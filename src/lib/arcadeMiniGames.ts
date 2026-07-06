@@ -4,6 +4,9 @@ import type {
   BreakTargetRuntime,
   BreakTargetTier,
   CharacterDefinition,
+  EnemyRushEnemyKind,
+  EnemyRushMiniGameSnapshot,
+  EnemyRushRuntime,
   FighterRuntime,
   InputFrame,
   MiniGameHighScoreKey,
@@ -16,6 +19,7 @@ import { emptyInputFrame } from '../types';
 import { getCharacterCombatScale } from './characterScale';
 
 export const BREAK_TARGET_GAME_ID: MiniGameKind = 'break-target';
+export const ENEMY_RUSH_GAME_ID: MiniGameKind = 'enemy-rush';
 export const BREAK_TARGET_HIGH_SCORE_STORAGE_KEY = 'kore.arcadeMiniGameHighScores.v1';
 export const BREAK_TARGET_ROUND_TIME = 45;
 export const ARCADE_MINI_GAME_CHANCE = 0.35;
@@ -39,6 +43,11 @@ const UNIVERSAL_HITBOX_LATERAL_PADDING = 0.14;
 const UNIVERSAL_HITBOX_VERTICAL_PADDING = 0.14;
 const TARGET_MIN_SPACING = 1.55;
 const EXPLOSION_DURATION = 0.58;
+const ENEMY_RUSH_PLAYER_RADIUS = 0.42;
+const ENEMY_RUSH_PROJECTILE_RADIUS = 0.18;
+const ENEMY_RUSH_PROJECTILE_SPEED = 4.2;
+const ENEMY_RUSH_MIN_SPAWN_DISTANCE = 2.2;
+const ENEMY_RUSH_CLEAR_BONUS_PER_LEVEL = 500;
 
 type ResolvedMiniGameStageBounds = {
   shape: 'box' | 'ellipse';
@@ -60,6 +69,36 @@ type Aabb = {
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 
+type EnemyRushDefinition = {
+  kind: EnemyRushEnemyKind;
+  name: string;
+  minLevel: number;
+  hp: number;
+  damage: number;
+  speed: number;
+  points: number;
+  radius: number;
+  height: number;
+  elite: boolean;
+  projectileKind?: string;
+};
+
+export const ENEMY_RUSH_ENEMY_DEFINITIONS: EnemyRushDefinition[] = [
+  { kind: 'zombie-small', name: 'Zombie', minLevel: 1, hp: 24, damage: 7, speed: 1.15, points: 100, radius: 0.38, height: 1.05, elite: false },
+  { kind: 'skeleton-small', name: 'Skeleton', minLevel: 1, hp: 28, damage: 8, speed: 1.28, points: 135, radius: 0.36, height: 1.08, elite: false },
+  { kind: 'pig-small', name: 'Pig', minLevel: 1, hp: 34, damage: 9, speed: 1.05, points: 175, radius: 0.44, height: 0.95, elite: false },
+  { kind: 'orc-small', name: 'Orc', minLevel: 2, hp: 48, damage: 11, speed: 1.16, points: 250, radius: 0.46, height: 1.15, elite: false },
+  { kind: 'zombie-big', name: 'Big Zombie', minLevel: 2, hp: 58, damage: 13, speed: 0.95, points: 300, radius: 0.52, height: 1.28, elite: false },
+  { kind: 'skeleton-big', name: 'Big Skeleton', minLevel: 2, hp: 54, damage: 13, speed: 1.1, points: 340, radius: 0.5, height: 1.3, elite: false },
+  { kind: 'samurai', name: 'Samurai', minLevel: 3, hp: 72, damage: 17, speed: 1.35, points: 400, radius: 0.48, height: 1.34, elite: false },
+  { kind: 'pig-big', name: 'Big Pig', minLevel: 3, hp: 78, damage: 18, speed: 1.08, points: 380, radius: 0.56, height: 1.24, elite: false },
+  { kind: 'orc-big', name: 'Big Orc', minLevel: 3, hp: 92, damage: 20, speed: 1.04, points: 500, radius: 0.58, height: 1.4, elite: true, projectileKind: 'orc-b' },
+  { kind: 'wizzart-a', name: 'Wizzart A', minLevel: 4, hp: 70, damage: 18, speed: 1.0, points: 560, radius: 0.46, height: 1.38, elite: true, projectileKind: 'wizzart-a' },
+  { kind: 'wizzart-b', name: 'Wizzart B', minLevel: 4, hp: 76, damage: 20, speed: 1.0, points: 640, radius: 0.46, height: 1.38, elite: true, projectileKind: 'wizzart-b' },
+  { kind: 'wizzart-c', name: 'Wizzart C', minLevel: 4, hp: 82, damage: 22, speed: 1.0, points: 700, radius: 0.46, height: 1.38, elite: true, projectileKind: 'wizzart-c' },
+  { kind: 'dark-knight', name: 'Dark Knight', minLevel: 4, hp: 125, damage: 26, speed: 1.2, points: 800, radius: 0.58, height: 1.48, elite: true }
+];
+
 export function shouldStartArcadeMiniGame(random = Math.random()) {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
@@ -68,6 +107,16 @@ export function shouldStartArcadeMiniGame(random = Math.random()) {
     if (window.localStorage.getItem('kore.forceArcadeMiniGame') === '1') return true;
   }
   return random < ARCADE_MINI_GAME_CHANCE;
+}
+
+export function pickArcadeMiniGameKind(arcadeLevel = 1, random = Math.random()): MiniGameKind {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const forced = params.get('forceMiniGameKind');
+    if (forced === BREAK_TARGET_GAME_ID || forced === ENEMY_RUSH_GAME_ID) return forced;
+  }
+  const enemyRushChance = Math.min(0.72, 0.28 + Math.max(0, arcadeLevel - 1) * 0.11);
+  return random < enemyRushChance ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
 }
 
 export function createBreakTargetMiniGame(
@@ -176,11 +225,151 @@ export function makeBreakTargetMiniGameResult(snapshot: BreakTargetMiniGameSnaps
     previousHighScore,
     highScore,
     newHighScore: score > previousHighScore,
+    cleared: destroyed === snapshot.targets.length,
     targetsDestroyed: destroyed,
     totalTargets: snapshot.targets.length,
     timeRemaining: Math.max(0, snapshot.timer),
     allClear: destroyed === snapshot.targets.length,
     completedReason: snapshot.completedReason ?? (snapshot.timer <= 0 ? 'time-up' : 'all-clear')
+  };
+}
+
+export function createEnemyRushMiniGame(
+  character: CharacterDefinition,
+  stage: StageDefinition,
+  seed = Date.now(),
+  level = 1
+): EnemyRushMiniGameSnapshot {
+  const safeLevel = Math.max(1, Math.round(level));
+  const bounds = resolveMiniGameStageBounds(stage, PLAYER_RADIUS);
+  const fallbackSpawn = stageBoundsLocalToWorld({ x: -Math.min(2.8, bounds.halfWidth * 0.45), z: 0 }, bounds);
+  const spawn = stage.spawns?.p1
+    ? { x: stage.spawns.p1[0], y: Math.max(0, stage.spawns.p1[1] ?? 0), z: stage.spawns.p1[2] }
+    : { x: fallbackSpawn.x, y: 0, z: fallbackSpawn.z };
+  return {
+    kind: 'enemy-rush',
+    gameId: ENEMY_RUSH_GAME_ID,
+    stage,
+    player: createMiniGameFighter(character, spawn),
+    seed,
+    level: safeLevel,
+    score: 0,
+    enemies: generateEnemyRushEnemies(stage, seed, safeLevel, spawn),
+    coins: [],
+    projectiles: [],
+    explosions: [],
+    phase: 'playing',
+    completedReason: null
+  };
+}
+
+export function generateEnemyRushEnemies(
+  stage: StageDefinition,
+  seed = 1,
+  level = 1,
+  playerPosition: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 }
+): EnemyRushRuntime[] {
+  const safeLevel = Math.max(1, Math.round(level));
+  const random = seededRandom(seed);
+  const bounds = resolveMiniGameStageBounds(stage, 0.8);
+  const pool = ENEMY_RUSH_ENEMY_DEFINITIONS.filter((enemy) => enemy.minLevel <= safeLevel);
+  const count = Math.min(18, 3 + safeLevel * 2);
+  const enemies: EnemyRushRuntime[] = [];
+  let attempts = 0;
+  while (enemies.length < count && attempts < count * 36) {
+    attempts += 1;
+    const definition = pool[Math.floor(random() * pool.length)] ?? ENEMY_RUSH_ENEMY_DEFINITIONS[0];
+    const playerLocal = worldToMiniGameBoundsLocal(playerPosition, bounds);
+    const local = randomLocalPoint(bounds, random);
+    const laneWidth = Math.min(3.4, bounds.halfWidth * 0.42);
+    local.x = clamp(playerLocal.x + (random() * 2 - 1) * laneWidth, -bounds.halfWidth, bounds.halfWidth);
+    const world = stageBoundsLocalToWorld(local, bounds);
+    const distanceFromPlayer = Math.hypot(world.x - playerPosition.x, world.z - playerPosition.z);
+    if (distanceFromPlayer < ENEMY_RUSH_MIN_SPAWN_DISTANCE) continue;
+    const spacing = definition.radius + 0.72;
+    if (enemies.some((enemy) => Math.hypot(enemy.position.x - world.x, enemy.position.z - world.z) < spacing + enemy.radius)) continue;
+    enemies.push({
+      id: `enemy-${enemies.length + 1}`,
+      kind: definition.kind,
+      name: definition.name,
+      level: safeLevel,
+      hp: Math.round(definition.hp * (1 + (safeLevel - definition.minLevel) * 0.18)),
+      maxHp: Math.round(definition.hp * (1 + (safeLevel - definition.minLevel) * 0.18)),
+      damage: Math.round(definition.damage * (1 + (safeLevel - 1) * 0.12)),
+      speed: definition.speed * (1 + Math.min(0.45, (safeLevel - 1) * 0.045)),
+      points: Math.round(definition.points * (1 + (safeLevel - 1) * 0.12)),
+      radius: definition.radius,
+      height: definition.height,
+      position: { x: world.x, y: 0, z: world.z },
+      facing: world.x >= playerPosition.x ? -1 : 1,
+      attackCooldown: 0.45 + random() * 0.9,
+      hitFlash: 0,
+      defeated: false,
+      elite: definition.elite,
+      projectileKind: definition.projectileKind
+    });
+  }
+  return enemies;
+}
+
+export function stepEnemyRushMiniGame(
+  snapshot: EnemyRushMiniGameSnapshot,
+  input: InputFrame,
+  dt: number
+): EnemyRushMiniGameSnapshot {
+  if (snapshot.phase === 'complete') return snapshot;
+  const next = cloneEnemyRushMiniGame(snapshot);
+  const player = next.player;
+  const frameDelta = Math.max(1, Math.round(dt * FRAMES_PER_SECOND));
+  const sanitized = sanitizeMiniGameInput(input);
+  tickAttack(player, frameDelta);
+  const freshMove = getFreshMoveInput(player, sanitized);
+  if (freshMove && canStartMiniGameAttack(player)) startMiniGameAttack(player, freshMove);
+  if (player.state !== 'attack' || player.actionFramesRemaining <= 0) applyMiniGameMovement(next, sanitized, dt);
+  applyMiniGameGravity(player, dt);
+  constrainMiniGamePlayer(next);
+  resolveEnemyRushPlayerHits(next);
+  stepEnemyRushEnemies(next, dt);
+  stepEnemyRushProjectiles(next, dt);
+  collectEnemyRushCoins(next);
+  next.explosions = next.explosions
+    .map((explosion) => ({ ...explosion, age: explosion.age + dt }))
+    .filter((explosion) => explosion.age < explosion.duration);
+  next.enemies = next.enemies.map((enemy) => ({ ...enemy, hitFlash: Math.max(0, enemy.hitFlash - dt) }));
+  if (player.hp <= 0) completeEnemyRushMiniGame(next, 'player-death');
+  else if (next.enemies.every((enemy) => enemy.defeated)) completeEnemyRushMiniGame(next, 'all-clear');
+  player.previousAttackInputs = {
+    jab: sanitized.jab,
+    kick: sanitized.kick,
+    heavy: sanitized.heavy,
+    special: sanitized.special
+  };
+  return next;
+}
+
+export function makeEnemyRushMiniGameResult(snapshot: EnemyRushMiniGameSnapshot, previousHighScore = 0): MiniGameResult {
+  const defeated = snapshot.enemies.filter((enemy) => enemy.defeated).length;
+  const coinsCollected = snapshot.coins.filter((coin) => coin.collected).length;
+  const score = Math.max(0, Math.round(snapshot.score));
+  const highScore = Math.max(previousHighScore, score);
+  return {
+    kind: ENEMY_RUSH_GAME_ID,
+    gameId: ENEMY_RUSH_GAME_ID,
+    stageId: snapshot.stage.id,
+    stageName: snapshot.stage.name,
+    score,
+    previousHighScore,
+    highScore,
+    newHighScore: score > previousHighScore,
+    cleared: snapshot.completedReason === 'all-clear',
+    targetsDestroyed: defeated,
+    totalTargets: snapshot.enemies.length,
+    enemiesDefeated: defeated,
+    totalEnemies: snapshot.enemies.length,
+    coinsCollected,
+    timeRemaining: 0,
+    allClear: snapshot.completedReason === 'all-clear',
+    completedReason: snapshot.completedReason ?? 'player-death'
   };
 }
 
@@ -380,7 +569,7 @@ function sanitizeMiniGameInput(input: InputFrame): InputFrame {
   };
 }
 
-function applyMiniGameMovement(snapshot: BreakTargetMiniGameSnapshot, input: InputFrame, dt: number) {
+function applyMiniGameMovement(snapshot: { player: FighterRuntime }, input: InputFrame, dt: number) {
   const player = snapshot.player;
   const grounded = player.position.y === 0 && player.velocityY === 0;
   const dx = input.left === input.right ? 0 : input.left ? -1 : 1;
@@ -433,7 +622,7 @@ function applyMiniGameGravity(player: FighterRuntime, dt: number) {
   }
 }
 
-function constrainMiniGamePlayer(snapshot: BreakTargetMiniGameSnapshot) {
+function constrainMiniGamePlayer(snapshot: { stage: StageDefinition; player: FighterRuntime }) {
   const bounds = resolveMiniGameStageBounds(snapshot.stage, PLAYER_RADIUS);
   const local = worldToMiniGameBoundsLocal(snapshot.player.position, bounds);
   if (bounds.shape === 'ellipse') {
@@ -523,6 +712,152 @@ function resolveTargetHits(snapshot: BreakTargetMiniGameSnapshot) {
   }
 }
 
+function cloneEnemyRushMiniGame(snapshot: EnemyRushMiniGameSnapshot): EnemyRushMiniGameSnapshot {
+  return {
+    ...snapshot,
+    player: {
+      ...snapshot.player,
+      position: { ...snapshot.player.position },
+      previousAttackInputs: { ...snapshot.player.previousAttackInputs },
+      visualHitstop: { ...snapshot.player.visualHitstop }
+    },
+    enemies: snapshot.enemies.map((enemy) => ({ ...enemy, position: { ...enemy.position } })),
+    coins: snapshot.coins.map((coin) => ({ ...coin, position: { ...coin.position } })),
+    projectiles: snapshot.projectiles.map((projectile) => ({ ...projectile, position: { ...projectile.position }, velocity: { ...projectile.velocity } })),
+    explosions: snapshot.explosions.map((explosion) => ({ ...explosion, position: { ...explosion.position } }))
+  };
+}
+
+function resolveEnemyRushPlayerHits(snapshot: EnemyRushMiniGameSnapshot) {
+  const player = snapshot.player;
+  const move = player.currentMove;
+  if (!move || player.state !== 'attack' || !isActiveMoveFrame(move.startupFrames, move.activeFrames, player.moveFrame)) return;
+  const attackBox = moveHitboxToWorldAabb(player, move.hitbox);
+  for (const enemy of snapshot.enemies) {
+    if (enemy.defeated) continue;
+    if (!boxesIntersect(attackBox, enemyToAabb(enemy))) continue;
+    const damage = Math.max(1, Math.round(move.damage || 1));
+    enemy.hp = Math.max(0, enemy.hp - damage);
+    enemy.hitFlash = 0.16;
+    player.hitConnected = true;
+    player.hitConfirmed = true;
+    if (enemy.hp <= 0) defeatEnemyRushEnemy(snapshot, enemy);
+    break;
+  }
+}
+
+function stepEnemyRushEnemies(snapshot: EnemyRushMiniGameSnapshot, dt: number) {
+  const player = snapshot.player;
+  const bounds = resolveMiniGameStageBounds(snapshot.stage, 0.6);
+  for (const enemy of snapshot.enemies) {
+    if (enemy.defeated) continue;
+    const dx = player.position.x - enemy.position.x;
+    const dz = player.position.z - enemy.position.z;
+    const distance = Math.max(0.001, Math.hypot(dx, dz));
+    enemy.facing = dx >= 0 ? 1 : -1;
+    enemy.attackCooldown = Math.max(0, enemy.attackCooldown - dt);
+    const ranged = Boolean(enemy.projectileKind);
+    const attackRange = ranged ? 4.8 : enemy.radius + ENEMY_RUSH_PLAYER_RADIUS + 0.48;
+    if (distance > attackRange * 0.72) {
+      const chaseSpeed = ranged && distance < attackRange ? enemy.speed * 0.25 : enemy.speed;
+      const laneCorrection = Math.min(0.35, Math.abs(dx) / Math.max(1, distance));
+      enemy.position.x += Math.sign(dx) * chaseSpeed * laneCorrection * dt;
+      enemy.position.z += Math.sign(dz || 1) * chaseSpeed * dt;
+      constrainPointToBounds(enemy.position, bounds);
+    }
+    if (distance <= attackRange && enemy.attackCooldown <= 0) {
+      if (ranged && enemy.projectileKind) {
+        snapshot.projectiles.push({
+          id: `projectile-${enemy.id}-${snapshot.projectiles.length + 1}`,
+          ownerId: enemy.id,
+          kind: enemy.projectileKind,
+          damage: Math.max(1, Math.round(enemy.damage * 0.85)),
+          position: { x: enemy.position.x, y: 0.85, z: enemy.position.z },
+          velocity: { x: (dx / distance) * ENEMY_RUSH_PROJECTILE_SPEED, z: (dz / distance) * ENEMY_RUSH_PROJECTILE_SPEED },
+          radius: ENEMY_RUSH_PROJECTILE_RADIUS,
+          age: 0
+        });
+        enemy.attackCooldown = 1.65;
+      } else if (boxesIntersect(enemyToAabb(enemy), playerToAabb(player))) {
+        damageEnemyRushPlayer(snapshot, enemy.damage);
+        enemy.attackCooldown = 0.95;
+      }
+    }
+  }
+}
+
+function stepEnemyRushProjectiles(snapshot: EnemyRushMiniGameSnapshot, dt: number) {
+  const bounds = resolveMiniGameStageBounds(snapshot.stage, 1);
+  snapshot.projectiles = snapshot.projectiles
+    .map((projectile) => ({
+      ...projectile,
+      age: projectile.age + dt,
+      position: {
+        x: projectile.position.x + projectile.velocity.x * dt,
+        y: projectile.position.y,
+        z: projectile.position.z + projectile.velocity.z * dt
+      }
+    }))
+    .filter((projectile) => {
+      const local = worldToMiniGameBoundsLocal(projectile.position, bounds);
+      if (projectile.age > 4 || Math.abs(local.x) > bounds.halfWidth + 1 || Math.abs(local.z) > bounds.halfDepth + 1) return false;
+      if (boxesIntersect(projectileToAabb(projectile), playerToAabb(snapshot.player))) {
+        damageEnemyRushPlayer(snapshot, projectile.damage);
+        return false;
+      }
+      return true;
+    });
+}
+
+function collectEnemyRushCoins(snapshot: EnemyRushMiniGameSnapshot) {
+  for (const coin of snapshot.coins) {
+    if (coin.collected) continue;
+    if (Math.hypot(snapshot.player.position.x - coin.position.x, snapshot.player.position.z - coin.position.z) > coin.radius + ENEMY_RUSH_PLAYER_RADIUS) continue;
+    coin.collected = true;
+    snapshot.score += coin.value;
+  }
+}
+
+function defeatEnemyRushEnemy(snapshot: EnemyRushMiniGameSnapshot, enemy: EnemyRushRuntime) {
+  if (enemy.defeated) return;
+  enemy.defeated = true;
+  snapshot.score += enemy.points;
+  snapshot.explosions.push({
+    id: `enemy-explosion-${enemy.id}-${snapshot.explosions.length + 1}`,
+    position: { x: enemy.position.x, y: Math.max(0.4, enemy.height * 0.5), z: enemy.position.z },
+    age: 0,
+    duration: EXPLOSION_DURATION
+  });
+  const dropRoll = seededRandom(snapshot.seed + snapshot.coins.length * 97 + Number(enemy.id.replace(/\D/g, '') || 0) * 31)();
+  const dropChance = enemy.elite ? 0.78 : enemy.points >= 250 ? 0.42 : 0.18;
+  if (dropRoll <= dropChance) {
+    const coinRandom = seededRandom(snapshot.seed + snapshot.coins.length * 131 + enemy.points);
+    const min = 50 + (snapshot.level - 1) * 50;
+    const max = 150 + (snapshot.level - 1) * 50;
+    snapshot.coins.push({
+      id: `coin-${snapshot.coins.length + 1}`,
+      value: Math.round(min + coinRandom() * (max - min)),
+      position: { x: enemy.position.x, y: 0.28, z: enemy.position.z },
+      radius: 0.42,
+      collected: false
+    });
+  }
+}
+
+function damageEnemyRushPlayer(snapshot: EnemyRushMiniGameSnapshot, damage: number) {
+  if (snapshot.player.hp <= 0) return;
+  snapshot.player.hp = Math.max(0, snapshot.player.hp - Math.max(1, Math.round(damage)));
+  snapshot.player.hitFlash = 0.18;
+  if (snapshot.player.hp <= 0) completeEnemyRushMiniGame(snapshot, 'player-death');
+}
+
+function completeEnemyRushMiniGame(snapshot: EnemyRushMiniGameSnapshot, reason: 'all-clear' | 'player-death') {
+  if (snapshot.phase === 'complete') return;
+  snapshot.phase = 'complete';
+  snapshot.completedReason = reason;
+  if (reason === 'all-clear') snapshot.score += snapshot.level * ENEMY_RUSH_CLEAR_BONUS_PER_LEVEL;
+}
+
 function completeBreakTargetMiniGame(snapshot: BreakTargetMiniGameSnapshot, reason: 'all-clear' | 'time-up') {
   if (snapshot.phase === 'complete') return;
   snapshot.phase = 'complete';
@@ -545,6 +880,37 @@ function moveHitboxToWorldAabb(player: FighterRuntime, hitbox: { offset: [number
 
 function targetToAabb(target: BreakTargetRuntime): Aabb {
   return makeAabb(target.position.x, target.position.y, target.position.z, target.radius * 2, target.height, target.radius * 0.58);
+}
+
+function enemyToAabb(enemy: EnemyRushRuntime): Aabb {
+  return makeAabb(enemy.position.x, enemy.position.y + enemy.height * 0.5, enemy.position.z, enemy.radius * 2, enemy.height, enemy.radius * 2);
+}
+
+function playerToAabb(player: FighterRuntime): Aabb {
+  const scale = getCharacterCombatScale(player.character);
+  return makeAabb(player.position.x, player.position.y + scale.height * 0.5, player.position.z, 0.82 * scale.width, scale.height, 0.82 * scale.width);
+}
+
+function projectileToAabb(projectile: { position: { x: number; y: number; z: number }; radius: number }): Aabb {
+  return makeAabb(projectile.position.x, projectile.position.y, projectile.position.z, projectile.radius * 2, projectile.radius * 2, projectile.radius * 2);
+}
+
+function constrainPointToBounds(position: { x: number; z: number }, bounds: ResolvedMiniGameStageBounds) {
+  const local = worldToMiniGameBoundsLocal(position, bounds);
+  if (bounds.shape === 'ellipse') {
+    const distance = (local.x * local.x) / (bounds.halfWidth * bounds.halfWidth) + (local.z * local.z) / (bounds.halfDepth * bounds.halfDepth);
+    if (distance > 1) {
+      const scale = 1 / Math.sqrt(distance);
+      local.x *= scale;
+      local.z *= scale;
+    }
+  } else {
+    local.x = clamp(local.x, -bounds.halfWidth, bounds.halfWidth);
+    local.z = clamp(local.z, -bounds.halfDepth, bounds.halfDepth);
+  }
+  const world = stageBoundsLocalToWorld(local, bounds);
+  position.x = world.x;
+  position.z = world.z;
 }
 
 function makeAabb(centerX: number, centerY: number, centerZ: number, width: number, height: number, depth: number): Aabb {

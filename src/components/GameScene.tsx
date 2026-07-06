@@ -14,6 +14,8 @@ import type {
   CharacterProjectileDefinition,
   BreakTargetMiniGameSnapshot,
   BreakTargetRuntime,
+  EnemyRushMiniGameSnapshot,
+  EnemyRushRuntime,
   EffectSoundCue,
   EffectTransform,
   FighterRuntime,
@@ -936,7 +938,9 @@ function makeDuplicateFighterRenderStyle(match: MatchSnapshot, slot: 1 | 2): Par
   return hueShiftDegrees ? { hueShiftDegrees } : undefined;
 }
 
-export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: BreakTargetMiniGameSnapshot; reducedMotion?: boolean }) {
+type AnyMiniGameSnapshot = BreakTargetMiniGameSnapshot | EnemyRushMiniGameSnapshot;
+
+export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: AnyMiniGameSnapshot; reducedMotion?: boolean }) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [snapshot.stage.id]);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [snapshot.player.position.x, 3.3, snapshot.player.position.z + 6.8], fov: 46 }} data-testid="mini-game-canvas">
@@ -949,7 +953,11 @@ export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: B
         <MiniGameCameraRig snapshot={snapshot} />
         <Arena stage={snapshot.stage} fighters={[snapshot.player, snapshot.player] as [FighterRuntime, FighterRuntime]} impactEvents={[]} />
         <StageCameraOcclusionFader />
-        <BreakTargetLayer targets={snapshot.targets} explosions={snapshot.explosions} reducedMotion={reducedMotion} />
+        {snapshot.kind === 'break-target' ? (
+          <BreakTargetLayer targets={snapshot.targets} explosions={snapshot.explosions} reducedMotion={reducedMotion} />
+        ) : (
+          <EnemyRushLayer snapshot={snapshot} reducedMotion={reducedMotion} />
+        )}
         <FighterRig fighter={snapshot.player} timeScale={1} stage={snapshot.stage} />
         <ContactShadows position={[0, -0.01, 0]} opacity={0.38} scale={18} blur={2.4} far={3} />
         <StagePostProcessing stage={snapshot.stage} reducedMotion={reducedMotion} />
@@ -958,7 +966,7 @@ export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: B
   );
 }
 
-function MiniGameCameraRig({ snapshot }: { snapshot: BreakTargetMiniGameSnapshot }) {
+function MiniGameCameraRig({ snapshot }: { snapshot: AnyMiniGameSnapshot }) {
   const { camera, size } = useThree();
   const smoothedTarget = useRef(new THREE.Vector3(snapshot.player.position.x, 1.1, snapshot.player.position.z));
   useFrame((_, delta) => {
@@ -969,12 +977,14 @@ function MiniGameCameraRig({ snapshot }: { snapshot: BreakTargetMiniGameSnapshot
       camera.fov = desiredFov;
       camera.updateProjectionMatrix();
     }
-    const aliveTargets = snapshot.targets.filter((target) => !target.destroyed);
-    const targetCenter = aliveTargets.reduce(
-      (sum, target) => sum.add(new THREE.Vector3(target.position.x, Math.max(1, target.position.y), target.position.z)),
-      new THREE.Vector3(snapshot.player.position.x, 1.1, snapshot.player.position.z)
-    );
-    if (aliveTargets.length > 0) targetCenter.multiplyScalar(1 / (aliveTargets.length + 1));
+    const focusables: Array<{ x: number; y: number; z: number }> = snapshot.kind === 'break-target'
+      ? snapshot.targets.filter((target) => !target.destroyed).map((target) => target.position)
+      : snapshot.enemies.filter((enemy) => !enemy.defeated).map((enemy) => ({ x: enemy.position.x, y: enemy.position.y + enemy.height * 0.5, z: enemy.position.z }));
+    const targetCenter = new THREE.Vector3(snapshot.player.position.x, 1.1, snapshot.player.position.z);
+    for (const target of focusables) {
+      targetCenter.add(new THREE.Vector3(target.x, Math.max(1, target.y), target.z));
+    }
+    if (focusables.length > 0) targetCenter.multiplyScalar(1 / (focusables.length + 1));
     const player = new THREE.Vector3(snapshot.player.position.x, 1.08, snapshot.player.position.z);
     const focus = player.lerp(targetCenter, isNarrow ? 0.34 : 0.38);
     smoothedTarget.current.lerp(focus, 1 - Math.pow(0.001, delta));
@@ -1016,8 +1026,115 @@ const breakTargetAssetByTier: Record<BreakTargetRuntime['tier'], string> = {
   30: '/minigames/break-target/target-30hp.png'
 };
 
+const enemyRushAssetByKind: Record<EnemyRushRuntime['kind'], string> = {
+  'zombie-small': '/minigames/enemy-rush/enemies/zombie-small.png',
+  'skeleton-small': '/minigames/enemy-rush/enemies/skeleton-small.png',
+  'pig-small': '/minigames/enemy-rush/enemies/pig-small.png',
+  'orc-small': '/minigames/enemy-rush/enemies/orc-small.png',
+  'zombie-big': '/minigames/enemy-rush/enemies/zombie-big.png',
+  'skeleton-big': '/minigames/enemy-rush/enemies/skeleton-big.png',
+  samurai: '/minigames/enemy-rush/enemies/samurai.png',
+  'pig-big': '/minigames/enemy-rush/enemies/pig-big.png',
+  'orc-big': '/minigames/enemy-rush/enemies/orc-big.png',
+  'wizzart-a': '/minigames/enemy-rush/enemies/wizzart-a.png',
+  'wizzart-b': '/minigames/enemy-rush/enemies/wizzart-b.png',
+  'wizzart-c': '/minigames/enemy-rush/enemies/wizzart-c.png',
+  'dark-knight': '/minigames/enemy-rush/enemies/darkknight.png'
+};
+
 const BREAK_TARGET_EXPLOSION_SHEET = '/minigames/break-target/target-explosion-sheet.png';
 const TARGET_VOXEL_SOURCE_CHARACTER = { voxelProfile: 'image-source' } as CharacterDefinition;
+
+function EnemyRushLayer({ snapshot, reducedMotion }: { snapshot: EnemyRushMiniGameSnapshot; reducedMotion: boolean }) {
+  return (
+    <group>
+      {snapshot.enemies.map((enemy) => (
+        <EnemyRushVoxelEnemy key={enemy.id} enemy={enemy} playerFacing={snapshot.player.facing} />
+      ))}
+      {snapshot.coins.map((coin) => (
+        <EnemyRushCoin key={coin.id} coin={coin} />
+      ))}
+      {snapshot.projectiles.map((projectile) => (
+        <EnemyRushProjectile key={projectile.id} projectile={projectile} />
+      ))}
+      {snapshot.explosions.map((explosion) => (
+        <BreakTargetExplosion key={explosion.id} explosion={explosion} reducedMotion={reducedMotion} />
+      ))}
+    </group>
+  );
+}
+
+function EnemyRushVoxelEnemy({ enemy, playerFacing }: { enemy: EnemyRushRuntime; playerFacing: 1 | -1 }) {
+  const [voxels, setVoxels] = useState<ImageVoxel[]>([]);
+  const groupRef = useRef<THREE.Group>(null);
+  const source = enemyRushAssetByKind[enemy.kind];
+  useEffect(() => {
+    let canceled = false;
+    getCachedImageVoxels(source, TARGET_VOXEL_SOURCE_CHARACTER).then((nextVoxels) => {
+      if (!canceled) setVoxels(nextVoxels);
+    });
+    return () => {
+      canceled = true;
+    };
+  }, [source]);
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const pulse = enemy.hitFlash > 0 ? Math.sin(state.clock.elapsedTime * 80) * 0.045 : 0;
+    const bob = Math.sin(state.clock.elapsedTime * 5 + enemy.position.x) * 0.025;
+    groupRef.current.scale.setScalar((enemy.defeated ? 0.001 : enemy.radius * 1.08) + pulse);
+    groupRef.current.position.y = bob;
+  });
+  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 520 ? 2 : 1, source), [source, voxels]);
+  const outlineStyle = useMemo<FighterOutlineStyle>(() => ({
+    enabled: true,
+    color: enemy.elite ? '#3b0f17' : '#111318',
+    opacity: enemy.elite ? 0.48 : 0.34,
+    scale: 1.055
+  }), [enemy.elite]);
+  const renderStyle = useMemo(() => withDefaultRenderStyle({ castShadow: true, receiveShadow: true }), []);
+  if (enemy.defeated) return null;
+  return (
+    <group ref={groupRef} position={[enemy.position.x, enemy.position.y, enemy.position.z]} rotation={[0, playerFacing >= 0 ? 0 : Math.PI, 0]}>
+      <ImageVoxelPartGroup part={parts.head} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.torso} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadArm} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearArm} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.leadLeg} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <ImageVoxelPartGroup part={parts.rearLeg} groupRef={undefined} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+    </group>
+  );
+}
+
+function EnemyRushCoin({ coin }: { coin: EnemyRushMiniGameSnapshot['coins'][number] }) {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (!ref.current) return;
+    ref.current.rotation.y = state.clock.elapsedTime * 4;
+    ref.current.position.y = coin.position.y + Math.sin(state.clock.elapsedTime * 6 + coin.value) * 0.06;
+  });
+  if (coin.collected) return null;
+  return (
+    <group ref={ref} position={[coin.position.x, coin.position.y, coin.position.z]}>
+      <mesh castShadow>
+        <cylinderGeometry args={[0.18, 0.18, 0.07, 18]} />
+        <meshStandardMaterial color="#fff06c" emissive="#f5b400" emissiveIntensity={0.8} metalness={0.25} roughness={0.35} />
+      </mesh>
+      <pointLight color="#fff06c" intensity={0.45} distance={2.2} />
+    </group>
+  );
+}
+
+function EnemyRushProjectile({ projectile }: { projectile: EnemyRushMiniGameSnapshot['projectiles'][number] }) {
+  return (
+    <group position={[projectile.position.x, projectile.position.y, projectile.position.z]}>
+      <mesh castShadow>
+        <sphereGeometry args={[projectile.radius, 14, 10]} />
+        <meshStandardMaterial color="#ff7048" emissive="#ff2d55" emissiveIntensity={1.4} roughness={0.2} />
+      </mesh>
+      <pointLight color="#ff7048" intensity={0.75} distance={2.8} />
+    </group>
+  );
+}
 
 function BreakTargetVoxelTarget({ target }: { target: BreakTargetRuntime }) {
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);

@@ -8046,9 +8046,9 @@ button {
   left: 50%;
   z-index: 12;
   display: grid;
-  grid-template-columns: minmax(104px, 1fr) minmax(92px, 0.85fr) minmax(118px, 1fr);
+  grid-template-columns: repeat(6, minmax(74px, 1fr));
   gap: 10px;
-  width: min(92vw, 520px);
+  width: min(94vw, 820px);
   transform: translateX(-50%) scale(var(--hud-scale, 1));
   transform-origin: top center;
   pointer-events: none;
@@ -8082,6 +8082,7 @@ button {
   font-weight: 950;
   letter-spacing: 0;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .mini-game-hud-card.timer {
@@ -8089,6 +8090,72 @@ button {
 }
 
 .mini-game-hud-card.score {
+  color: #8ef9ff;
+}
+
+.mini-game-hud-card.arcade-score,
+.mini-game-hud-card.arcade-lives,
+.mini-game-hud-card.arcade-level {
+  background: linear-gradient(180deg, rgba(20, 28, 22, 0.78), rgba(14, 21, 18, 0.52));
+}
+
+.mini-game-hud-card.arcade-score {
+  color: #fff06c;
+}
+
+.mini-game-hud-card.arcade-lives {
+  color: #ff9aa8;
+}
+
+.mini-game-hud-card.arcade-level {
+  color: #b8ff9d;
+}
+
+.arcade-run-hud {
+  position: absolute;
+  top: 82px;
+  left: 50%;
+  z-index: 12;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(78px, auto);
+  gap: 8px;
+  transform: translateX(-50%) scale(var(--hud-scale, 1));
+  transform-origin: top center;
+  pointer-events: none;
+}
+
+.arcade-run-hud div {
+  display: grid;
+  min-height: 42px;
+  place-items: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(8, 12, 18, 0.72), rgba(12, 18, 25, 0.46));
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  color: #f7fbff;
+  backdrop-filter: blur(12px);
+}
+
+.arcade-run-hud span {
+  color: rgba(236, 244, 255, 0.68);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.arcade-run-hud strong {
+  color: #fff06c;
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.arcade-run-hud .is-award strong {
   color: #8ef9ff;
 }
 
@@ -9231,6 +9298,47 @@ button {
   letter-spacing: 0;
   text-transform: uppercase;
   animation: unlockContinuePulse 1.15s ease-in-out infinite;
+}
+
+.mini-game-result-arcade-award {
+  margin-top: 18px;
+  color: #8ef9ff;
+  font-size: clamp(13px, 1.8vw, 20px);
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.arcade-game-over-copy {
+  gap: 0;
+}
+
+.arcade-game-over-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.arcade-game-over-details span {
+  display: inline-grid;
+  min-height: 32px;
+  place-items: center;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(247, 251, 255, 0.82);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.arcade-game-over-actions {
+  margin-top: 26px;
 }
 
 @keyframes unlockContinuePulse {
@@ -11638,6 +11746,32 @@ button {
 }
 
 @media (max-width: 760px) {
+  .mini-game-hud {
+    grid-template-columns: repeat(3, minmax(78px, 1fr));
+    gap: 7px;
+    width: min(94vw, 390px);
+  }
+
+  .mini-game-hud-card {
+    min-height: 50px;
+    padding: 7px 9px;
+  }
+
+  .mini-game-hud-card span {
+    font-size: 10px;
+  }
+
+  .mini-game-hud-card strong {
+    font-size: 19px;
+  }
+
+  .arcade-run-hud {
+    top: 76px;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, minmax(66px, 1fr));
+    width: min(94vw, 360px);
+  }
+
   .ranked-profile-header,
   .ranked-stats-grid,
   .ranked-results-panel,

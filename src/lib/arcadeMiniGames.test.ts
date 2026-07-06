@@ -5,13 +5,17 @@ import { emptyInputFrame, type StageDefinition } from '../types';
 import {
   BREAK_TARGET_GAME_ID,
   BREAK_TARGET_HIGH_SCORE_STORAGE_KEY,
+  createEnemyRushMiniGame,
   createBreakTargetMiniGame,
+  generateEnemyRushEnemies,
   generateBreakTargets,
+  makeEnemyRushMiniGameResult,
   makeBreakTargetMiniGameResult,
   miniGameHighScoreStorageKey,
   readMiniGameHighScore,
   resolveMiniGameStageBounds,
   shouldStartArcadeMiniGame,
+  stepEnemyRushMiniGame,
   stepBreakTargetMiniGame,
   worldToMiniGameBoundsLocal,
   writeMiniGameHighScore
@@ -136,6 +140,48 @@ describe('arcade mini games', () => {
     });
     expect(shouldStartArcadeMiniGame(0.99)).toBe(true);
   });
+
+  it('generates enemy rush spawns deterministically inside stage bounds with spacing', () => {
+    const first = generateEnemyRushEnemies(stage, 404, 3);
+    const second = generateEnemyRushEnemies(stage, 404, 3);
+    expect(second.map(summarizeEnemy)).toEqual(first.map(summarizeEnemy));
+    const bounds = resolveMiniGameStageBounds(stage, 0.8);
+    for (const enemy of first) {
+      const local = worldToMiniGameBoundsLocal(enemy.position, bounds);
+      expect(Math.abs(local.x)).toBeLessThanOrEqual(bounds.halfWidth + 0.001);
+      expect(Math.abs(local.z)).toBeLessThanOrEqual(bounds.halfDepth + 0.001);
+    }
+    for (let index = 0; index < first.length; index += 1) {
+      for (let other = index + 1; other < first.length; other += 1) {
+        expect(Math.hypot(first[index].position.x - first[other].position.x, first[index].position.z - first[other].position.z)).toBeGreaterThanOrEqual(first[index].radius + first[other].radius + 0.7);
+      }
+    }
+  });
+
+  it('enemy rush all-clear awards clear bonus and high score payload', () => {
+    const snapshot = createEnemyRushMiniGame(character, stage, 505, 2);
+    snapshot.enemies.forEach((enemy) => {
+      enemy.defeated = true;
+    });
+    const next = stepEnemyRushMiniGame(snapshot, emptyInputFrame(), 1 / 60);
+    expect(next.phase).toBe('complete');
+    expect(next.completedReason).toBe('all-clear');
+    expect(next.score).toBeGreaterThanOrEqual(1000);
+    const result = makeEnemyRushMiniGameResult(next, 100);
+    expect(result.highScore).toBe(result.score);
+    expect(result.cleared).toBe(true);
+  });
+
+  it('enemy rush player death completes as player-death', () => {
+    const snapshot = createEnemyRushMiniGame(character, stage, 606, 1);
+    snapshot.player.hp = 0;
+    const next = stepEnemyRushMiniGame(snapshot, emptyInputFrame(), 1 / 60);
+    expect(next.phase).toBe('complete');
+    expect(next.completedReason).toBe('player-death');
+    const result = makeEnemyRushMiniGameResult(next);
+    expect(result.completedReason).toBe('player-death');
+    expect(result.cleared).toBe(false);
+  });
 });
 
 function summarizeTarget(target: ReturnType<typeof generateBreakTargets>[number]) {
@@ -144,5 +190,14 @@ function summarizeTarget(target: ReturnType<typeof generateBreakTargets>[number]
     x: Number(target.position.x.toFixed(3)),
     y: Number(target.position.y.toFixed(3)),
     z: Number(target.position.z.toFixed(3))
+  };
+}
+
+function summarizeEnemy(enemy: ReturnType<typeof generateEnemyRushEnemies>[number]) {
+  return {
+    kind: enemy.kind,
+    hp: enemy.hp,
+    x: Number(enemy.position.x.toFixed(3)),
+    z: Number(enemy.position.z.toFixed(3))
   };
 }

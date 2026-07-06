@@ -90,6 +90,7 @@ import {
   type CombatPopupEvent,
   type ControlScheme,
   type CpuDifficulty,
+  type ArcadeRunState,
   type EffectAnchor,
   type EffectBlendMode,
   type EffectKeyframe,
@@ -101,6 +102,7 @@ import {
   type MenuAttractPerformanceMode,
   type MenuMotionPerformanceMode,
   type BreakTargetMiniGameSnapshot,
+  type EnemyRushMiniGameSnapshot,
   type HitLevel,
   type ImpactSparkEvent,
   type InputFrame,
@@ -153,13 +155,27 @@ import {
 } from './lib/trainingTrials';
 import {
   BREAK_TARGET_GAME_ID,
+  ENEMY_RUSH_GAME_ID,
   createBreakTargetMiniGame,
+  createEnemyRushMiniGame,
+  makeEnemyRushMiniGameResult,
   makeBreakTargetMiniGameResult,
+  pickArcadeMiniGameKind,
   readMiniGameHighScore,
   shouldStartArcadeMiniGame,
+  stepEnemyRushMiniGame,
   stepBreakTargetMiniGame,
   writeMiniGameHighScore
 } from './lib/arcadeMiniGames';
+import {
+  applyArcadeFightWin,
+  applyArcadeLifeLoss,
+  applyArcadeMiniGameResult,
+  addArcadeUnlock,
+  createArcadeRunState,
+  readLocalArcadeRunHighScore,
+  submitArcadeRunScore
+} from './lib/arcadeRun';
 import {
   applyVoxelBodyScale,
   computeVoxelBodyNormalization,
@@ -189,7 +205,7 @@ import {
   type TournamentSummary
 } from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
 type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
@@ -228,6 +244,7 @@ type ArcadeMiniGameLaunch = {
   stage: StageDefinition;
   seed: number;
   durationSeconds?: number;
+  arcadeLevel?: number;
 };
 
 type CharacterAnimationOverride = {
@@ -2576,6 +2593,8 @@ export default function App() {
   const [pendingUnlockCharacterId, setPendingUnlockCharacterId] = useState('');
   const [activeArcadeMiniGame, setActiveArcadeMiniGame] = useState<ArcadeMiniGameLaunch | null>(null);
   const [lastMiniGameResult, setLastMiniGameResult] = useState<MiniGameResult | null>(null);
+  const [arcadeRun, setArcadeRun] = useState<ArcadeRunState>(() => createArcadeRunState());
+  const [arcadeRunBestScore, setArcadeRunBestScore] = useState(0);
   const [musicStarted, setMusicStarted] = useState(true);
   const [fightPaused, setFightPaused] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -3522,15 +3541,36 @@ export default function App() {
 	    () => createCursorStyle(getKoreCursorOption(settings.display.cursorId)),
 	    [settings.display.cursorId]
 	  );
-	  const makeArcadeMiniGameLaunch = useCallback((): ArcadeMiniGameLaunch | null => {
+	  useEffect(() => {
+	    setArcadeRunBestScore(readLocalArcadeRunHighScore(onlineProfile));
+	  }, [onlineProfile]);
+	  const resetArcadeRun = useCallback(() => {
+	    setArcadeRun(createArcadeRunState());
+	    setLastMiniGameResult(null);
+	    setActiveArcadeMiniGame(null);
+	  }, []);
+	  const finishArcadeRun = useCallback((run: ArcadeRunState) => {
+	    const best = Math.max(readLocalArcadeRunHighScore(onlineProfile), run.score);
+	    setArcadeRunBestScore(best);
+	    void submitArcadeRunScore(onlineProfile, run.score)
+	      .then((result) => {
+	        const submittedBest = result.entries.find((entry) => entry.playerId === (onlineProfile?.playerId ?? 'local-player'))?.score ?? best;
+	        setArcadeRunBestScore(Math.max(best, submittedBest));
+	      })
+	      .catch((error) => {
+	        console.error('Failed to submit arcade run score', error);
+	      });
+	  }, [onlineProfile]);
+	  const makeArcadeMiniGameLaunch = useCallback((level = arcadeRun.level): ArcadeMiniGameLaunch | null => {
 	    if (!shouldStartArcadeMiniGame()) return null;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
 	    return {
-	      kind: BREAK_TARGET_GAME_ID,
+	      kind: pickArcadeMiniGameKind(level),
 	      stage: miniGameStage,
-	      seed: freshAiSeed()
+	      seed: freshAiSeed(),
+	      arcadeLevel: level
 	    };
-	  }, [playableStageRoster, selectedStage]);
+	  }, [arcadeRun.level, playableStageRoster, selectedStage]);
 	  const continueAfterArcadeUnlock = useCallback(() => {
 	    setPendingUnlockCharacterId('');
 	    setVersusReturnScreen('stage');
@@ -3540,8 +3580,13 @@ export default function App() {
 	    setActiveArcadeMiniGame(null);
 	    setLastMiniGameResult(null);
 	    setVersusReturnScreen('stage');
+	    if (arcadeRun.status === 'game-over') {
+	      finishArcadeRun(arcadeRun);
+	      setScreen('arcadeGameOver');
+	      return;
+	    }
 	    setScreen('versus');
-	  }, []);
+	  }, [arcadeRun, finishArcadeRun]);
 	  const debugMiniGameStartedRef = useRef(false);
 	  useEffect(() => {
 	    if (debugMiniGameStartedRef.current || screen === 'boot' || typeof window === 'undefined' || !p1) return;
@@ -3550,16 +3595,18 @@ export default function App() {
 	    debugMiniGameStartedRef.current = true;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
 	    const debugDuration = Number(params.get('debugMiniGameTimer'));
+	    const debugKind = params.get('forceMiniGameKind') === ENEMY_RUSH_GAME_ID ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
 	    setMode('ai');
 	    setActiveArcadeMiniGame({
-	      kind: BREAK_TARGET_GAME_ID,
+	      kind: debugKind,
 	      stage: miniGameStage,
 	      seed: freshAiSeed(),
-	      durationSeconds: Number.isFinite(debugDuration) && debugDuration > 0 ? Math.min(45, debugDuration) : undefined
+	      durationSeconds: Number.isFinite(debugDuration) && debugDuration > 0 ? Math.min(45, debugDuration) : undefined,
+	      arcadeLevel: arcadeRun.level
 	    });
 	    setLastMiniGameResult(null);
 	    setScreen('miniGame');
-	  }, [p1, playableStageRoster, screen, selectedStage]);
+	  }, [arcadeRun.level, p1, playableStageRoster, screen, selectedStage]);
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
@@ -3600,6 +3647,7 @@ export default function App() {
             onArcade={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'ai' });
               resetRandomSelections();
+              resetArcadeRun();
               setMode('ai');
               setScreen('select');
             }}
@@ -3942,26 +3990,57 @@ export default function App() {
           />
         )}
         {screen === 'miniGame' && activeArcadeMiniGame && (
-          <BreakTargetMiniGameScreen
-            key={`${p1.id}-${activeArcadeMiniGame.kind}-${activeArcadeMiniGame.stage.id}-${activeArcadeMiniGame.seed}`}
-            character={p1}
-            launch={activeArcadeMiniGame}
-            settings={settings}
-            readInputsForStep={readInputsForStep}
-            setVirtualAction={setVirtualAction}
-            clearMenuInputs={clearMenuInputs}
-            onMenu={() => {
-              captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
-              setActiveArcadeMiniGame(null);
-              setLastMiniGameResult(null);
-              setScreen('menu');
-            }}
-            onComplete={(result) => {
-              setLastMiniGameResult(result);
-              setScreen('miniGameResult');
-            }}
-            onAnalytics={captureAppAnalytics}
-          />
+          activeArcadeMiniGame.kind === ENEMY_RUSH_GAME_ID ? (
+            <EnemyRushMiniGameScreen
+              key={`${p1.id}-${activeArcadeMiniGame.kind}-${activeArcadeMiniGame.stage.id}-${activeArcadeMiniGame.seed}`}
+              character={p1}
+              launch={activeArcadeMiniGame}
+              settings={settings}
+              arcadeRun={arcadeRun}
+              readInputsForStep={readInputsForStep}
+              setVirtualAction={setVirtualAction}
+              clearMenuInputs={clearMenuInputs}
+              onMenu={() => {
+                captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
+                finishArcadeRun(arcadeRun);
+                setActiveArcadeMiniGame(null);
+                setLastMiniGameResult(null);
+                setScreen('menu');
+              }}
+              onComplete={(result) => {
+                const resultWithAward = { ...result, arcadeScoreAward: result.score };
+                setArcadeRun((current) => applyArcadeMiniGameResult(current, resultWithAward));
+                setLastMiniGameResult(resultWithAward);
+                setScreen('miniGameResult');
+              }}
+              onAnalytics={captureAppAnalytics}
+            />
+          ) : (
+            <BreakTargetMiniGameScreen
+              key={`${p1.id}-${activeArcadeMiniGame.kind}-${activeArcadeMiniGame.stage.id}-${activeArcadeMiniGame.seed}`}
+              character={p1}
+              launch={activeArcadeMiniGame}
+              settings={settings}
+              arcadeRun={arcadeRun}
+              readInputsForStep={readInputsForStep}
+              setVirtualAction={setVirtualAction}
+              clearMenuInputs={clearMenuInputs}
+              onMenu={() => {
+                captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
+                finishArcadeRun(arcadeRun);
+                setActiveArcadeMiniGame(null);
+                setLastMiniGameResult(null);
+                setScreen('menu');
+              }}
+              onComplete={(result) => {
+                const resultWithAward = { ...result, arcadeScoreAward: result.score };
+                setArcadeRun((current) => applyArcadeMiniGameResult(current, resultWithAward));
+                setLastMiniGameResult(resultWithAward);
+                setScreen('miniGameResult');
+              }}
+              onAnalytics={captureAppAnalytics}
+            />
+          )
         )}
         {screen === 'miniGameResult' && lastMiniGameResult && (
           <MiniGameResultScreen
@@ -3974,6 +4053,23 @@ export default function App() {
                 new_high_score: lastMiniGameResult.newHighScore
               });
               continueAfterMiniGameResult();
+            }}
+          />
+        )}
+        {screen === 'arcadeGameOver' && (
+          <ArcadeGameOverScreen
+            run={arcadeRun}
+            bestScore={Math.max(arcadeRunBestScore, arcadeRun.score)}
+            onStartOver={() => {
+              resetArcadeRun();
+              captureAppAnalytics('game_start_clicked', { source: 'arcade_game_over', selected_mode: 'ai' });
+              setMode('ai');
+              setScreen('select');
+            }}
+            onGiveUp={() => {
+              finishArcadeRun(arcadeRun);
+              resetArcadeRun();
+              setScreen('menu');
             }}
           />
         )}
@@ -4067,24 +4163,38 @@ export default function App() {
             tournamentBotOpponent={mode === 'tournamentOnline' ? makeTournamentBotOpponent(onlineTournamentStatus) : null}
             onRankedProfileChange={setRankedProfile}
             privateRoomIntent={privateRoomIntent}
+            arcadeRun={arcadeRun}
             onPausedChange={setFightPaused}
             onMenu={() => setScreen('menu')}
             initialTrainingMode={selectedTrainingMode}
             onCharacterSelect={() => setScreen(mode === 'training' || mode === 'trainingOnline' ? 'training' : 'select')}
             onTournamentMatchComplete={handleTournamentMatchComplete}
-            onArcadeAdvance={({ winnerSlot, defeatedCharacterId }) => {
+            onArcadeAdvance={({ winnerSlot, defeatedCharacterId, playerHealth, playerMaxHealth }) => {
               const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
               const defeatedCharacter = roster.find((character) => character.id === defeatedCharacterId);
               const shouldRevealUnlock = winnerSlot === 1 && !isDevHost && defeatedCharacter
                 ? !isCharacterUnlocked(defeatedCharacter, unlockedCharacterIds)
                 : false;
+              let nextArcadeRun = arcadeRun;
               if (winnerSlot === 1 && !isDevHost) {
                 effectiveUnlocks.add(defeatedCharacterId);
                 unlockCharacter(defeatedCharacterId);
+                nextArcadeRun = addArcadeUnlock(nextArcadeRun, defeatedCharacterId);
+              }
+              nextArcadeRun = winnerSlot === 1
+                ? applyArcadeFightWin(nextArcadeRun, playerHealth, playerMaxHealth)
+                : applyArcadeLifeLoss(nextArcadeRun);
+              setArcadeRun(nextArcadeRun);
+              if (nextArcadeRun.status === 'game-over') {
+                finishArcadeRun(nextArcadeRun);
+                setActiveArcadeMiniGame(null);
+                setLastMiniGameResult(null);
+                setScreen('arcadeGameOver');
+                return;
               }
               const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlocks, cpuDifficulty);
               if (nextOpponent) setP2Id(nextOpponent.id);
-              const nextMiniGame = mode === 'ai' && winnerSlot === 1 ? makeArcadeMiniGameLaunch() : null;
+              const nextMiniGame = mode === 'ai' && winnerSlot === 1 ? makeArcadeMiniGameLaunch(nextArcadeRun.level) : null;
               setActiveArcadeMiniGame(nextMiniGame);
               setLastMiniGameResult(null);
               setVersusReturnScreen('stage');
@@ -18482,6 +18592,7 @@ function FightScreen({
   tournamentBotOpponent,
   onRankedProfileChange,
   privateRoomIntent,
+  arcadeRun,
   initialTrainingMode = 'free',
   onPausedChange,
   onMenu,
@@ -18507,12 +18618,13 @@ function FightScreen({
   tournamentBotOpponent?: OnlineBotOpponent | null;
   onRankedProfileChange: (profile: RankedProfile) => void;
   privateRoomIntent: PrivateRoomIntent | null;
+  arcadeRun?: ArcadeRunState;
   initialTrainingMode?: TrainingTrialMode;
   onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onCharacterSelect: () => void;
   onTournamentMatchComplete?: (result: { winnerSlot: 1 | 2 }) => void;
-  onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string }) => void;
+  onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string; playerHealth: number; playerMaxHealth: number }) => void;
 }) {
   const [paused, setPaused] = useState(false);
   const [pauseMenuView, setPauseMenuView] = useState<'menu' | 'movelist' | 'trainingTrials'>('menu');
@@ -20228,7 +20340,12 @@ function FightScreen({
     if (!isArcadeMatchMode(mode) || arcadeMatchPhase !== 'matchOver' || !arcadeWinnerSlot || arcadeAdvanceRef.current) return undefined;
     arcadeAdvanceRef.current = true;
     const timeout = window.setTimeout(() => {
-      onArcadeAdvance?.({ winnerSlot: arcadeWinnerSlot, defeatedCharacterId: arcadeDefeatedCharacterId });
+      onArcadeAdvance?.({
+        winnerSlot: arcadeWinnerSlot,
+        defeatedCharacterId: arcadeDefeatedCharacterId,
+        playerHealth: Math.max(0, match.fighters[0].hp),
+        playerMaxHealth: Math.max(1, match.fighters[0].maxHp)
+      });
     }, 1650);
     return () => window.clearTimeout(timeout);
   }, [arcadeDefeatedCharacterId, arcadeMatchPhase, arcadeWinnerSlot, mode, onArcadeAdvance]);
@@ -20474,6 +20591,7 @@ function FightScreen({
         onAssetLoadingChange={setAssetLoadingState}
       />
       <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
+      {isArcadeMatchMode(mode) && arcadeRun && <ArcadeRunHud run={arcadeRun} hudScale={settings.display.hudScale} />}
       <CombatPopupLayer popups={combatPopups} />
       <ClashOverlay match={match} />
       <button
@@ -21418,6 +21536,7 @@ function BreakTargetMiniGameScreen({
   character,
   launch,
   settings,
+  arcadeRun,
   readInputsForStep,
   setVirtualAction,
   clearMenuInputs,
@@ -21428,6 +21547,7 @@ function BreakTargetMiniGameScreen({
   character: CharacterDefinition;
   launch: ArcadeMiniGameLaunch;
   settings: GameSettings;
+  arcadeRun: ArcadeRunState;
   readInputsForStep: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
@@ -21547,7 +21667,7 @@ function BreakTargetMiniGameScreen({
       onPointerDown={() => screenRef.current?.focus()}
     >
       <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
-      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} />
+      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} arcadeRun={arcadeRun} />
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {paused && (
         <div className="pause-overlay">
@@ -21577,21 +21697,204 @@ function BreakTargetMiniGameScreen({
   );
 }
 
-function MiniGameHud({ snapshot, hudScale }: { snapshot: BreakTargetMiniGameSnapshot; hudScale: number }) {
-  const remaining = snapshot.targets.filter((target) => !target.destroyed).length;
+function EnemyRushMiniGameScreen({
+  character,
+  launch,
+  settings,
+  arcadeRun,
+  readInputsForStep,
+  setVirtualAction,
+  clearMenuInputs,
+  onMenu,
+  onComplete,
+  onAnalytics
+}: {
+  character: CharacterDefinition;
+  launch: ArcadeMiniGameLaunch;
+  settings: GameSettings;
+  arcadeRun: ArcadeRunState;
+  readInputsForStep: () => [InputFrame, InputFrame];
+  setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
+  clearMenuInputs: () => void;
+  onMenu: () => void;
+  onComplete: (result: MiniGameResult) => void;
+  onAnalytics: AnalyticsCapture;
+}) {
+  const [snapshot, setSnapshot] = useState<EnemyRushMiniGameSnapshot>(() => createEnemyRushMiniGame(character, launch.stage, launch.seed, launch.arcadeLevel ?? arcadeRun.level));
+  const [paused, setPaused] = useState(false);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const snapshotRef = useRef(snapshot);
+  const pausedRef = useRef(paused);
+  const pauseLatchRef = useRef(false);
+  const completedRef = useRef(false);
+  const mobileControlsTrackedRef = useRef(false);
+
+  useEffect(() => {
+    const fresh = createEnemyRushMiniGame(character, launch.stage, launch.seed, launch.arcadeLevel ?? arcadeRun.level);
+    snapshotRef.current = fresh;
+    setSnapshot(fresh);
+    setPaused(false);
+    pausedRef.current = false;
+    completedRef.current = false;
+    pauseLatchRef.current = false;
+    mobileControlsTrackedRef.current = false;
+    onAnalytics('minigame_started', {
+      game_id: fresh.gameId,
+      stage_id: fresh.stage.id,
+      character_id: character.id,
+      seed: launch.seed,
+      arcade_level: fresh.level
+    });
+    const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
+    return () => window.cancelAnimationFrame(focusFrame);
+  }, [arcadeRun.level, character, launch.arcadeLevel, launch.stage, launch.seed, onAnalytics]);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
+
+  useEffect(() => {
+    snapshotRef.current = snapshot;
+  }, [snapshot]);
+
+  useEffect(() => {
+    let frame = 0;
+    let last = performance.now();
+    let accumulator = 0;
+    const fixedStep = 1 / 60;
+    const tick = (now: number) => {
+      const delta = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const [p1Input] = readInputsForStep();
+      if (p1Input.pause) {
+        if (!pauseLatchRef.current) {
+          pauseLatchRef.current = true;
+          setPaused((current) => {
+            pausedRef.current = !current;
+            onAnalytics('minigame_paused', {
+              paused: !current,
+              game_id: snapshotRef.current.gameId,
+              stage_id: snapshotRef.current.stage.id
+            });
+            return !current;
+          });
+          clearMenuInputs();
+        }
+      } else {
+        pauseLatchRef.current = false;
+      }
+      if (!pausedRef.current && !completedRef.current) {
+        accumulator += delta;
+        while (accumulator >= fixedStep) {
+          snapshotRef.current = stepEnemyRushMiniGame(snapshotRef.current, p1Input, fixedStep);
+          accumulator -= fixedStep;
+        }
+        setSnapshot(snapshotRef.current);
+        if (snapshotRef.current.phase === 'complete') {
+          completedRef.current = true;
+          const previousHighScore = readMiniGameHighScore({ gameId: snapshotRef.current.gameId, stageId: snapshotRef.current.stage.id });
+          const result = makeEnemyRushMiniGameResult(snapshotRef.current, previousHighScore);
+          const highScore = writeMiniGameHighScore({ gameId: result.gameId, stageId: result.stageId }, result.score);
+          onAnalytics('minigame_completed', {
+            game_id: result.gameId,
+            stage_id: result.stageId,
+            score: Math.round(result.score),
+            high_score: highScore,
+            new_high_score: result.score > previousHighScore,
+            enemies_defeated: result.enemiesDefeated,
+            enemy_count: result.totalEnemies,
+            completed_reason: result.completedReason
+          });
+          onComplete({ ...result, highScore, newHighScore: result.score > previousHighScore });
+          return;
+        }
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [clearMenuInputs, onAnalytics, onComplete, readInputsForStep]);
+
+  const trackMobileControlsUsed = useCallback(() => {
+    if (mobileControlsTrackedRef.current) return;
+    mobileControlsTrackedRef.current = true;
+    onAnalytics('mobile_controls_used', {
+      source: 'minigame',
+      game_id: snapshotRef.current.gameId,
+      stage_id: snapshotRef.current.stage.id
+    });
+  }, [onAnalytics]);
+
+  return (
+    <div
+      className="fight-screen mini-game-screen"
+      ref={screenRef}
+      tabIndex={-1}
+      onPointerDown={() => screenRef.current?.focus()}
+    >
+      <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
+      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} arcadeRun={arcadeRun} />
+      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
+      {paused && (
+        <div className="pause-overlay">
+          <div className="pause-panel">
+            <h2>Enemy Rush Paused</h2>
+            <div className="pause-menu-actions">
+              <button className="primary-button" onClick={() => {
+                onAnalytics('minigame_paused', {
+                  paused: false,
+                  game_id: snapshot.gameId,
+                  stage_id: snapshot.stage.id
+                });
+                setPaused(false);
+              }}>
+                <Play size={18} />
+                Resume
+              </button>
+              <button className="secondary-button" onClick={onMenu}>
+                <Home size={18} />
+                Menu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MiniGameHud({ snapshot, hudScale, arcadeRun }: { snapshot: BreakTargetMiniGameSnapshot | EnemyRushMiniGameSnapshot; hudScale: number; arcadeRun: ArcadeRunState }) {
+  const remaining = snapshot.kind === 'break-target'
+    ? snapshot.targets.filter((target) => !target.destroyed).length
+    : snapshot.enemies.filter((enemy) => !enemy.defeated).length;
+  const total = snapshot.kind === 'break-target' ? snapshot.targets.length : snapshot.enemies.length;
+  const label = snapshot.kind === 'break-target' ? 'Targets' : 'Enemies';
+  const centerLabel = snapshot.kind === 'break-target' ? Math.ceil(snapshot.timer) : `HP ${Math.max(0, Math.round(snapshot.player.hp))}`;
   return (
     <div className="mini-game-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
       <div className="mini-game-hud-card">
-        <span>Targets</span>
-        <strong>{remaining}/{snapshot.targets.length}</strong>
+        <span>{label}</span>
+        <strong>{remaining}/{total}</strong>
       </div>
       <div className="mini-game-hud-card timer">
-        <Timer size={18} />
-        <strong>{Math.ceil(snapshot.timer)}</strong>
+        {snapshot.kind === 'break-target' ? <Timer size={18} /> : <Swords size={18} />}
+        <strong>{centerLabel}</strong>
       </div>
       <div className="mini-game-hud-card score">
         <span>Points</span>
         <strong>{Math.round(snapshot.score)}</strong>
+      </div>
+      <div className="mini-game-hud-card arcade-score">
+        <span>Arcade</span>
+        <strong>{arcadeRun.score}</strong>
+      </div>
+      <div className="mini-game-hud-card arcade-lives">
+        <span>Lives</span>
+        <strong>{arcadeRun.livesRemaining}</strong>
+      </div>
+      <div className="mini-game-hud-card arcade-level">
+        <span>Level</span>
+        <strong>{arcadeRun.level}</strong>
       </div>
     </div>
   );
@@ -21638,18 +21941,78 @@ function MiniGameResultScreen({ result, onContinue }: { result: MiniGameResult; 
     >
       <div className="mini-game-result-vignette" />
       <section className="mini-game-result-copy" aria-live="polite">
-        <span>Break The Target</span>
+        <span>{result.gameId === ENEMY_RUSH_GAME_ID ? 'Enemy Rush' : 'Break The Target'}</span>
         <h1>{displayScore}</h1>
         <p>{result.stageName}</p>
         <div className="mini-game-result-stats">
           <strong>{result.targetsDestroyed}/{result.totalTargets}</strong>
-          <span>Targets</span>
-          <strong>{Math.ceil(result.timeRemaining)}</strong>
-          <span>Seconds</span>
+          <span>{result.gameId === ENEMY_RUSH_GAME_ID ? 'Enemies' : 'Targets'}</span>
+          <strong>{result.gameId === ENEMY_RUSH_GAME_ID ? (result.coinsCollected ?? 0) : Math.ceil(result.timeRemaining)}</strong>
+          <span>{result.gameId === ENEMY_RUSH_GAME_ID ? 'Coins' : 'Seconds'}</span>
           <strong>{result.highScore}</strong>
           <span>{result.newHighScore ? 'New Best' : 'Best'}</span>
         </div>
+        {typeof result.arcadeScoreAward === 'number' && (
+          <b className="mini-game-result-arcade-award">Arcade Score +{Math.round(result.arcadeScoreAward)}</b>
+        )}
         {ready && <small>Press any key to continue</small>}
+      </section>
+    </div>
+  );
+}
+
+function ArcadeRunHud({ run, hudScale }: { run: ArcadeRunState; hudScale: number }) {
+  return (
+    <div className="arcade-run-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
+      <div><span>Arcade</span><strong>{run.score}</strong></div>
+      <div><span>Lives</span><strong>{run.livesRemaining}</strong></div>
+      <div><span>Level</span><strong>{run.level}</strong></div>
+      {run.lastAward > 0 && <div className="is-award"><span>Last</span><strong>+{run.lastAward}</strong></div>}
+    </div>
+  );
+}
+
+function ArcadeGameOverScreen({
+  run,
+  bestScore,
+  onStartOver,
+  onGiveUp
+}: {
+  run: ArcadeRunState;
+  bestScore: number;
+  onStartOver: () => void;
+  onGiveUp: () => void;
+}) {
+  return (
+    <div className="mini-game-result-screen arcade-game-over-screen" aria-label="Arcade game over">
+      <div className="mini-game-result-vignette" />
+      <section className="mini-game-result-copy arcade-game-over-copy">
+        <span>Arcade Run</span>
+        <h1>{run.score}</h1>
+        <p>{run.score >= bestScore ? 'New Best Score' : 'Game Over'}</p>
+        <div className="mini-game-result-stats arcade-game-over-stats">
+          <strong>{bestScore}</strong>
+          <span>Best</span>
+          <strong>{run.wins}</strong>
+          <span>Wins</span>
+          <strong>{run.level}</strong>
+          <span>Level</span>
+        </div>
+        <div className="arcade-game-over-details">
+          <span>{run.unlockedThisRun.length} unlocks</span>
+          <span>{run.miniGameTotals['break-target']} target pts</span>
+          <span>{run.miniGameTotals['enemy-rush']} rush pts</span>
+        </div>
+        <div className="overlay-actions pause-menu-actions arcade-game-over-actions">
+          <button className="primary-button" onClick={onStartOver}>
+            <RotateCcw size={18} />
+            Start Over
+          </button>
+          <button className="secondary-button" onClick={onGiveUp}>
+            <Home size={18} />
+            Give Up
+          </button>
+        </div>
       </section>
     </div>
   );

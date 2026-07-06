@@ -821,7 +821,7 @@ export type InputFrameMetadata = {
 
 export type InputFrameWithMetadata = InputFrame & InputFrameMetadata;
 
-export type MiniGameKind = 'break-target';
+export type MiniGameKind = 'break-target' | 'enemy-rush';
 export type BreakTargetTier = 10 | 20 | 30;
 
 export type MiniGameHighScoreKey = {
@@ -864,6 +864,89 @@ export type BreakTargetMiniGameSnapshot = {
   completedReason: 'all-clear' | 'time-up' | null;
 };
 
+export type EnemyRushEnemyKind =
+  | 'zombie-small'
+  | 'skeleton-small'
+  | 'pig-small'
+  | 'orc-small'
+  | 'zombie-big'
+  | 'skeleton-big'
+  | 'samurai'
+  | 'pig-big'
+  | 'orc-big'
+  | 'wizzart-a'
+  | 'wizzart-b'
+  | 'wizzart-c'
+  | 'dark-knight';
+
+export type EnemyRushRuntime = {
+  id: string;
+  kind: EnemyRushEnemyKind;
+  name: string;
+  level: number;
+  hp: number;
+  maxHp: number;
+  damage: number;
+  speed: number;
+  points: number;
+  radius: number;
+  height: number;
+  position: { x: number; y: number; z: number };
+  facing: 1 | -1;
+  attackCooldown: number;
+  hitFlash: number;
+  defeated: boolean;
+  elite: boolean;
+  projectileKind?: string;
+};
+
+export type EnemyRushCoinRuntime = {
+  id: string;
+  value: number;
+  position: { x: number; y: number; z: number };
+  radius: number;
+  collected: boolean;
+};
+
+export type EnemyRushProjectileRuntime = {
+  id: string;
+  ownerId: string;
+  kind: string;
+  damage: number;
+  position: { x: number; y: number; z: number };
+  velocity: { x: number; z: number };
+  radius: number;
+  age: number;
+};
+
+export type EnemyRushMiniGameSnapshot = {
+  kind: 'enemy-rush';
+  gameId: MiniGameKind;
+  stage: StageDefinition;
+  player: FighterRuntime;
+  seed: number;
+  level: number;
+  score: number;
+  enemies: EnemyRushRuntime[];
+  coins: EnemyRushCoinRuntime[];
+  projectiles: EnemyRushProjectileRuntime[];
+  explosions: BreakTargetExplosionRuntime[];
+  phase: 'playing' | 'complete';
+  completedReason: 'all-clear' | 'player-death' | null;
+};
+
+export type ArcadeRunState = {
+  score: number;
+  livesRemaining: number;
+  wins: number;
+  level: number;
+  status: 'idle' | 'running' | 'game-over';
+  startedAt: number;
+  lastAward: number;
+  unlockedThisRun: string[];
+  miniGameTotals: Record<MiniGameKind, number>;
+};
+
 export type MiniGameResult = {
   kind: MiniGameKind;
   gameId: MiniGameKind;
@@ -873,11 +956,16 @@ export type MiniGameResult = {
   previousHighScore: number;
   highScore: number;
   newHighScore: boolean;
+  cleared: boolean;
+  arcadeScoreAward?: number;
   targetsDestroyed: number;
   totalTargets: number;
+  enemiesDefeated?: number;
+  totalEnemies?: number;
+  coinsCollected?: number;
   timeRemaining: number;
   allClear: boolean;
-  completedReason: 'all-clear' | 'time-up';
+  completedReason: 'all-clear' | 'time-up' | 'player-death';
 };
 
 export type BufferedMoveIntent = {

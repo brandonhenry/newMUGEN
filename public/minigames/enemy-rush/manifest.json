@@ -1,0 +1,24 @@
+{
+  "enemies": [
+    { "kind": "zombie-small", "name": "Zombie", "asset": "/minigames/enemy-rush/enemies/zombie-small.png", "minLevel": 1, "hp": 24, "damage": 7, "speed": 1.15, "points": 100, "radius": 0.38, "height": 1.05, "tier": "small" },
+    { "kind": "skeleton-small", "name": "Skeleton", "asset": "/minigames/enemy-rush/enemies/skeleton-small.png", "minLevel": 1, "hp": 28, "damage": 8, "speed": 1.28, "points": 135, "radius": 0.36, "height": 1.08, "tier": "small" },
+    { "kind": "pig-small", "name": "Pig", "asset": "/minigames/enemy-rush/enemies/pig-small.png", "minLevel": 1, "hp": 34, "damage": 9, "speed": 1.05, "points": 175, "radius": 0.44, "height": 0.95, "tier": "small" },
+    { "kind": "orc-small", "name": "Orc", "asset": "/minigames/enemy-rush/enemies/orc-small.png", "minLevel": 2, "hp": 48, "damage": 11, "speed": 1.16, "points": 250, "radius": 0.46, "height": 1.15, "tier": "big" },
+    { "kind": "zombie-big", "name": "Big Zombie", "asset": "/minigames/enemy-rush/enemies/zombie-big.png", "minLevel": 2, "hp": 58, "damage": 13, "speed": 0.95, "points": 300, "radius": 0.52, "height": 1.28, "tier": "big" },
+    { "kind": "skeleton-big", "name": "Big Skeleton", "asset": "/minigames/enemy-rush/enemies/skeleton-big.png", "minLevel": 2, "hp": 54, "damage": 13, "speed": 1.1, "points": 340, "radius": 0.5, "height": 1.3, "tier": "big" },
+    { "kind": "samurai", "name": "Samurai", "asset": "/minigames/enemy-rush/enemies/samurai.png", "minLevel": 3, "hp": 72, "damage": 17, "speed": 1.35, "points": 400, "radius": 0.48, "height": 1.34, "tier": "big" },
+    { "kind": "pig-big", "name": "Big Pig", "asset": "/minigames/enemy-rush/enemies/pig-big.png", "minLevel": 3, "hp": 78, "damage": 18, "speed": 1.08, "points": 380, "radius": 0.56, "height": 1.24, "tier": "big" },
+    { "kind": "orc-big", "name": "Big Orc", "asset": "/minigames/enemy-rush/enemies/orc-big.png", "minLevel": 3, "hp": 92, "damage": 20, "speed": 1.04, "points": 500, "radius": 0.58, "height": 1.4, "tier": "elite" },
+    { "kind": "wizzart-a", "name": "Wizzart A", "asset": "/minigames/enemy-rush/enemies/wizzart-a.png", "minLevel": 4, "hp": 70, "damage": 18, "speed": 1.0, "points": 560, "radius": 0.46, "height": 1.38, "tier": "elite", "projectile": "wizzart-a" },
+    { "kind": "wizzart-b", "name": "Wizzart B", "asset": "/minigames/enemy-rush/enemies/wizzart-b.png", "minLevel": 4, "hp": 76, "damage": 20, "speed": 1.0, "points": 640, "radius": 0.46, "height": 1.38, "tier": "elite", "projectile": "wizzart-b" },
+    { "kind": "wizzart-c", "name": "Wizzart C", "asset": "/minigames/enemy-rush/enemies/wizzart-c.png", "minLevel": 4, "hp": 82, "damage": 22, "speed": 1.0, "points": 700, "radius": 0.46, "height": 1.38, "tier": "elite", "projectile": "wizzart-c" },
+    { "kind": "dark-knight", "name": "Dark Knight", "asset": "/minigames/enemy-rush/enemies/darkknight.png", "minLevel": 4, "hp": 125, "damage": 26, "speed": 1.2, "points": 800, "radius": 0.58, "height": 1.48, "tier": "elite" }
+  ],
+  "projectiles": {
+    "orc-b": "/minigames/enemy-rush/projectiles/bullet-orc-b.png",
+    "wizzart-a": "/minigames/enemy-rush/projectiles/bullet-wizzart-a.png",
+    "wizzart-b": "/minigames/enemy-rush/projectiles/bullet-wizzart-b.png",
+    "wizzart-c": "/minigames/enemy-rush/projectiles/bullet-wizzart-c.png",
+    "wizzart-d": "/minigames/enemy-rush/projectiles/bullet-wizzart-d.png"
+  }
+}
