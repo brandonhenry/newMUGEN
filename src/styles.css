@@ -4615,11 +4615,19 @@ button {
 }
 
 .animation-grid > button small,
-.editing-title small,
-.pause-move-copy small {
+.editing-title small {
   color: var(--text-muted);
   font-size: 10px;
   font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.pause-move-copy small {
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 950;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
@@ -8922,13 +8930,13 @@ button {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(172px, 0.34fr);
   align-items: stretch;
-  gap: 10px;
+  gap: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
-  padding: 8px;
+  padding: 12px;
   background: rgba(0, 0, 0, 0.2);
   color: var(--text);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 850;
   outline: none;
   transition:
@@ -8949,29 +8957,32 @@ button {
   display: grid;
   align-content: center;
   min-width: 0;
-  gap: 5px;
+  gap: 8px;
 }
 
 .pause-move-title-line {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   min-width: 0;
 }
 
 .pause-move-name {
   min-width: 0;
   overflow: hidden;
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1.12;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .pause-move-description {
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 15px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.35;
   text-transform: none;
 }
@@ -8979,16 +8990,16 @@ button {
 .pause-move-properties {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
 .pause-move-properties b {
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 4px;
-  padding: 2px 5px;
+  padding: 4px 7px;
   background: rgba(255, 255, 255, 0.08);
   color: var(--text);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.03em;
   line-height: 1;

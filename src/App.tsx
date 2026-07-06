@@ -1,5 +1,6 @@
 import anime from 'animejs';
 import {
+  Apple,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -14,9 +15,11 @@ import {
   Home,
   History,
   KeyRound,
+  Laptop,
   List,
   Maximize2,
   Minimize2,
+  Package,
   Pause,
   Play,
   Rotate3D,
@@ -9469,7 +9472,7 @@ const sidebars: Record<SettingsTab, string[]> = {
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
   audio: ['Menu Music', 'Stage Music', 'Mix'],
-  console: ['Terminal', 'Memory Card', 'About']
+  console: ['Terminal', 'Memory Card', 'Installers', 'About']
 };
 
 function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings): AnalyticsProperties[] {
@@ -10077,6 +10080,23 @@ type ConsoleLine = {
   text: string;
 };
 
+type InstallerPlatformId = 'windows' | 'mac' | 'steamdeck' | 'linux';
+type InstallerAsset = {
+  label?: string;
+  filename: string;
+  url: string;
+  size?: number;
+  sha256?: string;
+};
+type InstallerEntry = InstallerAsset & {
+  id: InstallerPlatformId;
+  label: string;
+  version: string;
+  recommended?: boolean;
+  notes?: string;
+  assets?: InstallerAsset[];
+};
+
 let consoleLineId = 0;
 
 function OptionsConsole({
@@ -10093,6 +10113,8 @@ function OptionsConsole({
     { id: ++consoleLineId, kind: 'system', text: 'KORE local console online.' },
     { id: ++consoleLineId, kind: 'system', text: 'Type /help for commands. Starter access is limited to memory-card save export and import.' }
   ]);
+  const [installers, setInstallers] = useState<InstallerEntry[] | null>(null);
+  const [installerManifestFailed, setInstallerManifestFailed] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const appendLine = useCallback((kind: ConsoleLine['kind'], text: string) => {
@@ -10182,6 +10204,28 @@ function OptionsConsole({
     }
   };
 
+  useEffect(() => {
+    let cancelled = false;
+    setInstallerManifestFailed(false);
+    fetch('/installers/manifest.json', { cache: 'no-store' })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Installer manifest returned ${response.status}`);
+        return response.json();
+      })
+      .then((payload) => {
+        if (!cancelled) setInstallers(normalizeInstallerManifest(payload));
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setInstallers([]);
+          setInstallerManifestFailed(true);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="settings-section-stack options-console-stack">
       <SettingsSection index={0} title="Terminal" active={activeSectionIndex === 0} showTitle={false}>
@@ -10250,7 +10294,10 @@ function OptionsConsole({
           </dl>
         </article>
       </SettingsSection>
-      <SettingsSection index={2} title="About" active={activeSectionIndex === 2} showTitle={false}>
+      <SettingsSection index={2} title="Installers" active={activeSectionIndex === 2} showTitle={false}>
+        <OptionsInstallersPanel installers={installers} manifestFailed={installerManifestFailed} />
+      </SettingsSection>
+      <SettingsSection index={3} title="About" active={activeSectionIndex === 3} showTitle={false}>
         <article className="about-kore-panel" aria-label="About game">
           <div className="about-kore-heading">
             <img src="/brand/kore-logo-generated.png" alt="Game logo" />
@@ -10265,6 +10312,176 @@ function OptionsConsole({
         </article>
       </SettingsSection>
     </div>
+  );
+}
+
+function normalizeInstallerManifest(payload: unknown): InstallerEntry[] {
+  if (!payload || typeof payload !== 'object') return [];
+  const installers = (payload as { installers?: unknown }).installers;
+  if (!Array.isArray(installers)) return [];
+  return installers
+    .map((item) => {
+      if (!item || typeof item !== 'object') return null;
+      const record = item as Record<string, unknown>;
+      const id = record.id;
+      const label = record.label;
+      const filename = record.filename;
+      const url = record.url;
+      const version = record.version;
+      if (!isInstallerPlatformId(id) || typeof label !== 'string' || typeof filename !== 'string' || typeof url !== 'string' || typeof version !== 'string') {
+        return null;
+      }
+      const entry: InstallerEntry = {
+        id,
+        label,
+        filename,
+        url,
+        version,
+        size: typeof record.size === 'number' ? record.size : undefined,
+        sha256: typeof record.sha256 === 'string' ? record.sha256 : undefined,
+        recommended: record.recommended === true,
+        notes: typeof record.notes === 'string' ? record.notes : undefined,
+        assets: Array.isArray(record.assets)
+          ? record.assets
+              .map((asset) => normalizeInstallerAsset(asset))
+              .filter((asset): asset is InstallerAsset => Boolean(asset))
+          : undefined
+      };
+      return entry;
+    })
+    .filter((entry): entry is InstallerEntry => Boolean(entry));
+}
+
+function normalizeInstallerAsset(asset: unknown): InstallerAsset | null {
+  if (!asset || typeof asset !== 'object') return null;
+  const record = asset as Record<string, unknown>;
+  if (typeof record.filename !== 'string' || typeof record.url !== 'string') return null;
+  return {
+    label: typeof record.label === 'string' ? record.label : undefined,
+    filename: record.filename,
+    url: record.url,
+    size: typeof record.size === 'number' ? record.size : undefined,
+    sha256: typeof record.sha256 === 'string' ? record.sha256 : undefined
+  };
+}
+
+function isInstallerPlatformId(value: unknown): value is InstallerPlatformId {
+  return value === 'windows' || value === 'mac' || value === 'steamdeck' || value === 'linux';
+}
+
+function detectInstallerPlatform(): InstallerPlatformId {
+  if (typeof navigator === 'undefined') return 'windows';
+  const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
+  const platform = `${nav.userAgentData?.platform ?? ''} ${navigator.platform ?? ''} ${navigator.userAgent ?? ''}`;
+  if (/mac/i.test(platform)) return 'mac';
+  if (/win/i.test(platform)) return 'windows';
+  if (/steamos|steam deck|jupiter|galileo/i.test(platform)) return 'steamdeck';
+  if (/linux/i.test(platform)) {
+    const isDeckSized = typeof window !== 'undefined' && Math.min(window.screen.width, window.screen.height) <= 800 && Math.max(window.screen.width, window.screen.height) <= 1400;
+    return isDeckSized && navigator.maxTouchPoints > 0 ? 'steamdeck' : 'linux';
+  }
+  return 'windows';
+}
+
+function formatInstallerSize(size?: number) {
+  if (!size || !Number.isFinite(size) || size <= 0) return 'Size pending';
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let value = size;
+  let unitIndex = 0;
+  while (value >= 1024 && unitIndex < units.length - 1) {
+    value /= 1024;
+    unitIndex += 1;
+  }
+  return `${value >= 10 || unitIndex === 0 ? value.toFixed(0) : value.toFixed(1)} ${units[unitIndex]}`;
+}
+
+function installerIcon(id: InstallerPlatformId) {
+  if (id === 'mac') return <Apple size={20} />;
+  if (id === 'steamdeck') return <Gamepad2 size={20} />;
+  if (id === 'linux') return <Package size={20} />;
+  return <Laptop size={20} />;
+}
+
+function OptionsInstallersPanel({
+  installers,
+  manifestFailed
+}: {
+  installers: InstallerEntry[] | null;
+  manifestFailed: boolean;
+}) {
+  const detectedPlatform = useMemo(() => detectInstallerPlatform(), []);
+  const hasInstallers = Boolean(installers?.length);
+
+  if (installers === null) {
+    return (
+      <article className="installer-panel" aria-label="Desktop installers">
+        <div className="installer-panel-heading">
+          <span><Download size={18} /> INSTALLERS</span>
+          <strong>LOADING</strong>
+        </div>
+        <div className="installer-empty-state">
+          <Package size={34} />
+          <strong>Checking installer manifest</strong>
+          <p>KORE is looking for the latest desktop builds.</p>
+        </div>
+      </article>
+    );
+  }
+
+  if (!hasInstallers) {
+    return (
+      <article className="installer-panel" aria-label="Desktop installers">
+        <div className="installer-panel-heading">
+          <span><Download size={18} /> INSTALLERS</span>
+          <strong>{manifestFailed ? 'OFFLINE' : 'PENDING'}</strong>
+        </div>
+        <div className="installer-empty-state">
+          <Package size={34} />
+          <strong>Installers are being prepared</strong>
+          <p>Windows, Mac, Steam Deck, and Linux builds will appear here once the release files are published.</p>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article className="installer-panel" aria-label="Desktop installers">
+      <div className="installer-panel-heading">
+        <span><Download size={18} /> INSTALLERS</span>
+        <strong>{detectedPlatform.toUpperCase()}</strong>
+      </div>
+      <div className="installer-grid">
+        {installers.map((installer) => {
+          const recommended = installer.recommended || installer.id === detectedPlatform;
+          const assets = installer.assets?.length ? installer.assets : [installer];
+          return (
+            <section key={installer.id} className={`installer-card ${recommended ? 'installer-card-recommended' : ''}`}>
+              <div className="installer-card-title">
+                <span>{installerIcon(installer.id)}</span>
+                <div>
+                  <strong>{installer.label}</strong>
+                  <small>{recommended ? 'Recommended for this device' : `KORE ${installer.version}`}</small>
+                </div>
+              </div>
+              {installer.notes && <p>{installer.notes}</p>}
+              <dl>
+                <div><dt>Version</dt><dd>{installer.version}</dd></div>
+                <div><dt>Size</dt><dd>{formatInstallerSize(installer.size)}</dd></div>
+                <div><dt>SHA</dt><dd>{installer.sha256 ? installer.sha256.slice(0, 12) : 'Pending'}</dd></div>
+              </dl>
+              <div className="installer-actions">
+                {assets.map((asset) => (
+                  <a key={asset.url} href={asset.url} download onClick={() => undefined}>
+                    <Download size={15} />
+                    <span>{asset.label ?? asset.filename}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </article>
   );
 }
 

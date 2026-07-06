@@ -1,5 +1,7 @@
 node_modules/
 dist/
+release/
+dist-electron/
 test-results/
 playwright-report/
 coverage/
@@ -14,6 +16,10 @@ coverage/
 tools/blender/Blender.app/
 tools/blender/blender
 scripts/__pycache__/
+public/installers/*
+!public/installers/
+!public/installers/manifest.json
+!public/installers/install-kore-steamdeck.sh
 public/stages/**/stage.raw.glb
 public/stages/**/stage.flattened.glb
 public/stages/**/*.centered.glb
