@@ -8681,6 +8681,14 @@ button {
   color: #f7fbff;
 }
 
+.online-training-chat.is-controller-editing .online-training-chat-entry {
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.36),
+    0 0 0 2px rgba(118, 236, 255, 0.24),
+    0 0 22px rgba(118, 236, 255, 0.24),
+    inset 0 0 0 1px rgba(118, 236, 255, 0.42);
+}
+
 .online-training-chat-log {
   display: flex;
   flex-direction: column;
@@ -8734,8 +8742,9 @@ button {
 
 .online-training-chat-entry {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 40px;
   align-items: center;
+  gap: 6px;
   min-height: 42px;
   padding: 5px 7px 5px 10px;
   border-radius: 8px;
@@ -8747,6 +8756,13 @@ button {
   transition-property: box-shadow, background;
   transition-duration: 150ms;
   transition-timing-function: ease;
+}
+
+.online-training-chat-entry label {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
 }
 
 .online-training-chat-entry:focus-within {
@@ -8778,6 +8794,50 @@ button {
 
 .online-training-chat-entry input::placeholder {
   color: rgba(235, 246, 255, 0.48);
+}
+
+.online-training-chat-entry button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 32px;
+  min-width: 36px;
+  border: 0;
+  border-radius: 6px;
+  color: #071018;
+  background: linear-gradient(180deg, #e8fcff, #70e9ff);
+  box-shadow:
+    0 8px 20px rgba(45, 227, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.74);
+  cursor: pointer;
+  transition-property: transform, filter, opacity;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.online-training-chat-entry button:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.online-training-chat-entry button:hover:not(:disabled),
+.online-training-chat-entry button:focus-visible:not(:disabled) {
+  filter: brightness(1.08);
+  outline: none;
+}
+
+.online-training-chat-entry button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.online-training-chat-hint {
+  justify-self: end;
+  color: rgba(235, 246, 255, 0.66);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.52);
 }
 
 .online-training-leave-button {
@@ -10707,6 +10767,39 @@ button {
   .match-message {
     align-items: start;
     padding-top: 92px;
+  }
+
+  .online-training-chat {
+    left: 12px;
+    right: 12px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 96px);
+    width: auto;
+  }
+
+  .online-training-chat-log {
+    min-height: 74px;
+    max-height: 104px;
+    padding: 10px;
+  }
+
+  .online-training-chat-entry {
+    min-height: 46px;
+  }
+
+  .online-training-chat-entry input {
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .online-training-chat-entry button {
+    width: 40px;
+    height: 36px;
+    min-width: 40px;
+  }
+
+  .online-training-leave-button {
+    right: 12px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
   }
 }
 

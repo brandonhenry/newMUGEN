@@ -27,6 +27,7 @@ import {
   RotateCcw,
   Ruler,
   Save,
+  Send,
   Settings,
   Shuffle,
   Swords,
@@ -211,6 +212,7 @@ type OnlineTrainingChatEntry = {
 };
 const ONLINE_INPUT_REDUNDANT_FRAMES = 8;
 const ONLINE_TRAINING_CHAT_MAX_LENGTH = 160;
+const ONLINE_TRAINING_CHAT_CONTROLLER_CHARACTERS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?.,_-'.split('');
 const BOT_REMATCH_READY_MS = 5_000;
 const BOT_REMATCH_LEAVE_MS = 10_000;
 const RANKED_REMATCH_LIMIT = 2;
@@ -3791,7 +3793,7 @@ export default function App() {
               const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
               if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
               if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
-              setMode('training');
+              setMode(selectedTrainingMode === 'online' ? 'trainingOnline' : 'training');
               captureAppAnalytics('character_selected', {
                 p1_character_id: trainingCharacters.p1?.id ?? p1Id,
                 p2_character_id: trainingCharacters.p2?.id ?? p2Id,
@@ -18541,6 +18543,15 @@ function FightScreen({
   }, []);
 
   useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      if (active?.closest('[data-kore-suppress-fight-gamepad="true"]')) return;
+      screenRef.current?.focus({ preventScroll: true });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
     pausedRef.current = paused;
     onPausedChange(paused);
   }, [onPausedChange, paused]);
@@ -20502,7 +20513,7 @@ function FightScreen({
   );
 }
 
-function OnlineTrainingChat({
+export function OnlineTrainingChat({
   messages,
   localName,
   remoteName,
@@ -20514,7 +20525,24 @@ function OnlineTrainingChat({
   onSend: (text: string) => void;
 }) {
   const [draft, setDraft] = useState('');
+  const [controllerEditing, setControllerEditing] = useState(false);
+  const [controllerCursor, setControllerCursor] = useState(0);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const controllerEditingRef = useRef(false);
+  const controllerPadStateRef = useRef({
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    confirm: false,
+    back: false,
+    select: false
+  });
+  const controllerLastMoveAtRef = useRef(0);
+
+  useEffect(() => {
+    controllerEditingRef.current = controllerEditing;
+  }, [controllerEditing]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -20529,15 +20557,106 @@ function OnlineTrainingChat({
     return () => window.removeEventListener('keydown', onKeyDown, true);
   }, []);
 
-  const send = () => {
+  const send = useCallback(() => {
     const text = sanitizeOnlineTrainingChatText(draft);
     if (!text) return;
     onSend(text);
     setDraft('');
-  };
+    setControllerCursor(0);
+  }, [draft, onSend]);
+
+  const moveControllerCursor = useCallback((direction: -1 | 1) => {
+    setControllerCursor((cursor) => {
+      const next = Math.max(0, Math.min(ONLINE_TRAINING_CHAT_MAX_LENGTH - 1, cursor + direction));
+      window.requestAnimationFrame(() => inputRef.current?.setSelectionRange(next, next));
+      return next;
+    });
+  }, []);
+
+  const cycleControllerCharacter = useCallback((direction: -1 | 1) => {
+    setDraft((currentDraft) => {
+      const cursor = Math.max(0, Math.min(ONLINE_TRAINING_CHAT_MAX_LENGTH - 1, controllerCursor));
+      const nextCharacters = currentDraft.padEnd(cursor + 1, ' ').slice(0, ONLINE_TRAINING_CHAT_MAX_LENGTH).split('');
+      const currentCharacter = nextCharacters[cursor] ?? ' ';
+      const currentIndex = Math.max(0, ONLINE_TRAINING_CHAT_CONTROLLER_CHARACTERS.indexOf(currentCharacter));
+      nextCharacters[cursor] = ONLINE_TRAINING_CHAT_CONTROLLER_CHARACTERS[
+        (currentIndex + direction + ONLINE_TRAINING_CHAT_CONTROLLER_CHARACTERS.length) % ONLINE_TRAINING_CHAT_CONTROLLER_CHARACTERS.length
+      ];
+      const nextDraft = sanitizeOnlineTrainingChatText(nextCharacters.join(''));
+      window.requestAnimationFrame(() => inputRef.current?.setSelectionRange(cursor, cursor));
+      return nextDraft;
+    });
+  }, [controllerCursor]);
+
+  useEffect(() => {
+    let frame = 0;
+    const repeatDelayMs = 170;
+    const tick = () => {
+      const input = inputRef.current;
+      const active = document.activeElement === input;
+      const pad = getPrimaryGamepad();
+      if (!input || !pad) {
+        controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false };
+        if (controllerEditingRef.current) setControllerEditing(false);
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      const now = performance.now();
+      const current = readMenuGamepadState(pad, false);
+      const previous = controllerPadStateRef.current;
+      const edge = {
+        up: current.up && !previous.up,
+        down: current.down && !previous.down,
+        left: current.left && !previous.left,
+        right: current.right && !previous.right,
+        confirm: current.confirm && !previous.confirm,
+        back: current.back && !previous.back,
+        select: current.select && !previous.select
+      };
+      if (!active) {
+        if (edge.select) {
+          input.focus();
+          setControllerEditing(true);
+        } else if (controllerEditingRef.current) {
+          setControllerEditing(false);
+        }
+        controllerPadStateRef.current = current;
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+      const repeatedMove = now - controllerLastMoveAtRef.current > repeatDelayMs;
+      const heldHorizontal = current.left ? 'left' : current.right ? 'right' : null;
+      const heldVertical = current.up ? 'up' : current.down ? 'down' : null;
+
+      if (!controllerEditingRef.current) setControllerEditing(true);
+      if (edge.confirm) {
+        send();
+        input.blur();
+        setControllerEditing(false);
+      } else if (edge.back) {
+        setDraft('');
+        setControllerCursor(0);
+        input.blur();
+        setControllerEditing(false);
+      } else if (edge.left || edge.right || (heldHorizontal && repeatedMove)) {
+        moveControllerCursor(edge.left || heldHorizontal === 'left' ? -1 : 1);
+        controllerLastMoveAtRef.current = now;
+      } else if (edge.up || edge.down || (heldVertical && repeatedMove)) {
+        cycleControllerCharacter(edge.up || heldVertical === 'up' ? 1 : -1);
+        controllerLastMoveAtRef.current = now;
+      }
+
+      controllerPadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleControllerCharacter, moveControllerCursor, send]);
 
   return (
-    <section className="online-training-chat" aria-label="Training online chat">
+    <section className={`online-training-chat ${controllerEditing ? 'is-controller-editing' : ''}`} aria-label="Training online chat">
       <div className="online-training-chat-log" aria-live="polite">
         {messages.length === 0 ? (
           <p><strong>{remoteName}</strong> is ready to spar.</p>
@@ -20548,29 +20667,51 @@ function OnlineTrainingChat({
           </p>
         ))}
       </div>
-      <label className="online-training-chat-entry">
-        <span>Chat</span>
-        <input
-          ref={inputRef}
-          value={draft}
-          maxLength={ONLINE_TRAINING_CHAT_MAX_LENGTH}
-          placeholder="Press Enter to chat"
-          onChange={(event) => setDraft(event.target.value)}
-          onKeyDown={(event) => {
-            event.stopPropagation();
-            if (event.key === 'Enter') {
-              event.preventDefault();
-              send();
-              return;
-            }
-            if (event.key === 'Escape') {
-              event.preventDefault();
-              setDraft('');
-              inputRef.current?.blur();
-            }
-          }}
-        />
-      </label>
+      <div className="online-training-chat-entry">
+        <label>
+          <span>Chat</span>
+          <input
+            ref={inputRef}
+            value={draft}
+            maxLength={ONLINE_TRAINING_CHAT_MAX_LENGTH}
+            placeholder="Press Enter to chat"
+            aria-label="Online sparring chat message"
+            inputMode="text"
+            autoComplete="off"
+            enterKeyHint="send"
+            data-kore-suppress-fight-gamepad="true"
+            onChange={(event) => {
+              setDraft(event.target.value);
+              setControllerCursor(Math.min(event.target.selectionStart ?? event.target.value.length, ONLINE_TRAINING_CHAT_MAX_LENGTH - 1));
+            }}
+            onFocus={() => {
+              if (getPrimaryGamepad()) setControllerEditing(true);
+              setControllerCursor((cursor) => Math.max(0, Math.min(ONLINE_TRAINING_CHAT_MAX_LENGTH - 1, cursor)));
+            }}
+            onSelect={(event) => {
+              setControllerCursor(Math.max(0, Math.min(ONLINE_TRAINING_CHAT_MAX_LENGTH - 1, event.currentTarget.selectionStart ?? 0)));
+            }}
+            onKeyDown={(event) => {
+              event.stopPropagation();
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                send();
+                return;
+              }
+              if (event.key === 'Escape') {
+                event.preventDefault();
+                setDraft('');
+                setControllerCursor(0);
+                inputRef.current?.blur();
+              }
+            }}
+          />
+        </label>
+        <button type="button" onClick={send} disabled={!sanitizeOnlineTrainingChatText(draft)} aria-label="Send online sparring chat message">
+          <Send size={16} />
+        </button>
+      </div>
+      {controllerEditing && <small className="online-training-chat-hint">D-pad edit / A send / B cancel</small>}
     </section>
   );
 }

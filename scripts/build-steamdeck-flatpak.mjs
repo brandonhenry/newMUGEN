@@ -109,6 +109,7 @@ async function buildBundle() {
     arch: 'x64',
     workingDir: workDir,
     bundlePath,
+    extraFlatpakBuilderArgs: ['--disable-rofiles-fuse'],
     files: [
       [linuxUnpacked, 'kore/'],
       [launcherPath, 'bin/kore'],

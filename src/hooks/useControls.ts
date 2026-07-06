@@ -3,7 +3,7 @@ import type { ActionName, ControlBindingMap, InputFrame, InputFrameWithMetadata,
 import { emptyInputFrame } from '../types';
 import { keybindableButtonComboDefinitions } from '../lib/buttonCombos';
 import { defaultGameSettings } from '../lib/gameSettings';
-import { getPlayerGamepad, readFightGamepadInput } from '../lib/gamepads';
+import { getVisibleGamepads, isGamepadActive, readFightGamepadInput } from '../lib/gamepads';
 
 const aiModeArrowKeys: Record<string, ActionName> = {
   ArrowUp: 'up',
@@ -17,6 +17,7 @@ type InputSource = 'keyboard' | 'virtual' | 'gamepad';
 type InputDebugWindow = Window & {
   __koreInputDebugLog?: Array<{ event: string; payload: Record<string, unknown>; timestamp: number }>;
 };
+type GamepadAssignment = { index: number; source: 'active' | 'fallback' } | null;
 
 export type QueuedInputPress = {
   player: 0 | 1;
@@ -100,6 +101,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   const virtualHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
   const gamepadHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
   const gamepadInitializedRefs = useRef<[boolean, boolean]>([false, false]);
+  const gamepadAssignmentRefs = useRef<[GamepadAssignment, GamepadAssignment]>([null, null]);
   const inputQueueRef = useRef<QueuedInputPress[]>([]);
   const inputSequenceRef = useRef(0);
   const processedKeyboardEventsRef = useRef(new WeakSet<KeyboardEvent>());
@@ -164,7 +166,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   }, []);
 
   const peekInputs = useCallback((): [InputFrame, InputFrame] => {
-    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
+    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, gamepadAssignmentRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
     return mergeInputsForRead(
       inputRefs.current,
       virtualRefs.current,
@@ -177,7 +179,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   }, []);
 
   const readInputsForStep = useCallback((): [InputFrame, InputFrame] => {
-    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
+    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, gamepadAssignmentRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
     const merged = mergeInputsForRead(
       inputRefs.current,
       virtualRefs.current,
@@ -372,14 +374,24 @@ function refreshGamepadInputs(
   gamepadInputs: [InputFrame, InputFrame],
   horizontalTapStates: [HorizontalTapState, HorizontalTapState],
   initialized: [boolean, boolean],
+  assignments: [GamepadAssignment, GamepadAssignment],
   queue: QueuedInputPress[],
   sequenceRef: { current: number },
   controls: ControlBindingMap
 ) {
+  if (isFightGamepadSuppressed(document.activeElement)) {
+    for (let player = 0; player < 2; player += 1) {
+      gamepadInputs[player] = emptyInputFrame();
+      initialized[player] = false;
+    }
+    return;
+  }
   const now = performance.now();
+  const pads = getVisibleGamepads();
+  const playerPads = resolveFightGamepads(pads, assignments);
   for (let player = 0; player < 2; player += 1) {
     const previous = gamepadInputs[player];
-    const next = readFightGamepadInput(getPlayerGamepad(player as 0 | 1), controls, player as 0 | 1);
+    const next = readFightGamepadInput(playerPads[player], controls, player as 0 | 1);
     applyHorizontalTap(next, horizontalTapStates[player], 'left', next.left, 'gamepad', now);
     applyHorizontalTap(next, horizontalTapStates[player], 'right', next.right, 'gamepad', now);
     if (!initialized[player]) {
@@ -391,6 +403,45 @@ function refreshGamepadInputs(
     }
     gamepadInputs[player] = next;
   }
+}
+
+function resolveFightGamepads(pads: Gamepad[], assignments: [GamepadAssignment, GamepadAssignment]): [Gamepad | null, Gamepad | null] {
+  const byIndex = new Map(pads.map((pad) => [pad.index, pad]));
+  for (let player = 0; player < 2; player += 1) {
+    if (assignments[player] && !byIndex.has(assignments[player]!.index)) assignments[player] = null;
+  }
+
+  const p1 = assignments[0] ? byIndex.get(assignments[0].index) ?? null : null;
+  if (!p1 || assignments[0]?.source === 'fallback') {
+    const activePad = pads.find((pad) => isGamepadActive(pad, 0.35) && pad.index !== assignments[1]?.index);
+    const activeAssignedToP2 = pads.find((pad) => isGamepadActive(pad, 0.35) && pad.index === assignments[1]?.index);
+    const selected = activePad ?? activeAssignedToP2 ?? (!p1 ? pads[0] : null);
+    if (selected) {
+      assignments[0] = { index: selected.index, source: isGamepadActive(selected, 0.35) ? 'active' : 'fallback' };
+      if (assignments[1]?.index === selected.index) assignments[1] = null;
+    } else if (!p1) {
+      assignments[0] = null;
+    }
+  } else if (isGamepadActive(p1, 0.35)) {
+    assignments[0] = { index: p1.index, source: 'active' };
+  }
+
+  if (!assignments[1] || !byIndex.has(assignments[1].index) || assignments[1].index === assignments[0]?.index) {
+    const p2Pad = pads.find((pad) => pad.index !== assignments[0]?.index) ?? null;
+    assignments[1] = p2Pad ? { index: p2Pad.index, source: isGamepadActive(p2Pad, 0.35) ? 'active' : 'fallback' } : null;
+  } else {
+    const p2 = byIndex.get(assignments[1].index);
+    if (p2 && isGamepadActive(p2, 0.35)) assignments[1] = { index: p2.index, source: 'active' };
+  }
+
+  return [
+    assignments[0] ? byIndex.get(assignments[0].index) ?? null : null,
+    assignments[1] ? byIndex.get(assignments[1].index) ?? null : null
+  ];
+}
+
+function isFightGamepadSuppressed(target: EventTarget | null) {
+  return target instanceof HTMLElement && Boolean(target.closest('[data-kore-suppress-fight-gamepad="true"]'));
 }
 
 function formatInputQueueForDebug(queue: QueuedInputPress[]) {

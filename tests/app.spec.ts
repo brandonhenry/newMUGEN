@@ -65,8 +65,8 @@ async function dispatchTouchPointer(page: Page, selector: string) {
   });
 }
 
-async function installMockGamepad(page: Page) {
-  await page.addInitScript(() => {
+async function installMockGamepad(page: Page, idleFirst = false) {
+  await page.addInitScript((includeIdleFirst) => {
     Object.defineProperty(navigator, 'getGamepads', {
       configurable: true,
       value: () => {
@@ -80,7 +80,7 @@ async function installMockGamepad(page: Page) {
         if (!connected) return [];
         const pressedButtons = testWindow.__koreMockGamepadButtons ?? [];
         if (testWindow.__koreMockGamepadPressed) pressedButtons[0] = true;
-        return [null, {
+        const activePad = {
           id: 'Sparse Slot Test Gamepad',
           index: 1,
           connected: true,
@@ -88,10 +88,20 @@ async function installMockGamepad(page: Page) {
           timestamp: performance.now(),
           buttons: Array.from({ length: 17 }, (_, index) => ({ pressed: Boolean(pressedButtons[index]), touched: Boolean(pressedButtons[index]), value: pressedButtons[index] ? 1 : 0 })),
           axes: testWindow.__koreMockGamepadAxes ?? [0, 0]
-        }];
+        };
+        if (!includeIdleFirst) return [null, activePad];
+        return [{
+          id: 'Idle Low Index Test Gamepad',
+          index: 0,
+          connected: true,
+          mapping: 'standard',
+          timestamp: performance.now(),
+          buttons: Array.from({ length: 17 }, () => ({ pressed: false, touched: false, value: 0 })),
+          axes: [0, 0]
+        }, activePad];
       }
     });
-  });
+  }, idleFirst);
 }
 
 async function setMockGamepadPressed(page: Page, pressed: boolean) {
@@ -357,9 +367,15 @@ test('versus splash accepts browser gamepad input to skip into the fight', async
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
 });
 
-test('fight reads browser gamepad input from sparse slot', async ({ page }) => {
-  await installMockGamepad(page);
+test('fight reads browser gamepad input after mouse or touchpad focus', async ({ page }) => {
+  await installMockGamepad(page, true);
   await startFight(page);
+
+  await page.locator('.fight-screen').click({ position: { x: 80, y: 80 } });
+  await setMockGamepadButton(page, 15, true);
+  await expect(page.getByTestId('frame-input')).toHaveText('p1:right', { timeout: 3000 });
+  await setMockGamepadButton(page, 15, false);
+  await expectNoHeldFightInput(page);
 
   await setMockGamepadButton(page, 0, true);
   await expect(page.getByTestId('frame-input')).toHaveText('p1:jab', { timeout: 3000 });
