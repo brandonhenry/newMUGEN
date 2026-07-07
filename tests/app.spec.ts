@@ -763,6 +763,13 @@ test('shows desktop installer downloads from the console installers tab', async 
                 sha256: 'cccccc1234567890abcdef1234567890abcdef1234567890abcdef1234567890'
               },
               {
+                type: 'steam-art',
+                primary: false,
+                label: 'Steam cover art',
+                filename: 'kore_library_600x900.png',
+                url: '/steam-art/kore_library_600x900.png'
+              },
+              {
                 type: 'script',
                 primary: false,
                 label: 'Konsole fallback script',
@@ -801,6 +808,8 @@ test('shows desktop installer downloads from the console installers tab', async 
   await expect(page.getByText('Recommended for this device').first()).toBeVisible();
   await expect(page.getByRole('link', { name: /Install with Discover/ })).toHaveAttribute('href', /\/installers\/KORE-SteamDeck\.flatpak$/);
   await expect(page.getByText('Open it with Discover.', { exact: true })).toBeVisible();
+  await expect(page.getByText('If Steam does not show the cover, download Steam cover art and set it manually in your library.')).toBeVisible();
+  await expect(page.getByRole('link', { name: /Steam cover art/ })).toHaveAttribute('href', /\/steam-art\/kore_library_600x900\.png$/);
   await expect(page.getByText('curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash')).toBeVisible();
   await expect(page.getByRole('link', { name: /Konsole fallback script/ })).toHaveAttribute('href', /\/installers\/install-kore-steamdeck\.sh$/);
   await expect(page.locator('a[href$="/installers/KORE-1.2.0-win-x64.exe"]')).toHaveAttribute('href', /\/installers\/KORE-1\.2\.0-win-x64\.exe$/);

@@ -11,6 +11,13 @@ const sourceVersion = appVersionSource.match(/KORE_APP_VERSION\s*=\s*['"]([^'"]+
 const packageVersion = JSON.parse(packageSource).version ?? '0.0.0';
 const appVersion = sourceVersion || packageVersion;
 const deckNotes = 'Best for Steam Deck: install with Discover, then launch KORE from your apps or add it to Steam.';
+const steamCoverArtAsset = {
+  type: 'steam-art',
+  primary: false,
+  label: 'Steam cover art',
+  filename: 'kore_library_600x900.png',
+  url: '/steam-art/kore_library_600x900.png'
+};
 
 const platforms = [
   {
@@ -133,6 +140,7 @@ for (const platform of platforms) {
             label: 'AppImage fallback'
           }
         : null,
+      steamCoverArtAsset,
       scriptAsset
     ].filter(Boolean);
     entry.installCommand = 'curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash';

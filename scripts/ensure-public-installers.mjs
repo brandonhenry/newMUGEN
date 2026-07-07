@@ -19,7 +19,8 @@ function uniqueAssets(manifest) {
   }
   return [...assets.values()].filter((asset) => {
     const filename = String(asset.filename);
-    return !filename.endsWith('.sh') && filename !== 'manifest.json';
+    const url = String(asset.url);
+    return url.startsWith('/installers/') && !filename.endsWith('.sh') && filename !== 'manifest.json';
   });
 }
 

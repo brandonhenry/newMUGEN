@@ -10899,7 +10899,7 @@ type ConsoleLine = {
 };
 
 type InstallerPlatformId = 'windows' | 'mac' | 'steamdeck' | 'linux';
-type InstallerAssetType = 'installer' | 'flatpak' | 'appimage' | 'script';
+type InstallerAssetType = 'installer' | 'flatpak' | 'appimage' | 'script' | 'steam-art';
 type InstallerAsset = {
   type?: InstallerAssetType;
   primary?: boolean;
@@ -11240,7 +11240,7 @@ function normalizeInstallerAsset(asset: unknown): InstallerAsset | null {
 }
 
 function isInstallerAssetType(value: unknown): value is InstallerAssetType {
-  return value === 'installer' || value === 'flatpak' || value === 'appimage' || value === 'script';
+  return value === 'installer' || value === 'flatpak' || value === 'appimage' || value === 'script' || value === 'steam-art';
 }
 
 function isInstallerPlatformId(value: unknown): value is InstallerPlatformId {
@@ -11373,6 +11373,7 @@ function OptionsInstallersPanel({
                     <li>Open it with Discover.</li>
                     <li>Install and launch KORE from the app launcher.</li>
                   </ol>
+                  <p>If Steam does not show the cover, download Steam cover art and set it manually in your library.</p>
                 </div>
               )}
               <div className="installer-actions">

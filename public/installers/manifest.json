@@ -33,6 +33,13 @@
           "label": "AppImage fallback"
         },
         {
+          "type": "steam-art",
+          "primary": false,
+          "label": "Steam cover art",
+          "filename": "kore_library_600x900.png",
+          "url": "/steam-art/kore_library_600x900.png"
+        },
+        {
           "type": "script",
           "primary": false,
           "label": "Konsole fallback script",
