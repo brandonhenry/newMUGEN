@@ -23,8 +23,8 @@ export async function handler(event) {
     const tournamentId = cleanId(params.tournamentId);
     const playerId = cleanId(params.playerId);
     if (!tournamentId) return json(400, { error: 'missing_tournament_id' });
-    if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID) {
-      return json(200, await getPaidTournamentStatus(getPaidTournamentStores(event), playerId));
+    if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID || tournamentId.startsWith(`${PAID_LIGHTNING_TOURNAMENT_ID}-`)) {
+      return json(200, await getPaidTournamentStatus(getPaidTournamentStores(event), playerId, params.posthogDeviceId));
     }
     const store = getTournamentStore(event);
     const bracket = tournamentId === FREE_ONLINE_TOURNAMENT_ID

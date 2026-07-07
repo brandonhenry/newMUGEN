@@ -24,7 +24,11 @@ const ENTRY_STORE_NAME = 'kore-paid-entries';
 const CHECKING_STORE_NAME = 'kore-paid-checking-ids';
 const PAYOUT_STORE_NAME = 'kore-paid-payouts';
 const LEDGER_STORE_NAME = 'kore-paid-ledger-events';
+const ROOM_STORE_NAME = 'kore-paid-match-rooms';
 const ACTIVE_KEY = 'active.json';
+const PAID_SERIES_ID = 'paid-lightning';
+const SLOT_MS = 60 * 60 * 1000;
+const PAID_TOURNAMENT_STAGE_POOL = ['the-chamber', 'the-chamber-green', 'metro-ring', 'forge-yard'];
 
 export function getPaidTournamentStores(event) {
   return {
@@ -32,6 +36,7 @@ export function getPaidTournamentStores(event) {
     entries: getBlobStore(ENTRY_STORE_NAME, event),
     checking: getBlobStore(CHECKING_STORE_NAME, event),
     payouts: getBlobStore(PAYOUT_STORE_NAME, event),
+    rooms: getBlobStore(ROOM_STORE_NAME, event),
     ledger: getBlobStore(LEDGER_STORE_NAME, event)
   };
 }
@@ -62,6 +67,11 @@ export function paidDisabledSummary() {
   };
 }
 
+export async function paidSummaryWithStores(stores) {
+  const bracket = await getOrCreatePaidTournament(stores);
+  return paidSummary(bracket);
+}
+
 export function paidSummary(bracket) {
   const confirmed = confirmedPaidEntries(bracket);
   const timing = paidTimingSummary(bracket);
@@ -78,6 +88,9 @@ export function paidSummary(bracket) {
     minEntries: bracket.minEntries,
     capacity: bracket.capacity,
     paidEnabled: Boolean(bracket.paidEnabled),
+    formingEntries: bracket.status === 'open' ? confirmed.length : 0,
+    liveBracketId: bracket.status !== 'open' ? bracket.id : undefined,
+    nextBracketId: bracket.status === 'open' ? bracket.id : undefined,
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
     startsLabel: bracket.status === 'open' ? 'Starts when full' : bracket.status === 'roundActive' ? 'Bracket active' : 'Completed'
@@ -88,7 +101,10 @@ export async function getOrCreatePaidTournament(stores, now = Date.now()) {
   const active = await stores.tournaments.get(ACTIVE_KEY, { type: 'json' }).catch(() => null);
   if (active?.id) {
     const bracket = await stores.tournaments.get(tournamentKey(active.id), { type: 'json' }).catch(() => null);
-    if (bracket?.id) return sanitizePaidBracket(bracket);
+    if (bracket?.id) {
+      const sanitized = sanitizePaidBracket(bracket);
+      if (sanitized.status === 'open' && confirmedPaidEntries(sanitized).length < sanitized.capacity) return sanitized;
+    }
   }
   const bracket = makeOpenPaidTournament(now);
   await writePaidTournament(stores, bracket);
@@ -98,7 +114,8 @@ export async function getOrCreatePaidTournament(stores, now = Date.now()) {
 export function makeOpenPaidTournament(now = Date.now()) {
   const config = paidTournamentConfig();
   return {
-    id: PAID_LIGHTNING_TOURNAMENT_ID,
+    id: `${PAID_LIGHTNING_TOURNAMENT_ID}-${now}`,
+    seriesId: PAID_SERIES_ID,
     kind: 'paidOnline',
     status: 'open',
     entries: [],
@@ -128,14 +145,25 @@ export async function enterPaidTournament(stores, entryRequest, now = Date.now()
     throw Object.assign(new Error('Tournament is full'), { statusCode: 409, code: 'tournament_full' });
   }
   const playerId = cleanId(entryRequest.playerId);
-  const existing = await readEntry(stores, bracket.id, playerId);
+  const registeredDeviceId = cleanDeviceId(entryRequest.posthogDeviceId);
+  if (!playerId || !registeredDeviceId) {
+    throw Object.assign(new Error('PostHog device id is required for paid tournament entry'), { statusCode: 400, code: 'device_id_required' });
+  }
+  const existing = await findEntryForDevice(stores, playerId, registeredDeviceId);
   if (existing && !['expired', 'invalid'].includes(existing.paymentState)) {
-    return { bracket, entry: existing, reused: true };
+    const existingBracket = await readPaidTournament(stores, existing.tournamentId || bracket.id) || bracket;
+    return { bracket: existingBracket, entry: existing, reused: true };
+  }
+  const activePlayerEntry = await readEntry(stores, bracket.id, playerId);
+  if (activePlayerEntry && activePlayerEntry.registeredDeviceId !== registeredDeviceId && !['expired', 'invalid'].includes(activePlayerEntry.paymentState)) {
+    throw Object.assign(new Error('This paid tournament entry is registered to a different device'), { statusCode: 403, code: 'device_mismatch' });
   }
   const amountSats = await usdToSats(bracket.entryUsd);
   const entry = {
     id: `paid-${playerId}-${now}`,
+    tournamentId: bracket.id,
     playerId,
+    registeredDeviceId,
     displayName: cleanName(entryRequest.displayName),
     characterId: cleanId(entryRequest.characterId),
     seed: 0,
@@ -170,6 +198,7 @@ export async function enterPaidTournament(stores, entryRequest, now = Date.now()
     await stores.checking.setJSON(checkingKey(invoice.paymentHash), paymentIndex);
   }
   await writeLedgerEvent(stores, 'entry_invoice_created', { tournamentId: nextBracket.id, playerId, entryId: invoicedEntry.id, checkingId: invoice.checkingId, amountSats }, now);
+  await writeDeviceEntryIndex(stores, invoicedEntry);
   await writePaidTournament(stores, nextBracket);
   return { bracket: nextBracket, entry: invoicedEntry, reused: false };
 }
@@ -212,15 +241,23 @@ export async function readPaidTournament(stores, tournamentId = PAID_LIGHTNING_T
   return bracket?.id ? sanitizePaidBracket(bracket) : null;
 }
 
-export async function getPaidTournamentStatus(stores, playerId) {
-  const bracket = await getOrCreatePaidTournament(stores);
-  const assignment = playerId ? assignedMatch(bracket, playerId) : { entry: undefined, match: undefined };
-  const entry = assignment.entry || (playerId ? await readEntry(stores, bracket.id, playerId) : undefined);
+export async function getPaidTournamentStatus(stores, playerId, posthogDeviceId) {
+  const cleanPlayerId = cleanId(playerId);
+  const deviceId = cleanDeviceId(posthogDeviceId);
+  const deviceEntry = cleanPlayerId && deviceId ? await findEntryForDevice(stores, cleanPlayerId, deviceId) : null;
+  const bracket = deviceEntry
+    ? await readPaidTournament(stores, deviceEntry.tournamentId)
+    : await getOrCreatePaidTournament(stores);
+  const assignment = cleanPlayerId ? assignedMatch(bracket, cleanPlayerId) : { entry: undefined, match: undefined };
+  const entry = assignment.entry || deviceEntry || (cleanPlayerId ? await readEntry(stores, bracket.id, cleanPlayerId) : undefined);
+  if (entry) assertEntryDevice(entry, deviceId);
+  const matchRoom = assignment.match && entry ? await readMatchRoom(stores, bracket, assignment.match, entry) : undefined;
   const timing = paidTimingSummary(bracket);
   return {
     bracket,
     entry,
     assignedMatch: assignment.match,
+    matchRoom,
     payment: paidPaymentSummary(entry),
     confirmedEntries: timing.confirmedEntries,
     entriesNeeded: timing.entriesNeeded,
@@ -230,32 +267,75 @@ export async function getPaidTournamentStatus(stores, playerId) {
   };
 }
 
-export async function reportPaidTournamentWinner(stores, matchId, reporterPlayerId, winnerEntryId, now = Date.now()) {
-  let bracket = await getOrCreatePaidTournament(stores, now);
-  bracket = reportWinner(bracket, matchId, winnerEntryId, now);
-  if (bracket.status === 'completed') {
-    bracket = await applyLockedPrizeSats(stores, bracket, now);
+export async function reportPaidTournamentWinner(stores, matchId, reporterPlayerId, winnerEntryId, posthogDeviceId, roomId, now = Date.now()) {
+  const cleanReporterId = cleanId(reporterPlayerId);
+  const deviceId = cleanDeviceId(posthogDeviceId);
+  const reporterEntry = await findEntryForDevice(stores, cleanReporterId, deviceId);
+  if (!reporterEntry) {
+    throw Object.assign(new Error('Paid tournament device mismatch'), { statusCode: 403, code: 'device_mismatch' });
+  }
+  let bracket = await readPaidTournament(stores, reporterEntry.tournamentId);
+  if (!bracket) throw Object.assign(new Error('Paid tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
+  const match = bracket.matches.find((candidate) => candidate.id === matchId);
+  if (!match || (match.entryAId !== reporterEntry.id && match.entryBId !== reporterEntry.id)) {
+    throw Object.assign(new Error('Reporter is not assigned to this match'), { statusCode: 403, code: 'match_not_assigned' });
+  }
+  if (match.roomId && cleanId(roomId) !== match.roomId) {
+    throw Object.assign(new Error('Match room is required to report this result'), { statusCode: 403, code: 'room_required' });
+  }
+  const cleanWinnerEntryId = cleanId(winnerEntryId);
+  if (match.entryAId !== cleanWinnerEntryId && match.entryBId !== cleanWinnerEntryId) {
+    throw Object.assign(new Error('Winner is not assigned to this match'), { statusCode: 400, code: 'invalid_winner' });
+  }
+  const reports = { ...(match.resultReports || {}), [reporterEntry.id]: cleanWinnerEntryId };
+  const reportedWinnerIds = Object.values(reports);
+  const uniqueWinners = [...new Set(reportedWinnerIds)];
+  if (reportedWinnerIds.length < 2) {
+    bracket = {
+      ...bracket,
+      matches: bracket.matches.map((candidate) => candidate.id === matchId ? { ...candidate, resultReports: reports, reportState: 'single', reportedAt: now } : candidate),
+      updatedAt: now
+    };
+  } else if (uniqueWinners.length > 1) {
+    bracket = {
+      ...bracket,
+      matches: bracket.matches.map((candidate) => candidate.id === matchId ? { ...candidate, resultReports: reports, reportState: 'conflict', roomStatus: 'review', reportedAt: now } : candidate),
+      updatedAt: now
+    };
+  } else {
+    bracket = attachRoomsToReadyMatches(reportWinner(bracket, matchId, cleanWinnerEntryId, now), now);
+    bracket = {
+      ...bracket,
+      matches: bracket.matches.map((candidate) => candidate.id === matchId ? { ...candidate, resultReports: reports, reportState: 'agreed' } : candidate)
+    };
+    if (bracket.status === 'completed') {
+      bracket = await applyLockedPrizeSats(stores, bracket, now);
+    }
   }
   await writePaidTournament(stores, bracket);
-  const assignment = assignedMatch(bracket, reporterPlayerId);
+  const assignment = assignedMatch(bracket, cleanReporterId);
+  const nextMatch = assignment.match || bracket.matches.find((candidate) => candidate.id === matchId);
+  const matchRoom = nextMatch && assignment.entry ? await readMatchRoom(stores, bracket, nextMatch, assignment.entry, now) : undefined;
   const timing = paidTimingSummary(bracket);
   return {
     bracket,
     entry: assignment.entry,
     assignedMatch: assignment.match,
+    matchRoom,
     payment: paidPaymentSummary(assignment.entry),
     confirmedEntries: timing.confirmedEntries,
     entriesNeeded: timing.entriesNeeded,
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
-    statusText: paidStatusText(bracket, assignment.match)
+    statusText: uniqueWinners.length > 1 ? 'Result conflict needs review' : reportedWinnerIds.length < 2 ? 'Waiting for opponent result confirmation' : paidStatusText(bracket, assignment.match)
   };
 }
 
-export async function claimPaidPrize(stores, { tournamentId, playerId, bolt11 }, now = Date.now()) {
+export async function claimPaidPrize(stores, { tournamentId, playerId, posthogDeviceId, bolt11 }, now = Date.now()) {
   const cleanPlayerId = cleanId(playerId);
+  const deviceId = cleanDeviceId(posthogDeviceId);
   const invoice = cleanBolt11(bolt11);
-  if (!tournamentId || !cleanPlayerId || !invoice) {
+  if (!tournamentId || !cleanPlayerId || !deviceId || !invoice) {
     throw Object.assign(new Error('Missing playerId or Lightning invoice'), { statusCode: 400, code: 'missing_fields' });
   }
   let bracket = await readPaidTournament(stores, tournamentId);
@@ -263,6 +343,7 @@ export async function claimPaidPrize(stores, { tournamentId, playerId, bolt11 },
     throw Object.assign(new Error('Tournament is not complete'), { statusCode: 409, code: 'tournament_not_complete' });
   }
   const entry = bracket.entries.find((candidate) => candidate.playerId === cleanPlayerId || candidate.id === cleanPlayerId);
+  assertEntryDevice(entry, deviceId);
   if (!entry?.payoutAmountSats || entry.payoutState !== 'rewardPending') {
     throw Object.assign(new Error('No claimable prize for this player'), { statusCode: 403, code: 'prize_not_claimable' });
   }
@@ -290,6 +371,56 @@ export async function claimPaidPrize(stores, { tournamentId, playerId, bolt11 },
   return { bracket, entry: updatedEntry, payout };
 }
 
+export async function joinPaidTournamentRoom(stores, { tournamentId, matchId, playerId, posthogDeviceId, peerId }, now = Date.now()) {
+  const bracket = await readPaidTournament(stores, tournamentId);
+  if (!bracket) throw Object.assign(new Error('Paid tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
+  const deviceId = cleanDeviceId(posthogDeviceId);
+  const cleanPeerId = cleanId(peerId);
+  if (!deviceId || !cleanPeerId) throw Object.assign(new Error('Device id and peer id are required'), { statusCode: 400, code: 'missing_fields' });
+  const entry = findEntryByPlayer(bracket, playerId);
+  assertEntryDevice(entry, deviceId);
+  const match = bracket.matches.find((candidate) => candidate.id === matchId);
+  assertEntryAssignedToMatch(entry, match);
+  const room = await upsertMatchRoom(stores, bracket, match, entry, cleanPeerId, now);
+  const assignment = assignedMatch(bracket, entry.playerId);
+  const timing = paidTimingSummary(bracket);
+  return {
+    bracket,
+    entry,
+    assignedMatch: assignment.match,
+    matchRoom: room,
+    payment: paidPaymentSummary(entry),
+    confirmedEntries: timing.confirmedEntries,
+    entriesNeeded: timing.entriesNeeded,
+    estimatedStartLabel: timing.estimatedStartLabel,
+    startsWhenFullLabel: timing.startsWhenFullLabel,
+    statusText: room.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
+  };
+}
+
+export async function getPaidTournamentRoomStatus(stores, { tournamentId, matchId, playerId, posthogDeviceId }, now = Date.now()) {
+  const bracket = await readPaidTournament(stores, tournamentId);
+  if (!bracket) throw Object.assign(new Error('Paid tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
+  const entry = findEntryByPlayer(bracket, playerId);
+  assertEntryDevice(entry, cleanDeviceId(posthogDeviceId));
+  const match = bracket.matches.find((candidate) => candidate.id === matchId);
+  assertEntryAssignedToMatch(entry, match);
+  const room = await readMatchRoom(stores, bracket, match, entry, now);
+  const timing = paidTimingSummary(bracket);
+  return {
+    bracket,
+    entry,
+    assignedMatch: match,
+    matchRoom: room,
+    payment: paidPaymentSummary(entry),
+    confirmedEntries: timing.confirmedEntries,
+    entriesNeeded: timing.entriesNeeded,
+    estimatedStartLabel: timing.estimatedStartLabel,
+    startsWhenFullLabel: timing.startsWhenFullLabel,
+    statusText: room?.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
+  };
+}
+
 export function paidPaymentSummary(entry) {
   if (!entry) return undefined;
   return {
@@ -312,13 +443,17 @@ async function lockPaidTournament(bracket, now) {
     2: await usdToSats(bracket.prizeUsd?.[2] ?? 10),
     3: await usdToSats(bracket.prizeUsd?.[3] ?? 5)
   };
-  return generateOnlineBracket({
+  const generated = generateOnlineBracket({
     ...bracket,
     entries: confirmedPaidEntries(bracket).slice(0, bracket.capacity),
     prizeSats,
     lockedAt: now,
     updatedAt: now
   }, now);
+  return {
+    ...generated,
+    matches: generated.matches.map((match) => attachRoomToMatch(generated, match, now))
+  };
 }
 
 async function applyLockedPrizeSats(stores, bracket, now) {
@@ -392,7 +527,7 @@ function formatDuration(ms) {
 
 async function writePaidTournament(stores, bracket) {
   await stores.tournaments.setJSON(tournamentKey(bracket.id), bracket);
-  await stores.tournaments.setJSON(ACTIVE_KEY, { id: bracket.id, updatedAt: bracket.updatedAt });
+  if (bracket.status === 'open') await stores.tournaments.setJSON(ACTIVE_KEY, { id: bracket.id, updatedAt: bracket.updatedAt });
   return bracket;
 }
 
@@ -403,6 +538,26 @@ async function readEntry(stores, tournamentId, playerId) {
 async function writeEntry(stores, tournamentId, entry) {
   await stores.entries.setJSON(entryKey(tournamentId, entry.playerId), entry);
   return entry;
+}
+
+async function writeDeviceEntryIndex(stores, entry) {
+  await stores.entries.setJSON(deviceEntryKey(entry.playerId, entry.registeredDeviceId), {
+    tournamentId: entry.tournamentId,
+    playerId: entry.playerId,
+    entryId: entry.id,
+    registeredDeviceId: entry.registeredDeviceId,
+    updatedAt: Date.now()
+  });
+}
+
+async function findEntryForDevice(stores, playerId, posthogDeviceId) {
+  const cleanPlayerId = cleanId(playerId);
+  const deviceId = cleanDeviceId(posthogDeviceId);
+  if (!cleanPlayerId || !deviceId) return null;
+  const index = await stores.entries.get(deviceEntryKey(cleanPlayerId, deviceId), { type: 'json' }).catch(() => null);
+  if (!index?.tournamentId) return null;
+  const entry = await readEntry(stores, index.tournamentId, cleanPlayerId);
+  return entry && entry.registeredDeviceId === deviceId ? entry : null;
 }
 
 async function writeLedgerEvent(stores, type, payload, now = Date.now()) {
@@ -426,6 +581,87 @@ function sanitizePaidBracket(value) {
   };
 }
 
+function findEntryByPlayer(bracket, playerId) {
+  const cleanPlayerId = cleanId(playerId);
+  return bracket.entries.find((candidate) => candidate.playerId === cleanPlayerId || candidate.id === cleanPlayerId);
+}
+
+function assertEntryDevice(entry, posthogDeviceId) {
+  if (!entry) throw Object.assign(new Error('Paid tournament entry not found'), { statusCode: 404, code: 'paid_entry_not_found' });
+  const deviceId = cleanDeviceId(posthogDeviceId);
+  if (!deviceId || entry.registeredDeviceId !== deviceId) {
+    throw Object.assign(new Error('Paid tournament device mismatch'), { statusCode: 403, code: 'device_mismatch' });
+  }
+}
+
+function assertEntryAssignedToMatch(entry, match) {
+  if (!match || match.status !== 'ready') throw Object.assign(new Error('Match is not ready'), { statusCode: 409, code: 'match_not_ready' });
+  if (match.entryAId !== entry.id && match.entryBId !== entry.id) {
+    throw Object.assign(new Error('Entry is not assigned to this match'), { statusCode: 403, code: 'match_not_assigned' });
+  }
+}
+
+function attachRoomsToReadyMatches(bracket, now) {
+  return {
+    ...bracket,
+    matches: bracket.matches.map((match) => attachRoomToMatch(bracket, match, now))
+  };
+}
+
+function attachRoomToMatch(bracket, match, now) {
+  if (match.status !== 'ready' || !match.entryAId || !match.entryBId) return match;
+  const roomId = match.roomId || `${bracket.id}:${match.id}`;
+  const slotStartsAt = match.slotStartsAt || now;
+  return {
+    ...match,
+    stageId: match.stageId || deterministicStageId(bracket.id, match.id),
+    roomId,
+    slotStartsAt,
+    slotEndsAt: match.slotEndsAt || slotStartsAt + SLOT_MS,
+    roomStatus: match.roomStatus || 'pending',
+    reportState: match.reportState || 'none'
+  };
+}
+
+async function readMatchRoom(stores, bracket, match, entry, now = Date.now()) {
+  if (!match?.roomId) return undefined;
+  const stored = await stores.rooms.get(roomKey(bracket.id, match.id), { type: 'json' }).catch(() => null);
+  if (!stored) {
+    return {
+      tournamentId: bracket.id,
+      matchId: match.id,
+      roomId: match.roomId,
+      slotStartsAt: match.slotStartsAt,
+      slotEndsAt: match.slotEndsAt,
+      status: now > match.slotEndsAt ? 'closed' : 'waiting',
+      localRole: undefined
+    };
+  }
+  const localRole = stored.hostEntryId === entry?.id ? 'host' : stored.guestEntryId === entry?.id ? 'guest' : undefined;
+  const status = now > stored.slotEndsAt && stored.status !== 'forfeit' && stored.status !== 'review' ? 'closed' : stored.status;
+  return { ...stored, status, localRole };
+}
+
+async function upsertMatchRoom(stores, bracket, match, entry, peerId, now) {
+  const base = await readMatchRoom(stores, bracket, match, entry, now);
+  if (!base) throw Object.assign(new Error('Match room not found'), { statusCode: 404, code: 'room_not_found' });
+  if (now > base.slotEndsAt) {
+    const closed = { ...base, status: 'closed' };
+    await stores.rooms.setJSON(roomKey(bracket.id, match.id), closed);
+    return closed;
+  }
+  let next = { ...base };
+  if (!next.hostEntryId || next.hostEntryId === entry.id) {
+    next = { ...next, hostEntryId: entry.id, hostPeerId: peerId, status: next.guestEntryId ? 'ready' : 'waiting', localRole: 'host' };
+  } else if (!next.guestEntryId || next.guestEntryId === entry.id) {
+    next = { ...next, guestEntryId: entry.id, guestPeerId: peerId, status: 'ready', localRole: 'guest' };
+  } else {
+    throw Object.assign(new Error('Match room is full'), { statusCode: 409, code: 'room_full' });
+  }
+  await stores.rooms.setJSON(roomKey(bracket.id, match.id), next);
+  return next;
+}
+
 function paidStatusText(bracket, match) {
   if (bracket.status === 'open') return `${confirmedPaidEntries(bracket).length} / ${bracket.minEntries} entries`;
   if (bracket.status === 'completed') return 'Tournament complete';
@@ -441,12 +677,34 @@ function entryKey(tournamentId, playerId) {
   return `${tournamentId}/${playerId}.json`;
 }
 
+function deviceEntryKey(playerId, posthogDeviceId) {
+  return `devices/${cleanDeviceId(posthogDeviceId)}/${cleanId(playerId)}.json`;
+}
+
 function checkingKey(checkingId) {
   return `${checkingId}.json`;
 }
 
 function payoutKey(tournamentId, playerId) {
   return `${tournamentId}/${playerId}.json`;
+}
+
+function roomKey(tournamentId, matchId) {
+  return `${tournamentId}/${matchId}.json`;
+}
+
+function cleanDeviceId(value) {
+  if (typeof value !== 'string') return '';
+  return value.replace(/[^a-zA-Z0-9:_.-]/g, '').slice(0, 160);
+}
+
+function deterministicStageId(tournamentId, matchId) {
+  const seed = `${tournamentId}:${matchId}`;
+  let hash = 0;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash = (hash * 31 + seed.charCodeAt(index)) >>> 0;
+  }
+  return PAID_TOURNAMENT_STAGE_POOL[hash % PAID_TOURNAMENT_STAGE_POOL.length];
 }
 
 function cleanBolt11(value) {

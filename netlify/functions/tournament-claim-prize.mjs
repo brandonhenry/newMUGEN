@@ -12,6 +12,7 @@ export async function handler(event) {
     const result = await claimPaidPrize(getPaidTournamentStores(event), {
       tournamentId: body.tournamentId,
       playerId: body.playerId,
+      posthogDeviceId: body.posthogDeviceId,
       bolt11: body.bolt11
     }, Date.now());
     return json(200, {

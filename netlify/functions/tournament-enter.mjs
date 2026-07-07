@@ -27,7 +27,7 @@ export async function handler(event) {
     if (!kind || !playerId || !characterId) return json(400, { error: 'missing_fields' });
 
     if (kind === 'paidOnline' || body.tournamentId === PAID_LIGHTNING_TOURNAMENT_ID) {
-      const result = await enterPaidTournament(getPaidTournamentStores(event), { playerId, displayName, characterId }, Date.now());
+      const result = await enterPaidTournament(getPaidTournamentStores(event), { playerId, displayName, characterId, posthogDeviceId: body.posthogDeviceId }, Date.now());
       return json(200, {
         bracket: result.bracket,
         entry: result.entry,

@@ -25,6 +25,7 @@ export type TournamentPaymentState =
 export type TournamentEntry = {
   id: string;
   playerId: string;
+  registeredDeviceId?: string;
   displayName: string;
   characterId: string;
   seed: number;
@@ -61,8 +62,30 @@ export type TournamentMatch = {
   entryBId?: string;
   winnerEntryId?: string;
   status: TournamentMatchStatus;
+  stageId?: string;
   roomId?: string;
+  slotStartsAt?: number;
+  slotEndsAt?: number;
+  hostEntryId?: string;
+  guestEntryId?: string;
+  roomStatus?: 'pending' | 'waiting' | 'ready' | 'closed' | 'forfeit' | 'review';
+  reportState?: 'none' | 'single' | 'agreed' | 'conflict' | 'forfeit';
+  resultReports?: Record<string, string>;
   reportedAt?: number;
+};
+
+export type TournamentMatchRoom = {
+  tournamentId: string;
+  matchId: string;
+  roomId: string;
+  slotStartsAt: number;
+  slotEndsAt: number;
+  status: 'waiting' | 'ready' | 'closed' | 'forfeit' | 'review';
+  hostEntryId?: string;
+  guestEntryId?: string;
+  hostPeerId?: string;
+  guestPeerId?: string;
+  localRole?: 'host' | 'guest';
 };
 
 export type TournamentReward = {
@@ -99,6 +122,9 @@ export type TournamentSummary = {
   minEntries: number;
   capacity: number;
   paidEnabled: boolean;
+  formingEntries?: number;
+  liveBracketId?: string;
+  nextBracketId?: string;
   estimatedStartLabel?: string;
   startsWhenFullLabel?: string;
   startsLabel: string;
@@ -120,6 +146,7 @@ export type TournamentEnterRequest = {
   tournamentId?: string;
   kind: TournamentKind;
   playerId: string;
+  posthogDeviceId?: string;
   displayName: string;
   characterId: string;
   kp?: number;
@@ -142,6 +169,7 @@ export type TournamentStatusResult = {
   bracket: TournamentBracket;
   entry?: TournamentEntry;
   assignedMatch?: TournamentMatch;
+  matchRoom?: TournamentMatchRoom;
   payment?: TournamentPaymentSummary;
   confirmedEntries?: number;
   entriesNeeded?: number;
@@ -154,13 +182,31 @@ export type TournamentReportRequest = {
   tournamentId: string;
   matchId: string;
   reporterPlayerId: string;
+  posthogDeviceId?: string;
+  roomId?: string;
   winnerEntryId: string;
 };
 
 export type TournamentClaimPrizeRequest = {
   tournamentId: string;
   playerId: string;
+  posthogDeviceId?: string;
   bolt11: string;
+};
+
+export type TournamentRoomJoinRequest = {
+  tournamentId: string;
+  matchId: string;
+  playerId: string;
+  posthogDeviceId: string;
+  peerId: string;
+};
+
+export type TournamentRoomStatusRequest = {
+  tournamentId: string;
+  matchId: string;
+  playerId: string;
+  posthogDeviceId: string;
 };
 
 export type TournamentClaimPrizeResult = {

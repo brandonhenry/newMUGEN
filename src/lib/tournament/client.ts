@@ -5,6 +5,8 @@ import type {
   TournamentClaimPrizeRequest,
   TournamentClaimPrizeResult,
   TournamentEntry,
+  TournamentRoomJoinRequest,
+  TournamentRoomStatusRequest,
   TournamentReportRequest,
   TournamentStatusResult,
   TournamentSummary
@@ -24,9 +26,10 @@ export async function enterTournament(request: TournamentEnterRequest): Promise<
   });
 }
 
-export async function fetchTournamentStatus(tournamentId: string, playerId?: string): Promise<TournamentStatusResult> {
+export async function fetchTournamentStatus(tournamentId: string, playerId?: string, posthogDeviceId?: string): Promise<TournamentStatusResult> {
   const query = new URLSearchParams({ tournamentId });
   if (playerId) query.set('playerId', playerId);
+  if (posthogDeviceId) query.set('posthogDeviceId', posthogDeviceId);
   return getJson<TournamentStatusResult>(`/.netlify/functions/tournament-status?${query.toString()}`).catch((error) => {
     if (isLocalFallbackAllowed()) return localTournamentStatus(tournamentId, playerId);
     throw error;
@@ -42,6 +45,20 @@ export async function reportTournamentMatch(request: TournamentReportRequest): P
 
 export async function claimTournamentPrize(request: TournamentClaimPrizeRequest): Promise<TournamentClaimPrizeResult> {
   return postJson<TournamentClaimPrizeResult>('/.netlify/functions/tournament-claim-prize', request);
+}
+
+export async function joinTournamentMatchRoom(request: TournamentRoomJoinRequest): Promise<TournamentStatusResult> {
+  return postJson<TournamentStatusResult>('/.netlify/functions/tournament-room-join', request);
+}
+
+export async function fetchTournamentMatchRoomStatus(request: TournamentRoomStatusRequest): Promise<TournamentStatusResult> {
+  const query = new URLSearchParams({
+    tournamentId: request.tournamentId,
+    matchId: request.matchId,
+    playerId: request.playerId,
+    posthogDeviceId: request.posthogDeviceId
+  });
+  return getJson<TournamentStatusResult>(`/.netlify/functions/tournament-room-status?${query.toString()}`);
 }
 
 async function getJson<T>(url: string): Promise<T> {

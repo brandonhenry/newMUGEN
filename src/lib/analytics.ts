@@ -113,6 +113,13 @@ export function initializeAnalytics(environment: AnalyticsEnvironment = readAnal
   return posthog;
 }
 
+export function getPostHogDeviceId() {
+  if (!analyticsInitialized) initializeAnalytics();
+  if (!analyticsInitialized) return '';
+  const candidate = posthog.get_distinct_id?.();
+  return typeof candidate === 'string' ? candidate.trim() : '';
+}
+
 export function captureAnalyticsEvent(name: AnalyticsEventName, properties?: AnalyticsProperties) {
   if (!analyticsInitialized) initializeAnalytics();
   if (!analyticsInitialized) return;

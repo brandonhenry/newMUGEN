@@ -133,7 +133,7 @@ import {
   type VoxelFidelitySettings
 } from './types';
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
-import { captureAnalyticsError, captureAnalyticsEvent, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
+import { captureAnalyticsError, captureAnalyticsEvent, getPostHogDeviceId, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
 import {
   FRIENDS_STORAGE_KEY,
@@ -211,12 +211,14 @@ import {
   createInfiniteTournamentBracket,
   createLocalTournamentBracket,
   enterTournament,
+  fetchTournamentMatchRoomStatus,
   fetchTournamentList,
   fetchTournamentStatus,
   getAssignedTournamentMatch,
   getNextReadyTournamentMatch,
   getTournamentEntry,
   getTournamentOpponentEntry,
+  joinTournamentMatchRoom,
   reportTournamentMatch,
   simulateCpuTournamentMatches,
   type TournamentBracket,
@@ -238,6 +240,7 @@ type AssetWarmupIntent = {
   p2: CharacterDefinition;
   matchOptions?: Partial<AssetWarmupMatchOptions>;
 };
+const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
   __koreE2ESetFightPositions?: (positions: { p1?: E2EFightPosition; p2?: E2EFightPosition }) => void;
@@ -3023,14 +3026,55 @@ export default function App() {
     window.clearTimeout(infiniteTournamentRestartTimerRef.current);
   }, []);
 
+  useEffect(() => {
+    if (screen !== 'tournament' || !onlineProfile) return undefined;
+    const posthogDeviceId = getPostHogDeviceId();
+    if (!posthogDeviceId) return undefined;
+    let cancelled = false;
+    void fetchTournamentStatus(PAID_LIGHTNING_TOURNAMENT_ID, onlineProfile.playerId, posthogDeviceId)
+      .then((status) => {
+        if (cancelled || !status.entry) return;
+        setOnlineTournamentStatus(status);
+        setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+        setTournamentStatusText(status.statusText);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [onlineProfile, screen]);
+
   const enterOnlineTournament = useCallback(async (characterId: string, tournamentMode: Extract<TournamentSelectMode, 'online' | 'paid'>, confirmedProfile?: OnlinePlayerProfile) => {
     const profile = confirmedProfile ?? onlineProfile;
     if (!profile) throw new Error('Player name required');
     const paid = tournamentMode === 'paid';
-    setTournamentStatusText(paid ? 'Creating Cash App checkout' : 'Entering free online tournament');
+    const posthogDeviceId = paid ? getPostHogDeviceId() : undefined;
+    if (paid && !posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
+    setTournamentStatusText(paid ? 'Checking tournament entry' : 'Entering free online tournament');
+    if (paid && posthogDeviceId) {
+      const existingStatus = await fetchTournamentStatus(PAID_LIGHTNING_TOURNAMENT_ID, profile.playerId, posthogDeviceId).catch(() => null);
+      if (existingStatus?.entry) {
+        setP1Id(existingStatus.entry.characterId || characterId);
+        setOnlineTournamentStatus(existingStatus);
+        setLocalTournamentBracket(null);
+        setActiveTournamentMatchId(existingStatus.assignedMatch?.id ?? '');
+        setTournamentStatusText(existingStatus.statusText || 'Tournament entry found');
+        setScreen('tournamentLobby');
+        captureAppAnalytics('tournament_entry_succeeded', {
+          tournament_mode: tournamentMode,
+          tournament_id: existingStatus.bracket.id,
+          entry_id: existingStatus.entry.id,
+          character_id: existingStatus.entry.characterId,
+          reused_entry: true
+        });
+        return;
+      }
+      setTournamentStatusText('Creating Cash App checkout');
+    }
     const result = await enterTournament({
       kind: paid ? 'paidOnline' : 'freeOnline',
       playerId: profile.playerId,
+      posthogDeviceId,
       displayName: profile.displayName,
       characterId,
       kp: rankedProfile?.kp,
@@ -3086,10 +3130,13 @@ export default function App() {
     const current = onlineTournamentStatus;
     const profile = onlineProfile;
     if (!current || !profile) throw new Error('Tournament entry unavailable');
+    const posthogDeviceId = getPostHogDeviceId();
+    if (current.bracket.kind === 'paidOnline' && !posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
     setTournamentStatusText('Submitting prize invoice');
     const result = await claimTournamentPrize({
       tournamentId: current.bracket.id,
       playerId: profile.playerId,
+      posthogDeviceId,
       bolt11
     });
     setOnlineTournamentStatus({
@@ -3112,7 +3159,8 @@ export default function App() {
     const current = onlineTournamentStatus;
     const profile = onlineProfile;
     if (!current || !profile) return;
-    const status = await fetchTournamentStatus(current.bracket.id, profile.playerId);
+    const posthogDeviceId = current.bracket.kind === 'paidOnline' ? getPostHogDeviceId() : undefined;
+    const status = await fetchTournamentStatus(current.bracket.id, profile.playerId, posthogDeviceId);
     setOnlineTournamentStatus(status);
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
     setTournamentStatusText(status.statusText);
@@ -3131,7 +3179,8 @@ export default function App() {
     let cancelled = false;
     const pollStatus = async () => {
       try {
-        const status = await fetchTournamentStatus(current.bracket.id, profile.playerId);
+        const posthogDeviceId = current.bracket.kind === 'paidOnline' ? getPostHogDeviceId() : undefined;
+        const status = await fetchTournamentStatus(current.bracket.id, profile.playerId, posthogDeviceId);
         if (cancelled) return;
         setOnlineTournamentStatus(status);
         setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
@@ -3156,13 +3205,14 @@ export default function App() {
     const opponent = getTournamentOpponentEntry(status.bracket, match, entry.id);
     if (!opponent) return;
     const opponentCharacter = roster.find((character) => character.id === opponent.characterId) ?? roster[0];
-    const fightStage = resolveRandomStageSelection();
+    const fightStage = match.stageId ? playableStageRoster.find((item) => item.id === match.stageId) ?? resolveRandomStageSelection() : resolveRandomStageSelection();
     if (!opponentCharacter || !fightStage) return;
     setP2Id(opponentCharacter.id);
+    setStageId(fightStage.id);
     setActiveTournamentMatchId(match.id);
     setMode('tournamentOnline');
     setScreen('tournamentBracket');
-  }, [onlineProfile, onlineTournamentStatus, resolveRandomStageSelection, roster]);
+  }, [onlineProfile, onlineTournamentStatus, playableStageRoster, resolveRandomStageSelection, roster]);
 
   const handleTournamentMatchComplete = useCallback((result: { winnerSlot: 1 | 2 }) => {
     if (!activeTournamentMatchId) return;
@@ -3232,12 +3282,16 @@ export default function App() {
       const entry = onlineTournamentStatus.entry;
       if (!match || !entry) return;
       const opponentEntryId = match.entryAId === entry.id ? match.entryBId : match.entryAId;
-      const winnerEntryId = result.winnerSlot === 1 ? entry.id : opponentEntryId;
+      const localRole = onlineTournamentStatus.matchRoom?.localRole;
+      const localWinnerSlot = localRole === 'guest' ? 2 : 1;
+      const winnerEntryId = result.winnerSlot === localWinnerSlot ? entry.id : opponentEntryId;
       if (!winnerEntryId) return;
       void reportTournamentMatch({
         tournamentId: onlineTournamentStatus.bracket.id,
         matchId: activeTournamentMatchId,
         reporterPlayerId: onlineProfile.playerId,
+        posthogDeviceId: onlineTournamentStatus.bracket.kind === 'paidOnline' ? getPostHogDeviceId() : undefined,
+        roomId: onlineTournamentStatus.matchRoom?.roomId ?? match.roomId,
         winnerEntryId
       }).then((status) => {
         setOnlineTournamentStatus(status);
@@ -4085,6 +4139,7 @@ export default function App() {
             unlockedCharacterIds={effectiveUnlockedCharacterIds}
             tournamentMode={selectedTournamentMode}
             isDevHost={isDevHost}
+            knownPaidTournamentStatus={onlineTournamentStatus?.bracket.kind === 'paidOnline' ? onlineTournamentStatus : null}
             setP1Id={setP1Id}
             setTournamentMode={setSelectedTournamentMode}
             onBack={() => setScreen('menu')}
@@ -4668,6 +4723,13 @@ export default function App() {
             onlineProfile={onlineProfile}
             rankedProfile={rankedProfile}
             tournamentBotOpponent={mode === 'tournamentOnline' ? makeTournamentBotOpponent(onlineTournamentStatus) : null}
+            onlineTournamentStatus={mode === 'tournamentOnline' ? onlineTournamentStatus : null}
+            posthogDeviceId={mode === 'tournamentOnline' ? getPostHogDeviceId() : undefined}
+            onOnlineTournamentStatusChange={setOnlineTournamentStatus}
+            onTournamentRoomFailure={(message) => {
+              setTournamentStatusText(message);
+              setScreen('tournamentLobby');
+            }}
             onRankedProfileChange={setRankedProfile}
             privateRoomIntent={privateRoomIntent}
             arcadeRun={arcadeRun}
@@ -7586,6 +7648,7 @@ function TournamentSelect({
   unlockedCharacterIds,
   tournamentMode,
   isDevHost,
+  knownPaidTournamentStatus,
   setP1Id,
   setTournamentMode,
   onBack,
@@ -7597,6 +7660,7 @@ function TournamentSelect({
   unlockedCharacterIds: Set<string>;
   tournamentMode: TournamentSelectMode;
   isDevHost: boolean;
+  knownPaidTournamentStatus: TournamentStatusResult | null;
   setP1Id: (id: string) => void;
   setTournamentMode: (mode: TournamentSelectMode) => void;
   onBack: () => void;
@@ -7621,7 +7685,8 @@ function TournamentSelect({
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
   const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
   const canStart = Boolean(p1Character && isCharacterUnlocked(p1Character, unlockedCharacterIds));
-  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
+  const hasKnownPaidEntry = Boolean(knownPaidTournamentStatus?.entry);
+  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? hasKnownPaidEntry ? 'View Tournament' : 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
   const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
 
   useEffect(() => {
@@ -7807,7 +7872,7 @@ function TournamentSelect({
               disabled={!paidEnabled}
             >
               <strong>Prizepool</strong>
-              <span>{paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries` : 'Paid beta unavailable'}</span>
+              <span>{hasKnownPaidEntry ? knownPaidTournamentStatus?.statusText ?? 'Entry found' : paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries` : 'Paid beta unavailable'}</span>
               <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning'}</small>
             </button>
             {isDevHost && (
@@ -7995,6 +8060,7 @@ function TournamentLobbyScreen({
   const canClaimPrize = bracket?.kind === 'paidOnline' && bracket.status === 'completed' && prizeEntry?.payoutState === 'rewardPending' && Boolean(prizeEntry.payoutAmountSats);
   const estimatedStartLabel = onlineStatus?.estimatedStartLabel ?? getEstimatedTournamentStartLabel(bracket);
   const startsWhenFullLabel = onlineStatus?.startsWhenFullLabel ?? (bracket ? `Tournament starts once ${bracket.minEntries} entries enter` : 'Tournament starts once enough players enter');
+  const matchRoom = onlineStatus?.matchRoom;
   const checkoutKey = payment?.checkingId ?? onlineStatus?.entry?.checkingId ?? '';
   const [cashAppCheckoutDismissed, setCashAppCheckoutDismissed] = useState(false);
 
@@ -8048,6 +8114,11 @@ function TournamentLobbyScreen({
             )}
             {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Confirming entry.</div>}
             {paymentConfirmed && <div className="tournament-status-strip">Success. You entered. Tournament starts once enough players enter.</div>}
+            {matchRoom && (
+              <div className="tournament-status-strip">
+                Match room {matchRoom.status}. {matchRoom.localRole ? `You are ${matchRoom.localRole}.` : 'Join during your live room slot.'}
+              </div>
+            )}
             <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
             {winnerEntry && (
               <div className="tournament-status-strip">
@@ -8080,7 +8151,7 @@ function TournamentLobbyScreen({
         {onlineStatus && (
           <button className="primary-button" type="button" onClick={onStartOnlineMatch} disabled={!canStartOnlineMatch}>
             <Swords size={18} />
-            Start Match
+            {bracket?.kind === 'paidOnline' ? 'Join Match Room' : 'Start Match'}
           </button>
         )}
         <button className="secondary-button" type="button" onClick={onMenu}>
@@ -20498,6 +20569,10 @@ function FightScreen({
   onlineProfile,
   rankedProfile,
   tournamentBotOpponent,
+  onlineTournamentStatus,
+  posthogDeviceId,
+  onOnlineTournamentStatusChange,
+  onTournamentRoomFailure,
   onRankedProfileChange,
   privateRoomIntent,
   arcadeRun,
@@ -20526,6 +20601,10 @@ function FightScreen({
   onlineProfile: OnlinePlayerProfile | null;
   rankedProfile: RankedProfile | null;
   tournamentBotOpponent?: OnlineBotOpponent | null;
+  onlineTournamentStatus?: TournamentStatusResult | null;
+  posthogDeviceId?: string;
+  onOnlineTournamentStatusChange?: (status: TournamentStatusResult) => void;
+  onTournamentRoomFailure?: (message: string) => void;
   onRankedProfileChange: (profile: RankedProfile) => void;
   privateRoomIntent: PrivateRoomIntent | null;
   arcadeRun?: ArcadeRunState;
@@ -21357,6 +21436,33 @@ function FightScreen({
     const onlineStage = stages.find((item) => item.id === onlineStageId) ?? stage;
     return createMatch(p1, botCharacter, onlineStage, 'versusCpu', bot.cpuDifficulty, withFreshAiSeed(matchOptions));
   }, [matchOptions, p1, p2, roster, stage, stages]);
+
+  const tournamentRoomToOnlineResult = useCallback((status: TournamentStatusResult, peerId: string): OnlineMatchResult | null => {
+    const room = status.matchRoom;
+    const match = status.assignedMatch;
+    if (!room || !match || !room.localRole || !match.entryAId || !match.entryBId) return null;
+    const hostEntryId = room.hostEntryId ?? match.entryAId;
+    const guestEntryId = room.guestEntryId ?? (hostEntryId === match.entryAId ? match.entryBId : match.entryAId);
+    const hostEntry = getTournamentEntry(status.bracket, hostEntryId);
+    const guestEntry = getTournamentEntry(status.bracket, guestEntryId);
+    if (!hostEntry || !guestEntry) return null;
+    const hostPeerId = room.hostPeerId ?? (room.localRole === 'host' ? peerId : '');
+    const guestPeerId = room.guestPeerId ?? (room.localRole === 'guest' ? peerId : undefined);
+    if (!hostPeerId) return null;
+    return {
+      role: room.localRole,
+      status: room.status === 'ready' ? 'matched' : 'waiting',
+      roomId: room.roomId,
+      ownerToken: room.roomId,
+      hostPeerId,
+      guestPeerId,
+      hostCharacterId: hostEntry.characterId,
+      guestCharacterId: guestEntry.characterId,
+      stageId: match.stageId ?? stage.id,
+      queue: 'casual',
+      opponentKind: 'human'
+    };
+  }, [stage.id]);
 
   const startOnlineBotMatch = useCallback((bot: OnlineBotOpponent, room: OnlineMatchResult | null, resetWins = true) => {
     const opponentRoomId = `opponent-${bot.playerId.replace(/^bot-/i, 'rival-')}`;
@@ -22265,6 +22371,56 @@ function FightScreen({
         }
         onlineSessionRef.current = session;
 
+        if (mode === 'tournamentOnline' && onlineTournamentStatus?.bracket.kind === 'paidOnline' && onlineTournamentStatus.assignedMatch && onlineTournamentStatus.entry) {
+          if (!posthogDeviceId) throw new Error('Tournament device id unavailable');
+          const joinOrPollTournamentRoom = async (join: boolean) => {
+            const request = {
+              tournamentId: onlineTournamentStatus.bracket.id,
+              matchId: onlineTournamentStatus.assignedMatch?.id ?? '',
+              playerId: onlineTournamentStatus.entry?.playerId ?? onlineProfile?.playerId ?? '',
+              posthogDeviceId
+            };
+            const status = join
+              ? await joinTournamentMatchRoom({ ...request, peerId: session.peerId })
+              : await fetchTournamentMatchRoomStatus(request);
+            if (cancelled) return;
+            onOnlineTournamentStatusChange?.(status);
+            const roomStatus = status.matchRoom?.status as string | undefined;
+            if (roomStatus === 'closed') throw new Error('Tournament match room expired');
+            if (roomStatus === 'forfeit') throw new Error('Tournament match room forfeited');
+            if (roomStatus === 'review') throw new Error('Tournament match needs review');
+            const result = tournamentRoomToOnlineResult(status, session.peerId);
+            if (!result) throw new Error(roomStatus === 'closed' ? 'Tournament match room closed' : 'Tournament match room unavailable');
+            onlineRoomRef.current = result;
+            onlineRoleRef.current = result.role;
+            setOnlineRole(result.role);
+            if (result.role === 'guest') {
+              if (!result.hostPeerId) throw new Error('Tournament host not ready');
+              onlineStateRef.current = 'connecting';
+              setOnlineState('connecting');
+              setOnlineStatusText('TOURNAMENT ROOM READY');
+              if (!onlineAssetGateRef.current && onlineStateRef.current === 'connecting') session.connect(result.hostPeerId);
+              return;
+            }
+            onlineStateRef.current = 'searching';
+            setOnlineState('searching');
+            setOnlineStatusText(result.status === 'matched' ? 'TOURNAMENT ROOM READY' : 'WAITING FOR TOURNAMENT OPPONENT');
+          };
+
+          await joinOrPollTournamentRoom(true);
+          matchmakingTimer = window.setInterval(() => {
+            if (cancelled || onlineStateRef.current === 'connected' || onlineAssetGateRef.current) return;
+            if (onlineRoleRef.current === 'guest' && onlineStateRef.current === 'connecting') return;
+            void joinOrPollTournamentRoom(false).catch((error) => {
+              if (cancelled) return;
+              const message = error instanceof Error ? error.message : 'TOURNAMENT ROOM ERROR';
+              setOnlineStatusText(message);
+              onTournamentRoomFailure?.(message);
+            });
+          }, 2000);
+          return;
+        }
+
         const poll = async () => {
           if (cancelled || !onlineSessionRef.current) return;
           if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'disconnected') return;
@@ -22364,9 +22520,14 @@ function FightScreen({
         }, 2000);
       } catch (error) {
         if (!cancelled) {
+          const message = error instanceof Error ? error.message : 'ONLINE ERROR';
+          if (mode === 'tournamentOnline' && onlineTournamentStatus?.bracket.kind === 'paidOnline') {
+            onTournamentRoomFailure?.(message);
+            return;
+          }
           setOnlineState('error');
           onlineStateRef.current = 'error';
-          setOnlineStatusText(error instanceof Error ? error.message : 'ONLINE ERROR');
+          setOnlineStatusText(message);
         }
       }
     };
@@ -22377,7 +22538,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, handleOnlineMessage, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, p1.displayName, p1.id, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent]);
+  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, handleOnlineMessage, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, onOnlineTournamentStatusChange, onTournamentRoomFailure, onlineProfile?.playerId, onlineTournamentStatus, p1.displayName, p1.id, posthogDeviceId, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent, tournamentRoomToOnlineResult]);
 
   useEffect(() => {
     if (!isOnline) return undefined;

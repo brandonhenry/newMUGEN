@@ -25,8 +25,8 @@ export async function handler(event) {
     const reporterPlayerId = cleanId(body.reporterPlayerId);
     const winnerEntryId = cleanId(body.winnerEntryId);
     if (!tournamentId || !matchId || !reporterPlayerId || !winnerEntryId) return json(400, { error: 'missing_fields' });
-    if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID) {
-      return json(200, await reportPaidTournamentWinner(getPaidTournamentStores(event), matchId, reporterPlayerId, winnerEntryId, Date.now()));
+    if (tournamentId === PAID_LIGHTNING_TOURNAMENT_ID || tournamentId.startsWith(`${PAID_LIGHTNING_TOURNAMENT_ID}-`)) {
+      return json(200, await reportPaidTournamentWinner(getPaidTournamentStores(event), matchId, reporterPlayerId, winnerEntryId, body.posthogDeviceId, body.roomId, Date.now()));
     }
     const store = getTournamentStore(event);
     const bracket = await readTournament(store, tournamentId);
