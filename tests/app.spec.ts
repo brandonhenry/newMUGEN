@@ -756,6 +756,26 @@ test('shows device support debug checks from console sidebar', async ({ page }) 
   await expect(page.getByText('Browser version', { exact: true })).toBeVisible();
 });
 
+test('allows the console about disclaimer to scroll in short viewports', async ({ page }) => {
+  await page.setViewportSize({ width: 1210, height: 350 });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'About' }).click();
+
+  const aboutPanel = page.getByLabel('About game');
+  await expect(aboutPanel).toBeVisible();
+  await expect.poll(async () => aboutPanel.evaluate((element) => window.getComputedStyle(element).overflowY)).toBe('auto');
+  await expect.poll(async () => aboutPanel.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true);
+
+  const box = await aboutPanel.boundingBox();
+  expect(box).not.toBeNull();
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await page.mouse.wheel(0, 900);
+
+  await expect.poll(async () => aboutPanel.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+});
+
 test('opens tournament mode above characters and shows paid beta disabled', async ({ page }) => {
   await startFromSplash(page);
   const tournamentButton = page.getByRole('button', { name: 'Tournament' });

@@ -572,14 +572,16 @@ export function applyHorizontalTap(
   if (action !== 'left' && action !== 'right') return false;
   const lastTapKey = action === 'left' ? 'lastLeftTap' : 'lastRightTap';
   const oppositeAction = action === 'left' ? 'right' : 'left';
+  const oppositeLastTapKey = action === 'left' ? 'lastRightTap' : 'lastLeftTap';
 
   if (pressed) {
     input[action] = true;
     input[oppositeAction] = false;
+    state[oppositeLastTapKey] = Number.NEGATIVE_INFINITY;
+    if (state.heldAction === oppositeAction) state.heldAction = null;
     if (state.heldAction === action) return true;
     if (now - state[lastTapKey] <= DOUBLE_TAP_MS) {
-      input.dashForward = true;
-      input.dashBack = true;
+      (input as InputFrameWithMetadata).__horizontalDashDirection = action;
       state[lastTapKey] = Number.NEGATIVE_INFINITY;
     }
     state.heldAction = action;
@@ -596,6 +598,7 @@ export function applyHorizontalTap(
 export function consumeHorizontalTapAfterRead(input: InputFrame, _state: HorizontalTapState, _source: VerticalInputSource) {
   input.dashForward = false;
   input.dashBack = false;
+  delete (input as InputFrameWithMetadata).__horizontalDashDirection;
 }
 
 export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, _source: VerticalInputSource, now = performance.now()) {

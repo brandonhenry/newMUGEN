@@ -529,6 +529,9 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     facing: slot === 1 ? 1 : -1,
     facingYaw: slot === 1 ? Math.PI / 2 : -Math.PI / 2,
     controlSideSign: slot === 1 ? 1 : -1,
+    horizontalHoldDirection: null,
+    horizontalHoldIntent: null,
+    horizontalHoldControlSideSign: slot === 1 ? 1 : -1,
     state: 'idle',
     sidestepTimer: 0,
     sidestepDirection: 0,
@@ -910,7 +913,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
 
   if (fighter.backHopTotalFrames > 0) {
-    applyBackHopMovement(fighter, opponent, frameDelta);
+    applyBackHopMovement(match.stage, fighter, opponent, frameDelta);
     fighter.state = 'jump';
     const landed = applyGravity(fighter, dt, BACK_HOP_GRAVITY_SCALE);
     if (landed) clearBackHop(fighter);
@@ -949,7 +952,8 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     return;
   }
 
-  const horizontalIntent = resolveHorizontalIntent(fighter, opponent, input);
+  const horizontalIntent = resolveHorizontalIntent(match.stage, fighter, opponent, input);
+  const dashIntent = resolveHorizontalDashIntent(input, horizontalIntent);
   const forward = horizontalIntent.direction;
   fighter.walkDirection = 0;
   const holdingBack = horizontalIntent.back;
@@ -958,11 +962,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   const grounded = fighter.position.y === 0 && fighter.velocityY === 0;
   const crouching = input.down && grounded;
   const jumping = isAirborne(fighter);
-  const backHopRequested = input.dashBack && holdingBack && grounded && !crouching && !jumping && fighter.backHopCooldownFrames === 0;
+  const backHopRequested = dashIntent.back && holdingBack && grounded && !crouching && !jumping && fighter.backHopCooldownFrames === 0;
   const blocking = input.block || (holdingBack && !backHopRequested);
   const axisSpeedScale = crouching ? 0 : blocking ? 0.42 : 1;
   const laneSpeedScale = blocking ? 0.42 : crouching ? 0.18 : 1;
-  const dashForwardRequested = input.dashForward && forward > 0 && grounded && !blocking && !crouching && !jumping && fighter.dashForwardCooldownFrames === 0;
+  const dashForwardRequested = dashIntent.forward && forward > 0 && grounded && !blocking && !crouching && !jumping && fighter.dashForwardCooldownFrames === 0;
 
   if (jumpPressed && grounded && !blocking && !input.down) {
     fighter.velocityY = fighter.character.stats.jumpForce;
@@ -978,7 +982,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
 
   if (backHopRequested) {
     startBackHop(fighter);
-    applyBackHopMovement(fighter, opponent, frameDelta);
+    applyBackHopMovement(match.stage, fighter, opponent, frameDelta);
     applyGravity(fighter, dt, BACK_HOP_GRAVITY_SCALE);
     finishFighterStep();
     return;
@@ -1028,6 +1032,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     const sideBeforeHorizontalMove = getPositionSideSign(fighter, opponent, match.stage);
     fighter.walkDirection = forward > 0 ? 1 : -1;
     moveAlongOpponentAxis(fighter, opponent, forward * fighter.character.stats.speed * axisSpeedScale * dt);
+    if (forward < 0) {
+      preventRetreatCrossing(match.stage, fighter, opponent, sideBeforeHorizontalMove);
+    }
     if (horizontalMovementEndsLaneOrbit) {
       maybeUnlockLaneOrbitControlAfterHorizontalCross(match.stage, fighter, opponent, sideBeforeHorizontalMove);
     }
@@ -1362,6 +1369,7 @@ function cloneInputFrame(input: InputFrame): InputFrame {
   }
   const inputMeta = input as InputFrameWithMetadata;
   const cloneMeta = clone as InputFrameWithMetadata;
+  if (inputMeta.__horizontalDashDirection) cloneMeta.__horizontalDashDirection = inputMeta.__horizontalDashDirection;
   if (inputMeta.__pressedActions) cloneMeta.__pressedActions = [...inputMeta.__pressedActions];
   if (inputMeta.__pressSequences) cloneMeta.__pressSequences = { ...inputMeta.__pressSequences };
   return clone;
@@ -5025,6 +5033,7 @@ function updateControlSideSigns(match: MatchSnapshot) {
 function updateControlSideSign(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime) {
   if (isRecoverySideLocked(fighter)) return;
   if (isLaneOrbitActive(fighter)) return;
+  if (fighter.horizontalHoldIntent === 'back') return;
   fighter.controlSideSign = getPositionSideSign(fighter, opponent, stage) ?? fighter.controlSideSign;
 }
 
@@ -5201,13 +5210,23 @@ function startBackHop(fighter: FighterRuntime) {
   fighter.backHopCooldownFrames = BACK_HOP_COOLDOWN_FRAMES;
 }
 
-function applyBackHopMovement(fighter: FighterRuntime, opponent: FighterRuntime, frameDelta: number) {
+function applyBackHopMovement(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime, frameDelta: number) {
   if (fighter.backHopFrames <= 0) return;
   const overlapFrames = Math.min(fighter.backHopFrames, Math.max(0, frameDelta));
   if (overlapFrames <= 0) return;
   const tuning = getBackHopTuning(fighter);
+  const sideBeforeBackHopMove = getPositionSideSign(fighter, opponent, stage);
   moveAlongOpponentAxis(fighter, opponent, -(tuning.distance * overlapFrames) / tuning.durationFrames);
+  preventRetreatCrossing(stage, fighter, opponent, sideBeforeBackHopMove);
   fighter.backHopFrames = Math.max(0, fighter.backHopFrames - overlapFrames);
+}
+
+function preventRetreatCrossing(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime, sideBeforeMove: 1 | -1 | null) {
+  if (sideBeforeMove === null || sideBeforeMove !== fighter.horizontalHoldControlSideSign) return;
+  const sideAfterMove = getPositionSideSign(fighter, opponent, stage);
+  if (sideAfterMove !== null && sideAfterMove !== sideBeforeMove) {
+    keepFighterOnControlSide(stage, fighter, opponent, sideBeforeMove);
+  }
 }
 
 function clearBackHop(fighter: FighterRuntime) {
@@ -5264,17 +5283,34 @@ type HorizontalControlIntent = {
 };
 
 function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {
-  return resolveHorizontalIntent(fighter, opponent, input).direction;
+  return resolveHorizontalIntent(undefined, fighter, opponent, input).direction;
 }
 
-function resolveHorizontalIntent(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): HorizontalControlIntent {
-  if (input.left === input.right) return { direction: 0, forward: false, back: false, neutral: true };
-  const sideSign = getControlSideSign(fighter, opponent);
-  const forward = sideSign > 0 ? input.right : input.left;
-  const back = sideSign > 0 ? input.left : input.right;
-  if (forward) return { direction: 1, forward: true, back: false, neutral: false };
-  if (back) return { direction: -1, forward: false, back: true, neutral: false };
+function resolveHorizontalIntent(stage: StageDefinition | undefined, fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): HorizontalControlIntent {
+  const physicalDirection = input.left === input.right ? null : input.left ? 'left' : 'right';
+  if (!physicalDirection) {
+    fighter.horizontalHoldDirection = null;
+    fighter.horizontalHoldIntent = null;
+    return { direction: 0, forward: false, back: false, neutral: true };
+  }
+  if (fighter.horizontalHoldDirection !== physicalDirection) {
+    const sideSign = isLaneOrbitActive(fighter) ? getControlSideSign(fighter, opponent, stage) : getOpponentSideSign(fighter, opponent, stage);
+    const physicalForward = sideSign > 0 ? physicalDirection === 'right' : physicalDirection === 'left';
+    fighter.horizontalHoldDirection = physicalDirection;
+    fighter.horizontalHoldIntent = physicalForward ? 'forward' : 'back';
+    fighter.horizontalHoldControlSideSign = sideSign;
+  }
+  if (fighter.horizontalHoldIntent === 'forward') return { direction: 1, forward: true, back: false, neutral: false };
+  if (fighter.horizontalHoldIntent === 'back') return { direction: -1, forward: false, back: true, neutral: false };
   return { direction: 0, forward: false, back: false, neutral: true };
+}
+
+function resolveHorizontalDashIntent(input: InputFrame, horizontalIntent: HorizontalControlIntent) {
+  const physicalDashDirection = (input as InputFrameWithMetadata).__horizontalDashDirection;
+  if (!physicalDashDirection) return { forward: input.dashForward, back: input.dashBack };
+  const activePhysicalDirection = input.left === input.right ? null : input.left ? 'left' : 'right';
+  if (activePhysicalDirection !== physicalDashDirection) return { forward: false, back: false };
+  return { forward: horizontalIntent.forward, back: horizontalIntent.back };
 }
 
 function getOpponentSideSign(fighter: FighterRuntime, opponent: FighterRuntime, stage?: StageDefinition) {

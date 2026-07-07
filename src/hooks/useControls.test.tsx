@@ -4,7 +4,7 @@ import { starterCharacters } from '../data/characters';
 import { stages } from '../data/stages';
 import { createMatch, stepMatch } from '../engine/fightEngine';
 import { cloneSettings, defaultGameSettings } from '../lib/gameSettings';
-import { emptyInputFrame } from '../types';
+import { emptyInputFrame, type InputFrameWithMetadata } from '../types';
 import { useControls } from './useControls';
 
 type ControlsApi = ReturnType<typeof useControls>;
@@ -97,6 +97,61 @@ describe('useControls', () => {
     expect(match.controlScheme).toBe('beginner');
     expect(match.fighters[0].currentMove?.input).toBe('jab');
   });
+
+  it('does not synthesize forward dash while holding controller back', () => {
+    const pad = makeMutableGamepad({ index: 0, buttons: { 14: true } });
+    mockGamepads([pad]);
+    render(<Harness />);
+
+    for (let frame = 0; frame < 360; frame += 1) {
+      const [p1Input] = controlsApi!.readInputsForStep();
+      expect(p1Input.left).toBe(true);
+      expect(p1Input.right).toBe(false);
+      expect(p1Input.dashForward).toBe(false);
+      expect(p1Input.dashBack).toBe(false);
+      expect((p1Input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
+    }
+  });
+
+  it('keeps analog back jitter from becoming semantic forward dash', () => {
+    const pad = makeMutableGamepad({ index: 0, axes: [-0.8, 0] });
+    mockGamepads([pad]);
+    render(<Harness />);
+
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ left: true, dashForward: false });
+    setGamepadAxis(pad, 0, -0.32);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ left: false, dashForward: false });
+    setGamepadAxis(pad, 0, -0.82);
+    const [p1Input] = controlsApi!.readInputsForStep();
+
+    expect(p1Input.left).toBe(true);
+    expect(p1Input.dashForward).toBe(false);
+  });
+
+  it('lets D-pad back win over noisy forward stick input', () => {
+    const pad = makeMutableGamepad({ index: 0, buttons: { 14: true }, axes: [0.9, 0] });
+    mockGamepads([pad]);
+    render(<Harness />);
+
+    const [p1Input] = controlsApi!.readInputsForStep();
+
+    expect(p1Input.left).toBe(true);
+    expect(p1Input.right).toBe(false);
+    expect(p1Input.dashForward).toBe(false);
+  });
+
+  it('does not synthesize forward dash while holding mobile back', () => {
+    render(<Harness />);
+
+    controlsApi!.setVirtualAction(1, 'left', true);
+    for (let frame = 0; frame < 180; frame += 1) {
+      const [p1Input] = controlsApi!.readInputsForStep();
+      expect(p1Input.left).toBe(true);
+      expect(p1Input.dashForward).toBe(false);
+      expect((p1Input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
+    }
+    controlsApi!.setVirtualAction(1, 'left', false);
+  });
 });
 
 function mockGamepads(pads: Array<Gamepad | null>) {
@@ -142,4 +197,8 @@ function setGamepadButton(gamepad: Gamepad, buttonIndex: number, pressed: boolea
   button.pressed = pressed;
   button.touched = pressed;
   button.value = pressed ? 1 : 0;
+}
+
+function setGamepadAxis(gamepad: Gamepad, axisIndex: number, value: number) {
+  (gamepad.axes as number[])[axisIndex] = value;
 }

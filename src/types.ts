@@ -818,6 +818,7 @@ export type StagePropLibraryManifest = {
 export type InputFrame = Record<ActionName, boolean>;
 
 export type InputFrameMetadata = {
+  __horizontalDashDirection?: 'left' | 'right';
   __pressedActions?: ActionName[];
   __pressSequences?: Partial<Record<ActionName, number>>;
 };
@@ -1150,6 +1151,9 @@ export type FighterRuntime = {
   facing: 1 | -1;
   facingYaw: number;
   controlSideSign: 1 | -1;
+  horizontalHoldDirection: 'left' | 'right' | null;
+  horizontalHoldIntent: 'forward' | 'back' | null;
+  horizontalHoldControlSideSign: 1 | -1;
   state: FighterState;
   sidestepTimer: number;
   sidestepDirection: -1 | 0 | 1;

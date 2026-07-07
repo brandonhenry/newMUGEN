@@ -16,7 +16,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { compactMatchSnapshot, hydrateMatchSnapshot } from '../lib/online/codec';
-import { emptyInputFrame, type ActionName, type CharacterDefinition, type MatchSnapshot, type MoveDefinition, type MoveInput, type MoveProjectileInstance, type StageDefinition } from '../types';
+import { emptyInputFrame, type ActionName, type CharacterDefinition, type InputFrameWithMetadata, type MatchSnapshot, type MoveDefinition, type MoveInput, type MoveProjectileInstance, type StageDefinition } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, getFighterAnimationFrameSource, stepMatch } from './fightEngine';
 
 function unwrappedAngleDelta(next: number, previous: number) {
@@ -1341,7 +1341,7 @@ describe('character manifests', () => {
     expect(input.sidewalkDown).toBe(false);
   });
 
-  it('turns double tap left or right into one-frame dash flags while preserving hold movement', () => {
+  it('turns double tap left or right into one-frame physical dash metadata while preserving hold movement', () => {
     const input = emptyInputFrame();
     const state = createHorizontalTapState();
 
@@ -1349,16 +1349,19 @@ describe('character manifests', () => {
     expect(input.right).toBe(true);
     expect(input.dashForward).toBe(false);
     expect(input.dashBack).toBe(false);
+    expect((input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
     applyHorizontalTap(input, state, 'right', false, 'keyboard', 130);
 
     applyHorizontalTap(input, state, 'right', true, 'keyboard', 210);
     expect(input.right).toBe(true);
-    expect(input.dashForward).toBe(true);
-    expect(input.dashBack).toBe(true);
+    expect(input.dashForward).toBe(false);
+    expect(input.dashBack).toBe(false);
+    expect((input as InputFrameWithMetadata).__horizontalDashDirection).toBe('right');
     consumeHorizontalTapAfterRead(input, state, 'keyboard');
     expect(input.right).toBe(true);
     expect(input.dashForward).toBe(false);
     expect(input.dashBack).toBe(false);
+    expect((input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
 
     applyHorizontalTap(input, state, 'right', false, 'keyboard', 240);
     applyHorizontalTap(input, state, 'left', true, 'keyboard', 330);
@@ -1366,8 +1369,9 @@ describe('character manifests', () => {
     applyHorizontalTap(input, state, 'left', true, 'keyboard', 410);
     expect(input.left).toBe(true);
     expect(input.right).toBe(false);
-    expect(input.dashForward).toBe(true);
-    expect(input.dashBack).toBe(true);
+    expect(input.dashForward).toBe(false);
+    expect(input.dashBack).toBe(false);
+    expect((input as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
   });
 
   it('preserves a press-and-release between simulation reads for exactly one step', () => {
@@ -1442,8 +1446,9 @@ describe('character manifests', () => {
     applyHorizontalTap(input, horizontalState, 'right', false, 'keyboard', 250);
     applyHorizontalTap(input, horizontalState, 'right', true, 'keyboard', 310);
     expect(input.right).toBe(true);
-    expect(input.dashForward).toBe(true);
-    expect(input.dashBack).toBe(true);
+    expect(input.dashForward).toBe(false);
+    expect(input.dashBack).toBe(false);
+    expect((input as InputFrameWithMetadata).__horizontalDashDirection).toBe('right');
   });
 
   it('does not promote the held second vertical tap into continuous lane walking', () => {
@@ -4313,6 +4318,67 @@ describe('fight engine', () => {
     expect(crossedMatch.fighters[0].position.x).toBeLessThan(crossedBefore - 0.8);
     expect(crossedMatch.fighters[0].dashForwardFrames).toBeGreaterThan(0);
     expect(crossedMatch.fighters[0].walkDirection).toBe(1);
+  });
+
+  it('does not turn held physical back into forward dash after the opponent changes sides', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    const heldBack = { ...emptyInputFrame(), left: true };
+    match = stepMatch(match, heldBack, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].horizontalHoldIntent).toBe('back');
+
+    match.fighters[1].position.x = match.fighters[0].position.x - 1.2;
+    const before = match.fighters[0].position.x;
+    const jitterBack = { ...emptyInputFrame(), left: true } as InputFrameWithMetadata;
+    jitterBack.__horizontalDashDirection = 'left';
+
+    match = stepMatch(match, jitterBack, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].dashForwardFrames).toBe(0);
+    expect(match.fighters[0].horizontalHoldIntent).toBe('back');
+    expect(match.fighters[0].position.x).toBeGreaterThanOrEqual(before);
+  });
+
+  it('allows a fresh physical forward press after releasing held back', () => {
+    let match = createMatch({ ...starterCharacters[0], stats: { ...starterCharacters[0].stats, dashDistance: 0.95 } }, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    match = stepMatch(match, { ...emptyInputFrame(), left: true }, emptyInputFrame(), 1 / 60);
+    match.fighters[1].position.x = match.fighters[0].position.x - 1.2;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].horizontalHoldIntent).toBe(null);
+
+    const before = match.fighters[0].position.x;
+    const freshForward = { ...emptyInputFrame(), left: true } as InputFrameWithMetadata;
+    freshForward.__horizontalDashDirection = 'left';
+    match = stepMatch(match, freshForward, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].dashForwardFrames).toBeGreaterThan(0);
+    expect(match.fighters[0].position.x).toBeLessThan(before - 0.5);
+    expect(match.fighters[0].horizontalHoldIntent).toBe('forward');
+  });
+
+  it('keeps both players from crossing through the opponent while holding back', () => {
+    let p1Match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    p1Match.phase = 'fighting';
+    p1Match.countdown = 0;
+    for (let frame = 0; frame < 600; frame += 1) {
+      p1Match = stepMatch(p1Match, { ...emptyInputFrame(), left: true }, emptyInputFrame(), 1 / 60);
+      expect(p1Match.fighters[0].position.x).toBeLessThan(p1Match.fighters[1].position.x);
+      expect(p1Match.fighters[0].dashForwardFrames).toBe(0);
+    }
+
+    let p2Match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    p2Match.phase = 'fighting';
+    p2Match.countdown = 0;
+    for (let frame = 0; frame < 600; frame += 1) {
+      p2Match = stepMatch(p2Match, emptyInputFrame(), { ...emptyInputFrame(), right: true }, 1 / 60);
+      expect(p2Match.fighters[1].position.x).toBeGreaterThan(p2Match.fighters[0].position.x);
+      expect(p2Match.fighters[1].dashForwardFrames).toBe(0);
+    }
   });
 
   it('keeps continuous lane walking on the same stage lane after side crossover', () => {
