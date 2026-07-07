@@ -3058,8 +3058,12 @@ function updateCommandHistory(fighter: FighterRuntime, opponent: FighterRuntime,
     .filter((entry) => entry.age <= 0.62);
 
   const token = getDirectionalNotation(fighter, opponent, input);
+  const physicalDashToken = getPhysicalHorizontalDashNotation(fighter, opponent, input);
   if (token !== 'N' && token !== fighter.previousDirectionToken) {
     fighter.commandHistory.push({ token, age: 0 });
+  }
+  if (physicalDashToken && token === physicalDashToken && !hasRecentSequence(fighter.commandHistory, [physicalDashToken, physicalDashToken])) {
+    fighter.commandHistory.push({ token: physicalDashToken, age: 0 });
   }
   fighter.previousDirectionToken = token;
 }
@@ -3098,6 +3102,13 @@ function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntim
 
   if (input.charge) push(`O+${buttonText}`);
   for (const motion of getMotionCandidates(fighter.commandHistory)) push(`${motion}+${buttonText}`);
+  const physicalDashToken = getPhysicalHorizontalDashNotation(fighter, opponent, input);
+  if (physicalDashToken === 'f') {
+    push(`WR+${buttonText}`);
+    push(`f,f+${buttonText}`);
+  } else if (physicalDashToken === 'b') {
+    push(`b,b+${buttonText}`);
+  }
 
   if (fighter.state === 'sidestep' || input.sidestepUp || input.sidestepDown || input.sidewalkUp || input.sidewalkDown) {
     push(`SS+${buttonText}`);
@@ -3128,6 +3139,7 @@ function buildCommandCandidates(fighter: FighterRuntime, opponent: FighterRuntim
 function hasCommandInputIntent(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, freshMoveInput: MoveInput) {
   if (getHeldButtons(input, freshMoveInput).length > 1) return true;
   if (getDirectionalNotation(fighter, opponent, input) !== 'N') return true;
+  if (getPhysicalHorizontalDashNotation(fighter, opponent, input)) return true;
   if (input.sidestepUp || input.sidestepDown || input.sidewalkUp || input.sidewalkDown || fighter.state === 'sidestep') return true;
   return getMotionCandidates(fighter.commandHistory).length > 0;
 }
@@ -3147,6 +3159,15 @@ function getDirectionalNotation(fighter: FighterRuntime, opponent: FighterRuntim
   const horizontal = forward > 0 ? 'f' : forward < 0 ? 'b' : '';
   if (vertical && horizontal) return `${vertical}/${horizontal}`;
   return vertical || horizontal || 'N';
+}
+
+function getPhysicalHorizontalDashNotation(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): 'f' | 'b' | null {
+  const physicalDashDirection = (input as InputFrameWithMetadata).__horizontalDashDirection;
+  if (!physicalDashDirection) return null;
+  const activePhysicalDirection = input.left === input.right ? null : input.left ? 'left' : 'right';
+  if (activePhysicalDirection !== physicalDashDirection) return null;
+  const forward = resolveForwardInput(fighter, opponent, input);
+  return forward > 0 ? 'f' : forward < 0 ? 'b' : null;
 }
 
 function getMotionCandidates(history: FighterRuntime['commandHistory']) {

@@ -8,6 +8,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { KTX2Loader } from 'three-stdlib';
 import type {
   CharacterDefinition,
   CharacterEffectDefinition,
@@ -51,6 +52,20 @@ import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEv
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 import { KORE_APP_VERSION } from '../appVersion';
 import { makePreviewInput, previewScriptLength, type TrainingPreviewFrame } from '../lib/trainingTrials';
+import {
+  MODEL_STAGE_IDS,
+  STAGE_BASIS_TRANSCODER_PATH,
+  STAGE_DRACO_DECODER_PATH,
+  isModelStage,
+  markStageAssetDecoded,
+  markStageAssetError,
+  markStageAssetGpuWarm,
+  markStageAssetReady,
+  prefetchStageModelDecoders,
+  preloadStageModel,
+  resolveStageModelDefinition,
+  resolveStageModelUrl
+} from '../lib/stageAssets';
 
 type GameSceneProps = {
   match: MatchSnapshot;
@@ -132,7 +147,6 @@ const FULL_FIGHT_FIGHTER_RENDER_STYLE: Partial<FighterRenderStyle> = {
 };
 
 const DEFAULT_SKYBOX_PATH = '/stages/shared/default-skybox.png';
-const MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
 const MODEL_STAGE_DEBUG_ID_PREFIXES = ['bleach-', 'dbz-', 'general-', 'naruto-', 'one-piece-', 'one-punch-man-'];
 const FIXED_STAGE_PREVIEW_CAMERA_POSITION: [number, number, number] = [24, 24, 64];
 const FIXED_STAGE_PREVIEW_TARGET: [number, number, number] = [0, 3.2, 0];
@@ -213,12 +227,6 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
   console.info(`[KORE stage-model-debug] ${event} ${JSON.stringify(payload)}`);
 }
 
-function withStageAssetVersion(path: string) {
-  if (!path || path.startsWith('data:') || path.startsWith('blob:')) return path;
-  const separator = path.includes('?') ? '&' : '?';
-  return `${path}${separator}v=${encodeURIComponent(KORE_APP_VERSION)}`;
-}
-
 function bytesToHex(bytes: Uint8Array) {
   return Array.from(bytes).map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
@@ -253,27 +261,6 @@ async function probeStageModelAsset(stageId: string, modelPath: string, signal: 
     htmlFallback,
     elapsedMs: Math.round(performance.now() - startedAt)
   });
-}
-
-function isModelStage(stage: Pick<StageDefinition, 'id' | 'renderMode' | 'model'>) {
-  return stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url) || MODEL_STAGE_IDS.has(stage.id);
-}
-
-function resolveStageModel(stage: StageDefinition): StageModelDefinition | undefined {
-  if (stage.model?.path || stage.model?.url) return stage.model;
-  if (!MODEL_STAGE_IDS.has(stage.id)) return undefined;
-  return {
-    path: `/stages/${stage.id}/stage.glb`,
-    url: `/stages/${stage.id}/stage.glb`,
-    format: 'glb',
-    position: stage.id === 'hidden-leaf-village' ? [-16, 0, -8] : [0, 0, 0],
-    scale: [1, 1, 1],
-    rotation: [0, 0, 0],
-    focus: stage.id === 'hidden-leaf-village' ? [0, 2.1, 0] : [0, 1.5, 0],
-    castShadow: true,
-    receiveShadow: true,
-    decorativeProps: []
-  };
 }
 
 function roundDebugNumber(value: number, decimals = 4) {
@@ -1770,12 +1757,15 @@ type ActiveMoveSoundBinding = {
 function EffectLayer({
   match,
   audioSettings,
-  reducedMotion
+  reducedMotion,
+  renderTick
 }: {
   match: MatchSnapshot;
   audioSettings?: GameSettings['audio'];
   reducedMotion: boolean;
+  renderTick?: number;
 }) {
+  void renderTick;
   const bindings = getActiveEffectBindings(match);
   useEffectAudioCues(bindings, audioSettings);
   useMoveAudioCues(getActiveMoveSoundBindings(match), audioSettings);
@@ -1793,7 +1783,8 @@ function EffectLayer({
   );
 }
 
-function ProjectileLayer({ match, stage }: { match: MatchSnapshot; stage: StageDefinition }) {
+function ProjectileLayer({ match, stage, renderTick }: { match: MatchSnapshot; stage: StageDefinition; renderTick?: number }) {
+  void renderTick;
   const projectiles = match.projectiles ?? [];
   if (projectiles.length === 0) return null;
   return (
@@ -2335,6 +2326,11 @@ export function StagePreviewCanvas({
       fightersVisible
     });
   }, [fightersVisible, interactive, modelStage, previewMode, stage.id, stage.model?.path, stage.model?.url, stage.renderMode]);
+  useEffect(() => {
+    if (!modelStage) return;
+    prefetchStageModelDecoders();
+    void preloadStageModel(stage);
+  }, [modelStage, stage]);
   return (
     <Canvas
       key={`${stage.id}:${stage.renderMode ?? 'procedural'}:${stage.model?.path ?? stage.model?.url ?? ''}`}
@@ -2609,8 +2605,9 @@ export function MenuAttractScene({
   match,
   sparkSettings = defaultSparkSettings,
   reducedMotion = false,
-  performanceMode = 'full'
-}: GameSceneProps & { performanceMode?: MenuAttractPerformanceMode }) {
+  performanceMode = 'full',
+  renderTick = 0
+}: GameSceneProps & { performanceMode?: MenuAttractPerformanceMode; renderTick?: number }) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   const snappy = performanceMode === 'snappy';
   const dpr: [number, number] = snappy ? [0.42, 0.6] : [0.55, 0.75];
@@ -2636,7 +2633,8 @@ export function MenuAttractScene({
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         {stableScene}
         {!snappy && <>
-          <EffectLayer match={match} reducedMotion={reducedMotion} />
+          <EffectLayer match={match} reducedMotion={reducedMotion} renderTick={renderTick} />
+          <ProjectileLayer match={match} stage={match.stage} renderTick={renderTick} />
           <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
         </>}
       </StageCameraCollisionContext.Provider>
@@ -3990,8 +3988,8 @@ function ModelStage({
   onSelectProp?: (propId: string) => void;
   showFightLaneMarkers?: boolean;
 }) {
-  const modelDefinition = resolveStageModel(stage);
-  const modelPath = modelDefinition?.path ?? modelDefinition?.url;
+  const modelDefinition = resolveStageModelDefinition(stage);
+  const modelPath = modelDefinition ? resolveStageModelUrl(stage) : '';
   useEffect(() => {
     logStageModelDebug('H10 ModelStage mounted', {
       stageId: stage.id,
@@ -4014,7 +4012,7 @@ function ModelStage({
     if (!modelPath) return;
     let cancelled = false;
     const controller = new AbortController();
-    probeStageModelAsset(stage.id, withStageAssetVersion(modelPath), controller.signal)
+    probeStageModelAsset(stage.id, modelPath, controller.signal)
       .catch((error) => {
         if (cancelled) return;
         logStageModelDebug('GLB asset probe threw', {
@@ -4236,9 +4234,17 @@ function ModelStageLoadBackdrop({ stage }: { stage: StageDefinition }) {
 }
 
 function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; modelDefinition: StageModelDefinition }) {
-  const modelPath = modelDefinition?.path ?? modelDefinition?.url ?? '';
+  const modelPath = resolveStageModelUrl(stage);
   const modelGroupRef = useRef<THREE.Group>(null);
   const requestStartedAtRef = useRef(performance.now());
+  const { gl, scene: rootScene, camera } = useThree();
+  const extendStageLoader = useCallback((loader: { setKTX2Loader?: (ktx2Loader: KTX2Loader) => unknown }) => {
+    if (!loader.setKTX2Loader) return;
+    const ktx2Loader = new KTX2Loader();
+    ktx2Loader.setTranscoderPath(STAGE_BASIS_TRANSCODER_PATH);
+    ktx2Loader.detectSupport(gl);
+    loader.setKTX2Loader(ktx2Loader);
+  }, [gl]);
   const gltfRequestPath = useMemo(() => {
     requestStartedAtRef.current = performance.now();
     logStageModelDebug('H10 StageModelScene useGLTF requested', {
@@ -4246,10 +4252,11 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
       renderMode: stage.renderMode,
       modelPath
     });
-    return withStageAssetVersion(modelPath);
+    return modelPath;
   }, [modelPath, stage.id, stage.renderMode]);
-  const gltf = useGLTF(gltfRequestPath);
+  const gltf = useGLTF(gltfRequestPath, STAGE_DRACO_DECODER_PATH, true, extendStageLoader);
   useEffect(() => {
+    markStageAssetDecoded(stage.id, gltfRequestPath);
     logStageModelDebug('H10 StageModelScene useGLTF resolved', {
       stageId: stage.id,
       renderMode: stage.renderMode,
@@ -4257,7 +4264,7 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
       childCount: gltf.scene.children.length,
       resolveMs: Math.round(performance.now() - requestStartedAtRef.current)
     });
-  }, [gltf.scene, modelPath, stage.id, stage.renderMode]);
+  }, [gltf.scene, gltfRequestPath, modelPath, stage.id, stage.renderMode]);
   const basePosition = modelDefinition?.position ?? [0, 0, 0];
   const scale = modelDefinition?.scale ?? [1, 1, 1];
   const rotation = modelDefinition?.rotation ?? [0, 0, 0];
@@ -4322,6 +4329,35 @@ function StageModelScene({ stage, modelDefinition }: { stage: StageDefinition; m
       firstRenderSafe: true
     });
   }, [flattenedMeshes, sceneNormalization.normalizedMaterialCount, sceneNormalization.normalizedMeshCount, stage.id, useFlattenedModel]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const modelGroup = modelGroupRef.current;
+    if (!modelGroup) return undefined;
+    modelGroup.updateWorldMatrix(true, true);
+    const textures = collectStageModelTextures(modelGroup);
+    try {
+      textures.forEach((texture) => {
+        gl.initTexture(texture);
+      });
+      markStageAssetGpuWarm(stage.id, gltfRequestPath);
+      const compileResult = typeof gl.compileAsync === 'function'
+        ? gl.compileAsync(modelGroup, camera, rootScene)
+        : Promise.resolve(gl.compile(modelGroup, camera, rootScene));
+      void compileResult
+        .then(() => {
+          if (!cancelled) markStageAssetReady(stage.id, gltfRequestPath);
+        })
+        .catch((error) => {
+          if (!cancelled) markStageAssetError(stage.id, error, gltfRequestPath);
+        });
+    } catch (error) {
+      markStageAssetError(stage.id, error, gltfRequestPath);
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [camera, gl, gltfRequestPath, rootScene, scene, stage.id]);
 
   useEffect(() => {
     const cloneBounds = manifestBoundsBox?.clone() ?? new THREE.Box3().setFromObject(scene);
@@ -4519,6 +4555,21 @@ function StageModelFlattenedMeshes({ meshes }: { meshes: FlattenedStageModelMesh
       ))}
     </group>
   );
+}
+
+function collectStageModelTextures(root: THREE.Object3D) {
+  const textures = new Set<THREE.Texture>();
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    meshMaterials(mesh).forEach((material) => {
+      Object.values(material).forEach((value) => {
+        const texture = value as THREE.Texture;
+        if (texture?.isTexture) textures.add(texture);
+      });
+    });
+  });
+  return textures;
 }
 
 function StageModelRuntimeProbe({

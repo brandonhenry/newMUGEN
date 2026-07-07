@@ -42,12 +42,18 @@ const sourceRoot = resolve(args.get('source') ?? defaultSourceRoot);
 const skipUnavailable = flags.has('skip-unavailable');
 const dryRun = flags.has('dry-run') || flags.has('list');
 const onlyStageId = args.get('stage');
+const stageBudgetMb = numberArg('stage-budget-mb', 35);
+const stageSimplifyRatio = numberArg('stage-simplify-ratio', 0.82);
+const stageSimplifyError = numberArg('stage-simplify-error', 0.002);
+const stageTextureSize = Math.round(numberArg('stage-texture-size', 1024));
+const stageTextureCompress = args.get('stage-texture-compress') ?? process.env.KORE_STAGE_TEXTURE_COMPRESS ?? 'webp';
+const stageGeometryCompress = args.get('stage-geometry-compress') ?? process.env.KORE_STAGE_GEOMETRY_COMPRESS ?? 'meshopt';
 const hiddenLeafBudgetMb = numberArg('hidden-leaf-budget-mb', 60);
 const hiddenLeafSimplifyRatio = numberArg('hidden-leaf-simplify-ratio', 0.35);
 const hiddenLeafSimplifyError = numberArg('hidden-leaf-simplify-error', 0.012);
 const hiddenLeafTextureSize = Math.round(numberArg('hidden-leaf-texture-size', 512));
-const hiddenLeafTextureCompress = args.get('hidden-leaf-texture-compress') ?? process.env.KORE_HIDDEN_LEAF_TEXTURE_COMPRESS ?? 'webp';
-const hiddenLeafGeometryCompress = args.get('hidden-leaf-geometry-compress') ?? process.env.KORE_HIDDEN_LEAF_GEOMETRY_COMPRESS ?? 'false';
+const hiddenLeafTextureCompress = args.get('hidden-leaf-texture-compress') ?? process.env.KORE_HIDDEN_LEAF_TEXTURE_COMPRESS ?? stageTextureCompress;
+const hiddenLeafGeometryCompress = args.get('hidden-leaf-geometry-compress') ?? process.env.KORE_HIDDEN_LEAF_GEOMETRY_COMPRESS ?? stageGeometryCompress;
 const installAddons = !flags.has('no-addon-install') && process.env.KORE_STAGE_AUTO_INSTALL_ADDONS !== 'false';
 const duplicateSkips = [];
 
@@ -595,35 +601,34 @@ async function optimizeGlb(inputPath, outputPath, stage) {
   }
   try {
     const hiddenLeaf = stage.id === 'hidden-leaf-village';
+    const budgetMb = hiddenLeaf ? hiddenLeafBudgetMb : stageBudgetMb;
     await run(gltfTransform, [
       'optimize',
       inputPath,
       outputPath,
       '--compress',
-      hiddenLeaf ? hiddenLeafGeometryCompress : 'false',
+      hiddenLeaf ? hiddenLeafGeometryCompress : stageGeometryCompress,
       '--texture-compress',
-      hiddenLeaf ? hiddenLeafTextureCompress : 'false',
+      hiddenLeaf ? hiddenLeafTextureCompress : stageTextureCompress,
       '--simplify',
-      hiddenLeaf ? 'true' : 'false',
+      hiddenLeaf || stageSimplifyRatio < 1 ? 'true' : 'false',
       '--simplify-ratio',
-      hiddenLeaf ? String(hiddenLeafSimplifyRatio) : '0',
+      hiddenLeaf ? String(hiddenLeafSimplifyRatio) : String(stageSimplifyRatio),
       '--simplify-error',
-      hiddenLeaf ? String(hiddenLeafSimplifyError) : '0.0001',
+      hiddenLeaf ? String(hiddenLeafSimplifyError) : String(stageSimplifyError),
       '--texture-size',
-      hiddenLeaf ? String(hiddenLeafTextureSize) : '2048',
+      hiddenLeaf ? String(hiddenLeafTextureSize) : String(stageTextureSize),
       '--palette',
       'false'
     ]);
     if (hiddenLeaf) {
       await centerGlb(outputPath);
-      await assertGlbBudget(outputPath, hiddenLeafBudgetMb, stage.id);
     }
+    await assertGlbBudget(outputPath, budgetMb, stage.id);
     await run(gltfTransform, ['inspect', outputPath]);
   } catch (error) {
     await rm(outputPath, { force: true });
-    if (stage.id === 'hidden-leaf-village') throw error;
-    await rename(inputPath, outputPath);
-    console.warn(`gltf-transform optimize failed for ${stage.id}; kept raw GLB. ${error instanceof Error ? error.message : error}`);
+    throw error;
   }
 }
 
@@ -642,7 +647,7 @@ async function assertGlbBudget(outputPath, budgetMb, stageId) {
   if (sizeMb <= budgetMb) return;
   throw new Error(
     `${stageId} optimized GLB is ${sizeMb.toFixed(1)} MB, above the ${budgetMb} MB budget. ` +
-    'Raise --hidden-leaf-budget-mb intentionally or lower --hidden-leaf-simplify-ratio / --hidden-leaf-texture-size.'
+    'Raise --stage-budget-mb intentionally or lower --stage-simplify-ratio / --stage-texture-size.'
   );
 }
 

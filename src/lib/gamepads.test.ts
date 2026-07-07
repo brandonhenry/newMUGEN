@@ -58,7 +58,7 @@ describe('gamepad helpers', () => {
 
   it('converts stick axes and D-pad buttons into fight movement', () => {
     const axisPad = makeGamepad({ axes: [-0.8, 0.75] });
-    const dpadPad = makeGamepad({ buttons: { 12: true, 15: true } });
+    const dpadPad = makeGamepad({ id: 'Xbox Wireless Controller (STANDARD GAMEPAD)', buttons: { 12: true, 15: true } });
 
     const axisInput = readFightGamepadInput(axisPad, defaultGameSettings.controls, 0);
     expect(axisInput.left).toBe(true);
@@ -69,11 +69,18 @@ describe('gamepad helpers', () => {
     expect(dpadInput.right).toBe(true);
   });
 
-  it('uses nonstandard hat axes as additive D-pad fallback', () => {
-    const hatPad = makeGamepad({ mapping: '', axes: [0, 0, 0, 0, 0, 0, -1, 1] });
+  it('uses Steam Deck nonstandard hat axes when primary axes are neutral', () => {
+    const hatPad = makeGamepad({ id: 'Steam Deck Controller', mapping: '', axes: [0, 0, 0, 0, 0, 0, -1, 1] });
 
     expect(readFightGamepadInput(hatPad, defaultGameSettings.controls, 0)).toMatchObject({ left: true, down: true });
     expect(readMenuGamepadState(hatPad, false)).toMatchObject({ left: true, down: true });
+  });
+
+  it('keeps primary axes above nonstandard Steam hat axes when both report directions', () => {
+    const pad = makeGamepad({ id: 'Steam Virtual Gamepad', mapping: '', axes: [0.82, 0, 0, 0, 0, 0, -1, 0] });
+
+    expect(readFightGamepadInput(pad, defaultGameSettings.controls, 0)).toMatchObject({ left: false, right: true });
+    expect(readMenuGamepadState(pad, false)).toMatchObject({ left: false, right: true });
   });
 
   it('does not let standard-pad auxiliary axes override normal direction axes', () => {

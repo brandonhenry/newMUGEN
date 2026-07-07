@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
@@ -6,6 +6,7 @@ import process from 'node:process';
 const root = process.cwd();
 const publicDir = path.join(root, 'public');
 const indexPath = path.join(publicDir, 'stages', 'index.json');
+const modelBudgetMb = Number(process.env.KORE_STAGE_MODEL_BUDGET_MB ?? 35);
 
 function publicPathToFile(assetPath) {
   if (!assetPath || !assetPath.startsWith('/')) return null;
@@ -42,6 +43,10 @@ for (const id of ids) {
   }
   const header = await readFile(modelFile, { encoding: null, flag: 'r' }).then((buffer) => buffer.subarray(0, 4).toString('utf8'));
   if (header !== 'glTF') failures.push(`${id}: ${modelPath} does not start with GLB magic bytes`);
+  const sizeMb = (await stat(modelFile)).size / 1024 / 1024;
+  if (Number.isFinite(modelBudgetMb) && sizeMb > modelBudgetMb) {
+    failures.push(`${id}: ${modelPath} is ${sizeMb.toFixed(1)} MB, above the ${modelBudgetMb} MB stage model budget`);
+  }
 }
 
 if (failures.length > 0) {

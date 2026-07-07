@@ -91,6 +91,31 @@ function makeInput(...actions: ActionName[]) {
   return input;
 }
 
+function makePhysicalHorizontalDashInput(direction: 'left' | 'right', moveInput: MoveInput) {
+  const input = makeInput(direction, moveInput) as InputFrameWithMetadata;
+  input.__horizontalDashDirection = direction;
+  input.__pressedActions = [moveInput];
+  return input;
+}
+
+function makeHorizontalDashCommandCharacter(command: string, label: string): CharacterDefinition {
+  const base = starterCharacters[0];
+  const animationKey = `cmd:${command}`;
+  return {
+    ...base,
+    id: `${base.id}-${command.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-test`,
+    displayName: `${base.displayName} ${label}`,
+    animationFrames: {
+      ...(base.animationFrames ?? {}),
+      [animationKey]: [`/test-${animationKey}.png`]
+    },
+    moveOverrides: {
+      ...(base.moveOverrides ?? {}),
+      [animationKey]: { label, damage: 17, blockDamage: 3 }
+    }
+  };
+}
+
 function makeProjectileCharacter(id: string, options: Partial<MoveDefinition> = {}, projectileOptions: Partial<MoveProjectileInstance> = {}): CharacterDefinition {
   const base = normalizeCharacter(starterCharacters[0]);
   const jab = normalizeMove({
@@ -986,6 +1011,43 @@ describe('character manifests', () => {
     expect(match.fighters[0].currentMove?.command).toBe('d+3');
     expect(match.fighters[0].currentMove?.label).toBe('Immediate Low Kick');
     expect(match.fighters[0].currentMove?.hitLevel).toBe('low');
+  });
+
+  it.each([
+    {
+      command: 'WR+4',
+      label: 'Running Test Special',
+      historyToken: 'f',
+      direction: 'right',
+      moveInput: 'special'
+    },
+    {
+      command: 'f,f+4',
+      label: 'Forward Forward Test Special',
+      historyToken: 'f',
+      direction: 'right',
+      moveInput: 'special'
+    },
+    {
+      command: 'b,b+1',
+      label: 'Back Back Test Jab',
+      historyToken: 'b',
+      direction: 'left',
+      moveInput: 'jab'
+    }
+  ] as const)('routes $command from physical horizontal double-tap metadata when neutral was not sampled', ({ command, label, historyToken, direction, moveInput }) => {
+    const character = makeHorizontalDashCommandCharacter(command, label);
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].commandHistory = [{ token: historyToken, age: 0.05 }];
+    match.fighters[0].previousDirectionToken = historyToken;
+
+    match = stepMatch(match, makePhysicalHorizontalDashInput(direction, moveInput), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].currentMove?.command).toBe(command);
+    expect(match.fighters[0].currentMove?.label).toBe(label);
+    expect(match.fighters[0].commandHistory.filter((entry) => entry.token === historyToken)).toHaveLength(2);
   });
 
   it('keeps KORE move damage unchanged', () => {

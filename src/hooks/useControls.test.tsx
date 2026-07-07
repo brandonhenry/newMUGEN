@@ -163,6 +163,40 @@ describe('useControls', () => {
     expect((p1Input as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
   });
 
+  it.each([
+    ['Xbox Wireless Controller (STANDARD GAMEPAD)', 15, 'right'],
+    ['Steam Virtual Gamepad', 14, 'left']
+  ] as const)('turns slower %s horizontal D-pad double taps into physical dash metadata', (id, buttonIndex, direction) => {
+    const pad = makeMutableGamepad({ index: 0, id });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, buttonIndex, true);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({
+      left: direction === 'left',
+      right: direction === 'right'
+    });
+
+    setNow(220);
+    setGamepadButton(pad, buttonIndex, false);
+    controlsApi!.readInputsForStep();
+
+    setNow(860);
+    setGamepadButton(pad, buttonIndex, true);
+    const [p1Input] = controlsApi!.readInputsForStep();
+
+    expect(p1Input).toMatchObject({
+      left: direction === 'left',
+      right: direction === 'right',
+      dashForward: false,
+      dashBack: false
+    });
+    expect((p1Input as InputFrameWithMetadata).__horizontalDashDirection).toBe(direction);
+  });
+
   it('preserves slower gamepad back-back through a non-consuming peek', () => {
     const pad = makeMutableGamepad({ index: 0 });
     mockGamepads([pad]);
@@ -180,6 +214,78 @@ describe('useControls', () => {
     setGamepadButton(pad, 14, true);
     expect((controlsApi!.peekInputs()[0] as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
     expect((controlsApi!.readInputsForStep()[0] as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
+  });
+
+  it('preserves slower Xbox forward-forward through a non-consuming peek', () => {
+    const pad = makeMutableGamepad({ index: 0, id: 'Xbox Wireless Controller (STANDARD GAMEPAD)' });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 15, true);
+    controlsApi!.readInputsForStep();
+    setNow(220);
+    setGamepadButton(pad, 15, false);
+    controlsApi!.readInputsForStep();
+    setNow(860);
+    setGamepadButton(pad, 15, true);
+
+    expect((controlsApi!.peekInputs()[0] as InputFrameWithMetadata).__horizontalDashDirection).toBe('right');
+    expect((controlsApi!.readInputsForStep()[0] as InputFrameWithMetadata).__horizontalDashDirection).toBe('right');
+  });
+
+  it('clears stale gamepad horizontal tap state while fight gamepad input is suppressed', () => {
+    const pad = makeMutableGamepad({ index: 0, id: 'Xbox Wireless Controller (STANDARD GAMEPAD)' });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 14, true);
+    controlsApi!.readInputsForStep();
+    setNow(220);
+    setGamepadButton(pad, 14, false);
+    controlsApi!.readInputsForStep();
+
+    screen.getByLabelText('Chat').focus();
+    setNow(300);
+    controlsApi!.readInputsForStep();
+    screen.getByLabelText('Chat').blur();
+
+    setNow(860);
+    setGamepadButton(pad, 14, true);
+    const [p1Input] = controlsApi!.readInputsForStep();
+
+    expect(p1Input).toMatchObject({ left: true, right: false });
+    expect((p1Input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
+  });
+
+  it('clears stale gamepad horizontal tap state when player one is reassigned to a new pad', () => {
+    const oldPad = makeMutableGamepad({ index: 0, id: 'Steam Deck Desktop Controller', mapping: '' });
+    const newPad = makeMutableGamepad({ index: 2, id: 'Steam Virtual Gamepad', connected: false });
+    mockGamepads([oldPad, null, newPad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(oldPad, 14, true);
+    controlsApi!.readInputsForStep();
+    setNow(220);
+    setGamepadButton(oldPad, 14, false);
+    controlsApi!.readInputsForStep();
+
+    (oldPad as unknown as { connected: boolean }).connected = false;
+    (newPad as unknown as { connected: boolean }).connected = true;
+    setNow(860);
+    setGamepadButton(newPad, 14, true);
+    const [p1Input] = controlsApi!.readInputsForStep();
+
+    expect(p1Input).toMatchObject({ left: true, right: false });
+    expect((p1Input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
   });
 
   it('feeds slower gamepad back-back into the engine as a back hop', () => {
@@ -311,20 +417,24 @@ function makeGamepad(options: Parameters<typeof makeMutableGamepad>[0] = {}): Ga
 
 function makeMutableGamepad({
   index = 0,
+  id = `Test Gamepad ${index}`,
   connected = true,
+  mapping = 'standard',
   buttons = {},
   axes = [0, 0]
 }: {
   index?: number;
+  id?: string;
   connected?: boolean;
+  mapping?: Gamepad['mapping'];
   buttons?: Record<number, boolean>;
   axes?: number[];
 } = {}): Gamepad {
   return {
-    id: `Test Gamepad ${index}`,
+    id,
     index,
     connected,
-    mapping: 'standard',
+    mapping,
     timestamp: 0,
     buttons: Array.from({ length: 17 }, (_, buttonIndex) => ({
       pressed: Boolean(buttons[buttonIndex]),

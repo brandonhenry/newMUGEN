@@ -181,15 +181,19 @@ function readGamepadDirections(pad: Gamepad, deadzone: number) {
   const dpadRight = isGamepadButtonPressed(pad, 15);
   const dpadUp = isGamepadButtonPressed(pad, 12);
   const dpadDown = isGamepadButtonPressed(pad, 13);
+  const axisLeft = horizontal < -deadzone;
+  const axisRight = horizontal > deadzone;
+  const axisUp = vertical < -deadzone;
+  const axisDown = vertical > deadzone;
   const hat = pad.mapping === 'standard' ? null : readHatAxisDirections(pad, deadzone);
   const hatLeft = hat?.left ?? false;
   const hatRight = hat?.right ?? false;
   const hatUp = hat?.up ?? false;
   const hatDown = hat?.down ?? false;
-  const left = dpadLeft !== dpadRight ? dpadLeft : hatLeft !== hatRight ? hatLeft : horizontal < -deadzone;
-  const right = dpadLeft !== dpadRight ? dpadRight : hatLeft !== hatRight ? hatRight : horizontal > deadzone;
-  const up = dpadUp !== dpadDown ? dpadUp : hatUp !== hatDown ? hatUp : vertical < -deadzone;
-  const down = dpadUp !== dpadDown ? dpadDown : hatUp !== hatDown ? hatDown : vertical > deadzone;
+  const left = dpadLeft !== dpadRight ? dpadLeft : axisLeft !== axisRight ? axisLeft : hatLeft !== hatRight ? hatLeft : false;
+  const right = dpadLeft !== dpadRight ? dpadRight : axisLeft !== axisRight ? axisRight : hatLeft !== hatRight ? hatRight : false;
+  const up = dpadUp !== dpadDown ? dpadUp : axisUp !== axisDown ? axisUp : hatUp !== hatDown ? hatUp : false;
+  const down = dpadUp !== dpadDown ? dpadDown : axisUp !== axisDown ? axisDown : hatUp !== hatDown ? hatDown : false;
   return { left, right, up, down };
 }
 

@@ -418,14 +418,22 @@ function refreshGamepadInputs(
     for (let player = 0; player < 2; player += 1) {
       gamepadInputs[player] = emptyInputFrame();
       verticalTapStates[player] = createVerticalTapState();
+      horizontalTapStates[player] = createHorizontalTapState();
       initialized[player] = false;
     }
     return;
   }
   const now = performance.now();
   const pads = getVisibleGamepads();
+  const previousAssignments = assignments.map((assignment) => assignment?.index ?? null) as [number | null, number | null];
   const playerPads = resolveFightGamepads(pads, assignments);
   for (let player = 0; player < 2; player += 1) {
+    if ((assignments[player]?.index ?? null) !== previousAssignments[player]) {
+      gamepadInputs[player] = emptyInputFrame();
+      verticalTapStates[player] = createVerticalTapState();
+      horizontalTapStates[player] = createHorizontalTapState();
+      initialized[player] = false;
+    }
     const previous = gamepadInputs[player];
     const next = readFightGamepadInput(playerPads[player], controls, player as 0 | 1);
     applyVerticalTap(next, verticalTapStates[player], 'up', next.up, 'gamepad', now);
