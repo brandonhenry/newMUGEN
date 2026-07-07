@@ -468,12 +468,22 @@ test('starter guide opens from F1 after dismissal', async ({ page }) => {
   await expect(page.getByTestId('starter-guide-dialog')).toBeVisible({ timeout: 2_000 });
 });
 
-test('starter guide opens from gamepad L1 on menu screens', async ({ page }) => {
+test('starter guide opens from gamepad L1 on main menu', async ({ page }) => {
   await installMockGamepad(page);
   await forceMenuLagHealthy(page);
   await startFromSplash(page);
 
   await tapMockGamepadButton(page, 4);
+
+  await expect(page.getByTestId('starter-guide-dialog')).toBeVisible({ timeout: 2_000 });
+});
+
+test('starter guide pages with gamepad L1 and R1 while open', async ({ page }) => {
+  await installMockGamepad(page);
+  await forceMenuLagHealthy(page);
+  await startFromSplash(page);
+
+  await page.keyboard.press('F1');
 
   const guide = page.getByTestId('starter-guide-dialog');
   await expect(guide).toBeVisible({ timeout: 2_000 });
@@ -566,6 +576,87 @@ test('fight reads browser gamepad input after mouse or touchpad focus', async ({
   await expect(page.getByTestId('frame-input')).toHaveText('p1:jab', { timeout: 3000 });
   await setMockGamepadButton(page, 0, false);
   await expectNoHeldFightInput(page);
+});
+
+test('controller shoulders cycle Options tabs', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+
+  const activeTab = page.locator('.options-tabs button.active');
+  const previousHint = page.getByTestId('options-tab-previous-hint');
+  const nextHint = page.getByTestId('options-tab-next-hint');
+  await expect(activeTab).toHaveText('Controls');
+  await expect(previousHint).toHaveText('←');
+  await expect(nextHint).toHaveText('→');
+
+  await tapMockGamepadButton(page, 5);
+  await expect(activeTab).toHaveText('Camera');
+  await expect(previousHint).toHaveText('L1');
+  await expect(nextHint).toHaveText('R1');
+
+  await tapMockGamepadButton(page, 4);
+  await expect(activeTab).toHaveText('Controls');
+
+  await tapMockGamepadButton(page, 4);
+  await expect(activeTab).toHaveText('Game');
+
+  await page.keyboard.press('p');
+  await expect(activeTab).toHaveText('Controls');
+  await expect(previousHint).toHaveText('O');
+  await expect(nextHint).toHaveText('P');
+
+  await page.keyboard.press('ArrowRight');
+  await expect(previousHint).toHaveText('←');
+  await expect(nextHint).toHaveText('→');
+});
+
+test('controller D-pad navigation follows visual rows in menu screens', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFromSplash(page);
+
+  await expect.poll(() => page.evaluate(() => document.activeElement?.textContent?.trim() ?? '')).toBe('Arcade');
+  await tapMockGamepadButton(page, 13);
+  await expect.poll(() => page.evaluate(() => document.activeElement?.textContent?.trim() ?? '')).toBe('Versus');
+
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.locator('.options-tabs button').filter({ hasText: /^Controls$/ }).focus();
+  await tapMockGamepadButton(page, 15);
+  await expect.poll(() => page.evaluate(() => document.activeElement?.textContent?.trim() ?? '')).toBe('Camera');
+  await tapMockGamepadButton(page, 13);
+  await expect.poll(() => page.evaluate(() => document.activeElement?.textContent?.trim() ?? '')).not.toBe('Camera');
+});
+
+test('controller shoulders page character select and cycle stages', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Versus' }).click();
+
+  const pageIndicator = page.locator('.versus-page-indicator').first();
+  await expect(pageIndicator).toContainText(/Page 1 \/ [2-9]\d*/);
+
+  await setMockGamepadButton(page, 5, true);
+  await expect(pageIndicator).toContainText(/Page 2 \/ [2-9]\d*/);
+  await setMockGamepadButton(page, 5, false);
+  await page.waitForTimeout(120);
+
+  await setMockGamepadButton(page, 4, true);
+  await expect(pageIndicator).toContainText(/Page 1 \/ [2-9]\d*/);
+  await setMockGamepadButton(page, 4, false);
+  await page.waitForTimeout(120);
+
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await expect(page.locator('.stage-hero-label strong')).toHaveText('Random');
+
+  await setMockGamepadButton(page, 5, true);
+  await expect(page.locator('.stage-hero-label strong')).not.toHaveText('Random');
+  await setMockGamepadButton(page, 5, false);
+  await page.waitForTimeout(120);
+
+  await setMockGamepadButton(page, 4, true);
+  await expect(page.locator('.stage-hero-label strong')).toHaveText('Random');
+  await setMockGamepadButton(page, 4, false);
+  await page.waitForTimeout(120);
 });
 
 test('starts a playable match from the menu', async ({ page }) => {

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { defaultGameSettings } from './gameSettings';
-import { getPlayerGamepad, getPrimaryGamepad, getVisibleGamepads, readFightGamepadInput, readMenuGamepadState } from './gamepads';
+import { getPlayerGamepad, getPrimaryGamepad, getVisibleGamepads, readFightGamepadInput, readMenuGamepadState, readPageGamepadState } from './gamepads';
 
 afterEach(() => {
   Object.defineProperty(navigator, 'getGamepads', {
@@ -100,11 +100,19 @@ describe('gamepad helpers', () => {
     expect(readMenuGamepadState(pad, false)).toMatchObject({ up: true, right: true, select: true, back: false });
   });
 
-  it('reports shoulders as menu guide paging without changing fight block bindings', () => {
+  it('reports shoulders as menu navigation without changing fight block bindings', () => {
     const pad = makeGamepad({ buttons: { 4: true, 5: true } });
 
-    expect(readMenuGamepadState(pad, false)).toMatchObject({ help: true, helpNext: true });
+    expect(readMenuGamepadState(pad, false)).toMatchObject({ previous: true, next: true, help: true, helpNext: true });
+    expect(readPageGamepadState(pad)).toEqual({ previous: true, next: true });
     expect(readFightGamepadInput(pad, defaultGameSettings.controls, 0).block).toBe(true);
+  });
+
+  it('keeps trigger aliases for page navigation compatibility', () => {
+    const pad = makeGamepad({ buttons: { 6: true, 7: true } });
+
+    expect(readPageGamepadState(pad)).toEqual({ previous: true, next: true });
+    expect(readMenuGamepadState(pad, false)).toMatchObject({ previous: true, next: true });
   });
 });
 

@@ -39,6 +39,7 @@ import {
   Trash2,
   Trophy,
   Upload,
+  UserPlus,
   Users,
   Wifi,
   XCircle,
@@ -60,6 +61,7 @@ import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
 import { sanitizeMoveProjectiles, sanitizeProjectiles } from './lib/projectiles';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
+import { getTabShortcutPrompts, type InputPromptMode } from './lib/inputPrompts';
 import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/stageLoader';
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
@@ -132,6 +134,21 @@ import {
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
 import { captureAnalyticsError, captureAnalyticsEvent, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
+import {
+  FRIENDS_STORAGE_KEY,
+  MATCH_HISTORY_STORAGE_KEY,
+  RECORDINGS_STORAGE_KEY,
+  addFriend,
+  isFriend,
+  readFriends,
+  readMatchHistory,
+  readRecordings,
+  recordMatchHistory,
+  type FriendEntry,
+  type MatchHistoryEntry,
+  type MatchHistoryOpponent,
+  type SocialMatchMode
+} from './lib/socialHistory';
 import {
   comboTrialCategoryLabels,
   generateCharacterComboRoutes
@@ -207,7 +224,7 @@ import {
   type TournamentSummary
 } from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
 type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
@@ -294,7 +311,10 @@ const MEMORY_CARD_SAVE_KEYS = [
   { key: UNLOCKED_CHARACTERS_KEY, label: 'Unlocked fighters' },
   { key: GAME_SETTINGS_STORAGE_KEY, label: 'Options settings' },
   { key: ONLINE_PROFILE_STORAGE_KEY, label: 'Online profile' },
-  { key: LOCAL_LEADERBOARD_STORAGE_KEY, label: 'Local leaderboard' }
+  { key: LOCAL_LEADERBOARD_STORAGE_KEY, label: 'Local leaderboard' },
+  { key: MATCH_HISTORY_STORAGE_KEY, label: 'Match history' },
+  { key: FRIENDS_STORAGE_KEY, label: 'Friend list' },
+  { key: RECORDINGS_STORAGE_KEY, label: 'Recordings' }
 ] as const;
 type CursorStyleVars = CSSProperties & { '--kore-cursor-default': string };
 type NotationToken = string;
@@ -2649,11 +2669,13 @@ export default function App() {
   const [tournamentStatusText, setTournamentStatusText] = useState('');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
+  const [inputPromptMode, setInputPromptMode] = useState<InputPromptMode>('keyboardShortcut');
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [usernameGate, setUsernameGate] = useState<UsernameGateRequest | null>(null);
   const [rankedProfile, setRankedProfile] = useState<RankedProfile | null>(null);
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
+  const [pendingPrivateInviteFriend, setPendingPrivateInviteFriend] = useState<FriendEntry | null>(null);
   const [pendingUnlockCharacterId, setPendingUnlockCharacterId] = useState('');
   const [activeArcadeMiniGame, setActiveArcadeMiniGame] = useState<ArcadeMiniGameLaunch | null>(null);
   const [lastMiniGameResult, setLastMiniGameResult] = useState<MiniGameResult | null>(null);
@@ -2718,6 +2740,23 @@ export default function App() {
     setUsernameGate(null);
     request.onConfirm(saved);
   }, [onlineProfile?.playerId, saveOnlineProfile, usernameGate]);
+
+  const openMatchHistoryFromTraining = useCallback(() => {
+    const openHistory = () => {
+      captureAppAnalytics('navigation_clicked', { source: 'training_select', destination: 'match_history' });
+      setScreen('matchHistory');
+    };
+    if (!onlineProfile) {
+      promptForUsername({
+        source: 'match_history',
+        body: 'Choose your player name before opening match history.',
+        onConfirm: openHistory,
+        onBack: () => setScreen('training')
+      });
+      return;
+    }
+    openHistory();
+  }, [captureAppAnalytics, onlineProfile, promptForUsername]);
 
   const openStarterGuide = useCallback((source: string) => {
     setStarterGuideOpen(true);
@@ -3644,10 +3683,13 @@ export default function App() {
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
-  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'));
-  useStarterGuideKeyboardShortcut(screen, () => openStarterGuide('keyboard_f1'));
+  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'), setInputPromptMode);
+  useStarterGuideKeyboardShortcut(screen, () => {
+    setInputPromptMode('keyboardShortcut');
+    openStarterGuide('keyboard_f1');
+  });
   const handleAppMenuKeyDown = useCallback((event: ReactKeyboardEvent<HTMLElement>) => {
-    if (handleMenuNavigationKeyEvent(event.nativeEvent, screen)) {
+    if (handleMenuNavigationKeyEvent(event.nativeEvent, screen, setInputPromptMode)) {
       event.stopPropagation();
     }
   }, [screen]);
@@ -3754,6 +3796,7 @@ export default function App() {
             sparkSettings={settings.display.impactSparks}
             reducedMotion={settings.display.reducedMotion}
             performanceSettings={settings.performance}
+            inputPromptMode={inputPromptMode}
             onApplyRecommendedPerformance={applyRecommendedMenuPerformanceSettings}
             onStarterGuideAutoRequest={requestStarterGuideAutoOpen}
             onAnalytics={captureAppAnalytics}
@@ -3955,10 +3998,14 @@ export default function App() {
             stage={selectedStage}
             roster={roster}
             stages={playableStageRoster}
+            onlineProfile={onlineProfile}
+            inviteFriend={pendingPrivateInviteFriend}
+            onInviteFriendChange={setPendingPrivateInviteFriend}
             onCreate={(intent) => {
               captureAppAnalytics('game_start_clicked', { source: 'private_room_create', selected_mode: 'private' });
               setMode('private');
               setPrivateRoomIntent(intent);
+              setPendingPrivateInviteFriend(null);
               setVersusReturnScreen('privateRooms');
               setScreen('versus');
             }}
@@ -3966,10 +4013,28 @@ export default function App() {
               captureAppAnalytics('game_start_clicked', { source: 'private_room_join', selected_mode: 'private' });
               setMode('private');
               setPrivateRoomIntent(intent);
+              setPendingPrivateInviteFriend(null);
               setVersusReturnScreen('privateRooms');
               setScreen('versus');
             }}
-            onBack={() => setScreen('select')}
+            onBack={() => {
+              setPendingPrivateInviteFriend(null);
+              setScreen('select');
+            }}
+            onAnalytics={captureAppAnalytics}
+          />
+        )}
+        {screen === 'matchHistory' && (
+          <MatchHistoryScreen
+            profile={onlineProfile}
+            roster={roster}
+            stages={playableStageRoster}
+            onBack={() => setScreen('training')}
+            onInviteFriend={(friend) => {
+              setPendingPrivateInviteFriend(friend);
+              setMode('private');
+              setScreen('privateRooms');
+            }}
             onAnalytics={captureAppAnalytics}
           />
         )}
@@ -3983,6 +4048,7 @@ export default function App() {
             setP1Id={setP1Id}
             setP2Id={setP2Id}
             setTrainingMode={setSelectedTrainingMode}
+            onMatchHistory={openMatchHistoryFromTraining}
             onBack={() => setScreen('menu')}
             onStart={() => {
               const startTraining = () => {
@@ -4289,6 +4355,8 @@ export default function App() {
             setCpuDifficulty={setModeScopedCpuDifficulty}
             settings={settings}
             setSettings={setSettings}
+            inputPromptMode={inputPromptMode}
+            onInputPromptModeChange={setInputPromptMode}
             onlineProfile={onlineProfile}
             onOnlineProfileChange={(profile) => saveOnlineProfile(profile, 'settings')}
             selectedStageName={selectedStage.name}
@@ -4353,6 +4421,8 @@ export default function App() {
             mode={mode}
             cpuDifficulty={effectiveCpuDifficulty}
             settings={settings}
+            inputPromptMode={inputPromptMode}
+            onInputPromptModeChange={setInputPromptMode}
             readInputsForStep={readInputsForStep}
             peekInputs={peekInputs}
             setVirtualAction={setVirtualAction}
@@ -4417,15 +4487,22 @@ export default function App() {
           onBack={closeUsernameGate}
         />
       )}
-      {starterGuideOpen && <StarterGuideDialog onClose={dismissStarterGuide} />}
+      {starterGuideOpen && (
+        <StarterGuideDialog
+          settings={settings}
+          inputPromptMode={inputPromptMode}
+          onInputPromptModeChange={setInputPromptMode}
+          onClose={dismissStarterGuide}
+        />
+      )}
     </main>
   );
 }
 
 type MenuNavigationDirection = 'up' | 'down' | 'left' | 'right';
-type MenuNavigationDevice = 'keyboard' | 'gamepad';
 
 const MAIN_MENU_CHROME_TOGGLE_EVENT = 'kore:main-menu-chrome-toggle';
+const SETTINGS_TAB_CYCLE_EVENT = 'kore:settings-tab-cycle';
 const MAIN_MENU_SCREENSAVER_IDLE_MS = 15000;
 const ARCADE_NAME_MAX_LENGTH = 12;
 const ARCADE_NAME_CONTROLLER_CHARACTERS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'.split('');
@@ -4482,10 +4559,10 @@ const menuFocusableSelector = [
   '[tabindex]:not([tabindex="-1"])'
 ].join(',');
 
-function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
+function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onInputPromptModeChange: (mode: InputPromptMode) => void) {
   const screenRef = useRef(screen);
-  const onHelpShortcutRef = useRef(onHelpShortcut);
-  const lastDeviceRef = useRef<MenuNavigationDevice>('keyboard');
+  const onMainMenuHelpRef = useRef(onMainMenuHelp);
+  const onInputPromptModeChangeRef = useRef(onInputPromptModeChange);
   const previousPadStateRef = useRef({
     up: false,
     down: false,
@@ -4494,6 +4571,8 @@ function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
     confirm: false,
     back: false,
     select: false,
+    previous: false,
+    next: false,
     help: false,
     helpNext: false
   });
@@ -4503,8 +4582,12 @@ function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
   }, [screen]);
 
   useEffect(() => {
-    onHelpShortcutRef.current = onHelpShortcut;
-  }, [onHelpShortcut]);
+    onMainMenuHelpRef.current = onMainMenuHelp;
+  }, [onMainMenuHelp]);
+
+  useEffect(() => {
+    onInputPromptModeChangeRef.current = onInputPromptModeChange;
+  }, [onInputPromptModeChange]);
 
   useEffect(() => {
     if (!isMenuNavigationActive(screen)) return undefined;
@@ -4514,13 +4597,24 @@ function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (handleMenuNavigationKeyEvent(event, screenRef.current)) {
-        lastDeviceRef.current = 'keyboard';
-      }
+      handleMenuNavigationKeyEvent(event, screenRef.current, onInputPromptModeChangeRef.current);
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      onInputPromptModeChangeRef.current(event.pointerType === 'touch' ? 'touch' : 'pointer');
+    };
+    const handleTouchStart = () => onInputPromptModeChangeRef.current('touch');
+    window.addEventListener('pointerdown', handlePointerDown, true);
+    window.addEventListener('touchstart', handleTouchStart, true);
+    return () => {
+      window.removeEventListener('pointerdown', handlePointerDown, true);
+      window.removeEventListener('touchstart', handleTouchStart, true);
+    };
   }, []);
 
   useEffect(() => {
@@ -4542,6 +4636,8 @@ function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
           confirm: current.confirm && !previous.confirm,
           back: current.back && !previous.back,
           select: current.select && !previous.select,
+          previous: current.previous && !previous.previous,
+          next: current.next && !previous.next,
           help: current.help && !previous.help,
           helpNext: current.helpNext && !previous.helpNext
         };
@@ -4554,23 +4650,25 @@ function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
             frame = window.requestAnimationFrame(tick);
             return;
           }
+          if (edge.up || edge.down || edge.left || edge.right || edge.confirm || edge.back || edge.select || edge.previous || edge.next || heldDirection) {
+            onInputPromptModeChangeRef.current('gamepad');
+          }
           if (document.querySelector('.starter-guide-overlay') && (edge.help || edge.helpNext)) {
-            lastDeviceRef.current = 'gamepad';
             activateStarterGuideStep(edge.helpNext ? 1 : -1);
-          } else if (edge.help && onHelpShortcutRef.current) {
-            lastDeviceRef.current = 'gamepad';
-            onHelpShortcutRef.current();
+          } else if (screenRef.current === 'menu' && edge.previous) {
+            onMainMenuHelpRef.current();
+          } else if (screenRef.current === 'settings' && (edge.previous || edge.next)) {
+            dispatchSettingsTabCycle(edge.next ? 1 : -1);
+          } else if (!hasScreenSpecificPageGamepadHandler(screenRef.current) && (edge.previous || edge.next)) {
+            moveMenuFocus(edge.next ? 'right' : 'left');
+            lastMoveAt = now;
           } else if (screenRef.current === 'menu' && edge.select) {
-            lastDeviceRef.current = 'gamepad';
             window.dispatchEvent(new CustomEvent(MAIN_MENU_CHROME_TOGGLE_EVENT));
           } else if (edge.confirm) {
-            lastDeviceRef.current = 'gamepad';
             activateFocusedMenuElement();
           } else if (edge.back) {
-            lastDeviceRef.current = 'gamepad';
             activateBackMenuElement();
           } else if (edge.up || edge.down || edge.left || edge.right || (heldDirection && repeatedMove)) {
-            lastDeviceRef.current = 'gamepad';
             const direction = edge.up ? 'up' : edge.down ? 'down' : edge.left ? 'left' : edge.right ? 'right' : heldDirection;
             if (direction) {
               moveMenuFocus(direction);
@@ -4580,7 +4678,7 @@ function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
         }
         previousPadStateRef.current = current;
       } else {
-        previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, help: false, helpNext: false };
+        previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, previous: false, next: false, help: false, helpNext: false };
       }
       frame = window.requestAnimationFrame(tick);
     };
@@ -4588,6 +4686,14 @@ function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
   }, []);
+}
+
+function dispatchSettingsTabCycle(direction: -1 | 1) {
+  window.dispatchEvent(new CustomEvent(SETTINGS_TAB_CYCLE_EVENT, { detail: { direction } }));
+}
+
+function hasScreenSpecificPageGamepadHandler(screen: Screen) {
+  return screen === 'select' || screen === 'training' || screen === 'tournament' || screen === 'stage';
 }
 
 function useStarterGuideKeyboardShortcut(screen: Screen, onOpen: () => void) {
@@ -4617,13 +4723,14 @@ function useStarterGuideKeyboardShortcut(screen: Screen, onOpen: () => void) {
   }, []);
 }
 
-function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen) {
+function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen, onInputPromptModeChange?: (mode: InputPromptMode) => void) {
   if (!isMenuNavigationActive(screen)) return false;
   if (document.querySelector('.capture')) return false;
   if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return false;
   if (isTextEntryElement(event.target)) return false;
   const command = keyboardMenuNavigation[event.code] ?? keyboardMenuNavigationByKey[event.key];
   if (!command) return false;
+  onInputPromptModeChange?.(getKeyboardMenuPromptMode(event));
   event.preventDefault();
   if (command === 'confirm') {
     activateFocusedMenuElement();
@@ -4636,6 +4743,12 @@ function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen) {
   if ((command === 'left' || command === 'right') && activateFocusedDirectionalControl(command)) return true;
   moveMenuFocus(command);
   return true;
+}
+
+function getKeyboardMenuPromptMode(event: KeyboardEvent): InputPromptMode {
+  const key = event.key.toLowerCase();
+  if (key === 'o' || key === 'p') return 'keyboardShortcut';
+  return 'keyboardDirectional';
 }
 
 function isMenuNavigationActive(screen: Screen) {
@@ -4725,7 +4838,11 @@ function findNextMenuElement(elements: HTMLElement[], current: HTMLElement, dire
   const currentRect = current.getBoundingClientRect();
   const currentCenter = getRectCenter(currentRect);
   const axis = direction === 'left' || direction === 'right' ? 'x' : 'y';
+  const crossAxis = axis === 'x' ? 'y' : 'x';
   const sign = direction === 'right' || direction === 'down' ? 1 : -1;
+  const sameBandTolerance = axis === 'x'
+    ? Math.max(18, Math.min(72, currentRect.height * 0.75))
+    : Math.max(18, Math.min(96, currentRect.width * 0.45));
   const candidates = elements
     .filter((element) => element !== current)
     .map((element) => {
@@ -4733,25 +4850,43 @@ function findNextMenuElement(elements: HTMLElement[], current: HTMLElement, dire
       const center = getRectCenter(rect);
       const primaryDelta = axis === 'x' ? center.x - currentCenter.x : center.y - currentCenter.y;
       const crossDelta = axis === 'x' ? center.y - currentCenter.y : center.x - currentCenter.x;
-      return { element, primaryDelta, crossDelta };
+      const overlapsBand = rectsOverlapOnAxis(currentRect, rect, crossAxis);
+      const sameBand = overlapsBand || Math.abs(crossDelta) <= sameBandTolerance;
+      const overlapBonus = overlapsBand ? getRectOverlapOnAxis(currentRect, rect, crossAxis) : 0;
+      return { element, rect, center, primaryDelta, crossDelta, sameBand, overlapBonus };
     })
     .filter((candidate) => candidate.primaryDelta * sign > 6)
     .sort((a, b) => {
       const aPrimary = Math.abs(a.primaryDelta);
       const bPrimary = Math.abs(b.primaryDelta);
-      const aScore = aPrimary * 1.5 + Math.abs(a.crossDelta);
-      const bScore = bPrimary * 1.5 + Math.abs(b.crossDelta);
+      const aScore = (a.sameBand ? 0 : 100000) + aPrimary * 2 + Math.abs(a.crossDelta) * (a.sameBand ? 1.15 : 2.5) - a.overlapBonus * 0.35;
+      const bScore = (b.sameBand ? 0 : 100000) + bPrimary * 2 + Math.abs(b.crossDelta) * (b.sameBand ? 1.15 : 2.5) - b.overlapBonus * 0.35;
       return aScore - bScore;
     });
   if (candidates[0]) return candidates[0].element;
 
-  const ordered = [...elements].sort((a, b) => {
-    const aCenter = getRectCenter(a.getBoundingClientRect());
-    const bCenter = getRectCenter(b.getBoundingClientRect());
-    if (axis === 'x') return sign > 0 ? aCenter.x - bCenter.x : bCenter.x - aCenter.x;
-    return sign > 0 ? aCenter.y - bCenter.y : bCenter.y - aCenter.y;
-  });
-  return ordered.find((element) => element !== current) ?? current;
+  const currentPrimary = axis === 'x' ? currentCenter.x : currentCenter.y;
+  const bandWrapCandidates = elements
+    .filter((element) => element !== current)
+    .map((element) => {
+      const rect = element.getBoundingClientRect();
+      const center = getRectCenter(rect);
+      const crossDelta = axis === 'x' ? center.y - currentCenter.y : center.x - currentCenter.x;
+      const sameBand = rectsOverlapOnAxis(currentRect, rect, crossAxis) || Math.abs(crossDelta) <= sameBandTolerance;
+      const primary = axis === 'x' ? center.x : center.y;
+      return { element, primary, crossDelta, sameBand };
+    })
+    .filter((candidate) => candidate.sameBand)
+    .sort((a, b) => {
+      if (sign > 0) return a.primary - b.primary || Math.abs(a.crossDelta) - Math.abs(b.crossDelta);
+      return b.primary - a.primary || Math.abs(a.crossDelta) - Math.abs(b.crossDelta);
+    });
+  const wrapped = bandWrapCandidates.find((candidate) => (candidate.primary - currentPrimary) * sign < -6);
+  if (wrapped) return wrapped.element;
+
+  const currentIndex = elements.indexOf(current);
+  const nextIndex = currentIndex + sign;
+  return elements[nextIndex] ?? current;
 }
 
 function getRectCenter(rect: DOMRect) {
@@ -4759,6 +4894,24 @@ function getRectCenter(rect: DOMRect) {
     x: rect.left + rect.width / 2,
     y: rect.top + rect.height / 2
   };
+}
+
+function rectsOverlapOnAxis(a: DOMRect, b: DOMRect, axis: 'x' | 'y') {
+  return getRectOverlapOnAxis(a, b, axis) > 0;
+}
+
+function getRectOverlapOnAxis(a: DOMRect, b: DOMRect, axis: 'x' | 'y') {
+  const start = Math.max(getRectStart(a, axis), getRectStart(b, axis));
+  const end = Math.min(getRectEnd(a, axis), getRectEnd(b, axis));
+  return Math.max(0, end - start);
+}
+
+function getRectStart(rect: DOMRect, axis: 'x' | 'y') {
+  return axis === 'x' ? rect.left : rect.top;
+}
+
+function getRectEnd(rect: DOMRect, axis: 'x' | 'y') {
+  return axis === 'x' ? rect.right : rect.bottom;
 }
 
 function activateFocusedMenuElement() {
@@ -5087,6 +5240,7 @@ function MenuScreen({
   sparkSettings,
   reducedMotion,
   performanceSettings,
+  inputPromptMode,
   onApplyRecommendedPerformance,
   onStarterGuideAutoRequest,
   onAnalytics,
@@ -5108,6 +5262,7 @@ function MenuScreen({
   sparkSettings: GameSettings['display']['impactSparks'];
   reducedMotion: boolean;
   performanceSettings: GameSettings['performance'];
+  inputPromptMode: InputPromptMode;
   onApplyRecommendedPerformance: () => void;
   onStarterGuideAutoRequest: () => void;
   onAnalytics: AnalyticsCapture;
@@ -5439,6 +5594,7 @@ function MenuScreen({
         <div className="menu-cinematic-hint" aria-hidden="true">
           <span>/</span>
           <span>Select</span>
+          {inputPromptMode === 'gamepad' && <span>L1 Help</span>}
         </div>
       </section>}
       {menuLagReport && (
@@ -5491,7 +5647,21 @@ type StarterGuideSection = {
   points: string[];
 };
 
-const starterGuideSections: StarterGuideSection[] = [
+function buildStarterGuideSections(settings: GameSettings, inputPromptMode: InputPromptMode): StarterGuideSection[] {
+  const attackActions: ActionName[] = ['jab', 'heavy', 'kick', 'special'];
+  const keyboardAttackPrompts = attackActions.map((action) => formatKeyName(settings.controls.keyboard[0][action]?.[0] ?? '')).filter(Boolean);
+  const gamepadAttackPrompts = attackActions.map((action) => formatGamepadButtonName(settings.controls.gamepad[0][action]?.[0]));
+  const attackDevice = inputPromptMode === 'gamepad' ? 'gamepad' : 'keyboard';
+  const attackPrompts = inputPromptMode === 'gamepad' ? gamepadAttackPrompts : keyboardAttackPrompts;
+  const attackPromptText = attackPrompts.length > 0 ? attackPrompts.join(', ') : 'your attack bindings';
+  const menuMovePrompt = inputPromptMode === 'gamepad'
+    ? 'D-pad or stick moves through menus; the south face button confirms.'
+    : 'Arrow keys or WASD move through menus; Enter confirms.';
+  const pausePrompt = inputPromptMode === 'gamepad'
+    ? 'Start pauses fights; L1 opens this guide from the main menu and follows your Block binding in fights.'
+    : 'Escape pauses fights; F1 opens this guide.';
+
+  return [
   {
     id: 'welcome',
     title: 'Welcome',
@@ -5534,10 +5704,9 @@ const starterGuideSections: StarterGuideSection[] = [
     eyebrow: 'Keyboard and gamepad',
     body: 'Controls can be remapped from Options -> Controls, and Beginner or KORE notation can be chosen under Options -> Game.',
     points: [
-      'WASD or D-pad/stick move; Enter or the south face button confirms menus.',
-      'Default attacks are U, I, J, K on keyboard or the four face buttons on gamepad.',
-      'Escape or Start pauses fights; F1 opens this guide.',
-      'L1 opens this guide on menu screens, but remains block during active fights.'
+      menuMovePrompt,
+      `Default attacks use ${attackPromptText} on ${attackDevice}.`,
+      pausePrompt
     ]
   },
   {
@@ -5552,11 +5721,23 @@ const starterGuideSections: StarterGuideSection[] = [
       'Options -> Console -> About always has this guide if you need the rundown again.'
     ]
   }
-];
+  ];
+}
 
-function StarterGuideDialog({ onClose }: { onClose: () => void }) {
+function StarterGuideDialog({
+  settings,
+  inputPromptMode,
+  onInputPromptModeChange,
+  onClose
+}: {
+  settings: GameSettings;
+  inputPromptMode: InputPromptMode;
+  onInputPromptModeChange: (mode: InputPromptMode) => void;
+  onClose: () => void;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const nextRef = useRef<HTMLButtonElement | null>(null);
+  const starterGuideSections = useMemo(() => buildStarterGuideSections(settings, inputPromptMode), [inputPromptMode, settings]);
   const activeSection = starterGuideSections[Math.min(activeIndex, starterGuideSections.length - 1)] ?? starterGuideSections[0];
   const isFirstStep = activeIndex === 0;
   const isLastStep = activeIndex >= starterGuideSections.length - 1;
@@ -5585,6 +5766,7 @@ function StarterGuideDialog({ onClose }: { onClose: () => void }) {
         onClose();
         return;
       }
+      onInputPromptModeChange('keyboardShortcut');
       if (key === 'o') goPrevious();
       else goNext();
     };
@@ -5593,7 +5775,7 @@ function StarterGuideDialog({ onClose }: { onClose: () => void }) {
       window.cancelAnimationFrame(frame);
       window.removeEventListener('keydown', onKeyDown, true);
     };
-  }, [goNext, goPrevious, onClose]);
+  }, [goNext, goPrevious, onClose, onInputPromptModeChange]);
 
   return (
     <div className="starter-guide-overlay" role="presentation">
@@ -5742,11 +5924,201 @@ function LeaderboardScreen({
   );
 }
 
+function MatchHistoryScreen({
+  profile,
+  roster,
+  stages,
+  onBack,
+  onInviteFriend,
+  onAnalytics
+}: {
+  profile: OnlinePlayerProfile | null;
+  roster: CharacterDefinition[];
+  stages: StageDefinition[];
+  onBack: () => void;
+  onInviteFriend: (friend: FriendEntry) => void;
+  onAnalytics: AnalyticsCapture;
+}) {
+  const [view, setView] = useState<'history' | 'friends' | 'recordings'>('history');
+  const [history, setHistory] = useState<MatchHistoryEntry[]>(() => readMatchHistory(profile));
+  const [friends, setFriends] = useState<FriendEntry[]>(() => readFriends(profile));
+  const [selectedMatch, setSelectedMatch] = useState<MatchHistoryEntry | null>(null);
+  const recordings = useMemo(() => readRecordings(profile, selectedMatch?.id), [profile, selectedMatch?.id, view]);
+
+  useEffect(() => {
+    setHistory(readMatchHistory(profile));
+    setFriends(readFriends(profile));
+  }, [profile]);
+
+  const characterName = (id: string) => roster.find((character) => character.id === id)?.displayName ?? id;
+  const stageName = (id: string) => stages.find((stage) => stage.id === id)?.name ?? id;
+  const addSelectedFriend = (entry: MatchHistoryEntry) => {
+    const next = addFriend(profile, entry.opponent, entry.createdAt);
+    setFriends(next);
+    onAnalytics('navigation_clicked', { source: 'match_history', destination: 'friend_added' });
+  };
+  const selectedIsFriend = isFriend(profile, selectedMatch?.opponent.playerId);
+  const selectedFriend = selectedMatch?.opponent.playerId
+    ? friends.find((friend) => friend.playerId === selectedMatch.opponent.playerId) ?? null
+    : null;
+
+  return (
+    <div className="leaderboard-screen match-history-screen">
+      <header className="leaderboard-header">
+        <div>
+          <p className="eyebrow">Recent Opponents</p>
+          <h1>{view === 'friends' ? 'Friend List' : view === 'recordings' ? 'Recordings' : 'Match History'}</h1>
+        </div>
+      </header>
+
+      <div className="leaderboard-actions match-history-actions">
+        <button className="secondary-button" onClick={() => {
+          setView(view === 'friends' ? 'history' : 'friends');
+          setSelectedMatch(null);
+        }}>
+          <Users size={18} />
+          {view === 'friends' ? 'Match History' : 'View Friend List'}
+        </button>
+        {view === 'recordings' && (
+          <button className="secondary-button" onClick={() => setView('history')}>
+            <ChevronLeft size={18} />
+            History
+          </button>
+        )}
+        <button className="secondary-button" onClick={onBack}>
+          <Home size={18} />
+          Back
+        </button>
+      </div>
+
+      {view === 'friends' ? (
+        <section className="leaderboard-board match-history-board" aria-label="Friend list">
+          {friends.length === 0 && <div className="leaderboard-empty">No friends yet. Add recent opponents from Match History.</div>}
+          {friends.length > 0 && (
+            <div className="friend-list-rows">
+              {friends.map((friend) => (
+                <article className="friend-list-row" key={friend.playerId}>
+                  <div>
+                    <strong>{friend.displayName}</strong>
+                    <span>{friend.lastCharacterId ? characterName(friend.lastCharacterId) : 'Ready for private matches'}</span>
+                  </div>
+                  <small>{friend.lastPlayedAt ? formatMatchHistoryTime(friend.lastPlayedAt) : 'Added friend'}</small>
+                  <button className="primary-button" onClick={() => onInviteFriend(friend)}>
+                    <Wifi size={18} />
+                    Invite
+                  </button>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+      ) : view === 'recordings' ? (
+        <section className="leaderboard-board match-history-board" aria-label="Match recordings">
+          {recordings.length === 0 && (
+            <div className="leaderboard-empty">
+              No recordings saved for {selectedMatch?.opponent.displayName ?? 'this opponent'} yet.
+            </div>
+          )}
+          {recordings.length > 0 && (
+            <div className="recording-list-rows">
+              {recordings.map((recording) => (
+                <article className="recording-list-row" key={recording.id}>
+                  <div>
+                    <strong>{recording.label}</strong>
+                    <span>{recording.status === 'ready' ? 'Ready' : 'Replay capture coming soon'}</span>
+                  </div>
+                  <small>{formatMatchHistoryTime(recording.createdAt)}</small>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+      ) : (
+        <section className="leaderboard-board match-history-board" aria-label="Match history">
+          {history.length === 0 && <div className="leaderboard-empty">No online opponents yet. Spar online or play private matches to fill this list.</div>}
+          {history.length > 0 && (
+            <div className="match-history-rows">
+              <div className="match-history-heading" aria-hidden="true">
+                <span>Opponent</span>
+                <span>Modes Played Together</span>
+                <span>Time Played</span>
+              </div>
+              {history.map((entry) => {
+                const opponentCharacter = roster.find((character) => character.id === entry.opponent.characterId);
+                return (
+                  <button
+                    key={entry.id}
+                    type="button"
+                    className={`match-history-row is-${entry.result}`}
+                    onClick={() => setSelectedMatch(entry)}
+                  >
+                    <span className="match-history-opponent">
+                      {opponentCharacter && <img src={characterPortraitPath(opponentCharacter)} alt="" />}
+                      <span>
+                        <strong>{entry.opponent.displayName}</strong>
+                        <small>{characterName(entry.opponent.characterId)} / {stageName(entry.stageId)}</small>
+                      </span>
+                    </span>
+                    <span>{formatMatchHistoryMode(entry.mode)} / {entry.result.toUpperCase()} {entry.score[0]}-{entry.score[1]}</span>
+                    <span>{formatMatchHistoryTime(entry.createdAt)}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      )}
+
+      {selectedMatch && view === 'history' && (
+        <div className="match-history-modal-backdrop" role="presentation" onClick={() => setSelectedMatch(null)}>
+          <section className="match-history-modal" role="dialog" aria-modal="true" aria-label={`${selectedMatch.opponent.displayName} actions`} onClick={(event) => event.stopPropagation()}>
+            <header>
+              <span>{formatMatchHistoryMode(selectedMatch.mode)}</span>
+              <h2>{selectedMatch.opponent.displayName}</h2>
+              <p>{characterName(selectedMatch.opponent.characterId)} / {formatMatchHistoryTime(selectedMatch.createdAt)}</p>
+            </header>
+            <div className="overlay-actions match-history-modal-actions">
+              <button className="primary-button" onClick={() => {
+                setView('recordings');
+                onAnalytics('navigation_clicked', { source: 'match_history', destination: 'recordings' });
+              }}>
+                <History size={18} />
+                View Recordings
+              </button>
+              <button
+                className="secondary-button"
+                disabled={!selectedMatch.opponent.playerId || selectedMatch.opponent.isBot || selectedIsFriend}
+                onClick={() => addSelectedFriend(selectedMatch)}
+              >
+                <UserPlus size={18} />
+                {selectedIsFriend ? 'Friend Added' : 'Add as Friend'}
+              </button>
+              {selectedFriend && (
+                <button className="secondary-button" onClick={() => onInviteFriend(selectedFriend)}>
+                  <Wifi size={18} />
+                  Invite
+                </button>
+              )}
+              <button className="secondary-button" onClick={() => setSelectedMatch(null)}>
+                <XCircle size={18} />
+                Close
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PrivateRoomsScreen({
   p1,
   stage,
   roster,
   stages,
+  onlineProfile,
+  inviteFriend,
+  onInviteFriendChange,
   onCreate,
   onJoin,
   onBack,
@@ -5756,6 +6128,9 @@ function PrivateRoomsScreen({
   stage: StageDefinition;
   roster: CharacterDefinition[];
   stages: StageDefinition[];
+  onlineProfile: OnlinePlayerProfile | null;
+  inviteFriend: FriendEntry | null;
+  onInviteFriendChange: (friend: FriendEntry | null) => void;
   onCreate: (intent: Extract<PrivateRoomIntent, { kind: 'host' }>) => void;
   onJoin: (intent: Extract<PrivateRoomIntent, { kind: 'guest' }>) => void;
   onBack: () => void;
@@ -5766,6 +6141,8 @@ function PrivateRoomsScreen({
   const [passwords, setPasswords] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [message, setMessage] = useState('');
+  const [friendPickerOpen, setFriendPickerOpen] = useState(Boolean(inviteFriend));
+  const friends = useMemo(() => readFriends(onlineProfile), [onlineProfile, inviteFriend]);
 
   const load = useCallback(async () => {
     setStatus('loading');
@@ -5789,15 +6166,28 @@ function PrivateRoomsScreen({
     return () => window.clearInterval(timer);
   }, [load]);
 
-  const createRoom = () => {
+  useEffect(() => {
+    if (!inviteFriend) return;
+    setRoomName(cleanPrivateRoomName(`${p1.displayName} VS ${inviteFriend.displayName}`));
+    setFriendPickerOpen(true);
+  }, [inviteFriend, p1.displayName]);
+
+  const createRoom = async () => {
+    const password = generatePrivateRoomPassword();
+    const cleanRoom = cleanPrivateRoomName(roomName || `${p1.displayName} Room`);
     onAnalytics('private_room_create_clicked', {
       stage_id: stage.id,
-      p1_character_id: p1.id
+      p1_character_id: p1.id,
+      invited_friend_id: inviteFriend?.playerId ?? null
     });
+    if (inviteFriend) {
+      const copied = await copyPrivateRoomInvite(cleanRoom, password, inviteFriend);
+      setMessage(copied ? `Invite copied for ${inviteFriend.displayName}` : `Invite ${inviteFriend.displayName}: ${cleanRoom} / ${password}`);
+    }
     onCreate({
       kind: 'host',
-      roomName: cleanPrivateRoomName(roomName || `${p1.displayName} Room`),
-      password: generatePrivateRoomPassword()
+      roomName: cleanRoom,
+      password
     });
   };
 
@@ -5826,8 +6216,8 @@ function PrivateRoomsScreen({
 
       <div className="private-room-create">
         <div>
-          <span>Host Room</span>
-          <strong>{p1.displayName}</strong>
+          <span>{inviteFriend ? 'Invite Friend' : 'Host Room'}</span>
+          <strong>{inviteFriend?.displayName ?? p1.displayName}</strong>
           <small>{stage.name}</small>
         </div>
         <label className="arcade-name-entry">
@@ -5838,12 +6228,16 @@ function PrivateRoomsScreen({
             onChange={(event) => setRoomName(cleanPrivateRoomName(event.target.value))}
           />
           <button type="button" onClick={createRoom}>
-            Create
+            {inviteFriend ? 'Invite' : 'Create'}
           </button>
         </label>
       </div>
 
       <div className="leaderboard-actions">
+        <button className="secondary-button" onClick={() => setFriendPickerOpen((open) => !open)}>
+          <Users size={18} />
+          Invite Friend
+        </button>
         <button className="secondary-button" onClick={() => {
           onAnalytics('private_rooms_loaded', { action: 'refresh_clicked' });
           void load();
@@ -5859,6 +6253,23 @@ function PrivateRoomsScreen({
           Back
         </button>
       </div>
+
+      {friendPickerOpen && (
+        <section className="friend-picker-board" aria-label="Invite friend">
+          {friends.length === 0 && <div className="leaderboard-empty">No friends saved yet. Add opponents from Match History.</div>}
+          {friends.length > 0 && friends.map((friend) => (
+            <button
+              key={friend.playerId}
+              type="button"
+              className={`friend-picker-row ${inviteFriend?.playerId === friend.playerId ? 'is-selected' : ''}`}
+              onClick={() => onInviteFriendChange(inviteFriend?.playerId === friend.playerId ? null : friend)}
+            >
+              <span>{friend.displayName}</span>
+              <small>{friend.lastCharacterId ? characterName(friend.lastCharacterId) : 'Friend'}</small>
+            </button>
+          ))}
+        </section>
+      )}
 
       <section className="leaderboard-board private-room-board" aria-label="Private rooms">
         {message && <div className="private-room-message">{message}</div>}
@@ -5903,6 +6314,34 @@ function PrivateRoomsScreen({
 
 function cleanPrivateRoomName(value: string) {
   return value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').slice(0, 18);
+}
+
+async function copyPrivateRoomInvite(roomName: string, password: string, friend: FriendEntry) {
+  if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) return false;
+  try {
+    await navigator.clipboard.writeText(`KORE private match for ${friend.displayName}: room ${roomName}, password ${password}`);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function formatMatchHistoryMode(mode: SocialMatchMode) {
+  if (mode === 'ranked') return 'Ranked Match';
+  if (mode === 'trainingOnline') return 'Training Sparring';
+  if (mode === 'private') return 'Private Match';
+  return 'Online Match';
+}
+
+function formatMatchHistoryTime(value: number) {
+  if (!Number.isFinite(value) || value <= 0) return 'Unknown';
+  return new Intl.DateTimeFormat(undefined, {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(new Date(value));
 }
 
 function privateRoomToOnlineResult(room: PrivateRoomResult): OnlineMatchResult {
@@ -6167,6 +6606,7 @@ function TrainingSelect({
   setP1Id,
   setP2Id,
   setTrainingMode,
+  onMatchHistory,
   onBack,
   onStart,
   onAnalytics
@@ -6179,6 +6619,7 @@ function TrainingSelect({
   setP1Id: (id: string) => void;
   setP2Id: (id: string) => void;
   setTrainingMode: (mode: TrainingTrialMode) => void;
+  onMatchHistory: () => void;
   onBack: () => void;
   onStart: () => void;
   onAnalytics: AnalyticsCapture;
@@ -6416,6 +6857,12 @@ function TrainingSelect({
           onBack={() => {
             onAnalytics('navigation_clicked', { destination: 'menu', source: 'training_select_back' });
             onBack();
+          }}
+          middleAction={{
+            label: 'Match History',
+            icon: <History size={18} />,
+            className: 'training-match-history-button',
+            onClick: onMatchHistory
           }}
           onNext={onStart}
           nextLabel={trainingMode === 'online' ? 'Find Partner' : trainingMode === 'free' ? 'Start Training' : trainingMode === 'basics' ? 'Start Basics' : 'Start Combos'}
@@ -10548,6 +10995,8 @@ function SettingsScreen({
   setCpuDifficulty,
   settings,
   setSettings,
+  inputPromptMode,
+  onInputPromptModeChange,
   onlineProfile,
   onOnlineProfileChange,
   selectedStageName,
@@ -10567,6 +11016,8 @@ function SettingsScreen({
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   settings: GameSettings;
   setSettings: Dispatch<SetStateAction<GameSettings>>;
+  inputPromptMode: InputPromptMode;
+  onInputPromptModeChange: (mode: InputPromptMode) => void;
   onlineProfile: OnlinePlayerProfile | null;
   onOnlineProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
   selectedStageName: string;
@@ -10593,6 +11044,7 @@ function SettingsScreen({
   const editorRef = useRef<HTMLElement | null>(null);
   const previousSettingsRef = useRef(settings);
   const activeSectionIndex = Math.min(activeSections[activeTab] ?? 0, sidebars[activeTab].length - 1);
+  const tabPrompts = getTabShortcutPrompts(inputPromptMode);
   const visibleCursorOptions = useMemo(
     () => KORE_CURSOR_OPTIONS.filter((cursor) => cursor.style === cursorStyleFilter && cursor.scale === cursorScaleFilter),
     [cursorScaleFilter, cursorStyleFilter]
@@ -10631,6 +11083,17 @@ function SettingsScreen({
       return nextTab;
     });
   }, [onAnalytics]);
+
+  useEffect(() => {
+    const onControllerTabCycle = (event: Event) => {
+      const direction = (event as CustomEvent<{ direction?: -1 | 1 }>).detail?.direction;
+      if (direction !== -1 && direction !== 1) return;
+      cycleOptionsTab(direction);
+      onOptionsShortcut();
+    };
+    window.addEventListener(SETTINGS_TAB_CYCLE_EVENT, onControllerTabCycle);
+    return () => window.removeEventListener(SETTINGS_TAB_CYCLE_EVENT, onControllerTabCycle);
+  }, [cycleOptionsTab, onOptionsShortcut]);
 
   const scrollOptionsSectionIntoView = useCallback((index: number) => {
     window.requestAnimationFrame(() => {
@@ -10693,6 +11156,7 @@ function SettingsScreen({
       const key = event.key.toLowerCase();
       if (key === 'o' || key === 'p') {
         event.preventDefault();
+        onInputPromptModeChange('keyboardShortcut');
         cycleOptionsTab(key === 'p' ? 1 : -1);
         onOptionsShortcut();
         return;
@@ -10702,7 +11166,7 @@ function SettingsScreen({
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [comboRemapRequest, cycleOptionsTab, mode, onOptionsShortcut, remapRequest, settings.controls, settings.game.controlScheme]);
+  }, [comboRemapRequest, cycleOptionsTab, mode, onInputPromptModeChange, onOptionsShortcut, remapRequest, settings.controls, settings.game.controlScheme]);
 
   const renderEditor = () => {
     if (activeTab === 'game') {
@@ -11045,7 +11509,7 @@ function SettingsScreen({
     <div className="settings-screen">
       <header className="options-header">
         <nav className="options-tabs" aria-label="Options tabs">
-          <span>O</span>
+          <span data-testid="options-tab-previous-hint">{tabPrompts.previous}</span>
           {settingsTabs.map((tab) => (
             <button key={tab} className={activeTab === tab ? 'active' : ''} onClick={() => {
               setActiveTab(tab);
@@ -11054,7 +11518,7 @@ function SettingsScreen({
               {tabLabels[tab]}
             </button>
           ))}
-          <span>P</span>
+          <span data-testid="options-tab-next-hint">{tabPrompts.next}</span>
         </nav>
       </header>
       <section className="options-layout">
@@ -19213,6 +19677,8 @@ function FightScreen({
   mode,
   cpuDifficulty,
   settings,
+  inputPromptMode,
+  onInputPromptModeChange,
   readInputsForStep,
   peekInputs,
   setVirtualAction,
@@ -19239,6 +19705,8 @@ function FightScreen({
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   settings: GameSettings;
+  inputPromptMode: InputPromptMode;
+  onInputPromptModeChange: (mode: InputPromptMode) => void;
   readInputsForStep: () => [InputFrame, InputFrame];
   peekInputs: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
@@ -19336,6 +19804,7 @@ function FightScreen({
   const botRematchReadyTimerRef = useRef(0);
   const botRematchLeaveTimerRef = useRef(0);
   const onlineWinnerRecordedRef = useRef(false);
+  const matchHistoryRecordedRef = useRef('');
   const onlineSnapshotSequenceRef = useRef(0);
   const onlineInputSequenceRef = useRef(0);
   const onlineLatestSnapshotRef = useRef(-1);
@@ -19645,11 +20114,12 @@ function FightScreen({
       if (key !== 'o' && key !== 'p') return;
       event.preventDefault();
       event.stopPropagation();
+      onInputPromptModeChange('keyboardShortcut');
       cycleMoveListTab(key === 'p' ? 1 : -1);
     };
     window.addEventListener('keydown', onKeyDown, true);
     return () => window.removeEventListener('keydown', onKeyDown, true);
-  }, [cycleMoveListTab, pauseMenuView, paused]);
+  }, [cycleMoveListTab, onInputPromptModeChange, pauseMenuView, paused]);
 
   useEffect(() => {
     onlineStateRef.current = onlineState;
@@ -20011,6 +20481,7 @@ function FightScreen({
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     onlineWinnerRecordedRef.current = false;
+    matchHistoryRecordedRef.current = '';
     if (resetWins) {
       onlineWinsRef.current = [0, 0];
       setOnlineWins([0, 0]);
@@ -20137,6 +20608,7 @@ function FightScreen({
     setMatch(fresh);
     startOnlineRollback(fresh, onlineRoleRef.current);
     onlineWinnerRecordedRef.current = false;
+    matchHistoryRecordedRef.current = '';
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
     setRankedPlayerResult(null);
@@ -20255,6 +20727,50 @@ function FightScreen({
     setPrivateRoomPassword('');
     setPrivateRoomName('');
   }, [clearBotRematchTimers, isOnline, isPrivate]);
+
+  const recordSocialMatchHistory = useCallback((candidate: MatchSnapshot) => {
+    if (!isOnline || candidate.phase !== 'matchOver' || !candidate.winnerSlot) return;
+    if (mode !== 'online' && mode !== 'ranked' && mode !== 'trainingOnline' && mode !== 'private') return;
+    const localProfile = onlineLocalProfileRef.current;
+    if (!localProfile) return;
+    const room = onlineRoomRef.current;
+    const localIndex = onlineRoleRef.current === 'guest' ? 1 : 0;
+    const opponentIndex = localIndex === 0 ? 1 : 0;
+    const key = [
+      room?.roomId ?? 'roomless',
+      mode,
+      candidate.round,
+      candidate.winnerSlot,
+      candidate.fighters[0].roundsWon,
+      candidate.fighters[1].roundsWon
+    ].join(':');
+    if (matchHistoryRecordedRef.current === key) return;
+    const bot = onlineBotOpponentRef.current;
+    const remoteProfile = onlineRemoteProfileRef.current;
+    const opponent: MatchHistoryOpponent = {
+      playerId: bot ? bot.playerId : remoteProfile?.playerId,
+      displayName: bot ? bot.displayName : remoteProfile?.displayName ?? 'OPPONENT',
+      characterId: candidate.fighters[opponentIndex].baseCharacter.id,
+      isBot: Boolean(bot)
+    };
+    const localRounds = candidate.fighters[localIndex].roundsWon;
+    const opponentRounds = candidate.fighters[opponentIndex].roundsWon;
+    recordMatchHistory(localProfile, {
+      createdAt: Date.now(),
+      mode: mode as SocialMatchMode,
+      roomId: room?.roomId,
+      stageId: candidate.stage.id,
+      localCharacterId: candidate.fighters[localIndex].baseCharacter.id,
+      opponent,
+      result: candidate.winnerSlot === localIndex + 1 ? 'win' : 'loss',
+      score: [localRounds, opponentRounds]
+    });
+    matchHistoryRecordedRef.current = key;
+  }, [isOnline, mode]);
+
+  useEffect(() => {
+    recordSocialMatchHistory(match);
+  }, [match, recordSocialMatchHistory]);
 
   const recordOnlineMatchWin = useCallback((candidate: MatchSnapshot) => {
     if (candidate.phase !== 'matchOver' || !candidate.winnerSlot || onlineWinnerRecordedRef.current) return;
@@ -20485,6 +21001,7 @@ function FightScreen({
       incrementOnlineRematchCount();
       onlineRematchReadyRef.current = { local: false, remote: false };
       onlineWinnerRecordedRef.current = false;
+      matchHistoryRecordedRef.current = '';
       onlineRollbackRef.current = null;
       resetTrackedMatchAnalytics();
       onlineWinsRef.current = message.wins;
@@ -20552,6 +21069,7 @@ function FightScreen({
     setOnlineRematchCount(0);
     clearBotRematchTimers();
     onlineWinnerRecordedRef.current = false;
+    matchHistoryRecordedRef.current = '';
     onlineLatestSnapshotRef.current = -1;
     onlineSnapshotSequenceRef.current = 0;
     onlineBotOpponentRef.current = null;
@@ -21222,7 +21740,6 @@ function FightScreen({
         onAssetLoadingChange={setAssetLoadingState}
       />
       <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
-      {isArcadeMatchMode(mode) && arcadeRun && <ArcadeRunHud run={arcadeRun} hudScale={settings.display.hudScale} />}
       <CombatPopupLayer popups={combatPopups} />
       <ClashOverlay match={match} />
       <button
@@ -21292,6 +21809,7 @@ function FightScreen({
               <ConfiguredMoveList
                 character={p1}
                 activeTab={activeMoveListTab}
+                inputPromptMode={inputPromptMode}
                 onTabChange={setActiveMoveListTab}
               />
               <div className="overlay-actions pause-menu-actions pause-movelist-actions">
@@ -21757,10 +22275,12 @@ function RankedResultPanel({ result, accepted }: { result: RankedPlayerResult; a
 function ConfiguredMoveList({
   character,
   activeTab,
+  inputPromptMode,
   onTabChange
 }: {
   character: CharacterDefinition;
   activeTab: MoveListTab;
+  inputPromptMode: InputPromptMode;
   onTabChange: (tab: MoveListTab) => void;
 }) {
   const [activePreviewKey, setActivePreviewKey] = useState<string | null>(null);
@@ -21776,6 +22296,7 @@ function ConfiguredMoveList({
   const comboRoutes = useMemo(() => generateCharacterComboRoutes(character), [character]);
   const rows = useMemo(() => buildPauseMovePreviewRows(character, activeTab, configured, comboRoutes), [activeTab, character, comboRoutes, configured]);
   const activeRow = rows.find((row) => row.id === activePreviewKey) ?? rows[0] ?? null;
+  const tabPrompts = getTabShortcutPrompts(inputPromptMode);
 
   useEffect(() => {
     setActivePreviewKey((current) => rows.some((row) => row.id === current) ? current : rows[0]?.id ?? null);
@@ -21786,7 +22307,7 @@ function ConfiguredMoveList({
   return (
     <div className="pause-movelist-panel">
       <nav className="options-tabs pause-movelist-tabs" aria-label="Move list tabs">
-        <span>O</span>
+        <span data-testid="pause-movelist-previous-hint">{tabPrompts.previous}</span>
         {moveListTabs.map((tab) => (
           <button
             key={tab}
@@ -21796,7 +22317,7 @@ function ConfiguredMoveList({
             {moveListTabLabels[tab]}
           </button>
         ))}
-        <span>P</span>
+        <span data-testid="pause-movelist-next-hint">{tabPrompts.next}</span>
       </nav>
       <div className="pause-movelist">
         <section>
@@ -22300,7 +22821,6 @@ function BreakTargetMiniGameScreen({
       onPointerDown={() => screenRef.current?.focus()}
     >
       <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
-      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} />
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {paused && (
         <div className="pause-overlay">
@@ -22466,7 +22986,6 @@ function EnemyRushMiniGameScreen({
       onPointerDown={() => screenRef.current?.focus()}
     >
       <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
-      <MiniGameHud snapshot={snapshot} hudScale={settings.display.hudScale} />
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {paused && (
         <div className="pause-overlay">
@@ -22492,22 +23011,6 @@ function EnemyRushMiniGameScreen({
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-function MiniGameHud({ snapshot, hudScale }: { snapshot: BreakTargetMiniGameSnapshot | EnemyRushMiniGameSnapshot; hudScale: number }) {
-  const remaining = snapshot.kind === 'break-target'
-    ? snapshot.targets.filter((target) => !target.destroyed).length
-    : snapshot.enemies.filter((enemy) => !enemy.defeated).length;
-  const total = snapshot.kind === 'break-target' ? snapshot.targets.length : snapshot.enemies.length;
-  const label = snapshot.kind === 'break-target' ? 'Targets' : 'Enemies';
-  return (
-    <div className="mini-game-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
-      <div className="mini-game-hud-card">
-        <span>{label}</span>
-        <strong>{remaining}/{total}</strong>
-      </div>
     </div>
   );
 }
@@ -22569,17 +23072,6 @@ function MiniGameResultScreen({ result, onContinue }: { result: MiniGameResult; 
         )}
         {ready && <small>Press any key to continue</small>}
       </section>
-    </div>
-  );
-}
-
-function ArcadeRunHud({ run, hudScale }: { run: ArcadeRunState; hudScale: number }) {
-  return (
-    <div className="arcade-run-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
-      <div><span>Arcade</span><strong>{run.score}</strong></div>
-      <div><span>Lives</span><strong>{run.livesRemaining}</strong></div>
-      <div><span>Level</span><strong>{run.level}</strong></div>
-      {run.lastAward > 0 && <div className="is-award"><span>Last</span><strong>+{run.lastAward}</strong></div>}
     </div>
   );
 }
@@ -22839,6 +23331,7 @@ function FooterActions({
   middleAction?: {
     label: string;
     icon: ReactNode;
+    className?: string;
     onClick: () => void;
   };
   onNext: () => void;
@@ -22852,7 +23345,7 @@ function FooterActions({
         Back
       </button>
       {middleAction && (
-        <button className="secondary-button" onClick={middleAction.onClick}>
+        <button className={`secondary-button ${middleAction.className ?? ''}`} onClick={middleAction.onClick}>
           {middleAction.icon}
           {middleAction.label}
         </button>
