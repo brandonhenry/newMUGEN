@@ -4049,7 +4049,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].controlSideSign).toBe(-match.fighters[1].controlSideSign);
   });
 
-  it('retargets P1 horizontal controls after crossing sides and releasing the held direction', () => {
+  it('retargets P1 horizontal controls immediately after crossing sides', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -4060,7 +4060,8 @@ describe('fight engine', () => {
     match.fighters[0].position.x = 1.3;
     match.fighters[1].position.x = -1.3;
     const heldBackWhileCrossed = stepMatch(match, { ...emptyInputFrame(), left: true }, emptyInputFrame(), 1 / 60);
-    expect(heldBackWhileCrossed.fighters[0].horizontalHoldIntent).toBe('back');
+    expect(heldBackWhileCrossed.fighters[0].horizontalHoldIntent).toBe('forward');
+    expect(heldBackWhileCrossed.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
 
     const released = stepMatch(heldBackWhileCrossed, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(released.fighters[0].horizontalHoldIntent).toBeNull();
@@ -4076,7 +4077,7 @@ describe('fight engine', () => {
     expect(back.fighters[0].position.x).toBeGreaterThan(released.fighters[0].position.x);
   });
 
-  it('retargets P2 horizontal controls after crossing sides and releasing the held direction', () => {
+  it('retargets P2 horizontal controls immediately after crossing sides', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -4087,7 +4088,8 @@ describe('fight engine', () => {
     match.fighters[0].position.x = 1.3;
     match.fighters[1].position.x = -1.3;
     const heldBackWhileCrossed = stepMatch(match, emptyInputFrame(), { ...emptyInputFrame(), right: true }, 1 / 60);
-    expect(heldBackWhileCrossed.fighters[1].horizontalHoldIntent).toBe('back');
+    expect(heldBackWhileCrossed.fighters[1].horizontalHoldIntent).toBe('forward');
+    expect(heldBackWhileCrossed.fighters[1].position.x).toBeGreaterThan(match.fighters[1].position.x);
 
     const released = stepMatch(heldBackWhileCrossed, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(released.fighters[1].horizontalHoldIntent).toBeNull();
@@ -4785,7 +4787,7 @@ describe('fight engine', () => {
     expect(crossedMatch.fighters[0].walkDirection).toBe(1);
   });
 
-  it('does not turn held physical back into forward dash after the opponent changes sides', () => {
+  it('reinterprets held physical directions against the latest side before dash resolution', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -4801,9 +4803,9 @@ describe('fight engine', () => {
 
     match = stepMatch(match, jitterBack, emptyInputFrame(), 1 / 60);
 
-    expect(match.fighters[0].dashForwardFrames).toBe(0);
-    expect(match.fighters[0].horizontalHoldIntent).toBe('back');
-    expect(match.fighters[0].position.x).toBeGreaterThanOrEqual(before);
+    expect(match.fighters[0].dashForwardFrames).toBeGreaterThan(0);
+    expect(match.fighters[0].horizontalHoldIntent).toBe('forward');
+    expect(match.fighters[0].position.x).toBeLessThan(before - 0.5);
   });
 
   it('allows a fresh physical forward press after releasing held back', () => {

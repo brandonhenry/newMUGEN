@@ -5390,16 +5390,14 @@ function resolveHorizontalIntent(stage: StageDefinition | undefined, fighter: Fi
     fighter.horizontalHoldControlSideSign = getControlSideSign(fighter, opponent, stage);
     return { direction: 0, forward: false, back: false, neutral: true };
   }
-  if (fighter.horizontalHoldDirection !== physicalDirection) {
-    const sideSign = getControlSideSign(fighter, opponent, stage);
-    const physicalForward = sideSign > 0 ? physicalDirection === 'right' : physicalDirection === 'left';
-    fighter.horizontalHoldDirection = physicalDirection;
-    fighter.horizontalHoldIntent = physicalForward ? 'forward' : 'back';
-    fighter.horizontalHoldControlSideSign = sideSign;
-  }
-  if (fighter.horizontalHoldIntent === 'forward') return { direction: 1, forward: true, back: false, neutral: false };
-  if (fighter.horizontalHoldIntent === 'back') return { direction: -1, forward: false, back: true, neutral: false };
-  return { direction: 0, forward: false, back: false, neutral: true };
+  const sideSign = getControlSideSign(fighter, opponent, stage);
+  const physicalForward = sideSign > 0 ? physicalDirection === 'right' : physicalDirection === 'left';
+  fighter.horizontalHoldDirection = physicalDirection;
+  fighter.horizontalHoldIntent = physicalForward ? 'forward' : 'back';
+  fighter.horizontalHoldControlSideSign = sideSign;
+  return physicalForward
+    ? { direction: 1, forward: true, back: false, neutral: false }
+    : { direction: -1, forward: false, back: true, neutral: false };
 }
 
 function resolveHorizontalDashIntent(input: InputFrame, horizontalIntent: HorizontalControlIntent) {
