@@ -96,26 +96,13 @@
       "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
     ],
     "kickright": [
-      "/characters/bobobo-bo-bo-bobo/frames/frame-373.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-374.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-375.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-376.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-377.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-378.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-379.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-380.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-381.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-382.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-383.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-384.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-385.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-386.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-387.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-388.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-389.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-390.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-391.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-392.png"
+      "/characters/bobobo-bo-bo-bobo/frames/frame-381.png"
     ],
     "hitLight": [
       "/characters/bobobo-bo-bo-bobo/frames/frame-024.png"
@@ -696,9 +683,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 5,
-      "activeFrames": 39,
-      "recoveryFrames": 2,
+      "startupFrames": 14,
+      "activeFrames": 6,
+      "recoveryFrames": 14,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -1800,7 +1787,7 @@
     },
     "crouch": {
       "23": {
-        "width": 1.082,
+        "width": 1.08,
         "height": 1.03,
         "offsetX": 0
       }

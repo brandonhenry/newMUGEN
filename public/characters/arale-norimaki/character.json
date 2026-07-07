@@ -79,14 +79,7 @@
       "/characters/arale-norimaki/frames/frame-130.png",
       "/characters/arale-norimaki/frames/frame-131.png"
     ],
-    "kickleft": [
-      "/characters/arale-norimaki/frames/frame-032.png",
-      "/characters/arale-norimaki/frames/frame-033.png",
-      "/characters/arale-norimaki/frames/frame-034.png",
-      "/characters/arale-norimaki/frames/frame-035.png",
-      "/characters/arale-norimaki/frames/frame-036.png",
-      "/characters/arale-norimaki/frames/frame-037.png"
-    ],
+    "kickleft": [],
     "kickright": [
       "/characters/arale-norimaki/frames/frame-043.png",
       "/characters/arale-norimaki/frames/frame-044.png",
@@ -172,11 +165,7 @@
       "/characters/arale-norimaki/frames/frame-148.png",
       "/characters/arale-norimaki/frames/frame-149.png",
       "/characters/arale-norimaki/frames/frame-150.png",
-      "/characters/arale-norimaki/frames/frame-151.png",
-      "/characters/arale-norimaki/frames/frame-152.png",
-      "/characters/arale-norimaki/frames/frame-153.png",
-      "/characters/arale-norimaki/frames/frame-154.png",
-      "/characters/arale-norimaki/frames/frame-155.png"
+      "/characters/arale-norimaki/frames/frame-151.png"
     ],
     "cmd:FC+2": [
       "/characters/arale-norimaki/frames/frame-127.png",
@@ -701,9 +690,9 @@
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
-      "startupFrames": 13,
-      "activeFrames": 25,
-      "recoveryFrames": 4,
+      "startupFrames": 8,
+      "activeFrames": 4,
+      "recoveryFrames": 16,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -1681,7 +1670,7 @@
     },
     "crouch": {
       "62": {
-        "width": 0.924,
+        "width": 0.92,
         "height": 0.97,
         "offsetX": 0
       }
