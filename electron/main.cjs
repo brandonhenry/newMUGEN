@@ -61,12 +61,32 @@ function startDeckInputDebug() {
     void mainWindow.webContents.executeJavaScript(`
       (() => {
         const pads = Array.from(navigator.getGamepads?.() || []).filter(Boolean);
+        const active = (pad, deadzone = 0.35) =>
+          pad.buttons.some((button) => button.pressed) || pad.axes.some((axis) => Math.abs(axis) > deadzone);
+        const score = (pad) => {
+          const id = String(pad.id || '').toLowerCase();
+          let next = 0;
+          if (active(pad)) next += 1000;
+          if (pad.mapping === 'standard') next += 160;
+          if (/(xinput|xbox|steam virtual|steam input|wireless controller|dualsense|dualshock|gamepad)/i.test(id)) next += 60;
+          if (pad.buttons.length >= 16 && pad.axes.length >= 2) next += 30;
+          if (pad.buttons.length < 8 || pad.axes.length < 2) next -= 80;
+          if (/(mouse|keyboard|desktop|trackpad|touchpad|lizard)/i.test(id)) next -= 120;
+          return next;
+        };
+        const preferred = [...pads].sort((a, b) => score(b) - score(a) || a.index - b.index);
         return {
           count: pads.length,
+          primaryIndex: preferred[0]?.index ?? null,
           pads: pads.map((pad) => ({
             index: pad.index,
             id: pad.id,
+            mapping: pad.mapping,
             connected: pad.connected,
+            active: active(pad),
+            score: score(pad),
+            buttonCount: pad.buttons.length,
+            axisCount: pad.axes.length,
             buttons: pad.buttons.map((button, index) => button.pressed ? index : null).filter((index) => index !== null),
             axes: pad.axes.map((axis) => Number(axis.toFixed(3)))
           }))

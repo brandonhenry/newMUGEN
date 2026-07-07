@@ -3,7 +3,7 @@ import type { ActionName, ControlBindingMap, InputFrame, InputFrameWithMetadata,
 import { emptyInputFrame } from '../types';
 import { keybindableButtonComboDefinitions } from '../lib/buttonCombos';
 import { defaultGameSettings } from '../lib/gameSettings';
-import { getVisibleGamepads, isGamepadActive, readFightGamepadInput } from '../lib/gamepads';
+import { getPreferredGamepads, getVisibleGamepads, isGamepadActive, readFightGamepadInput } from '../lib/gamepads';
 
 const aiModeArrowKeys: Record<string, ActionName> = {
   ArrowUp: 'up',
@@ -407,15 +407,16 @@ function refreshGamepadInputs(
 
 function resolveFightGamepads(pads: Gamepad[], assignments: [GamepadAssignment, GamepadAssignment]): [Gamepad | null, Gamepad | null] {
   const byIndex = new Map(pads.map((pad) => [pad.index, pad]));
+  const preferredPads = getPreferredGamepads(pads, 0.35);
   for (let player = 0; player < 2; player += 1) {
     if (assignments[player] && !byIndex.has(assignments[player]!.index)) assignments[player] = null;
   }
 
   const p1 = assignments[0] ? byIndex.get(assignments[0].index) ?? null : null;
   if (!p1 || assignments[0]?.source === 'fallback') {
-    const activePad = pads.find((pad) => isGamepadActive(pad, 0.35) && pad.index !== assignments[1]?.index);
-    const activeAssignedToP2 = pads.find((pad) => isGamepadActive(pad, 0.35) && pad.index === assignments[1]?.index);
-    const selected = activePad ?? activeAssignedToP2 ?? (!p1 ? pads[0] : null);
+    const activePad = preferredPads.find((pad) => isGamepadActive(pad, 0.35) && pad.index !== assignments[1]?.index);
+    const activeAssignedToP2 = preferredPads.find((pad) => isGamepadActive(pad, 0.35) && pad.index === assignments[1]?.index);
+    const selected = activePad ?? activeAssignedToP2 ?? (!p1 ? preferredPads[0] : null);
     if (selected) {
       assignments[0] = { index: selected.index, source: isGamepadActive(selected, 0.35) ? 'active' : 'fallback' };
       if (assignments[1]?.index === selected.index) assignments[1] = null;
@@ -427,7 +428,7 @@ function resolveFightGamepads(pads: Gamepad[], assignments: [GamepadAssignment, 
   }
 
   if (!assignments[1] || !byIndex.has(assignments[1].index) || assignments[1].index === assignments[0]?.index) {
-    const p2Pad = pads.find((pad) => pad.index !== assignments[0]?.index) ?? null;
+    const p2Pad = preferredPads.find((pad) => pad.index !== assignments[0]?.index) ?? null;
     assignments[1] = p2Pad ? { index: p2Pad.index, source: isGamepadActive(p2Pad, 0.35) ? 'active' : 'fallback' } : null;
   } else {
     const p2 = byIndex.get(assignments[1].index);
