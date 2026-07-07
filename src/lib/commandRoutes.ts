@@ -112,6 +112,7 @@ export function commandToActions(command: string | undefined, input: MoveInput):
   const family = commandRouteFamily(command);
   if (family === 'ki') actions.add('charge');
   if (family === 'crouch') actions.add('down');
+  if (family === 'jump') actions.add('jump');
   if (family === 'sidestep') {
     if (notation.startsWith('SSR+')) actions.add('sidestepDown');
     else actions.add('sidestepUp');
@@ -120,7 +121,7 @@ export function commandToActions(command: string | undefined, input: MoveInput):
   if (prefix.includes('f')) actions.add('right');
   if (prefix.includes('b')) actions.add('left');
   if (prefix.includes('d')) actions.add('down');
-  if (prefix.includes('u')) actions.add('up');
+  if (prefix.includes('u') && family !== 'jump') actions.add('up');
   for (const button of notation.match(/[1-4]/g) ?? [inputToButton[input]]) {
     const moveInput = buttonToInput[button];
     if (moveInput) actions.add(inputToAction[moveInput]);

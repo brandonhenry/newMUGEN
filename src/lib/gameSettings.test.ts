@@ -11,6 +11,23 @@ describe('game settings', () => {
     expect(settings.controls.keyboard[1].jump).toEqual(['Numpad0']);
     expect(settings.controls.gamepad[0].jump).toEqual([7]);
     expect(settings.controls.gamepad[1].jump).toEqual([7]);
+    expect(settings.controls.upHoldJumps).toBe(false);
+  });
+
+  it('sanitizes and clones the up-hold jump option', () => {
+    const settings = sanitizeGameSettings({
+      controls: {
+        upHoldJumps: true,
+        gamepad: [{ jump: [] }]
+      }
+    });
+
+    expect(settings.controls.upHoldJumps).toBe(true);
+    expect(settings.controls.gamepad[0].jump).toBeUndefined();
+
+    const clone = cloneSettings(settings);
+    clone.controls.upHoldJumps = false;
+    expect(settings.controls.upHoldJumps).toBe(true);
   });
 
   it('migrates legacy Space-as-up saves to dedicated jump', () => {

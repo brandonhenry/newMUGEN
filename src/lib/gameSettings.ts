@@ -84,7 +84,8 @@ export const defaultGameSettings: GameSettings = {
     keyboard: [p1Keyboard, p2Keyboard],
     gamepad: [defaultGamepad, defaultGamepad],
     keyboardCombos: [{}, {}],
-    gamepadCombos: [{}, {}]
+    gamepadCombos: [{}, {}],
+    upHoldJumps: false
   },
   camera: {
     distance: 1,
@@ -184,7 +185,8 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       gamepadCombos: [
         sanitizeGamepadComboBindings(gamepadCombos[0], defaults.controls.gamepadCombos[0]),
         sanitizeGamepadComboBindings(gamepadCombos[1], defaults.controls.gamepadCombos[1])
-      ]
+      ],
+      upHoldJumps: booleanOr(controls.upHoldJumps, defaults.controls.upHoldJumps)
     },
     camera: {
       distance: clampNumber(camera.distance, 0.7, 1.35, defaults.camera.distance),
@@ -244,7 +246,8 @@ export function cloneSettings(settings: GameSettings): GameSettings {
       gamepadCombos: [
         cloneGamepadComboBindings(settings.controls.gamepadCombos?.[0] ?? {}),
         cloneGamepadComboBindings(settings.controls.gamepadCombos?.[1] ?? {})
-      ]
+      ],
+      upHoldJumps: settings.controls.upHoldJumps
     },
     camera: { ...settings.camera },
     display: { ...settings.display, impactSparks: { ...settings.display.impactSparks } },

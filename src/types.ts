@@ -1013,6 +1013,7 @@ export type ControlBindingMap = {
   gamepad: [PlayerGamepadBindings, PlayerGamepadBindings];
   keyboardCombos: [PlayerKeyboardComboBindings, PlayerKeyboardComboBindings];
   gamepadCombos: [PlayerGamepadComboBindings, PlayerGamepadComboBindings];
+  upHoldJumps: boolean;
 };
 
 export type GameSettings = {

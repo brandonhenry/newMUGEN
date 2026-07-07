@@ -120,7 +120,7 @@ const actionToNotation: Partial<Record<ActionName, string>> = {
   sidestepDown: 'SSR',
   sidewalkUp: 'SSL',
   sidewalkDown: 'SSR',
-  jump: 'u',
+  jump: 'JUMP',
   jab: '1',
   heavy: '2',
   kick: '3',
@@ -182,6 +182,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const trials: TrainingTrialDefinition[] = [
     makeSimpleTrial(character, dummy, 'movement', 'movement:walk', 'Walk In', ['f'], ['right'], 'Close space without swinging.', 'First, take the space. No wasted cuts.', 'Step forward and hold your ground.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:dash', 'Dash In', ['F'], ['dashForward'], 'Dash to punish distance quickly.', 'When the opening is far, move first.', 'Dash forward cleanly.', { requireState: 'walk' }),
+    makeSimpleTrial(character, dummy, 'movement', 'movement:jump', 'Jump', ['JUMP'], ['jump'], 'Jump leaves the ground for airborne approaches and evasive timing, but you cannot guard while committed to the air. Use the dedicated Jump binding, or enable Up Hold Jumps in Controls if you prefer classic held-Up jumping.', 'Air has reach, but no guard. Choose the leap.', 'Jump complete.', { requireState: 'jump' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:back-hop', 'Back Hop', ['b,b'], ['dashBack'], 'Back-back is a quick retreat for neutral spacing and whiff bait. Use it to make short attacks miss, then whiff punish, but it is unsafe if the enemy reads it or hits you during startup or airtime.', 'Retreat with care. Air has no guard.', 'Back hop complete.', { requireState: 'jump' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:sidestep', 'Sidestep Line', ['SSL'], ['sidestepUp'], 'Step off the center line to move or defend against linear pressure.', "Don't stand where the blade is falling.", 'Sidestep once.'),
     ...(basicButtonSteps.length > 0 ? [makeSequenceTrial(character, dummy, 'offense', 'offense:button-feel', 'Button Feel', basicButtonSteps, 'Press each basic attack button one at a time. Learn what your character feels like before worrying about combos.', 'One button. One result. Remember the feel.', 'Button feel complete.')] : []),
@@ -364,7 +365,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   if (fastestRoute) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:whiff', 'Whiff Punish', fastestRoute, 'Use back-hop or sidestep to make the enemy whiff, then hit their recovery before they can guard.', 'When they cut empty air, answer immediately.', 'Whiff punish landed.', { dummyScript: 'whiff', setup: { p1Position: { x: -0.25, z: 0 }, p2Position: { x: 1.15, z: 0 } }, expectImpactKinds: ['whiffPunish'], missAfterFrame: 72 }));
   if (safeRoute) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:safe', 'Safe Check', safeRoute, 'Use a safer check when you are not sure.', 'A safe cut beats a greedy one.', 'Land the safe check.'));
   if (advanced) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:command', 'Command Punish', advanced, 'Use a committed command route for bigger openings.', 'Bigger opening. Sharper answer.', 'Land the command starter.', { dummyScript: 'attack' }));
-  trials.push(makeSimpleTrial(character, dummy, 'jumpIn', 'jump:starter', 'Jump-In Starter', ['u', '1'], ['jump', 'jab'], 'Jump in to start pressure from above.', 'Come down with purpose.', 'Jump, then press 1.', { requireState: 'jump' }));
+  trials.push(makeSimpleTrial(character, dummy, 'jumpIn', 'jump:starter', 'Jump-In Starter', ['JUMP', '1'], ['jump', 'jab'], 'Use your Jump binding to start pressure from above.', 'Come down with purpose.', 'Jump-in complete.', { requireState: 'jump' }));
   if (antiAir) trials.push(makeRouteStarterTrial(character, dummy, 'defense', 'defense:anti-air', 'Anti-Air Jump-In', antiAir, 'Stay grounded and interrupt jump-ins before they land.', 'Do not chase the sky. Cut it down.', 'Anti-air landed.', { dummyScript: 'jumpIn', setup: { p1Position: { x: -0.45, z: 0 }, p2Position: { x: 0.62, z: 0 } }, expectImpactKinds: ['hit', 'counterHit'], requireAirborneDefender: true, missAfterFrame: 96 }));
   if (counterHit) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:counter-hit', 'Counter-Hit Intercept', counterHit, 'Counter hits happen when you interrupt an enemy startup or active attack.', 'Cut into the beginning of their swing.', 'Counter hit landed.', { dummyScript: 'counterHit', expectImpactKinds: ['counterHit'], missAfterFrame: 72 }));
   if (launcher) trials.push(makeRouteStarterTrial(character, dummy, 'launcher', 'launcher:starter', 'Launch Starter', launcher, 'Launchers start longer air routes.', 'Lift them first. The combo starts in the air.', 'Launch the dummy.', { expectImpact: { launched: true } }));
@@ -419,15 +420,16 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
 export function generateComboTrainingTrials(character: CharacterDefinition): TrainingTrialDefinition[] {
   return generateComboTrials(character).map((route) => {
     const routeIntent = comboRouteIntent(route);
+    const routeStepActions = route.steps.map(stepToActions);
     const steps = route.steps.map((step, index): TrainingTrialStep => ({
       id: `${route.id}:step:${index}`,
-      notation: step.notation,
+      notation: normalizeTrainingNotation(step.notation, routeStepActions[index] ?? []),
       label: step.label,
       routeKey: step.routeKey,
       animationKey: step.animationKey,
       input: step.input,
       command: step.command,
-      actions: stepToActions(step),
+      actions: routeStepActions[index] ?? stepToActions(step),
       kind: 'impact',
       targetFrame: index === 0 ? 18 : 14,
       windowBefore: 6,
@@ -697,7 +699,7 @@ function makeSimpleTrial(
     setup,
     steps: [{
       id: `${id}:step`,
-      notation,
+      notation: normalizeTrainingNotation(notation, actions),
       label: title,
       actions,
       kind: 'state',
@@ -738,7 +740,7 @@ function makeSequenceTrial(
   const setup = makeSetup(dummy, options.dummyScript ?? options.setup?.dummyScript ?? 'idle', options.setup);
   const steps: TrainingTrialStep[] = stepInputs.map((step, index) => ({
     id: `${id}:${step.id}`,
-    notation: step.notation,
+    notation: normalizeTrainingNotation(step.notation, step.actions),
     label: step.label,
     actions: step.actions,
     kind: 'state',
@@ -807,7 +809,7 @@ function makeMixedTrial(
     id: `${id}:${step.id}`,
     routeKey: step.routeKey,
     animationKey: step.animationKey,
-    notation: step.notation,
+    notation: normalizeTrainingNotation(step.notation, step.actions),
     label: step.label,
     input: step.input,
     command: step.command,
@@ -874,7 +876,7 @@ function makeMoveTrial(
   const setup = makeSetup(dummy, options.dummyScript ?? 'idle', options.setup);
   const step: TrainingTrialStep = {
     id: `${id}:step`,
-    notation,
+    notation: normalizeTrainingNotation(notation, actions),
     label,
     input,
     actions,
@@ -932,7 +934,7 @@ function makeRouteStarterTrial(
   const setup = makeSetup(dummy, options.dummyScript ?? options.setup?.dummyScript ?? 'idle', options.setup);
   const step: TrainingTrialStep = {
     id: `${id}:step`,
-    notation: route.notation,
+    notation: normalizeTrainingNotation(route.notation, commandRouteToActions(route.command, route.input)),
     label: route.label,
     routeKey: route.routeKey,
     animationKey: route.animationKey,
@@ -970,6 +972,17 @@ function makeRouteStarterTrial(
   };
 }
 
+function normalizeTrainingNotation(notation: string[], actions: ActionName[]) {
+  if (!actions.includes('jump')) return notation;
+  return notation.map((token) => {
+    const normalized = token.toLowerCase();
+    if (normalized === 'u') return 'JUMP';
+    if (normalized === 'u/f') return 'JUMP/f';
+    if (normalized === 'u/b') return 'JUMP/b';
+    return token;
+  });
+}
+
 function makeImpactOnlyTrial(
   character: CharacterDefinition,
   dummy: CharacterDefinition | undefined,
@@ -998,7 +1011,7 @@ function makeImpactOnlyTrial(
   const setup = makeSetup(dummy, options.dummyScript, options.setup);
   const step: TrainingTrialStep = {
     id: `${id}:step`,
-    notation,
+    notation: normalizeTrainingNotation(notation, actions),
     label: title,
     actions,
     kind: 'impact',
@@ -1051,7 +1064,7 @@ function makeGetupTrial(
   const setup = makeSetup(dummy, 'idle', { p1State: 'knockdown' });
   const step: TrainingTrialStep = {
     id: `${id}:step`,
-    notation,
+    notation: normalizeTrainingNotation(notation, actions),
     label: title,
     actions,
     kind: 'state',
@@ -1303,15 +1316,16 @@ function routeToTrialStep(
     reason: string;
   }
 ): MixedTrialStepInput {
+  const actions = commandRouteToActions(route.command, route.input);
   return {
     id,
-    notation: route.notation,
+    notation: normalizeTrainingNotation(route.notation, actions),
     label: route.label,
     routeKey: route.routeKey,
     animationKey: route.animationKey,
     input: route.input,
     command: route.command,
-    actions: commandRouteToActions(route.command, route.input),
+    actions,
     kind: 'impact',
     expectImpact: options.expectImpact,
     expectImpactKinds: options.expectImpactKinds,

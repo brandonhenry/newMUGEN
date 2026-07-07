@@ -190,6 +190,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       keyboardVerticalTapRefs.current,
       virtualVerticalTapRefs.current,
       gamepadVerticalTapRefs.current,
+      controlsRef.current.upHoldJumps,
       false
     );
   }, []);
@@ -213,6 +214,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       keyboardVerticalTapRefs.current,
       virtualVerticalTapRefs.current,
       gamepadVerticalTapRefs.current,
+      controlsRef.current.upHoldJumps,
       true
     );
     if (inputDebugHasSignal(merged, inputQueueRef.current)) {
@@ -350,6 +352,7 @@ function mergeInputsForRead(
   keyboardVerticalTapStates: [VerticalTapState, VerticalTapState],
   virtualVerticalTapStates: [VerticalTapState, VerticalTapState],
   gamepadVerticalTapStates: [VerticalTapState, VerticalTapState],
+  upHoldJumps: boolean,
   consumeQueuedPresses: boolean
 ): [InputFrame, InputFrame] {
   const merged: [InputFrame, InputFrame] = [emptyInputFrame(), emptyInputFrame()];
@@ -361,6 +364,7 @@ function mergeInputsForRead(
     for (const action of Object.keys(merged[player]) as ActionName[]) {
       merged[player][action] = keyboardInputs[player][action] || virtualInputs[player][action] || gamepadInputs[player][action];
     }
+    if (upHoldJumps && merged[player].up) merged[player].jump = true;
     const horizontalDashDirection =
       (keyboardInputs[player] as InputFrameWithMetadata).__horizontalDashDirection ??
       (virtualInputs[player] as InputFrameWithMetadata).__horizontalDashDirection ??

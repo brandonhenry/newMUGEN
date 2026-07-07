@@ -6244,9 +6244,19 @@ function buildStarterGuideSections(settings: GameSettings, inputPromptMode: Inpu
   const attackDevice = inputPromptMode === 'gamepad' ? 'gamepad' : 'keyboard';
   const attackPrompts = inputPromptMode === 'gamepad' ? gamepadAttackPrompts : keyboardAttackPrompts;
   const attackPromptText = attackPrompts.length > 0 ? attackPrompts.join(', ') : 'your attack bindings';
+  const jumpPrompt = inputPromptMode === 'gamepad'
+    ? formatGamepadButtonName(settings.controls.gamepad[0].jump?.[0])
+    : formatKeyName(settings.controls.keyboard[0].jump?.[0] ?? '');
   const menuMovePrompt = inputPromptMode === 'gamepad'
     ? 'D-pad or stick moves through menus; the south face button confirms.'
     : 'Arrow keys or WASD move through menus; Enter confirms.';
+  const fightMovePrompt = inputPromptMode === 'gamepad'
+    ? settings.controls.upHoldJumps
+      ? `Jump uses ${jumpPrompt || 'your Jump binding'} and held D-pad or stick up.`
+      : `Jump uses ${jumpPrompt || 'your Jump binding'}; D-pad or stick up stays a movement and lane input.`
+    : settings.controls.upHoldJumps
+      ? `Jump uses ${jumpPrompt || 'your Jump binding'} and held Up/W.`
+      : `Jump uses ${jumpPrompt || 'your Jump binding'}; Up/W stays a movement and lane input.`;
   const pausePrompt = inputPromptMode === 'gamepad'
     ? 'Start pauses fights; L1 opens this guide from the main menu and follows your Block binding in fights.'
     : 'Escape pauses fights; F1 opens this guide.';
@@ -6295,6 +6305,7 @@ function buildStarterGuideSections(settings: GameSettings, inputPromptMode: Inpu
     body: 'Controls can be remapped from Options -> Controls, and Beginner or KORE notation can be chosen under Options -> Game.',
     points: [
       menuMovePrompt,
+      fightMovePrompt,
       `Default attacks use ${attackPromptText} on ${attackDevice}.`,
       pausePrompt
     ]
@@ -12106,6 +12117,11 @@ function SettingsScreen({
                 <button className={activePlayer === 2 ? 'active' : ''} onClick={() => setActivePlayer(2)}>P2</button>
               </div>
             </SettingRow>
+            <SettingToggle
+              label="Up Hold Jumps"
+              checked={settings.controls.upHoldJumps}
+              onChange={(checked) => updateSettings((current) => ({ ...current, controls: { ...current.controls, upHoldJumps: checked } }))}
+            />
             {controlActions.map((action) => (
               <div className="binding-row" key={action}>
                 <div>
@@ -13138,16 +13154,19 @@ function setKeyboardComboBinding(settings: GameSettings, player: 1 | 2, comboId:
 
 function adjustGamepadButton(settings: GameSettings, player: 1 | 2, action: ActionName, delta: number): GameSettings {
   const next = cloneSettings(settings);
-  const current = next.controls.gamepad[player - 1][action]?.[0] ?? 0;
-  next.controls.gamepad[player - 1][action] = [nextMenuConfigurableGamepadButton(current, delta)];
+  const current = next.controls.gamepad[player - 1][action]?.[0];
+  const nextButton = nextMenuConfigurableGamepadButton(current, delta);
+  if (nextButton === undefined) delete next.controls.gamepad[player - 1][action];
+  else next.controls.gamepad[player - 1][action] = [nextButton];
   return next;
 }
 
 function adjustGamepadComboButton(settings: GameSettings, player: 1 | 2, comboId: ButtonComboId, delta: number): GameSettings {
   const next = cloneSettings(settings);
-  const fallback = delta < 0 ? maxConfigurableGamepadButton + 1 : minConfigurableGamepadButton - 1;
-  const current = next.controls.gamepadCombos[player - 1][comboId]?.[0] ?? fallback;
-  next.controls.gamepadCombos[player - 1][comboId] = [nextMenuConfigurableGamepadButton(current, delta)];
+  const current = next.controls.gamepadCombos[player - 1][comboId]?.[0];
+  const nextButton = nextMenuConfigurableGamepadButton(current, delta);
+  if (nextButton === undefined) delete next.controls.gamepadCombos[player - 1][comboId];
+  else next.controls.gamepadCombos[player - 1][comboId] = [nextButton];
   return next;
 }
 
@@ -13159,8 +13178,11 @@ function formatButtonComboLabel(comboId: ButtonComboId, scheme: ControlScheme = 
     .join(' + ');
 }
 
-function nextMenuConfigurableGamepadButton(current: number, delta: number) {
+function nextMenuConfigurableGamepadButton(current: number | undefined, delta: number) {
   const direction = delta < 0 ? -1 : 1;
+  if (current === undefined) return direction > 0 ? minConfigurableGamepadButton : maxConfigurableGamepadButton;
+  if (direction < 0 && current <= minConfigurableGamepadButton) return undefined;
+  if (direction > 0 && current >= maxConfigurableGamepadButton) return undefined;
   let candidate = Math.min(maxConfigurableGamepadButton, Math.max(minConfigurableGamepadButton, current + direction));
   while (menuReservedGamepadButtons.has(candidate) && candidate > minConfigurableGamepadButton && candidate < maxConfigurableGamepadButton) {
     candidate += direction;

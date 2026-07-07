@@ -378,6 +378,28 @@ describe('useControls', () => {
     expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: true, jump: false, sidestepUp: false });
   });
 
+  it('can optionally turn held gamepad up into jump after the gamepad hold threshold', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    const settings = cloneSettings(defaultGameSettings);
+    settings.controls.upHoldJumps = true;
+    settings.controls.gamepad[0].jump = [];
+    mockGamepads([pad]);
+    function UpHoldJumpHarness() {
+      controlsApi = useControls('training', settings.controls);
+      return <div />;
+    }
+    render(<UpHoldJumpHarness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 12, true);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: false, jump: false });
+
+    setNow(341);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: true, jump: true, sidestepUp: false });
+  });
+
   it('maps the default gamepad R2 button to dedicated jump', () => {
     const pad = makeMutableGamepad({ index: 0 });
     mockGamepads([pad]);

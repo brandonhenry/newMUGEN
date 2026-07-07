@@ -122,6 +122,31 @@ describe('training trial catalog', () => {
     expect(previewInput.dashBack).toBe(true);
   });
 
+  it('teaches dedicated jump as a basic movement principle', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('movement:jump'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    expect(trial.title).toBe('Jump');
+    expect(trial.steps[0]).toMatchObject({
+      notation: ['JUMP'],
+      actions: ['jump'],
+      requireState: 'jump'
+    });
+    expect(trial.lesson).toContain('dedicated Jump binding');
+    expect(trial.lesson).toContain('Up Hold Jumps');
+    expect(trial.lesson.toLowerCase()).toContain('cannot guard');
+
+    const previewInput = makePreviewInput(trial.previewScript, trial.previewScript[0].frame);
+    expect(previewInput.jump).toBe(true);
+    expect(previewInput.up).toBe(false);
+  });
+
   it('adds basic offense drills for button feel, dash checks, and guarded pressure', () => {
     const roster = readRosterCharacters();
     const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
@@ -146,6 +171,27 @@ describe('training trial catalog', () => {
     for (const trial of [buttonFeel, dashCheck, guardedCheck]) {
       expect(trial?.previewScript.length, trial?.id).toBeGreaterThan(0);
     }
+  });
+
+  it('labels jump-in basics with the dedicated jump binding instead of up', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('jump:starter'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    expect(trial.steps[0]).toMatchObject({
+      notation: ['JUMP', '1'],
+      actions: ['jump', 'jab'],
+      requireState: 'jump'
+    });
+    expect(trial.lesson).toContain('Jump binding');
+    const previewInput = makePreviewInput(trial.previewScript, trial.previewScript[0].frame);
+    expect(previewInput.jump).toBe(true);
+    expect(previewInput.up).toBe(false);
   });
 
   it('teaches blocking fundamentals in the basic defense list', () => {
@@ -512,6 +558,15 @@ describe('training trial catalog', () => {
     if (motionTrial) {
       expect(motionTrial.previewScript.some((frame) => frame.actions.includes('down'))).toBe(true);
       expect(motionTrial.previewScript.some((frame) => frame.actions.includes('left') || frame.actions.includes('right'))).toBe(true);
+    }
+
+    const jumpTrial = readRosterCharacters()
+      .flatMap((candidate) => generateComboTrainingTrials(candidate))
+      .find((trial) => trial.steps.some((step) => step.command && /^(u|U|u\/f|U\/F|u\/b|U\/B)\+/.test(step.command)));
+    if (jumpTrial) {
+      expect(jumpTrial.steps.some((step) => step.actions.includes('jump')), jumpTrial.id).toBe(true);
+      expect(jumpTrial.steps.some((step) => step.notation.includes('JUMP') || step.notation.some((token) => token.startsWith('JUMP/'))), jumpTrial.id).toBe(true);
+      expect(jumpTrial.previewScript.some((frame) => frame.actions.includes('jump')), jumpTrial.id).toBe(true);
     }
   });
 
