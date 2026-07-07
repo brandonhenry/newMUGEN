@@ -20676,7 +20676,13 @@ function FightScreen({
     }),
     [isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
-  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
+  const initialTrialStage = useMemo(() => {
+    const trial = activeTrainingTrials.find((t) => t.id === activeTrainingTrialId) ?? activeTrainingTrials[0] ?? null;
+    if (!trial) return stage;
+    return stages.find((item) => item.id === trial.stageId || item.id === trial.setup.stageId) ?? stage;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, mode === 'training' && initialTrialStage ? initialTrialStage : stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
   const pausedRef = useRef(paused);
   const pauseLatch = useRef(false);
@@ -20889,6 +20895,7 @@ function FightScreen({
         statuses: trial.steps.map(() => 'perfect'),
         ratings: trial.steps.map(() => 'Perfect'),
         completed: true,
+        succeeded: true,
         lastFeedback: trial.successText
       };
       trainingTrialProgressRef.current = nextProgress;
@@ -21012,7 +21019,7 @@ function FightScreen({
   }, [captureFightAnalytics, isOnline, onlineRole, onlineState, onlineStatusText]);
 
   useEffect(() => {
-    if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
+    if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || !trainingTrialProgress.succeeded || previewPlayback) return;
     if (completedTrainingTrialAnalyticsRef.current.has(activeTrainingTrial.id)) return;
     completedTrainingTrialAnalyticsRef.current.add(activeTrainingTrial.id);
     captureFightAnalytics('training_trial_completed', {
@@ -21021,29 +21028,47 @@ function FightScreen({
       trial_category: activeTrainingTrial.category,
       trial_difficulty: activeTrainingTrial.difficulty
     });
-  }, [activeTrainingTrial, captureFightAnalytics, mode, previewPlayback, trainingTrialProgress?.completed]);
+  }, [activeTrainingTrial, captureFightAnalytics, mode, previewPlayback, trainingTrialProgress?.completed, trainingTrialProgress?.succeeded]);
 
   useEffect(() => {
     if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
     if (trainingTrialOutcome?.trialId === activeTrainingTrial.id) return;
     if (dismissedTrainingTrialOutcomeRef.current === activeTrainingTrial.id) return;
-    const finalRating = [...trainingTrialProgress.ratings].reverse().find((rating) => rating !== 'Ready') ?? 'Confirmed';
-    const fighter = matchRef.current.fighters[0];
-    setTrainingTrialOutcome({
-      trialId: activeTrainingTrial.id,
-      title: activeTrainingTrial.title,
-      category: trainingTrialCategoryLabels[activeTrainingTrial.category],
-      difficulty: activeTrainingTrial.difficulty,
-      successText: activeTrainingTrial.successText,
-      feedback: trainingTrialProgress.lastFeedback || activeTrainingTrial.successText,
-      rating: finalRating,
-      attempts: Math.max(1, trainingTrialProgress.attempts),
-      comboHits: Math.max(0, fighter.comboHits),
-      comboDamage: Math.max(0, Math.round(fighter.comboDamage))
-    });
-    setPauseMenuView('menu');
-    setPaused(true);
-  }, [activeTrainingTrial, mode, previewPlayback, trainingTrialOutcome?.trialId, trainingTrialProgress]);
+
+    // On failure (missed/timeout), auto-reset after a brief pause so the player can retry
+    if (!trainingTrialProgress.succeeded) {
+      const failTimer = window.setTimeout(() => {
+        if (activeTrainingTrialRef.current?.id === activeTrainingTrial.id) {
+          restartTrainingTrial(activeTrainingTrial, false);
+        }
+      }, 1500);
+      return () => window.clearTimeout(failTimer);
+    }
+
+    // On success, add a delay so the player can see the result before the overlay appears
+    const trialId = activeTrainingTrial.id;
+    const successTimer = window.setTimeout(() => {
+      if (activeTrainingTrialRef.current?.id !== trialId) return;
+      if (dismissedTrainingTrialOutcomeRef.current === trialId) return;
+      const finalRating = [...trainingTrialProgress.ratings].reverse().find((rating) => rating !== 'Ready') ?? 'Confirmed';
+      const fighter = matchRef.current.fighters[0];
+      setTrainingTrialOutcome({
+        trialId,
+        title: activeTrainingTrial.title,
+        category: trainingTrialCategoryLabels[activeTrainingTrial.category],
+        difficulty: activeTrainingTrial.difficulty,
+        successText: activeTrainingTrial.successText,
+        feedback: trainingTrialProgress.lastFeedback || activeTrainingTrial.successText,
+        rating: finalRating,
+        attempts: Math.max(1, trainingTrialProgress.attempts),
+        comboHits: Math.max(0, fighter.comboHits),
+        comboDamage: Math.max(0, Math.round(fighter.comboDamage))
+      });
+      setPauseMenuView('menu');
+      setPaused(true);
+    }, 3500);
+    return () => window.clearTimeout(successTimer);
+  }, [activeTrainingTrial, mode, previewPlayback, restartTrainingTrial, trainingTrialOutcome?.trialId, trainingTrialProgress]);
 
   useEffect(() => {
     latestAudioSettingsRef.current = settings.audio;
@@ -21234,7 +21259,7 @@ function FightScreen({
       setTrainingTrialProgress((current) => {
         const next = current ? advanceTrainingTrialWithImpact(current, activeTrainingTrial, event) : current;
         trainingTrialProgressRef.current = next;
-        if (next?.completed) {
+        if (next?.completed && next.succeeded) {
           setCompletedTrainingTrialIds((completed) => {
             if (completed.has(activeTrainingTrial.id)) return completed;
             const updated = new Set(completed);
@@ -22722,7 +22747,7 @@ function FightScreen({
                 const nextProgress = advanceTrainingTrialWithInput(currentProgress, currentTrial, trialInput, matchRef.current);
                 trainingTrialProgressRef.current = nextProgress;
                 setTrainingTrialProgress(nextProgress);
-                if (!currentPreview && nextProgress.completed) {
+                if (!currentPreview && nextProgress.completed && nextProgress.succeeded) {
                   setCompletedTrainingTrialIds((completed) => {
                     if (completed.has(currentTrial.id)) return completed;
                     const updated = new Set(completed);
@@ -23877,7 +23902,7 @@ function TrainerPortrait() {
 }
 
 function formatTrainingFeedback(progress: TrainingTrialProgress, previewing: boolean) {
-  if (progress.completed) return 'Success';
+  if (progress.completed) return progress.succeeded ? 'Success' : 'Missed';
   if (previewing) return 'Preview';
   const feedback = progress.lastFeedback || 'Ready';
   if (/early/i.test(feedback)) return 'Too Early';
@@ -23912,7 +23937,7 @@ function TrainingTrialHud({
       </header>
       {currentStep && (
         <section className="training-trial-objective">
-          <small>{previewing ? 'Watch the timing' : progress.completed ? 'Drill clear' : 'Current objective'}</small>
+          <small>{previewing ? 'Watch the timing' : progress.completed ? (progress.succeeded ? 'Drill clear' : 'Missed — Retrying') : 'Current objective'}</small>
           <strong>{currentStep.label}</strong>
           <NotationGroup tokens={currentStep.notation} />
           <span className={`training-trial-feedback is-${safeClassToken(feedback)}`}>{feedback}</span>
@@ -23926,7 +23951,7 @@ function TrainingTrialHud({
             <div key={`${trial.id}:hud:${index}`} className={`training-trial-hud-step ${status}`}>
               <NotationGroup tokens={step.notation} />
               <span>{step.label}</span>
-              <small>{progress.completed && status === 'perfect' ? 'Success' : status === 'current' ? feedback : rating === 'Too early' ? 'Too Early' : rating}</small>
+              <small>{progress.completed && progress.succeeded && status === 'perfect' ? 'Success' : status === 'current' ? feedback : rating === 'Too early' ? 'Too Early' : rating}</small>
             </div>
           );
         })}
@@ -24160,7 +24185,7 @@ function TrainingTrialPanel({
             <div className="combo-trial-stats">
               <span>{match.fighters[0].comboHits} hits</span>
               <span>{Math.round(match.fighters[0].comboDamage)} damage</span>
-              <span>{progress?.completed ? 'Success' : previewing ? 'Preview' : 'Ready'}</span>
+              <span>{progress?.completed ? (progress.succeeded ? 'Success' : 'Missed') : previewing ? 'Preview' : 'Ready'}</span>
               <span>{progress ? formatTrainingFeedback(progress, previewing) : 'Ready'}</span>
             </div>
           </>

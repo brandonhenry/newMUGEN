@@ -96,6 +96,7 @@ export type TrainingTrialProgress = {
   ratings: TrainingTrialTimingRating[];
   attempts: number;
   completed: boolean;
+  succeeded: boolean;
   lastFeedback: string;
   preview: boolean;
 };
@@ -493,6 +494,7 @@ export function makeTrainingTrialProgress(trial: TrainingTrialDefinition | null,
     ratings: trial.steps.map(() => 'Ready'),
     attempts,
     completed: false,
+    succeeded: false,
     lastFeedback: 'Ready',
     preview
   };
@@ -530,7 +532,7 @@ export function advanceTrainingTrialWithInput(progress: TrainingTrialProgress, t
       const ratings = [...next.ratings];
       statuses[progress.stepIndex] = 'missed';
       ratings[progress.stepIndex] = 'Missed';
-      return { ...next, statuses, ratings, completed: true, lastFeedback: 'Missed' };
+      return { ...next, statuses, ratings, completed: true, succeeded: false, lastFeedback: 'Missed' };
     }
     return next;
   }
@@ -667,7 +669,7 @@ function completeTrainingStep(
   ratings[progress.stepIndex] = rating;
   const nextIndex = progress.stepIndex + 1;
   if (nextIndex >= trial.steps.length) {
-    return { ...progress, statuses, ratings, completed: true, lastFeedback: trial.successText };
+    return { ...progress, statuses, ratings, completed: true, succeeded: true, lastFeedback: trial.successText };
   }
   statuses[nextIndex] = 'current';
   return { ...progress, stepIndex: nextIndex, stepFrame: 0, statuses, ratings, completed: false, lastFeedback: feedback };
