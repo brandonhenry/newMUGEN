@@ -292,13 +292,15 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 
   const cpuControlsBothFighters = next.mode === 'cpu' || next.mode === 'cpuArcade' || next.mode === 'tournamentInfinite';
   const cpuControlsP2 = next.mode === 'ai' || next.mode === 'versusCpu' || cpuControlsBothFighters;
-  const input1 = cpuControlsBothFighters ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
-  const input2 =
+  const rawInput1 = cpuControlsBothFighters ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
+  const rawInput2 =
     next.mode === 'training'
       ? next.trainingDummyInput ?? makeTrainingDummyInput(next.fighters[1])
       : cpuControlsP2
         ? makeAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, cpuControlsBothFighters, next.aiSeed, next.roundAiSeed)
         : p2Input;
+  const input1 = withControlledWakeupInput(next.fighters[0], next.fighters[1], rawInput1, cpuControlsBothFighters);
+  const input2 = withControlledWakeupInput(next.fighters[1], next.fighters[0], rawInput2, next.mode === 'training' || cpuControlsP2);
   if (isClashActive(next.clashState)) {
     const clashInput1 = cpuControlsBothFighters ? makeAiClashInput(next, 1) : input1;
     const clashInput2 = cpuControlsP2 ? makeAiClashInput(next, 2) : input2;
@@ -378,6 +380,26 @@ function makeTrainingDummyInput(dummy: FighterRuntime): InputFrame {
     input.confirm = true;
   }
   return input;
+}
+
+function withControlledWakeupInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, controlled: boolean): InputFrame {
+  if (!controlled || !shouldForceControlledWakeup(fighter)) return input;
+  if (getRequestedGetupAction(fighter, opponent, input) !== 'none') return input;
+  return { ...input, confirm: true };
+}
+
+function shouldForceControlledWakeup(fighter: FighterRuntime) {
+  return (
+    fighter.state === 'knockdown' &&
+    !fighter.getupStarted &&
+    fighter.position.y === 0 &&
+    fighter.velocityY === 0 &&
+    fighter.actionFramesRemaining === 0 &&
+    fighter.actionTimer === 0 &&
+    fighter.stunFramesRemaining === 0 &&
+    fighter.stunTimer === 0 &&
+    fighter.blockstunFramesRemaining === 0
+  );
 }
 
 function createEmptyClashParticipant(): ClashState['p1'] {
@@ -1868,6 +1890,8 @@ function updateAttackInputMemory(fighter: FighterRuntime, input: InputFrame) {
 function handleKnockdownStep(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, dt: number) {
   if (fighter.position.y > 0 || fighter.velocityY !== 0) return;
 
+  repairStaleGetupStart(fighter);
+
   if (fighter.state === 'getup' || fighter.getupStarted) {
     const recoverySide = getControlSideSign(fighter, opponent, stage);
     if (fighter.getupForward !== 0) {
@@ -1904,6 +1928,22 @@ function handleKnockdownStep(stage: StageDefinition, fighter: FighterRuntime, op
   fighter.blockPunishWindowFrames = 0;
   fighter.stunTimer = 0;
   keepFighterOnControlSide(stage, fighter, opponent, getControlSideSign(fighter, opponent, stage));
+}
+
+function repairStaleGetupStart(fighter: FighterRuntime) {
+  if (!fighter.getupStarted || fighter.state === 'getup') return;
+  fighter.state = 'getup';
+  if (fighter.getupAction === 'none') fighter.getupAction = 'stand';
+  const totalFrames = fighter.getupTotalFrames > 0 ? fighter.getupTotalFrames : getGetupAnimationFrames(fighter, fighter.getupAction);
+  fighter.getupTotalFrames = totalFrames;
+  if (fighter.actionFramesRemaining === 0 && fighter.actionTimer === 0) {
+    fighter.actionFramesRemaining = totalFrames;
+    fighter.actionTimer = framesToSeconds(totalFrames);
+  }
+  fighter.stunFramesRemaining = 0;
+  fighter.blockstunFramesRemaining = 0;
+  fighter.blockPunishWindowFrames = 0;
+  fighter.stunTimer = 0;
 }
 
 function getRequestedGetupAction(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): FighterRuntime['getupAction'] {

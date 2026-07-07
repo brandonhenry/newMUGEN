@@ -226,6 +226,84 @@ function makeKiClashCharacter(character: CharacterDefinition, kiBurst = true): C
   };
 }
 
+function makeHpRegressionCharacter(): CharacterDefinition {
+  const base = normalizeCharacter(starterCharacters[0]);
+  const jab = normalizeMove({
+    ...base.moves.find((move) => move.input === 'jab')!,
+    id: 'hp-regression-mid-check',
+    label: 'HP Regression Mid Check',
+    input: 'jab',
+    animationKey: 'jableft',
+    startupFrames: 1,
+    activeFrames: 3,
+    recoveryFrames: 1,
+    damage: 25,
+    blockDamage: 0,
+    range: 1.9,
+    hitLevel: 'mid',
+    knockdown: false,
+    launchHeight: undefined,
+    tornado: false,
+    healAmount: undefined,
+    hitbox: { offset: [0, 1, 0.72], size: [2, 2, 2] }
+  });
+  return normalizeCharacter({
+    ...base,
+    id: 'hp-regression-attacker',
+    displayName: 'HP Regression Attacker',
+    animationFrames: {
+      ...(base.animationFrames ?? {}),
+      jableft: ['/test-jab.png']
+    },
+    moves: [jab]
+  });
+}
+
+function primeDirectHpRegressionHit(match: MatchSnapshot) {
+  const attacker = match.fighters[0];
+  const defender = match.fighters[1];
+  const move = attacker.character.moves[0];
+  if (!move) throw new Error('missing HP regression move');
+  attacker.position.x = -0.45;
+  attacker.position.z = 0;
+  attacker.facing = 1;
+  attacker.facingYaw = Math.PI / 2;
+  attacker.controlSideSign = 1;
+  attacker.state = 'attack';
+  attacker.currentMove = move;
+  attacker.moveFrame = 0;
+  attacker.actionFramesRemaining = 6;
+  attacker.actionTimer = 6 / 60;
+  attacker.hitConnected = false;
+  attacker.hitConfirmed = false;
+  attacker.whiffRecoveryApplied = false;
+  attacker.comboTimer = 0;
+  attacker.comboHits = 0;
+  attacker.comboDamage = 0;
+  attacker.comboSequence = [];
+  attacker.comboIdentitySequence = [];
+  attacker.comboFamilySequence = [];
+  attacker.comboVisualFamilySequence = [];
+  attacker.comboUsedKeys = [];
+  defender.position.x = 0.45;
+  defender.position.z = 0;
+  defender.position.y = 0;
+  defender.velocityY = 0;
+  defender.facing = -1;
+  defender.facingYaw = -Math.PI / 2;
+  defender.controlSideSign = -1;
+  defender.state = 'hit';
+  defender.currentMove = null;
+  defender.moveFrame = 0;
+  defender.actionFramesRemaining = 4;
+  defender.actionTimer = 4 / 60;
+  defender.stunFramesRemaining = 4;
+  defender.stunTimer = 4 / 60;
+  defender.blockstunFramesRemaining = 0;
+  defender.blockPunishWindowFrames = 0;
+  defender.getupInvulnerableFrames = 0;
+}
+
 function makeCancelableCharacter(character: CharacterDefinition, inputs?: MoveInput[]): CharacterDefinition {
   const allowed = inputs ? new Set(inputs) : null;
   return {
@@ -1871,6 +1949,55 @@ describe('fight engine', () => {
     expect(match.fighters[1].position.x).toBeLessThan(p2StartX);
   });
 
+  it('keeps 1P vs CPU HP decreasing below seventy percent on repeated non-knockdown hits', () => {
+    const attacker = makeHpRegressionCharacter();
+    let match = createMatch(attacker, starterCharacters[1], stages[0], 'versusCpu', 5, { maxHealth: 100, trainingInfiniteHealth: true });
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    for (let hit = 0; hit < 2; hit += 1) {
+      const beforeHp = match.fighters[1].hp;
+      primeDirectHpRegressionHit(match);
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+      expect(match.fighters[0].hitConnected).toBe(true);
+      expect(match.fighters[1].hp).toBeLessThan(beforeHp);
+      expect(match.fighters[1].state).not.toBe('knockdown');
+      expect(match.phase).toBe('fighting');
+    }
+
+    expect(match.fighters[1].hp).toBeLessThan(70);
+  });
+
+  it('lets repeated 1P vs CPU hits KO normally without training health refill', () => {
+    const attacker = makeHpRegressionCharacter();
+    let match = createMatch(attacker, starterCharacters[1], stages[0], 'versusCpu', 5, { maxHealth: 100, trainingInfiniteHealth: true });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].hp = 20;
+
+    primeDirectHpRegressionHit(match);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[1].hp).toBe(0);
+    expect(match.fighters[1].roundsWon).toBe(0);
+    expect(match.fighters[1].hp).not.toBe(match.fighters[1].maxHp);
+    expect(match.phase).toBe('roundFinisher');
+  });
+
+  it('does not apply training infinite health outside training modes', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'versusCpu', 5, { trainingInfiniteHealth: true });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].hp = 0;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('roundOver');
+    expect(match.fighters[1].hp).toBe(0);
+  });
+
   it('keeps the opponent dummy passive in training mode', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
     match.phase = 'fighting';
@@ -1949,6 +2076,68 @@ describe('fight engine', () => {
     expect(match.fighters[1].getupStarted).toBe(true);
     expect(match.fighters[1].getupAction).toBe('stand');
     expect(match.fighters[1].currentMove).toBeNull();
+  });
+
+  it('makes the 1P vs CPU opponent get up after lock-expired knockdown', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'versusCpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].state = 'knockdown';
+    match.fighters[1].actionFramesRemaining = 0;
+    match.fighters[1].actionTimer = 0;
+    match.fighters[1].stunFramesRemaining = 0;
+    match.fighters[1].stunTimer = 0;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('getup');
+    expect(match.fighters[1].getupStarted).toBe(true);
+
+    match = stepFrames(match, 90);
+
+    expect(match.fighters[1].state).not.toBe('knockdown');
+    expect(match.fighters[1].state).not.toBe('getup');
+    expect(match.fighters[1].getupStarted).toBe(false);
+  });
+
+  it('makes the training dummy get up even when explicit dummy input is idle', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.trainingDummyInput = emptyInputFrame();
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].state = 'knockdown';
+    match.fighters[1].actionFramesRemaining = 0;
+    match.fighters[1].actionTimer = 0;
+    match.fighters[1].stunFramesRemaining = 0;
+    match.fighters[1].stunTimer = 0;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('getup');
+    expect(match.fighters[1].getupAction).toBe('stand');
+    expect(match.fighters[1].currentMove).toBeNull();
+  });
+
+  it('keeps local 2P knockdown waiting for human wakeup input', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].state = 'knockdown';
+    match.fighters[1].actionFramesRemaining = 0;
+    match.fighters[1].actionTimer = 0;
+    match.fighters[1].stunFramesRemaining = 0;
+    match.fighters[1].stunTimer = 0;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('knockdown');
+    expect(match.fighters[1].getupStarted).toBe(false);
   });
 
   it('uses configured recovery frames for getup options', () => {
