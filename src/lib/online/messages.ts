@@ -54,6 +54,7 @@ export type OnlineRematchReadyMessage = {
 export type OnlineRematchStartMessage = {
   type: 'rematchStart';
   wins: [number, number];
+  stageId?: string;
 };
 
 export type OnlineLeaveMessage = {

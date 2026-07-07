@@ -298,6 +298,10 @@ const BOT_REMATCH_READY_MS = 5_000;
 const BOT_REMATCH_LEAVE_MS = 10_000;
 const ONLINE_ASSET_WARMUP_TIMEOUT_MS = 300_000;
 const RANKED_REMATCH_LIMIT = 2;
+function isTournamentMatchMode(mode: MatchMode) {
+  return mode === 'tournamentLocal' || mode === 'tournamentOnline' || mode === 'tournamentInfinite';
+}
+
 function makeOnlineAssetWarmupId(roomId: string, match: MatchSnapshot, reason: OnlineAssetGate['reason'], wins: OnlineWins) {
   return [
     roomId,
@@ -21674,6 +21678,10 @@ function FightScreen({
   }, []);
 
   const startOnlineRematch = useCallback(() => {
+    if (isTournamentMatchMode(mode)) {
+      setOnlineStatusText('TOURNAMENTS ADVANCE BRACKET');
+      return;
+    }
     if (rankedRematchLimitReached()) {
       setOnlineStatusText('RANKED SET COMPLETE');
       return;
@@ -21718,9 +21726,9 @@ function FightScreen({
     seenImpactAudioEventIds.current.clear();
     lastCombatEventId.current = 0;
     onlineRematchReadyRef.current = { local: false, remote: false };
-    onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
+    onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current, stageId: fresh.stage.id });
     beginOnlineAssetWarmup(fresh, 'rematch');
-  }, [beginOnlineAssetWarmup, captureFightAnalytics, clearBotRematchTimers, incrementOnlineRematchCount, makeOnlineMatch, rankedRematchLimitReached, resetTrackedMatchAnalytics, startOnlineBotMatch]);
+  }, [beginOnlineAssetWarmup, captureFightAnalytics, clearBotRematchTimers, incrementOnlineRematchCount, makeOnlineMatch, mode, rankedRematchLimitReached, resetTrackedMatchAnalytics, startOnlineBotMatch]);
 
   const trackOnlinePerformanceFrame = useCallback((candidate: MatchSnapshot) => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected' || candidate.phase !== 'fighting') return;
@@ -22090,6 +22098,10 @@ function FightScreen({
       return;
     }
     if (message.type === 'rematchStart') {
+      if (isTournamentMatchMode(mode)) {
+        setOnlineStatusText('TOURNAMENTS ADVANCE BRACKET');
+        return;
+      }
       if (rankedRematchLimitReached()) {
         setOnlineStatusText('RANKED SET COMPLETE');
         return;
@@ -22104,7 +22116,8 @@ function FightScreen({
       setOnlineWins(message.wins);
       setOnlineStatusText('REMATCH LOADING');
       const current = matchRef.current;
-      const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, current.stage.id);
+      const rematchStageId = message.stageId ?? current.stage.id;
+      const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, rematchStageId);
       beginOnlineAssetWarmup(fresh, 'rematch');
       return;
     }
@@ -22565,6 +22578,10 @@ function FightScreen({
   }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
 
   const requestOnlineRematch = () => {
+    if (isTournamentMatchMode(mode)) {
+      setOnlineStatusText('TOURNAMENTS ADVANCE BRACKET');
+      return;
+    }
     captureFightAnalytics('online_rematch_requested', {
       online_state: onlineStateRef.current,
       online_role: onlineRoleRef.current
@@ -22628,6 +22645,10 @@ function FightScreen({
   }, [mode, onTournamentMatchComplete, tournamentMatchPhase, tournamentWinnerSlot]);
 
   const reset = () => {
+    if (isTournamentMatchMode(mode)) {
+      setPaused(false);
+      return;
+    }
     captureFightAnalytics('rematch_clicked', {
       phase: match.phase,
       winner_slot: match.winnerSlot
@@ -22883,8 +22904,10 @@ function FightScreen({
   }, [captureFightAnalytics]);
 
   const winnerFighter = match.winnerSlot ? match.fighters[match.winnerSlot - 1] : null;
+  const tournamentMatch = isTournamentMatchMode(mode);
   const rankedRematchCapReached = isRanked && onlineRematchCount >= RANKED_REMATCH_LIMIT;
   const onlineAssetGateActive = Boolean(onlineAssetGate);
+  const canRematch = !tournamentMatch;
   const rematchDisabled = Boolean(isRanked && ((rankedPlayerResult?.promoted && !rankedPromotionAccepted) || rankedRematchCapReached));
   const rematchButtonLabel = rankedRematchCapReached
     ? 'Ranked Set Complete'
@@ -23159,10 +23182,12 @@ function FightScreen({
             </section>
           )}
           <div className="overlay-actions pause-menu-actions results-actions">
-            <button className="primary-button" onClick={reset} disabled={rematchDisabled}>
-              <RotateCcw size={18} />
-              {rematchButtonLabel}
-            </button>
+            {canRematch && (
+              <button className="primary-button" onClick={reset} disabled={rematchDisabled}>
+                <RotateCcw size={18} />
+                {rematchButtonLabel}
+              </button>
+            )}
             <button className="secondary-button" onClick={leaveToCharacterSelect} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
               <Users size={18} />
               Character Select
