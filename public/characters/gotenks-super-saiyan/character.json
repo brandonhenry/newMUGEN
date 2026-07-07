@@ -121,11 +121,7 @@
       "/characters/gotenks-super-saiyan/frames/frame-152.png",
       "/characters/gotenks-super-saiyan/frames/frame-153.png",
       "/characters/gotenks-super-saiyan/frames/frame-154.png",
-      "/characters/gotenks-super-saiyan/frames/frame-155.png",
-      "/characters/gotenks-super-saiyan/frames/frame-156.png",
-      "/characters/gotenks-super-saiyan/frames/frame-157.png",
-      "/characters/gotenks-super-saiyan/frames/frame-158.png",
-      "/characters/gotenks-super-saiyan/frames/frame-159.png"
+      "/characters/gotenks-super-saiyan/frames/frame-155.png"
     ],
     "cmd:FC+1": [
       "/characters/gotenks-super-saiyan/frames/frame-120.png",
@@ -652,6 +648,10 @@
       "forwardForce": 1.33,
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 13,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Rising Super Rush",
       "hitLevel": "mid"
     },
@@ -1637,7 +1637,7 @@
     "crouch": {
       "15": {
         "width": 1.29,
-        "height": 0.891,
+        "height": 0.89,
         "offsetX": 0
       }
     },
