@@ -225,7 +225,7 @@ import {
   type TournamentSummary
 } from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
 type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
@@ -278,6 +278,22 @@ type ArcadeMiniGameLaunch = {
   seed: number;
   durationSeconds?: number;
   arcadeLevel?: number;
+};
+type ArcadeTransitionKind = 'victory' | 'life-lost' | 'bonus-stage' | 'mini-game-complete' | 'unlock-complete' | 'next-route';
+type ArcadeTransitionDestination = 'versus' | 'miniGame';
+type ArcadeTransitionIntent = {
+  id: string;
+  kind: ArcadeTransitionKind;
+  destination: ArcadeTransitionDestination;
+  run: ArcadeRunState;
+  previousRun?: ArcadeRunState;
+  award?: number;
+  defeatedCharacterName?: string;
+  unlockedCharacterName?: string;
+  nextOpponent?: CharacterDefinition | null;
+  nextStage: StageDefinition;
+  nextMiniGame?: ArcadeMiniGameLaunch | null;
+  miniGameResult?: MiniGameResult | null;
 };
 type UsernameGateRequest = {
   source: string;
@@ -2700,6 +2716,7 @@ export default function App() {
   const [pendingPrivateInviteFriend, setPendingPrivateInviteFriend] = useState<FriendEntry | null>(null);
   const [pendingUnlockCharacterId, setPendingUnlockCharacterId] = useState('');
   const [activeArcadeMiniGame, setActiveArcadeMiniGame] = useState<ArcadeMiniGameLaunch | null>(null);
+  const [arcadeTransition, setArcadeTransition] = useState<ArcadeTransitionIntent | null>(null);
   const [lastMiniGameResult, setLastMiniGameResult] = useState<MiniGameResult | null>(null);
   const [arcadeRun, setArcadeRun] = useState<ArcadeRunState>(() => createArcadeRunState());
   const [arcadeRunBestScore, setArcadeRunBestScore] = useState(0);
@@ -3695,13 +3712,14 @@ export default function App() {
     if (!musicStarted || screen === 'boot') return null;
     if (screen === 'fight' && mode === 'cpu') return settings.audio.menuMusic ? fixedBgmSource('cpu-attract:local-bgm', KORE_MENU_BGM_TRACK) : null;
     if (screen === 'fight' && mode !== 'cpu') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
+    if (screen === 'arcadeTransition') return stageBgmSource(arcadeTransition?.nextStage ?? selectedStage);
     if (screen === 'miniGame' && activeArcadeMiniGame) return stageBgmSource(activeArcadeMiniGame.stage);
     if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
     if (!settings.audio.menuMusic) return null;
     if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
     if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
     return KORE_MENU_BGM_SOURCE;
-  }, [activeArcadeMiniGame, fightPaused, mode, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
+  }, [activeArcadeMiniGame, arcadeTransition, fightPaused, mode, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
@@ -3726,6 +3744,7 @@ export default function App() {
 	    setArcadeRun(createArcadeRunState());
 	    setLastMiniGameResult(null);
 	    setActiveArcadeMiniGame(null);
+	    setArcadeTransition(null);
 	  }, []);
 	  const finishArcadeRun = useCallback((run: ArcadeRunState) => {
 	    const best = Math.max(readLocalArcadeRunHighScore(onlineProfile), run.score);
@@ -3749,22 +3768,53 @@ export default function App() {
 	      arcadeLevel: level
 	    };
 	  }, [arcadeRun.level, playableStageRoster, selectedStage]);
+	  const resolveNextArcadeStage = useCallback(() => {
+	    return randomStageSelected ? pickRandomStage(playableStageRoster) ?? selectedStage : selectedStage;
+	  }, [playableStageRoster, randomStageSelected, selectedStage]);
+	  const startArcadeTransition = useCallback((intent: ArcadeTransitionIntent) => {
+	    setArcadeTransition(intent);
+	    if (intent.destination === 'versus') setStageId(intent.nextStage.id);
+	    setVersusReturnScreen('stage');
+	    setScreen('arcadeTransition');
+	  }, []);
+	  const continueArcadeTransition = useCallback(() => {
+	    const destination = arcadeTransition?.destination ?? (activeArcadeMiniGame ? 'miniGame' : 'versus');
+	    setArcadeTransition(null);
+	    setVersusReturnScreen('stage');
+	    setScreen(destination === 'miniGame' ? 'miniGame' : 'versus');
+	  }, [activeArcadeMiniGame, arcadeTransition]);
 	  const continueAfterArcadeUnlock = useCallback(() => {
 	    setPendingUnlockCharacterId('');
 	    setVersusReturnScreen('stage');
-	    setScreen(activeArcadeMiniGame ? 'miniGame' : 'versus');
-	  }, [activeArcadeMiniGame]);
+	    setScreen(arcadeTransition ? 'arcadeTransition' : activeArcadeMiniGame ? 'miniGame' : 'versus');
+	  }, [activeArcadeMiniGame, arcadeTransition]);
 	  const continueAfterMiniGameResult = useCallback(() => {
-	    setActiveArcadeMiniGame(null);
-	    setLastMiniGameResult(null);
-	    setVersusReturnScreen('stage');
 	    if (arcadeRun.status === 'game-over') {
 	      finishArcadeRun(arcadeRun);
+	      setActiveArcadeMiniGame(null);
+	      setLastMiniGameResult(null);
+	      setArcadeTransition(null);
 	      setScreen('arcadeGameOver');
 	      return;
 	    }
-	    setScreen('versus');
-	  }, [arcadeRun, finishArcadeRun]);
+	    const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
+	    const nextStage = resolveNextArcadeStage();
+	    if (nextOpponent) setP2Id(nextOpponent.id);
+	    const result = lastMiniGameResult;
+	    const transition: ArcadeTransitionIntent = {
+	      id: `mini-game-${Date.now()}`,
+	      kind: result?.completedReason === 'player-death' ? 'life-lost' : 'mini-game-complete',
+	      destination: 'versus',
+	      run: arcadeRun,
+	      award: result?.arcadeScoreAward ?? result?.score ?? arcadeRun.lastAward,
+	      nextOpponent,
+	      nextStage,
+	      miniGameResult: result
+	    };
+	    setActiveArcadeMiniGame(null);
+	    setLastMiniGameResult(null);
+	    startArcadeTransition(transition);
+	  }, [arcadeRun, cpuDifficulty, effectiveUnlockedCharacterIds, finishArcadeRun, lastMiniGameResult, p1.id, resolveNextArcadeStage, roster, startArcadeTransition]);
 	  const debugMiniGameStartedRef = useRef(false);
 	  useEffect(() => {
 	    if (debugMiniGameStartedRef.current || screen === 'boot' || typeof window === 'undefined' || !p1) return;
@@ -4274,6 +4324,14 @@ export default function App() {
             onContinue={continueAfterArcadeUnlock}
           />
         )}
+        {screen === 'arcadeTransition' && arcadeTransition && (
+          <ArcadeTransitionScreen
+            intent={arcadeTransition}
+            player={p1}
+            bestScore={Math.max(arcadeRunBestScore, arcadeTransition.run.score)}
+            onContinue={continueArcadeTransition}
+          />
+        )}
         {screen === 'miniGame' && activeArcadeMiniGame && (
           activeArcadeMiniGame.kind === ENEMY_RUSH_GAME_ID ? (
             <EnemyRushMiniGameScreen
@@ -4463,6 +4521,7 @@ export default function App() {
             onTournamentMatchComplete={handleTournamentMatchComplete}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId, playerHealth, playerMaxHealth }) => {
               const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
+              const previousArcadeRun = arcadeRun;
               const defeatedCharacter = roster.find((character) => character.id === defeatedCharacterId);
               const shouldRevealUnlock = winnerSlot === 1 && !isDevHost && defeatedCharacter
                 ? !isCharacterUnlocked(defeatedCharacter, unlockedCharacterIds)
@@ -4481,21 +4540,44 @@ export default function App() {
                 finishArcadeRun(nextArcadeRun);
                 setActiveArcadeMiniGame(null);
                 setLastMiniGameResult(null);
+                setArcadeTransition(null);
                 setScreen('arcadeGameOver');
                 return;
               }
               const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlocks, cpuDifficulty);
               if (nextOpponent) setP2Id(nextOpponent.id);
               const nextMiniGame = mode === 'ai' && winnerSlot === 1 ? makeArcadeMiniGameLaunch(nextArcadeRun.level) : null;
+              const nextStage = nextMiniGame?.stage ?? resolveNextArcadeStage();
+              const transition: ArcadeTransitionIntent = {
+                id: `${winnerSlot === 1 ? 'win' : 'loss'}-${nextArcadeRun.wins}-${Date.now()}`,
+                kind: winnerSlot === 1
+                  ? nextMiniGame
+                    ? 'bonus-stage'
+                    : shouldRevealUnlock
+                      ? 'unlock-complete'
+                      : 'victory'
+                  : 'life-lost',
+                destination: nextMiniGame ? 'miniGame' : 'versus',
+                run: nextArcadeRun,
+                previousRun: previousArcadeRun,
+                award: nextArcadeRun.lastAward,
+                defeatedCharacterName: defeatedCharacter?.displayName,
+                unlockedCharacterName: shouldRevealUnlock ? defeatedCharacter?.displayName : undefined,
+                nextOpponent,
+                nextStage,
+                nextMiniGame
+              };
               setActiveArcadeMiniGame(nextMiniGame);
               setLastMiniGameResult(null);
               setVersusReturnScreen('stage');
               if (shouldRevealUnlock) {
                 setPendingUnlockCharacterId(defeatedCharacterId);
+                setArcadeTransition(transition);
+                if (transition.destination === 'versus') setStageId(nextStage.id);
                 setScreen('unlockReveal');
                 return;
               }
-              setScreen(nextMiniGame ? 'miniGame' : 'versus');
+              startArcadeTransition(transition);
             }}
           />
         )}
@@ -5089,6 +5171,260 @@ function UnlockRevealScreen({
       </section>
     </div>
   );
+}
+
+const ARCADE_TRANSITION_MIN_MS = 1300;
+const ARCADE_TRANSITION_MAX_MS = 4200;
+const ARCADE_TRANSITION_AUTO_ADVANCE_MS = 850;
+
+function ArcadeTransitionScreen({
+  intent,
+  player,
+  bestScore,
+  onContinue
+}: {
+  intent: ArcadeTransitionIntent;
+  player: CharacterDefinition;
+  bestScore: number;
+  onContinue: () => void;
+}) {
+  const [ready, setReady] = useState(false);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const continuedRef = useRef(false);
+  const copy = getArcadeTransitionCopy(intent);
+  const nextLabel = intent.destination === 'miniGame'
+    ? getArcadeMiniGameTitle(intent.nextMiniGame?.kind)
+    : intent.nextOpponent
+      ? intent.nextOpponent.displayName
+      : 'Next Challenger';
+  const continueIfReady = useCallback(() => {
+    if (!ready || continuedRef.current) return;
+    continuedRef.current = true;
+    onContinue();
+  }, [onContinue, ready]);
+  const acceptInput = useAnyInputActivation({ enabled: ready, ready, onAccept: continueIfReady });
+
+  useEffect(() => {
+    setReady(false);
+    continuedRef.current = false;
+    let cancelled = false;
+    let minElapsed = false;
+    let preloadDone = false;
+    let settled = false;
+    const finishWhenReady = () => {
+      if (cancelled || settled || !minElapsed || !preloadDone) return;
+      settled = true;
+      setReady(true);
+    };
+    const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
+    const minTimer = window.setTimeout(() => {
+      minElapsed = true;
+      finishWhenReady();
+    }, ARCADE_TRANSITION_MIN_MS);
+    const maxTimer = window.setTimeout(() => {
+      if (cancelled || settled) return;
+      settled = true;
+      setReady(true);
+    }, ARCADE_TRANSITION_MAX_MS);
+    const playerPriorityFrames = collectCharacterPriorityFrameSources(player, ['sprint', 'walkForward', 'idle']).slice(0, 6);
+    const cancelPlayerPrewarm = prewarmActiveFighterVoxels(player, playerPriorityFrames, {
+      immediateFrames: playerPriorityFrames.slice(0, 1)
+    });
+    const opponentPriorityFrames = intent.nextOpponent
+      ? collectCharacterPriorityFrameSources(intent.nextOpponent, ['entry', 'idle', 'walkForward']).slice(0, 5)
+      : [];
+    const cancelOpponentPrewarm = intent.nextOpponent
+      ? prewarmActiveFighterVoxels(intent.nextOpponent, opponentPriorityFrames, {
+        immediateFrames: opponentPriorityFrames.slice(0, 1)
+      })
+      : () => undefined;
+    void preloadArcadeTransitionImages(intent, player).finally(() => {
+      if (cancelled) return;
+      preloadDone = true;
+      finishWhenReady();
+    });
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(focusFrame);
+      window.clearTimeout(minTimer);
+      window.clearTimeout(maxTimer);
+      cancelPlayerPrewarm();
+      cancelOpponentPrewarm();
+    };
+  }, [intent, player]);
+
+  useEffect(() => {
+    if (!ready) return undefined;
+    const timer = window.setTimeout(continueIfReady, ARCADE_TRANSITION_AUTO_ADVANCE_MS);
+    return () => window.clearTimeout(timer);
+  }, [continueIfReady, ready]);
+
+  return (
+    <div
+      ref={screenRef}
+      className={`arcade-transition-screen any-input-screen ${ready ? 'is-ready' : ''}`}
+      tabIndex={0}
+      onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptInput)}
+      aria-label="Arcade route loading"
+      style={{
+        '--arcade-primary': player.colors.primary,
+        '--arcade-accent': player.colors.accent
+      } as CSSProperties}
+    >
+      <div className="arcade-transition-stage" aria-hidden="true">
+        <StagePreviewCanvas stage={intent.nextStage} previewMode="fly" />
+      </div>
+      <div className="arcade-transition-vignette" />
+      <div className="arcade-transition-route-line" aria-hidden="true" />
+      <section className="arcade-transition-copy" aria-live="polite">
+        <div className="arcade-transition-kicker">
+          <span>{copy.kicker}</span>
+          <b>{ready ? 'Ready' : 'Loading Route'}</b>
+        </div>
+        <h1>{copy.title}</h1>
+        <p>{copy.body}</p>
+        <div className="arcade-transition-stats">
+          <span>
+            <strong>{intent.run.score}</strong>
+            <small>Score</small>
+          </span>
+          <span>
+            <strong>{bestScore}</strong>
+            <small>Best</small>
+          </span>
+          <span>
+            <strong>{intent.run.livesRemaining}</strong>
+            <small>Lives</small>
+          </span>
+          <span>
+            <strong>{intent.run.level}</strong>
+            <small>Route</small>
+          </span>
+          <span>
+            <strong>{intent.run.wins}</strong>
+            <small>Wins</small>
+          </span>
+        </div>
+        <div className="arcade-transition-next">
+          <span>{intent.destination === 'miniGame' ? 'Incoming' : 'Next Battle'}</span>
+          <strong>{nextLabel}</strong>
+          <small>{intent.destination === 'miniGame' ? intent.nextMiniGame?.stage.name ?? intent.nextStage.name : intent.nextStage.name}</small>
+        </div>
+      </section>
+      <div className="arcade-transition-runner" aria-hidden="true">
+        <div className="arcade-transition-runner-shadow" />
+        <div className="arcade-transition-runner-frame">
+          <CharacterPreviewCanvas
+            character={player}
+            pose="walk"
+            animationKey="sprint"
+            rotationTurn={0.08}
+            zoom={1.06}
+            preserveCameraFrame
+          />
+        </div>
+      </div>
+      <div className="arcade-transition-footer">
+        <span>{ready ? 'Continuing' : 'Preparing map and fighters'}</span>
+        <ChevronRight size={18} />
+      </div>
+    </div>
+  );
+}
+
+function getArcadeTransitionCopy(intent: ArcadeTransitionIntent) {
+  const defeated = intent.defeatedCharacterName ?? 'opponent';
+  if (intent.kind === 'life-lost') {
+    return {
+      kicker: 'Arcade Run',
+      title: 'LIFE LOST',
+      body: intent.run.livesRemaining > 1
+        ? `${intent.run.livesRemaining} lives remain. Regroup for the next battle.`
+        : 'Last life. The route keeps moving.'
+    };
+  }
+  if (intent.kind === 'bonus-stage') {
+    return {
+      kicker: `Score +${Math.max(0, Math.round(intent.award ?? 0))}`,
+      title: 'BONUS STAGE',
+      body: `${getArcadeMiniGameTitle(intent.nextMiniGame?.kind)} is opening after defeating ${defeated}.`
+    };
+  }
+  if (intent.kind === 'mini-game-complete') {
+    return {
+      kicker: `Bonus +${Math.max(0, Math.round(intent.award ?? 0))}`,
+      title: 'ROUTE CLEAR',
+      body: 'Bonus score banked. Loading the next opponent.'
+    };
+  }
+  if (intent.kind === 'unlock-complete') {
+    return {
+      kicker: `Score +${Math.max(0, Math.round(intent.award ?? 0))}`,
+      title: 'ROUTE CONTINUES',
+      body: `${intent.unlockedCharacterName ?? defeated} joined the roster. Loading the next battle.`
+    };
+  }
+  if (intent.kind === 'victory') {
+    return {
+      kicker: `Score +${Math.max(0, Math.round(intent.award ?? 0))}`,
+      title: 'VICTORY',
+      body: `Defeated ${defeated}. Loading the next battle.`
+    };
+  }
+  return {
+    kicker: 'Arcade Run',
+    title: 'NEXT ROUTE',
+    body: 'Preparing the next battle.'
+  };
+}
+
+function getArcadeMiniGameTitle(kind?: MiniGameKind) {
+  if (kind === ENEMY_RUSH_GAME_ID) return 'Enemy Rush';
+  return 'Break The Target';
+}
+
+function preloadArcadeTransitionImages(intent: ArcadeTransitionIntent, player: CharacterDefinition) {
+  const urls = [
+    ...getArcadeCharacterImageSources(player),
+    ...(intent.nextOpponent ? getArcadeCharacterImageSources(intent.nextOpponent) : []),
+    ...getArcadeStageImageSources(intent.nextStage),
+    ...(intent.nextMiniGame ? getArcadeStageImageSources(intent.nextMiniGame.stage) : [])
+  ];
+  return preloadImageSources(urls);
+}
+
+function getArcadeCharacterImageSources(character: CharacterDefinition) {
+  const frames = character.animationFrames ?? {};
+  return [
+    character.faceCardPath,
+    character.spriteSheetPath,
+    ...(frames.sprint ?? []),
+    ...(frames.walkForward ?? []),
+    ...(frames.entry ?? []),
+    ...(frames.idle ?? [])
+  ].filter((url): url is string => Boolean(url)).slice(0, 16);
+}
+
+function getArcadeStageImageSources(stage: StageDefinition) {
+  return [
+    stage.thumbnailPath,
+    stage.skyboxPath,
+    stage.floorTexturePath,
+    stage.safePlatform?.texturePath,
+    ...(stage.backgroundLayers ?? []).map((layer) => layer.imagePath)
+  ].filter((url): url is string => Boolean(url));
+}
+
+function preloadImageSources(urls: string[]) {
+  if (typeof window === 'undefined') return Promise.resolve([]);
+  const uniqueUrls = [...new Set(urls)];
+  return Promise.allSettled(uniqueUrls.map((url) => new Promise<void>((resolve) => {
+    const image = new Image();
+    image.decoding = 'async';
+    image.onload = () => resolve();
+    image.onerror = () => resolve();
+    image.src = url;
+  })));
 }
 
 function MenuAttractBackground({
