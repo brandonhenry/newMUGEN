@@ -634,10 +634,9 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 18,
       "label": "Forward Clone Strike",
-      "cancelable": false,
-      "description": "Slow high clone strike with a tiny active window and heavy recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 15,
@@ -657,10 +656,9 @@
       "juggleGravityScale": 0.52,
       "label": "Diagonal Rasengan Launcher",
       "hitLevel": "mid",
+      "tracking": "weakLeft",
       "knockdown": false,
-      "cancelable": false,
-      "description": "Steady mid launcher with a tiny active Rasengan pop-up and heavy recovery.",
-      "tracking": "weakLeft"
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 18,
@@ -677,11 +675,10 @@
       "launchHeight": 0,
       "label": "Rasenshuriken Tornado",
       "hitLevel": "mid",
+      "tracking": "strong",
       "knockdown": false,
       "tornado": true,
-      "cancelable": false,
-      "description": "Steady mid Rasenshuriken tornado with a brief active window and strong tracking.",
-      "tracking": "strong"
+      "cancelable": false
     },
     "cmd:WS+4": {
       "startupFrames": 13,
@@ -700,11 +697,10 @@
       "launchHeight": 0,
       "label": "While-Rising Jump Kick",
       "hitLevel": "mid",
+      "tracking": "strong",
       "knockdown": false,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "description": "Quick mid jumping kick with a tiny active window and heavy recovery.",
-      "tracking": "strong"
+      "jumpBeforeMove": true
     },
     "cmd:3+4": {
       "startupFrames": 10,
@@ -739,8 +735,7 @@
           "pan": 0,
           "retrigger": false
         }
-      ],
-      "description": "Fast low homing sweep that knocks down and ends Naruto crouched."
+      ]
     },
     "neutral:jab-jab": {
       "label": "Multiple Shadow Clone Technique"
@@ -780,11 +775,10 @@
       "forwardForceStartFrame": 10,
       "forwardForceEndFrame": 13,
       "label": "Rasenshuriken Smash",
-      "knockdown": true,
-      "cancelable": false,
-      "description": "Quick mid knockdown smash with a brief active chakra arc.",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "knockdown": true,
+      "cancelable": false
     },
     "neutral:jab-jab-heavy": {
       "label": "Shadow Clone Body Blow"
@@ -853,9 +847,8 @@
       "forwardForce": 0.9,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 24,
-      "hitLevel": "low",
       "label": "Low Uzumaki Kick",
-      "description": "Fast low kick with a short active window and quick recovery.",
+      "hitLevel": "low",
       "tracking": "medium"
     },
     "cmd:d+1": {
@@ -868,10 +861,9 @@
       "forwardForceEndFrame": 13,
       "label": "Low Clone Jab",
       "hitLevel": "low",
+      "tracking": "medium",
       "endsInCrouch": true,
-      "cancelable": false,
-      "description": "Fast low clone jab with a tiny active window that ends in crouch.",
-      "tracking": "medium"
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 9,
@@ -890,10 +882,9 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Rasengan Pop-Up",
-      "cancelable": false,
-      "description": "Fast high launcher with a tiny active pop-up and heavy recovery.",
       "hitLevel": "high",
-      "tracking": "weakLeft"
+      "tracking": "weakLeft",
+      "cancelable": false
     },
     "cmd:2+3": {
       "startupFrames": 13,
@@ -908,10 +899,9 @@
       "forwardForceEndFrame": 15,
       "label": "Low Clone Hop",
       "hitLevel": "low",
+      "tracking": "medium",
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "description": "Quick low jumping strike with a brief active window and fast recovery.",
-      "tracking": "medium"
+      "jumpBeforeMove": true
     },
     "jableft": {
       "startupFrames": 4,
@@ -924,7 +914,6 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 9,
       "label": "Shadow Clone Jab",
-      "description": "Fast high clone jab with a tiny active window for close checks.",
       "hitLevel": "high",
       "tracking": "medium"
     },
@@ -938,9 +927,8 @@
       "forwardForce": 0.5,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 11,
-      "hitLevel": "high",
       "label": "Uzumaki Barrage Kick",
-      "description": "Fast high kick with a short active window and quick recovery.",
+      "hitLevel": "high",
       "tracking": "medium"
     },
     "jabright": {
@@ -954,7 +942,6 @@
       "forwardForceStartFrame": 5,
       "forwardForceEndFrame": 13,
       "label": "Quick Rasengan Palm",
-      "description": "Fast high Rasengan palm with a brief active window and steady recovery.",
       "hitLevel": "high",
       "tracking": "weakLeft"
     },
@@ -968,9 +955,8 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 18,
-      "hitLevel": "mid",
       "label": "Rasenshuriken Arc",
-      "description": "Quick mid Rasenshuriken arc with a short active window and strong tracking.",
+      "hitLevel": "mid",
       "tracking": "strong"
     },
     "cmd:O+2": {
@@ -985,6 +971,7 @@
       "forwardForce": 4,
       "forwardForceStartFrame": 23,
       "forwardForceEndFrame": 30,
+      "label": "Rasengan Knockdown Drive",
       "hitLevel": "mid",
       "tracking": "weakLeft",
       "knockdown": true,
@@ -999,9 +986,7 @@
           "pan": 0,
           "retrigger": false
         }
-      ],
-      "label": "Rasengan Knockdown Drive",
-      "description": "Steady mid Rasengan drive that knocks down after a short active burst."
+      ]
     },
     "cmd:1+3": {
       "startupFrames": 6,
@@ -1019,10 +1004,9 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Clone Upper Barrage",
-      "cancelable": false,
-      "description": "Fast high launcher with a moderate active window and steady recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 12,
@@ -1037,9 +1021,8 @@
       "forwardForceEndFrame": 26,
       "label": "Crouching Clone Combo",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Quick mid crouching combo with extended active chakra coverage.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:FC+2": {
       "onBlockFrames": -5,
@@ -1054,10 +1037,9 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Crouch Rasengan Pop-Up",
-      "cancelable": false,
-      "description": "Fast high launcher with a brief Rasengan pop-up from crouch.",
       "hitLevel": "high",
-      "tracking": "weakLeft"
+      "tracking": "weakLeft",
+      "cancelable": false
     },
     "cmd:FC+4": {
       "recoveryFrames": 10,
@@ -1068,11 +1050,10 @@
       "forwardForce": 3,
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 24,
+      "label": "Low Rasenshuriken Feint",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true,
-      "label": "Low Rasenshuriken Feint",
-      "description": "Quick low homing feint that ends Naruto in full crouch."
+      "endsInCrouch": true
     },
     "cmd:FC+3": {
       "startupFrames": 10,
@@ -1083,11 +1064,10 @@
       "forwardForce": 3,
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 33,
+      "label": "Full-Crouch Low Kick",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true,
-      "label": "Full-Crouch Low Kick",
-      "description": "Fast low kick with a short active window that ends Naruto crouched."
+      "endsInCrouch": true
     },
     "cmd:WR+4": {
       "recoveryFrames": 14,
@@ -1103,7 +1083,6 @@
       "juggleRefloatVelocity": 4.35,
       "juggleGravityScale": 0.52,
       "label": "Running Rasenshuriken Launcher",
-      "description": "Quick mid running launcher with a short Rasenshuriken active window.",
       "hitLevel": "mid",
       "tracking": "strong"
     },
@@ -1119,10 +1098,9 @@
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
       "label": "Rasenshuriken Step",
-      "cancelable": false,
-      "description": "Quick mid chakra step with a moderate active window and very fast recovery.",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "cancelable": false
     },
     "cmd:f+2": {
       "onBlockFrames": -5,
@@ -1133,10 +1111,9 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
       "label": "Forward Rasengan Palm",
-      "cancelable": false,
-      "description": "Fast high forward Rasengan palm with a brief active window.",
       "hitLevel": "high",
-      "tracking": "weakLeft"
+      "tracking": "weakLeft",
+      "cancelable": false
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1147,10 +1124,9 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Advancing Barrage Kick",
-      "cancelable": false,
-      "description": "Fast high advancing kick with a short active window and quick recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1161,10 +1137,9 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Ducking Barrage Kick",
-      "cancelable": false,
-      "description": "Fast high ducking kick with a short active window and quick recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1175,10 +1150,9 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Diagonal Barrage Kick",
-      "cancelable": false,
-      "description": "Fast high diagonal kick with a short active window and quick recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1189,10 +1163,9 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "label": "Shadow Clone Rush Jab",
-      "cancelable": false,
-      "description": "Fast high rush jab with a tiny active window and steady recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1203,10 +1176,9 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Uzumaki Rush Kick",
-      "cancelable": false,
-      "description": "Fast high rush kick with a short active window and quick recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1217,10 +1189,9 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 18,
       "label": "While-Rising Rasengan",
-      "cancelable": false,
-      "description": "Fast high while-rising Rasengan palm with a brief active window.",
       "hitLevel": "high",
-      "tracking": "weakLeft"
+      "tracking": "weakLeft",
+      "cancelable": false
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1231,10 +1202,9 @@
       "forwardForceStartFrame": 15,
       "forwardForceEndFrame": 22,
       "label": "Sidestep Barrage Kick",
-      "cancelable": false,
-      "description": "Fast high sidestep kick with a short active window and quick recovery.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1245,10 +1215,9 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 28,
       "label": "Sidestep Rasenshuriken",
-      "cancelable": false,
-      "description": "Quick mid sidestep Rasenshuriken arc with strong tracking.",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "cancelable": false
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1259,10 +1228,9 @@
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10,
       "label": "Overdrive Clone Jab",
-      "cancelable": false,
-      "description": "Fast high overdrive jab with a tiny active window for close checks.",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1273,15 +1241,13 @@
       "forwardForceStartFrame": 19,
       "forwardForceEndFrame": 28,
       "label": "Overdrive Rasenshuriken Tornado",
-      "tornado": true,
-      "cancelable": false,
-      "description": "Quick mid Rasenshuriken tornado with a short active window and strong tracking.",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "tornado": true,
+      "cancelable": false
     },
     "cmd:FC+3+4": {
       "label": "Crouch Rasenshuriken",
-      "description": "Quick mid Rasenshuriken sweep with a short active window and strong tracking.",
       "hitLevel": "mid",
       "tracking": "strong"
     }
@@ -9837,8 +9803,8 @@
         "offsetX": 0
       },
       "522": {
-        "width": 0.68,
-        "height": 0.56,
+        "width": 1.03,
+        "height": 1.03,
         "offsetX": 0
       }
     },

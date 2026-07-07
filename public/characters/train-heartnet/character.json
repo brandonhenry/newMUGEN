@@ -615,8 +615,7 @@
       "label": "Quick Hades Shot",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "description": "Fast high pistol check with a tiny active window and guarded recovery."
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -635,8 +634,7 @@
       "label": "Hades Body Shot",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "description": "Quick mid pistol shot with a brief active hit and steady recovery."
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 18,
@@ -654,7 +652,6 @@
       "forwardForceEndFrame": 22,
       "label": "Low Gunner Sweep",
       "hitLevel": "low",
-      "description": "Steady low sweep with huge active movement and quick recovery.",
       "tracking": "medium"
     },
     "kickright": {
@@ -673,7 +670,6 @@
       "forwardForceEndFrame": 22,
       "label": "Sweeper Slide Kick",
       "hitLevel": "mid",
-      "description": "Slow mid slide kick with huge active travel and quick finish.",
       "tracking": "medium"
     },
     "cmd:f+1": {
@@ -692,9 +688,8 @@
       "forwardForceEndFrame": 44,
       "label": "Forward Hades Shot",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid forward shot with a tiny active hit and heavy recovery.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -716,9 +711,8 @@
       "juggleGravityScale": 0.54,
       "label": "Diagonal Hades Launcher",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid diagonal launcher with a tiny active shot and heavy recovery.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 15,
@@ -738,10 +732,9 @@
       "moveJumpGravity": 24,
       "label": "Black Cat Knockdown",
       "hitLevel": "mid",
+      "tracking": "medium",
       "knockdown": true,
-      "jumpBeforeMove": true,
-      "description": "Steady mid jumping knockdown with huge active acrobatic travel.",
-      "tracking": "medium"
+      "jumpBeforeMove": true
     },
     "cmd:WS+4": {
       "startupFrames": 0,
@@ -759,7 +752,6 @@
       "forwardForceEndFrame": 20,
       "label": "Rising Sweeper Rush",
       "hitLevel": "mid",
-      "description": "Instant mid while-rising rush with long active movement and high recovery.",
       "tracking": "medium"
     },
     "cmd:FC+1": {
@@ -778,9 +770,8 @@
       "forwardForceEndFrame": 29,
       "label": "Crouch Hades Rush",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Quick mid crouch rush with long active pistol pressure and fast recovery.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -796,12 +787,11 @@
       "forwardForce": 1.89,
       "forwardForceStartFrame": 24,
       "forwardForceEndFrame": 31,
-      "launchHeight": 2.0,
+      "launchHeight": 2,
       "label": "Crouch Hades Launcher",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Steady mid crouch launcher with a tiny active shot and heavy recovery.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -819,9 +809,8 @@
       "forwardForceEndFrame": 14,
       "label": "Sweeper Slide Shot",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid sliding shot with a long active path and measured recovery.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -840,7 +829,6 @@
       "launchHeight": 2.2,
       "label": "Hades Launcher Shot",
       "hitLevel": "mid",
-      "description": "Slow mid launcher with long active pistol pressure and quick recovery.",
       "tracking": "medium"
     },
     "cmd:2+3": {
@@ -860,8 +848,7 @@
       "label": "Homing Low Feint",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true,
-      "description": "Slow low homing feint that ends crouched after a long active step."
+      "endsInCrouch": true
     },
     "cmd:2+4": {
       "startupFrames": 29,
@@ -879,9 +866,8 @@
       "forwardForceEndFrame": 23,
       "label": "Low Sweeper Knockdown",
       "hitLevel": "low",
-      "knockdown": true,
-      "description": "Slow low knockdown kick with long active reach and quick recovery.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 17,
@@ -905,11 +891,10 @@
       "juggleGravityScale": 0.52,
       "label": "Black Cat Tornado Launcher",
       "hitLevel": "mid",
+      "tracking": "medium",
       "knockdown": false,
       "tornado": true,
-      "jumpBeforeMove": true,
-      "description": "Steady mid jumping tornado launcher with a modest active spin.",
-      "tracking": "medium"
+      "jumpBeforeMove": true
     },
     "cmd:O+2": {
       "startupFrames": 6,
@@ -927,9 +912,8 @@
       "forwardForceEndFrame": 39,
       "label": "Hades Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "description": "Fast special knockdown drive with huge active pistol pressure.",
-      "tracking": "medium"
+      "tracking": "medium",
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1396,6 +1380,9 @@
       "label": "Train Heartnet Kick Ender"
     },
     "cmd:1+4": {
+      "startupFrames": 13,
+      "activeFrames": 5,
+      "recoveryFrames": 25,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1405,17 +1392,16 @@
       "forwardForceEndFrame": 17,
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
-      "tornado": true,
-      "jumpBeforeMove": true,
-      "startupFrames": 13,
-      "activeFrames": 5,
-      "recoveryFrames": 25,
       "label": "Black Cat Tornado Kick",
-      "description": "Quick mid jumping tornado kick with a tiny active hit and heavy recovery.",
+      "hitLevel": "mid",
       "tracking": "medium",
-      "hitLevel": "mid"
+      "tornado": true,
+      "jumpBeforeMove": true
     },
     "cmd:f+2": {
+      "startupFrames": 16,
+      "activeFrames": 10,
+      "recoveryFrames": 5,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1424,15 +1410,14 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
       "label": "Forward Hades Burst",
-      "cancelable": false,
-      "startupFrames": 16,
-      "activeFrames": 10,
-      "recoveryFrames": 5,
-      "description": "Steady mid forward burst with a long active shot and quick finish.",
+      "hitLevel": "mid",
       "tracking": "medium",
-      "hitLevel": "mid"
+      "cancelable": false
     },
     "cmd:d+1": {
+      "startupFrames": 5,
+      "activeFrames": 21,
+      "recoveryFrames": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1441,15 +1426,14 @@
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 27,
       "label": "Ducking Hades Shot",
-      "cancelable": false,
+      "hitLevel": "high",
+      "tracking": "medium",
+      "cancelable": false
+    },
+    "cmd:qcf+1": {
       "startupFrames": 5,
       "activeFrames": 21,
       "recoveryFrames": 1,
-      "description": "Fast high ducking shot with very long active pressure and quick recovery.",
-      "tracking": "medium",
-      "hitLevel": "high"
-    },
-    "cmd:qcf+1": {
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1458,15 +1442,14 @@
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 27,
       "label": "Hades Quick Shot",
-      "cancelable": false,
-      "startupFrames": 5,
-      "activeFrames": 21,
-      "recoveryFrames": 1,
-      "description": "Fast high quarter-circle shot with very long active pressure and quick recovery.",
+      "hitLevel": "high",
       "tracking": "medium",
-      "hitLevel": "high"
+      "cancelable": false
     },
     "cmd:WS+2": {
+      "startupFrames": 16,
+      "activeFrames": 10,
+      "recoveryFrames": 5,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1475,15 +1458,14 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 20,
       "label": "Rising Hades Shot",
-      "cancelable": false,
-      "startupFrames": 16,
-      "activeFrames": 10,
-      "recoveryFrames": 5,
-      "description": "Steady mid while-rising shot with a long active burst and quick finish.",
+      "hitLevel": "mid",
       "tracking": "medium",
-      "hitLevel": "mid"
+      "cancelable": false
     },
     "cmd:O+1": {
+      "startupFrames": 5,
+      "activeFrames": 21,
+      "recoveryFrames": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1492,13 +1474,9 @@
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 27,
       "label": "Overdrive Hades Shot",
-      "cancelable": false,
-      "startupFrames": 5,
-      "activeFrames": 21,
-      "recoveryFrames": 1,
-      "description": "Fast high overdrive shot with very long active pressure and quick recovery.",
+      "hitLevel": "high",
       "tracking": "medium",
-      "hitLevel": "high"
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1670,46 +1648,36 @@
       }
     },
     "jableft": {
-      "99": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
-      "100": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
       "101": {
-        "width": 1.478,
-        "height": 1.168,
+        "width": 1.48,
+        "height": 1.17,
         "offsetX": 0
       },
       "102": {
-        "width": 1.288,
-        "height": 1.168,
+        "width": 1.29,
+        "height": 1.17,
         "offsetX": 0
       },
       "103": {
-        "width": 1.131,
-        "height": 1.131,
+        "width": 1.13,
+        "height": 1.13,
         "offsetX": 0
       },
       "104": {
-        "width": 1.019,
-        "height": 1.019,
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       }
     },
     "jabright": {
       "80": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       },
       "81": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "82": {
@@ -1718,57 +1686,57 @@
         "offsetX": 0
       },
       "83": {
-        "width": 0.853,
-        "height": 0.853,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0
       },
       "84": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "85": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       }
     },
     "cmd:1+2": {
       "86": {
-        "width": 1.049,
-        "height": 0.982,
+        "width": 1.05,
+        "height": 0.98,
         "offsetX": 0
       },
       "87": {
-        "width": 0.927,
-        "height": 0.927,
+        "width": 0.93,
+        "height": 0.93,
         "offsetX": 0
       },
       "88": {
-        "width": 0.779,
-        "height": 0.779,
+        "width": 0.78,
+        "height": 0.78,
         "offsetX": 0
       },
       "89": {
-        "width": 0.723,
-        "height": 0.723,
+        "width": 0.72,
+        "height": 0.72,
         "offsetX": 0
       },
       "90": {
-        "width": 2.098,
-        "height": 0.797,
+        "width": 2.1,
+        "height": 0.8,
         "offsetX": 0
       },
       "91": {
-        "width": 1.717,
-        "height": 0.816,
+        "width": 1.72,
+        "height": 0.82,
         "offsetX": 0
       }
     },
     "cmd:1+4": {
       "105": {
-        "width": 0.964,
-        "height": 0.964,
+        "width": 0.96,
+        "height": 0.96,
         "offsetX": 0
       },
       "106": {
@@ -1777,75 +1745,75 @@
         "offsetX": 0
       },
       "107": {
-        "width": 0.964,
-        "height": 0.964,
+        "width": 0.96,
+        "height": 0.96,
         "offsetX": 0
       },
       "108": {
-        "width": 1.149,
-        "height": 1.149,
+        "width": 1.15,
+        "height": 1.15,
         "offsetX": 0
       },
       "109": {
-        "width": 1.205,
-        "height": 1.205,
+        "width": 1.21,
+        "height": 1.21,
         "offsetX": 0
       },
       "110": {
-        "width": 1.057,
-        "height": 1.057,
+        "width": 1.06,
+        "height": 1.06,
         "offsetX": 0
       },
       "111": {
-        "width": 0.816,
-        "height": 0.816,
+        "width": 0.82,
+        "height": 0.82,
         "offsetX": 0
       },
       "112": {
-        "width": 1.192,
-        "height": 1.019,
+        "width": 1.19,
+        "height": 1.02,
         "offsetX": 0
       },
       "113": {
-        "width": 1.192,
-        "height": 0.982,
+        "width": 1.19,
+        "height": 0.98,
         "offsetX": 0
       },
       "114": {
-        "width": 0.964,
-        "height": 0.964,
+        "width": 0.96,
+        "height": 0.96,
         "offsetX": 0
       }
     },
     "cmd:3+4": {
       "93": {
-        "width": 1.431,
-        "height": 0.945,
+        "width": 1.43,
+        "height": 0.94,
         "offsetX": 0
       },
       "94": {
-        "width": 0.834,
-        "height": 0.834,
+        "width": 0.83,
+        "height": 0.83,
         "offsetX": 0
       },
       "95": {
-        "width": 1.431,
-        "height": 0.853,
+        "width": 1.43,
+        "height": 0.85,
         "offsetX": 0
       },
       "96": {
         "width": 1.86,
-        "height": 0.871,
+        "height": 0.87,
         "offsetX": 0
       },
       "97": {
-        "width": 1.669,
+        "width": 1.67,
         "height": 0.89,
         "offsetX": 0
       },
       "98": {
-        "width": 1.192,
-        "height": 0.945,
+        "width": 1.19,
+        "height": 0.94,
         "offsetX": 0
       }
     },
@@ -1900,8 +1868,8 @@
     },
     "backHop": {
       "17": {
-        "width": 1.908,
-        "height": 0.964,
+        "width": 1.91,
+        "height": 0.96,
         "offsetX": 0
       },
       "40": {
@@ -2027,143 +1995,128 @@
       }
     },
     "cmd:qcf+4": {
-      "183": {
-        "width": 1.002,
-        "height": 1.001,
-        "offsetX": 0
-      },
       "184": {
-        "width": 1.152,
-        "height": 1.001,
+        "width": 1.15,
+        "height": 1,
         "offsetX": 0
       },
       "185": {
-        "width": 0.983,
-        "height": 0.982,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0
       },
       "186": {
-        "width": 1.526,
-        "height": 0.871,
+        "width": 1.53,
+        "height": 0.87,
         "offsetX": 0
       },
       "187": {
-        "width": 1.717,
-        "height": 0.871,
+        "width": 1.72,
+        "height": 0.87,
         "offsetX": 0
       },
       "188": {
-        "width": 2.146,
-        "height": 1.131,
+        "width": 2.15,
+        "height": 1.13,
         "offsetX": 0
       },
       "189": {
-        "width": 1.908,
-        "height": 1.057,
+        "width": 1.91,
+        "height": 1.06,
         "offsetX": 0
       },
       "190": {
-        "width": 2.575,
+        "width": 2.5,
         "height": 0.89,
         "offsetX": 0
       },
       "191": {
-        "width": 2.289,
-        "height": 0.853,
+        "width": 2.29,
+        "height": 0.85,
         "offsetX": 0
       },
       "192": {
-        "width": 2.575,
-        "height": 0.908,
+        "width": 2.5,
+        "height": 0.91,
         "offsetX": 0
       }
     },
     "cmd:1+3": {
       "120": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "121": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "122": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "123": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "124": {
-        "width": 0.954,
-        "height": 1.001,
-        "offsetX": 0
-      },
-      "125": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
-      "126": {
-        "width": 1.001,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "127": {
-        "width": 1.057,
-        "height": 1.057,
+        "width": 1.06,
+        "height": 1.06,
         "offsetX": 0
       },
       "128": {
-        "width": 0.983,
-        "height": 0.982,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0
       }
     },
     "cmd:2+3": {
       "140": {
-        "width": 0.816,
-        "height": 0.816,
+        "width": 0.82,
+        "height": 0.82,
         "offsetX": 0
       },
       "141": {
-        "width": 0.742,
-        "height": 0.741,
+        "width": 0.74,
+        "height": 0.74,
         "offsetX": 0
       },
       "142": {
-        "width": 1.149,
-        "height": 1.149,
+        "width": 1.15,
+        "height": 1.15,
         "offsetX": 0
       },
       "143": {
-        "width": 0.964,
-        "height": 0.964,
+        "width": 0.96,
+        "height": 0.96,
         "offsetX": 0
       },
       "144": {
-        "width": 0.853,
-        "height": 0.853,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0
       },
       "145": {
-        "width": 0.816,
-        "height": 0.816,
+        "width": 0.82,
+        "height": 0.82,
         "offsetX": 0
       },
       "146": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "147": {
-        "width": 0.909,
-        "height": 0.908,
+        "width": 0.91,
+        "height": 0.91,
         "offsetX": 0
       }
     },
@@ -2182,46 +2135,36 @@
       }
     },
     "cmd:f+1": {
-      "99": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
-      "100": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
       "101": {
-        "width": 1.478,
-        "height": 1.168,
+        "width": 1.48,
+        "height": 1.17,
         "offsetX": 0
       },
       "102": {
-        "width": 1.288,
-        "height": 1.168,
+        "width": 1.29,
+        "height": 1.17,
         "offsetX": 0
       },
       "103": {
-        "width": 1.131,
-        "height": 1.131,
+        "width": 1.13,
+        "height": 1.13,
         "offsetX": 0
       },
       "104": {
-        "width": 1.019,
-        "height": 1.019,
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       }
     },
     "cmd:d/f+2": {
       "80": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       },
       "81": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "82": {
@@ -2230,30 +2173,30 @@
         "offsetX": 0
       },
       "83": {
-        "width": 0.853,
-        "height": 0.853,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0
       },
       "84": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "85": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       }
     },
     "cmd:FC+2": {
       "80": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       },
       "81": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "82": {
@@ -2262,30 +2205,30 @@
         "offsetX": 0
       },
       "83": {
-        "width": 0.853,
-        "height": 0.853,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0
       },
       "84": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "85": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       }
     },
     "cmd:f+2": {
       "80": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       },
       "81": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "82": {
@@ -2294,94 +2237,74 @@
         "offsetX": 0
       },
       "83": {
-        "width": 0.853,
-        "height": 0.853,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0
       },
       "84": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "85": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       }
     },
     "cmd:d+1": {
-      "99": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
-      "100": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
       "101": {
-        "width": 1.478,
-        "height": 1.168,
+        "width": 1.48,
+        "height": 1.17,
         "offsetX": 0
       },
       "102": {
-        "width": 1.288,
-        "height": 1.168,
+        "width": 1.29,
+        "height": 1.17,
         "offsetX": 0
       },
       "103": {
-        "width": 1.131,
-        "height": 1.131,
+        "width": 1.13,
+        "height": 1.13,
         "offsetX": 0
       },
       "104": {
-        "width": 1.019,
-        "height": 1.019,
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       }
     },
     "cmd:qcf+1": {
-      "99": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
-      "100": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
       "101": {
-        "width": 1.478,
-        "height": 1.168,
+        "width": 1.48,
+        "height": 1.17,
         "offsetX": 0
       },
       "102": {
-        "width": 1.288,
-        "height": 1.168,
+        "width": 1.29,
+        "height": 1.17,
         "offsetX": 0
       },
       "103": {
-        "width": 1.131,
-        "height": 1.131,
+        "width": 1.13,
+        "height": 1.13,
         "offsetX": 0
       },
       "104": {
-        "width": 1.019,
-        "height": 1.019,
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       }
     },
     "cmd:WS+2": {
       "80": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       },
       "81": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "82": {
@@ -2390,834 +2313,363 @@
         "offsetX": 0
       },
       "83": {
-        "width": 0.853,
-        "height": 0.853,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0
       },
       "84": {
-        "width": 0.871,
-        "height": 0.871,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0
       },
       "85": {
-        "width": 0.946,
-        "height": 0.945,
+        "width": 0.95,
+        "height": 0.94,
         "offsetX": 0
       }
     },
     "cmd:O+1": {
-      "99": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
-      "100": {
-        "width": 1.001,
-        "height": 1.001,
-        "offsetX": 0
-      },
       "101": {
-        "width": 1.478,
-        "height": 1.168,
+        "width": 1.48,
+        "height": 1.17,
         "offsetX": 0
       },
       "102": {
-        "width": 1.288,
-        "height": 1.168,
+        "width": 1.29,
+        "height": 1.17,
         "offsetX": 0
       },
       "103": {
-        "width": 1.131,
-        "height": 1.131,
+        "width": 1.13,
+        "height": 1.13,
         "offsetX": 0
       },
       "104": {
-        "width": 1.019,
-        "height": 1.019,
+        "width": 1.02,
+        "height": 1.02,
         "offsetX": 0
       }
     },
     "crouchBlock": {
       "220": {
-        "width": 0.69,
-        "height": 0.72,
+        "width": 0.79,
+        "height": 0.97,
         "offsetX": 0
       }
     },
     "kickleft": {
       "194": {
-        "width": 1.526,
-        "height": 0.964,
+        "width": 1.53,
+        "height": 0.96,
         "offsetX": 0
       },
       "195": {
-        "width": 1.049,
-        "height": 0.927,
+        "width": 1.05,
+        "height": 0.93,
         "offsetX": 0
       },
       "196": {
-        "width": 1.049,
-        "height": 0.927,
+        "width": 1.05,
+        "height": 0.93,
         "offsetX": 0
       },
       "197": {
-        "width": 1.622,
-        "height": 0.964,
+        "width": 1.62,
+        "height": 0.96,
         "offsetX": 0
       },
       "198": {
-        "width": 2.003,
-        "height": 0.982,
+        "width": 2,
+        "height": 0.98,
         "offsetX": 0
       },
       "199": {
-        "width": 2.051,
-        "height": 0.982,
+        "width": 2.05,
+        "height": 0.98,
         "offsetX": 0
       },
       "200": {
-        "width": 1.478,
-        "height": 1.057,
+        "width": 1.48,
+        "height": 1.06,
         "offsetX": 0
       },
       "201": {
-        "width": 1.765,
-        "height": 1.149,
+        "width": 1.76,
+        "height": 1.15,
         "offsetX": 0
       },
       "202": {
-        "width": 1.955,
-        "height": 1.075,
+        "width": 1.96,
+        "height": 1.07,
         "offsetX": 0
       },
       "203": {
-        "width": 1.478,
-        "height": 1.223,
+        "width": 1.48,
+        "height": 1.22,
         "offsetX": 0
       }
     },
     "kickright": {
       "204": {
-        "width": 1.669,
+        "width": 1.67,
         "height": 0.89,
         "offsetX": 0
       },
       "205": {
-        "width": 2.003,
-        "height": 0.723,
+        "width": 2,
+        "height": 0.72,
         "offsetX": 0
       },
       "206": {
         "width": 1.24,
-        "height": 0.927,
+        "height": 0.93,
         "offsetX": 0
       },
       "207": {
-        "width": 1.145,
-        "height": 0.982,
+        "width": 1.15,
+        "height": 0.98,
         "offsetX": 0
       },
       "208": {
-        "width": 1.765,
-        "height": 0.982,
+        "width": 1.76,
+        "height": 0.98,
         "offsetX": 0
       },
       "209": {
-        "width": 1.526,
-        "height": 0.871,
+        "width": 1.53,
+        "height": 0.87,
         "offsetX": 0
       },
       "210": {
-        "width": 1.431,
-        "height": 0.834,
+        "width": 1.43,
+        "height": 0.83,
         "offsetX": 0
       },
       "211": {
         "width": 2.48,
-        "height": 0.871,
+        "height": 0.87,
         "offsetX": 0
       },
       "212": {
-        "width": 1.765,
+        "width": 1.76,
         "height": 0.89,
         "offsetX": 0
       },
       "213": {
-        "width": 2.575,
+        "width": 2.5,
         "height": 0.89,
         "offsetX": 0
       }
     },
     "cmd:WS+4": {
       "173": {
-        "width": 2.385,
-        "height": 1.001,
+        "width": 2.38,
+        "height": 1,
         "offsetX": 0
       },
       "174": {
-        "width": 2.385,
-        "height": 1.001,
+        "width": 2.38,
+        "height": 1,
         "offsetX": 0
       },
       "175": {
-        "width": 2.385,
-        "height": 1.001,
+        "width": 2.38,
+        "height": 1,
         "offsetX": 0
       },
       "176": {
-        "width": 1.717,
-        "height": 1.001,
+        "width": 1.72,
+        "height": 1,
         "offsetX": 0
       },
       "177": {
-        "width": 1.526,
-        "height": 0.982,
+        "width": 1.53,
+        "height": 0.98,
         "offsetX": 0
       },
       "178": {
-        "width": 1.431,
-        "height": 1.001,
+        "width": 1.43,
+        "height": 1,
         "offsetX": 0
       },
       "179": {
-        "width": 1.431,
-        "height": 1.001,
+        "width": 1.43,
+        "height": 1,
         "offsetX": 0
       },
       "180": {
-        "width": 1.431,
-        "height": 1.001,
+        "width": 1.43,
+        "height": 1,
         "offsetX": 0
       },
       "181": {
-        "width": 1.431,
-        "height": 1.001,
+        "width": 1.43,
+        "height": 1,
         "offsetX": 0
       },
       "182": {
-        "width": 1.478,
-        "height": 0.982,
+        "width": 1.48,
+        "height": 0.98,
         "offsetX": 0
       }
     },
     "cmd:FC+1": {
       "150": {
-        "width": 2.003,
-        "height": 0.797,
+        "width": 2,
+        "height": 0.8,
         "offsetX": 0
       },
       "151": {
-        "width": 1.955,
-        "height": 0.816,
+        "width": 1.96,
+        "height": 0.82,
         "offsetX": 0
       },
       "152": {
-        "width": 1.335,
+        "width": 1.33,
         "height": 0.89,
         "offsetX": 0
       },
       "153": {
-        "width": 1.717,
-        "height": 1.001,
+        "width": 1.72,
+        "height": 1,
         "offsetX": 0
       },
       "154": {
         "width": 2.48,
-        "height": 1.001,
+        "height": 1,
         "offsetX": 0
       },
       "155": {
-        "width": 1.478,
-        "height": 1.168,
+        "width": 1.48,
+        "height": 1.17,
         "offsetX": 0
       },
       "156": {
-        "width": 1.288,
-        "height": 1.168,
+        "width": 1.29,
+        "height": 1.17,
         "offsetX": 0
       },
       "157": {
-        "width": 1.526,
-        "height": 1.131,
+        "width": 1.53,
+        "height": 1.13,
         "offsetX": 0
       },
       "158": {
-        "width": 2.528,
-        "height": 1.019,
+        "width": 2.5,
+        "height": 1.02,
         "offsetX": 0
       },
       "159": {
-        "width": 2.337,
-        "height": 0.538,
+        "width": 2.34,
+        "height": 0.54,
         "offsetX": 0
       }
     },
     "cmd:2+4": {
       "130": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "131": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "132": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "133": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "134": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "135": {
-        "width": 0.954,
-        "height": 1.001,
+        "width": 0.95,
+        "height": 1,
         "offsetX": 0
       },
       "136": {
-        "width": 1.288,
-        "height": 1.001,
+        "width": 1.29,
+        "height": 1,
         "offsetX": 0
       },
       "137": {
-        "width": 2.337,
-        "height": 1.001,
+        "width": 2.34,
+        "height": 1,
         "offsetX": 0
       },
       "138": {
         "width": 1.86,
-        "height": 1.057,
+        "height": 1.06,
         "offsetX": 0
       },
       "139": {
-        "width": 1.478,
-        "height": 0.982,
+        "width": 1.48,
+        "height": 0.98,
         "offsetX": 0
       }
     },
     "cmd:O+2": {
       "163": {
-        "width": 1.478,
-        "height": 1.001,
+        "width": 1.48,
+        "height": 1,
         "offsetX": 0
       },
       "164": {
-        "width": 1.812,
-        "height": 1.001,
+        "width": 1.81,
+        "height": 1,
         "offsetX": 0
       },
       "165": {
         "width": 2.48,
-        "height": 1.001,
+        "height": 1,
         "offsetX": 0
       },
       "166": {
         "width": 2.48,
-        "height": 1.001,
+        "height": 1,
         "offsetX": 0
       },
       "167": {
         "width": 2.48,
-        "height": 1.001,
+        "height": 1,
         "offsetX": 0
       },
       "168": {
         "width": 2.48,
-        "height": 1.001,
+        "height": 1,
         "offsetX": 0
       },
       "169": {
         "width": 2.48,
-        "height": 1.001,
+        "height": 1,
         "offsetX": 0
       },
       "170": {
-        "width": 2.432,
-        "height": 1.001,
+        "width": 2.43,
+        "height": 1,
         "offsetX": 0
       },
       "171": {
-        "width": 2.432,
-        "height": 1.001,
+        "width": 2.43,
+        "height": 1,
         "offsetX": 0
       },
       "172": {
-        "width": 2.385,
-        "height": 1.001,
+        "width": 2.38,
+        "height": 1,
         "offsetX": 0
       }
     }
   },
-  "projectiles": [
-    {
-      "id": "firearm-bullet-projectile",
-      "name": "Firearm Bullet",
-      "sourcePath": "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png",
-      "spriteSheetPath": "/characters/train-heartnet/projectiles/firearm-bullet-projectile/source/raw/65.png",
-      "frames": [
-        "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png",
-        "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-001.png",
-        "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-002.png"
-      ],
-      "animationFrames": {
-        "startup": [
-          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png"
-        ],
-        "active": [
-          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png",
-          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-001.png",
-          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-002.png"
-        ],
-        "recovery": [
-          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-002.png"
-        ]
-      },
-      "fps": 18,
-      "loop": true,
-      "billboard": false,
-      "blendMode": "additive",
-      "voxelProfile": "image-source",
-      "defaultScale": [
-        1,
-        1,
-        0.28
-      ],
-      "defaultRotation": [
-        0,
-        0,
-        0
-      ],
-      "color": "#ffe06e"
-    }
-  ],
-  "moveProjectiles": {
-    "cmd:1+3": [
-      {
-        "id": "cmd:1-3-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Cross Launcher Firearm Bullet",
-        "spawnFrame": 4,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "cmd:O+2": [
-      {
-        "id": "cmd:o-2-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Aura Drive Firearm Bullet",
-        "spawnFrame": 5,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "cmd:WS+4": [
-      {
-        "id": "cmd:ws-4-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Rising Strike Firearm Bullet",
-        "spawnFrame": 5,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "kickleft": [
-      {
-        "id": "kickleft-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Left Kick Firearm Bullet",
-        "spawnFrame": 5,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "kickright": [
-      {
-        "id": "kickright-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Right Kick Firearm Bullet",
-        "spawnFrame": 5,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "cmd:O+1": [
-      {
-        "id": "cmd:o-1-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "O+1 Frame Link Firearm Bullet",
-        "spawnFrame": 3,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "cmd:d+1": [
-      {
-        "id": "cmd:d-1-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "d+1 Frame Link Firearm Bullet",
-        "spawnFrame": 3,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "cmd:f+1": [
-      {
-        "id": "cmd:f-1-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "f+1 Frame Link Firearm Bullet",
-        "spawnFrame": 3,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "cmd:qcf+1": [
-      {
-        "id": "cmd:qcf-1-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "qcf+1 Frame Link Firearm Bullet",
-        "spawnFrame": 3,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ],
-    "jableft": [
-      {
-        "id": "jableft-shot",
-        "projectileId": "firearm-bullet-projectile",
-        "label": "Train Heartnet Left Check Firearm Bullet",
-        "spawnFrame": 3,
-        "spawnOffset": [
-          0,
-          1.08,
-          0.94
-        ],
-        "startupFrames": 0,
-        "activeFrames": 72,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 82,
-        "speed": 14,
-        "forwardVelocity": 14,
-        "homingMode": "limited",
-        "homingStrength": 1.8,
-        "homingTurnRate": 2.4,
-        "homingEndFrame": 41,
-        "nearMissRadius": 0.58,
-        "hitbox": {
-          "offset": [
-            0,
-            0,
-            0
-          ],
-          "size": [
-            0.32,
-            0.3,
-            0.62
-          ]
-        },
-        "damageScale": 1,
-        "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true,
-        "clash": false
-      }
-    ]
-  }}
+  "projectiles": [],
+  "moveProjectiles": {}
+}

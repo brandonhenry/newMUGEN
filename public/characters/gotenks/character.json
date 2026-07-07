@@ -573,8 +573,7 @@
       "label": "Quick Fusion Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "description": "Fast high jab with a tiny active window for close checks."
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -593,8 +592,7 @@
       "label": "Fusion Body Check",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "description": "Quick mid body check with a short active window and steady recovery."
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 0,
@@ -611,8 +609,7 @@
       "forwardForceStartFrame": 16,
       "forwardForceEndFrame": 23,
       "label": "Low Fusion Roll",
-      "hitLevel": "low",
-      "description": "Fast low rolling kick with long active coverage and heavier recovery."
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 22,
@@ -631,8 +628,7 @@
       "label": "Heavy Fusion Kick",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "description": "Slow mid kick with a wide arc and committed recovery."
+      "knockdown": false
     },
     "cmd:f+1": {
       "startupFrames": 19,
@@ -650,8 +646,7 @@
       "forwardForceEndFrame": 24,
       "label": "Fusion Body Poke",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid body poke with a tiny active window and heavy recovery."
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -673,8 +668,7 @@
       "juggleGravityScale": 0.54,
       "label": "Forward Fusion Launcher",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid launcher that reaches forward with a lifting strike."
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 13,
@@ -693,8 +687,7 @@
       "label": "Galactic Fusion Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false,
-      "description": "Quick mid knockdown burst with very long active coverage and fast recovery."
+      "cancelable": false
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -712,8 +705,7 @@
       "forwardForceEndFrame": 23,
       "label": "Rising Fusion Kick",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Steady mid rising kick with a brief active window and heavy recovery."
+      "cancelable": false
     },
     "cmd:FC+1": {
       "startupFrames": 3,
@@ -731,8 +723,7 @@
       "forwardForceEndFrame": 15,
       "label": "Crouch Fusion Flurry",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Fast mid crouch attack with long active coverage from a quick low flurry."
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -751,8 +742,7 @@
       "launchHeight": 2,
       "label": "Crouch Fusion Launcher",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Steady mid launcher with a short active window from a crouching strike."
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 16,
@@ -773,8 +763,7 @@
       "label": "Fusion Hop Strike",
       "hitLevel": "mid",
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "description": "Steady mid jumping strike with a short active window and quick recovery."
+      "jumpBeforeMove": true
     },
     "cmd:1+3": {
       "startupFrames": 20,
@@ -795,8 +784,7 @@
       "launchHeight": 2.2,
       "label": "Gotenks Cross Launcher",
       "hitLevel": "mid",
-      "jumpBeforeMove": true,
-      "description": "Slow mid jumping launcher with long active coverage from a rushing kick."
+      "jumpBeforeMove": true
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -820,8 +808,7 @@
       "juggleGravityScale": 0.52,
       "label": "Low Fusion Pop-Up",
       "hitLevel": "low",
-      "jumpBeforeMove": true,
-      "description": "Steady low jumping launcher with a short active window and quick recovery."
+      "jumpBeforeMove": true
     },
     "cmd:2+4": {
       "startupFrames": 20,
@@ -840,8 +827,7 @@
       "label": "Low Fusion Trip",
       "hitLevel": "low",
       "knockdown": true,
-      "cancelable": false,
-      "description": "Slow low knockdown kick with a short active window and heavy recovery."
+      "cancelable": false
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -860,8 +846,7 @@
       "label": "Fusion Knockdown Kick",
       "hitLevel": "mid",
       "knockdown": true,
-      "cancelable": false,
-      "description": "Slow mid knockdown kick with a brief active window and high commitment."
+      "cancelable": false
     },
     "cmd:O+2": {
       "startupFrames": 12,
@@ -879,8 +864,7 @@
       "forwardForceEndFrame": 35,
       "label": "Fusion Aura Drive",
       "hitLevel": "special",
-      "knockdown": true,
-      "description": "Quick special knockdown rush with very long active coverage from a golden charge."
+      "knockdown": true
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
@@ -1347,6 +1331,9 @@
       "label": "Gotenks Kick Ender"
     },
     "cmd:1+4": {
+      "startupFrames": 16,
+      "activeFrames": 7,
+      "recoveryFrames": 23,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1357,16 +1344,15 @@
       "moveJumpForce": 8.8,
       "moveJumpGravity": 24,
       "label": "Galactic Spin Kick",
+      "hitLevel": "mid",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true,
-      "startupFrames": 16,
-      "activeFrames": 7,
-      "recoveryFrames": 23,
-      "description": "Steady mid tornado kick that hops into a circular strike.",
-      "hitLevel": "mid"
+      "jumpBeforeMove": true
     },
     "cmd:f+2": {
+      "startupFrames": 12,
+      "activeFrames": 12,
+      "recoveryFrames": 6,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1375,14 +1361,13 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "Forward Fusion Check",
-      "cancelable": false,
-      "startupFrames": 12,
-      "activeFrames": 12,
-      "recoveryFrames": 6,
-      "description": "Quick mid strike with balanced active time and fast recovery.",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:d+1": {
+      "startupFrames": 0,
+      "activeFrames": 22,
+      "recoveryFrames": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1391,14 +1376,13 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "Instant Fusion Check",
-      "cancelable": false,
+      "hitLevel": "high",
+      "cancelable": false
+    },
+    "cmd:qcf+1": {
       "startupFrames": 0,
       "activeFrames": 22,
       "recoveryFrames": 1,
-      "description": "Fast high check with long active time and quick recovery.",
-      "hitLevel": "high"
-    },
-    "cmd:qcf+1": {
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1407,14 +1391,13 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "Instant Fusion Check",
-      "cancelable": false,
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
-      "description": "Fast high check with long active time for quick close pressure.",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "cancelable": false
     },
     "cmd:WS+2": {
+      "startupFrames": 12,
+      "activeFrames": 12,
+      "recoveryFrames": 6,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1423,14 +1406,13 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "While Rising Fusion",
-      "cancelable": false,
-      "startupFrames": 12,
-      "activeFrames": 12,
-      "recoveryFrames": 6,
-      "description": "Quick mid while-rising strike with balanced active time and fast recovery.",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:SS+4": {
+      "startupFrames": 20,
+      "activeFrames": 7,
+      "recoveryFrames": 19,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1439,14 +1421,13 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
       "label": "Sidestep Fusion Kick",
-      "cancelable": false,
-      "startupFrames": 20,
-      "activeFrames": 7,
-      "recoveryFrames": 19,
-      "description": "Slow mid sidestep kick with a steady active window and committed recovery.",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:O+1": {
+      "startupFrames": 0,
+      "activeFrames": 22,
+      "recoveryFrames": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1455,14 +1436,13 @@
       "forwardForceStartFrame": 7,
       "forwardForceEndFrame": 12,
       "label": "Instant Fusion Check",
-      "cancelable": false,
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
-      "description": "Fast high check with long active time from a compact single-frame poke.",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "cancelable": false
     },
     "cmd:O+4": {
+      "startupFrames": 20,
+      "activeFrames": 7,
+      "recoveryFrames": 19,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1471,12 +1451,8 @@
       "forwardForceStartFrame": 20,
       "forwardForceEndFrame": 26,
       "label": "Heavy Fusion Kick",
-      "cancelable": false,
-      "startupFrames": 20,
-      "activeFrames": 7,
-      "recoveryFrames": 19,
-      "description": "Slow mid kick with a steady active window and committed recovery.",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "cancelable": false
     }
   },
   "effects": [],
@@ -1516,45 +1492,45 @@
   "animationFrameScales": {
     "knockdown": {
       "30": {
-        "width": 0.505,
-        "height": 0.538,
+        "width": 0.51,
+        "height": 0.54,
         "offsetX": 0
       },
       "31": {
-        "width": 0.529,
-        "height": 0.564,
+        "width": 0.53,
+        "height": 0.56,
         "offsetX": 0
       },
       "32": {
-        "width": 0.649,
-        "height": 0.692,
+        "width": 0.65,
+        "height": 0.69,
         "offsetX": 0
       },
       "33": {
-        "width": 0.649,
-        "height": 0.692,
+        "width": 0.65,
+        "height": 0.69,
         "offsetX": 0
       }
     },
     "getupStand": {
       "30": {
-        "width": 0.505,
-        "height": 0.538,
+        "width": 0.51,
+        "height": 0.54,
         "offsetX": 0
       },
       "31": {
-        "width": 0.529,
-        "height": 0.564,
+        "width": 0.53,
+        "height": 0.56,
         "offsetX": 0
       },
       "32": {
-        "width": 0.649,
-        "height": 0.692,
+        "width": 0.65,
+        "height": 0.69,
         "offsetX": 0
       },
       "33": {
-        "width": 0.649,
-        "height": 0.692,
+        "width": 0.65,
+        "height": 0.69,
         "offsetX": 0
       },
       "49": {
@@ -1563,8 +1539,8 @@
         "offsetX": 0
       },
       "50": {
-        "width": 1.041,
-        "height": 1.025,
+        "width": 1.04,
+        "height": 1.02,
         "offsetX": 0
       },
       "51": {
@@ -1670,6 +1646,11 @@
       }
     },
     "backHop": {
+      "17": {
+        "width": 0.58,
+        "height": 1.26,
+        "offsetX": 0
+      },
       "40": {
         "width": 1.08,
         "height": 1.08,
@@ -1709,11 +1690,6 @@
         "width": 1.11,
         "height": 1.11,
         "offsetX": 0
-      },
-      "17": {
-        "width": 0.576,
-        "height": 1.256,
-        "offsetX": 0
       }
     },
     "jump": {
@@ -1751,72 +1727,72 @@
     },
     "jableft": {
       "71": {
-        "width": 1.107,
-        "height": 1.128,
+        "width": 1.11,
+        "height": 1.13,
         "offsetX": 0
       }
     },
     "jabright": {
       "64": {
-        "width": 0.598,
-        "height": 1.333,
+        "width": 0.6,
+        "height": 1.33,
         "offsetX": 0
       },
       "65": {
-        "width": 0.487,
-        "height": 1.307,
+        "width": 0.49,
+        "height": 1.31,
         "offsetX": 0
       },
       "66": {
-        "width": 0.952,
-        "height": 1.128,
+        "width": 0.95,
+        "height": 1.13,
         "offsetX": 0
       },
       "67": {
         "width": 0.93,
-        "height": 1.179,
+        "height": 1.18,
         "offsetX": 0
       },
       "68": {
-        "width": 0.576,
-        "height": 1.282,
+        "width": 0.58,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "kickright": {
       "168": {
-        "width": 0.509,
-        "height": 1.333,
+        "width": 0.51,
+        "height": 1.33,
         "offsetX": 0
       },
       "169": {
-        "width": 0.775,
-        "height": 1.256,
+        "width": 0.78,
+        "height": 1.26,
         "offsetX": 0
       },
       "170": {
-        "width": 0.531,
-        "height": 1.307,
+        "width": 0.53,
+        "height": 1.31,
         "offsetX": 0
       },
       "171": {
-        "width": 1.085,
-        "height": 1.128,
+        "width": 1.08,
+        "height": 1.13,
         "offsetX": 0
       },
       "172": {
-        "width": 0.797,
-        "height": 1.179,
+        "width": 0.8,
+        "height": 1.18,
         "offsetX": 0
       },
       "173": {
-        "width": 0.686,
-        "height": 1.307,
+        "width": 0.69,
+        "height": 1.31,
         "offsetX": 0
       },
       "174": {
-        "width": 0.775,
-        "height": 1.282,
+        "width": 0.78,
+        "height": 1.28,
         "offsetX": 0
       }
     },
@@ -1848,151 +1824,151 @@
     },
     "cmd:qcf+4": {
       "200": {
-        "width": 0.664,
+        "width": 0.66,
         "height": 1.23,
         "offsetX": 0
       },
       "201": {
-        "width": 0.841,
-        "height": 1.051,
+        "width": 0.84,
+        "height": 1.05,
         "offsetX": 0
       },
       "202": {
-        "width": 1.063,
+        "width": 1.06,
         "height": 1.23,
         "offsetX": 0
       },
       "203": {
-        "width": 0.664,
-        "height": 1.128,
+        "width": 0.66,
+        "height": 1.13,
         "offsetX": 0
       },
       "204": {
-        "width": 0.664,
-        "height": 1.205,
+        "width": 0.66,
+        "height": 1.21,
         "offsetX": 0
       },
       "205": {
-        "width": 0.531,
-        "height": 1.076,
+        "width": 0.53,
+        "height": 1.08,
         "offsetX": 0
       },
       "206": {
-        "width": 0.996,
-        "height": 1.153,
+        "width": 1,
+        "height": 1.15,
         "offsetX": 0
       },
       "207": {
-        "width": 1.107,
-        "height": 1.153,
+        "width": 1.11,
+        "height": 1.15,
         "offsetX": 0
       }
     },
     "cmd:1+2": {
       "68": {
-        "width": 0.576,
-        "height": 1.282,
+        "width": 0.58,
+        "height": 1.28,
         "offsetX": 0
       },
       "70": {
-        "width": 0.996,
-        "height": 1.128,
+        "width": 1,
+        "height": 1.13,
         "offsetX": 0
       },
       "71": {
-        "width": 1.107,
-        "height": 1.128,
+        "width": 1.11,
+        "height": 1.13,
         "offsetX": 0
       }
     },
     "cmd:1+3": {
       "110": {
-        "width": 0.908,
-        "height": 1.282,
+        "width": 0.91,
+        "height": 1.28,
         "offsetX": 0
       },
       "111": {
-        "width": 0.996,
-        "height": 1.256,
+        "width": 1,
+        "height": 1.26,
         "offsetX": 0
       },
       "112": {
-        "width": 0.908,
+        "width": 0.91,
         "height": 1.23,
         "offsetX": 0
       },
       "113": {
-        "width": 0.775,
-        "height": 1.128,
+        "width": 0.78,
+        "height": 1.13,
         "offsetX": 0
       },
       "114": {
-        "width": 1.173,
-        "height": 1.128,
+        "width": 1.17,
+        "height": 1.13,
         "offsetX": 0
       },
       "115": {
-        "width": 1.173,
-        "height": 1.102,
+        "width": 1.17,
+        "height": 1.1,
         "offsetX": 0
       },
       "116": {
-        "width": 1.085,
-        "height": 1.205,
+        "width": 1.08,
+        "height": 1.21,
         "offsetX": 0
       }
     },
     "cmd:2+3": {
       "133": {
-        "width": 0.686,
-        "height": 1.256,
+        "width": 0.69,
+        "height": 1.26,
         "offsetX": 0
       },
       "134": {
-        "width": 0.908,
-        "height": 1.128,
+        "width": 0.91,
+        "height": 1.13,
         "offsetX": 0
       },
       "135": {
-        "width": 0.952,
-        "height": 1.179,
+        "width": 0.95,
+        "height": 1.18,
         "offsetX": 0
       },
       "136": {
-        "width": 0.598,
-        "height": 1.307,
+        "width": 0.6,
+        "height": 1.31,
         "offsetX": 0
       }
     },
     "cmd:1+4": {
       "123": {
-        "width": 0.686,
+        "width": 0.69,
         "height": 1,
         "offsetX": 0
       },
       "124": {
         "width": 0.62,
-        "height": 1.128,
+        "height": 1.13,
         "offsetX": 0
       },
       "125": {
-        "width": 1.173,
-        "height": 1.307,
+        "width": 1.17,
+        "height": 1.31,
         "offsetX": 0
       },
       "126": {
         "width": 0.93,
-        "height": 1.128,
+        "height": 1.13,
         "offsetX": 0
       },
       "127": {
-        "width": 0.598,
-        "height": 1.153,
+        "width": 0.6,
+        "height": 1.15,
         "offsetX": 0
       },
       "128": {
         "width": 0.62,
-        "height": 1.282,
+        "height": 1.28,
         "offsetX": 0
       }
     },
@@ -2036,460 +2012,460 @@
     },
     "cmd:f+1": {
       "71": {
-        "width": 1.107,
-        "height": 1.128,
+        "width": 1.11,
+        "height": 1.13,
         "offsetX": 0
       }
     },
     "cmd:d/f+2": {
       "64": {
-        "width": 0.598,
-        "height": 1.333,
+        "width": 0.6,
+        "height": 1.33,
         "offsetX": 0
       },
       "65": {
-        "width": 0.487,
-        "height": 1.307,
+        "width": 0.49,
+        "height": 1.31,
         "offsetX": 0
       },
       "66": {
-        "width": 0.952,
-        "height": 1.128,
+        "width": 0.95,
+        "height": 1.13,
         "offsetX": 0
       },
       "67": {
         "width": 0.93,
-        "height": 1.179,
+        "height": 1.18,
         "offsetX": 0
       },
       "68": {
-        "width": 0.576,
-        "height": 1.282,
+        "width": 0.58,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:WS+4": {
       "168": {
-        "width": 0.509,
-        "height": 1.333,
+        "width": 0.51,
+        "height": 1.33,
         "offsetX": 0
       },
       "169": {
-        "width": 0.775,
-        "height": 1.256,
+        "width": 0.78,
+        "height": 1.26,
         "offsetX": 0
       },
       "170": {
-        "width": 0.531,
-        "height": 1.307,
+        "width": 0.53,
+        "height": 1.31,
         "offsetX": 0
       },
       "171": {
-        "width": 1.085,
-        "height": 1.128,
+        "width": 1.08,
+        "height": 1.13,
         "offsetX": 0
       },
       "172": {
-        "width": 0.797,
-        "height": 1.179,
+        "width": 0.8,
+        "height": 1.18,
         "offsetX": 0
       },
       "173": {
-        "width": 0.686,
-        "height": 1.307,
+        "width": 0.69,
+        "height": 1.31,
         "offsetX": 0
       },
       "174": {
-        "width": 0.775,
-        "height": 1.282,
+        "width": 0.78,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:FC+2": {
       "64": {
-        "width": 0.598,
-        "height": 1.333,
+        "width": 0.6,
+        "height": 1.33,
         "offsetX": 0
       },
       "65": {
-        "width": 0.487,
-        "height": 1.307,
+        "width": 0.49,
+        "height": 1.31,
         "offsetX": 0
       },
       "66": {
-        "width": 0.952,
-        "height": 1.128,
+        "width": 0.95,
+        "height": 1.13,
         "offsetX": 0
       },
       "67": {
         "width": 0.93,
-        "height": 1.179,
+        "height": 1.18,
         "offsetX": 0
       },
       "68": {
-        "width": 0.576,
-        "height": 1.282,
+        "width": 0.58,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:2+4": {
       "168": {
-        "width": 0.509,
-        "height": 1.333,
+        "width": 0.51,
+        "height": 1.33,
         "offsetX": 0
       },
       "169": {
-        "width": 0.775,
-        "height": 1.256,
+        "width": 0.78,
+        "height": 1.26,
         "offsetX": 0
       },
       "170": {
-        "width": 0.531,
-        "height": 1.307,
+        "width": 0.53,
+        "height": 1.31,
         "offsetX": 0
       },
       "171": {
-        "width": 1.085,
-        "height": 1.128,
+        "width": 1.08,
+        "height": 1.13,
         "offsetX": 0
       },
       "172": {
-        "width": 0.797,
-        "height": 1.179,
+        "width": 0.8,
+        "height": 1.18,
         "offsetX": 0
       },
       "173": {
-        "width": 0.686,
-        "height": 1.307,
+        "width": 0.69,
+        "height": 1.31,
         "offsetX": 0
       },
       "174": {
-        "width": 0.775,
-        "height": 1.282,
+        "width": 0.78,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:3+4": {
       "168": {
-        "width": 0.509,
-        "height": 1.333,
+        "width": 0.51,
+        "height": 1.33,
         "offsetX": 0
       },
       "169": {
-        "width": 0.775,
-        "height": 1.256,
+        "width": 0.78,
+        "height": 1.26,
         "offsetX": 0
       },
       "170": {
-        "width": 0.531,
-        "height": 1.307,
+        "width": 0.53,
+        "height": 1.31,
         "offsetX": 0
       },
       "171": {
-        "width": 1.085,
-        "height": 1.128,
+        "width": 1.08,
+        "height": 1.13,
         "offsetX": 0
       },
       "172": {
-        "width": 0.797,
-        "height": 1.179,
+        "width": 0.8,
+        "height": 1.18,
         "offsetX": 0
       },
       "173": {
-        "width": 0.686,
-        "height": 1.307,
+        "width": 0.69,
+        "height": 1.31,
         "offsetX": 0
       },
       "174": {
-        "width": 0.775,
-        "height": 1.282,
+        "width": 0.78,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:f+2": {
       "64": {
-        "width": 0.598,
-        "height": 1.333,
+        "width": 0.6,
+        "height": 1.33,
         "offsetX": 0
       },
       "65": {
-        "width": 0.487,
-        "height": 1.307,
+        "width": 0.49,
+        "height": 1.31,
         "offsetX": 0
       },
       "66": {
-        "width": 0.952,
-        "height": 1.128,
+        "width": 0.95,
+        "height": 1.13,
         "offsetX": 0
       },
       "67": {
         "width": 0.93,
-        "height": 1.179,
+        "height": 1.18,
         "offsetX": 0
       },
       "68": {
-        "width": 0.576,
-        "height": 1.282,
+        "width": 0.58,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:d+1": {
       "71": {
-        "width": 1.107,
-        "height": 1.128,
+        "width": 1.11,
+        "height": 1.13,
         "offsetX": 0
       }
     },
     "cmd:qcf+1": {
       "71": {
-        "width": 1.107,
-        "height": 1.128,
+        "width": 1.11,
+        "height": 1.13,
         "offsetX": 0
       }
     },
     "cmd:WS+2": {
       "64": {
-        "width": 0.598,
-        "height": 1.333,
+        "width": 0.6,
+        "height": 1.33,
         "offsetX": 0
       },
       "65": {
-        "width": 0.487,
-        "height": 1.307,
+        "width": 0.49,
+        "height": 1.31,
         "offsetX": 0
       },
       "66": {
-        "width": 0.952,
-        "height": 1.128,
+        "width": 0.95,
+        "height": 1.13,
         "offsetX": 0
       },
       "67": {
         "width": 0.93,
-        "height": 1.179,
+        "height": 1.18,
         "offsetX": 0
       },
       "68": {
-        "width": 0.576,
-        "height": 1.282,
+        "width": 0.58,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:SS+4": {
       "168": {
-        "width": 0.509,
-        "height": 1.333,
+        "width": 0.51,
+        "height": 1.33,
         "offsetX": 0
       },
       "169": {
-        "width": 0.775,
-        "height": 1.256,
+        "width": 0.78,
+        "height": 1.26,
         "offsetX": 0
       },
       "170": {
-        "width": 0.531,
-        "height": 1.307,
+        "width": 0.53,
+        "height": 1.31,
         "offsetX": 0
       },
       "171": {
-        "width": 1.085,
-        "height": 1.128,
+        "width": 1.08,
+        "height": 1.13,
         "offsetX": 0
       },
       "172": {
-        "width": 0.797,
-        "height": 1.179,
+        "width": 0.8,
+        "height": 1.18,
         "offsetX": 0
       },
       "173": {
-        "width": 0.686,
-        "height": 1.307,
+        "width": 0.69,
+        "height": 1.31,
         "offsetX": 0
       },
       "174": {
-        "width": 0.775,
-        "height": 1.282,
+        "width": 0.78,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "cmd:O+1": {
       "71": {
-        "width": 1.107,
-        "height": 1.128,
+        "width": 1.11,
+        "height": 1.13,
         "offsetX": 0
       }
     },
     "cmd:O+4": {
       "168": {
-        "width": 0.509,
-        "height": 1.333,
+        "width": 0.51,
+        "height": 1.33,
         "offsetX": 0
       },
       "169": {
-        "width": 0.775,
-        "height": 1.256,
+        "width": 0.78,
+        "height": 1.26,
         "offsetX": 0
       },
       "170": {
-        "width": 0.531,
-        "height": 1.307,
+        "width": 0.53,
+        "height": 1.31,
         "offsetX": 0
       },
       "171": {
-        "width": 1.085,
-        "height": 1.128,
+        "width": 1.08,
+        "height": 1.13,
         "offsetX": 0
       },
       "172": {
-        "width": 0.797,
-        "height": 1.179,
+        "width": 0.8,
+        "height": 1.18,
         "offsetX": 0
       },
       "173": {
-        "width": 0.686,
-        "height": 1.307,
+        "width": 0.69,
+        "height": 1.31,
         "offsetX": 0
       },
       "174": {
-        "width": 0.775,
-        "height": 1.282,
+        "width": 0.78,
+        "height": 1.28,
         "offsetX": 0
       }
     },
     "crouchBlock": {
       "209": {
-        "width": 1.05,
-        "height": 1.17,
+        "width": 1.2,
+        "height": 1.2,
         "offsetX": 0
       }
     },
     "kickleft": {
       "180": {
-        "width": 1.173,
-        "height": 1.102,
+        "width": 1.17,
+        "height": 1.1,
         "offsetX": 0
       },
       "181": {
-        "width": 0.886,
+        "width": 0.89,
         "height": 1.23,
         "offsetX": 0
       },
       "182": {
-        "width": 0.487,
+        "width": 0.49,
         "height": 1.23,
         "offsetX": 0
       },
       "183": {
-        "width": 0.642,
+        "width": 0.64,
         "height": 1,
         "offsetX": 0
       },
       "184": {
-        "width": 0.908,
-        "height": 0.641,
+        "width": 0.91,
+        "height": 0.64,
         "offsetX": 0
       },
       "185": {
         "width": 0.62,
-        "height": 0.897,
+        "height": 0.9,
         "offsetX": 0
       },
       "186": {
-        "width": 0.576,
-        "height": 1.256,
+        "width": 0.58,
+        "height": 1.26,
         "offsetX": 0
       },
       "187": {
-        "width": 0.642,
-        "height": 1.051,
+        "width": 0.64,
+        "height": 1.05,
         "offsetX": 0
       },
       "188": {
-        "width": 0.531,
-        "height": 1.384,
+        "width": 0.53,
+        "height": 1.38,
         "offsetX": 0
       },
       "189": {
-        "width": 0.465,
-        "height": 1.358,
+        "width": 0.47,
+        "height": 1.36,
         "offsetX": 0
       }
     },
     "cmd:FC+1": {
       "90": {
-        "width": 0.708,
-        "height": 1.256,
+        "width": 0.71,
+        "height": 1.26,
         "offsetX": 0
       },
       "91": {
-        "width": 1.107,
-        "height": 1.179,
+        "width": 1.11,
+        "height": 1.18,
         "offsetX": 0
       },
       "92": {
-        "width": 1.107,
-        "height": 1.153,
+        "width": 1.11,
+        "height": 1.15,
         "offsetX": 0
       },
       "93": {
-        "width": 0.642,
-        "height": 1.256,
+        "width": 0.64,
+        "height": 1.26,
         "offsetX": 0
       },
       "94": {
-        "width": 0.664,
+        "width": 0.66,
         "height": 1.23,
         "offsetX": 0
       },
       "95": {
-        "width": 0.841,
-        "height": 1.051,
+        "width": 0.84,
+        "height": 1.05,
         "offsetX": 0
       },
       "96": {
-        "width": 1.063,
+        "width": 1.06,
         "height": 1.23,
         "offsetX": 0
       },
       "97": {
-        "width": 0.664,
-        "height": 1.128,
+        "width": 0.66,
+        "height": 1.13,
         "offsetX": 0
       },
       "98": {
-        "width": 0.664,
-        "height": 1.205,
+        "width": 0.66,
+        "height": 1.21,
         "offsetX": 0
       },
       "99": {
         "width": 0.62,
-        "height": 0.974,
+        "height": 0.97,
         "offsetX": 0
       }
     },
     "cmd:O+2": {
       "175": {
-        "width": 0.908,
-        "height": 1.282,
+        "width": 0.91,
+        "height": 1.28,
         "offsetX": 0
       },
       "176": {
-        "width": 0.996,
+        "width": 1,
         "height": 1.23,
         "offsetX": 0
       },
       "177": {
-        "width": 0.908,
+        "width": 0.91,
         "height": 1.23,
         "offsetX": 0
       },
       "178": {
-        "width": 0.775,
-        "height": 1.128,
+        "width": 0.78,
+        "height": 1.13,
         "offsetX": 0
       },
       "179": {
-        "width": 1.173,
-        "height": 1.128,
+        "width": 1.17,
+        "height": 1.13,
         "offsetX": 0
       }
     }
@@ -2513,5 +2489,7 @@
     "stageIntro": [
       "/characters/gotenks/sounds/voices/win-01.wav"
     ]
-  }
+  },
+  "projectiles": [],
+  "moveProjectiles": {}
 }

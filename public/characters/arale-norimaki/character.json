@@ -568,8 +568,7 @@
       "label": "Ncha Quick Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "knockdown": false,
-      "description": "Fast high jab with a tiny robot poke and a short active window."
+      "knockdown": false
     },
     "jabright": {
       "startupFrames": 11,
@@ -588,8 +587,7 @@
       "label": "Windup Robot Hook",
       "hitLevel": "mid",
       "tracking": "medium",
-      "knockdown": false,
-      "description": "Quick mid hook with a cartoon windup and compact recovery."
+      "knockdown": false
     },
     "kickleft": {
       "startupFrames": 8,
@@ -606,8 +604,7 @@
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 21,
       "label": "Low Robot Slide",
-      "hitLevel": "low",
-      "description": "Fast low slide that sends Arale skimming forward for long active pressure."
+      "hitLevel": "low"
     },
     "kickright": {
       "startupFrames": 10,
@@ -625,7 +622,6 @@
       "forwardForceEndFrame": 24,
       "label": "Gatchan Flip Kick",
       "hitLevel": "mid",
-      "description": "Fast mid flip kick that stays active through Arale's tumbling recovery.",
       "jumpBeforeMove": true
     },
     "cmd:f+1": {
@@ -644,8 +640,7 @@
       "forwardForceEndFrame": 30,
       "label": "Forward Robot Poke",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid forward poke that trades speed for a committed step-in hit."
+      "cancelable": false
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
@@ -667,8 +662,7 @@
       "juggleGravityScale": 0.54,
       "label": "Forward Spin Launcher",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid launcher that steps forward into Arale's spinning hit."
+      "cancelable": false
     },
     "cmd:qcf+4": {
       "startupFrames": 10,
@@ -686,8 +680,7 @@
       "forwardForceEndFrame": 49,
       "label": "Penguin Village Burst",
       "hitLevel": "mid",
-      "knockdown": true,
-      "description": "Fast mid knockdown that bursts through a tumbling robot strike."
+      "knockdown": true
     },
     "cmd:WS+4": {
       "startupFrames": 14,
@@ -705,7 +698,6 @@
       "forwardForceEndFrame": 22,
       "label": "Rising Robot Tumble",
       "hitLevel": "mid",
-      "description": "Quick mid rising tumble that carries Arale upward through active frames.",
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
@@ -724,9 +716,8 @@
       "forwardForceEndFrame": 27,
       "label": "Crouch Robot Pester",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Quick mid crouch poke that scoots forward with playful pressure.",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "cancelable": false
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -745,8 +736,7 @@
       "launchHeight": 2.1,
       "label": "Crouch Spin Launcher",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Steady mid launcher that rises from crouch into a spinning hit."
+      "cancelable": false
     },
     "cmd:1+2": {
       "startupFrames": 26,
@@ -764,8 +754,7 @@
       "forwardForceEndFrame": 22,
       "label": "Penguin Village Link",
       "hitLevel": "mid",
-      "cancelable": false,
-      "description": "Slow mid link that shoulder-checks forward before Arale resets."
+      "cancelable": false
     },
     "cmd:1+3": {
       "startupFrames": 14,
@@ -784,7 +773,6 @@
       "launchHeight": 2.1,
       "label": "Robot Spin Launcher",
       "hitLevel": "mid",
-      "description": "Quick mid launcher that spins Arale through a rising cartoon arc.",
       "jumpBeforeMove": true
     },
     "cmd:2+3": {
@@ -803,7 +791,6 @@
       "forwardForceEndFrame": 23,
       "label": "Low Gadget Feint",
       "hitLevel": "low",
-      "description": "Fast low feint that ducks under pressure before Arale pops back up.",
       "endsInCrouch": true
     },
     "cmd:2+4": {
@@ -822,8 +809,7 @@
       "forwardForceEndFrame": 25,
       "label": "Flying Robot Sweep",
       "hitLevel": "low",
-      "knockdown": true,
-      "description": "Steady low knockdown that launches Arale sideways like a tiny missile."
+      "knockdown": true
     },
     "cmd:3+4": {
       "startupFrames": 22,
@@ -841,8 +827,7 @@
       "forwardForceEndFrame": 33,
       "label": "Norimaki Power Crash",
       "hitLevel": "mid",
-      "knockdown": true,
-      "description": "Slow mid knockdown that drives Arale forward with a committed body check."
+      "knockdown": true
     },
     "cmd:O+2": {
       "startupFrames": 12,
@@ -861,7 +846,6 @@
       "label": "Robot Aura Bonk",
       "hitLevel": "special",
       "knockdown": true,
-      "description": "Quick special knockdown that spins Arale into a long active bonk.",
       "usesKi": true
     },
     "neutral:jab-jab": {
@@ -1329,6 +1313,9 @@
       "label": "Arale Norimaki Kick Ender"
     },
     "cmd:f+2": {
+      "startupFrames": 12,
+      "activeFrames": 6,
+      "recoveryFrames": 12,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1337,14 +1324,13 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "Forward Robot Hook",
-      "cancelable": false,
-      "startupFrames": 12,
-      "activeFrames": 6,
-      "recoveryFrames": 12,
-      "description": "Quick mid forward hook with compact active timing.",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:d+1": {
+      "startupFrames": 8,
+      "activeFrames": 15,
+      "recoveryFrames": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1353,14 +1339,13 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "Low-Step Ncha Jab",
-      "cancelable": false,
+      "hitLevel": "high",
+      "cancelable": false
+    },
+    "cmd:qcf+1": {
       "startupFrames": 8,
       "activeFrames": 15,
       "recoveryFrames": 1,
-      "description": "Fast high poke from a low command that still strikes at head height.",
-      "hitLevel": "high"
-    },
-    "cmd:qcf+1": {
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1369,14 +1354,13 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "Ncha Dash Jab",
-      "cancelable": false,
-      "startupFrames": 8,
-      "activeFrames": 15,
-      "recoveryFrames": 1,
-      "description": "Fast high motion jab with quick startup and tiny recovery.",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "cancelable": false
     },
     "cmd:WS+2": {
+      "startupFrames": 12,
+      "activeFrames": 6,
+      "recoveryFrames": 12,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1385,14 +1369,13 @@
       "forwardForceStartFrame": 12,
       "forwardForceEndFrame": 17,
       "label": "While-Rising Hook",
-      "cancelable": false,
-      "startupFrames": 12,
-      "activeFrames": 6,
-      "recoveryFrames": 12,
-      "description": "Quick mid while-standing hook with a short active window.",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "cancelable": false
     },
     "cmd:O+1": {
+      "startupFrames": 8,
+      "activeFrames": 15,
+      "recoveryFrames": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1401,13 +1384,9 @@
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 15,
       "label": "Charged Ncha Jab",
+      "hitLevel": "high",
       "cancelable": false,
-      "startupFrames": 8,
-      "activeFrames": 15,
-      "recoveryFrames": 1,
-      "description": "Fast high charged poke with a simple short active strike.",
-      "usesKi": true,
-      "hitLevel": "high"
+      "usesKi": true
     }
   },
   "effects": [],
@@ -1628,6 +1607,11 @@
       }
     },
     "backHop": {
+      "22": {
+        "width": 1.11,
+        "height": 0.9,
+        "offsetX": 0
+      },
       "40": {
         "width": 0.99,
         "height": 0.99,
@@ -1661,11 +1645,6 @@
       "48": {
         "width": 1.11,
         "height": 1.11,
-        "offsetX": 0
-      },
-      "22": {
-        "width": 1.109,
-        "height": 0.901,
         "offsetX": 0
       }
     },
@@ -1723,45 +1702,45 @@
     },
     "jableft": {
       "86": {
-        "width": 0.998,
-        "height": 0.974,
+        "width": 1,
+        "height": 0.97,
         "offsetX": 0
       },
       "87": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       },
       "88": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       }
     },
     "jabright": {
       "127": {
-        "width": 0.914,
-        "height": 0.925,
+        "width": 0.91,
+        "height": 0.93,
         "offsetX": 0
       },
       "128": {
-        "width": 0.794,
-        "height": 0.803,
+        "width": 0.79,
+        "height": 0.8,
         "offsetX": 0
       },
       "129": {
-        "width": 0.818,
-        "height": 0.828,
+        "width": 0.82,
+        "height": 0.83,
         "offsetX": 0
       },
       "130": {
-        "width": 0.746,
-        "height": 0.755,
+        "width": 0.75,
+        "height": 0.76,
         "offsetX": 0
       },
       "131": {
-        "width": 0.961,
-        "height": 0.949,
+        "width": 0.96,
+        "height": 0.95,
         "offsetX": 0
       }
     },
@@ -1781,112 +1760,107 @@
     },
     "cmd:qcf+4": {
       "173": {
-        "width": 0.961,
-        "height": 0.998,
+        "width": 0.96,
+        "height": 1,
         "offsetX": 0
       },
       "174": {
-        "width": 0.961,
-        "height": 0.998,
+        "width": 0.96,
+        "height": 1,
         "offsetX": 0
       },
       "175": {
-        "width": 0.961,
-        "height": 0.974,
+        "width": 0.96,
+        "height": 0.97,
         "offsetX": 0
       },
       "176": {
-        "width": 1.109,
-        "height": 0.803,
+        "width": 1.11,
+        "height": 0.8,
         "offsetX": 0
       },
       "177": {
-        "width": 1.109,
-        "height": 0.779,
+        "width": 1.11,
+        "height": 0.78,
         "offsetX": 0
       },
       "178": {
-        "width": 0.998,
-        "height": 0.876,
+        "width": 1,
+        "height": 0.88,
         "offsetX": 0
       },
       "179": {
-        "width": 0.851,
-        "height": 0.949,
+        "width": 0.85,
+        "height": 0.95,
         "offsetX": 0
       },
       "180": {
-        "width": 0.887,
-        "height": 0.876,
+        "width": 0.89,
+        "height": 0.88,
         "offsetX": 0
       },
       "181": {
-        "width": 0.961,
-        "height": 0.998,
-        "offsetX": 0
-      },
-      "182": {
-        "width": 0.998,
-        "height": 0.998,
+        "width": 0.96,
+        "height": 1,
         "offsetX": 0
       }
     },
     "cmd:1+2": {
       "102": {
-        "width": 0.961,
-        "height": 0.974,
+        "width": 0.96,
+        "height": 0.97,
         "offsetX": 0
       },
       "103": {
-        "width": 0.961,
-        "height": 1.071,
+        "width": 0.96,
+        "height": 1.07,
         "offsetX": 0
       },
       "104": {
-        "width": 1.034,
-        "height": 1.047,
+        "width": 1.03,
+        "height": 1.05,
         "offsetX": 0
       },
       "105": {
-        "width": 1.034,
-        "height": 1.047,
+        "width": 1.03,
+        "height": 1.05,
         "offsetX": 0
       },
       "106": {
-        "width": 1.109,
-        "height": 0.949,
+        "width": 1.11,
+        "height": 0.95,
         "offsetX": 0
       },
       "107": {
-        "width": 0.998,
-        "height": 0.949,
+        "width": 1,
+        "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:3+4": {
       "108": {
-        "width": 0.998,
-        "height": 0.828,
+        "width": 1,
+        "height": 0.83,
         "offsetX": 0
       },
       "109": {
-        "width": 0.961,
-        "height": 0.803,
+        "width": 0.96,
+        "height": 0.8,
         "offsetX": 0
       },
       "110": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       },
       "111": {
-        "width": 1.035,
-        "height": 0.852,
+        "width": 1.03,
+        "height": 0.85,
         "offsetX": 0
       },
       "112": {
-        "width": 0.794,
-        "height": 0.803,
+        "width": 0.79,
+        "height": 0.8,
         "offsetX": 0
       }
     },
@@ -1916,530 +1890,520 @@
     },
     "cmd:f+1": {
       "86": {
-        "width": 0.998,
-        "height": 0.974,
+        "width": 1,
+        "height": 0.97,
         "offsetX": 0
       },
       "87": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       },
       "88": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       }
     },
     "cmd:d/f+2": {
       "127": {
-        "width": 0.914,
-        "height": 0.925,
+        "width": 0.91,
+        "height": 0.93,
         "offsetX": 0
       },
       "128": {
-        "width": 0.794,
-        "height": 0.803,
+        "width": 0.79,
+        "height": 0.8,
         "offsetX": 0
       },
       "129": {
-        "width": 0.818,
-        "height": 0.828,
+        "width": 0.82,
+        "height": 0.83,
         "offsetX": 0
       },
       "130": {
-        "width": 0.746,
-        "height": 0.755,
+        "width": 0.75,
+        "height": 0.76,
         "offsetX": 0
       },
       "131": {
-        "width": 0.961,
-        "height": 0.949,
+        "width": 0.96,
+        "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:FC+2": {
       "127": {
-        "width": 0.914,
-        "height": 0.925,
+        "width": 0.91,
+        "height": 0.93,
         "offsetX": 0
       },
       "128": {
-        "width": 0.794,
-        "height": 0.803,
+        "width": 0.79,
+        "height": 0.8,
         "offsetX": 0
       },
       "129": {
-        "width": 0.818,
-        "height": 0.828,
+        "width": 0.82,
+        "height": 0.83,
         "offsetX": 0
       },
       "130": {
-        "width": 0.746,
-        "height": 0.755,
+        "width": 0.75,
+        "height": 0.76,
         "offsetX": 0
       },
       "131": {
-        "width": 0.961,
-        "height": 0.949,
+        "width": 0.96,
+        "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:f+2": {
       "127": {
-        "width": 0.914,
-        "height": 0.925,
+        "width": 0.91,
+        "height": 0.93,
         "offsetX": 0
       },
       "128": {
-        "width": 0.794,
-        "height": 0.803,
+        "width": 0.79,
+        "height": 0.8,
         "offsetX": 0
       },
       "129": {
-        "width": 0.818,
-        "height": 0.828,
+        "width": 0.82,
+        "height": 0.83,
         "offsetX": 0
       },
       "130": {
-        "width": 0.746,
-        "height": 0.755,
+        "width": 0.75,
+        "height": 0.76,
         "offsetX": 0
       },
       "131": {
-        "width": 0.961,
-        "height": 0.949,
+        "width": 0.96,
+        "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:d+1": {
       "86": {
-        "width": 0.998,
-        "height": 0.974,
+        "width": 1,
+        "height": 0.97,
         "offsetX": 0
       },
       "87": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       },
       "88": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       }
     },
     "cmd:qcf+1": {
       "86": {
-        "width": 0.998,
-        "height": 0.974,
+        "width": 1,
+        "height": 0.97,
         "offsetX": 0
       },
       "87": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       },
       "88": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       }
     },
     "cmd:WS+2": {
       "127": {
-        "width": 0.914,
-        "height": 0.925,
+        "width": 0.91,
+        "height": 0.93,
         "offsetX": 0
       },
       "128": {
-        "width": 0.794,
-        "height": 0.803,
+        "width": 0.79,
+        "height": 0.8,
         "offsetX": 0
       },
       "129": {
-        "width": 0.818,
-        "height": 0.828,
+        "width": 0.82,
+        "height": 0.83,
         "offsetX": 0
       },
       "130": {
-        "width": 0.746,
-        "height": 0.755,
+        "width": 0.75,
+        "height": 0.76,
         "offsetX": 0
       },
       "131": {
-        "width": 0.961,
-        "height": 0.949,
+        "width": 0.96,
+        "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:O+1": {
       "86": {
-        "width": 0.998,
-        "height": 0.974,
+        "width": 1,
+        "height": 0.97,
         "offsetX": 0
       },
       "87": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       },
       "88": {
         "width": 0.89,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       }
     },
     "crouchBlock": {
       "184": {
         "width": 0.77,
-        "height": 0.83,
+        "height": 0.97,
         "offsetX": 0
       }
     },
     "kickleft": {
       "32": {
-        "width": 0.962,
-        "height": 0.974,
+        "width": 0.96,
+        "height": 0.97,
         "offsetX": 0
       },
       "33": {
-        "width": 0.962,
-        "height": 0.974,
+        "width": 0.96,
+        "height": 0.97,
         "offsetX": 0
       },
       "34": {
-        "width": 0.962,
-        "height": 0.974,
+        "width": 0.96,
+        "height": 0.97,
         "offsetX": 0
       },
       "35": {
-        "width": 0.553,
+        "width": 0.55,
         "height": 0.56,
         "offsetX": 0
       },
       "36": {
-        "width": 0.553,
+        "width": 0.55,
         "height": 0.56,
         "offsetX": 0
       },
       "37": {
-        "width": 0.553,
+        "width": 0.55,
         "height": 0.56,
         "offsetX": 0
       }
     },
     "kickright": {
       "43": {
-        "width": 1.072,
-        "height": 0.974,
+        "width": 1.07,
+        "height": 0.97,
         "offsetX": 0
       },
       "44": {
-        "width": 0.961,
-        "height": 0.949,
+        "width": 0.96,
+        "height": 0.95,
         "offsetX": 0
       },
       "45": {
-        "width": 0.924,
-        "height": 0.949,
+        "width": 0.92,
+        "height": 0.95,
         "offsetX": 0
       },
       "46": {
-        "width": 0.998,
-        "height": 0.949,
+        "width": 1,
+        "height": 0.95,
         "offsetX": 0
       },
       "47": {
-        "width": 1.183,
-        "height": 0.949,
+        "width": 1.18,
+        "height": 0.95,
         "offsetX": 0
       },
       "48": {
-        "width": 1.146,
-        "height": 0.828,
+        "width": 1.15,
+        "height": 0.83,
         "offsetX": 0
       },
       "49": {
-        "width": 1.405,
-        "height": 0.706,
+        "width": 1.41,
+        "height": 0.71,
         "offsetX": 0
       },
       "50": {
-        "width": 0.961,
-        "height": 0.876,
+        "width": 0.96,
+        "height": 0.88,
         "offsetX": 0
       },
       "51": {
-        "width": 1.183,
-        "height": 0.633,
+        "width": 1.18,
+        "height": 0.63,
         "offsetX": 0
       },
       "52": {
-        "width": 0.961,
-        "height": 0.779,
+        "width": 0.96,
+        "height": 0.78,
         "offsetX": 0
       },
       "53": {
-        "width": 0.961,
-        "height": 0.779,
+        "width": 0.96,
+        "height": 0.78,
         "offsetX": 0
       },
       "54": {
-        "width": 1.183,
-        "height": 0.633,
+        "width": 1.18,
+        "height": 0.63,
         "offsetX": 0
       },
       "55": {
-        "width": 0.961,
-        "height": 0.779,
+        "width": 0.96,
+        "height": 0.78,
         "offsetX": 0
       },
       "56": {
-        "width": 1.183,
-        "height": 0.633,
+        "width": 1.18,
+        "height": 0.63,
         "offsetX": 0
       }
     },
     "cmd:WS+4": {
       "161": {
-        "width": 0.961,
-        "height": 0.998,
+        "width": 0.96,
+        "height": 1,
         "offsetX": 0
       },
       "162": {
-        "width": 0.961,
-        "height": 0.998,
+        "width": 0.96,
+        "height": 1,
         "offsetX": 0
       },
       "163": {
-        "width": 0.961,
-        "height": 0.974,
+        "width": 0.96,
+        "height": 0.97,
         "offsetX": 0
       },
       "164": {
-        "width": 1.109,
-        "height": 0.803,
+        "width": 1.11,
+        "height": 0.8,
         "offsetX": 0
       },
       "165": {
-        "width": 1.109,
-        "height": 0.779,
+        "width": 1.11,
+        "height": 0.78,
         "offsetX": 0
       },
       "166": {
-        "width": 0.998,
-        "height": 0.876,
+        "width": 1,
+        "height": 0.88,
         "offsetX": 0
       },
       "167": {
-        "width": 0.961,
-        "height": 0.876,
+        "width": 0.96,
+        "height": 0.88,
         "offsetX": 0
       },
       "168": {
-        "width": 0.961,
-        "height": 0.755,
+        "width": 0.96,
+        "height": 0.76,
         "offsetX": 0
       },
       "169": {
-        "width": 1.109,
-        "height": 0.706,
+        "width": 1.11,
+        "height": 0.71,
         "offsetX": 0
       },
       "170": {
-        "width": 1.109,
-        "height": 0.682,
+        "width": 1.11,
+        "height": 0.68,
         "offsetX": 0
       }
     },
     "cmd:FC+1": {
       "146": {
-        "width": 0.961,
-        "height": 0.998,
+        "width": 0.96,
+        "height": 1,
         "offsetX": 0
       },
       "147": {
-        "width": 0.961,
-        "height": 0.998,
+        "width": 0.96,
+        "height": 1,
         "offsetX": 0
       },
       "148": {
-        "width": 0.961,
-        "height": 0.974,
+        "width": 0.96,
+        "height": 0.97,
         "offsetX": 0
       },
       "149": {
-        "width": 1.109,
-        "height": 0.803,
+        "width": 1.11,
+        "height": 0.8,
         "offsetX": 0
       },
       "150": {
-        "width": 1.109,
-        "height": 0.779,
+        "width": 1.11,
+        "height": 0.78,
         "offsetX": 0
       },
       "151": {
-        "width": 0.998,
-        "height": 0.876,
+        "width": 1,
+        "height": 0.88,
         "offsetX": 0
       },
       "152": {
-        "width": 0.777,
-        "height": 0.901,
+        "width": 0.78,
+        "height": 0.9,
         "offsetX": 0
       },
       "153": {
-        "width": 0.887,
-        "height": 0.876,
+        "width": 0.89,
+        "height": 0.88,
         "offsetX": 0
       },
       "154": {
-        "width": 1.035,
-        "height": 0.998,
-        "offsetX": 0
-      },
-      "155": {
-        "width": 0.998,
-        "height": 0.998,
+        "width": 1.03,
+        "height": 1,
         "offsetX": 0
       }
     },
     "cmd:1+3": {
       "113": {
-        "width": 1.109,
-        "height": 0.876,
+        "width": 1.11,
+        "height": 0.88,
         "offsetX": 0
       },
       "114": {
-        "width": 1.072,
-        "height": 0.876,
+        "width": 1.07,
+        "height": 0.88,
         "offsetX": 0
       },
       "115": {
-        "width": 1.516,
-        "height": 0.949,
+        "width": 1.52,
+        "height": 0.95,
         "offsetX": 0
       },
       "116": {
-        "width": 1.479,
-        "height": 0.925,
+        "width": 1.48,
+        "height": 0.93,
         "offsetX": 0
       },
       "117": {
-        "width": 1.442,
-        "height": 0.925,
+        "width": 1.44,
+        "height": 0.93,
         "offsetX": 0
       },
       "118": {
-        "width": 1.553,
-        "height": 0.949,
+        "width": 1.55,
+        "height": 0.95,
         "offsetX": 0
       },
       "119": {
-        "width": 0.961,
-        "height": 0.949,
+        "width": 0.96,
+        "height": 0.95,
         "offsetX": 0
       }
     },
     "cmd:2+3": {
       "132": {
-        "width": 1.109,
-        "height": 0.755,
+        "width": 1.11,
+        "height": 0.76,
         "offsetX": 0
       },
       "133": {
-        "width": 1.146,
-        "height": 0.803,
+        "width": 1.15,
+        "height": 0.8,
         "offsetX": 0
       },
       "134": {
-        "width": 1.072,
-        "height": 0.828,
+        "width": 1.07,
+        "height": 0.83,
         "offsetX": 0
       },
       "135": {
-        "width": 1.072,
-        "height": 0.779,
+        "width": 1.07,
+        "height": 0.78,
         "offsetX": 0
       },
       "136": {
-        "width": 1.035,
-        "height": 0.682,
+        "width": 1.03,
+        "height": 0.68,
         "offsetX": 0
       },
       "137": {
-        "width": 0.998,
-        "height": 0.974,
+        "width": 1,
+        "height": 0.97,
         "offsetX": 0
       },
       "138": {
-        "width": 1.183,
-        "height": 0.901,
+        "width": 1.18,
+        "height": 0.9,
         "offsetX": 0
       },
       "139": {
         "width": 1.22,
-        "height": 0.901,
+        "height": 0.9,
         "offsetX": 0
       }
     },
     "cmd:2+4": {
       "140": {
-        "width": 0.998,
-        "height": 0.949,
+        "width": 1,
+        "height": 0.95,
         "offsetX": 0
       },
       "141": {
-        "width": 0.998,
-        "height": 0.974,
+        "width": 1,
+        "height": 0.97,
         "offsetX": 0
       },
       "142": {
-        "width": 1.257,
-        "height": 0.755,
+        "width": 1.26,
+        "height": 0.76,
         "offsetX": 0
       },
       "143": {
-        "width": 1.294,
-        "height": 0.974,
+        "width": 1.29,
+        "height": 0.97,
         "offsetX": 0
       },
       "144": {
         "width": 1.22,
-        "height": 0.949,
+        "height": 0.95,
         "offsetX": 0
       },
       "145": {
-        "width": 1.442,
-        "height": 0.584,
+        "width": 1.44,
+        "height": 0.58,
         "offsetX": 0
       }
     },
     "cmd:O+2": {
       "156": {
-        "width": 1.146,
-        "height": 0.925,
-        "offsetX": 0
-      },
-      "157": {
-        "width": 0.998,
-        "height": 0.998,
+        "width": 1.15,
+        "height": 0.93,
         "offsetX": 0
       },
       "158": {
-        "width": 1.294,
-        "height": 0.901,
+        "width": 1.29,
+        "height": 0.9,
         "offsetX": 0
       },
       "159": {
         "width": 1.22,
-        "height": 0.876,
+        "height": 0.88,
         "offsetX": 0
       },
       "160": {
-        "width": 0.961,
-        "height": 0.901,
+        "width": 0.96,
+        "height": 0.9,
         "offsetX": 0
       }
     }
@@ -2463,5 +2427,7 @@
     "stageIntro": [
       "/characters/arale-norimaki/sounds/voices/win-01.ogg"
     ]
-  }
+  },
+  "projectiles": [],
+  "moveProjectiles": {}
 }
