@@ -128,6 +128,9 @@ describe('combo route catalog', () => {
       const identities = route.steps.map(stepIdentity);
       expect(route.steps.length, `${character.id}:${route.id}`).toBeLessThanOrEqual(30);
       expect(route.estimatedHits, `${character.id}:${route.id}`).toBe(route.steps.length);
+      expect(route.estimatedDamage, `${character.id}:${route.id}:estimatedDamage`).toBeGreaterThan(0);
+      expect(route.rewardClass, `${character.id}:${route.id}:rewardClass`).toBeTruthy();
+      expect(route.structure, `${character.id}:${route.id}:structure`).toContain('starter');
       expect(route.targetHits, `${character.id}:${route.id}`).toBeLessThanOrEqual(30);
       expect(new Set(identities).size, `${character.id}:${route.id}:exact-identities`).toBe(identities.length);
       for (let index = 1; index < route.steps.length; index += 1) {
@@ -135,6 +138,27 @@ describe('combo route catalog', () => {
         const current = route.steps[index];
         expect(current.command ?? current.input, `${character.id}:${route.id}:step-${index}`).not.toBe(previous.command ?? previous.input);
       }
+    }
+  });
+
+  it('describes route reward and structure from real route properties', () => {
+    const routes = readRosterCharacters().flatMap((character) =>
+      generateCharacterComboRoutes(character).map((route) => ({ character, route }))
+    );
+    expect(routes.some(({ route }) => route.rewardClass === 'launcher' || route.rewardClass === 'tornado')).toBe(true);
+    expect(routes.some(({ route }) => route.tier === 'marathon' && route.rewardClass === 'marathon')).toBe(true);
+
+    for (const { character, route } of routes) {
+      if (route.category === 'launcher') {
+        expect(route.structure, `${character.id}:${route.id}`).toContain('launcher');
+      }
+      if (route.category === 'tornado') {
+        expect(route.structure, `${character.id}:${route.id}`).toContain('tornado');
+      }
+      if (route.requiresKi) {
+        expect(route.structure, `${character.id}:${route.id}`).toContain('ki');
+      }
+      expect(route.reason, `${character.id}:${route.id}`).toContain('dmg');
     }
   });
 

@@ -118,8 +118,8 @@
       "startup": 0.28,
       "active": 0.16,
       "recovery": 0.52,
-      "damage": 19,
-      "blockDamage": 5,
+      "damage": 11,
+      "blockDamage": 2,
       "range": 1.48,
       "push": 1.45,
       "hitstun": 0.62,
@@ -144,10 +144,10 @@
       "forwardForce": 0.72,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 13,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 13
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 7,
+      "juggleRepeatPenaltyFrames": 11
     },
     {
       "id": "special",
@@ -156,8 +156,8 @@
       "startup": 0.32,
       "active": 0.18,
       "recovery": 0.58,
-      "damage": 22,
-      "blockDamage": 6,
+      "damage": 14,
+      "blockDamage": 3,
       "range": 2.4,
       "push": 1.8,
       "hitstun": 0.7,
@@ -182,10 +182,10 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 8,
       "forwardForceEndFrame": 13,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     }
   ],
   "hurtboxes": [
@@ -226,4 +226,5 @@
   "animationFrames": {},
   "animationFrameRates": {},
   "moveOverrides": {},
-  "animationFrameScales": {}}
+  "animationFrameScales": {}
+}

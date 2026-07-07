@@ -408,6 +408,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
 
 export function generateComboTrainingTrials(character: CharacterDefinition): TrainingTrialDefinition[] {
   return generateComboTrials(character).map((route) => {
+    const routeIntent = comboRouteIntent(route);
     const steps = route.steps.map((step, index): TrainingTrialStep => ({
       id: `${route.id}:step:${index}`,
       notation: step.notation,
@@ -441,13 +442,34 @@ export function generateComboTrainingTrials(character: CharacterDefinition): Tra
         p1Ki: route.requiresKi ? 100 : undefined
       },
       steps,
-      lesson: `${comboTrialCategoryLabels[route.category]}: ${route.reason}`,
-      zoroLine: route.category === 'launcher' ? 'Launch first. Keep the air route clean.' : route.category === 'counterHit' ? 'Make them swing, then cut through it.' : 'One clean input after another.',
+      lesson: `${comboTrialCategoryLabels[route.category]}: ${routeIntent}. ${route.reason}`,
+      zoroLine: comboRouteZoroLine(route),
       successText: 'Route complete.',
       previewScript: makePreviewScript(steps),
       sourceComboRoute: route
     };
   });
+}
+
+function comboRouteIntent(route: GeneratedComboRoute) {
+  if (route.tier === 'marathon') return `Marathon ${route.structure.join(' / ')} route for about ${route.estimatedDamage} damage`;
+  if (route.launchRouteStyle === 'grounded') return `Grounded launcher route for about ${route.estimatedDamage} damage`;
+  if (route.launchRouteStyle === 'airChase') return `Air chase launcher route for about ${route.estimatedDamage} damage`;
+  if (route.launchRouteStyle === 'hybrid') return `Hybrid launcher route for about ${route.estimatedDamage} damage`;
+  if (route.structure.includes('tornado')) return `Tornado extender route for about ${route.estimatedDamage} damage`;
+  if (route.structure.includes('counterHit')) return `Counter-hit link route for about ${route.estimatedDamage} damage`;
+  if (route.structure.includes('crouch')) return `Crouch or while-standing branch for about ${route.estimatedDamage} damage`;
+  if (route.structure.includes('ki')) return `Ki route for about ${route.estimatedDamage} damage`;
+  return `${route.rewardClass} route for about ${route.estimatedDamage} damage`;
+}
+
+function comboRouteZoroLine(route: GeneratedComboRoute) {
+  if (route.tier === 'marathon') return 'Long route. Stay clean, keep the order.';
+  if (route.category === 'launcher') return 'Launch first. Keep the air route clean.';
+  if (route.category === 'counterHit') return 'Make them swing, then cut through it.';
+  if (route.structure.includes('tornado')) return 'Extend once the juggle is real.';
+  if (route.structure.includes('ki')) return 'Spend power only after the opening.';
+  return 'One clean input after another.';
 }
 
 export function makeTrainingTrialProgress(trial: TrainingTrialDefinition | null, preview = false): TrainingTrialProgress | null {

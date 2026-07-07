@@ -1,4 +1,5 @@
 import type { CharacterDefinition, ImpactSparkEvent, MoveDefinition, MoveInput, MoveOverride } from '../types';
+import { classifyComboReward, estimateComboSequenceDamage, type ComboRewardClass } from './comboDamage';
 import {
   baseInputToAnimationKey,
   commandFamilyKey,
@@ -18,6 +19,7 @@ export type ComboRouteCategory = 'basic' | 'advanced' | 'crouch' | 'launcher' | 
 export type ComboRouteState = 'standing' | 'crouch' | 'whileStanding' | 'juggle';
 export type ComboRouteTier = 'short' | 'medium' | 'long' | 'marathon';
 export type LaunchRouteStyle = 'grounded' | 'airChase' | 'hybrid';
+export type ComboRouteStructureRole = 'starter' | 'filler' | 'launcher' | 'tornado' | 'ender' | 'ki' | 'counterHit' | 'crouch' | 'airChase';
 
 export type ResolvedMoveRoute = {
   id: string;
@@ -66,6 +68,9 @@ export type GeneratedComboRoute = {
   tier: ComboRouteTier;
   level: number;
   estimatedHits: number;
+  estimatedDamage: number;
+  rewardClass: ComboRewardClass;
+  structure: ComboRouteStructureRole[];
   targetHits: number;
   steps: ComboTrialStep[];
   reason: string;
@@ -387,7 +392,7 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
         step,
         stepIndex,
         input: step.input,
-        score: 10 + routeCategoryCpuWeight(activeRoute.category, context) + routeTierCpuWeight(activeRoute.tier, context) + launchRouteStyleCpuWeight(activeRoute, context)
+        score: 10 + routeCategoryCpuWeight(activeRoute.category, context) + routeTierCpuWeight(activeRoute.tier, context) + routeDamageCpuWeight(activeRoute, context) + launchRouteStyleCpuWeight(activeRoute, context)
       };
     }
   }
@@ -413,7 +418,7 @@ export function recommendCpuComboRoute(character: CharacterDefinition, context: 
         step,
         stepIndex,
         input: step.input,
-        score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + launchRouteStyleCpuWeight(route, context) + freshness + difficultyBonus + closeoutPenalty + timing + variety + wave * 0.18
+        score: routeCategoryCpuWeight(route.category, context) + routeTierCpuWeight(route.tier, context) + routeDamageCpuWeight(route, context) + launchRouteStyleCpuWeight(route, context) + freshness + difficultyBonus + closeoutPenalty + timing + variety + wave * 0.18
       };
     })
     .filter((candidate) => candidate.score > 0 && isCpuRouteStepFreshEnough(candidate.step, usedKeys, usedFamilies, usedVisualFamilies, context, false));
@@ -470,7 +475,8 @@ function buildMultiHitTrial(
   if (category === 'tornado' && !sequence.slice(1).some((route) => route.move.tornado)) return null;
   if (category === 'crouch' && !sequence.slice(1).some((route) => route.state === 'crouch' || route.state === 'whileStanding')) return null;
 
-  const reason = routeReasonForSequence(category, sequence, targetHits);
+  const estimatedDamage = routeEstimatedDamage(sequence);
+  const reason = routeReasonForSequence(category, sequence, targetHits, estimatedDamage);
   return makeRouteTrialFromSequence(category, sequence, reason, targetHits);
 }
 
@@ -629,7 +635,7 @@ function minimumRouteHits(targetHits: number) {
   return 3;
 }
 
-function routeReasonForSequence(category: ComboRouteCategory, sequence: ResolvedMoveRoute[], targetHits: number) {
+function routeReasonForSequence(category: ComboRouteCategory, sequence: ResolvedMoveRoute[], targetHits: number, estimatedDamage?: number) {
   const actualHits = sequence.length;
   const parts = [`${actualHits}/${targetHits} hits`];
   if (category === 'counterHit') parts.push(`CH +${counterHitAdvantage(sequence[0].move)}`);
@@ -640,6 +646,7 @@ function routeReasonForSequence(category: ComboRouteCategory, sequence: Resolved
   if (sequence.some((route) => route.move.tornado)) parts.push('Tornado');
   if (sequence.some((route) => route.move.endsInCrouch || route.state === 'crouch' || route.state === 'whileStanding')) parts.push('FC/WS');
   if (sequence.some((route) => route.requiresKi)) parts.push('Ki');
+  if (estimatedDamage !== undefined) parts.push(`~${estimatedDamage} dmg`);
   return parts.join(' -> ');
 }
 
@@ -674,6 +681,7 @@ function makeRouteTrialFromSequence(
 
   const estimatedHits = Math.min(MAX_ROUTE_HITS, steps.length);
   const launchRouteStyle = (sequence[0].move.launchHeight ?? 0) > 0 ? launchRouteStyleForSequence(sequence) : undefined;
+  const estimatedDamage = routeEstimatedDamage(sequence);
   return {
     id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${estimatedHits}:${targetHits}`,
     title: routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
@@ -682,8 +690,11 @@ function makeRouteTrialFromSequence(
     requiresKi: sequence.some((route) => route.requiresKi),
     launchRouteStyle,
     tier: routeTier(estimatedHits),
-    level: routeLevel(category, sequence[0], sequence.slice(1), estimatedHits),
+    level: routeLevel(category, sequence[0], sequence.slice(1), estimatedHits, estimatedDamage),
     estimatedHits,
+    estimatedDamage,
+    rewardClass: classifyComboReward(sequence.map(routeToDamageStep), estimatedDamage),
+    structure: routeStructureForSequence(category, sequence, launchRouteStyle),
     targetHits,
     steps,
     reason
@@ -706,19 +717,24 @@ function makeRouteTrial(
   const estimatedHits = Math.min(MAX_ROUTE_HITS, steps.length);
   const sequence = [starter, ...followups];
   const launchRouteStyle = explicitLaunchRouteStyle ?? ((starter.move.launchHeight ?? 0) > 0 ? launchRouteStyleForSequence(sequence) : undefined);
+  const estimatedDamage = routeEstimatedDamage(sequence);
+  const routeReason = reason.includes('dmg') ? reason : `${reason} | ~${estimatedDamage} dmg`;
   return {
-    id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${reason}`,
+    id: `${category}:${steps.map((step) => step.command ?? step.input).join('>')}:${routeReason}`,
     title: category === 'counterHit' ? `${starter.label} Counter Hit` : routeTitleForSequence(category, sequence, estimatedHits, launchRouteStyle),
     category,
     families: routeFamiliesForSequence(sequence),
     requiresKi: sequence.some((route) => route.requiresKi),
     launchRouteStyle,
     tier: routeTier(estimatedHits),
-    level: routeLevel(category, starter, followups, estimatedHits),
+    level: routeLevel(category, starter, followups, estimatedHits, estimatedDamage),
     estimatedHits,
+    estimatedDamage,
+    rewardClass: classifyComboReward(sequence.map(routeToDamageStep), estimatedDamage),
+    structure: routeStructureForSequence(category, sequence, launchRouteStyle),
     targetHits: estimatedHits,
     steps,
-    reason
+    reason: routeReason
   };
 }
 
@@ -749,6 +765,34 @@ function routeTitleForSequence(category: ComboRouteCategory, sequence: ResolvedM
 
 function routeFamiliesForSequence(sequence: ResolvedMoveRoute[]): CommandRouteFamily[] {
   return [...new Set(sequence.map((route) => route.family))];
+}
+
+function routeEstimatedDamage(sequence: ResolvedMoveRoute[]) {
+  return estimateComboSequenceDamage(sequence.map(routeToDamageStep));
+}
+
+function routeToDamageStep(route: ResolvedMoveRoute) {
+  return {
+    damage: route.move.damage,
+    identity: routeIdentity(route),
+    launchHeight: route.move.launchHeight,
+    tornado: route.move.tornado,
+    usesKi: route.requiresKi || route.move.usesKi,
+    kiBurst: route.move.kiBurst
+  };
+}
+
+function routeStructureForSequence(category: ComboRouteCategory, sequence: ResolvedMoveRoute[], launchRouteStyle?: LaunchRouteStyle): ComboRouteStructureRole[] {
+  const roles: ComboRouteStructureRole[] = ['starter'];
+  if (category === 'counterHit') roles.push('counterHit');
+  if (sequence.some((route) => (route.move.launchHeight ?? 0) > 0)) roles.push('launcher');
+  if (sequence.some((route) => route.move.tornado)) roles.push('tornado');
+  if (sequence.some((route) => route.requiresKi)) roles.push('ki');
+  if (sequence.some((route) => route.move.endsInCrouch || route.state === 'crouch' || route.state === 'whileStanding')) roles.push('crouch');
+  if (launchRouteStyle === 'airChase' || launchRouteStyle === 'hybrid') roles.push('airChase');
+  if (sequence.length > 2) roles.push('filler');
+  if (sequence.length > 1 && (sequence[sequence.length - 1].move.knockdown || sequence.length >= 4)) roles.push('ender');
+  return [...new Set(roles)];
 }
 
 function launchRouteStyleForSequence(sequence: ResolvedMoveRoute[]): LaunchRouteStyle {
@@ -881,11 +925,12 @@ function juggleScore(route: ResolvedMoveRoute) {
   return (route.move.tornado ? 8 : 0) + (route.move.knockdown ? 3 : 0) + route.move.damage * 0.25 - route.move.startupFrames * 0.08;
 }
 
-function routeLevel(category: ComboRouteCategory, starter: ResolvedMoveRoute, followups: ResolvedMoveRoute[], estimatedHits = followups.length + 1) {
+function routeLevel(category: ComboRouteCategory, starter: ResolvedMoveRoute, followups: ResolvedMoveRoute[], estimatedHits = followups.length + 1, estimatedDamage = 0) {
   const complexity = starter.complexity + followups.reduce((sum, route) => sum + route.complexity, 0);
   const categoryBonus = category === 'basic' ? 0 : category === 'advanced' ? 2 : category === 'crouch' ? 3 : category === 'launcher' ? 4 : category === 'tornado' ? 5 : 4;
   const lengthBonus = estimatedHits >= 21 ? 5 : estimatedHits >= 11 ? 3 : estimatedHits >= 6 ? 2 : Math.max(0, followups.length - 1);
-  return clamp(Math.round(1 + complexity * 0.28 + categoryBonus + lengthBonus), 1, 10);
+  const rewardBonus = estimatedDamage >= 60 ? 2 : estimatedDamage >= 45 ? 1 : 0;
+  return clamp(Math.round(1 + complexity * 0.28 + categoryBonus + lengthBonus + rewardBonus), 1, 10);
 }
 
 function routeTier(estimatedHits: number): ComboRouteTier {
@@ -1072,6 +1117,16 @@ function routeTierCpuWeight(tier: ComboRouteTier, context: CpuRouteContext) {
   if (tier === 'medium') return context.difficulty >= 4 ? 0.14 : -0.08;
   if (tier === 'long') return context.difficulty >= 5 && context.opening !== 'neutral' ? -0.18 : -0.34;
   return context.difficulty >= 5 && context.opening === 'juggle' ? -0.92 : -1.25;
+}
+
+function routeDamageCpuWeight(route: GeneratedComboRoute, context: CpuRouteContext) {
+  const damage = route.estimatedDamage;
+  if (context.leaderCloseout && damage > 24) return -0.8;
+  if (route.tier === 'marathon') return damage > 62 ? -0.72 : -0.24;
+  if (route.tier === 'long') return damage > 56 ? -0.42 : -0.08;
+  if (context.opening === 'neutral') return damage > 34 ? -0.28 : 0.04;
+  if (context.opening === 'juggle') return clamp((damage - 28) / 90, -0.08, 0.22);
+  return clamp((damage - 20) / 120, -0.06, 0.28);
 }
 
 function launchRouteStyleCpuWeight(route: GeneratedComboRoute, context: CpuRouteContext) {

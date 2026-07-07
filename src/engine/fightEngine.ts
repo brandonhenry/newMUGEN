@@ -21,6 +21,7 @@ import type {
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale, getCharacterGlobalScale } from '../lib/characterScale';
+import { scaledComboDamage } from '../lib/comboDamage';
 import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
 import {
   cpuMoveFamilyKeyFromMove,
@@ -1146,12 +1147,14 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
   attacker.throwJabHitConnected = true;
   attacker.hitConnected = true;
   attacker.hitConfirmed = true;
+  const comboHits = Math.max(1, attacker.comboHits + 1);
+  const damage = getScaledComboHitDamage(move, comboHits);
   if (!moveUsesKi(move)) {
-    attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)), 0, KI_MAX);
+    attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(damage * 0.35)), 0, KI_MAX);
   }
-  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboHits = comboHits;
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
-  attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + damage);
   const identity = getMoveIdentity(move);
   const family = getMoveFamily(move);
   const visualFamily = getMoveVisualFamily(move);
@@ -1161,13 +1164,14 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
   attacker.aiRecentComboKeys = addRecentAiMemoryKey(attacker.aiRecentComboKeys, identity);
   attacker.aiRecentComboFamilies = addRecentAiMemoryKey(attacker.aiRecentComboFamilies, family);
   attacker.aiRecentComboVisualFamilies = addRecentAiMemoryKey(attacker.aiRecentComboVisualFamilies, visualFamily);
-  applyFighterDamage(defender, move.damage);
+  applyFighterDamage(defender, damage);
   defender.hitFlash = Math.max(defender.hitFlash, 0.12);
   defender.throwShakeFrames = Math.max(defender.throwShakeFrames, THROW_SHAKE_FRAMES);
   const impactId = nextHitEventId(match);
   const impactPosition: [number, number, number] = [defender.position.x, defender.position.y + 1.12, defender.position.z];
   pushImpactSparkEvent(match, impactId, attacker, defender, move, 'hit', {
     comboHits: attacker.comboHits,
+    damage,
     launched: false,
     juggled: false,
     tornado: false,
@@ -2260,6 +2264,23 @@ function countIdentityOccurrences(sequence: string[], identity: string) {
   return sequence.reduce((count, candidate) => count + (candidate === identity ? 1 : 0), 0);
 }
 
+function getScaledComboHitDamage(move: MoveDefinition, comboHits: number, repeatCount = 1, variedRoute = true) {
+  return scaledComboDamage({
+    baseDamage: move.damage,
+    comboHits,
+    repeatCount,
+    variedRoute
+  });
+}
+
+function getScaledComboHitDamageForIdentity(attacker: FighterRuntime, move: MoveDefinition, comboHits: number, identity: string) {
+  const repeatCount = countTrailingIdentityRepeats(attacker.comboIdentitySequence, identity);
+  const previousIdentities = attacker.comboIdentitySequence[attacker.comboIdentitySequence.length - 1] === identity
+    ? attacker.comboIdentitySequence.slice(0, -1)
+    : attacker.comboIdentitySequence;
+  return getScaledComboHitDamage(move, comboHits, repeatCount, !previousIdentities.includes(identity));
+}
+
 function shouldForceJuggleRepeatDrop(attacker: FighterRuntime, identity: string, family: string, visualFamily: string) {
   return (
     isStaleJuggleLoopKey(attacker.comboIdentitySequence, identity) ||
@@ -2297,15 +2318,17 @@ function applyJuggleLoopBreakerHit(
 ) {
   const breakerMove = buildJuggleLoopBreakerMove(move);
   const impactId = nextHitEventId(match);
-  const damage = breakerMove.damage;
+  const comboHits = Math.max(1, attacker.comboHits + 1);
+  const damage = getScaledComboHitDamage(breakerMove, comboHits, 2, false);
   pushImpactSparkEvent(match, impactId, attacker, defender, breakerMove, 'hit', {
-    comboHits: Math.max(1, attacker.comboHits + 1),
+    comboHits,
+    damage,
     juggled: true,
     kiBurst: Boolean(move.kiBurst)
   }, position);
   attacker.hitConnected = true;
   attacker.hitConfirmed = true;
-  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboHits = comboHits;
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
   attacker.comboDamage = Math.max(0, attacker.comboDamage + damage);
   attacker.aiJuggleLockoutFrames = Math.max(attacker.aiJuggleLockoutFrames, AI_JUGGLE_LOCKOUT_FRAMES);
@@ -2343,20 +2366,23 @@ function applyShadowCloneJuggleLoopBreakerHit(
 ) {
   const breakerMove = buildJuggleLoopBreakerMove(weakMove);
   const impactId = nextHitEventId(match);
+  const comboHits = Math.max(1, attacker.comboHits + 1);
+  const damage = getScaledComboHitDamage(breakerMove, comboHits, 2, false);
   pushImpactSparkEvent(match, impactId, attacker, defender, breakerMove, 'hit', {
-    comboHits: Math.max(1, attacker.comboHits + 1),
+    comboHits,
+    damage,
     juggled: true,
     kiBurst: Boolean(weakMove.kiBurst)
   }, position);
   attacker.hitConfirmed = true;
-  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
-  attacker.comboDamage = Math.max(0, attacker.comboDamage + breakerMove.damage);
+  attacker.comboHits = comboHits;
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + damage);
   attacker.aiJuggleLockoutFrames = Math.max(attacker.aiJuggleLockoutFrames, AI_JUGGLE_LOCKOUT_FRAMES);
   pushCombatPopupEvent(match, impactId, attacker, breakerMove, attacker.comboHits >= 2 ? 'combo' : null, {
     juggled: true,
     kiBurst: Boolean(weakMove.kiBurst)
   });
-  applyFighterDamage(defender, breakerMove.damage);
+  applyFighterDamage(defender, damage);
   defender.currentMove = null;
   defender.moveFrame = 0;
   defender.blockstunFramesRemaining = 0;
@@ -3415,8 +3441,10 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const launchHeight = Math.max(0, move.launchHeight ?? 0);
   const impactId = nextHitEventId(match);
   const comboHits = blocked ? 0 : Math.max(1, attacker.comboHits + 1);
+  const hitDamage = blocked ? move.blockDamage : getScaledComboHitDamage(move, comboHits);
   pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
     comboHits,
+    damage: hitDamage,
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
     tornado: tornadoExtendsJuggle,
@@ -3444,10 +3472,10 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   }
 
   attacker.hitConfirmed = true;
-  if (!moveUsesKi(move)) attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)), 0, KI_MAX);
-  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  if (!moveUsesKi(move)) attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(hitDamage * 0.35)), 0, KI_MAX);
+  attacker.comboHits = comboHits;
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
-  attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + hitDamage);
   attacker.comboUsedKeys = attacker.comboUsedKeys.includes(getMoveIdentity(move)) ? attacker.comboUsedKeys : [...attacker.comboUsedKeys, getMoveIdentity(move)].slice(-COMBO_SEQUENCE_MEMORY);
   pushCombatPopupEvent(match, impactId, attacker, move, counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : attacker.comboHits >= 2 ? 'combo' : null, {
     launched: launchHeight > 0,
@@ -3458,12 +3486,12 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const frameData = contextualComboFrameData(move, { context: wasAirborne ? 'juggle' : defender.state === 'hit' ? 'combo' : 'neutral', counterHit: counterHit && Boolean(move.counterHit), comboHits: attacker.comboHits, repeatCount: 1 });
   const stunFrames = getProjectileHitstunFrames(frameData.effectiveAdvantage, counterHit);
   const entersJuggle = launchHeight > 0 || wasJuggled;
-  const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
-  const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, 1, tornadoExtendsJuggle);
+  const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + hitDamage;
+  const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, 1, tornadoExtendsJuggle, hitDamage);
   const juggleSequenceDamage = tornadoExtendsJuggle
     ? juggleDamageContribution
     : (wasAirborne || entersJuggle ? defender.juggleSequenceDamage : 0) + juggleDamageContribution;
-  applyFighterDamage(defender, move.damage);
+  applyFighterDamage(defender, hitDamage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -3755,8 +3783,10 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   }
   const impactId = nextHitEventId(match);
   const comboHits = blocked ? 0 : Math.max(1, attacker.comboHits + 1);
+  const hitDamage = blocked ? move.blockDamage : getScaledComboHitDamageForIdentity(attacker, move, comboHits, identity);
   pushImpactSparkEvent(match, impactId, attacker, defender, move, blocked ? 'block' : counterHit ? 'counterHit' : whiffPunish ? 'whiffPunish' : blockPunish ? 'punish' : 'hit', {
     comboHits,
+    damage: hitDamage,
     launched: launchHeight > 0,
     juggled: wasJuggled || wasAirborne,
     tornado: tornadoExtendsJuggle,
@@ -3797,11 +3827,11 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
 
   attacker.hitConfirmed = true;
   if (!moveUsesKi(move)) {
-    attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(move.damage * 0.35)) + Math.max(0, attacker.comboStep - 1) * 2, 0, KI_MAX);
+    attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(hitDamage * 0.35)) + Math.max(0, attacker.comboStep - 1) * 2, 0, KI_MAX);
   }
-  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
+  attacker.comboHits = comboHits;
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
-  attacker.comboDamage = Math.max(0, attacker.comboDamage + move.damage);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + hitDamage);
   if (!attacker.comboUsedKeys.includes(identity)) {
     attacker.comboUsedKeys = [...attacker.comboUsedKeys, identity].slice(-COMBO_SEQUENCE_MEMORY);
   }
@@ -3830,13 +3860,13 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   );
   const stunFrames = Math.max(1, attackerRemaining + advantage + (counterHit ? UNIVERSAL_COUNTER_HIT_STUN_BONUS_FRAMES : 0));
   const entersJuggle = launchHeight > 0 || wasJuggled;
-  const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + move.damage;
-  const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, repeatCount, tornadoExtendsJuggle);
+  const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + hitDamage;
+  const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, repeatCount, tornadoExtendsJuggle, hitDamage);
   const juggleSequenceDamage = tornadoExtendsJuggle
     ? juggleDamageContribution
     : (wasAirborne || entersJuggle ? defender.juggleSequenceDamage : 0) + juggleDamageContribution;
   const forceKnockdown = move.knockdown || (!tornadoExtendsJuggle && juggleSequenceDamage >= JUGGLE_DAMAGE_LIMIT);
-  applyFighterDamage(defender, move.damage);
+  applyFighterDamage(defender, hitDamage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -3921,8 +3951,11 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
 
   clone.hitConnected = true;
   const impactId = nextHitEventId(match);
+  const comboHits = blocked ? 0 : Math.max(1, attacker.comboHits + 1);
+  const hitDamage = blocked ? weakMove.blockDamage : getScaledComboHitDamage(weakMove, comboHits);
   pushImpactSparkEvent(match, impactId, attacker, defender, weakMove, blocked ? 'block' : 'hit', {
-    comboHits: blocked ? 0 : Math.max(1, attacker.comboHits + 1),
+    comboHits,
+    damage: hitDamage,
     juggled: defender.state === 'juggle' || isAirborne(defender),
     kiBurst: Boolean(sourceMove.kiBurst)
   }, collision.position);
@@ -3950,10 +3983,10 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
 
   attacker.hitConfirmed = true;
   if (!moveUsesKi(sourceMove)) {
-    attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_HIT_GAIN * 0.45)), 0, KI_MAX);
+    attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_HIT_GAIN * 0.35 + hitDamage * 0.12)), 0, KI_MAX);
   }
-  attacker.comboHits = Math.max(1, attacker.comboHits + 1);
-  attacker.comboDamage = Math.max(0, attacker.comboDamage + weakMove.damage);
+  attacker.comboHits = comboHits;
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + hitDamage);
   pushCombatPopupEvent(match, impactId, attacker, weakMove, attacker.comboHits >= 2 ? 'combo' : null, {
     juggled: defender.state === 'juggle' || isAirborne(defender),
     kiBurst: Boolean(sourceMove.kiBurst)
@@ -3967,7 +4000,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
     repeatCount: 1
   });
   const stunFrames = Math.max(8, attackerRemaining + cloneAdvantage);
-  applyFighterDamage(defender, weakMove.damage);
+  applyFighterDamage(defender, hitDamage);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -4161,7 +4194,7 @@ function pushImpactSparkEvent(
   defender: FighterRuntime,
   move: MoveDefinition,
   kind: ImpactSparkKind,
-  context: { comboHits?: number; launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {},
+  context: { comboHits?: number; damage?: number; launched?: boolean; juggled?: boolean; tornado?: boolean; kiBurst?: boolean } = {},
   position: [number, number, number] = getImpactPosition(attacker, defender, move)
 ) {
   match.impactEvents = [
@@ -4173,7 +4206,7 @@ function pushImpactSparkEvent(
       attackerSlot: attacker.slot,
       defenderSlot: defender.slot,
       hitLevel: move.hitLevel,
-      damage: kind === 'block' ? move.blockDamage : move.damage,
+      damage: kind === 'block' ? move.blockDamage : context.damage ?? move.damage,
       moveLabel: move.label,
       moveInput: move.input,
       moveCommand: move.command,
@@ -4296,13 +4329,13 @@ function getJuggleRefloatMaxHeight(move: MoveDefinition, wasAirborne: boolean, c
   return 6.2;
 }
 
-function getJuggleSequenceDamageContribution(move: MoveDefinition, comboHits: number, repeatCount: number, tornadoExtendsJuggle: boolean) {
+function getJuggleSequenceDamageContribution(move: MoveDefinition, comboHits: number, repeatCount: number, tornadoExtendsJuggle: boolean, damage = move.damage) {
   const depth = Math.max(1, comboHits);
   const depthScale = depth <= 2 ? 1 : depth <= 6 ? 0.58 : depth <= 14 ? 0.28 : 0.12;
   const repeatScale = repeatCount > 1 ? 1 + repeatCount * 0.45 : 1;
   const propertyLoad = (move.launchHeight ? 8 : 0) + (move.knockdown ? 4 : 0) + (move.tornado && !tornadoExtendsJuggle ? 3 : 0);
   const tornadoResetRelief = tornadoExtendsJuggle ? -3 : 0;
-  return Math.max(1, Math.round(move.damage * depthScale * repeatScale + propertyLoad + tornadoResetRelief));
+  return Math.max(1, Math.round(damage * depthScale * repeatScale + propertyLoad + tornadoResetRelief));
 }
 
 function getMoveJuggleGravityScale(move: MoveDefinition) {

@@ -5672,6 +5672,90 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.comboStep).toBe(2);
   });
 
+  it('scales combo damage after the first hit and reports scaled popup totals', () => {
+    const scalingCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moves: starterCharacters[0].moves.map((move) => ({
+        ...move,
+        startupFrames: 3,
+        activeFrames: 2,
+        recoveryFrames: 4,
+        damage: 10,
+        blockDamage: 5,
+        onHitFrames: 26,
+        onCounterHitFrames: 30,
+        range: 3,
+        pushback: 0.04,
+        launchHeight: undefined,
+        knockdown: false,
+        comboKey: `neutral:${move.input}`,
+        hitbox: { offset: [0, 1.1, 0.72], size: [1.5, 1.8, 1.4] }
+      }))
+    };
+
+    const runRoute = (route: Array<keyof ReturnType<typeof emptyInputFrame>>) => {
+      let match = createMatch(scalingCharacter, starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+
+      for (const button of route) {
+        match = stepUntilFighterActionable(match, 0);
+        const input = emptyInputFrame();
+        input[button] = true;
+        match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+        for (let i = 0; i < 36 && !match.fighters[0].hitConfirmed; i += 1) {
+          match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        }
+      }
+      return match;
+    };
+
+    const varied = runRoute(['jab', 'heavy']);
+    const repeated = runRoute(['jab', 'jab']);
+
+    const variedDamage = starterCharacters[1].stats.health - varied.fighters[1].hp;
+    const repeatedDamage = starterCharacters[1].stats.health - repeated.fighters[1].hp;
+    expect(variedDamage).toBe(18);
+    expect(varied.fighters[0].comboDamage).toBe(18);
+    expect(varied.combatEvents[varied.combatEvents.length - 1]?.damage).toBe(18);
+    expect(varied.impactEvents[varied.impactEvents.length - 1]?.damage).toBe(8);
+    expect(repeatedDamage).toBeLessThan(variedDamage);
+    expect(repeated.fighters[0].comboDamage).toBe(repeatedDamage);
+  });
+
+  it('keeps block chip unscaled', () => {
+    const chipCharacter: CharacterDefinition = {
+      ...starterCharacters[0],
+      moveOverrides: {
+        ...(starterCharacters[0].moveOverrides ?? {}),
+        jableft: {
+          blockDamage: 5
+        }
+      }
+    };
+    let match = createMatch(chipCharacter, starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    const attack = emptyInputFrame();
+    attack.jab = true;
+    const guard = emptyInputFrame();
+    guard.block = true;
+    for (let i = 0; i < 18; i += 1) {
+      match = stepMatch(match, attack, guard, 1 / 60);
+      attack.jab = false;
+    }
+    for (let i = 0; i < 4 && match.impactEvents.length === 0; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), guard, 1 / 60);
+    }
+
+    expect(starterCharacters[1].stats.health - match.fighters[1].hp).toBe(5);
+    expect(match.impactEvents[match.impactEvents.length - 1]?.damage).toBe(5);
+  });
+
   it('lets repeated same-button links happen only after recovery and makes them less plus', () => {
     const plusKickCharacter: CharacterDefinition = {
       ...starterCharacters[0],
@@ -7840,7 +7924,7 @@ describe('fight engine', () => {
     for (let frame = 0; frame < 2; frame += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
-    expect(match.fighters[1].hp).toBe(defenderHp - 7);
+    expect(defenderHp - match.fighters[1].hp).toBe(6);
     expect(match.fighters[0].visualHitstop.framesRemaining).toBeGreaterThan(0);
     expect(match.fighters[1].visualHitstop).toMatchObject({ animationKey: 'hitLight' });
 
@@ -7870,12 +7954,13 @@ describe('fight engine', () => {
     for (let frame = 0; frame < 2; frame += 1) {
       match = stepMatch(match, { ...emptyInputFrame(), jab: true }, emptyInputFrame(), 1 / 60);
     }
-    expect(match.fighters[1].hp).toBe(capturedHp - 7);
+    const firstHeldJabDamage = capturedHp - match.fighters[1].hp;
+    expect(firstHeldJabDamage).toBe(6);
 
     for (let frame = 0; frame < 3; frame += 1) {
       match = stepMatch(match, { ...emptyInputFrame(), jab: true }, emptyInputFrame(), 1 / 60);
     }
-    expect(match.fighters[1].hp).toBe(capturedHp - 7);
+    expect(capturedHp - match.fighters[1].hp).toBe(firstHeldJabDamage);
 
     for (let frame = 0; frame < 8; frame += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -7884,7 +7969,7 @@ describe('fight engine', () => {
     for (let frame = 0; frame < 2; frame += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
-    expect(match.fighters[1].hp).toBe(capturedHp - 14);
+    expect(capturedHp - match.fighters[1].hp).toBeGreaterThan(firstHeldJabDamage);
   });
 
   it('makes CPU grabbers light-attack held defenders during a throw capture', () => {
@@ -7904,15 +7989,16 @@ describe('fight engine', () => {
     }
 
     expect(firstJabStarted).toBe(true);
-    expect(match.fighters[1].hp).toBe(capturedHp - 7);
+    const firstHeldJabDamage = capturedHp - match.fighters[1].hp;
+    expect(firstHeldJabDamage).toBe(6);
 
-    for (let frame = 0; frame < 16 && match.fighters[1].hp > capturedHp - 14; frame += 1) {
+    for (let frame = 0; frame < 16 && capturedHp - match.fighters[1].hp <= firstHeldJabDamage; frame += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
 
     expect(match.fighters[0].state).toBe('throwHold');
     expect(match.fighters[1].state).toBe('throwHeld');
-    expect(match.fighters[1].hp).toBe(capturedHp - 14);
+    expect(capturedHp - match.fighters[1].hp).toBeGreaterThan(firstHeldJabDamage);
   });
 
   it('makes CPU held defenders mash out instead of taking repeated held jabs', () => {

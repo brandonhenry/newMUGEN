@@ -568,7 +568,7 @@
       "startupFrames": 19,
       "activeFrames": 4,
       "recoveryFrames": 26,
-      "damage": 15,
+      "damage": 14,
       "blockDamage": 1,
       "hitLevel": "mid",
       "onBlockFrames": -10,
@@ -598,7 +598,7 @@
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 30,
       "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
+      "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 9
     }
@@ -634,7 +634,7 @@
       "startupFrames": 5,
       "activeFrames": 2,
       "recoveryFrames": 22,
-      "damage": 6,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
@@ -682,7 +682,7 @@
       "startupFrames": 22,
       "activeFrames": 9,
       "recoveryFrames": 11,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -2,
       "onHitFrames": 10,
@@ -700,13 +700,13 @@
       "onComboHitFrames": 5,
       "onJuggleHitFrames": 4,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
       "startupFrames": 24,
       "activeFrames": 12,
       "recoveryFrames": 13,
-      "damage": 15,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -2,
       "onHitFrames": 10,
@@ -723,14 +723,14 @@
       "counterHit": false,
       "onComboHitFrames": 5,
       "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
       "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
-      "damage": 11,
+      "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -744,16 +744,16 @@
       "hitLevel": "mid",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 27,
-      "damage": 15,
+      "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -7,
       "onHitFrames": 15,
@@ -771,16 +771,16 @@
       "hitLevel": "mid",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
       "startupFrames": 19,
       "activeFrames": 4,
       "recoveryFrames": 29,
-      "damage": 17,
+      "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
       "onHitFrames": 17,
@@ -795,10 +795,10 @@
       "knockdown": true,
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
       "startupFrames": 17,
@@ -818,16 +818,16 @@
       "hitLevel": "mid",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "onComboHitFrames": 21,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
       "startupFrames": 12,
       "activeFrames": 2,
       "recoveryFrames": 15,
-      "damage": 7,
+      "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 1,
       "onHitFrames": 14,
@@ -841,16 +841,16 @@
       "hitLevel": "mid",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
-      "damage": 13,
+      "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -7,
       "onHitFrames": 15,
@@ -865,16 +865,16 @@
       "hitLevel": "mid",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:1+2": {
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
-      "damage": 14,
+      "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -7,
       "onHitFrames": 15,
@@ -888,16 +888,16 @@
       "hitLevel": "mid",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:1+3": {
       "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 28,
-      "damage": 15,
+      "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
       "onHitFrames": 16,
@@ -912,10 +912,10 @@
       "hitLevel": "mid",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 10,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 15
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 18,
@@ -935,16 +935,16 @@
       "hitLevel": "low",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
       "startupFrames": 20,
       "activeFrames": 3,
       "recoveryFrames": 25,
-      "damage": 15,
+      "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -959,16 +959,16 @@
       "knockdown": true,
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 6,
-      "comboRepeatPenaltyFrames": 8,
-      "juggleRepeatPenaltyFrames": 12
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
-      "damage": 18,
+      "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
       "onHitFrames": 17,
@@ -983,16 +983,16 @@
       "knockdown": true,
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 11,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 13
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
       "startupFrames": 24,
       "activeFrames": 4,
       "recoveryFrames": 32,
-      "damage": 22,
+      "damage": 16,
       "blockDamage": 1,
       "onBlockFrames": -8,
       "onHitFrames": 14,
@@ -1006,16 +1006,16 @@
       "hitLevel": "special",
       "knockdown": true,
       "counterHit": false,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 9,
-      "juggleRepeatPenaltyFrames": 14
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "neutral:jab-jab": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1030,13 +1030,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1051,13 +1051,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-kick": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1072,13 +1072,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-jab-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1093,13 +1093,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1114,13 +1114,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-kick": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1135,13 +1135,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-heavy-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1156,13 +1156,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 24,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1177,13 +1177,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1198,13 +1198,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-kick-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1219,13 +1219,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1240,13 +1240,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:jab-special-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1261,13 +1261,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1282,13 +1282,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1303,13 +1303,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-jab-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1324,13 +1324,13 @@
       "onComboHitFrames": 11,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 24,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1345,13 +1345,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-kick-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1366,13 +1366,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1387,13 +1387,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:heavy-special-kick": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1408,13 +1408,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1429,13 +1429,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-jab-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1450,13 +1450,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1471,13 +1471,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-heavy-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1492,13 +1492,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1513,13 +1513,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:kick-special-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1534,13 +1534,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1555,13 +1555,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-jab-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1576,13 +1576,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-heavy": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 20,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1597,13 +1597,13 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "neutral:special-kick": {
       "startupFrames": 16,
       "activeFrames": 3,
       "recoveryFrames": 24,
-      "damage": 10,
+      "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -1618,7 +1618,7 @@
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
       "onBlockFrames": -10,
@@ -1631,13 +1631,15 @@
       "label": "1+4 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
       "startupFrames": 0,
       "activeFrames": 19,
-      "recoveryFrames": 30
+      "recoveryFrames": 30,
+      "damage": 14,
+      "blockDamage": 1
     },
     "cmd:f+2": {
       "onBlockFrames": -6,
@@ -1650,13 +1652,15 @@
       "label": "f+2 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
       "startupFrames": 30,
       "activeFrames": 3,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "damage": 9,
+      "blockDamage": 1
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1669,13 +1673,15 @@
       "label": "f+3 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 33
+      "recoveryFrames": 33,
+      "damage": 10,
+      "blockDamage": 1
     },
     "cmd:d+1": {
       "onBlockFrames": 0,
@@ -1688,13 +1694,15 @@
       "label": "d+1 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 8,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 20
+      "recoveryFrames": 20,
+      "damage": 8,
+      "blockDamage": 1
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1707,13 +1715,15 @@
       "label": "d+3 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 33
+      "recoveryFrames": 33,
+      "damage": 10,
+      "blockDamage": 1
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1726,13 +1736,15 @@
       "label": "d/f+3 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 33
+      "recoveryFrames": 33,
+      "damage": 10,
+      "blockDamage": 1
     },
     "cmd:qcf+1": {
       "onBlockFrames": 0,
@@ -1745,13 +1757,15 @@
       "label": "qcf+1 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 7,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 20
+      "recoveryFrames": 20,
+      "damage": 8,
+      "blockDamage": 1
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1764,13 +1778,15 @@
       "label": "qcf+3 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 33
+      "recoveryFrames": 33,
+      "damage": 10,
+      "blockDamage": 1
     },
     "cmd:WS+2": {
       "onBlockFrames": -6,
@@ -1783,13 +1799,15 @@
       "label": "WS+2 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7,
+      "onComboHitFrames": 17,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 5,
       "startupFrames": 30,
       "activeFrames": 3,
-      "recoveryFrames": 1
+      "recoveryFrames": 1,
+      "damage": 9,
+      "blockDamage": 1
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1802,13 +1820,15 @@
       "label": "SS+3 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 16,
-      "onJuggleHitFrames": 12,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
+      "onComboHitFrames": 14,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 33
+      "recoveryFrames": 33,
+      "damage": 10,
+      "blockDamage": 1
     },
     "cmd:SS+4": {
       "onBlockFrames": -10,
@@ -1821,13 +1841,15 @@
       "label": "SS+4 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
       "startupFrames": 0,
       "activeFrames": 19,
-      "recoveryFrames": 30
+      "recoveryFrames": 30,
+      "damage": 14,
+      "blockDamage": 1
     },
     "cmd:O+1": {
       "onBlockFrames": 0,
@@ -1840,32 +1862,36 @@
       "label": "O+1 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 5,
+      "comboRepeatPenaltyFrames": 4,
       "juggleRepeatPenaltyFrames": 7,
       "startupFrames": 0,
       "activeFrames": 9,
-      "recoveryFrames": 20
+      "recoveryFrames": 20,
+      "damage": 16,
+      "blockDamage": 1
     },
     "cmd:O+4": {
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
-      "whiffRecoveryFrames": 30,
+      "whiffRecoveryFrames": 34,
       "forwardForce": 2.15,
       "forwardForceStartFrame": 25,
       "forwardForceEndFrame": 30,
       "label": "O+4 Frame Link",
       "cancelable": false,
       "counterHit": false,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 8,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9,
+      "onComboHitFrames": 5,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 4,
+      "juggleRepeatPenaltyFrames": 7,
       "startupFrames": 0,
       "activeFrames": 19,
-      "recoveryFrames": 30
+      "recoveryFrames": 30,
+      "damage": 16,
+      "blockDamage": 1
     }
   },
   "effects": [],
@@ -2673,4 +2699,5 @@
         "offsetX": 0
       }
     }
-  }}
+  }
+}

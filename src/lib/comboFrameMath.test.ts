@@ -1,4 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { CharacterDefinition, MoveDefinition } from '../types';
@@ -54,6 +55,21 @@ function isAttackOverride(key: string, override: NonNullable<CharacterDefinition
   return Boolean(override.input || override.command || override.animationKey || override.damage || override.onHitFrames || override.range || override.hitLevel);
 }
 
+function timingSnapshot(character: CharacterDefinition) {
+  const snapshot: Record<string, number> = {};
+  character.moves.forEach((move, index) => {
+    for (const key of timingKeys) {
+      if (move[key] !== undefined) snapshot[`moves.${index}.${key}`] = move[key];
+    }
+  });
+  for (const [key, override] of Object.entries(character.moveOverrides ?? {})) {
+    for (const timingKey of timingKeys) {
+      if (override[timingKey] !== undefined) snapshot[`moveOverrides.${key}.${timingKey}`] = override[timingKey];
+    }
+  }
+  return snapshot;
+}
+
 describe('contextual combo frame math', () => {
   it('preserves neutral hit advantage while using contextual combo and juggle values', () => {
     expect(contextualHitAdvantage(baseMove, { context: 'neutral' })).toBe(14);
@@ -99,6 +115,20 @@ describe('contextual combo frame math', () => {
           }
         }
       }
+    }
+  });
+
+  it('preserves roster startup, active, and recovery timing against the git baseline', () => {
+    for (const character of readRosterCharacters()) {
+      const manifestPath = `public/characters/${character.id}/character.json`;
+      let baselineText = '';
+      try {
+        baselineText = execFileSync('git', ['show', `HEAD:${manifestPath}`], { cwd: repoRoot, encoding: 'utf8' });
+      } catch {
+        continue;
+      }
+      const baseline = JSON.parse(baselineText) as CharacterDefinition;
+      expect(timingSnapshot(character), character.id).toEqual(timingSnapshot(baseline));
     }
   });
 });

@@ -451,6 +451,9 @@ describe('training trial catalog', () => {
     expect(trials.every((trial) => trial.mode === 'combos' && trial.category === 'combo')).toBe(true);
     expect(trials.some((trial) => trial.steps.length > 3)).toBe(true);
     expect(trials.every((trial) => trial.steps.every((step) => step.routeKey && step.animationKey))).toBe(true);
+    expect(trials.every((trial) => (trial.sourceComboRoute?.estimatedDamage ?? 0) > 0)).toBe(true);
+    expect(trials.every((trial) => trial.sourceComboRoute?.structure.includes('starter'))).toBe(true);
+    expect(trials.every((trial) => trial.lesson.includes('damage'))).toBe(true);
   });
 
   it('surfaces reviewed move labels in training and combo trial steps', () => {

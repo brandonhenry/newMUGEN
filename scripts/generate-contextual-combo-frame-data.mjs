@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const timingKeys = ['startupFrames', 'activeFrames', 'recoveryFrames'];
+const retunedKeys = ['damage', 'blockDamage', 'onComboHitFrames', 'onJuggleHitFrames', 'comboRepeatPenaltyFrames', 'juggleRepeatPenaltyFrames'];
 const baseKeys = new Set(['jableft', 'jabright', 'kickleft', 'kickright']);
 const buttonToInput = { 1: 'jab', 2: 'heavy', 3: 'kick', 4: 'special' };
 
@@ -122,15 +123,47 @@ function commandAdvantageFields(move) {
   };
 }
 
-function contextualFields(move, { tuneAdvantage = true } = {}) {
-  const advantage = tuneAdvantage
-    ? isAdvancedCommand(resolvedCommandForMove(move))
-      ? commandAdvantageFields(move)
-      : neutralAdvantageFields(move)
-    : {};
-  const tunedMove = { ...move, ...advantage };
+function damageBudgetFields(move) {
+  if ((move.damage ?? 0) <= 0) return {};
+  const command = resolvedCommandForMove(move);
+  const advanced = isAdvancedCommand(command);
+  const currentDamage = Math.max(1, Math.round(move.damage ?? 1));
+  const isKi = Boolean(move.usesKi || move.kiBurst || (command && /^O\+/.test(command)));
+  const isLauncher = Boolean(move.launchHeight);
+  const isTornado = Boolean(move.tornado);
+  const isLow = move.hitLevel === 'low';
+  let target = currentDamage;
+
+  if (!advanced) {
+    if (move.input === 'jab') target = clamp(currentDamage, 5, 8);
+    else if (move.input === 'heavy') target = clamp(currentDamage, 7, 11);
+    else if (move.input === 'kick') target = clamp(currentDamage, 7, 12);
+    else target = clamp(currentDamage, 9, 14);
+  } else if (isKi) {
+    target = clamp(currentDamage, 16, 22);
+  } else if (isLauncher) {
+    target = clamp(currentDamage, 12, 16);
+  } else if (isTornado) {
+    target = clamp(currentDamage, 10, 16);
+  } else if (isLow) {
+    target = clamp(currentDamage, 8, 12);
+  } else if (move.knockdown) {
+    target = clamp(currentDamage, 10, 17);
+  } else {
+    target = clamp(currentDamage, 8, 16);
+  }
+
+  const blockDamage = Math.max(0, Math.min(Math.round(move.blockDamage ?? 0), Math.floor(target * 0.25)));
   return {
-    ...advantage,
+    damage: target,
+    blockDamage
+  };
+}
+
+function contextualFields(move) {
+  const tunedMove = { ...move, ...damageBudgetFields(move) };
+  return {
+    ...damageBudgetFields(move),
     onComboHitFrames: defaultOnComboHitFrames(tunedMove),
     onJuggleHitFrames: defaultOnJuggleHitFrames(tunedMove),
     comboRepeatPenaltyFrames: defaultComboRepeatPenaltyFrames(tunedMove),
@@ -158,6 +191,34 @@ function assertTimingPreserved(before, after, id) {
   const afterSnapshot = timingSnapshot(after);
   if (JSON.stringify(beforeSnapshot) !== JSON.stringify(afterSnapshot)) {
     throw new Error(`${id}: startup/active/recovery changed`);
+  }
+}
+
+function assertOnlyRetunedFieldsChanged(before, after, id) {
+  const changes = [];
+  collectChanges(before, after, '', changes);
+  const illegal = changes.filter((path) => {
+    if (!path.startsWith('moves.') && !path.startsWith('moveOverrides.')) return false;
+    return !retunedKeys.some((key) => path.endsWith(`.${key}`));
+  });
+  if (illegal.length > 0) {
+    throw new Error(`${id}: unexpected field changes: ${illegal.slice(0, 8).join(', ')}`);
+  }
+}
+
+function collectChanges(before, after, prefix, changes) {
+  if (before === after) return;
+  if (Array.isArray(before) || Array.isArray(after)) {
+    if (JSON.stringify(before) !== JSON.stringify(after)) changes.push(prefix);
+    return;
+  }
+  if (!before || !after || typeof before !== 'object' || typeof after !== 'object') {
+    changes.push(prefix);
+    return;
+  }
+  const keys = new Set([...Object.keys(before), ...Object.keys(after)]);
+  for (const key of keys) {
+    collectChanges(before[key], after[key], prefix ? `${prefix}.${key}` : key, changes);
   }
 }
 
@@ -197,13 +258,20 @@ export function expandCharacterContextualComboFrames(character) {
     if (!isAttackOverride(key, override)) continue;
     const base = resolveBaseMove(next, key, override);
     if (!base) continue;
-    const merged = mergeMove(base, override);
+    const command = override.command ?? (key.startsWith('cmd:') ? key.slice(4) : undefined);
+    const merged = mergeMove(base, {
+      ...override,
+      command,
+      notation: override.notation ?? command,
+      input: override.input ?? (command ? commandInput(command) : override.input)
+    });
     next.moveOverrides[key] = {
       ...override,
       ...contextualFields(merged)
     };
   }
   assertTimingPreserved(character, next, character.id ?? 'unknown');
+  assertOnlyRetunedFieldsChanged(character, next, character.id ?? 'unknown');
   return next;
 }
 
