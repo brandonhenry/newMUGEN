@@ -954,6 +954,11 @@ test('shows desktop installer downloads from the console installers tab', async 
     const childBottoms = Array.from(element.children, (child) => child.getBoundingClientRect().bottom);
     return Math.ceil(Math.max(...childBottoms) - container.bottom);
   })).toBeLessThanOrEqual(1);
+  await expect.poll(async () => page.locator('.installer-panel').evaluate((element) => {
+    const container = element.getBoundingClientRect();
+    const card = element.querySelector('.installer-card-steamdeck')?.getBoundingClientRect();
+    return card ? Math.ceil(card.bottom - container.bottom) : 0;
+  })).toBeLessThanOrEqual(1);
 });
 
 test('shows installer preparation state when manifest is unavailable', async ({ page }) => {

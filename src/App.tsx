@@ -11725,7 +11725,7 @@ function OptionsConsole({
   }, []);
 
   return (
-    <div className="settings-section-stack options-console-stack">
+    <div className={`settings-section-stack options-console-stack${activeSectionIndex === 2 ? ' options-console-stack-installers' : ''}`}>
       <SettingsSection index={0} title="Terminal" active={activeSectionIndex === 0} showTitle={false}>
         <section className="options-console" aria-label="KORE console terminal">
           <div className="options-console-topline">
@@ -11792,7 +11792,7 @@ function OptionsConsole({
           </dl>
         </article>
       </SettingsSection>
-      <SettingsSection index={2} title="Installers" active={activeSectionIndex === 2} showTitle={false}>
+      <SettingsSection index={2} title="Installers" active={activeSectionIndex === 2} showTitle={false} className="settings-section-installers">
         <OptionsInstallersPanel installers={installers} manifestFailed={installerManifestFailed} />
       </SettingsSection>
       <SettingsSection index={3} title="Debug" active={activeSectionIndex === 3} showTitle={false}>
@@ -12174,17 +12174,19 @@ function SettingsSection({
   title,
   active = true,
   showTitle = true,
+  className,
   children
 }: {
   index: number;
   title: string;
   active?: boolean;
   showTitle?: boolean;
+  className?: string;
   children: ReactNode;
 }) {
   if (!active) return null;
   return (
-    <section className="settings-section" data-section-index={index}>
+    <section className={`settings-section${className ? ` ${className}` : ''}`} data-section-index={index}>
       {showTitle && <h3>{title}</h3>}
       <div className="settings-list">{children}</div>
     </section>

@@ -899,6 +899,23 @@ button {
   min-height: 0;
 }
 
+.options-console-stack-installers {
+  height: auto;
+  min-height: 100%;
+  grid-template-rows: auto;
+}
+
+.options-console-stack .settings-section-installers {
+  height: auto;
+  min-height: 100%;
+  grid-template-rows: auto;
+}
+
+.options-console-stack .settings-section-installers .settings-list {
+  height: auto;
+  min-height: 100%;
+}
+
 .options-console,
 .memory-card-panel,
 .installer-panel,
@@ -11765,29 +11782,42 @@ button {
 
 .training-select-screen .footer-actions {
   display: grid;
-  grid-template-columns: minmax(160px, 0.72fr) minmax(180px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   justify-content: stretch;
+  justify-items: stretch;
   align-items: stretch;
+  width: 100%;
+  max-width: 100%;
 }
 
 .training-select-screen .footer-actions > button {
+  display: grid;
+  grid-template-columns: 32px minmax(0, auto) 32px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  column-gap: 10px;
   width: 100%;
+  max-width: none;
+  text-align: center;
 }
 
 .training-select-screen .footer-actions > button:first-child {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 3;
+  min-height: 52px;
 }
 
 .training-select-screen .training-match-history-button {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
+  min-height: 52px;
 }
 
 .training-select-screen .footer-actions > .primary-button {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  min-height: 102px;
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 52px;
 }
 
 @media (max-width: 760px) {
@@ -11819,11 +11849,21 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .training-select-screen .footer-actions > button:first-child,
-  .training-select-screen .training-match-history-button,
+  .training-select-screen .footer-actions > button:first-child {
+    grid-column: 1;
+    grid-row: 3;
+    min-height: 52px;
+  }
+
+  .training-select-screen .training-match-history-button {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 52px;
+  }
+
   .training-select-screen .footer-actions > .primary-button {
     grid-column: 1;
-    grid-row: auto;
+    grid-row: 1;
     min-height: 52px;
   }
 
