@@ -2316,6 +2316,102 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(0);
   });
 
+  it('treats equal-health timeouts as draws without awarding a fake round win', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.timer = 0.01;
+    match.fighters[0].hp = 42;
+    match.fighters[1].hp = 42;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('roundOver');
+    expect(match.message).toBe('DRAW');
+    expect(match.winnerSlot).toBeNull();
+    expect(match.visualTimeScale).toBe(1);
+    expect(match.fighters[0].roundsWon).toBe(0);
+    expect(match.fighters[1].roundsWon).toBe(0);
+
+    match.countdown = 0.01;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('fighting');
+    expect(match.round).toBe(2);
+    expect(match.timer).toBe(match.roundTime);
+    expect(match.fighters[0].roundsWon).toBe(0);
+    expect(match.fighters[1].roundsWon).toBe(0);
+    expect(match.fighters[0].controlSideSign).toBe(1);
+    expect(match.fighters[1].controlSideSign).toBe(-1);
+  });
+
+  it('awards timeout rounds by health without showing KO messaging', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.timer = 0.01;
+    match.fighters[0].hp = 62;
+    match.fighters[1].hp = 31;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.phase).toBe('roundOver');
+    expect(match.message).toBe('TIME OVER');
+    expect(match.message).not.toBe('K.O.');
+    expect(match.message).not.toBe('PERFECT');
+    expect(match.visualTimeScale).toBe(1);
+    expect(match.fighters[0].roundsWon).toBe(1);
+    expect(match.fighters[1].roundsWon).toBe(0);
+    expect(match.fighters[0].state).toBe('win');
+    expect(match.fighters[1].state).toBe('lose');
+  });
+
+  it('resets crossed fighters to authored rotated stage spawns after a timeout draw', () => {
+    const rotatedStage: StageDefinition = {
+      ...stages[0],
+      fightPlane: { center: [4, 0, -2], width: 14, depth: 8, y: 0, rotationY: Math.PI / 2 },
+      playableBounds: { shape: 'box', width: 14, depth: 8 }
+    };
+    const p1Spawn = boundsWorldPosition(rotatedStage, { x: -2.25, z: 0.4 });
+    const p2Spawn = boundsWorldPosition(rotatedStage, { x: 2.25, z: -0.4 });
+    rotatedStage.spawns = {
+      p1: [p1Spawn.x, 0, p1Spawn.z],
+      p2: [p2Spawn.x, 0, p2Spawn.z]
+    };
+    let match = createMatch(starterCharacters[0], starterCharacters[1], rotatedStage, 'local2p');
+    expect(match.fighters[0].position).toEqual({ x: p1Spawn.x, y: 0, z: p1Spawn.z });
+    expect(match.fighters[1].position).toEqual({ x: p2Spawn.x, y: 0, z: p2Spawn.z });
+    expect(match.fighters[0].controlSideSign).toBe(1);
+    expect(match.fighters[1].controlSideSign).toBe(-1);
+
+    const crossedP1 = boundsWorldPosition(rotatedStage, { x: 3.2, z: 0 });
+    const crossedP2 = boundsWorldPosition(rotatedStage, { x: -3.2, z: 0 });
+    match.fighters[0].position.x = crossedP1.x;
+    match.fighters[0].position.z = crossedP1.z;
+    match.fighters[1].position.x = crossedP2.x;
+    match.fighters[1].position.z = crossedP2.z;
+    match.timer = 0.01;
+    match.fighters[0].hp = 50;
+    match.fighters[1].hp = 50;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.message).toBe('DRAW');
+    match.countdown = 0.01;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.round).toBe(2);
+    expect(match.fighters[0].position).toEqual({ x: p1Spawn.x, y: 0, z: p1Spawn.z });
+    expect(match.fighters[1].position).toEqual({ x: p2Spawn.x, y: 0, z: p2Spawn.z });
+    expect(stageSideDelta(rotatedStage, match.fighters[0], match.fighters[1])).toBeGreaterThan(0);
+    expect(stageSideDelta(rotatedStage, match.fighters[1], match.fighters[0])).toBeLessThan(0);
+    expect(match.fighters[0].facing).toBe(1);
+    expect(match.fighters[1].facing).toBe(-1);
+    expect(match.fighters[0].controlSideSign).toBe(1);
+    expect(match.fighters[1].controlSideSign).toBe(-1);
+    expect(match.fighters[0].horizontalHoldControlSideSign).toBe(1);
+    expect(match.fighters[1].horizontalHoldControlSideSign).toBe(-1);
+  });
+
   it('uses custom round timer settings for new matches', () => {
     const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p', 3, { roundTime: 45 });
 

@@ -17,7 +17,8 @@ import type {
   ImpactSparkKind,
   ImpactSparkEvent,
   ProjectileRuntime,
-  StageDefinition
+  StageDefinition,
+  Vec3Tuple
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale, getCharacterGlobalScale } from '../lib/characterScale';
@@ -47,6 +48,7 @@ const ROUND_FINISHER_TIME_SCALE = 0.28;
 const ROUND_FINISHER_CAMERA_ZOOM_SCALE = 0.78;
 const KO_SLOWMO_SECONDS = 0.8;
 const KO_SLOWMO_TIME_SCALE = 0.24;
+type RoundFinishReason = 'ko' | 'timeout';
 const ROUND_INTRO_ENTRY_SECONDS = 1.2;
 const ROUND_ANNOUNCER_TIMINGS = [
   { duration: 4.05, fightAt: 2.49 },
@@ -231,6 +233,7 @@ export function createMatch(
     idleQuietFrames: 0,
     idleQuietLockFrames: 0
   };
+  resetFightersToRoundStart(match);
   if (match.introEnabled) beginRoundIntro(match);
   return match;
 }
@@ -333,7 +336,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   if (isTrainingInfiniteHealthMode(next) && next.trainingInfiniteHealth) {
     refillTrainingHealth(next);
   } else if (ko || (!infiniteTimer && next.timer <= 0)) {
-    finishRound(next);
+    finishRound(next, ko ? 'ko' : 'timeout');
   }
 
   return next;
@@ -4838,21 +4841,26 @@ function getRoundFinishMessage(winner: FighterRuntime, loser: FighterRuntime) {
   return loser.hp <= 0 && winner.hp > 0 && !winner.tookDamageThisRound ? 'PERFECT' : 'K.O.';
 }
 
-function finishRound(match: MatchSnapshot) {
+function getTimeoutRoundWinner(p1: FighterRuntime, p2: FighterRuntime) {
+  if (p1.hp === p2.hp) return null;
+  return p1.hp > p2.hp ? p1 : p2;
+}
+
+function finishRound(match: MatchSnapshot, reason: RoundFinishReason = 'ko') {
   const [p1, p2] = match.fighters;
-  const winner = p1.hp === p2.hp ? (p1.slot === 1 ? p1 : p2) : p1.hp > p2.hp ? p1 : p2;
-  const loser = winner.slot === p1.slot ? p2 : p1;
-  winner.roundsWon += 1;
+  const winner = reason === 'timeout' ? getTimeoutRoundWinner(p1, p2) : p1.hp === p2.hp ? p1 : p1.hp > p2.hp ? p1 : p2;
+  const loser = winner ? winner.slot === p1.slot ? p2 : p1 : null;
+  if (winner) winner.roundsWon += 1;
   match.phase = 'roundOver';
   match.countdown = ROUND_OVER_DELAY;
-  match.message = getRoundFinishMessage(winner, loser);
+  match.message = winner && loser ? reason === 'timeout' ? 'TIME OVER' : getRoundFinishMessage(winner, loser) : 'DRAW';
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
-  match.visualTimeScale = KO_SLOWMO_TIME_SCALE;
+  match.visualTimeScale = reason === 'ko' ? KO_SLOWMO_TIME_SCALE : 1;
   match.idleQuietFrames = 0;
   match.idleQuietLockFrames = 0;
   match.fighters.forEach((fighter) => {
-    fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
+    fighter.state = winner ? fighter.slot === winner.slot ? 'win' : 'lose' : 'idle';
     fighter.currentMove = null;
     fighter.actionTimer = ROUND_OVER_DELAY;
     fighter.actionFramesRemaining = secondsToFrames(ROUND_OVER_DELAY);
@@ -4907,7 +4915,7 @@ function beginRoundFinisher(
 function updateRoundFinisher(match: MatchSnapshot, dt: number) {
   const finisher = match.roundFinisher;
   if (!finisher) {
-    finishRound(match);
+    finishRound(match, 'ko');
     return;
   }
   finisher.elapsed = Math.min(finisher.duration, finisher.elapsed + dt);
@@ -4923,7 +4931,7 @@ function updateRoundFinisher(match: MatchSnapshot, dt: number) {
   constrainFightersToStageBounds(match);
 
   if (finisher.elapsed >= finisher.duration) {
-    finishRound(match);
+    finishRound(match, 'ko');
   }
 }
 
@@ -4956,6 +4964,7 @@ function isTrainingInfiniteHealthMode(match: MatchSnapshot) {
 }
 
 function beginRoundIntro(match: MatchSnapshot) {
+  resetFightersToRoundStart(match);
   const totalIntroSeconds = getRoundIntroTotalSeconds(match.round);
   match.phase = 'intro';
   match.countdown = totalIntroSeconds;
@@ -4988,7 +4997,6 @@ function beginRoundIntro(match: MatchSnapshot) {
     fighter.getupAction = 'none';
     fighter.getupTotalFrames = 0;
     fighter.velocityY = 0;
-    fighter.position.y = 0;
     fighter.visualHitstop = createEmptyVisualHitstop();
     fighter.shadowClone = null;
     fighter.shadowCloneChargeConsumed = false;
@@ -5020,8 +5028,43 @@ function getRoundAnnouncerTiming(round: number) {
 }
 
 function updateRoundOverVisuals(match: MatchSnapshot) {
+  if (match.message !== 'K.O.' && match.message !== 'PERFECT') {
+    match.visualTimeScale = 1;
+    return;
+  }
   const elapsed = ROUND_OVER_DELAY - Math.max(0, match.countdown);
   match.visualTimeScale = elapsed < KO_SLOWMO_SECONDS ? KO_SLOWMO_TIME_SCALE : 1;
+}
+
+function resetFightersToRoundStart(match: MatchSnapshot) {
+  const [p1Start, p2Start] = resolveRoundStartPositions(match.stage);
+  match.fighters[0].position = { x: p1Start[0], y: p1Start[1], z: p1Start[2] };
+  match.fighters[1].position = { x: p2Start[0], y: p2Start[1], z: p2Start[2] };
+  resolveFacing(match);
+  updateControlSideSigns(match);
+  match.fighters.forEach((fighter) => {
+    fighter.horizontalHoldDirection = null;
+    fighter.horizontalHoldIntent = null;
+    fighter.horizontalHoldControlSideSign = fighter.controlSideSign;
+  });
+}
+
+function resolveRoundStartPositions(stage: StageDefinition): [Vec3Tuple, Vec3Tuple] {
+  if (stage.spawns) return [cloneVec3Tuple(stage.spawns.p1), cloneVec3Tuple(stage.spawns.p2)];
+  const center = stage.fightPlane?.center ?? [0, 0, 0];
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  const y = stage.fightPlane?.y ?? stage.world?.floorY ?? 0;
+  const p1 = roundStartPositionFromLocalSide(center, rotationY, y, -START_DISTANCE / 2);
+  const p2 = roundStartPositionFromLocalSide(center, rotationY, y, START_DISTANCE / 2);
+  return [p1, p2];
+}
+
+function cloneVec3Tuple(value: Vec3Tuple): Vec3Tuple {
+  return [value[0], value[1], value[2]];
+}
+
+function roundStartPositionFromLocalSide(center: Vec3Tuple, rotationY: number, y: number, side: number): Vec3Tuple {
+  return [center[0] + side * Math.cos(rotationY), y, center[2] - side * Math.sin(rotationY)];
 }
 
 function resetRound(match: MatchSnapshot) {
@@ -5034,6 +5077,7 @@ function resetRound(match: MatchSnapshot) {
   ];
   match.fighters[0].roundsWon = rounds[0];
   match.fighters[1].roundsWon = rounds[1];
+  resetFightersToRoundStart(match);
   match.round += 1;
   match.roundAiSeed = makeRoundAiSeed(match.aiSeed, match.round);
   match.timer = match.roundTime;

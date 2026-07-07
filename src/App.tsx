@@ -5594,7 +5594,6 @@ function MenuScreen({
         <div className="menu-cinematic-hint" aria-hidden="true">
           <span>/</span>
           <span>Select</span>
-          {inputPromptMode === 'gamepad' && <span>L1 Help</span>}
         </div>
       </section>}
       {menuLagReport && (
