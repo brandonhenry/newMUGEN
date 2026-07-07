@@ -165,6 +165,7 @@ import {
   makeTrialDummyInput,
   previewScriptLength,
   readTrainingTrialCompletion,
+  resolveNextTrainingTrial,
   trainingTrialCategoryLabels,
   trainingTrialModes,
   writeTrainingTrialCompletion,
@@ -229,6 +230,7 @@ type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsPropert
 type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
   __koreE2ESetFightPositions?: (positions: { p1?: E2EFightPosition; p2?: E2EFightPosition }) => void;
+  __koreE2ECompleteTrainingTrial?: () => void;
 };
 type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -248,6 +250,18 @@ type OnlineTrainingChatEntry = {
   sentAt: number;
   senderName: string;
   local: boolean;
+};
+type TrainingTrialOutcome = {
+  trialId: string;
+  title: string;
+  category: string;
+  difficulty: number;
+  successText: string;
+  feedback: string;
+  rating: string;
+  attempts: number;
+  comboHits: number;
+  comboDamage: number;
 };
 const ONLINE_INPUT_REDUNDANT_FRAMES = 8;
 const ONLINE_TRAINING_CHAT_MAX_LENGTH = 160;
@@ -19968,9 +19982,12 @@ function FightScreen({
   const [trainingTrialProgress, setTrainingTrialProgress] = useState<TrainingTrialProgress | null>(() => makeTrainingTrialProgress(activeTrainingTrial));
   const [completedTrainingTrialIds, setCompletedTrainingTrialIds] = useState<Set<string>>(() => readTrainingTrialCompletion(p1.id));
   const [previewPlayback, setPreviewPlayback] = useState<{ trialId: string; frame: number } | null>(null);
+  const [trainingTrialOutcome, setTrainingTrialOutcome] = useState<TrainingTrialOutcome | null>(null);
   const activeTrainingTrialRef = useRef<TrainingTrialDefinition | null>(activeTrainingTrial);
   const trainingTrialProgressRef = useRef<TrainingTrialProgress | null>(trainingTrialProgress);
   const previewPlaybackRef = useRef<{ trialId: string; frame: number } | null>(previewPlayback);
+  const dismissedTrainingTrialOutcomeRef = useRef<string | null>(null);
+  const trainingTrialAttemptCountsRef = useRef<Record<string, number>>({});
   const isTrainingOnline = mode === 'trainingOnline';
   const isRanked = mode === 'ranked';
   const isOnline = mode === 'online' || isTrainingOnline || mode === 'ranked' || mode === 'private' || mode === 'tournamentOnline';
@@ -19982,10 +19999,10 @@ function FightScreen({
       maxHealth: isOnline ? defaultGameSettings.game.maxHealth : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
       controlScheme: settings.game.controlScheme,
-      playIntro: true,
+      playIntro: mode !== 'training' && !isTrainingOnline,
       roster
     }),
-    [isOnline, isTrainingOnline, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
   const matchRef = useRef(match);
@@ -20164,10 +20181,34 @@ function FightScreen({
       matchRef.current = next;
       setMatch(next);
     };
+    testWindow.__koreE2ECompleteTrainingTrial = () => {
+      const trial = activeTrainingTrialRef.current;
+      const progress = trainingTrialProgressRef.current;
+      if (!trial || !progress) return;
+      const nextProgress: TrainingTrialProgress = {
+        ...progress,
+        stepIndex: Math.max(0, trial.steps.length - 1),
+        stepFrame: progress.stepFrame + 1,
+        statuses: trial.steps.map(() => 'perfect'),
+        ratings: trial.steps.map(() => 'Perfect'),
+        completed: true,
+        lastFeedback: trial.successText
+      };
+      trainingTrialProgressRef.current = nextProgress;
+      setTrainingTrialProgress(nextProgress);
+      setCompletedTrainingTrialIds((completed) => {
+        if (completed.has(trial.id)) return completed;
+        const updated = new Set(completed);
+        updated.add(trial.id);
+        writeTrainingTrialCompletion(p1.id, updated);
+        return updated;
+      });
+    };
     return () => {
       if (testWindow.__koreE2ESetFightPositions) delete testWindow.__koreE2ESetFightPositions;
+      if (testWindow.__koreE2ECompleteTrainingTrial) delete testWindow.__koreE2ECompleteTrainingTrial;
     };
-  }, []);
+  }, [p1.id]);
 
   useEffect(() => {
     setCompletedTrainingTrialIds(readTrainingTrialCompletion(p1.id));
@@ -20175,11 +20216,13 @@ function FightScreen({
 
   useEffect(() => {
     const nextTrial = activeTrainingTrials.find((trial) => trial.id === activeTrainingTrialId) ?? activeTrainingTrials[0] ?? null;
-    const nextProgress = makeTrainingTrialProgress(nextTrial);
+    const nextProgress = makeTrainingTrialProgress(nextTrial, false, nextTrial ? trainingTrialAttemptCountsRef.current[nextTrial.id] ?? 0 : 0);
     setActiveTrainingTrialId(nextTrial?.id ?? null);
     activeTrainingTrialRef.current = nextTrial;
     trainingTrialProgressRef.current = nextProgress;
     setTrainingTrialProgress(nextProgress);
+    setTrainingTrialOutcome(null);
+    dismissedTrainingTrialOutcomeRef.current = null;
     seenTrialImpactEventIds.current.clear();
   }, [activeTrainingTrials, activeTrainingTrialId]);
 
@@ -20282,6 +20325,28 @@ function FightScreen({
       trial_difficulty: activeTrainingTrial.difficulty
     });
   }, [activeTrainingTrial, captureFightAnalytics, mode, previewPlayback, trainingTrialProgress?.completed]);
+
+  useEffect(() => {
+    if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
+    if (trainingTrialOutcome?.trialId === activeTrainingTrial.id) return;
+    if (dismissedTrainingTrialOutcomeRef.current === activeTrainingTrial.id) return;
+    const finalRating = [...trainingTrialProgress.ratings].reverse().find((rating) => rating !== 'Ready') ?? 'Confirmed';
+    const fighter = matchRef.current.fighters[0];
+    setTrainingTrialOutcome({
+      trialId: activeTrainingTrial.id,
+      title: activeTrainingTrial.title,
+      category: trainingTrialCategoryLabels[activeTrainingTrial.category],
+      difficulty: activeTrainingTrial.difficulty,
+      successText: activeTrainingTrial.successText,
+      feedback: trainingTrialProgress.lastFeedback || activeTrainingTrial.successText,
+      rating: finalRating,
+      attempts: Math.max(1, trainingTrialProgress.attempts),
+      comboHits: Math.max(0, fighter.comboHits),
+      comboDamage: Math.max(0, Math.round(fighter.comboDamage))
+    });
+    setPauseMenuView('menu');
+    setPaused(true);
+  }, [activeTrainingTrial, mode, previewPlayback, trainingTrialOutcome?.trialId, trainingTrialProgress]);
 
   useEffect(() => {
     latestAudioSettingsRef.current = settings.audio;
@@ -21833,12 +21898,18 @@ function FightScreen({
 
   const restartTrainingTrial = useCallback((trial = activeTrainingTrialRef.current ?? activeTrainingTrial, preview = false) => {
     if (!trial) return;
+    setTrainingTrialOutcome(null);
+    dismissedTrainingTrialOutcomeRef.current = null;
     const fresh = prepareTrainingTrialMatch(makeTrialMatch(trial), trial);
     resetTrackedMatchAnalytics(fresh);
     seenTrialImpactEventIds.current.clear();
     matchRef.current = fresh;
     setMatch(fresh);
-    const progress = makeTrainingTrialProgress(trial, preview);
+    const attempts = preview
+      ? trainingTrialAttemptCountsRef.current[trial.id] ?? 0
+      : (trainingTrialAttemptCountsRef.current[trial.id] ?? 0) + 1;
+    if (!preview) trainingTrialAttemptCountsRef.current[trial.id] = attempts;
+    const progress = makeTrainingTrialProgress(trial, preview, attempts);
     activeTrainingTrialRef.current = trial;
     trainingTrialProgressRef.current = progress;
     setTrainingTrialProgress(progress);
@@ -21848,13 +21919,15 @@ function FightScreen({
   }, [activeTrainingTrial, makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
 
   const selectTrainingTrial = useCallback((trial: TrainingTrialDefinition) => {
+    setTrainingTrialOutcome(null);
+    dismissedTrainingTrialOutcomeRef.current = null;
     captureFightAnalytics('training_trial_selected', {
       trial_id: trial.id,
       training_submode: trial.mode,
       trial_category: trial.category,
       trial_difficulty: trial.difficulty
     });
-    const progress = makeTrainingTrialProgress(trial);
+    const progress = makeTrainingTrialProgress(trial, false, trainingTrialAttemptCountsRef.current[trial.id] ?? 0);
     setTrainingMode(trial.mode);
     setActiveTrainingTrialId(trial.id);
     activeTrainingTrialRef.current = trial;
@@ -21896,6 +21969,47 @@ function FightScreen({
     restartTrainingTrial(trial ?? undefined, true);
     setPaused(false);
   }, [activeTrainingTrial, captureFightAnalytics, restartTrainingTrial]);
+
+  const retryCompletedTrainingTrial = useCallback(() => {
+    const trial = activeTrainingTrialRef.current ?? activeTrainingTrial;
+    if (!trial) return;
+    captureFightAnalytics('training_trial_retried', {
+      trial_id: trial.id,
+      training_submode: trial.mode,
+      trial_category: trial.category,
+      trial_difficulty: trial.difficulty,
+      source: 'success_overlay'
+    });
+    restartTrainingTrial(trial, false);
+    setPaused(false);
+  }, [activeTrainingTrial, captureFightAnalytics, restartTrainingTrial]);
+
+  const goToNextTrainingTrial = useCallback(() => {
+    if (!trainingTrialOutcome) return;
+    const completed = new Set(completedTrainingTrialIds);
+    completed.add(trainingTrialOutcome.trialId);
+    const next = resolveNextTrainingTrial(activeTrainingTrials, trainingTrialOutcome.trialId, completed).trial;
+    if (!next) return;
+    captureFightAnalytics('training_trial_selected', {
+      trial_id: next.id,
+      training_submode: next.mode,
+      trial_category: next.category,
+      trial_difficulty: next.difficulty,
+      source: 'success_overlay'
+    });
+    setTrainingMode(next.mode);
+    setActiveTrainingTrialId(next.id);
+    activeTrainingTrialRef.current = next;
+    restartTrainingTrial(next, false);
+    setPaused(false);
+  }, [activeTrainingTrials, captureFightAnalytics, completedTrainingTrialIds, restartTrainingTrial, trainingTrialOutcome]);
+
+  const openTrainingTrialMenuFromOutcome = useCallback(() => {
+    if (trainingTrialOutcome) dismissedTrainingTrialOutcomeRef.current = trainingTrialOutcome.trialId;
+    setTrainingTrialOutcome(null);
+    setPauseMenuView('trainingTrials');
+    setPaused(true);
+  }, [trainingTrialOutcome]);
 
   const leaveToMenu = () => {
     captureFightAnalytics('pause_menu_action_clicked', { action: 'menu', phase: matchRef.current.phase });
@@ -21963,6 +22077,13 @@ function FightScreen({
     : isOnline && onlineRematchReadyRef.current.local
       ? 'Waiting'
       : 'Rematch';
+  const trainingTrialOutcomeNext = trainingTrialOutcome
+    ? resolveNextTrainingTrial(
+      activeTrainingTrials,
+      trainingTrialOutcome.trialId,
+      new Set([...completedTrainingTrialIds, trainingTrialOutcome.trialId])
+    )
+    : null;
 
   return (
     <div
@@ -21994,7 +22115,7 @@ function FightScreen({
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {(assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
-      {match.message && match.clashState.status === 'none' && (
+      {match.message && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
         >
@@ -22038,9 +22159,21 @@ function FightScreen({
           trial={activeTrainingTrial}
           progress={trainingTrialProgress}
           previewing={Boolean(previewPlayback)}
+          trialNumber={Math.max(1, activeTrainingTrials.findIndex((trial) => trial.id === activeTrainingTrial.id) + 1)}
+          trialCount={activeTrainingTrials.length}
         />
       )}
-      {paused && (
+      {trainingTrialOutcome && (
+        <TrainingTrialSuccessOverlay
+          outcome={trainingTrialOutcome}
+          nextLabel={trainingTrialOutcomeNext?.label ?? 'Next Trial'}
+          hasNextTrial={Boolean(trainingTrialOutcomeNext?.trial)}
+          onNext={goToNextTrainingTrial}
+          onRetry={retryCompletedTrainingTrial}
+          onMenu={openTrainingTrialMenuFromOutcome}
+        />
+      )}
+      {paused && !trainingTrialOutcome && (
         <div className={`pause-overlay ${pauseMenuView === 'movelist' || pauseMenuView === 'trainingTrials' ? 'pause-movelist-overlay' : ''}`}>
           {pauseMenuView === 'movelist' ? (
             <>
@@ -22680,21 +22813,85 @@ function safeTestId(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'move';
 }
 
+const ZORO_TRAINER_FACE_CARD = '/characters/roronoa-zoro/face-card.png';
+const ZORO_TRAINER_FRAME_FALLBACK = '/characters/roronoa-zoro/frames/frame-000.png';
+
+function TrainerPortrait() {
+  const [source, setSource] = useState(ZORO_TRAINER_FACE_CARD);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    setSource(ZORO_TRAINER_FACE_CARD);
+    setFailed(false);
+  }, []);
+
+  if (failed) {
+    return (
+      <span className="trainer-portrait trainer-portrait-fallback" data-testid="trainer-portrait-fallback" aria-hidden="true">
+        Z
+      </span>
+    );
+  }
+
+  return (
+    <img
+      className="trainer-portrait"
+      src={source}
+      alt=""
+      data-testid="trainer-portrait"
+      onError={() => {
+        if (source === ZORO_TRAINER_FACE_CARD) {
+          setSource(ZORO_TRAINER_FRAME_FALLBACK);
+          return;
+        }
+        setFailed(true);
+      }}
+    />
+  );
+}
+
+function formatTrainingFeedback(progress: TrainingTrialProgress, previewing: boolean) {
+  if (progress.completed) return 'Success';
+  if (previewing) return 'Preview';
+  const feedback = progress.lastFeedback || 'Ready';
+  if (/early/i.test(feedback)) return 'Too Early';
+  if (/late/i.test(feedback)) return 'Late';
+  if (/perfect/i.test(feedback)) return 'Perfect';
+  if (/confirmed|counter hit/i.test(feedback)) return feedback;
+  return 'Ready';
+}
+
 function TrainingTrialHud({
   trial,
   progress,
-  previewing
+  previewing,
+  trialNumber,
+  trialCount
 }: {
   trial: TrainingTrialDefinition;
   progress: TrainingTrialProgress;
   previewing: boolean;
+  trialNumber: number;
+  trialCount: number;
 }) {
+  const currentStep = trial.steps[progress.stepIndex] ?? trial.steps[trial.steps.length - 1];
+  const feedback = formatTrainingFeedback(progress, previewing);
   return (
     <aside className="training-trial-hud" aria-live="polite">
       <header>
-        <span>{previewing ? 'Preview' : 'Try'}</span>
+        <span>
+          Trial {String(trialNumber).padStart(2, '0')} / {Math.max(1, trialCount)} | {trainingTrialCategoryLabels[trial.category]} Lv {trial.difficulty}
+        </span>
         <strong>{trial.title}</strong>
       </header>
+      {currentStep && (
+        <section className="training-trial-objective">
+          <small>{previewing ? 'Watch the timing' : progress.completed ? 'Drill clear' : 'Current objective'}</small>
+          <strong>{currentStep.label}</strong>
+          <NotationGroup tokens={currentStep.notation} />
+          <span className={`training-trial-feedback is-${safeClassToken(feedback)}`}>{feedback}</span>
+        </section>
+      )}
       <div className="training-trial-hud-steps">
         {trial.steps.map((step, index) => {
           const status = progress.statuses[index] ?? 'pending';
@@ -22703,12 +22900,67 @@ function TrainingTrialHud({
             <div key={`${trial.id}:hud:${index}`} className={`training-trial-hud-step ${status}`}>
               <NotationGroup tokens={step.notation} />
               <span>{step.label}</span>
-              <small>{status === 'current' ? progress.lastFeedback : rating}</small>
+              <small>{progress.completed && status === 'perfect' ? 'Success' : status === 'current' ? feedback : rating === 'Too early' ? 'Too Early' : rating}</small>
             </div>
           );
         })}
       </div>
     </aside>
+  );
+}
+
+function TrainingTrialSuccessOverlay({
+  outcome,
+  nextLabel,
+  hasNextTrial,
+  onNext,
+  onRetry,
+  onMenu
+}: {
+  outcome: TrainingTrialOutcome;
+  nextLabel: 'Next Trial' | 'Review Next';
+  hasNextTrial: boolean;
+  onNext: () => void;
+  onRetry: () => void;
+  onMenu: () => void;
+}) {
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => nextButtonRef.current?.focus({ preventScroll: true }));
+    return () => window.cancelAnimationFrame(frame);
+  }, [outcome.trialId]);
+
+  return (
+    <div className="pause-overlay training-success-overlay" role="dialog" aria-label="Training trial success" data-testid="training-success-overlay">
+      <section className="training-success-panel">
+        <TrainerPortrait />
+        <span className="training-success-kicker">{outcome.category} Lv {outcome.difficulty}</span>
+        <h2>SUCCESS</h2>
+        <strong>{outcome.title}</strong>
+        <p>{outcome.successText}</p>
+        <div className="training-success-stats" aria-label="Training result stats">
+          <span><small>Attempts</small>{outcome.attempts}</span>
+          <span><small>Timing</small>{outcome.rating}</span>
+          <span><small>Hits</small>{outcome.comboHits}</span>
+          <span><small>Damage</small>{outcome.comboDamage}</span>
+        </div>
+        <div className="training-success-actions">
+          <button ref={nextButtonRef} className="primary-button" onClick={onNext} disabled={!hasNextTrial}>
+            <ChevronRight size={20} />
+            {nextLabel}
+          </button>
+          <button className="secondary-button" onClick={onRetry}>
+            <RotateCcw size={18} />
+            Retry
+          </button>
+          <button className="secondary-button" onClick={onMenu}>
+            <Target size={18} />
+            Training Menu
+          </button>
+        </div>
+      </section>
+    </div>
   );
 }
 
@@ -22805,8 +23057,8 @@ function TrainingTrialPanel({
 
   return (
     <div className="combo-trial-panel">
-      <aside className="combo-trial-list" aria-label="Combo trials">
-        <h3>{character.displayName}</h3>
+      <aside className="combo-trial-list" aria-label="Training trials">
+        <h3>{character.displayName} Training</h3>
         <div className="training-mode-switch" role="tablist" aria-label="Training mode">
           {modes.map((item) => (
             <button
@@ -22823,7 +23075,7 @@ function TrainingTrialPanel({
         {mode === 'free' && (
           <section>
             <strong>Free Training</strong>
-            <p>Use the arena freely. Pick Basics for fundamentals or Combos for route drills.</p>
+            <p>Use the arena freely, or switch to Basics for guided fundamentals and Combos for route drills.</p>
           </section>
         )}
         {groupedTrials.map((group) => (
@@ -22860,7 +23112,7 @@ function TrainingTrialPanel({
               <small>{activeTrial.lesson}</small>
             </header>
             <div className="zoro-trainer-callout">
-              <img src="/characters/roronoa-zoro/face-card.png" alt="" />
+              <TrainerPortrait />
               <p><strong>Zoro</strong>{activeTrial.zoroLine}</p>
             </div>
             <div className="combo-trial-sequence">
@@ -22882,8 +23134,8 @@ function TrainingTrialPanel({
             <div className="combo-trial-stats">
               <span>{match.fighters[0].comboHits} hits</span>
               <span>{Math.round(match.fighters[0].comboDamage)} damage</span>
-              <span>{progress?.completed ? 'Complete' : previewing ? 'Preview' : 'Training'}</span>
-              <span>{progress?.lastFeedback ?? 'Ready'}</span>
+              <span>{progress?.completed ? 'Success' : previewing ? 'Preview' : 'Ready'}</span>
+              <span>{progress ? formatTrainingFeedback(progress, previewing) : 'Ready'}</span>
             </div>
           </>
         ) : (

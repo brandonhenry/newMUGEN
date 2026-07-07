@@ -17,6 +17,7 @@ import {
   makeTrainingTrialProgress,
   previewScriptLength,
   readTrainingTrialCompletion,
+  resolveNextTrainingTrial,
   trainingTrialCategoryLabels,
   writeTrainingTrialCompletion
 } from './trainingTrials';
@@ -537,6 +538,68 @@ describe('training trial catalog', () => {
 
     expect(readTrainingTrialCompletion('naruto')).toEqual(new Set(['basic:naruto:movement:walk', 'combo:naruto:test']));
     expect(readTrainingTrialCompletion('sasuke')).toEqual(new Set(['basic:sasuke:movement:walk']));
+  });
+
+  it('resolves the next uncompleted training trial after the current trial', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster).slice(0, 4);
+    expect(trials.length).toBe(4);
+    const completed = new Set([trials[0].id, trials[1].id]);
+    const next = resolveNextTrainingTrial(trials, trials[1].id, completed);
+
+    expect(next).toMatchObject({
+      label: 'Next Trial',
+      allComplete: false,
+      trial: { id: trials[2].id }
+    });
+  });
+
+  it('wraps to review next when every training trial is complete', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster).slice(0, 3);
+    expect(trials.length).toBe(3);
+    const completed = new Set(trials.map((trial) => trial.id));
+    const next = resolveNextTrainingTrial(trials, trials[1].id, completed);
+
+    expect(next).toMatchObject({
+      label: 'Review Next',
+      allComplete: true,
+      trial: { id: trials[2].id }
+    });
+  });
+
+  it('resets completion and preserves attempt count when retrying a trial', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('movement:walk'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    let progress = makeTrainingTrialProgress(trial, false, 1)!;
+    const input = emptyInputFrame();
+    input.right = true;
+    for (let frame = 0; frame < 13; frame += 1) {
+      progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch());
+    }
+    progress = advanceTrainingTrialWithInput(progress, trial, input, mockMatch());
+    expect(progress.completed).toBe(true);
+
+    const retry = makeTrainingTrialProgress(trial, false, 2)!;
+    expect(retry.completed).toBe(false);
+    expect(retry.attempts).toBe(2);
+    expect(retry.statuses[0]).toBe('current');
+    expect(retry.lastFeedback).toBe('Ready');
   });
 
   it('grades early, perfect, and late input timing', () => {

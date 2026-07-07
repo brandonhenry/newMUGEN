@@ -100,6 +100,12 @@ export type TrainingTrialProgress = {
   preview: boolean;
 };
 
+export type TrainingTrialNextResolution = {
+  trial: TrainingTrialDefinition | null;
+  label: 'Next Trial' | 'Review Next';
+  allComplete: boolean;
+};
+
 export const TRAINING_TRIAL_CATALOG_VERSION = 1;
 export const TRAINING_TRIAL_STORAGE_KEY = `kore.trainingTrials.v${TRAINING_TRIAL_CATALOG_VERSION}`;
 
@@ -475,17 +481,38 @@ function comboRouteZoroLine(route: GeneratedComboRoute) {
   return 'One clean input after another.';
 }
 
-export function makeTrainingTrialProgress(trial: TrainingTrialDefinition | null, preview = false): TrainingTrialProgress | null {
+export function makeTrainingTrialProgress(trial: TrainingTrialDefinition | null, preview = false, attempts = 0): TrainingTrialProgress | null {
   if (!trial) return null;
   return {
     stepIndex: 0,
     stepFrame: 0,
     statuses: trial.steps.map((_, index) => index === 0 ? 'current' : 'pending'),
     ratings: trial.steps.map(() => 'Ready'),
-    attempts: 0,
+    attempts,
     completed: false,
     lastFeedback: 'Ready',
     preview
+  };
+}
+
+export function resolveNextTrainingTrial(
+  trials: TrainingTrialDefinition[],
+  currentTrialId: string | null,
+  completed: Set<string>
+): TrainingTrialNextResolution {
+  if (trials.length === 0) return { trial: null, label: 'Next Trial', allComplete: true };
+  const foundIndex = trials.findIndex((trial) => trial.id === currentTrialId);
+  const currentIndex = foundIndex >= 0 ? foundIndex : -1;
+  for (let offset = 1; offset <= trials.length; offset += 1) {
+    const candidate = trials[(currentIndex + offset) % trials.length];
+    if (candidate && !completed.has(candidate.id)) {
+      return { trial: candidate, label: 'Next Trial', allComplete: false };
+    }
+  }
+  return {
+    trial: trials[(currentIndex + 1) % trials.length] ?? trials[0] ?? null,
+    label: 'Review Next',
+    allComplete: true
   };
 }
 

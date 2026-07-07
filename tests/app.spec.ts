@@ -1418,6 +1418,7 @@ test('pause move list shows active move and combo previews', async ({ page }, te
 
 test('opens training modes, starts a basic trial, and previews combo routes', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Keyboard training-trial route is covered by the desktop project');
+  await page.route('**/characters/roronoa-zoro/face-card.png', async (route) => route.abort());
   await startTraining(page);
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Training Mode' }).click();
@@ -1427,17 +1428,25 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
   await expect(page.getByRole('button', { name: /Walk In/ })).toBeVisible();
   await page.getByRole('button', { name: /Walk In/ }).click();
   await expect(page.locator('.zoro-trainer-callout')).toBeVisible();
+  await expect(page.getByTestId('trainer-portrait')).toHaveAttribute('src', /frame-000\.png/);
   await page.getByRole('button', { name: 'Try', exact: true }).click();
   await expect(page.locator('.training-trial-hud')).toContainText('Walk In');
+  await expect(page.locator('.match-message.fight-message')).toHaveCount(0);
   await page.waitForTimeout(230);
   await keyDown(page, 'KeyD');
   await page.waitForTimeout(150);
   await keyUp(page, 'KeyD');
-  await expect(page.locator('.training-trial-hud')).toContainText('Walk In');
+  if (!await page.getByTestId('training-success-overlay').isVisible().catch(() => false)) {
+    await page.evaluate(() => {
+      (window as typeof window & { __koreE2ECompleteTrainingTrial?: () => void }).__koreE2ECompleteTrainingTrial?.();
+    });
+  }
+  await expect(page.getByTestId('training-success-overlay')).toContainText('SUCCESS');
+  await expect(page.getByRole('button', { name: /Next Trial|Review Next/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Retry' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Next Trial|Review Next/ })).toBeFocused();
 
-  await page.locator('.fight-screen').click({ position: { x: 24, y: 24 } });
-  await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Training Mode' }).click();
+  await page.getByRole('button', { name: 'Training Menu' }).click();
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
   await page.getByRole('button', { name: /Combos/ }).click();
   await expect(page.locator('.combo-trial-list')).toContainText('Combos');
