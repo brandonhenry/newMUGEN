@@ -5144,6 +5144,7 @@ function MenuScreen({
       return undefined;
     }
     const focusFrame = window.requestAnimationFrame(() => menuScreenRef.current?.focus({ preventScroll: true }));
+    hiddenMenuGamepadPressedRef.current = hasActiveGamepadInput();
 
     const revealFromPointer = () => revealMenuChrome();
     const revealFromKey = (event: KeyboardEvent) => {

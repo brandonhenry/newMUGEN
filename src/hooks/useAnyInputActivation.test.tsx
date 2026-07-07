@@ -50,10 +50,31 @@ describe('useAnyInputActivation', () => {
 
   it('accepts exposed active gamepad input from polling', async () => {
     const onAccept = vi.fn();
-    mockGamepads([makeGamepad({ buttons: { 0: true } })]);
+    const pad = makeGamepad();
+    mockGamepads([pad]);
 
     render(<Harness onAccept={onAccept} />);
 
+    setGamepadButton(pad, 0, true);
+
+    await waitFor(() => expect(onAccept).toHaveBeenCalledTimes(1));
+  });
+
+  it('requires neutral gamepad input before accepting a carried held button', async () => {
+    const onAccept = vi.fn();
+    const pad = makeGamepad({ buttons: { 0: true } });
+    mockGamepads([pad]);
+
+    render(<Harness onAccept={onAccept} />);
+
+    await waitForAnimationFrames(3);
+    expect(onAccept).not.toHaveBeenCalled();
+
+    setGamepadButton(pad, 0, false);
+    await waitForAnimationFrames(3);
+    expect(onAccept).not.toHaveBeenCalled();
+
+    setGamepadButton(pad, 0, true);
     await waitFor(() => expect(onAccept).toHaveBeenCalledTimes(1));
   });
 });
@@ -80,4 +101,24 @@ function makeGamepad({ buttons = {}, axes = [0, 0] }: { buttons?: Record<number,
     axes,
     vibrationActuator: null
   } as unknown as Gamepad;
+}
+
+function setGamepadButton(gamepad: Gamepad, buttonIndex: number, pressed: boolean) {
+  const button = gamepad.buttons[buttonIndex] as unknown as { pressed: boolean; touched: boolean; value: number };
+  button.pressed = pressed;
+  button.touched = pressed;
+  button.value = pressed ? 1 : 0;
+}
+
+function waitForAnimationFrames(count: number) {
+  return new Promise<void>((resolve) => {
+    const step = (remaining: number) => {
+      if (remaining <= 0) {
+        resolve();
+        return;
+      }
+      window.requestAnimationFrame(() => step(remaining - 1));
+    };
+    step(count);
+  });
 }

@@ -379,6 +379,44 @@ test('title splash accepts browser gamepad input', async ({ page }) => {
   await expectMainMenu(page);
 });
 
+test('controller select toggles main menu chrome only after release', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFromSplash(page);
+
+  await setMockGamepadButton(page, 8, true);
+  await expect(page.locator('.menu-screen')).toHaveClass(/is-chrome-hidden/);
+  await expect(page.locator('.kore-menu-overlay')).toBeHidden();
+
+  await page.waitForTimeout(350);
+  await expect(page.locator('.menu-screen')).toHaveClass(/is-chrome-hidden/);
+
+  await setMockGamepadButton(page, 8, false);
+  await page.waitForTimeout(120);
+  await setMockGamepadButton(page, 8, true);
+
+  await expect(page.locator('.menu-screen')).not.toHaveClass(/is-chrome-hidden/);
+  await expectMainMenu(page);
+});
+
+test('title screen ignores controller confirm carried from Exit until release', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFromSplash(page);
+
+  await page.getByRole('button', { name: 'Exit' }).focus();
+  await setMockGamepadButton(page, 0, true);
+
+  await expect(page.locator('.title-screen')).toBeVisible();
+  await page.waitForTimeout(350);
+  await expect(page.locator('.title-screen')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Arcade' })).toBeHidden();
+
+  await setMockGamepadButton(page, 0, false);
+  await page.waitForTimeout(120);
+  await setMockGamepadButton(page, 0, true);
+
+  await expectMainMenu(page);
+});
+
 test('title splash hides support warning on healthy WebGL devices', async ({ page }) => {
   await mockInitialWebGLSupport(page, true);
   await gotoTitle(page);

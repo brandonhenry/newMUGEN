@@ -15,6 +15,7 @@ export function useAnyInputActivation({
   onBack
 }: AnyInputActivationOptions) {
   const acceptedRef = useRef(false);
+  const gamepadPollingArmedRef = useRef(true);
   const onAcceptRef = useRef(onAccept);
   const onBackRef = useRef(onBack);
 
@@ -27,7 +28,10 @@ export function useAnyInputActivation({
   }, [onBack]);
 
   useEffect(() => {
-    if (enabled && ready) acceptedRef.current = false;
+    if (enabled && ready) {
+      acceptedRef.current = false;
+      gamepadPollingArmedRef.current = !hasActiveGamepadInput();
+    }
   }, [enabled, ready]);
 
   const accept = useCallback((event?: Event) => {
@@ -83,7 +87,12 @@ export function useAnyInputActivation({
     if (!enabled || !ready) return undefined;
     let frame = 0;
     const tick = () => {
-      if (hasActiveGamepadInput()) accept();
+      const active = hasActiveGamepadInput();
+      if (!active) {
+        gamepadPollingArmedRef.current = true;
+      } else if (gamepadPollingArmedRef.current) {
+        accept();
+      }
       frame = window.requestAnimationFrame(tick);
     };
     frame = window.requestAnimationFrame(tick);
