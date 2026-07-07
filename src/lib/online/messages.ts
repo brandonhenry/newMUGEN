@@ -81,6 +81,27 @@ export type OnlineRankedResultMessage = {
   result: RankedSubmitResult;
 };
 
+export type OnlineAssetWarmupReadyMessage = {
+  type: 'assetWarmupReady';
+  warmupId: string;
+  roomId: string;
+  stageId: string;
+  p1CharacterId: string;
+  p2CharacterId: string;
+  mode: 'online' | 'trainingOnline';
+  ready: boolean;
+  progress: number;
+  error?: string;
+  sentAt: number;
+};
+
+export type OnlineAssetWarmupAbortMessage = {
+  type: 'assetWarmupAbort';
+  warmupId: string;
+  roomId: string;
+  reason: string;
+};
+
 export type OnlineChatMessage = {
   type: 'chat';
   id: string;
@@ -102,12 +123,16 @@ export type OnlineMessage =
   | OnlinePongMessage
   | OnlineErrorMessage
   | OnlineRankedResultMessage
+  | OnlineAssetWarmupReadyMessage
+  | OnlineAssetWarmupAbortMessage
   | OnlineChatMessage;
 
 export function isOnlineMessage(value: unknown): value is OnlineMessage {
   if (!value || typeof value !== 'object' || !('type' in value)) return false;
   const type = (value as { type?: unknown }).type;
   if (type === 'chat') return isOnlineChatMessage(value);
+  if (type === 'assetWarmupReady') return isOnlineAssetWarmupReadyMessage(value);
+  if (type === 'assetWarmupAbort') return isOnlineAssetWarmupAbortMessage(value);
   return (
     type === 'hello' ||
     type === 'input' ||
@@ -121,6 +146,43 @@ export function isOnlineMessage(value: unknown): value is OnlineMessage {
     type === 'pong' ||
     type === 'error' ||
     type === 'rankedResult'
+  );
+}
+
+function isSafeProtocolString(value: unknown, maxLength = 160): value is string {
+  return typeof value === 'string' && value.length > 0 && value.length <= maxLength;
+}
+
+function isOnlineAssetWarmupReadyMessage(value: unknown): value is OnlineAssetWarmupReadyMessage {
+  if (!value || typeof value !== 'object') return false;
+  const message = value as Partial<OnlineAssetWarmupReadyMessage>;
+  return (
+    message.type === 'assetWarmupReady' &&
+    isSafeProtocolString(message.warmupId) &&
+    isSafeProtocolString(message.roomId) &&
+    isSafeProtocolString(message.stageId) &&
+    isSafeProtocolString(message.p1CharacterId) &&
+    isSafeProtocolString(message.p2CharacterId) &&
+    (message.mode === 'online' || message.mode === 'trainingOnline') &&
+    typeof message.ready === 'boolean' &&
+    typeof message.progress === 'number' &&
+    Number.isFinite(message.progress) &&
+    message.progress >= 0 &&
+    message.progress <= 100 &&
+    typeof message.sentAt === 'number' &&
+    Number.isFinite(message.sentAt) &&
+    (message.error === undefined || (typeof message.error === 'string' && message.error.length <= 240))
+  );
+}
+
+function isOnlineAssetWarmupAbortMessage(value: unknown): value is OnlineAssetWarmupAbortMessage {
+  if (!value || typeof value !== 'object') return false;
+  const message = value as Partial<OnlineAssetWarmupAbortMessage>;
+  return (
+    message.type === 'assetWarmupAbort' &&
+    isSafeProtocolString(message.warmupId) &&
+    isSafeProtocolString(message.roomId) &&
+    isSafeProtocolString(message.reason, 240)
   );
 }
 

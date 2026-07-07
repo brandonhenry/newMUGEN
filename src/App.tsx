@@ -80,7 +80,7 @@ import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/pe
 import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
 import { emptyRankedKrScores, fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedKrScores, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
-import type { OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
+import type { OnlineAssetWarmupReadyMessage, OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import { createRollbackSession, type RollbackSession } from './lib/online/rollback';
 import {
   ROUNDS_TO_WIN,
@@ -262,6 +262,23 @@ type OnlineTrainingChatEntry = {
   senderName: string;
   local: boolean;
 };
+type OnlineAssetGate = {
+  warmupId: string;
+  roomId: string;
+  stageId: string;
+  p1CharacterId: string;
+  p2CharacterId: string;
+  mode: 'online' | 'trainingOnline';
+  reason: 'start' | 'rematch';
+  match: MatchSnapshot;
+  startedAt: number;
+  localReady: boolean;
+  remoteReady: boolean;
+  localProgress: number;
+  remoteProgress: number;
+  localError?: string;
+  remoteError?: string;
+};
 type TrainingTrialOutcome = {
   trialId: string;
   title: string;
@@ -279,7 +296,24 @@ const ONLINE_TRAINING_CHAT_MAX_LENGTH = 160;
 const ONLINE_TRAINING_CHAT_CONTROLLER_CHARACTERS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?.,_-'.split('');
 const BOT_REMATCH_READY_MS = 5_000;
 const BOT_REMATCH_LEAVE_MS = 10_000;
+const ONLINE_ASSET_WARMUP_TIMEOUT_MS = 300_000;
 const RANKED_REMATCH_LIMIT = 2;
+function makeOnlineAssetWarmupId(roomId: string, match: MatchSnapshot, reason: OnlineAssetGate['reason'], wins: OnlineWins) {
+  return [
+    roomId,
+    reason,
+    wins.join('-'),
+    match.stage.id,
+    match.fighters[0].baseCharacter.id,
+    match.fighters[1].baseCharacter.id,
+    match.mode === 'trainingOnline' ? 'trainingOnline' : 'online'
+  ].join(':');
+}
+
+function onlineMatchGateMode(match: MatchSnapshot): OnlineAssetGate['mode'] {
+  return match.mode === 'trainingOnline' ? 'trainingOnline' : 'online';
+}
+
 type RandomCharacterSlots = Record<1 | 2, boolean>;
 type TournamentSelectMode = 'free' | 'online' | 'paid' | 'infinite';
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
@@ -20376,6 +20410,71 @@ function FightAssetLoadingOverlay({ state }: { state: AssetLoadingState }) {
   );
 }
 
+function OnlineAssetWarmupOverlay({
+  gate,
+  privateRoomName,
+  privateRoomPassword
+}: {
+  gate: OnlineAssetGate;
+  privateRoomName?: string;
+  privateRoomPassword?: string;
+}) {
+  const progress = Math.max(0, Math.min(100, Math.round((gate.localProgress + gate.remoteProgress) / 2)));
+  const localStatus = gate.localError ? 'Failed' : gate.localReady ? 'Ready' : 'Loading';
+  const remoteStatus = gate.remoteError ? 'Failed' : gate.remoteReady ? 'Ready' : 'Waiting';
+  const elapsedSeconds = Math.max(0, Math.floor((Date.now() - gate.startedAt) / 1000));
+  return (
+    <div
+      className={`arcade-transition-screen stage-warmup-screen asset-warmup-screen online-asset-warmup-screen ${gate.localReady && gate.remoteReady ? 'is-ready' : ''}`}
+      aria-label="Loading online match assets"
+      aria-live="polite"
+      data-testid="online-asset-warmup-screen"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 40,
+        '--arcade-primary': gate.match.stage.rail,
+        '--arcade-accent': gate.match.fighters[0].character.colors.accent
+      } as CSSProperties}
+    >
+      <div className="arcade-transition-stage" aria-hidden="true">
+        <StagePreviewCanvas stage={gate.match.stage} previewMode="fly" />
+      </div>
+      <div className="arcade-transition-vignette" />
+      <div className="arcade-transition-route-line" aria-hidden="true" />
+      <section className="arcade-transition-copy">
+        <div className="arcade-transition-kicker">
+          <span>Online Match Loading</span>
+          <b>{gate.localReady && gate.remoteReady ? 'Ready' : 'Syncing Assets'}</b>
+        </div>
+        <h1>{gate.match.stage.name}</h1>
+        <p>Preparing both fighters and the arena on both systems before the match starts.</p>
+        <div className="arcade-transition-stats stage-warmup-stats">
+          <span>
+            <strong>{progress}%</strong>
+            <small>Loaded</small>
+          </span>
+          <span>
+            <strong>{localStatus}</strong>
+            <small>You</small>
+          </span>
+          <span>
+            <strong>{remoteStatus}</strong>
+            <small>Opponent</small>
+          </span>
+        </div>
+        {privateRoomPassword && (
+          <p>{privateRoomName ? `${privateRoomName} ` : ''}{privateRoomPassword}</p>
+        )}
+      </section>
+      <div className="arcade-transition-footer">
+        <Timer size={18} />
+        <span>{gate.localReady ? remoteStatus === 'Ready' ? 'Entering online match' : 'Waiting for opponent assets' : `Loading local assets ${elapsedSeconds}s`}</span>
+      </div>
+    </div>
+  );
+}
+
 function FightScreen({
   p1,
   p2,
@@ -20508,6 +20607,9 @@ function FightScreen({
   const onlineRoleRef = useRef<OnlineRole | null>(null);
   const onlineStateRef = useRef<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const onlineRollbackRef = useRef<RollbackSession | null>(null);
+  const onlineAssetGateRef = useRef<OnlineAssetGate | null>(null);
+  const onlineAssetGateTimeoutRef = useRef(0);
+  const pendingOnlineAssetReadyRef = useRef<OnlineAssetWarmupReadyMessage | null>(null);
   const onlineSuppressSideEffectsRef = useRef(false);
   const onlineWinsRef = useRef<OnlineWins>([0, 0]);
   const onlineRematchReadyRef = useRef({ local: false, remote: false });
@@ -20552,6 +20654,7 @@ function FightScreen({
     errors: [],
     ready: false
   });
+  const [onlineAssetGate, setOnlineAssetGate] = useState<OnlineAssetGate | null>(null);
   const [showLateAssetFallback, setShowLateAssetFallback] = useState(false);
 
   const captureFightAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
@@ -20589,6 +20692,23 @@ function FightScreen({
     const timer = window.setTimeout(() => setShowLateAssetFallback(true), 900);
     return () => window.clearTimeout(timer);
   }, [mode, p1.id, p2.id, stage.id]);
+
+  useEffect(() => {
+    const gate = onlineAssetGateRef.current;
+    if (!gate) return undefined;
+    const p1PriorityFrames = collectCharacterPriorityFrameSources(gate.match.fighters[0].baseCharacter, ['entry', 'idle', 'walkForward', 'sprint']).slice(0, 8);
+    const p2PriorityFrames = collectCharacterPriorityFrameSources(gate.match.fighters[1].baseCharacter, ['entry', 'idle', 'walkForward', 'sprint']).slice(0, 8);
+    const cancelP1Prewarm = prewarmActiveFighterVoxels(gate.match.fighters[0].baseCharacter, p1PriorityFrames, {
+      immediateFrames: p1PriorityFrames.slice(0, 2)
+    });
+    const cancelP2Prewarm = prewarmActiveFighterVoxels(gate.match.fighters[1].baseCharacter, p2PriorityFrames, {
+      immediateFrames: p2PriorityFrames.slice(0, 2)
+    });
+    return () => {
+      cancelP1Prewarm();
+      cancelP2Prewarm();
+    };
+  }, [onlineAssetGate?.warmupId]);
 
   useEffect(() => {
     matchRef.current = match;
@@ -21344,6 +21464,201 @@ function FightScreen({
     });
   }, []);
 
+  const setOnlineAssetGateState = useCallback((next: OnlineAssetGate | null) => {
+    onlineAssetGateRef.current = next;
+    setOnlineAssetGate(next);
+  }, []);
+
+  const clearOnlineAssetGate = useCallback(() => {
+    window.clearTimeout(onlineAssetGateTimeoutRef.current);
+    onlineAssetGateTimeoutRef.current = 0;
+    pendingOnlineAssetReadyRef.current = null;
+    setOnlineAssetGateState(null);
+  }, [setOnlineAssetGateState]);
+
+  const onlineAssetGateMatchesMessage = useCallback((gate: OnlineAssetGate, message: OnlineAssetWarmupReadyMessage) => (
+    message.warmupId === gate.warmupId &&
+    message.roomId === gate.roomId &&
+    message.stageId === gate.stageId &&
+    message.p1CharacterId === gate.p1CharacterId &&
+    message.p2CharacterId === gate.p2CharacterId &&
+    message.mode === gate.mode
+  ), []);
+
+  const sendOnlineAssetWarmupReady = useCallback((gate: OnlineAssetGate) => {
+    onlineSessionRef.current?.send({
+      type: 'assetWarmupReady',
+      warmupId: gate.warmupId,
+      roomId: gate.roomId,
+      stageId: gate.stageId,
+      p1CharacterId: gate.p1CharacterId,
+      p2CharacterId: gate.p2CharacterId,
+      mode: gate.mode,
+      ready: gate.localReady,
+      progress: Math.max(0, Math.min(100, Math.round(gate.localProgress))),
+      error: gate.localError,
+      sentAt: Date.now()
+    });
+  }, []);
+
+  const tryCompleteOnlineAssetGate = useCallback(() => {
+    const gate = onlineAssetGateRef.current;
+    if (!gate || !gate.localReady || !gate.remoteReady) return;
+    if (onlineRoleRef.current === 'host') {
+      clearOnlineAssetGate();
+      startOnlineRollback(gate.match, 'host');
+      onlineStateRef.current = 'connected';
+      setOnlineState('connected');
+      setOnlineStatusText('CONNECTED');
+      publishOnlineSnapshot(true, gate.reason);
+      return;
+    }
+    setOnlineStatusText('WAITING FOR HOST START');
+  }, [clearOnlineAssetGate, publishOnlineSnapshot, startOnlineRollback]);
+
+  const abortOnlineAssetWarmup = useCallback((reason: string, notifyOpponent = true) => {
+    const gate = onlineAssetGateRef.current;
+    const session = onlineSessionRef.current;
+    const room = onlineRoomRef.current;
+    if (gate && notifyOpponent) {
+      session?.send({
+        type: 'assetWarmupAbort',
+        warmupId: gate.warmupId,
+        roomId: gate.roomId,
+        reason
+      });
+    }
+    clearOnlineAssetGate();
+    try {
+      session?.connection?.close();
+    } catch {
+      // no-op
+    }
+    onlineRollbackRef.current = null;
+    onlineRoleRef.current = null;
+    onlineRoomRef.current = null;
+    onlineBotOpponentRef.current = null;
+    onlinePlacementMatchRef.current = false;
+    onlineRematchReadyRef.current = { local: false, remote: false };
+    setOnlineRole(null);
+    setOnlineState('searching');
+    onlineStateRef.current = 'searching';
+    setOnlineStatusText(reason);
+    if (room || session?.peerId) {
+      const leaveRequest = { roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId };
+      void (isPrivate ? leavePrivateRoom(leaveRequest) : leaveOnlineRoom(leaveRequest)).catch(() => undefined);
+    }
+  }, [clearOnlineAssetGate, isPrivate]);
+
+  const applyRemoteOnlineAssetReady = useCallback((message: OnlineAssetWarmupReadyMessage) => {
+    const gate = onlineAssetGateRef.current;
+    if (!gate) {
+      pendingOnlineAssetReadyRef.current = message;
+      return;
+    }
+    if (!onlineAssetGateMatchesMessage(gate, message)) {
+      if (message.roomId === gate.roomId || message.warmupId === gate.warmupId) {
+        abortOnlineAssetWarmup('Opponent loaded different match assets');
+      }
+      return;
+    }
+    if (!message.ready && message.error) {
+      abortOnlineAssetWarmup('Opponent asset load failed');
+      return;
+    }
+    const next = {
+      ...gate,
+      remoteReady: message.ready,
+      remoteProgress: message.progress,
+      remoteError: message.error
+    };
+    setOnlineAssetGateState(next);
+    tryCompleteOnlineAssetGate();
+  }, [abortOnlineAssetWarmup, onlineAssetGateMatchesMessage, setOnlineAssetGateState, tryCompleteOnlineAssetGate]);
+
+  const beginOnlineAssetWarmup = useCallback((onlineMatch: MatchSnapshot, reason: OnlineAssetGate['reason']) => {
+    const room = onlineRoomRef.current;
+    if (!room || onlineBotOpponentRef.current) return;
+    window.clearTimeout(onlineAssetGateTimeoutRef.current);
+    const gate: OnlineAssetGate = {
+      warmupId: makeOnlineAssetWarmupId(room.roomId, onlineMatch, reason, onlineWinsRef.current),
+      roomId: room.roomId,
+      stageId: onlineMatch.stage.id,
+      p1CharacterId: onlineMatch.fighters[0].baseCharacter.id,
+      p2CharacterId: onlineMatch.fighters[1].baseCharacter.id,
+      mode: onlineMatchGateMode(onlineMatch),
+      reason,
+      match: onlineMatch,
+      startedAt: Date.now(),
+      localReady: false,
+      remoteReady: false,
+      localProgress: 0,
+      remoteProgress: 0
+    };
+    resetTrackedMatchAnalytics(onlineMatch);
+    setAssetLoadingState({
+      active: true,
+      progress: 0,
+      item: '',
+      errors: [],
+      ready: false
+    });
+    matchRef.current = onlineMatch;
+    setMatch(onlineMatch);
+    onlineRollbackRef.current = null;
+    onlinePerformanceRef.current = emptyOnlinePerformancePair();
+    onlineWinnerRecordedRef.current = false;
+    matchHistoryRecordedRef.current = '';
+    seenCombatEventIds.current.clear();
+    seenImpactScoreEventIds.current.clear();
+    seenImpactAudioEventIds.current.clear();
+    lastCombatEventId.current = 0;
+    setOnlineAssetGateState(gate);
+    onlineStateRef.current = 'connecting';
+    setOnlineState('connecting');
+    setOnlineStatusText('LOADING MATCH ASSETS');
+    void preloadStageModel(onlineMatch.stage);
+    onlineAssetGateTimeoutRef.current = window.setTimeout(() => {
+      abortOnlineAssetWarmup('Opponent asset load timed out');
+    }, ONLINE_ASSET_WARMUP_TIMEOUT_MS);
+    const pending = pendingOnlineAssetReadyRef.current;
+    if (pending) {
+      pendingOnlineAssetReadyRef.current = null;
+      window.setTimeout(() => applyRemoteOnlineAssetReady(pending), 0);
+    }
+  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, resetTrackedMatchAnalytics, setOnlineAssetGateState]);
+
+  useEffect(() => {
+    if (!onlineAssetGate) return undefined;
+    const checkLocalReadiness = () => {
+      const gate = onlineAssetGateRef.current;
+      if (!gate || gate.localReady) return;
+      if (assetLoadingState.errors.length > 0) {
+        abortOnlineAssetWarmup('Your match assets failed to load');
+        return;
+      }
+      const stageStatus = getStageAssetStatus(gate.stageId);
+      const stageReady = !isModelStage(gate.match.stage) || stageStatus.ready || stageStatus.phase === 'error';
+      const sceneReady = assetLoadingState.ready && !assetLoadingState.active;
+      const stageProgress = stageReady ? 100 : stageStatus.progress;
+      const progress = Math.max(0, Math.min(100, Math.round((stageProgress + assetLoadingState.progress) / 2)));
+      if (!stageReady || !sceneReady) {
+        if (progress !== gate.localProgress) {
+          setOnlineAssetGateState({ ...gate, localProgress: progress });
+        }
+        return;
+      }
+      const readyGate = { ...gate, localReady: true, localProgress: 100 };
+      setOnlineAssetGateState(readyGate);
+      sendOnlineAssetWarmupReady(readyGate);
+      setOnlineStatusText(readyGate.remoteReady ? 'ENTERING ONLINE MATCH' : 'WAITING FOR OPPONENT ASSETS');
+      tryCompleteOnlineAssetGate();
+    };
+    checkLocalReadiness();
+    const interval = window.setInterval(checkLocalReadiness, 250);
+    return () => window.clearInterval(interval);
+  }, [abortOnlineAssetWarmup, assetLoadingState, onlineAssetGate, sendOnlineAssetWarmupReady, setOnlineAssetGateState, tryCompleteOnlineAssetGate]);
+
   const clearBotRematchTimers = useCallback(() => {
     window.clearTimeout(botRematchReadyTimerRef.current);
     window.clearTimeout(botRematchLeaveTimerRef.current);
@@ -21388,7 +21703,6 @@ function FightScreen({
     });
     matchRef.current = fresh;
     setMatch(fresh);
-    startOnlineRollback(fresh, onlineRoleRef.current);
     onlineWinnerRecordedRef.current = false;
     matchHistoryRecordedRef.current = '';
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
@@ -21404,10 +21718,9 @@ function FightScreen({
     seenImpactAudioEventIds.current.clear();
     lastCombatEventId.current = 0;
     onlineRematchReadyRef.current = { local: false, remote: false };
-    setOnlineStatusText('CONNECTED');
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current });
-    publishOnlineSnapshot(true, 'rematch');
-  }, [captureFightAnalytics, clearBotRematchTimers, incrementOnlineRematchCount, makeOnlineMatch, publishOnlineSnapshot, rankedRematchLimitReached, resetTrackedMatchAnalytics, startOnlineBotMatch, startOnlineRollback]);
+    beginOnlineAssetWarmup(fresh, 'rematch');
+  }, [beginOnlineAssetWarmup, captureFightAnalytics, clearBotRematchTimers, incrementOnlineRematchCount, makeOnlineMatch, rankedRematchLimitReached, resetTrackedMatchAnalytics, startOnlineBotMatch]);
 
   const trackOnlinePerformanceFrame = useCallback((candidate: MatchSnapshot) => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected' || candidate.phase !== 'fighting') return;
@@ -21443,6 +21756,7 @@ function FightScreen({
     onlineRoleRef.current = null;
     onlineRoomRef.current = null;
     onlineRollbackRef.current = null;
+    clearOnlineAssetGate();
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineRematchCountRef.current = 0;
     setOnlineRematchCount(0);
@@ -21464,7 +21778,7 @@ function FightScreen({
     setOnlineStatusText(message);
     setPrivateRoomPassword('');
     setPrivateRoomName('');
-  }, [clearBotRematchTimers]);
+  }, [clearBotRematchTimers, clearOnlineAssetGate]);
 
   const cleanupOnline = useCallback((notifyOpponent = true) => {
     if (!isOnline) return;
@@ -21488,6 +21802,7 @@ function FightScreen({
     onlineRoleRef.current = null;
     onlineStateRef.current = 'idle';
     onlineRollbackRef.current = null;
+    clearOnlineAssetGate();
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineRematchCountRef.current = 0;
     setOnlineRematchCount(0);
@@ -21508,7 +21823,7 @@ function FightScreen({
     }
     setPrivateRoomPassword('');
     setPrivateRoomName('');
-  }, [clearBotRematchTimers, isOnline, isPrivate]);
+  }, [clearBotRematchTimers, clearOnlineAssetGate, isOnline, isPrivate]);
 
   const recordSocialMatchHistory = useCallback((candidate: MatchSnapshot) => {
     if (!isOnline || candidate.phase !== 'matchOver' || !candidate.winnerSlot) return;
@@ -21690,20 +22005,18 @@ function FightScreen({
       if (message.profile) onlineRemoteProfileRef.current = message.profile;
       if (onlineRoleRef.current === 'host') {
         const onlineMatch = makeOnlineMatch(p1.id, message.characterId, onlineRoomRef.current?.stageId ?? stage.id);
-        resetTrackedMatchAnalytics(onlineMatch);
-        matchRef.current = onlineMatch;
-        setMatch(onlineMatch);
-        startOnlineRollback(onlineMatch, 'host');
-        onlinePerformanceRef.current = emptyOnlinePerformancePair();
-        seenCombatEventIds.current.clear();
-        seenImpactScoreEventIds.current.clear();
-        seenImpactAudioEventIds.current.clear();
-        lastCombatEventId.current = 0;
-        onlineStateRef.current = 'connected';
-        setOnlineState('connected');
-        setOnlineStatusText('CONNECTED');
-        publishOnlineSnapshot(true, 'start');
+        beginOnlineAssetWarmup(onlineMatch, 'start');
       }
+      return;
+    }
+    if (message.type === 'assetWarmupReady') {
+      applyRemoteOnlineAssetReady(message);
+      return;
+    }
+    if (message.type === 'assetWarmupAbort') {
+      const gate = onlineAssetGateRef.current;
+      if (!gate || message.roomId !== gate.roomId || message.warmupId !== gate.warmupId) return;
+      abortOnlineAssetWarmup(message.reason || 'Opponent left while loading', false);
       return;
     }
     if (message.type === 'input') {
@@ -21756,6 +22069,7 @@ function FightScreen({
         : current;
       const hydrated = hydrateMatchSnapshot(base, message.snapshot);
       if (needsBase) resetTrackedMatchAnalytics(hydrated);
+      clearOnlineAssetGate();
       matchRef.current = hydrated;
       onlineWinsRef.current = message.wins;
       startOnlineRollback(hydrated, 'guest');
@@ -21788,10 +22102,17 @@ function FightScreen({
       resetTrackedMatchAnalytics();
       onlineWinsRef.current = message.wins;
       setOnlineWins(message.wins);
-      setOnlineStatusText('REMATCH STARTING');
+      setOnlineStatusText('REMATCH LOADING');
+      const current = matchRef.current;
+      const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, current.stage.id);
+      beginOnlineAssetWarmup(fresh, 'rematch');
       return;
     }
     if (message.type === 'leave') {
+      if (onlineAssetGateRef.current) {
+        abortOnlineAssetWarmup('Opponent left while loading', false);
+        return;
+      }
       markOnlineDisconnected('Opponent disconnected');
       return;
     }
@@ -21834,7 +22155,7 @@ function FightScreen({
         }
       ].slice(-8));
     }
-  }, [captureFightAnalytics, incrementOnlineRematchCount, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, publishOnlineSnapshot, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
+  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, beginOnlineAssetWarmup, captureFightAnalytics, clearOnlineAssetGate, incrementOnlineRematchCount, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -21845,6 +22166,7 @@ function FightScreen({
     onlineRoleRef.current = null;
     onlineRoomRef.current = null;
     onlineRollbackRef.current = null;
+    clearOnlineAssetGate();
     onlineWinsRef.current = [0, 0];
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineRematchCountRef.current = 0;
@@ -21895,14 +22217,28 @@ function FightScreen({
           characterId: p1.id,
           profile: onlineLocalProfileRef.current ?? undefined,
           onConnection: () => {
-            if (onlineRoleRef.current === 'guest') setOnlineStatusText('CONNECTING');
+            if (onlineRoleRef.current === 'guest') {
+              setOnlineStatusText('CONNECTING');
+              const room = onlineRoomRef.current;
+              if (room?.guestCharacterId) {
+                beginOnlineAssetWarmup(makeOnlineMatch(room.hostCharacterId, room.guestCharacterId, room.stageId), 'start');
+              }
+            }
           },
           onMessage: handleOnlineMessage,
           onClose: () => {
+            if (!onlineClosingRef.current && onlineAssetGateRef.current) {
+              abortOnlineAssetWarmup('Opponent left while loading', false);
+              return;
+            }
             if (!onlineClosingRef.current && onlineStateRef.current === 'connected') markOnlineDisconnected('Opponent disconnected');
           },
           onError: (error) => {
             if (onlineClosingRef.current) return;
+            if (onlineAssetGateRef.current) {
+              abortOnlineAssetWarmup(error.message || 'Online asset loading connection error', false);
+              return;
+            }
             if (onlineStateRef.current === 'connected' || onlineStateRef.current === 'connecting') {
               markOnlineDisconnected(error.message || 'Online connection error');
             } else {
@@ -22028,7 +22364,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [captureFightAnalytics, cleanupOnline, clearBotRematchTimers, handleOnlineMessage, isOnline, isPrivate, isRanked, isTrainingOnline, markOnlineDisconnected, mode, p1.displayName, p1.id, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent]);
+  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, handleOnlineMessage, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, p1.displayName, p1.id, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -22155,7 +22491,7 @@ function FightScreen({
               }
               }
             }
-          } else if (isOnline) {
+          } else if (isOnline && !onlineAssetGateRef.current) {
             const shouldRefreshWarmup =
               matchRef.current.phase === 'matchOver' ||
               matchRef.current.fighters.some((fighter) => fighter.hp <= fighter.maxHp * 0.2);
@@ -22548,6 +22884,7 @@ function FightScreen({
 
   const winnerFighter = match.winnerSlot ? match.fighters[match.winnerSlot - 1] : null;
   const rankedRematchCapReached = isRanked && onlineRematchCount >= RANKED_REMATCH_LIMIT;
+  const onlineAssetGateActive = Boolean(onlineAssetGate);
   const rematchDisabled = Boolean(isRanked && ((rankedPlayerResult?.promoted && !rankedPromotionAccepted) || rankedRematchCapReached));
   const rematchButtonLabel = rankedRematchCapReached
     ? 'Ranked Set Complete'
@@ -22579,9 +22916,9 @@ function FightScreen({
         reducedMotion={settings.display.reducedMotion}
         onAssetLoadingChange={setAssetLoadingState}
       />
-      <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />
-      <CombatPopupLayer popups={combatPopups} />
-      <ClashOverlay match={match} />
+      {!onlineAssetGateActive && <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />}
+      {!onlineAssetGateActive && <CombatPopupLayer popups={combatPopups} />}
+      {!onlineAssetGateActive && <ClashOverlay match={match} />}
       <button
         type="button"
         className="fight-fullscreen-button"
@@ -22591,17 +22928,18 @@ function FightScreen({
       >
         {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
       </button>
-      {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
-      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
-      {showLateAssetFallback && (assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
-      {match.message && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (
+      {settings.display.debugOverlay && !onlineAssetGateActive && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
+      {settings.display.touchControls !== 'off' && !onlineAssetGateActive && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
+      {showLateAssetFallback && !onlineAssetGateActive && (assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
+      {onlineAssetGate && <OnlineAssetWarmupOverlay gate={onlineAssetGate} privateRoomName={privateRoomName} privateRoomPassword={privateRoomPassword} />}
+      {match.message && !onlineAssetGateActive && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
         >
           {match.message}
         </div>
       )}
-      {isOnline && onlineState !== 'connected' && onlineState !== 'idle' && onlineState !== 'disconnected' && onlineState !== 'error' && (
+      {isOnline && !onlineAssetGateActive && onlineState !== 'connected' && onlineState !== 'idle' && onlineState !== 'disconnected' && onlineState !== 'error' && (
         <div className={`match-message online-search-message ${isPrivate ? 'private-search-message' : ''}`}>
           <span>{onlineStatusText}</span>
           {isPrivate && privateRoomPassword && onlineRole !== 'guest' && (
@@ -22609,14 +22947,14 @@ function FightScreen({
           )}
         </div>
       )}
-      {isOnline && onlineState === 'connected' && (
+      {isOnline && !onlineAssetGateActive && onlineState === 'connected' && (
         <div className="online-status-pill">
           {onlinePlacementMatchRef.current
             ? rankedPlacementStatus(rankedProfileRef.current)
             : isTrainingOnline ? `${onlineRole === 'host' ? 'HOST' : 'GUEST'} SPARRING` : `${onlineRole === 'host' ? 'HOST' : 'GUEST'} ONLINE`}
         </div>
       )}
-      {isTrainingOnline && onlineState === 'connected' && (
+      {isTrainingOnline && !onlineAssetGateActive && onlineState === 'connected' && (
         <>
           <OnlineTrainingChat
             messages={onlineTrainingChatMessages}
@@ -22633,7 +22971,7 @@ function FightScreen({
           </button>
         </>
       )}
-      {mode === 'training' && trainingMode !== 'free' && activeTrainingTrial && trainingTrialProgress && !paused && (
+      {mode === 'training' && !onlineAssetGateActive && trainingMode !== 'free' && activeTrainingTrial && trainingTrialProgress && !paused && (
         <TrainingTrialHud
           trial={activeTrainingTrial}
           progress={trainingTrialProgress}
@@ -22642,7 +22980,7 @@ function FightScreen({
           trialCount={activeTrainingTrials.length}
         />
       )}
-      {trainingTrialOutcome && (
+      {!onlineAssetGateActive && trainingTrialOutcome && (
         <TrainingTrialSuccessOverlay
           outcome={trainingTrialOutcome}
           nextLabel={trainingTrialOutcomeNext?.label ?? 'Next Trial'}
@@ -22652,7 +22990,7 @@ function FightScreen({
           onMenu={openTrainingTrialMenuFromOutcome}
         />
       )}
-      {paused && !trainingTrialOutcome && (
+      {paused && !onlineAssetGateActive && !trainingTrialOutcome && (
         <div className={`pause-overlay ${pauseMenuView === 'movelist' || pauseMenuView === 'trainingTrials' ? 'pause-movelist-overlay' : ''}`}>
           {pauseMenuView === 'movelist' ? (
             <>
@@ -22772,7 +23110,7 @@ function FightScreen({
           )}
         </div>
       )}
-      {isOnline && (onlineState === 'disconnected' || onlineState === 'error') && (
+      {isOnline && !onlineAssetGateActive && (onlineState === 'disconnected' || onlineState === 'error') && (
         <div className="pause-overlay online-disconnect-overlay">
           <Wifi size={34} />
           <h2>{onlineStatusText || 'Opponent disconnected'}</h2>
@@ -22788,7 +23126,7 @@ function FightScreen({
           </div>
         </div>
       )}
-      {match.phase === 'matchOver' && !isArcadeMatchMode(mode) && (!isOnline || onlineState === 'connected') && winnerFighter && (
+      {match.phase === 'matchOver' && !onlineAssetGateActive && !isArcadeMatchMode(mode) && (!isOnline || onlineState === 'connected') && winnerFighter && (
         <div
           className={`pause-overlay results-overlay ${isRanked ? 'ranked-results-overlay' : ''} ${rankedPlayerResult?.didWin ? 'is-ranked-win' : 'is-ranked-loss'}`}
           style={{
