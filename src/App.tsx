@@ -3797,6 +3797,7 @@ export default function App() {
 	      setScreen('arcadeGameOver');
 	      return;
 	    }
+	    if (!p1) return;
 	    const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
 	    const nextStage = resolveNextArcadeStage();
 	    if (nextOpponent) setP2Id(nextOpponent.id);
@@ -3814,7 +3815,7 @@ export default function App() {
 	    setActiveArcadeMiniGame(null);
 	    setLastMiniGameResult(null);
 	    startArcadeTransition(transition);
-	  }, [arcadeRun, cpuDifficulty, effectiveUnlockedCharacterIds, finishArcadeRun, lastMiniGameResult, p1.id, resolveNextArcadeStage, roster, startArcadeTransition]);
+	  }, [arcadeRun, cpuDifficulty, effectiveUnlockedCharacterIds, finishArcadeRun, lastMiniGameResult, p1, resolveNextArcadeStage, roster, startArcadeTransition]);
 	  const debugMiniGameStartedRef = useRef(false);
 	  useEffect(() => {
 	    if (debugMiniGameStartedRef.current || screen === 'boot' || typeof window === 'undefined' || !p1) return;
