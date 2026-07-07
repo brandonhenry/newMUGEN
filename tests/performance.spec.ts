@@ -79,6 +79,10 @@ async function forceSnappyMenuPerformance(page: Page) {
   });
 }
 
+async function expectNoHdProceduralFallback(page: Page) {
+  await expect.poll(() => page.evaluate(() => (window as typeof window & { __KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__?: number }).__KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__ ?? 0)).toBe(0);
+}
+
 async function enterMainMenu(page: Page) {
   const title = page.locator('.title-screen');
   const arcade = page.getByRole('button', { name: 'Arcade' });
@@ -293,6 +297,7 @@ test.describe('menu attract performance', () => {
     expect(loadedAttractAssets.some((url) => url.includes('/stages/the-chamber/stage.json') || url.includes('/stages/chamber/')), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedAttractAssets.join('\n')).toBe(true);
+    await expectNoHdProceduralFallback(page);
   });
 
   test('keeps the CPU-vs-CPU menu fight smooth after warmup', async ({ page }, testInfo) => {
@@ -314,6 +319,7 @@ test.describe('menu attract performance', () => {
     expect(loadedAttractAssets.some((url) => url.includes('/stages/chamber/') || (url.includes('/stages/') && url.includes('.glb'))), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedAttractAssets.join('\n')).toBe(true);
+    await expectNoHdProceduralFallback(page);
     await resetLongTaskCollector(page);
     const stats = await sampleFramePacing(page, 8_000);
     const renderer = await getWebglRendererInfo(page);
@@ -370,6 +376,8 @@ test.describe('menu attract performance', () => {
       ...assetPaths.map((path) => `https://playkore.com${path}`),
       'https://playkore.com/brand/kore-logo-generated.png',
       'https://playkore.com/characters/goku/character.json',
+      'https://playkore.com/characters/goku/voxels-hd/voxel-pack-v1.json',
+      'https://playkore.com/characters/goku/voxels-hd/voxel-pack-v1.bin',
       'https://playkore.com/characters/goku/voxels-hd/frame-004.json',
       'https://playkore.com/stages/index.json',
       'https://playkore.com/stages/the-chamber/stage.json',
@@ -401,6 +409,7 @@ test.describe('in-game fight performance', () => {
     });
     expect(loadedFightAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedFightAssets.join('\n')).toBe(true);
     expect(loadedFightAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedFightAssets.join('\n')).toBe(true);
+    await expectNoHdProceduralFallback(page);
     await resetLongTaskCollector(page);
     await page.evaluate(() => performance.clearResourceTimings());
     const stats = await sampleFramePacing(page, 8_000);

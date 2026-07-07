@@ -7,7 +7,7 @@
   "main": "electron/main.cjs",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "node scripts/ensure-public-installers.mjs && node scripts/validate-stage-assets.mjs && tsc -b && vite build",
+    "build": "node scripts/ensure-public-installers.mjs && node scripts/validate-stage-assets.mjs && node scripts/validate-voxel-packs.mjs --public && tsc -b && vite build && node scripts/validate-voxel-packs.mjs --dist",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc -b",
     "test": "vitest run",

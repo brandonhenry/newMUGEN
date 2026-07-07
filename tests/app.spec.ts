@@ -47,6 +47,10 @@ async function expectMainMenu(page: Page) {
   await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 10000 });
 }
 
+async function expectNoHdProceduralFallback(page: Page) {
+  await expect.poll(() => page.evaluate(() => (window as typeof window & { __KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__?: number }).__KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__ ?? 0)).toBe(0);
+}
+
 async function activateAnyInputScreen(page: Page, selector: string) {
   const target = page.locator(selector);
   await expect(target).toBeVisible({ timeout: 10_000 });
@@ -508,6 +512,7 @@ test('opens controls and character viewer', async ({ page }) => {
   await page.getByRole('button', { name: 'Back' }).click();
   await page.getByRole('button', { name: 'Characters' }).click();
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
+  await expectNoHdProceduralFallback(page);
   await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Compact');
   await page.getByTestId('change-character-view').click();
   await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Display');
@@ -516,6 +521,7 @@ test('opens controls and character viewer', async ({ page }) => {
   await expectMainMenu(page);
   await page.getByRole('button', { name: 'Characters' }).click();
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
+  await expectNoHdProceduralFallback(page);
   await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Display');
   await page.getByTestId('change-character-view').click();
   await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Compact');

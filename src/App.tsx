@@ -46,7 +46,7 @@ import {
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmImageVoxelFrames, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmActiveFighterVoxels, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
@@ -4712,8 +4712,12 @@ function MenuAttractBackground({
   }, [makeFreshMatch]);
 
   useEffect(() => {
-    const cancelP1 = prewarmImageVoxelFrames(p1, collectCharacterAnimationFrameSources(p1));
-    const cancelP2 = prewarmImageVoxelFrames(p2, collectCharacterAnimationFrameSources(p2));
+    const cancelP1 = prewarmActiveFighterVoxels(p1, collectCharacterAnimationFrameSources(p1), {
+      immediateFrames: collectCharacterPriorityFrameSources(p1).slice(0, 1)
+    });
+    const cancelP2 = prewarmActiveFighterVoxels(p2, collectCharacterAnimationFrameSources(p2), {
+      immediateFrames: collectCharacterPriorityFrameSources(p2).slice(0, 1)
+    });
     return () => {
       cancelP1();
       cancelP2();
@@ -4764,6 +4768,19 @@ function MenuAttractBackground({
 
 function collectCharacterAnimationFrameSources(character: CharacterDefinition) {
   return Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []);
+}
+
+function collectCharacterPriorityFrameSources(character: CharacterDefinition, animationKeys: string[] = []) {
+  const frames = character.animationFrames ?? {};
+  return [
+    ...new Set([
+      ...animationKeys.flatMap((key) => frames[key] ?? []),
+      ...(frames.idle ?? []),
+      ...(frames.win ?? []),
+      ...(frames.walkForward ?? []),
+      ...collectCharacterAnimationFrameSources(character)
+    ].filter(Boolean))
+  ];
 }
 
 function copyMenuAttractMatchInto(target: MatchSnapshot, source: MatchSnapshot) {
@@ -6944,6 +6961,7 @@ function CharacterSelect({
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const rosterPageStart = visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE;
   const pagedBaseRoster = baseRoster.slice(rosterPageStart, rosterPageStart + CHARACTER_SELECT_PAGE_SIZE);
+  const visibleRosterPrewarmKey = pagedBaseRoster.map((character) => character.id).join('|');
   const isArcadeMode = isArcadeMatchMode(mode);
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const targetIsRandom = randomCharacterSlots[selectTarget];
@@ -7004,6 +7022,20 @@ function CharacterSelect({
   useEffect(() => {
     if (isArcadeMode && selectTarget === 2) setSelectTarget(1);
   }, [isArcadeMode, selectTarget]);
+
+  useEffect(() => {
+    const uniqueCharacters = new Map<string, CharacterDefinition>();
+    [p1Character, p2Character, ...pagedBaseRoster].forEach((character) => {
+      if (character) uniqueCharacters.set(character.id, character);
+    });
+    const cancellations = [...uniqueCharacters.values()].map((character) =>
+      prewarmActiveFighterVoxels(character, collectCharacterAnimationFrameSources(character), {
+        immediateFrames: collectCharacterPriorityFrameSources(character).slice(0, 1),
+        chunkSize: 2
+      })
+    );
+    return () => cancellations.forEach((cancel) => cancel());
+  }, [p1Character, p2Character, visibleRosterPrewarmKey]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

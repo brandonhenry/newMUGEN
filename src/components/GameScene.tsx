@@ -617,8 +617,12 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
     makeFightFighterRenderStyle(match, 2)
   ] as const), [match.fighters[0].baseCharacter.id, match.fighters[1].baseCharacter.id]);
   useEffect(() => {
-    const cancelP1 = prewarmImageVoxelFrames(match.fighters[0].character, collectImageVoxelFrameSources(match.fighters[0].character));
-    const cancelP2 = prewarmImageVoxelFrames(match.fighters[1].character, collectImageVoxelFrameSources(match.fighters[1].character));
+    const cancelP1 = prewarmActiveFighterVoxels(match.fighters[0].character, collectImageVoxelFrameSources(match.fighters[0].character), {
+      immediateFrames: uniqueFrameSources([getImageVoxelFramePath(match.fighters[0], getFighterRenderProgress(match.fighters[0]), 0)])
+    });
+    const cancelP2 = prewarmActiveFighterVoxels(match.fighters[1].character, collectImageVoxelFrameSources(match.fighters[1].character), {
+      immediateFrames: uniqueFrameSources([getImageVoxelFramePath(match.fighters[1], getFighterRenderProgress(match.fighters[1]), 0)])
+    });
     return () => {
       cancelP1();
       cancelP2();
@@ -852,6 +856,19 @@ export function MoveDemoCanvas({
   ] as const), [previewMatch.fighters[0].baseCharacter.id, previewMatch.fighters[1].baseCharacter.id]);
 
   useEffect(() => {
+    const cancelP1 = prewarmActiveFighterVoxels(previewMatch.fighters[0].character, collectImageVoxelFrameSources(previewMatch.fighters[0].character), {
+      immediateFrames: uniqueFrameSources([getImageVoxelFramePath(previewMatch.fighters[0], getFighterRenderProgress(previewMatch.fighters[0]), 0)])
+    });
+    const cancelP2 = prewarmActiveFighterVoxels(previewMatch.fighters[1].character, collectImageVoxelFrameSources(previewMatch.fighters[1].character), {
+      immediateFrames: uniqueFrameSources([getImageVoxelFramePath(previewMatch.fighters[1], getFighterRenderProgress(previewMatch.fighters[1]), 0)])
+    });
+    return () => {
+      cancelP1();
+      cancelP2();
+    };
+  }, [previewMatch.fighters[0].character.id, previewMatch.fighters[1].character.id]);
+
+  useEffect(() => {
     setPreviewMatch(initialMatch);
   }, [initialMatch]);
 
@@ -952,6 +969,11 @@ type AnyMiniGameSnapshot = BreakTargetMiniGameSnapshot | EnemyRushMiniGameSnapsh
 
 export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: AnyMiniGameSnapshot; reducedMotion?: boolean }) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [snapshot.stage.id]);
+  useEffect(() => {
+    return prewarmActiveFighterVoxels(snapshot.player.character, collectImageVoxelFrameSources(snapshot.player.character), {
+      immediateFrames: uniqueFrameSources([getImageVoxelFramePath(snapshot.player, getFighterRenderProgress(snapshot.player), 0)])
+    });
+  }, [snapshot.player.character.id]);
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [snapshot.player.position.x, 3.3, snapshot.player.position.z + 6.8], fov: 46 }} data-testid="mini-game-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
@@ -2727,6 +2749,12 @@ export function CharacterPreviewCanvas({
   showIdleGhost?: boolean;
 }) {
   const frameFit = useMemo(() => getPreviewFrameFit(character, animationKey), [animationKey, character]);
+  useEffect(() => {
+    const frameSources = getPreviewCharacterFrameSources(character, animationKey);
+    return prewarmActiveFighterVoxels(character, frameSources, {
+      immediateFrames: frameSources.slice(0, 1)
+    });
+  }, [animationKey, character.id]);
   const initialFrameFit = useRef<PreviewFrameFit | null>(null);
   if (!preserveCameraFrame) initialFrameFit.current = null;
   else if (!initialFrameFit.current) initialFrameFit.current = frameFit;
@@ -2802,6 +2830,12 @@ export function UnlockRevealCanvas({
   frozen: boolean;
 }) {
   const seed = useMemo(() => hashString(character.id), [character.id]);
+  useEffect(() => {
+    const frameSources = getUnlockRevealFrameSources(character);
+    return prewarmActiveFighterVoxels(character, frameSources, {
+      immediateFrames: frameSources.slice(0, 1)
+    });
+  }, [character.id]);
   return (
     <Canvas
       shadows
@@ -5127,7 +5161,7 @@ function getFighterOutlineStyle(stage?: StageDefinition): FighterOutlineStyle {
 
 type ImageVoxelPart = VoxelPackPart;
 
-type ImageVoxel = {
+export type ImageVoxel = {
   part: ImageVoxelPart;
   position: [number, number, number];
   size: [number, number, number];
@@ -5158,6 +5192,7 @@ type MenuPerfProbeWindow = Window & {
     voxelLoadMs: number[];
     voxelBuildMs: number[];
   };
+  __KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__?: number;
 };
 
 const imageVoxelOutlineMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
@@ -5166,6 +5201,7 @@ const imageVoxelPreparedPartCache = new Map<string, PreparedImageVoxelPartRender
 
 const imageVoxelCache = new Map<string, Promise<ImageVoxel[]>>();
 const imageVoxelPackCache = new Map<string, Promise<{ manifest: VoxelPackManifest; records: Float64Array } | null>>();
+const warnedMissingVoxelPacks = new Set<string>();
 const IMAGE_VOXEL_PIXEL_SCALE = 1.2;
 const IMAGE_VOXEL_DEPTH_SCALE = 1.32;
 const IMAGE_VOXEL_MIN_DEPTH = 0.14;
@@ -5194,6 +5230,13 @@ function recordMenuPerfDuration(kind: 'voxelLoadMs' | 'voxelBuildMs', startedAt:
 function incrementMenuPerfCounter(kind: 'voxelPackHits' | 'voxelPackMisses' | 'voxelJsonFallbacks') {
   const probe = menuPerfProbe();
   if (probe) probe[kind] += 1;
+}
+
+function recordHdProceduralFallback(characterId: string) {
+  if (typeof window === 'undefined') return;
+  const perfWindow = window as MenuPerfProbeWindow;
+  perfWindow.__KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__ = (perfWindow.__KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__ ?? 0) + 1;
+  console.warn(`[KORE voxel] HD character ${characterId} reached procedural fallback renderer.`);
 }
 
 export function clearImageVoxelCacheForFrame(characterId: string, frameIndex?: number) {
@@ -5333,6 +5376,10 @@ function ImageVoxelFighter({
     }
   });
 
+  if (voxels.length === 0 && fighter.character.voxelProfile === 'hd-image-source') {
+    return null;
+  }
+
   if (voxels.length === 0) {
     return <VoxelSpriteFighter fighter={fighter} progress={progress} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={outlineStyle} renderStyle={renderStyle} />;
   }
@@ -5396,11 +5443,30 @@ function getCachedImageVoxels(src: string, character: CharacterDefinition): Prom
   return request;
 }
 
-export function prewarmImageVoxelFrames(character: CharacterDefinition, frameSources: string[]) {
+export function preloadImageVoxelFrame(character: CharacterDefinition, frameSource: string) {
+  if (!frameSource) return Promise.resolve([]);
+  return getCachedImageVoxels(frameSource, character);
+}
+
+export function preloadCharacterVoxelPack(characterId: string) {
+  if (!characterId) return Promise.resolve(false);
+  return getCharacterVoxelPack(characterId).then(Boolean);
+}
+
+export function prewarmActiveFighterVoxels(
+  character: CharacterDefinition,
+  frameSources: string[],
+  options: { immediateFrames?: string[]; chunkSize?: number } = {}
+) {
   if (typeof window === 'undefined' || character.voxelProfile !== 'hd-image-source') return () => undefined;
-  const uniqueFrames = [...new Set(frameSources.filter(Boolean))];
+  const immediateFrames = [...new Set((options.immediateFrames ?? []).filter(Boolean))];
+  const uniqueFrames = [
+    ...immediateFrames,
+    ...frameSources.filter((frame) => frame && !immediateFrames.includes(frame))
+  ];
+  const chunkSize = Math.max(1, Math.round(options.chunkSize ?? 4));
   let cancelled = false;
-  let index = 0;
+  let index = immediateFrames.length;
   const schedule = (callback: () => void) => {
     const requestIdle = window.requestIdleCallback as ((handler: IdleRequestCallback, options?: IdleRequestOptions) => number) | undefined;
     if (requestIdle) requestIdle(callback, { timeout: 120 });
@@ -5408,21 +5474,54 @@ export function prewarmImageVoxelFrames(character: CharacterDefinition, frameSou
   };
   const pump = () => {
     if (cancelled) return;
-    const batch = uniqueFrames.slice(index, index + 4);
+    const batch = uniqueFrames.slice(index, index + chunkSize);
     index += batch.length;
     batch.forEach((frame) => {
       void getCachedImageVoxels(frame, character).catch(() => undefined);
     });
     if (index < uniqueFrames.length) schedule(pump);
   };
+  void preloadCharacterVoxelPack(character.id).catch(() => undefined);
+  immediateFrames.forEach((frame) => {
+    void preloadImageVoxelFrame(character, frame).catch(() => undefined);
+  });
   schedule(pump);
   return () => {
     cancelled = true;
   };
 }
 
+export function prewarmImageVoxelFrames(character: CharacterDefinition, frameSources: string[]) {
+  return prewarmActiveFighterVoxels(character, frameSources);
+}
+
 function collectImageVoxelFrameSources(character: CharacterDefinition) {
   return Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []);
+}
+
+function getPreviewCharacterFrameSources(character: CharacterDefinition, animationKey?: string) {
+  const frames = character.animationFrames ?? {};
+  const priorityKeys = [animationKey, 'idle', 'win', 'walkForward'].filter((key): key is string => Boolean(key));
+  return uniqueFrameSources([
+    ...priorityKeys.flatMap((key) => frames[key] ?? []),
+    ...collectImageVoxelFrameSources(character)
+  ]);
+}
+
+function getUnlockRevealFrameSources(character: CharacterDefinition) {
+  const frames = character.animationFrames ?? {};
+  const revealMoves = selectUnlockRevealMoves(character);
+  const moveKeys = revealMoves.map((move) => move.animationKey ?? move.input);
+  return uniqueFrameSources([
+    ...(frames.idle ?? []),
+    ...(frames.win ?? []),
+    ...moveKeys.flatMap((key) => frames[key] ?? []),
+    ...collectImageVoxelFrameSources(character)
+  ]);
+}
+
+function uniqueFrameSources(frameSources: Array<string | null | undefined>) {
+  return [...new Set(frameSources.filter((frame): frame is string => Boolean(frame)))];
 }
 
 function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elapsedTime: number) {
@@ -6178,18 +6277,32 @@ async function getCharacterVoxelPack(characterId: string) {
 async function fetchCharacterVoxelPack(characterId: string) {
   try {
     const manifestResponse = await fetch(`/characters/${characterId}/voxels-hd/voxel-pack-v1.json`);
-    if (!manifestResponse.ok) return null;
+    if (!manifestResponse.ok) {
+      warnMissingVoxelPack(characterId, `manifest ${manifestResponse.status}`);
+      return null;
+    }
     const manifest = await manifestResponse.json() as VoxelPackManifest;
     const binaryResponse = await fetch(`/characters/${characterId}/voxels-hd/${manifest.binary}`);
-    if (!binaryResponse.ok) return null;
+    if (!binaryResponse.ok) {
+      warnMissingVoxelPack(characterId, `binary ${binaryResponse.status}`);
+      return null;
+    }
     const buffer = await binaryResponse.arrayBuffer();
     return {
       manifest,
       records: new Float64Array(buffer)
     };
   } catch {
+    warnMissingVoxelPack(characterId, 'fetch failed');
     return null;
   }
+}
+
+function warnMissingVoxelPack(characterId: string, reason: string) {
+  const key = `${characterId}:${reason}`;
+  if (warnedMissingVoxelPacks.has(key)) return;
+  warnedMissingVoxelPacks.add(key);
+  console.warn(`[KORE voxel-pack] ${characterId} pack unavailable (${reason}); using exact JSON fallback.`);
 }
 
 function getVoxelPackFrameName(src: string | undefined) {
@@ -6353,6 +6466,10 @@ function VoxelSpriteFighter({
   const rearLeg = useRef<THREE.Group>(null);
   const palette = getVoxelPalette(fighter.character);
   const scaledTime = useRef(0);
+
+  useEffect(() => {
+    if (fighter.character.voxelProfile === 'hd-image-source') recordHdProceduralFallback(fighter.character.id);
+  }, [fighter.character.id, fighter.character.voxelProfile]);
 
   useFrame((_, delta) => {
     if (frameTimeOverride === undefined) scaledTime.current += delta * timeScale;
