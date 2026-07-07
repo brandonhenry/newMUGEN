@@ -45,7 +45,8 @@ import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../li
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
-import { decodeVoxelPackFrame, normalizeHdVoxelPayload, type PackedImageVoxel, type VoxelPackManifest, type VoxelPackPart } from '../lib/voxelPack';
+import { normalizeHdVoxelPayload, type VoxelPackPart } from '../lib/voxelPack';
+import { installVoxelFreezeMonitor, loadHdVoxelFrameInWorker } from '../lib/voxelFrameClient';
 import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 import { KORE_APP_VERSION } from '../appVersion';
@@ -5200,8 +5201,9 @@ const imageVoxelRenderMeshCache = new Map<string, THREE.InstancedMesh>();
 const imageVoxelPreparedPartCache = new Map<string, PreparedImageVoxelPartRender>();
 
 const imageVoxelCache = new Map<string, Promise<ImageVoxel[]>>();
-const imageVoxelPackCache = new Map<string, Promise<{ manifest: VoxelPackManifest; records: Float64Array } | null>>();
-const warnedMissingVoxelPacks = new Set<string>();
+const imageVoxelPrewarmQueue: Array<{ character: CharacterDefinition; frame: string }> = [];
+const imageVoxelPrewarmKeys = new Set<string>();
+let imageVoxelPrewarmRunning = false;
 const IMAGE_VOXEL_PIXEL_SCALE = 1.2;
 const IMAGE_VOXEL_DEPTH_SCALE = 1.32;
 const IMAGE_VOXEL_MIN_DEPTH = 0.14;
@@ -5431,6 +5433,7 @@ function getIdleFlourishProgress(fighter: FighterRuntime) {
 }
 
 function getCachedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[]> {
+  installVoxelFreezeMonitor();
   const cacheKey = `${character.id}:${character.voxelProfile ?? 'image-source'}:${src}`;
   const cached = imageVoxelCache.get(cacheKey);
   if (cached) return cached;
@@ -5448,23 +5451,19 @@ export function preloadImageVoxelFrame(character: CharacterDefinition, frameSour
   return getCachedImageVoxels(frameSource, character);
 }
 
-export function preloadCharacterVoxelPack(characterId: string) {
-  if (!characterId) return Promise.resolve(false);
-  return getCharacterVoxelPack(characterId).then(Boolean);
-}
-
 export function prewarmActiveFighterVoxels(
   character: CharacterDefinition,
   frameSources: string[],
   options: { immediateFrames?: string[]; chunkSize?: number } = {}
 ) {
+  installVoxelFreezeMonitor();
   if (typeof window === 'undefined' || character.voxelProfile !== 'hd-image-source') return () => undefined;
   const immediateFrames = [...new Set((options.immediateFrames ?? []).filter(Boolean))];
   const uniqueFrames = [
     ...immediateFrames,
     ...frameSources.filter((frame) => frame && !immediateFrames.includes(frame))
   ];
-  const chunkSize = Math.max(1, Math.round(options.chunkSize ?? 4));
+  const chunkSize = Math.max(1, Math.min(2, Math.round(options.chunkSize ?? 1)));
   let cancelled = false;
   let index = immediateFrames.length;
   const schedule = (callback: () => void) => {
@@ -5477,11 +5476,10 @@ export function prewarmActiveFighterVoxels(
     const batch = uniqueFrames.slice(index, index + chunkSize);
     index += batch.length;
     batch.forEach((frame) => {
-      void getCachedImageVoxels(frame, character).catch(() => undefined);
+      enqueueImageVoxelPrewarm(character, frame);
     });
     if (index < uniqueFrames.length) schedule(pump);
   };
-  void preloadCharacterVoxelPack(character.id).catch(() => undefined);
   immediateFrames.forEach((frame) => {
     void preloadImageVoxelFrame(character, frame).catch(() => undefined);
   });
@@ -5493,6 +5491,30 @@ export function prewarmActiveFighterVoxels(
 
 export function prewarmImageVoxelFrames(character: CharacterDefinition, frameSources: string[]) {
   return prewarmActiveFighterVoxels(character, frameSources);
+}
+
+function enqueueImageVoxelPrewarm(character: CharacterDefinition, frame: string) {
+  const key = `${character.id}:${frame}`;
+  if (imageVoxelPrewarmKeys.has(key)) return;
+  imageVoxelPrewarmKeys.add(key);
+  imageVoxelPrewarmQueue.push({ character, frame });
+  void pumpImageVoxelPrewarmQueue();
+}
+
+async function pumpImageVoxelPrewarmQueue() {
+  if (imageVoxelPrewarmRunning) return;
+  imageVoxelPrewarmRunning = true;
+  try {
+    while (imageVoxelPrewarmQueue.length > 0) {
+      const item = imageVoxelPrewarmQueue.shift();
+      if (!item) continue;
+      imageVoxelPrewarmKeys.delete(`${item.character.id}:${item.frame}`);
+      await getCachedImageVoxels(item.frame, item.character).catch(() => undefined);
+      await new Promise((resolve) => window.setTimeout(resolve, 16));
+    }
+  } finally {
+    imageVoxelPrewarmRunning = false;
+  }
 }
 
 function collectImageVoxelFrameSources(character: CharacterDefinition) {
@@ -6252,57 +6274,13 @@ async function loadPrecomputedImageVoxels(src: string, character: CharacterDefin
 async function loadPackedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[] | null> {
   const frame = getVoxelPackFrameName(src);
   if (!frame || character.voxelProfile !== 'hd-image-source') return null;
-  const pack = await getCharacterVoxelPack(character.id);
-  if (!pack) {
-    incrementMenuPerfCounter('voxelPackMisses');
-    return null;
-  }
-  const voxels = decodeVoxelPackFrame(pack.manifest, pack.records, frame) as PackedImageVoxel[] | null;
+  const voxels = await loadHdVoxelFrameInWorker(character, src);
   if (!voxels) {
     incrementMenuPerfCounter('voxelPackMisses');
     return null;
   }
   incrementMenuPerfCounter('voxelPackHits');
   return voxels;
-}
-
-async function getCharacterVoxelPack(characterId: string) {
-  const cached = imageVoxelPackCache.get(characterId);
-  if (cached) return cached;
-  const request = fetchCharacterVoxelPack(characterId);
-  imageVoxelPackCache.set(characterId, request);
-  return request;
-}
-
-async function fetchCharacterVoxelPack(characterId: string) {
-  try {
-    const manifestResponse = await fetch(`/characters/${characterId}/voxels-hd/voxel-pack-v1.json`);
-    if (!manifestResponse.ok) {
-      warnMissingVoxelPack(characterId, `manifest ${manifestResponse.status}`);
-      return null;
-    }
-    const manifest = await manifestResponse.json() as VoxelPackManifest;
-    const binaryResponse = await fetch(`/characters/${characterId}/voxels-hd/${manifest.binary}`);
-    if (!binaryResponse.ok) {
-      warnMissingVoxelPack(characterId, `binary ${binaryResponse.status}`);
-      return null;
-    }
-    const buffer = await binaryResponse.arrayBuffer();
-    return {
-      manifest,
-      records: new Float64Array(buffer)
-    };
-  } catch {
-    warnMissingVoxelPack(characterId, 'fetch failed');
-    return null;
-  }
-}
-
-function warnMissingVoxelPack(characterId: string, reason: string) {
-  const key = `${characterId}:${reason}`;
-  if (warnedMissingVoxelPacks.has(key)) return;
-  warnedMissingVoxelPacks.add(key);
-  console.warn(`[KORE voxel-pack] ${characterId} pack unavailable (${reason}); using exact JSON fallback.`);
 }
 
 function getVoxelPackFrameName(src: string | undefined) {

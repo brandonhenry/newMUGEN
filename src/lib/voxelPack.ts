@@ -126,10 +126,35 @@ export function decodeVoxelPackFrame(manifest: VoxelPackManifest, records: Float
   if (manifest.format !== VOXEL_PACK_FORMAT || manifest.recordFields !== VOXEL_PACK_RECORD_FIELDS) return null;
   const frameEntry = manifest.frames.find((candidate) => candidate.frame === frame);
   if (!frameEntry) return null;
+  return decodeVoxelPackFrameRecords(manifest, records, frameEntry.offset, frameEntry.count);
+}
+
+export function voxelPackFrameByteRange(manifest: VoxelPackManifest, frame: string) {
+  if (manifest.format !== VOXEL_PACK_FORMAT || manifest.recordFields !== VOXEL_PACK_RECORD_FIELDS) return null;
+  const frameEntry = manifest.frames.find((candidate) => candidate.frame === frame);
+  if (!frameEntry) return null;
+  const bytesPerRecord = VOXEL_PACK_RECORD_FIELDS * Float64Array.BYTES_PER_ELEMENT;
+  const start = frameEntry.offset * bytesPerRecord;
+  const length = frameEntry.count * bytesPerRecord;
+  return {
+    start,
+    end: start + length - 1,
+    length,
+    offset: frameEntry.offset,
+    count: frameEntry.count
+  };
+}
+
+export function decodeVoxelPackFrameRecords(
+  manifest: VoxelPackManifest,
+  records: Float64Array,
+  recordOffset: number,
+  count: number
+): PackedImageVoxel[] | null {
+  if (manifest.format !== VOXEL_PACK_FORMAT || manifest.recordFields !== VOXEL_PACK_RECORD_FIELDS) return null;
   const voxels: PackedImageVoxel[] = [];
-  const start = frameEntry.offset * VOXEL_PACK_RECORD_FIELDS;
-  for (let index = 0; index < frameEntry.count; index += 1) {
-    const base = start + index * VOXEL_PACK_RECORD_FIELDS;
+  for (let index = 0; index < count; index += 1) {
+    const base = (recordOffset === 0 ? 0 : recordOffset * VOXEL_PACK_RECORD_FIELDS) + index * VOXEL_PACK_RECORD_FIELDS;
     const part = manifest.parts[Math.round(records[base] ?? 0)] ?? 'torso';
     const color = manifest.palette[Math.round(records[base + 1] ?? 0)] ?? '#ffffff';
     const sideColor = manifest.palette[Math.round(records[base + 2] ?? records[base + 1] ?? 0)] ?? color;

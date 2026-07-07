@@ -6961,7 +6961,6 @@ function CharacterSelect({
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const rosterPageStart = visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE;
   const pagedBaseRoster = baseRoster.slice(rosterPageStart, rosterPageStart + CHARACTER_SELECT_PAGE_SIZE);
-  const visibleRosterPrewarmKey = pagedBaseRoster.map((character) => character.id).join('|');
   const isArcadeMode = isArcadeMatchMode(mode);
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const targetIsRandom = randomCharacterSlots[selectTarget];
@@ -7025,17 +7024,17 @@ function CharacterSelect({
 
   useEffect(() => {
     const uniqueCharacters = new Map<string, CharacterDefinition>();
-    [p1Character, p2Character, ...pagedBaseRoster].forEach((character) => {
+    [p1Character, p2Character].forEach((character) => {
       if (character) uniqueCharacters.set(character.id, character);
     });
     const cancellations = [...uniqueCharacters.values()].map((character) =>
       prewarmActiveFighterVoxels(character, collectCharacterAnimationFrameSources(character), {
         immediateFrames: collectCharacterPriorityFrameSources(character).slice(0, 1),
-        chunkSize: 2
+        chunkSize: 1
       })
     );
     return () => cancellations.forEach((cancel) => cancel());
-  }, [p1Character, p2Character, visibleRosterPrewarmKey]);
+  }, [p1Character, p2Character]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

@@ -9,6 +9,7 @@ type ResourceRecord = {
   contentType: string;
   cacheControl: string;
   contentLength: number;
+  requestHeaders: Record<string, string>;
 };
 
 type FrameStats = {
@@ -263,8 +264,15 @@ function recordResponse(records: ResourceRecord[], response: Response) {
     status: response.status(),
     contentType: headers['content-type'] ?? '',
     cacheControl: headers['cache-control'] ?? '',
-    contentLength: Number(headers['content-length'] ?? 0)
+    contentLength: Number(headers['content-length'] ?? 0),
+    requestHeaders: response.request().headers()
   });
+}
+
+function expectVoxelBinsRequestedWithRange(records: ResourceRecord[]) {
+  const binRequests = records.filter((entry) => entry.url.includes('/voxels-hd/voxel-pack-v1.bin'));
+  expect(binRequests.length, records.map((entry) => entry.url).join('\n')).toBeGreaterThan(0);
+  expect(binRequests.every((entry) => Boolean(entry.requestHeaders.range)), JSON.stringify(binRequests, null, 2)).toBe(true);
 }
 
 test.describe('menu attract performance', () => {
@@ -297,6 +305,7 @@ test.describe('menu attract performance', () => {
     expect(loadedAttractAssets.some((url) => url.includes('/stages/the-chamber/stage.json') || url.includes('/stages/chamber/')), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedAttractAssets.join('\n')).toBe(true);
+    expectVoxelBinsRequestedWithRange(responses);
     await expectNoHdProceduralFallback(page);
   });
 
@@ -319,6 +328,7 @@ test.describe('menu attract performance', () => {
     expect(loadedAttractAssets.some((url) => url.includes('/stages/chamber/') || (url.includes('/stages/') && url.includes('.glb'))), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedAttractAssets.join('\n')).toBe(true);
     expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedAttractAssets.join('\n')).toBe(true);
+    expectVoxelBinsRequestedWithRange(responses);
     await expectNoHdProceduralFallback(page);
     await resetLongTaskCollector(page);
     const stats = await sampleFramePacing(page, 8_000);
@@ -409,6 +419,7 @@ test.describe('in-game fight performance', () => {
     });
     expect(loadedFightAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedFightAssets.join('\n')).toBe(true);
     expect(loadedFightAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedFightAssets.join('\n')).toBe(true);
+    expectVoxelBinsRequestedWithRange(responses);
     await expectNoHdProceduralFallback(page);
     await resetLongTaskCollector(page);
     await page.evaluate(() => performance.clearResourceTimings());

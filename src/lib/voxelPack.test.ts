@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildVoxelPack, decodeVoxelPackFrame, normalizeHdVoxelPayload, type HdVoxelPayload } from './voxelPack';
+import { buildVoxelPack, decodeVoxelPackFrame, decodeVoxelPackFrameRecords, normalizeHdVoxelPayload, voxelPackFrameByteRange, type HdVoxelPayload } from './voxelPack';
 
 const payload: HdVoxelPayload = {
   format: 'kore-hd-voxels-v1',
@@ -24,5 +24,35 @@ describe('voxel pack', () => {
     const pack = buildVoxelPack('test-fighter', [{ frame: 'frame-000', payload }]);
 
     expect(decodeVoxelPackFrame(pack.manifest, pack.records, 'frame-999')).toBeNull();
+  });
+
+  it('computes exact byte ranges for individual packed frames', () => {
+    const pack = buildVoxelPack('test-fighter', [
+      { frame: 'frame-000', payload },
+      { frame: 'frame-001', payload }
+    ]);
+    const first = voxelPackFrameByteRange(pack.manifest, 'frame-000');
+    const second = voxelPackFrameByteRange(pack.manifest, 'frame-001');
+
+    expect(first).toMatchObject({ start: 0, end: payload.voxels.length * 9 * 8 - 1, count: payload.voxels.length });
+    expect(second).toMatchObject({
+      start: payload.voxels.length * 9 * 8,
+      end: payload.voxels.length * 9 * 8 * 2 - 1,
+      count: payload.voxels.length
+    });
+  });
+
+  it('decodes a ranged frame slice exactly like the full pack', () => {
+    const pack = buildVoxelPack('test-fighter', [
+      { frame: 'frame-000', payload },
+      { frame: 'frame-001', payload }
+    ]);
+    const range = voxelPackFrameByteRange(pack.manifest, 'frame-001');
+    expect(range).not.toBeNull();
+    const start = (range?.start ?? 0) / 8;
+    const end = ((range?.end ?? 0) + 1) / 8;
+    const slice = pack.records.slice(start, end);
+
+    expect(decodeVoxelPackFrameRecords(pack.manifest, slice, 0, range?.count ?? 0)).toEqual(decodeVoxelPackFrame(pack.manifest, pack.records, 'frame-001'));
   });
 });
