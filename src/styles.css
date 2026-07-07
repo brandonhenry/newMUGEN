@@ -11373,6 +11373,98 @@ button {
   transform: scale(0.96);
 }
 
+.username-gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 42px);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(45, 227, 255, 0.18), transparent 36%),
+    rgba(1, 5, 12, 0.78);
+  backdrop-filter: blur(10px);
+}
+
+.username-gate-dialog {
+  width: min(520px, 100%);
+  display: grid;
+  gap: 18px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid rgba(72, 224, 255, 0.28);
+  border-left: 5px solid #ff8a1f;
+  border-radius: 8px;
+  background:
+    linear-gradient(120deg, rgba(255, 138, 31, 0.15), transparent 38%),
+    rgba(8, 12, 20, 0.96);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.52),
+    0 0 48px rgba(45, 227, 255, 0.1) inset;
+}
+
+.username-gate-dialog header {
+  display: grid;
+  gap: 6px;
+}
+
+.username-gate-dialog span,
+.username-gate-entry span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.76rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.username-gate-dialog h2 {
+  margin: 0;
+  color: #ffe071;
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.56);
+}
+
+.username-gate-dialog p {
+  margin: 0;
+  color: rgba(247, 247, 242, 0.78);
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.username-gate-entry {
+  display: grid;
+  gap: 8px;
+}
+
+.username-gate-entry input {
+  width: 100%;
+  min-width: 0;
+  height: clamp(58px, 8vw, 74px);
+  padding: 0 16px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 7px;
+  background: rgba(3, 8, 14, 0.86);
+  color: #fff8c7;
+  font: inherit;
+  font-size: clamp(1.6rem, 5vw, 2.7rem);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.username-gate-entry input:focus {
+  border-color: #2de3ff;
+  box-shadow: 0 0 0 4px rgba(45, 227, 255, 0.14);
+}
+
+.username-gate-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
 .leaderboard-actions {
   display: flex;
   flex-wrap: wrap;

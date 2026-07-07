@@ -248,6 +248,13 @@ type ArcadeMiniGameLaunch = {
   durationSeconds?: number;
   arcadeLevel?: number;
 };
+type UsernameGateRequest = {
+  source: string;
+  title?: string;
+  body?: string;
+  onConfirm: (profile: OnlinePlayerProfile) => void;
+  onBack: () => void;
+};
 
 type CharacterAnimationOverride = {
   frames?: Record<string, string[]>;
@@ -808,6 +815,14 @@ function getEffectiveCpuDifficulty(mode: MatchMode, cpuDifficulty: CpuDifficulty
 
 function isArcadeMatchMode(mode: MatchMode) {
   return mode === 'ai' || mode === 'cpuArcade';
+}
+
+function requiresOnlineProfileForMode(mode: MatchMode) {
+  return mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'trainingOnline' || mode === 'tournamentOnline';
+}
+
+function requiresOnlineProfileForTournamentMode(mode: TournamentSelectMode) {
+  return mode === 'online' || mode === 'paid';
 }
 
 function buildAnimationSlots(): AnimationSlot[] {
@@ -2635,6 +2650,7 @@ export default function App() {
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
+  const [usernameGate, setUsernameGate] = useState<UsernameGateRequest | null>(null);
   const [rankedProfile, setRankedProfile] = useState<RankedProfile | null>(null);
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
@@ -2672,6 +2688,36 @@ export default function App() {
     });
   }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
   const screenAnalyticsRef = useRef<{ screen: Screen | null; enteredAt: number }>({ screen: null, enteredAt: performance.now() });
+
+  const saveOnlineProfile = useCallback((profile: Partial<OnlinePlayerProfile>, source: string) => {
+    const saved = writeOnlineProfile(profile);
+    setOnlineProfile(saved);
+    captureAppAnalytics('online_profile_saved', {
+      source,
+      player_id: saved.playerId,
+      had_existing_profile: Boolean(profile.playerId)
+    });
+    return saved;
+  }, [captureAppAnalytics]);
+
+  const promptForUsername = useCallback((request: UsernameGateRequest) => {
+    setUsernameGate(request);
+    captureAppAnalytics('navigation_clicked', { source: request.source, destination: 'username_gate' });
+  }, [captureAppAnalytics]);
+
+  const closeUsernameGate = useCallback(() => {
+    const request = usernameGate;
+    setUsernameGate(null);
+    request?.onBack();
+  }, [usernameGate]);
+
+  const confirmUsernameGate = useCallback((displayName: string) => {
+    const request = usernameGate;
+    if (!request) return;
+    const saved = saveOnlineProfile({ playerId: onlineProfile?.playerId, displayName }, request.source);
+    setUsernameGate(null);
+    request.onConfirm(saved);
+  }, [onlineProfile?.playerId, saveOnlineProfile, usernameGate]);
 
   const openStarterGuide = useCallback((source: string) => {
     setStarterGuideOpen(true);
@@ -2827,9 +2873,9 @@ export default function App() {
     window.clearTimeout(infiniteTournamentRestartTimerRef.current);
   }, []);
 
-  const enterOnlineTournament = useCallback(async (characterId: string, tournamentMode: Extract<TournamentSelectMode, 'online' | 'paid'>) => {
-    const profile = onlineProfile ?? writeOnlineProfile({ displayName: 'PLAYER' });
-    if (!onlineProfile) setOnlineProfile(profile);
+  const enterOnlineTournament = useCallback(async (characterId: string, tournamentMode: Extract<TournamentSelectMode, 'online' | 'paid'>, confirmedProfile?: OnlinePlayerProfile) => {
+    const profile = confirmedProfile ?? onlineProfile;
+    if (!profile) throw new Error('Player name required');
     const paid = tournamentMode === 'paid';
     setTournamentStatusText(paid ? 'Creating Cash App checkout' : 'Entering free online tournament');
     const result = await enterTournament({
@@ -3748,6 +3794,18 @@ export default function App() {
               resetRandomSelections();
               setMode('online');
               setPrivateRoomIntent(null);
+              if (!onlineProfile) {
+                promptForUsername({
+                  source: 'online_menu',
+                  body: 'Choose the name other players will see online.',
+                  onConfirm: () => setScreen('select'),
+                  onBack: () => {
+                    setMode('ai');
+                    setScreen('menu');
+                  }
+                });
+                return;
+              }
               setScreen('select');
             }}
             onSettings={() => {
@@ -3777,8 +3835,6 @@ export default function App() {
             isDevHost={isDevHost}
             setP1Id={setP1Id}
             setTournamentMode={setSelectedTournamentMode}
-            onlineProfile={onlineProfile}
-            onOnlineProfileChange={(profile) => setOnlineProfile(writeOnlineProfile(profile))}
             onBack={() => setScreen('menu')}
             onStart={(characterId, tournamentMode) => {
               captureAppAnalytics('game_start_clicked', { source: 'tournament_select', selected_mode: tournamentMode });
@@ -3794,17 +3850,32 @@ export default function App() {
                 startInfiniteTournament();
                 return;
               }
-              void enterOnlineTournament(characterId, tournamentMode === 'paid' ? 'paid' : 'online').catch((error) => {
-                console.error('Failed to enter tournament', error);
-                captureAppAnalytics('tournament_entry_failed', {
-                  tournament_mode: tournamentMode,
-                  character_id: characterId
+              const startOnlineTournamentEntry = (profile?: OnlinePlayerProfile) => {
+                void enterOnlineTournament(characterId, tournamentMode === 'paid' ? 'paid' : 'online', profile).catch((error) => {
+                  console.error('Failed to enter tournament', error);
+                  captureAppAnalytics('tournament_entry_failed', {
+                    tournament_mode: tournamentMode,
+                    character_id: characterId
+                  });
+                  setTournamentStatusText(error instanceof Error ? error.message : 'Tournament unavailable');
+                  setOnlineTournamentStatus(null);
+                  setLocalTournamentBracket(null);
+                  setScreen('tournamentLobby');
                 });
-                setTournamentStatusText(error instanceof Error ? error.message : 'Tournament unavailable');
-                setOnlineTournamentStatus(null);
-                setLocalTournamentBracket(null);
-                setScreen('tournamentLobby');
-              });
+              };
+              if (requiresOnlineProfileForTournamentMode(tournamentMode) && !onlineProfile) {
+                promptForUsername({
+                  source: 'tournament_select',
+                  body: 'Choose the name shown in the tournament bracket.',
+                  onConfirm: startOnlineTournamentEntry,
+                  onBack: () => {
+                    setSelectedTournamentMode('free');
+                    setScreen('tournament');
+                  }
+                });
+                return;
+              }
+              startOnlineTournamentEntry();
             }}
             onAnalytics={captureAppAnalytics}
           />
@@ -3914,23 +3985,39 @@ export default function App() {
             setTrainingMode={setSelectedTrainingMode}
             onBack={() => setScreen('menu')}
             onStart={() => {
-              const fightStage = resolveRandomStageSelection();
-              if (!fightStage) return;
-              const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
-              if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
-              if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
-              setMode(selectedTrainingMode === 'online' ? 'trainingOnline' : 'training');
-              captureAppAnalytics('character_selected', {
-                p1_character_id: trainingCharacters.p1?.id ?? p1Id,
-                p2_character_id: trainingCharacters.p2?.id ?? p2Id,
-                training_submode: selectedTrainingMode
-              });
-              captureAppAnalytics('stage_selected', {
-                stage_id: fightStage.id,
-                stage_random: randomStageSelected,
-                training_submode: selectedTrainingMode
-              });
-              setScreen('fight');
+              const startTraining = () => {
+                const fightStage = resolveRandomStageSelection();
+                if (!fightStage) return;
+                const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
+                if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+                if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
+                setMode(selectedTrainingMode === 'online' ? 'trainingOnline' : 'training');
+                captureAppAnalytics('character_selected', {
+                  p1_character_id: trainingCharacters.p1?.id ?? p1Id,
+                  p2_character_id: trainingCharacters.p2?.id ?? p2Id,
+                  training_submode: selectedTrainingMode
+                });
+                captureAppAnalytics('stage_selected', {
+                  stage_id: fightStage.id,
+                  stage_random: randomStageSelected,
+                  training_submode: selectedTrainingMode
+                });
+                setScreen('fight');
+              };
+              if (selectedTrainingMode === 'online' && !onlineProfile) {
+                promptForUsername({
+                  source: 'training_online',
+                  body: 'Choose the name your training partner will see.',
+                  onConfirm: startTraining,
+                  onBack: () => {
+                    setMode('training');
+                    setSelectedTrainingMode('free');
+                    setScreen('training');
+                  }
+                });
+                return;
+              }
+              startTraining();
             }}
             onAnalytics={captureAppAnalytics}
           />
@@ -3951,20 +4038,29 @@ export default function App() {
             setCpuDifficulty={setModeScopedCpuDifficulty}
             onlineProfile={onlineProfile}
             rankedProfile={rankedProfile}
-            onOnlineProfileChange={(profile) => {
-              const saved = writeOnlineProfile(profile);
-              setOnlineProfile(saved);
-              captureAppAnalytics('online_profile_saved', {
-                source: 'character_select',
-                player_id: saved.playerId,
-                had_existing_profile: Boolean(profile.playerId)
-              });
-            }}
             onLeaderboards={() => {
               captureAppAnalytics('navigation_clicked', { destination: 'leaderboard', source: 'character_select' });
               setScreen('leaderboard');
             }}
             onPrivateRooms={() => {
+              if (!onlineProfile) {
+                promptForUsername({
+                  source: 'private_rooms',
+                  body: 'Choose the name private room opponents will see.',
+                  onConfirm: () => {
+                    captureAppAnalytics('navigation_clicked', { destination: 'private_rooms', source: 'character_select' });
+                    resolveRandomCharacterSelection('private');
+                    resolveRandomStageSelection();
+                    setScreen('privateRooms');
+                  },
+                  onBack: () => {
+                    setMode('ai');
+                    setPrivateRoomIntent(null);
+                    setScreen('select');
+                  }
+                });
+                return;
+              }
               captureAppAnalytics('navigation_clicked', { destination: 'private_rooms', source: 'character_select' });
               resolveRandomCharacterSelection('private');
               resolveRandomStageSelection();
@@ -3973,28 +4069,44 @@ export default function App() {
             onUiNavigate={playInnerMenuSelectSound}
             onBack={() => setScreen('menu')}
             onNext={() => {
-              const resolvedCharacters = resolveRandomCharacterSelection(mode);
-              if (mode === 'training') {
-                const p1Selected = roster.find((character) => character.id === resolvedCharacters.p1Id);
-                const p2Selected = roster.find((character) => character.id === resolvedCharacters.p2Id);
-                if (
-                  (p1Selected && !isCharacterUnlocked(p1Selected, effectiveUnlockedCharacterIds)) ||
-                  (p2Selected && !isCharacterUnlocked(p2Selected, effectiveUnlockedCharacterIds))
-                ) {
-                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, resolvedCharacters.p1Id, resolvedCharacters.p2Id);
-                  if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
-                  if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
-                  return;
+              const continueToStage = () => {
+                const resolvedCharacters = resolveRandomCharacterSelection(mode);
+                if (mode === 'training') {
+                  const p1Selected = roster.find((character) => character.id === resolvedCharacters.p1Id);
+                  const p2Selected = roster.find((character) => character.id === resolvedCharacters.p2Id);
+                  if (
+                    (p1Selected && !isCharacterUnlocked(p1Selected, effectiveUnlockedCharacterIds)) ||
+                    (p2Selected && !isCharacterUnlocked(p2Selected, effectiveUnlockedCharacterIds))
+                  ) {
+                    const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, resolvedCharacters.p1Id, resolvedCharacters.p2Id);
+                    if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+                    if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
+                    return;
+                  }
                 }
+                captureAppAnalytics('character_selected', {
+                  p1_character_id: resolvedCharacters.p1Id,
+                  p2_character_id: resolvedCharacters.p2Id,
+                  p1_random: randomCharacterSlots[1],
+                  p2_random: !isArcadeMatchMode(mode) && randomCharacterSlots[2]
+                });
+                if (mode !== 'private') setPrivateRoomIntent(null);
+                setScreen('stage');
+              };
+              if (requiresOnlineProfileForMode(mode) && !onlineProfile) {
+                promptForUsername({
+                  source: 'character_select',
+                  body: 'Choose your player name before entering this mode.',
+                  onConfirm: continueToStage,
+                  onBack: () => {
+                    setMode('ai');
+                    setPrivateRoomIntent(null);
+                    setScreen('menu');
+                  }
+                });
+                return;
               }
-              captureAppAnalytics('character_selected', {
-                p1_character_id: resolvedCharacters.p1Id,
-                p2_character_id: resolvedCharacters.p2Id,
-                p1_random: randomCharacterSlots[1],
-                p2_random: !isArcadeMatchMode(mode) && randomCharacterSlots[2]
-              });
-              if (mode !== 'private') setPrivateRoomIntent(null);
-              setScreen('stage');
+              continueToStage();
             }}
             onAnalytics={captureAppAnalytics}
           />
@@ -4010,32 +4122,48 @@ export default function App() {
             setRandomSelected={setRandomStageSelected}
             onBack={() => setScreen(mode === 'training' ? 'training' : 'select')}
             onFight={() => {
-              const fightStage = resolveRandomStageSelection();
-              if (!fightStage) return;
-              if (mode === 'private' && !privateRoomIntent) {
-                setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
-              }
-              if (mode === 'training') {
-                if (!isCharacterUnlocked(p1, effectiveUnlockedCharacterIds) || !isCharacterUnlocked(p2, effectiveUnlockedCharacterIds)) {
-                  const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
-                  if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
-                  if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
-                  return;
+              const continueToFight = () => {
+                const fightStage = resolveRandomStageSelection();
+                if (!fightStage) return;
+                if (mode === 'private' && !privateRoomIntent) {
+                  setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
                 }
-              }
-              captureAppAnalytics('stage_selected', { stage_id: fightStage.id, stage_random: randomStageSelected });
-              if (isArcadeMatchMode(mode)) {
-                const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
-                if (opponent) setP2Id(opponent.id);
-              }
-              if (mode !== 'cpu') {
-                playCharacterStageIntroVoiceSfx(p1, settings.audio);
-                if (mode === 'local2p') {
-                  window.setTimeout(() => playCharacterStageIntroVoiceSfx(p2, settings.audio), 650);
+                if (mode === 'training') {
+                  if (!isCharacterUnlocked(p1, effectiveUnlockedCharacterIds) || !isCharacterUnlocked(p2, effectiveUnlockedCharacterIds)) {
+                    const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
+                    if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
+                    if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
+                    return;
+                  }
                 }
+                captureAppAnalytics('stage_selected', { stage_id: fightStage.id, stage_random: randomStageSelected });
+                if (isArcadeMatchMode(mode)) {
+                  const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
+                  if (opponent) setP2Id(opponent.id);
+                }
+                if (mode !== 'cpu') {
+                  playCharacterStageIntroVoiceSfx(p1, settings.audio);
+                  if (mode === 'local2p') {
+                    window.setTimeout(() => playCharacterStageIntroVoiceSfx(p2, settings.audio), 650);
+                  }
+                }
+                setVersusReturnScreen('stage');
+                setScreen(mode === 'training' ? 'fight' : 'versus');
+              };
+              if (requiresOnlineProfileForMode(mode) && !onlineProfile) {
+                promptForUsername({
+                  source: 'stage_select',
+                  body: 'Choose your player name before starting this match.',
+                  onConfirm: continueToFight,
+                  onBack: () => {
+                    setMode('ai');
+                    setPrivateRoomIntent(null);
+                    setScreen('select');
+                  }
+                });
+                return;
               }
-              setVersusReturnScreen('stage');
-              setScreen(mode === 'training' ? 'fight' : 'versus');
+              continueToFight();
             }}
             onAnalytics={captureAppAnalytics}
           />
@@ -4161,6 +4289,8 @@ export default function App() {
             setCpuDifficulty={setModeScopedCpuDifficulty}
             settings={settings}
             setSettings={setSettings}
+            onlineProfile={onlineProfile}
+            onOnlineProfileChange={(profile) => saveOnlineProfile(profile, 'settings')}
             selectedStageName={selectedStage.name}
             selectedStageBgmTitle={stageBgmTrack(selectedStage)?.title ?? selectedStage.music?.title ?? 'Local Stage Track'}
             menuBgmTrackTitle={KORE_MENU_BGM_SOURCE.tracks[normalizeBgmIndex(settings.audio.bgmTrackIndex, KORE_MENU_BGM_SOURCE.tracks.length)]?.title ?? 'No track'}
@@ -4278,6 +4408,15 @@ export default function App() {
           />
         )}
       </section>
+      {usernameGate && (
+        <UsernamePromptModal
+          profile={onlineProfile}
+          title={usernameGate.title}
+          body={usernameGate.body}
+          onConfirm={confirmUsernameGate}
+          onBack={closeUsernameGate}
+        />
+      )}
       {starterGuideOpen && <StarterGuideDialog onClose={dismissStarterGuide} />}
     </main>
   );
@@ -5945,6 +6084,80 @@ function ArcadeNameCard({
   );
 }
 
+function UsernamePromptModal({
+  profile,
+  title = 'Player Name',
+  body = 'Choose the name other players will see.',
+  onConfirm,
+  onBack
+}: {
+  profile: OnlinePlayerProfile | null;
+  title?: string;
+  body?: string;
+  onConfirm: (displayName: string) => void;
+  onBack: () => void;
+}) {
+  const [draft, setDraft] = useState(profile?.displayName ?? '');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const displayName = sanitizeDisplayName(draft);
+
+  useEffect(() => {
+    setDraft(profile?.displayName ?? '');
+  }, [profile?.displayName]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const confirm = () => {
+    if (!displayName) return;
+    onConfirm(displayName);
+  };
+
+  return (
+    <div className="username-gate-overlay" role="presentation">
+      <section className="username-gate-dialog" role="dialog" aria-modal="true" aria-labelledby="username-gate-title">
+        <header>
+          <span>Online Profile</span>
+          <h2 id="username-gate-title">{title}</h2>
+          <p>{body}</p>
+        </header>
+        <label className="username-gate-entry">
+          <span>Name</span>
+          <input
+            ref={inputRef}
+            value={draft}
+            maxLength={ARCADE_NAME_MAX_LENGTH}
+            placeholder="AAA"
+            aria-label="Player name"
+            inputMode="text"
+            autoComplete="nickname"
+            onChange={(event) => setDraft(sanitizeDisplayName(event.target.value))}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                confirm();
+              }
+              if (event.key === 'Escape') {
+                event.preventDefault();
+                onBack();
+              }
+            }}
+          />
+        </label>
+        <div className="username-gate-actions">
+          <button type="button" className="secondary-button" onClick={onBack}>
+            Back
+          </button>
+          <button type="button" className="primary-button" onClick={confirm} disabled={!displayName}>
+            Confirm
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function TrainingSelect({
   roster,
   p1Id,
@@ -6234,8 +6447,6 @@ function TournamentSelect({
   isDevHost,
   setP1Id,
   setTournamentMode,
-  onlineProfile,
-  onOnlineProfileChange,
   onBack,
   onStart,
   onAnalytics
@@ -6247,8 +6458,6 @@ function TournamentSelect({
   isDevHost: boolean;
   setP1Id: (id: string) => void;
   setTournamentMode: (mode: TournamentSelectMode) => void;
-  onlineProfile: OnlinePlayerProfile | null;
-  onOnlineProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
   onBack: () => void;
   onStart: (characterId: string, mode: TournamentSelectMode) => void;
   onAnalytics: AnalyticsCapture;
@@ -6457,10 +6666,6 @@ function TournamentSelect({
               </button>
             )}
           </div>
-
-          {(tournamentMode === 'online' || tournamentMode === 'paid') && !onlineProfile && (
-            <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} autoFocus />
-          )}
 
           {summaryStatus === 'error' && <div className="tournament-status-strip">Online tournament list unavailable</div>}
 
@@ -7239,7 +7444,6 @@ function CharacterSelect({
   setCpuDifficulty,
   onlineProfile,
   rankedProfile,
-  onOnlineProfileChange,
   onLeaderboards,
   onPrivateRooms,
   onUiNavigate,
@@ -7261,7 +7465,6 @@ function CharacterSelect({
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   onlineProfile?: OnlinePlayerProfile | null;
   rankedProfile?: RankedProfile | null;
-  onOnlineProfileChange?: (profile: Partial<OnlinePlayerProfile>) => void;
   onLeaderboards?: () => void;
   onPrivateRooms?: () => void;
   onUiNavigate: () => void;
@@ -7565,10 +7768,6 @@ function CharacterSelect({
             })}
           </div>
 
-          {(mode === 'online' || mode === 'ranked') && !onlineProfile && onOnlineProfileChange && (
-            <ArcadeNameCard profile={onlineProfile ?? null} onProfileChange={onOnlineProfileChange} autoFocus />
-          )}
-
           {mode === 'ranked' && onlineProfile && rankedProfileOpen && (
             <RankedProfileCard profile={rankedProfile ?? null} onlineProfile={onlineProfile} onClose={() => setRankedProfileOpen(false)} />
           )}
@@ -7605,7 +7804,7 @@ function CharacterSelect({
           }
           onNext={onNext}
           nextLabel="Stage"
-          nextDisabled={((mode === 'online' || mode === 'ranked') && !onlineProfile) || trainingSelectionLocked}
+          nextDisabled={trainingSelectionLocked}
         />
       </section>
 
@@ -10239,7 +10438,7 @@ const tabLabels: Record<SettingsTab, string> = {
   console: 'Console'
 };
 const sidebars: Record<SettingsTab, string[]> = {
-  game: ['Match Rules', 'Training', 'Assist', 'Performance', 'Defaults'],
+  game: ['Match Rules', 'Player Profile', 'Training', 'Assist', 'Performance', 'Defaults'],
   controls: ['Keyboard Mapping', 'Keyboard Combos', 'Gamepad Mapping', 'Gamepad Combos', 'Input Test', 'Defaults'],
   camera: ['Fight Camera', 'Tracking', 'Zoom', 'Defaults'],
   display: ['HUD', 'Touch Controls', 'Cursor', 'Motion', 'Debug'],
@@ -10349,6 +10548,8 @@ function SettingsScreen({
   setCpuDifficulty,
   settings,
   setSettings,
+  onlineProfile,
+  onOnlineProfileChange,
   selectedStageName,
   selectedStageBgmTitle,
   menuBgmTrackTitle,
@@ -10366,6 +10567,8 @@ function SettingsScreen({
   setCpuDifficulty: (difficulty: CpuDifficulty) => void;
   settings: GameSettings;
   setSettings: Dispatch<SetStateAction<GameSettings>>;
+  onlineProfile: OnlinePlayerProfile | null;
+  onOnlineProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
   selectedStageName: string;
   selectedStageBgmTitle: string;
   menuBgmTrackTitle: string;
@@ -10538,13 +10741,19 @@ function SettingsScreen({
               </SettingRow>
             )}
           </SettingsSection>
-          <SettingsSection index={1} title="Training" active={activeSectionIndex === 1}>
+          <SettingsSection index={1} title="Player Profile" active={activeSectionIndex === 1}>
+            <SettingRow label="Saved Name" value={onlineProfile?.displayName ?? 'Not set'}>
+              <span className="setting-readout">{onlineProfile?.displayName ?? 'Not set'}</span>
+            </SettingRow>
+            <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} />
+          </SettingsSection>
+          <SettingsSection index={2} title="Training" active={activeSectionIndex === 2}>
             <SettingToggle label="Training Infinite Health" checked={settings.game.trainingInfiniteHealth} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, trainingInfiniteHealth: checked } }))} />
           </SettingsSection>
-          <SettingsSection index={2} title="Assist" active={activeSectionIndex === 2}>
+          <SettingsSection index={3} title="Assist" active={activeSectionIndex === 3}>
             <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
           </SettingsSection>
-          <SettingsSection index={3} title="Performance" active={activeSectionIndex === 3}>
+          <SettingsSection index={4} title="Performance" active={activeSectionIndex === 4}>
             <SettingToggle
               label="Auto Detect Menu Lag"
               checked={settings.performance.autoDetectMenuLag}
@@ -10578,7 +10787,7 @@ function SettingsScreen({
               Apply Recommended
             </button>
           </SettingsSection>
-          <SettingsSection index={4} title="Defaults" active={activeSectionIndex === 4}>
+          <SettingsSection index={5} title="Defaults" active={activeSectionIndex === 5}>
             <button className="secondary-button" onClick={() => {
               onAnalytics('settings_reset_clicked', { settings_tab: 'game' });
               clearMenuLagPromptDismissed();
