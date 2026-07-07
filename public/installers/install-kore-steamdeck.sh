@@ -9,6 +9,7 @@ STEAM_ART_BASE_URL="${KORE_STEAM_ART_BASE_URL:-https://playkore.com/steam-art}"
 STEAM_TARGET="${KORE_STEAM_TARGET:-auto}"
 INSTALL_DIR="${KORE_INSTALL_DIR:-$HOME/Games/KORE}"
 APPIMAGE_PATH="$INSTALL_DIR/KORE.AppImage"
+LAUNCHER_PATH="$INSTALL_DIR/kore-steamdeck-launcher.sh"
 ICON_PATH="$INSTALL_DIR/kore.png"
 STEAM_ART_DIR="$INSTALL_DIR/steam-art"
 DESKTOP_FILE="$HOME/.local/share/applications/${APP_ID}.desktop"
@@ -54,7 +55,7 @@ for arg in "$@"; do
   case "$arg" in
     --dry-run) DRY_RUN=1 ;;
     --appimage-url=*) APPIMAGE_URL="${arg#*=}" ;;
-    --install-dir=*) INSTALL_DIR="${arg#*=}"; APPIMAGE_PATH="$INSTALL_DIR/KORE.AppImage"; ICON_PATH="$INSTALL_DIR/kore.png"; STEAM_ART_DIR="$INSTALL_DIR/steam-art" ;;
+    --install-dir=*) INSTALL_DIR="${arg#*=}"; APPIMAGE_PATH="$INSTALL_DIR/KORE.AppImage"; LAUNCHER_PATH="$INSTALL_DIR/kore-steamdeck-launcher.sh"; ICON_PATH="$INSTALL_DIR/kore.png"; STEAM_ART_DIR="$INSTALL_DIR/steam-art" ;;
     --add-steam-shortcut) ADD_STEAM_SHORTCUT=1 ;;
     --prompt-steam-shortcut) PROMPT_STEAM_SHORTCUT=1 ;;
     --no-steam-shortcut) ADD_STEAM_SHORTCUT=0; PROMPT_STEAM_SHORTCUT=0 ;;
@@ -120,6 +121,34 @@ install_icon() {
   download_file "https://playkore.com/brand/kore-favicon.png" "$ICON_PATH"
 }
 
+create_launch_wrapper() {
+  run mkdir -p "$INSTALL_DIR"
+  write_file "$LAUNCHER_PATH" 755 <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+APPIMAGE_PATH="$APPIMAGE_PATH"
+
+if [ "\${KORE_SKIP_STALE_KILL:-0}" != "1" ] && command -v pgrep >/dev/null 2>&1; then
+  stale_pids="\$(pgrep -f "\$APPIMAGE_PATH" 2>/dev/null || true)"
+  if [ -n "\$stale_pids" ]; then
+    for pid in \$stale_pids; do
+      [ "\$pid" = "\$\$" ] && continue
+      kill -TERM "\$pid" 2>/dev/null || true
+    done
+    sleep 0.35
+    stale_pids="\$(pgrep -f "\$APPIMAGE_PATH" 2>/dev/null || true)"
+    for pid in \$stale_pids; do
+      [ "\$pid" = "\$\$" ] && continue
+      kill -KILL "\$pid" 2>/dev/null || true
+    done
+  fi
+fi
+
+export KORE_STEAM_DECK=1
+exec "\$APPIMAGE_PATH" --steamdeck "\$@"
+EOF
+}
+
 install_steam_art_sources() {
   run mkdir -p "$STEAM_ART_DIR"
   download_file "$STEAM_ART_BASE_URL/kore_capsule_460x215.png" "$STEAM_ART_DIR/kore_capsule_460x215.png"
@@ -141,7 +170,7 @@ create_desktop_entries() {
 Type=Application
 Name=KORE
 Comment=$GAME_SUMMARY
-Exec=$APPIMAGE_PATH
+Exec=$LAUNCHER_PATH
 Icon=$ICON_PATH
 Categories=Game;
 Terminal=false
@@ -152,7 +181,7 @@ EOF
 Type=Application
 Name=KORE
 Comment=$GAME_SUMMARY
-Exec=$APPIMAGE_PATH
+Exec=$LAUNCHER_PATH
 Icon=$ICON_PATH
 Categories=Game;
 Terminal=false
@@ -184,7 +213,7 @@ resolve_steam_target() {
       STEAM_LAUNCH_OPTIONS="run $APP_ID"
       ;;
     appimage)
-      STEAM_EXE="$APPIMAGE_PATH"
+      STEAM_EXE="$LAUNCHER_PATH"
       STEAM_START_DIR="$INSTALL_DIR"
       STEAM_LAUNCH_OPTIONS=""
       ;;
@@ -194,7 +223,7 @@ resolve_steam_target() {
         STEAM_START_DIR="/usr/bin"
         STEAM_LAUNCH_OPTIONS="run $APP_ID"
       else
-        STEAM_EXE="$APPIMAGE_PATH"
+        STEAM_EXE="$LAUNCHER_PATH"
         STEAM_START_DIR="$INSTALL_DIR"
         STEAM_LAUNCH_OPTIONS=""
       fi
@@ -411,6 +440,7 @@ echo "Install path: $APPIMAGE_PATH"
 echo "Desktop shortcut: $DESKTOP_SHORTCUT"
 download_appimage
 install_icon
+create_launch_wrapper
 create_desktop_entries
 maybe_install_steam_shortcut
 echo "Done."

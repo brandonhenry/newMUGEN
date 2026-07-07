@@ -17,6 +17,7 @@ describe('Steam Deck fallback installer script', () => {
 
     expect(stdout).toContain('Install path: /home/deck/Games/KORE/KORE.AppImage');
     expect(stdout).toContain('Desktop shortcut: /home/deck/Desktop/KORE.desktop');
+    expect(stdout).toContain('[dry-run] write /home/deck/Games/KORE/kore-steamdeck-launcher.sh');
     expect(stdout).toContain('Steam Library integration skipped.');
     expect(stdout).toContain('Advanced automatic Steam shortcut option: rerun with --add-steam-shortcut.');
     expect(stdout).not.toContain('/home/deck/Download');
@@ -44,6 +45,34 @@ describe('Steam Deck fallback installer script', () => {
     expect(stdout).toContain('Steam shortcut appid:');
     expect(stdout).toContain('would install Steam artwork from /home/deck/Games/KORE/steam-art');
   });
+
+  it('dry-runs AppImage Steam shortcut through the fresh-launch wrapper', async () => {
+    const { stdout } = await execFileAsync('bash', [
+      'public/installers/install-kore-steamdeck.sh',
+      '--dry-run',
+      '--add-steam-shortcut',
+      '--steam-target=appimage'
+    ], {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        HOME: '/home/deck'
+      }
+    });
+
+    expect(stdout).toContain('Steam target: /home/deck/Games/KORE/kore-steamdeck-launcher.sh');
+    expect(stdout).not.toContain('Steam target: /home/deck/Games/KORE/KORE.AppImage');
+  });
+
+  it('generates desktop entries and wrapper logic for fresh AppImage launches', async () => {
+    const fallbackScript = await readFile('public/installers/install-kore-steamdeck.sh', 'utf8');
+
+    expect(fallbackScript).toContain('LAUNCHER_PATH="$INSTALL_DIR/kore-steamdeck-launcher.sh"');
+    expect(fallbackScript).toContain('Exec=$LAUNCHER_PATH');
+    expect(fallbackScript).toContain('pgrep -f "\\$APPIMAGE_PATH"');
+    expect(fallbackScript).toContain('export KORE_STEAM_DECK=1');
+    expect(fallbackScript).toContain('exec "\\$APPIMAGE_PATH" --steamdeck "\\$@"');
+  });
 });
 
 describe('Steam Deck Flatpak bundle permissions', () => {
@@ -54,6 +83,8 @@ describe('Steam Deck Flatpak bundle permissions', () => {
     expect(script).toContain("'--device=all'");
     expect(script).toContain("'--filesystem=/run/udev:ro'");
     expect(script).toContain("'--socket=x11'");
+    expect(script).toContain('export KORE_STEAM_DECK=1');
+    expect(script).toContain('--steamdeck --no-sandbox --ozone-platform=x11');
     expect(script).not.toContain("'--device=input'");
   });
 
@@ -73,5 +104,20 @@ describe('Steam Deck Flatpak bundle permissions', () => {
 
     expect(packageJson).toContain('desktop:dist:linux');
     expect(packageJson).toContain('-c.electronVersion=26.6.10');
+  });
+});
+
+describe('Electron desktop lifecycle recovery', () => {
+  it('exits or relaunches instead of preserving a stale Steam Deck runtime', async () => {
+    const electronMain = await readFile('electron/main.cjs', 'utf8');
+
+    expect(electronMain).toContain('app.requestSingleInstanceLock()');
+    expect(electronMain).toContain("app.on('second-instance'");
+    expect(electronMain).toContain('app.relaunch');
+    expect(electronMain).toContain('forceExit');
+    expect(electronMain).toContain("webContents.on('render-process-gone'");
+    expect(electronMain).toContain("webContents.on('unresponsive'");
+    expect(electronMain).toContain("process.on(signal, () => forceExit(`signal:${signal}`))");
+    expect(electronMain).not.toMatch(/localStorage\.clear|sessionStorage\.clear/);
   });
 });

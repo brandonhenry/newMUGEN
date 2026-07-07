@@ -54,8 +54,9 @@ async function writeBuildFiles() {
 await writeFile(launcherPath, `#!/usr/bin/env bash
 set -euo pipefail
 export KORE_DESKTOP_URL="\${KORE_DESKTOP_URL:-https://playkore.com}"
+export KORE_STEAM_DECK=1
 export ELECTRON_OZONE_PLATFORM_HINT="\${ELECTRON_OZONE_PLATFORM_HINT:-x11}"
-exec /app/kore/kore --no-sandbox --ozone-platform=x11 "$@"
+exec /app/kore/kore --steamdeck --no-sandbox --ozone-platform=x11 "$@"
 `);
   await chmod(launcherPath, 0o755);
   await writeFile(desktopPath, `[Desktop Entry]
