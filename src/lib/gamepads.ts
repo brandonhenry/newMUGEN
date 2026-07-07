@@ -36,6 +36,8 @@ export const MENU_PREVIOUS_GAMEPAD_BUTTON = 4;
 export const MENU_NEXT_GAMEPAD_BUTTON = 5;
 export const MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON = 6;
 export const MENU_NEXT_GAMEPAD_ALIAS_BUTTON = 7;
+export const MENU_PREVIOUS_MODE_GAMEPAD_BUTTON = MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON;
+export const MENU_NEXT_MODE_GAMEPAD_BUTTON = MENU_NEXT_GAMEPAD_ALIAS_BUTTON;
 export const MENU_HELP_GAMEPAD_BUTTON = MENU_PREVIOUS_GAMEPAD_BUTTON;
 export const MENU_HELP_NEXT_GAMEPAD_BUTTON = MENU_NEXT_GAMEPAD_BUTTON;
 export const CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON = MENU_PREVIOUS_GAMEPAD_BUTTON;
@@ -125,10 +127,17 @@ export function readMenuGamepadState(pad: Gamepad, selectActsAsBack: boolean): M
   };
 }
 
-export function readPageGamepadState(pad: Gamepad): PageGamepadState {
+export function readPageGamepadState(pad: Gamepad, includeTriggerAliases = true): PageGamepadState {
   return {
-    previous: isGamepadButtonPressed(pad, CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON) || isGamepadButtonPressed(pad, MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON),
-    next: isGamepadButtonPressed(pad, CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON) || isGamepadButtonPressed(pad, MENU_NEXT_GAMEPAD_ALIAS_BUTTON)
+    previous: isGamepadButtonPressed(pad, CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON) || (includeTriggerAliases && isGamepadButtonPressed(pad, MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON)),
+    next: isGamepadButtonPressed(pad, CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON) || (includeTriggerAliases && isGamepadButtonPressed(pad, MENU_NEXT_GAMEPAD_ALIAS_BUTTON))
+  };
+}
+
+export function readModeGamepadState(pad: Gamepad): PageGamepadState {
+  return {
+    previous: isGamepadButtonPressed(pad, MENU_PREVIOUS_MODE_GAMEPAD_BUTTON),
+    next: isGamepadButtonPressed(pad, MENU_NEXT_MODE_GAMEPAD_BUTTON)
   };
 }
 

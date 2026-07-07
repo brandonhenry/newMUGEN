@@ -66,7 +66,7 @@ import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/sta
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { detectGameplaySupport, getGameplaySupportChecks, type SupportCheck, type SupportWarning } from './lib/gameplaySupport';
-import { getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readPageGamepadState } from './lib/gamepads';
+import { getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readModeGamepadState, readPageGamepadState } from './lib/gamepads';
 import { MENU_LAG_DETECTOR_VERSION, clearMenuLagPromptDismissed, getMenuLagPromptDismissed, sampleMenuLandingLag, setMenuLagPromptDismissed, type MenuLagReport } from './lib/menuLagDetector';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
@@ -6800,6 +6800,7 @@ function TrainingSelect({
   const [hoveredBaseId, setHoveredBaseId] = useState('');
   const [rosterPage, setRosterPage] = useState(0);
   const pageGamepadStateRef = useRef({ previous: false, next: false });
+  const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster.find((character) => character.id !== p1Character?.id) ?? roster[1] ?? p1Character;
   const basicCount = p1Character ? generateBasicTrainingTrials(p1Character, roster).length : 0;
@@ -6830,6 +6831,12 @@ function TrainingSelect({
   const cycleRosterPage = useCallback((direction: -1 | 1) => {
     setRosterPage((page) => (page + direction + totalRosterPages) % totalRosterPages);
   }, [totalRosterPages]);
+  const cycleTrainingMode = useCallback((direction: -1 | 1) => {
+    const nextMode = cycleModeValue(['free', 'basics', 'combos', 'online'] satisfies TrainingTrialMode[], trainingMode, direction);
+    if (nextMode === trainingMode) return;
+    setTrainingMode(nextMode);
+    onAnalytics('training_mode_changed', { source: 'training_select_gamepad_trigger', training_submode: nextMode });
+  }, [onAnalytics, setTrainingMode, trainingMode]);
   const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
     const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
     if (family.length <= 1) return;
@@ -6883,19 +6890,25 @@ function TrainingSelect({
       const pad = getPrimaryGamepad();
       if (!pad || isTextEntryElement(document.activeElement)) {
         pageGamepadStateRef.current = { previous: false, next: false };
+        modeGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
         return;
       }
-      const current = readPageGamepadState(pad);
+      const current = readPageGamepadState(pad, false);
       const previous = pageGamepadStateRef.current;
       if (current.previous && !previous.previous) cycleRosterPage(-1);
       if (current.next && !previous.next) cycleRosterPage(1);
       pageGamepadStateRef.current = current;
+      const currentMode = readModeGamepadState(pad);
+      const previousMode = modeGamepadStateRef.current;
+      if (currentMode.previous && !previousMode.previous) cycleTrainingMode(-1);
+      if (currentMode.next && !previousMode.next) cycleTrainingMode(1);
+      modeGamepadStateRef.current = currentMode;
       frame = window.requestAnimationFrame(tick);
     };
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
-  }, [cycleRosterPage]);
+  }, [cycleRosterPage, cycleTrainingMode]);
 
   if (!p1Character || !p2Character) {
     return (
@@ -7086,6 +7099,7 @@ function TournamentSelect({
   const [summaries, setSummaries] = useState<TournamentSummary[]>([]);
   const [summaryStatus, setSummaryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const pageGamepadStateRef = useRef({ previous: false, next: false });
+  const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
   const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
@@ -7139,6 +7153,14 @@ function TournamentSelect({
     setTournamentMode(nextMode);
     onAnalytics('tournament_mode_selected', { tournament_mode: nextMode });
   };
+
+  const cycleTournamentMode = useCallback((direction: -1 | 1) => {
+    const modes: TournamentSelectMode[] = ['free', 'online', 'paid', ...(isDevHost ? ['infinite' as const] : [])];
+    const nextMode = cycleModeValue(modes, tournamentMode, direction);
+    if (nextMode === tournamentMode) return;
+    setTournamentMode(nextMode);
+    onAnalytics('tournament_mode_selected', { source: 'tournament_select_gamepad_trigger', tournament_mode: nextMode });
+  }, [isDevHost, onAnalytics, setTournamentMode, tournamentMode]);
 
   const cycleRosterPage = useCallback((direction: -1 | 1) => {
     setRosterPage((page) => (page + direction + totalRosterPages) % totalRosterPages);
@@ -7194,19 +7216,25 @@ function TournamentSelect({
       const pad = getPrimaryGamepad();
       if (!pad || isTextEntryElement(document.activeElement)) {
         pageGamepadStateRef.current = { previous: false, next: false };
+        modeGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
         return;
       }
-      const current = readPageGamepadState(pad);
+      const current = readPageGamepadState(pad, false);
       const previous = pageGamepadStateRef.current;
       if (current.previous && !previous.previous) cycleRosterPage(-1);
       if (current.next && !previous.next) cycleRosterPage(1);
       pageGamepadStateRef.current = current;
+      const currentMode = readModeGamepadState(pad);
+      const previousMode = modeGamepadStateRef.current;
+      if (currentMode.previous && !previousMode.previous) cycleTournamentMode(-1);
+      if (currentMode.next && !previousMode.next) cycleTournamentMode(1);
+      modeGamepadStateRef.current = currentMode;
       frame = window.requestAnimationFrame(tick);
     };
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
-  }, [cycleRosterPage]);
+  }, [cycleRosterPage, cycleTournamentMode]);
 
   if (!p1Character) {
     return (
@@ -8048,6 +8076,16 @@ const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: 
   { mode: 'cpu', label: 'CPU vs CPU', icon: <Swords size={18} /> }
 ];
 
+function getCharacterSelectModeOptions() {
+  return characterSelectModeOptions.filter((option) => !option.devOnly || isLocalDevHost());
+}
+
+function cycleModeValue<T>(options: readonly T[], value: T, direction: -1 | 1) {
+  if (options.length === 0) return value;
+  const activeIndex = Math.max(0, options.findIndex((option) => option === value));
+  return options[(activeIndex + direction + options.length) % options.length] ?? value;
+}
+
 function CharacterSelect({
   roster,
   p1Id,
@@ -8096,6 +8134,7 @@ function CharacterSelect({
   const [hoveredBaseId, setHoveredBaseId] = useState('');
   const [rosterPage, setRosterPage] = useState(0);
   const pageGamepadStateRef = useRef({ previous: false, next: false });
+  const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
   const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
@@ -8144,6 +8183,15 @@ function CharacterSelect({
     onUiNavigate();
     onAnalytics('roster_page_changed', { source: 'character_select', direction, page: visibleRosterPage + 1 });
   }, [onAnalytics, onUiNavigate, totalRosterPages, visibleRosterPage]);
+
+  const cycleMatchMode = useCallback((direction: -1 | 1) => {
+    const modeOptions = getCharacterSelectModeOptions().map((option) => option.mode);
+    const nextMode = cycleModeValue(modeOptions, mode, direction);
+    if (nextMode === mode) return;
+    setMode(nextMode);
+    onUiNavigate();
+    onAnalytics('match_mode_changed', { source: 'character_select_gamepad_trigger', selected_mode: nextMode });
+  }, [mode, onAnalytics, onUiNavigate, setMode]);
 
   useEffect(() => {
     setRosterPage((page) => Math.min(page, totalRosterPages - 1));
@@ -8211,19 +8259,25 @@ function CharacterSelect({
       const pad = getPrimaryGamepad();
       if (!pad || isTextEntryElement(document.activeElement)) {
         pageGamepadStateRef.current = { previous: false, next: false };
+        modeGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
         return;
       }
-      const current = readPageGamepadState(pad);
+      const current = readPageGamepadState(pad, false);
       const previous = pageGamepadStateRef.current;
       if (current.previous && !previous.previous) cycleRosterPage(-1);
       if (current.next && !previous.next) cycleRosterPage(1);
       pageGamepadStateRef.current = current;
+      const currentMode = readModeGamepadState(pad);
+      const previousMode = modeGamepadStateRef.current;
+      if (currentMode.previous && !previousMode.previous) cycleMatchMode(-1);
+      if (currentMode.next && !previousMode.next) cycleMatchMode(1);
+      modeGamepadStateRef.current = currentMode;
       frame = window.requestAnimationFrame(tick);
     };
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
-  }, [cycleRosterPage]);
+  }, [cycleMatchMode, cycleRosterPage]);
 
   if (!p1Character || !p2Character) {
     return (
@@ -8576,7 +8630,7 @@ function CharacterSelectModeCarousel({
   onNavigate?: () => void;
 }) {
   const modeOptions = useMemo(
-    () => characterSelectModeOptions.filter((option) => !option.devOnly || isLocalDevHost()),
+    () => getCharacterSelectModeOptions(),
     []
   );
   const activeIndex = Math.max(0, modeOptions.findIndex((option) => option.mode === value));
@@ -22723,6 +22777,31 @@ function TrainingTrialPanel({
     basics: basicsCount,
     combos: combosCount
   };
+  const modeGamepadStateRef = useRef({ previous: false, next: false });
+  const cyclePanelMode = useCallback((direction: -1 | 1) => {
+    const nextMode = cycleModeValue(modes, mode, direction);
+    if (nextMode !== mode) onModeChange(nextMode);
+  }, [mode, modes, onModeChange]);
+
+  useEffect(() => {
+    let frame = 0;
+    const tick = () => {
+      const pad = getPrimaryGamepad();
+      if (!pad || isTextEntryElement(document.activeElement)) {
+        modeGamepadStateRef.current = { previous: false, next: false };
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+      const current = readModeGamepadState(pad);
+      const previous = modeGamepadStateRef.current;
+      if (current.previous && !previous.previous) cyclePanelMode(-1);
+      if (current.next && !previous.next) cyclePanelMode(1);
+      modeGamepadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cyclePanelMode]);
 
   return (
     <div className="combo-trial-panel">

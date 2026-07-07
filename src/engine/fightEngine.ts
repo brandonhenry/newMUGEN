@@ -99,6 +99,7 @@ const UNIVERSAL_COUNTER_HIT_STUN_BONUS_FRAMES = 8;
 const PRESSURE_LANE_TOLERANCE = 0.82;
 const AI_DECISION_BUCKETS_PER_SECOND = 4;
 const AI_SEED_MODULUS = 1_000_000;
+const AI_ACTIONABLE_IDLE_RECOVERY_FRAMES = 120;
 const KI_MAX = 100;
 const KI_CHARGE_PER_SECOND = 28;
 const TRANSFORM_READY_SECONDS = 3;
@@ -295,12 +296,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 
   const cpuControlsBothFighters = next.mode === 'cpu' || next.mode === 'cpuArcade' || next.mode === 'tournamentInfinite';
   const cpuControlsP2 = next.mode === 'ai' || next.mode === 'versusCpu' || cpuControlsBothFighters;
-  const rawInput1 = cpuControlsBothFighters ? makeAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
+  const rawInput1 = cpuControlsBothFighters ? makeRecoveringAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
   const rawInput2 =
     next.mode === 'training'
       ? next.trainingDummyInput ?? makeTrainingDummyInput(next.fighters[1])
       : cpuControlsP2
-        ? makeAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, cpuControlsBothFighters, next.aiSeed, next.roundAiSeed)
+        ? makeRecoveringAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, cpuControlsBothFighters, next.aiSeed, next.roundAiSeed)
         : p2Input;
   const input1 = withControlledWakeupInput(next.fighters[0], next.fighters[1], rawInput1, cpuControlsBothFighters);
   const input2 = withControlledWakeupInput(next.fighters[1], next.fighters[0], rawInput2, next.mode === 'training' || cpuControlsP2);
@@ -603,6 +604,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     aiRecentComboVisualFamilies: [],
     aiActiveComboRouteId: null,
     aiJuggleLockoutFrames: 0,
+    aiActionableIdleFrames: 0,
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
     roundsWon: 0,
@@ -1505,6 +1507,7 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.aiRecentComboVisualFamilies = [];
   fighter.aiActiveComboRouteId = null;
   fighter.aiJuggleLockoutFrames = 0;
+  fighter.aiActionableIdleFrames = 0;
   resetTransformCharge(fighter);
 }
 
@@ -5482,6 +5485,83 @@ function orbitAroundOpponent(fighter: FighterRuntime, opponent: FighterRuntime, 
   fighter.position.z = opponent.position.z + Math.sin(nextAngle) * radius;
 }
 
+function makeRecoveringAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0, roundAiSeed = aiSeed): InputFrame {
+  if (shouldRecoverStuckCpu(ai, opponent)) return recoverStuckCpuInput(match, ai, opponent);
+
+  const input = makeAiInput(match, ai, opponent, timer, difficulty, cpuDuel, aiSeed, roundAiSeed);
+  if (!canWatchCpuActionableIdle(ai)) {
+    ai.aiActionableIdleFrames = 0;
+    return input;
+  }
+
+  if (isMeaningfulCpuInput(ai, input)) {
+    ai.aiActionableIdleFrames = 0;
+    return input;
+  }
+
+  ai.aiActionableIdleFrames = getCpuActionableIdleFrames(ai) + 1;
+  return shouldRecoverStuckCpu(ai, opponent) ? recoverStuckCpuInput(match, ai, opponent) : input;
+}
+
+function canWatchCpuActionableIdle(ai: FighterRuntime) {
+  if (ai.hp <= 0) return false;
+  if (ai.actionFramesRemaining > 0 || ai.actionTimer > 0) return false;
+  if (ai.stunFramesRemaining > 0 || ai.blockstunFramesRemaining > 0 || ai.stunTimer > 0) return false;
+  if (isAirborne(ai) || ai.velocityY !== 0) return false;
+  return ai.state === 'idle' || ai.state === 'walk' || ai.state === 'sidestep' || ai.state === 'crouch' || ai.state === 'crouchBlock' || ai.state === 'block';
+}
+
+function isMeaningfulCpuInput(ai: FighterRuntime, input: InputFrame) {
+  if (input.left || input.right || input.up || input.down) return true;
+  if (input.dashForward || input.dashBack) return true;
+  if (input.sidestepUp || input.sidestepDown || input.sidewalkUp || input.sidewalkDown) return true;
+  if (input.block || input.charge || input.confirm) return true;
+  return moveInputs.some((action) => isFreshAttackPress(ai, input, action));
+}
+
+function shouldRecoverStuckCpu(ai: FighterRuntime, opponent: FighterRuntime) {
+  return canWatchCpuActionableIdle(ai) && getCpuActionableIdleFrames(ai) >= AI_ACTIONABLE_IDLE_RECOVERY_FRAMES && opponent.hp > 0;
+}
+
+function getCpuActionableIdleFrames(ai: FighterRuntime) {
+  return Number.isFinite(ai.aiActionableIdleFrames) ? ai.aiActionableIdleFrames : 0;
+}
+
+function recoverStuckCpuInput(match: MatchSnapshot, ai: FighterRuntime, opponent: FighterRuntime): InputFrame {
+  clearStuckCpuAiState(ai);
+  const input = emptyInputFrame();
+  const distance = Math.hypot(opponent.position.x - ai.position.x, opponent.position.z - ai.position.z);
+  const laneDiff = opponent.position.z - ai.position.z;
+  const fallbackMove = ai.character.moves.find((move) => move.input === 'jab') ?? ai.character.moves[0] ?? null;
+  const fallbackReach = (fallbackMove?.range ?? 1.25) + UNIVERSAL_RANGE_BUFFER;
+  const opponentSide = getOpponentSideSign(ai, opponent, match.stage);
+  const towardKey = opponentSide > 0 ? 'right' : 'left';
+
+  if (distance > fallbackReach || Math.abs(laneDiff) > fallbackReach * 0.8) {
+    input[towardKey] = true;
+    if (laneDiff < -0.42) input.sidewalkUp = true;
+    else if (laneDiff > 0.42) input.sidewalkDown = true;
+    return input;
+  }
+
+  const fallbackInput = fallbackMove?.input ?? 'jab';
+  input[fallbackInput] = true;
+  (input as InputFrameWithMetadata).__pressedActions = [fallbackInput];
+  (input as InputFrameWithMetadata).__pressSequences = { [fallbackInput]: 1 };
+  return input;
+}
+
+function clearStuckCpuAiState(ai: FighterRuntime) {
+  ai.aiRecentComboKeys = [];
+  ai.aiRecentComboFamilies = [];
+  ai.aiRecentComboVisualFamilies = [];
+  ai.aiActiveComboRouteId = null;
+  ai.aiJuggleLockoutFrames = 0;
+  ai.aiActionableIdleFrames = 0;
+  clearBufferedMoveInput(ai);
+  for (const action of moveInputs) ai.previousAttackInputs[action] = false;
+}
+
 function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0, roundAiSeed = aiSeed): InputFrame {
   const input = emptyInputFrame();
   const dx = opponent.position.x - ai.position.x;
@@ -7104,6 +7184,7 @@ export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
       aiRecentComboVisualFamilies: [...fighter.aiRecentComboVisualFamilies],
       aiActiveComboRouteId: fighter.aiActiveComboRouteId,
       aiJuggleLockoutFrames: fighter.aiJuggleLockoutFrames,
+      aiActionableIdleFrames: getCpuActionableIdleFrames(fighter),
       previousAttackInputs: { ...fighter.previousAttackInputs },
       visualHitstop: { ...fighter.visualHitstop },
       bufferedMoveIntent: fighter.bufferedMoveIntent

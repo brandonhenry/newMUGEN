@@ -2478,6 +2478,93 @@ describe('fight engine', () => {
     expect(movingFrames).toBeGreaterThan(20);
   });
 
+  it('recovers a stuck actionable CPU by clearing stale AI route state and moving back into range', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -5;
+    match.fighters[1].position.x = 5;
+    const cpu = match.fighters[0];
+    cpu.aiActionableIdleFrames = 120;
+    cpu.aiRecentComboKeys = ['stale:key'];
+    cpu.aiRecentComboFamilies = ['stale:family'];
+    cpu.aiRecentComboVisualFamilies = ['stale:visual'];
+    cpu.aiActiveComboRouteId = 'stale-route';
+    cpu.aiJuggleLockoutFrames = 24;
+    cpu.bufferedMoveInput = 'special';
+    cpu.bufferedMoveFrames = 8;
+    cpu.bufferedMoveIntent = {
+      moveInput: 'special',
+      inputSnapshot: emptyInputFrame(),
+      framesRemaining: 8,
+      sequence: 1
+    };
+    cpu.previousAttackInputs = { jab: true, kick: true, heavy: true, special: true };
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('walk');
+    expect(match.fighters[0].position.x).toBeGreaterThan(-5);
+    expect(match.fighters[0].aiActionableIdleFrames).toBe(0);
+    expect(match.fighters[0].aiRecentComboKeys).toEqual([]);
+    expect(match.fighters[0].aiRecentComboFamilies).toEqual([]);
+    expect(match.fighters[0].aiRecentComboVisualFamilies).toEqual([]);
+    expect(match.fighters[0].aiActiveComboRouteId).toBeNull();
+    expect(match.fighters[0].aiJuggleLockoutFrames).toBe(0);
+    expect(match.fighters[0].bufferedMoveIntent).toBeNull();
+    expect(match.fighters[0].previousAttackInputs.jab).toBe(false);
+  });
+
+  it('recovers a stuck in-range CPU with a fresh fallback attack after held attack inputs', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.45;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[0].aiActionableIdleFrames = 120;
+    match.fighters[0].previousAttackInputs = { jab: true, kick: true, heavy: true, special: true };
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].moveInstanceId).toBeGreaterThan(0);
+    expect(match.fighters[0].aiActionableIdleFrames).toBe(0);
+  });
+
+  it('does not recover CPU watchdog state while the fighter is locked in hitstun', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].state = 'hit';
+    match.fighters[0].stunFramesRemaining = 45;
+    match.fighters[0].actionFramesRemaining = 45;
+    match.fighters[0].aiActionableIdleFrames = 120;
+    match.fighters[0].aiRecentComboKeys = ['stale:key'];
+    match.fighters[0].aiActiveComboRouteId = 'stale-route';
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('hit');
+    expect(match.fighters[0].aiActionableIdleFrames).toBe(0);
+    expect(match.fighters[0].aiRecentComboKeys).toEqual(['stale:key']);
+  });
+
+  it('does not apply the CPU recovery watchdog to the passive training dummy', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 5);
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[1].aiActionableIdleFrames = 120;
+    match.fighters[1].aiRecentComboKeys = ['dummy:stale'];
+    match.fighters[1].aiActiveComboRouteId = 'dummy-route';
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].state).toBe('idle');
+    expect(match.fighters[1].aiActionableIdleFrames).toBe(120);
+    expect(match.fighters[1].aiRecentComboKeys).toEqual(['dummy:stale']);
+  });
+
   it('lets CPU vs CPU fighters connect attacks without needing point-blank spacing', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'cpu', 4);
     match.phase = 'fighting';

@@ -521,6 +521,7 @@ function createMiniGameFighter(character: CharacterDefinition, position: { x: nu
     aiRecentComboVisualFamilies: [],
     aiActiveComboRouteId: null,
     aiJuggleLockoutFrames: 0,
+    aiActionableIdleFrames: 0,
     previousAttackInputs: { jab: false, kick: false, heavy: false, special: false },
     wasCrouching: false,
     roundsWon: 0,

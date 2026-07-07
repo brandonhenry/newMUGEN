@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { defaultGameSettings } from './gameSettings';
-import { getPlayerGamepad, getPrimaryGamepad, getVisibleGamepads, readFightGamepadInput, readMenuGamepadState, readPageGamepadState } from './gamepads';
+import { getPlayerGamepad, getPrimaryGamepad, getVisibleGamepads, readFightGamepadInput, readMenuGamepadState, readModeGamepadState, readPageGamepadState } from './gamepads';
 
 afterEach(() => {
   Object.defineProperty(navigator, 'getGamepads', {
@@ -113,6 +113,13 @@ describe('gamepad helpers', () => {
 
     expect(readPageGamepadState(pad)).toEqual({ previous: true, next: true });
     expect(readMenuGamepadState(pad, false)).toMatchObject({ previous: true, next: true });
+  });
+
+  it('can reserve triggers for menu mode changes instead of page navigation', () => {
+    const pad = makeGamepad({ buttons: { 6: true, 7: true } });
+
+    expect(readPageGamepadState(pad, false)).toEqual({ previous: false, next: false });
+    expect(readModeGamepadState(pad)).toEqual({ previous: true, next: true });
   });
 });
 

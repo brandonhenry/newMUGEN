@@ -1200,6 +1200,7 @@ export type FighterRuntime = {
   aiRecentComboVisualFamilies: string[];
   aiActiveComboRouteId: string | null;
   aiJuggleLockoutFrames: number;
+  aiActionableIdleFrames: number;
   previousAttackInputs: Record<MoveInput, boolean>;
   wasCrouching: boolean;
   roundsWon: number;
