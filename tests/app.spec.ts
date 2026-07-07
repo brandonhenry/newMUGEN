@@ -191,9 +191,11 @@ async function startFight(page: import('@playwright/test').Page, local2p = false
   await page.getByRole('button', { name: 'Stage' }).click();
   await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
   await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
   const versusSplash = page.locator('.fight-versus-screen');
-  await expect(versusSplash).toBeVisible({ timeout: 3000 });
+  await expect(versusSplash).toBeVisible({ timeout: 8000 });
   await activateAnyInputScreen(page, '.fight-versus-screen');
+  await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 2000 });
   const fightScreen = page.locator('.fight-screen');
@@ -208,6 +210,7 @@ async function startTraining(page: import('@playwright/test').Page) {
   await expect(page.locator('.training-select-screen')).toBeVisible();
   await expect(page.getByRole('group', { name: 'Training mode' })).toContainText('Training');
   await page.getByRole('button', { name: 'Start Training' }).click();
+  await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
   await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
   await page.waitForTimeout(4200);
   const fightScreen = page.locator('.fight-screen');
@@ -663,6 +666,16 @@ test('starts a playable match from the menu', async ({ page }) => {
   await startFight(page);
   await expect(page.getByTestId('fight-canvas')).toBeVisible();
   await expect(page.locator('.fight-hud')).toBeVisible();
+  await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
+});
+
+test('shows asset warmup before entering training', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Training' }).click({ force: true });
+  await expect(page.locator('.training-select-screen')).toBeVisible();
+  await page.getByRole('button', { name: 'Start Training' }).click();
+  await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
+  await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
   await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
 });
 

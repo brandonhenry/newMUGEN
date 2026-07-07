@@ -226,13 +226,17 @@ import {
   type TournamentSummary
 } from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'stageWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
-type StageWarmupIntent = {
+type AssetWarmupMatchOptions = NonNullable<Parameters<typeof createMatch>[5]>;
+type AssetWarmupIntent = {
   stage: StageDefinition;
   previousScreen: Screen;
   destination: 'fight' | 'versus';
   mode: MatchMode;
+  p1: CharacterDefinition;
+  p2: CharacterDefinition;
+  matchOptions?: Partial<AssetWarmupMatchOptions>;
 };
 type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
@@ -2617,6 +2621,26 @@ function withFreshAiSeed<T extends object>(options: T): T & { aiSeed: number } {
   return { ...options, aiSeed: freshAiSeed() };
 }
 
+function matchModeForAssetWarmup(mode: MatchMode) {
+  if (mode === 'trainingOnline') return 'trainingOnline';
+  if (['online', 'ranked', 'private', 'tournamentOnline'].includes(mode)) return 'ai';
+  return mode;
+}
+
+function createAssetWarmupMatch(intent: AssetWarmupIntent, cpuDifficulty: CpuDifficulty) {
+  return createMatch(
+    intent.p1,
+    intent.p2,
+    intent.stage,
+    matchModeForAssetWarmup(intent.mode),
+    cpuDifficulty,
+    withFreshAiSeed({
+      ...(intent.matchOptions ?? {}),
+      playIntro: false
+    })
+  );
+}
+
 function LocalBgmPlayer({
   audio,
   started,
@@ -2689,7 +2713,7 @@ function LocalBgmPlayer({
 export default function App() {
   const [screen, setScreen] = useState<Screen>('boot');
   const [versusReturnScreen, setVersusReturnScreen] = useState<'stage' | 'privateRooms'>('stage');
-  const [stageWarmupIntent, setStageWarmupIntent] = useState<StageWarmupIntent | null>(null);
+  const [assetWarmupIntent, setAssetWarmupIntent] = useState<AssetWarmupIntent | null>(null);
   const [stageAssetRevision, setStageAssetRevision] = useState(0);
   const [rosterResult, setRosterResult] = useState<CharacterLoadResult | null>(null);
   const [stageResult, setStageResult] = useState<StageLoadResult | null>(null);
@@ -2735,7 +2759,7 @@ export default function App() {
   const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const innerMenuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const audioUnlockedRef = useRef(false);
-  const stageReadyContinuationRef = useRef<(() => void) | null>(null);
+  const assetReadyContinuationRef = useRef<(() => void) | null>(null);
   const menuHoverLastPlayedAtRef = useRef(0);
   const infiniteTournamentRestartTimerRef = useRef(0);
   const starterGuideAutoRequestedRef = useRef(false);
@@ -3730,44 +3754,55 @@ export default function App() {
     void preloadStageModel(selectedStage);
   }, [selectedStage]);
 
-  const continueWhenStageReady = useCallback((stage: StageDefinition, destination: 'fight' | 'versus', continuation: () => void, previousScreen: Screen = screen) => {
-    if (!isModelStage(stage) || getStageAssetStatus(stage.id).ready) {
-      continuation();
-      return;
-    }
-    stageReadyContinuationRef.current = continuation;
-    setStageWarmupIntent({ stage, previousScreen, destination, mode });
+  const continueWhenAssetsReady = useCallback((
+    stage: StageDefinition,
+    destination: 'fight' | 'versus',
+    continuation: () => void,
+    previousScreen: Screen = screen,
+    options: Partial<AssetWarmupMatchOptions> = {},
+    warmupFighters: { p1?: CharacterDefinition; p2?: CharacterDefinition } = {}
+  ) => {
+    assetReadyContinuationRef.current = continuation;
+    setAssetWarmupIntent({
+      stage,
+      previousScreen,
+      destination,
+      mode,
+      p1: warmupFighters.p1 ?? p1,
+      p2: warmupFighters.p2 ?? p2,
+      matchOptions: options
+    });
     setStageId(stage.id);
-    setScreen('stageWarmup');
+    setScreen('assetWarmup');
     void preloadStageModel(stage);
-  }, [mode, screen]);
+  }, [mode, p1, p2, screen]);
 
-  const completeStageWarmup = useCallback(() => {
-    const continuation = stageReadyContinuationRef.current;
-    stageReadyContinuationRef.current = null;
-    setStageWarmupIntent(null);
+  const completeAssetWarmup = useCallback(() => {
+    const continuation = assetReadyContinuationRef.current;
+    assetReadyContinuationRef.current = null;
+    setAssetWarmupIntent(null);
     if (continuation) continuation();
   }, []);
 
-  const cancelStageWarmup = useCallback(() => {
-    const previousScreen = stageWarmupIntent?.previousScreen ?? 'stage';
-    stageReadyContinuationRef.current = null;
-    setStageWarmupIntent(null);
+  const cancelAssetWarmup = useCallback(() => {
+    const previousScreen = assetWarmupIntent?.previousScreen ?? 'stage';
+    assetReadyContinuationRef.current = null;
+    setAssetWarmupIntent(null);
     setScreen(previousScreen);
-  }, [stageWarmupIntent?.previousScreen]);
+  }, [assetWarmupIntent?.previousScreen]);
   const activeBgmSource = useMemo(() => {
     if (!musicStarted || screen === 'boot') return null;
     if (screen === 'fight' && mode === 'cpu') return settings.audio.menuMusic ? fixedBgmSource('cpu-attract:local-bgm', KORE_MENU_BGM_TRACK) : null;
     if (screen === 'fight' && mode !== 'cpu') return fightPaused ? fixedBgmSource('pause:local-bgm', KORE_PAUSE_BGM_TRACK) : stageBgmSource(selectedStage);
     if (screen === 'arcadeTransition') return stageBgmSource(arcadeTransition?.nextStage ?? selectedStage);
-    if (screen === 'stageWarmup') return stageBgmSource(stageWarmupIntent?.stage ?? selectedStage);
+    if (screen === 'assetWarmup') return stageBgmSource(assetWarmupIntent?.stage ?? selectedStage);
     if (screen === 'miniGame' && activeArcadeMiniGame) return stageBgmSource(activeArcadeMiniGame.stage);
     if (screen === 'unlockReveal') return stageBgmSource(unlockRevealStage);
     if (!settings.audio.menuMusic) return null;
     if (screen === 'title') return fixedBgmSource('title:local-bgm', KORE_TITLE_BGM_TRACK);
     if (screen === 'settings') return fixedBgmSource('settings:local-bgm', KORE_OPTIONS_BGM_TRACK);
     return KORE_MENU_BGM_SOURCE;
-  }, [activeArcadeMiniGame, arcadeTransition, fightPaused, mode, musicStarted, screen, selectedStage, settings.audio.menuMusic, stageWarmupIntent?.stage, unlockRevealStage]);
+  }, [activeArcadeMiniGame, arcadeTransition, assetWarmupIntent?.stage, fightPaused, mode, musicStarted, screen, selectedStage, settings.audio.menuMusic, unlockRevealStage]);
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
@@ -3829,13 +3864,28 @@ export default function App() {
 	    const destination = arcadeTransition?.destination ?? (activeArcadeMiniGame ? 'miniGame' : 'versus');
 	    setArcadeTransition(null);
 	    setVersusReturnScreen('stage');
-	    setScreen(destination === 'miniGame' ? 'miniGame' : 'versus');
-	  }, [activeArcadeMiniGame, arcadeTransition]);
+	    if (destination === 'miniGame') {
+	      setScreen('miniGame');
+	      return;
+	    }
+	    const nextStage = arcadeTransition?.nextStage ?? selectedStage;
+	    const nextP2 = arcadeTransition?.nextOpponent ?? p2;
+	    continueWhenAssetsReady(nextStage, 'versus', () => setScreen('versus'), 'arcadeTransition', { roster }, { p2: nextP2 });
+	    if (nextP2) setP2Id(nextP2.id);
+	  }, [activeArcadeMiniGame, arcadeTransition, continueWhenAssetsReady, p2, roster, selectedStage]);
 	  const continueAfterArcadeUnlock = useCallback(() => {
 	    setPendingUnlockCharacterId('');
 	    setVersusReturnScreen('stage');
-	    setScreen(arcadeTransition ? 'arcadeTransition' : activeArcadeMiniGame ? 'miniGame' : 'versus');
-	  }, [activeArcadeMiniGame, arcadeTransition]);
+	    if (arcadeTransition) {
+	      setScreen('arcadeTransition');
+	      return;
+	    }
+	    if (activeArcadeMiniGame) {
+	      setScreen('miniGame');
+	      return;
+	    }
+	    continueWhenAssetsReady(selectedStage, 'versus', () => setScreen('versus'), 'unlockReveal', { roster });
+	  }, [activeArcadeMiniGame, arcadeTransition, continueWhenAssetsReady, roster, selectedStage]);
 	  const continueAfterMiniGameResult = useCallback(() => {
 	    if (arcadeRun.status === 'game-over') {
 	      finishArcadeRun(arcadeRun);
@@ -4087,7 +4137,9 @@ export default function App() {
                 tournament_mode: mode
               });
               setVersusReturnScreen('stage');
-              setScreen(mode === 'tournamentOnline' ? 'versus' : 'fight');
+              continueWhenAssetsReady(selectedStage, mode === 'tournamentOnline' ? 'versus' : 'fight', () => {
+                setScreen(mode === 'tournamentOnline' ? 'versus' : 'fight');
+              }, 'tournamentBracket');
             }}
           />
         )}
@@ -4128,7 +4180,7 @@ export default function App() {
               setPrivateRoomIntent(intent);
               setPendingPrivateInviteFriend(null);
               setVersusReturnScreen('privateRooms');
-              setScreen('versus');
+              continueWhenAssetsReady(selectedStage, 'versus', () => setScreen('versus'), 'privateRooms');
             }}
             onJoin={(intent) => {
               captureAppAnalytics('game_start_clicked', { source: 'private_room_join', selected_mode: 'private' });
@@ -4136,7 +4188,7 @@ export default function App() {
               setPrivateRoomIntent(intent);
               setPendingPrivateInviteFriend(null);
               setVersusReturnScreen('privateRooms');
-              setScreen('versus');
+              continueWhenAssetsReady(selectedStage, 'versus', () => setScreen('versus'), 'privateRooms');
             }}
             onBack={() => {
               setPendingPrivateInviteFriend(null);
@@ -4189,7 +4241,7 @@ export default function App() {
                   stage_random: randomStageSelected,
                   training_submode: selectedTrainingMode
                 });
-                continueWhenStageReady(fightStage, 'fight', () => setScreen('fight'), 'training');
+                continueWhenAssetsReady(fightStage, 'fight', () => setScreen('fight'), 'training', { roster });
               };
               if (selectedTrainingMode === 'online' && !onlineProfile) {
                 promptForUsername({
@@ -4325,9 +4377,13 @@ export default function App() {
                   }
                 }
                 captureAppAnalytics('stage_selected', { stage_id: fightStage.id, stage_random: randomStageSelected });
+                let warmupP2 = p2;
                 if (isArcadeMatchMode(mode)) {
                   const opponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty);
-                  if (opponent) setP2Id(opponent.id);
+                  if (opponent) {
+                    warmupP2 = opponent;
+                    setP2Id(opponent.id);
+                  }
                 }
                 if (mode !== 'cpu') {
                   playCharacterStageIntroVoiceSfx(p1, settings.audio);
@@ -4336,9 +4392,9 @@ export default function App() {
                   }
                 }
                 setVersusReturnScreen('stage');
-                continueWhenStageReady(fightStage, mode === 'training' ? 'fight' : 'versus', () => {
+                continueWhenAssetsReady(fightStage, mode === 'training' ? 'fight' : 'versus', () => {
                   setScreen(mode === 'training' ? 'fight' : 'versus');
-                }, 'stage');
+                }, 'stage', { roster }, { p2: warmupP2 });
               };
               if (requiresOnlineProfileForMode(mode) && !onlineProfile) {
                 promptForUsername({
@@ -4358,12 +4414,15 @@ export default function App() {
             onAnalytics={captureAppAnalytics}
           />
         )}
-        {screen === 'stageWarmup' && stageWarmupIntent && (
-          <StageWarmupScreen
-            intent={stageWarmupIntent}
-            assetStatus={getStageAssetStatus(stageWarmupIntent.stage.id)}
-            onBack={cancelStageWarmup}
-            onReady={completeStageWarmup}
+        {screen === 'assetWarmup' && assetWarmupIntent && (
+          <AssetWarmupScreen
+            intent={assetWarmupIntent}
+            assetStatus={getStageAssetStatus(assetWarmupIntent.stage.id)}
+            cpuDifficulty={effectiveCpuDifficulty}
+            sparkSettings={settings.display.impactSparks}
+            reducedMotion={settings.display.reducedMotion}
+            onBack={cancelAssetWarmup}
+            onReady={completeAssetWarmup}
           />
         )}
         {screen === 'versus' && (
@@ -4374,7 +4433,7 @@ export default function App() {
             mode={mode}
             privateRoomIntent={privateRoomIntent}
             onBack={() => setScreen(versusReturnScreen)}
-            onReady={() => continueWhenStageReady(selectedStage, 'fight', () => setScreen('fight'), 'versus')}
+            onReady={() => continueWhenAssetsReady(selectedStage, 'fight', () => setScreen('fight'), 'versus', { roster })}
           />
         )}
         {screen === 'unlockReveal' && unlockRevealCharacter && (
@@ -20493,6 +20552,7 @@ function FightScreen({
     errors: [],
     ready: false
   });
+  const [showLateAssetFallback, setShowLateAssetFallback] = useState(false);
 
   const captureFightAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
     captureAnalyticsEvent(name, {
@@ -20525,6 +20585,9 @@ function FightScreen({
       errors: [],
       ready: false
     });
+    setShowLateAssetFallback(false);
+    const timer = window.setTimeout(() => setShowLateAssetFallback(true), 900);
+    return () => window.clearTimeout(timer);
   }, [mode, p1.id, p2.id, stage.id]);
 
   useEffect(() => {
@@ -22530,7 +22593,7 @@ function FightScreen({
       </button>
       {settings.display.debugOverlay && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
-      {(assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
+      {showLateAssetFallback && (assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
       {match.message && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
@@ -24009,33 +24072,53 @@ function MiniGameResultScreen({ result, onContinue }: { result: MiniGameResult; 
   );
 }
 
-function StageWarmupScreen({
+function AssetWarmupScreen({
   intent,
   assetStatus,
+  cpuDifficulty,
+  sparkSettings,
+  reducedMotion,
   onBack,
   onReady
 }: {
-  intent: StageWarmupIntent;
+  intent: AssetWarmupIntent;
   assetStatus: StageAssetStatus;
+  cpuDifficulty: CpuDifficulty;
+  sparkSettings: GameSettings['display']['impactSparks'];
+  reducedMotion: boolean;
   onBack: () => void;
   onReady: () => void;
 }) {
   const [minimumElapsed, setMinimumElapsed] = useState(false);
+  const [sceneAssetState, setSceneAssetState] = useState<AssetLoadingState>({
+    active: true,
+    progress: 0,
+    item: '',
+    errors: [],
+    ready: false
+  });
   const continuedRef = useRef(false);
   const screenRef = useRef<HTMLDivElement>(null);
-  const ready = !isModelStage(intent.stage) || assetStatus.ready || assetStatus.phase === 'error';
-  const progress = Math.max(0, Math.min(100, Math.round(assetStatus.progress)));
-  const statusText = assetStatus.phase === 'error'
+  const warmupMatch = useMemo(() => createAssetWarmupMatch(intent, cpuDifficulty), [cpuDifficulty, intent]);
+  const stageReady = !isModelStage(intent.stage) || assetStatus.ready || assetStatus.phase === 'error';
+  const sceneReady = sceneAssetState.ready || sceneAssetState.errors.length > 0;
+  const ready = stageReady && sceneReady;
+  const progress = Math.max(0, Math.min(100, Math.round((Math.max(assetStatus.progress, stageReady ? 100 : 0) + sceneAssetState.progress) / 2)));
+  const statusText = !stageReady
+    ? assetStatus.phase === 'error'
     ? 'Stage fallback ready'
-    : assetStatus.ready
-      ? 'Ready'
-      : assetStatus.phase === 'gpuWarm'
-        ? 'Warming shaders'
-        : assetStatus.phase === 'decoded'
-          ? 'Preparing GPU'
-          : assetStatus.phase === 'downloading'
-            ? 'Loading world'
-            : 'Finding world';
+      : assetStatus.ready
+        ? 'Ready'
+        : assetStatus.phase === 'gpuWarm'
+          ? 'Warming shaders'
+          : assetStatus.phase === 'decoded'
+            ? 'Preparing GPU'
+            : assetStatus.phase === 'downloading'
+              ? 'Loading world'
+              : 'Finding world'
+    : !sceneReady
+      ? 'Loading fighters'
+      : 'Ready';
   const continueIfReady = useCallback(() => {
     if (!ready || !minimumElapsed || continuedRef.current) return;
     continuedRef.current = true;
@@ -24045,15 +24128,32 @@ function StageWarmupScreen({
 
   useEffect(() => {
     setMinimumElapsed(false);
+    setSceneAssetState({
+      active: true,
+      progress: 0,
+      item: '',
+      errors: [],
+      ready: false
+    });
     continuedRef.current = false;
     const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
     const minTimer = window.setTimeout(() => setMinimumElapsed(true), ARCADE_TRANSITION_MIN_MS);
     void preloadStageModel(intent.stage);
+    const p1PriorityFrames = collectCharacterPriorityFrameSources(intent.p1, ['entry', 'idle', 'walkForward', 'sprint']).slice(0, 8);
+    const p2PriorityFrames = collectCharacterPriorityFrameSources(intent.p2, ['entry', 'idle', 'walkForward', 'sprint']).slice(0, 8);
+    const cancelP1Prewarm = prewarmActiveFighterVoxels(intent.p1, p1PriorityFrames, {
+      immediateFrames: p1PriorityFrames.slice(0, 2)
+    });
+    const cancelP2Prewarm = prewarmActiveFighterVoxels(intent.p2, p2PriorityFrames, {
+      immediateFrames: p2PriorityFrames.slice(0, 2)
+    });
     return () => {
       window.cancelAnimationFrame(focusFrame);
       window.clearTimeout(minTimer);
+      cancelP1Prewarm();
+      cancelP2Prewarm();
     };
-  }, [intent.stage]);
+  }, [intent.p1, intent.p2, intent.stage]);
 
   useEffect(() => {
     if (!ready || !minimumElapsed) return undefined;
@@ -24064,39 +24164,58 @@ function StageWarmupScreen({
   return (
     <div
       ref={screenRef}
-      className={`arcade-transition-screen stage-warmup-screen any-input-screen ${ready && minimumElapsed ? 'is-ready' : ''}`}
+      className={`arcade-transition-screen stage-warmup-screen asset-warmup-screen any-input-screen ${ready && minimumElapsed ? 'is-ready' : ''}`}
       tabIndex={0}
       onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptInput)}
-      aria-label="Stage loading"
+      aria-label="Loading match assets"
+      data-testid="asset-warmup-screen"
       style={{
         '--arcade-primary': intent.stage.rail,
-        '--arcade-accent': intent.stage.light
+        '--arcade-accent': intent.p1.colors.accent
       } as CSSProperties}
     >
       <div className="arcade-transition-stage" aria-hidden="true">
         <StagePreviewCanvas stage={intent.stage} previewMode="fly" />
       </div>
+      <div
+        className="asset-warmup-hidden-scene"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          opacity: 0,
+          pointerEvents: 'none',
+          overflow: 'hidden'
+        }}
+      >
+        <GameScene
+          match={warmupMatch}
+          sparkSettings={sparkSettings}
+          reducedMotion={reducedMotion}
+          onAssetLoadingChange={setSceneAssetState}
+        />
+      </div>
       <div className="arcade-transition-vignette" />
       <div className="arcade-transition-route-line" aria-hidden="true" />
       <section className="arcade-transition-copy" aria-live="polite">
         <div className="arcade-transition-kicker">
-          <span>{intent.destination === 'fight' ? 'Fight Stage' : 'Versus Stage'}</span>
+          <span>{intent.destination === 'fight' ? 'Fight Loading' : 'Versus Loading'}</span>
           <b>{ready && minimumElapsed ? 'Ready' : statusText}</b>
         </div>
         <h1>{intent.stage.name}</h1>
-        <p>{assetStatus.phase === 'error' ? 'The arena model did not finish cleanly, so K.O.R.E will use the stage fallback.' : 'Building the arena before the fighters step in.'}</p>
+        <p>{assetStatus.phase === 'error' ? 'The arena model did not finish cleanly, so K.O.R.E will use the stage fallback.' : 'Preparing the fighters and arena before the match starts.'}</p>
         <div className="arcade-transition-stats stage-warmup-stats">
           <span>
             <strong>{progress}%</strong>
             <small>Loaded</small>
           </span>
           <span>
-            <strong>{isModelStage(intent.stage) ? '3D' : 'Fast'}</strong>
-            <small>World</small>
+            <strong>{intent.p1.displayName}</strong>
+            <small>P1</small>
           </span>
           <span>
-            <strong>{intent.mode === 'training' ? 'Lab' : 'Match'}</strong>
-            <small>Mode</small>
+            <strong>{intent.p2.displayName}</strong>
+            <small>P2</small>
           </span>
         </div>
       </section>

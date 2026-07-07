@@ -1,6 +1,6 @@
 {
   "version": "1.2.0",
-  "generatedAt": "2026-07-07T00:58:16.494Z",
+  "generatedAt": "2026-07-07T20:11:11.513Z",
   "installers": [
     {
       "id": "steamdeck",
@@ -9,8 +9,8 @@
       "type": "flatpak",
       "filename": "KORE-SteamDeck.flatpak",
       "url": "/installers/KORE-SteamDeck.flatpak",
-      "size": 84577088,
-      "sha256": "8e26f49e97bef2d86b49b41b99548769e7d2853e29ebbafe8ad2a122e286230a",
+      "size": 84609168,
+      "sha256": "82f8619b6fa472b954e01d37c3236f35356e1a6a6cea631c0dffc13c123ef4b2",
       "recommended": false,
       "notes": "Best for Steam Deck: install with Discover, then launch KORE from your apps or add it to Steam.",
       "assets": [
@@ -18,8 +18,8 @@
           "type": "flatpak",
           "filename": "KORE-SteamDeck.flatpak",
           "url": "/installers/KORE-SteamDeck.flatpak",
-          "size": 84577088,
-          "sha256": "8e26f49e97bef2d86b49b41b99548769e7d2853e29ebbafe8ad2a122e286230a",
+          "size": 84609168,
+          "sha256": "82f8619b6fa472b954e01d37c3236f35356e1a6a6cea631c0dffc13c123ef4b2",
           "primary": true,
           "label": "Install with Discover (.flatpak)"
         },
@@ -27,8 +27,8 @@
           "type": "appimage",
           "filename": "KORE-0.1.0-linux-x86_64.AppImage",
           "url": "/installers/KORE-0.1.0-linux-x86_64.AppImage",
-          "size": 108117317,
-          "sha256": "11d4bc0a87294a7701bb85f8cb79f5da05902cbd4d09b9104fdd1c16e958e667",
+          "size": 108121622,
+          "sha256": "a645097843796c4cf230f0dfb663fe8d35ad5bcb2b3717fceeb80657ddd253a5",
           "primary": false,
           "label": "AppImage fallback"
         },
@@ -52,8 +52,8 @@
           "label": "Konsole fallback script",
           "filename": "install-kore-steamdeck.sh",
           "url": "/installers/install-kore-steamdeck.sh",
-          "size": 13711,
-          "sha256": "ab11698b927e2030dfda0211da9ef50a327949cdf011ef199e67effee1668282"
+          "size": 14612,
+          "sha256": "08733871a1361463244aead9a3505e6cb5a94ecbf97d3c91abce51a4e7b8c893"
         }
       ],
       "installCommand": "curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash"
@@ -65,8 +65,8 @@
       "type": "appimage",
       "filename": "KORE-0.1.0-linux-x86_64.AppImage",
       "url": "/installers/KORE-0.1.0-linux-x86_64.AppImage",
-      "size": 108117317,
-      "sha256": "11d4bc0a87294a7701bb85f8cb79f5da05902cbd4d09b9104fdd1c16e958e667",
+      "size": 108121622,
+      "sha256": "a645097843796c4cf230f0dfb663fe8d35ad5bcb2b3717fceeb80657ddd253a5",
       "recommended": false,
       "notes": "Generic Linux AppImage for desktop distributions."
     }
