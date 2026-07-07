@@ -18,6 +18,13 @@ const steamCoverArtAsset = {
   filename: 'kore_library_600x900.png',
   url: '/steam-art/kore_library_600x900.png'
 };
+const steamSquareLogoArtAsset = {
+  type: 'steam-art',
+  primary: false,
+  label: 'Square logo art',
+  filename: 'kore_icon_256.png',
+  url: '/steam-art/kore_icon_256.png'
+};
 
 const platforms = [
   {
@@ -141,6 +148,7 @@ for (const platform of platforms) {
           }
         : null,
       steamCoverArtAsset,
+      steamSquareLogoArtAsset,
       scriptAsset
     ].filter(Boolean);
     entry.installCommand = 'curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash';

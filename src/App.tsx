@@ -12047,7 +12047,7 @@ function OptionsInstallersPanel({
                     <li>Open it with Discover.</li>
                     <li>Install and launch KORE from the app launcher.</li>
                   </ol>
-                  <p>If Steam does not show the cover, download Steam cover art and set it manually in your library.</p>
+                  <p>If Steam does not show the art, download the cover or square logo and set it manually in your library.</p>
                 </div>
               )}
               <div className="installer-actions">
