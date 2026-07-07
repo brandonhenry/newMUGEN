@@ -48,6 +48,8 @@ export type HorizontalTapState = {
 
 const DOUBLE_TAP_MS = 460;
 const VERTICAL_HOLD_MS = 185;
+const GAMEPAD_VERTICAL_DOUBLE_TAP_MS = 700;
+const GAMEPAD_VERTICAL_HOLD_MS = 240;
 const menuQueuedActions = new Set<ActionName>(['confirm', 'pause']);
 const queuedPulseActions = new Set<ActionName>(['jab', 'heavy', 'kick', 'special', 'confirm', 'pause', 'back', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown']);
 
@@ -97,6 +99,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   const gamepadRefs = useRef<[InputFrame, InputFrame]>([emptyInputFrame(), emptyInputFrame()]);
   const keyboardVerticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
   const virtualVerticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
+  const gamepadVerticalTapRefs = useRef<[VerticalTapState, VerticalTapState]>([createVerticalTapState(), createVerticalTapState()]);
   const keyboardHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
   const virtualHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
   const gamepadHorizontalTapRefs = useRef<[HorizontalTapState, HorizontalTapState]>([createHorizontalTapState(), createHorizontalTapState()]);
@@ -166,7 +169,16 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
   }, []);
 
   const peekInputs = useCallback((): [InputFrame, InputFrame] => {
-    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, gamepadAssignmentRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
+    refreshGamepadInputs(
+      gamepadRefs.current,
+      gamepadVerticalTapRefs.current,
+      gamepadHorizontalTapRefs.current,
+      gamepadInitializedRefs.current,
+      gamepadAssignmentRefs.current,
+      inputQueueRef.current,
+      inputSequenceRef,
+      controlsRef.current
+    );
     return mergeInputsForRead(
       inputRefs.current,
       virtualRefs.current,
@@ -174,12 +186,22 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       inputQueueRef.current,
       keyboardVerticalTapRefs.current,
       virtualVerticalTapRefs.current,
+      gamepadVerticalTapRefs.current,
       false
     );
   }, []);
 
   const readInputsForStep = useCallback((): [InputFrame, InputFrame] => {
-    refreshGamepadInputs(gamepadRefs.current, gamepadHorizontalTapRefs.current, gamepadInitializedRefs.current, gamepadAssignmentRefs.current, inputQueueRef.current, inputSequenceRef, controlsRef.current);
+    refreshGamepadInputs(
+      gamepadRefs.current,
+      gamepadVerticalTapRefs.current,
+      gamepadHorizontalTapRefs.current,
+      gamepadInitializedRefs.current,
+      gamepadAssignmentRefs.current,
+      inputQueueRef.current,
+      inputSequenceRef,
+      controlsRef.current
+    );
     const merged = mergeInputsForRead(
       inputRefs.current,
       virtualRefs.current,
@@ -187,6 +209,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
       inputQueueRef.current,
       keyboardVerticalTapRefs.current,
       virtualVerticalTapRefs.current,
+      gamepadVerticalTapRefs.current,
       true
     );
     if (inputDebugHasSignal(merged, inputQueueRef.current)) {
@@ -201,6 +224,7 @@ export function useControls(mode: MatchMode, controls: ControlBindingMap = defau
     for (let player = 0; player < 2; player += 1) {
       consumeVerticalTapAfterRead(inputRefs.current[player], keyboardVerticalTapRefs.current[player], 'keyboard');
       consumeVerticalTapAfterRead(virtualRefs.current[player], virtualVerticalTapRefs.current[player], 'virtual');
+      consumeVerticalTapAfterRead(gamepadRefs.current[player], gamepadVerticalTapRefs.current[player], 'gamepad');
       consumeHorizontalTapAfterRead(inputRefs.current[player], keyboardHorizontalTapRefs.current[player], 'keyboard');
       consumeHorizontalTapAfterRead(virtualRefs.current[player], virtualHorizontalTapRefs.current[player], 'virtual');
       consumeHorizontalTapAfterRead(gamepadRefs.current[player], gamepadHorizontalTapRefs.current[player], 'gamepad');
@@ -320,6 +344,7 @@ function mergeInputsForRead(
   queue: QueuedInputPress[],
   keyboardVerticalTapStates: [VerticalTapState, VerticalTapState],
   virtualVerticalTapStates: [VerticalTapState, VerticalTapState],
+  gamepadVerticalTapStates: [VerticalTapState, VerticalTapState],
   consumeQueuedPresses: boolean
 ): [InputFrame, InputFrame] {
   const merged: [InputFrame, InputFrame] = [emptyInputFrame(), emptyInputFrame()];
@@ -327,6 +352,7 @@ function mergeInputsForRead(
   for (let player = 0; player < 2; player += 1) {
     prepareVerticalTapForRead(keyboardInputs[player], keyboardVerticalTapStates[player], 'keyboard', now);
     prepareVerticalTapForRead(virtualInputs[player], virtualVerticalTapStates[player], 'virtual', now);
+    prepareVerticalTapForRead(gamepadInputs[player], gamepadVerticalTapStates[player], 'gamepad', now);
     for (const action of Object.keys(merged[player]) as ActionName[]) {
       merged[player][action] = keyboardInputs[player][action] || virtualInputs[player][action] || gamepadInputs[player][action];
     }
@@ -372,6 +398,7 @@ export function applyQueuedPressesToInputs(
 
 function refreshGamepadInputs(
   gamepadInputs: [InputFrame, InputFrame],
+  verticalTapStates: [VerticalTapState, VerticalTapState],
   horizontalTapStates: [HorizontalTapState, HorizontalTapState],
   initialized: [boolean, boolean],
   assignments: [GamepadAssignment, GamepadAssignment],
@@ -382,6 +409,7 @@ function refreshGamepadInputs(
   if (isFightGamepadSuppressed(document.activeElement)) {
     for (let player = 0; player < 2; player += 1) {
       gamepadInputs[player] = emptyInputFrame();
+      verticalTapStates[player] = createVerticalTapState();
       initialized[player] = false;
     }
     return;
@@ -392,6 +420,8 @@ function refreshGamepadInputs(
   for (let player = 0; player < 2; player += 1) {
     const previous = gamepadInputs[player];
     const next = readFightGamepadInput(playerPads[player], controls, player as 0 | 1);
+    applyVerticalTap(next, verticalTapStates[player], 'up', next.up, 'gamepad', now);
+    applyVerticalTap(next, verticalTapStates[player], 'down', next.down, 'gamepad', now);
     applyHorizontalTap(next, horizontalTapStates[player], 'left', next.left, 'gamepad', now);
     applyHorizontalTap(next, horizontalTapStates[player], 'right', next.right, 'gamepad', now);
     if (!initialized[player]) {
@@ -505,10 +535,11 @@ export function applyVerticalTap(
   state: VerticalTapState,
   action: ActionName,
   pressed: boolean,
-  _source: VerticalInputSource = 'keyboard',
+  source: VerticalInputSource = 'keyboard',
   now = performance.now()
 ) {
   if (action !== 'up' && action !== 'down') return false;
+  const config = getVerticalTapConfig(source);
   const sidestepAction = action === 'up' ? 'sidestepUp' : 'sidestepDown';
   const laneAction = action === 'up' ? 'sidewalkUp' : 'sidewalkDown';
   const oppositeSidestepAction = action === 'up' ? 'sidestepDown' : 'sidestepUp';
@@ -517,8 +548,19 @@ export function applyVerticalTap(
   const lastTapKey = action === 'up' ? 'lastUpTap' : 'lastDownTap';
 
   if (pressed) {
-    if (state.heldAction === action) return true;
-    if (now - state[lastTapKey] <= DOUBLE_TAP_MS) {
+    if (state.heldAction === action) {
+      if (state.laneDirection === direction && state.laneMode === 'holdCandidate' && !state.laneStepConsumed) {
+        input[action] = false;
+        input[sidestepAction] = true;
+        input[laneAction] = false;
+        return true;
+      }
+      input[action] = state.holdActivated;
+      input[sidestepAction] = false;
+      input[laneAction] = false;
+      return true;
+    }
+    if (now - state[lastTapKey] <= config.doubleTapMs) {
       input[action] = false;
       input[sidestepAction] = true;
       input[laneAction] = false;
@@ -602,9 +644,10 @@ export function consumeHorizontalTapAfterRead(input: InputFrame, _state: Horizon
   delete (input as InputFrameWithMetadata).__horizontalDashDirection;
 }
 
-export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, _source: VerticalInputSource, now = performance.now()) {
+export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, source: VerticalInputSource, now = performance.now()) {
+  const config = getVerticalTapConfig(source);
   if (state.holdAction && state.heldAction === state.holdAction) {
-    if (now - state.holdStartedAt >= VERTICAL_HOLD_MS) {
+    if (now - state.holdStartedAt >= config.holdMs) {
       state.holdActivated = true;
       input[state.holdAction] = true;
     } else {
@@ -627,6 +670,12 @@ export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapS
     input[sidestepAction] = false;
     input[laneAction] = false;
   }
+}
+
+function getVerticalTapConfig(source: VerticalInputSource) {
+  return source === 'gamepad'
+    ? { doubleTapMs: GAMEPAD_VERTICAL_DOUBLE_TAP_MS, holdMs: GAMEPAD_VERTICAL_HOLD_MS }
+    : { doubleTapMs: DOUBLE_TAP_MS, holdMs: VERTICAL_HOLD_MS };
 }
 
 export function consumeVerticalTapAfterRead(input: InputFrame, state: VerticalTapState, _source: VerticalInputSource) {

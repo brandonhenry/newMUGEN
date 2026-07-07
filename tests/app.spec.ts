@@ -1111,6 +1111,24 @@ test('uses single tap for jump/crouch and double tap for lane movement', async (
   expect(p2After).toBeGreaterThanOrEqual(-3.6);
 });
 
+test('gamepad double-tap up sidesteps with a forgiving controller window', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFight(page, true);
+  const zBefore = zFromPosition(await page.getByTestId('p1-position').innerText());
+
+  await setMockGamepadButton(page, 12, true);
+  await page.waitForTimeout(120);
+  await setMockGamepadButton(page, 12, false);
+  await page.waitForTimeout(560);
+  await setMockGamepadButton(page, 12, true);
+  await expect(page.getByTestId('p1-state')).toHaveText('sidestep', { timeout: 1000 });
+  await page.waitForTimeout(420);
+  await setMockGamepadButton(page, 12, false);
+
+  const zAfter = zFromPosition(await page.getByTestId('p1-position').innerText());
+  expect(zAfter).toBeLessThan(zBefore - 0.25);
+});
+
 test('mobile touch controls drive movement, attacks, and clear released inputs', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
   await startFight(page, true);

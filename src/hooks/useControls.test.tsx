@@ -1,11 +1,11 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { starterCharacters } from '../data/characters';
 import { stages } from '../data/stages';
 import { createMatch, stepMatch } from '../engine/fightEngine';
 import { cloneSettings, defaultGameSettings } from '../lib/gameSettings';
 import { emptyInputFrame, type InputFrameWithMetadata } from '../types';
-import { useControls } from './useControls';
+import { applyVerticalTap, createVerticalTapState, prepareVerticalTapForRead, useControls } from './useControls';
 
 type ControlsApi = ReturnType<typeof useControls>;
 
@@ -24,6 +24,7 @@ function Harness() {
 afterEach(() => {
   cleanup();
   controlsApi = null;
+  vi.restoreAllMocks();
   Object.defineProperty(navigator, 'getGamepads', {
     configurable: true,
     value: undefined
@@ -152,6 +153,74 @@ describe('useControls', () => {
     }
     controlsApi!.setVirtualAction(1, 'left', false);
   });
+
+  it('turns slower gamepad D-pad up double taps into sidestep instead of jump', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 12, true);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: false, sidestepUp: false });
+
+    setNow(220);
+    setGamepadButton(pad, 12, false);
+    controlsApi!.readInputsForStep();
+
+    setNow(860);
+    setGamepadButton(pad, 12, true);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: false, sidestepUp: true, sidewalkUp: false });
+  });
+
+  it('turns slower gamepad D-pad down double taps into sidestep instead of crouch', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 13, true);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ down: false, sidestepDown: false });
+
+    setNow(220);
+    setGamepadButton(pad, 13, false);
+    controlsApi!.readInputsForStep();
+
+    setNow(860);
+    setGamepadButton(pad, 13, true);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ down: false, sidestepDown: true, sidewalkDown: false });
+  });
+
+  it('still turns held gamepad up into jump input after the gamepad hold threshold', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 12, true);
+    expect(controlsApi!.readInputsForStep()[0].up).toBe(false);
+
+    setNow(341);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: true, sidestepUp: false });
+  });
+
+  it('keeps the keyboard double-tap window stricter than the gamepad window', () => {
+    const input = emptyInputFrame();
+    const state = createVerticalTapState();
+
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 100);
+    applyVerticalTap(input, state, 'up', false, 'keyboard', 180);
+    applyVerticalTap(input, state, 'up', true, 'keyboard', 720);
+    prepareVerticalTapForRead(input, state, 'keyboard', 721);
+
+    expect(input.up).toBe(false);
+    expect(input.sidestepUp).toBe(false);
+  });
 });
 
 function mockGamepads(pads: Array<Gamepad | null>) {
@@ -201,4 +270,8 @@ function setGamepadButton(gamepad: Gamepad, buttonIndex: number, pressed: boolea
 
 function setGamepadAxis(gamepad: Gamepad, axisIndex: number, value: number) {
   (gamepad.axes as number[])[axisIndex] = value;
+}
+
+function setNow(now: number) {
+  vi.spyOn(performance, 'now').mockReturnValue(now);
 }
