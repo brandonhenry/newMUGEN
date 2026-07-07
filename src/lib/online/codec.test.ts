@@ -11,6 +11,7 @@ describe('online codec', () => {
     input.right = true;
     input.dashForward = true;
     input.dashBack = true;
+    input.jump = true;
     input.jab = true;
     input.block = true;
     input.charge = true;

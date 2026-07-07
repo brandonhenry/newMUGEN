@@ -593,11 +593,11 @@ function applyMiniGameMovement(snapshot: { player: FighterRuntime }, input: Inpu
         ? 1
         : 0;
   const crouching = input.down && grounded;
-  if (input.up && !player.jumpInputHeld && grounded && !input.down) {
+  if (input.jump && !player.jumpInputHeld && grounded && !input.down) {
     player.velocityY = player.character.stats.jumpForce;
     player.position.y = Math.max(player.position.y, 0.18);
   }
-  player.jumpInputHeld = input.up;
+  player.jumpInputHeld = input.jump;
   if (dx !== 0) {
     player.position.x += dx * player.character.stats.speed * (crouching ? 0.18 : 1) * dt;
     player.facing = dx > 0 ? 1 : -1;

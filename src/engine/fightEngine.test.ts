@@ -1317,6 +1317,7 @@ describe('character manifests', () => {
     expect(settings.game.controlScheme).toBe('kore');
     expect(settings.controls.keyboard[0].jab).toEqual(['KeyP']);
     expect(settings.controls.keyboard[0].up).toEqual(defaultGameSettings.controls.keyboard[0].up);
+    expect(settings.controls.keyboard[0].jump).toEqual(defaultGameSettings.controls.keyboard[0].jump);
     expect(settings.controls.keyboard[1].right).toEqual(defaultGameSettings.controls.keyboard[1].right);
     expect(settings.controls.keyboardCombos[0]['1+2']).toEqual(['KeyL']);
     expect(settings.controls.keyboardCombos[0]['1+3']).toBeUndefined();
@@ -1346,7 +1347,7 @@ describe('character manifests', () => {
     expect(settings.game.roundTimer).toBe(0);
   });
 
-  it('migrates saved keyboard settings so Space jumps instead of confirming for player two', () => {
+  it('migrates saved keyboard settings so Space is a dedicated jump binding', () => {
     const settings = sanitizeGameSettings({
       version: 4,
       settings: {
@@ -1359,7 +1360,9 @@ describe('character manifests', () => {
       }
     });
 
-    expect(settings.controls.keyboard[0].up).toEqual(['KeyW', 'Space']);
+    expect(settings.controls.keyboard[0].up).toEqual(['KeyW']);
+    expect(settings.controls.keyboard[0].jump).toEqual(['Space']);
+    expect(settings.controls.keyboard[1].jump).toEqual(['Numpad0']);
     expect(settings.controls.keyboard[1].confirm).toEqual([]);
   });
 
@@ -1398,10 +1401,10 @@ describe('character manifests', () => {
   it('resolves Space as player one jump input', () => {
     const event = new KeyboardEvent('keydown', { code: 'Space', key: ' ' });
 
-    expect(getKeyboardBindingsForEvent(event, 'local2p', defaultGameSettings.controls)).toEqual([{ player: 1, action: 'up' }]);
+    expect(getKeyboardBindingsForEvent(event, 'local2p', defaultGameSettings.controls)).toEqual([{ player: 1, action: 'jump' }]);
   });
 
-  it('turns single up and down holds into jump and crouch without firing on tap', () => {
+  it('turns single up and down holds into directional up and crouch without firing on tap', () => {
     const input = emptyInputFrame();
     const state = createVerticalTapState();
 
@@ -4252,7 +4255,7 @@ describe('fight engine', () => {
     );
     const jumpStart = stepMatch(
       createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p'),
-      { ...emptyInputFrame(), up: true },
+      { ...emptyInputFrame(), jump: true },
       emptyInputFrame(),
       1 / 60
     );
@@ -4756,13 +4759,19 @@ describe('fight engine', () => {
     expect(backResult.fighters[0].position.x).toBeCloseTo(match.fighters[0].position.x, 5);
   });
 
-  it('uses up for jump, down for crouch, and lane inputs for 3D movement', () => {
+  it('uses jump for jump, up for direction, down for crouch, and lane inputs for 3D movement', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
 
+    const upOnly = emptyInputFrame();
+    upOnly.up = true;
+    const upResult = stepMatch(match, upOnly, emptyInputFrame(), 1 / 60);
+    expect(upResult.fighters[0].state).not.toBe('jump');
+    expect(upResult.fighters[0].velocityY).toBe(0);
+
     const jump = emptyInputFrame();
-    jump.up = true;
+    jump.jump = true;
     match = stepMatch(match, jump, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].state).toBe('jump');
     expect(match.fighters[0].velocityY).toBeGreaterThan(0);

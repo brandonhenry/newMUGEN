@@ -120,6 +120,7 @@ const actionToNotation: Partial<Record<ActionName, string>> = {
   sidestepDown: 'SSR',
   sidewalkUp: 'SSL',
   sidewalkDown: 'SSR',
+  jump: 'u',
   jab: '1',
   heavy: '2',
   kick: '3',
@@ -363,7 +364,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   if (fastestRoute) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:whiff', 'Whiff Punish', fastestRoute, 'Use back-hop or sidestep to make the enemy whiff, then hit their recovery before they can guard.', 'When they cut empty air, answer immediately.', 'Whiff punish landed.', { dummyScript: 'whiff', setup: { p1Position: { x: -0.25, z: 0 }, p2Position: { x: 1.15, z: 0 } }, expectImpactKinds: ['whiffPunish'], missAfterFrame: 72 }));
   if (safeRoute) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:safe', 'Safe Check', safeRoute, 'Use a safer check when you are not sure.', 'A safe cut beats a greedy one.', 'Land the safe check.'));
   if (advanced) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:command', 'Command Punish', advanced, 'Use a committed command route for bigger openings.', 'Bigger opening. Sharper answer.', 'Land the command starter.', { dummyScript: 'attack' }));
-  trials.push(makeSimpleTrial(character, dummy, 'jumpIn', 'jump:starter', 'Jump-In Starter', ['u', '1'], ['up', 'jab'], 'Jump in to start pressure from above.', 'Come down with purpose.', 'Jump, then press 1.', { requireState: 'jump' }));
+  trials.push(makeSimpleTrial(character, dummy, 'jumpIn', 'jump:starter', 'Jump-In Starter', ['u', '1'], ['jump', 'jab'], 'Jump in to start pressure from above.', 'Come down with purpose.', 'Jump, then press 1.', { requireState: 'jump' }));
   if (antiAir) trials.push(makeRouteStarterTrial(character, dummy, 'defense', 'defense:anti-air', 'Anti-Air Jump-In', antiAir, 'Stay grounded and interrupt jump-ins before they land.', 'Do not chase the sky. Cut it down.', 'Anti-air landed.', { dummyScript: 'jumpIn', setup: { p1Position: { x: -0.45, z: 0 }, p2Position: { x: 0.62, z: 0 } }, expectImpactKinds: ['hit', 'counterHit'], requireAirborneDefender: true, missAfterFrame: 96 }));
   if (counterHit) trials.push(makeRouteStarterTrial(character, dummy, 'punish', 'punish:counter-hit', 'Counter-Hit Intercept', counterHit, 'Counter hits happen when you interrupt an enemy startup or active attack.', 'Cut into the beginning of their swing.', 'Counter hit landed.', { dummyScript: 'counterHit', expectImpactKinds: ['counterHit'], missAfterFrame: 72 }));
   if (launcher) trials.push(makeRouteStarterTrial(character, dummy, 'launcher', 'launcher:starter', 'Launch Starter', launcher, 'Launchers start longer air routes.', 'Lift them first. The combo starts in the air.', 'Launch the dummy.', { expectImpact: { launched: true } }));
@@ -642,7 +643,7 @@ export function makeTrialDummyInput(trial: TrainingTrialDefinition | null, match
   }
   if (script === 'whiff' && dummy.state !== 'attack' && dummy.state !== 'hit' && dummy.state !== 'juggle') input.heavy = true;
   if (script === 'jumpIn') {
-    if (dummy.state === 'idle' || dummy.state === 'walk' || dummy.state === 'block') input.up = true;
+    if (dummy.state === 'idle' || dummy.state === 'walk' || dummy.state === 'block') input.jump = true;
     if (dummy.state === 'jump' && dummy.position.y > 0.28) input.jab = true;
   }
   if (script === 'counterHit') {

@@ -755,9 +755,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     syncShadowClonePassiveState(fighter);
     updateAttackInputMemory(fighter, input);
   };
-  const jumpPressed = input.up && !fighter.jumpInputHeld;
+  const jumpPressed = input.jump && !fighter.jumpInputHeld;
   const frameDelta = secondsToFrames(dt);
-  fighter.jumpInputHeld = input.up;
+  fighter.jumpInputHeld = input.jump;
   fighter.blockFlash = 0;
   fighter.hitFlash = 0;
   tickVisualHitstop(fighter, frameDelta);
@@ -5531,7 +5531,7 @@ function canWatchCpuActionableIdle(ai: FighterRuntime) {
 }
 
 function isMeaningfulCpuInput(ai: FighterRuntime, input: InputFrame) {
-  if (input.left || input.right || input.up || input.down) return true;
+  if (input.left || input.right || input.up || input.down || input.jump) return true;
   if (input.dashForward || input.dashBack) return true;
   if (input.sidestepUp || input.sidestepDown || input.sidewalkUp || input.sidewalkDown) return true;
   if (input.block || input.charge || input.confirm) return true;
@@ -6071,6 +6071,7 @@ function applyAiJumpTakeoff(input: InputFrame, towardKey: 'left' | 'right', away
   input.charge = false;
   input.down = false;
   input.up = true;
+  input.jump = true;
   input[towardKey] = false;
   input[awayKey] = false;
   input.sidestepUp = false;

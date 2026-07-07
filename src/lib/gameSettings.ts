@@ -4,12 +4,12 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 7;
+const settingsVersion = 8;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
 const p1Keyboard: PlayerControlBindings = {
-  up: ['KeyW', 'Space'],
+  up: ['KeyW'],
   down: ['KeyS'],
   left: ['KeyA'],
   right: ['KeyD'],
@@ -19,6 +19,7 @@ const p1Keyboard: PlayerControlBindings = {
   sidestepDown: [],
   sidewalkUp: [],
   sidewalkDown: [],
+  jump: ['Space'],
   jab: ['KeyU', 'Digit1', 'Numpad1'],
   heavy: ['KeyI', 'Digit2', 'Numpad2'],
   kick: ['KeyJ', 'Digit3', 'Numpad3'],
@@ -44,6 +45,7 @@ const p2Keyboard: PlayerControlBindings = {
   sidestepDown: [],
   sidewalkUp: [],
   sidewalkDown: [],
+  jump: ['Numpad0'],
   jab: ['Numpad1', 'Digit1'],
   heavy: ['Numpad2', 'Digit2'],
   kick: ['Numpad3', 'Digit3'],
@@ -59,6 +61,7 @@ const p2Keyboard: PlayerControlBindings = {
 };
 
 const defaultGamepad: PlayerGamepadBindings = {
+  jump: [7],
   jab: [0],
   kick: [1],
   heavy: [2],
@@ -277,7 +280,7 @@ function migrateStoredSettings(settings: unknown, version: number) {
         }
       : display
   };
-  return version < 5 ? migrateKeyboardSpaceJump(migrated) : migrated;
+  return version < 8 ? migrateDedicatedJumpBindings(version < 5 ? migrateKeyboardSpaceJump(migrated) : migrated) : migrated;
 }
 
 function migrateKeyboardSpaceJump(settings: Record<string, unknown>) {
@@ -300,6 +303,35 @@ function migrateKeyboardSpaceJump(settings: Record<string, unknown>) {
         {
           ...p2KeyboardSettings,
           confirm: p2Confirm?.filter((value) => value !== 'Space') ?? p2KeyboardSettings.confirm
+        }
+      ]
+    }
+  };
+}
+
+function migrateDedicatedJumpBindings(settings: unknown) {
+  if (!isRecord(settings)) return settings;
+  const controls = isRecord(settings.controls) ? settings.controls : {};
+  const keyboard = Array.isArray(controls.keyboard) ? controls.keyboard : [];
+  const p1KeyboardSettings = isRecord(keyboard[0]) ? keyboard[0] : {};
+  const p2KeyboardSettings = isRecord(keyboard[1]) ? keyboard[1] : {};
+  const p1Up = Array.isArray(p1KeyboardSettings.up) ? p1KeyboardSettings.up.filter(isNonEmptyString) : undefined;
+  const p1Jump = Array.isArray(p1KeyboardSettings.jump) ? p1KeyboardSettings.jump.filter(isNonEmptyString) : undefined;
+  const p2Jump = Array.isArray(p2KeyboardSettings.jump) ? p2KeyboardSettings.jump.filter(isNonEmptyString) : undefined;
+
+  return {
+    ...settings,
+    controls: {
+      ...controls,
+      keyboard: [
+        {
+          ...p1KeyboardSettings,
+          up: p1Up?.filter((value) => value !== 'Space') ?? p1KeyboardSettings.up,
+          jump: p1Jump ? uniqueNonEmpty([...p1Jump, 'Space']) : defaultGameSettings.controls.keyboard[0].jump
+        },
+        {
+          ...p2KeyboardSettings,
+          jump: p2Jump ?? defaultGameSettings.controls.keyboard[1].jump
         }
       ]
     }
@@ -418,4 +450,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.length > 0;
+}
+
+function uniqueNonEmpty(values: string[]) {
+  return values.filter((value, index) => value.length > 0 && values.indexOf(value) === index);
 }

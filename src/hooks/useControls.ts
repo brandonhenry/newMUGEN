@@ -53,7 +53,7 @@ const GAMEPAD_VERTICAL_DOUBLE_TAP_MS = 700;
 const GAMEPAD_VERTICAL_HOLD_MS = 240;
 const GAMEPAD_HORIZONTAL_DOUBLE_TAP_MS = 700;
 const menuQueuedActions = new Set<ActionName>(['confirm', 'pause']);
-const queuedPulseActions = new Set<ActionName>(['jab', 'heavy', 'kick', 'special', 'confirm', 'pause', 'back', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown']);
+const queuedPulseActions = new Set<ActionName>(['jump', 'jab', 'heavy', 'kick', 'special', 'confirm', 'pause', 'back', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown']);
 
 function inputDebugEnabled() {
   return Boolean(
@@ -298,6 +298,7 @@ function pickInputDebugState(input: InputFrame) {
     right: input.right,
     up: input.up,
     down: input.down,
+    jump: input.jump,
     jab: input.jab,
     heavy: input.heavy,
     kick: input.kick,
@@ -317,6 +318,7 @@ function inputDebugHasSignal(inputs: [InputFrame, InputFrame], queue: QueuedInpu
     input.right ||
     input.up ||
     input.down ||
+    input.jump ||
     input.jab ||
     input.heavy ||
     input.kick ||

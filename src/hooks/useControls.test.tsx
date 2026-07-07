@@ -363,7 +363,7 @@ describe('useControls', () => {
     expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ down: false, sidestepDown: true, sidewalkDown: false });
   });
 
-  it('still turns held gamepad up into jump input after the gamepad hold threshold', () => {
+  it('turns held gamepad up into directional up without firing jump after the gamepad hold threshold', () => {
     const pad = makeMutableGamepad({ index: 0 });
     mockGamepads([pad]);
     render(<Harness />);
@@ -375,7 +375,20 @@ describe('useControls', () => {
     expect(controlsApi!.readInputsForStep()[0].up).toBe(false);
 
     setNow(341);
-    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: true, sidestepUp: false });
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ up: true, jump: false, sidestepUp: false });
+  });
+
+  it('maps the default gamepad R2 button to dedicated jump', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 7, true);
+
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ jump: true, up: false });
   });
 
   it('keeps the keyboard double-tap window stricter than the gamepad window', () => {

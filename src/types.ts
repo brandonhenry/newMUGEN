@@ -13,6 +13,7 @@ export type ActionName =
   | 'sidestepDown'
   | 'sidewalkUp'
   | 'sidewalkDown'
+  | 'jump'
   | 'jab'
   | 'kick'
   | 'heavy'
@@ -1280,6 +1281,7 @@ export const emptyInputFrame = (): InputFrame => ({
   sidestepDown: false,
   sidewalkUp: false,
   sidewalkDown: false,
+  jump: false,
   jab: false,
   kick: false,
   heavy: false,

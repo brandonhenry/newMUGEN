@@ -89,10 +89,11 @@ describe('gamepad helpers', () => {
     expect(readFightGamepadInput(pad, defaultGameSettings.controls, 0)).toMatchObject({ up: true, right: false, down: false });
   });
 
-  it('converts face buttons and Start into fight actions', () => {
-    const pad = makeGamepad({ buttons: { 0: true, 1: true, 2: true, 3: true, 9: true } });
+  it('converts face buttons, R2, and Start into fight actions', () => {
+    const pad = makeGamepad({ buttons: { 0: true, 1: true, 2: true, 3: true, 7: true, 9: true } });
 
     const input = readFightGamepadInput(pad, defaultGameSettings.controls, 0);
+    expect(input.jump).toBe(true);
     expect(input.jab).toBe(true);
     expect(input.kick).toBe(true);
     expect(input.heavy).toBe(true);

@@ -2,6 +2,35 @@ import { describe, expect, it } from 'vitest';
 import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from './gameSettings';
 
 describe('game settings', () => {
+  it('defaults dedicated jump bindings for keyboard and gamepad', () => {
+    const settings = sanitizeGameSettings(null);
+
+    expect(settings.controls.keyboard[0].up).toEqual(['KeyW']);
+    expect(settings.controls.keyboard[0].jump).toEqual(['Space']);
+    expect(settings.controls.keyboard[1].up).toEqual(['ArrowUp']);
+    expect(settings.controls.keyboard[1].jump).toEqual(['Numpad0']);
+    expect(settings.controls.gamepad[0].jump).toEqual([7]);
+    expect(settings.controls.gamepad[1].jump).toEqual([7]);
+  });
+
+  it('migrates legacy Space-as-up saves to dedicated jump', () => {
+    const settings = sanitizeGameSettings({
+      version: 7,
+      settings: {
+        controls: {
+          keyboard: [
+            { up: ['KeyW', 'Space'] },
+            { up: ['ArrowUp'] }
+          ]
+        }
+      }
+    });
+
+    expect(settings.controls.keyboard[0].up).toEqual(['KeyW']);
+    expect(settings.controls.keyboard[0].jump).toEqual(['Space']);
+    expect(settings.controls.keyboard[1].jump).toEqual(['Numpad0']);
+  });
+
   it('defaults performance settings for older saves', () => {
     const settings = sanitizeGameSettings({
       game: { controlScheme: 'beginner' },

@@ -11759,9 +11759,9 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
 
   return changes;
 }
-const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown'];
+const controlActions: ActionName[] = ['up', 'down', 'left', 'right', 'jump', 'jab', 'heavy', 'kick', 'special', 'charge', 'block', 'confirm', 'pause', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown'];
 const koreActionLabels: Record<ActionName, string> = {
-  up: 'Up / Jump',
+  up: 'Up',
   down: 'Down / Crouch',
   left: 'Left',
   right: 'Right',
@@ -11771,6 +11771,7 @@ const koreActionLabels: Record<ActionName, string> = {
   sidestepDown: 'Sidestep Down',
   sidewalkUp: 'Sidewalk Up',
   sidewalkDown: 'Sidewalk Down',
+  jump: 'Jump',
   jab: '1 Left Hand',
   heavy: '2 Right Hand',
   kick: '3 Left Foot',

@@ -83,6 +83,21 @@ describe('arcade mini games', () => {
     expect(snapshot.player.state).not.toBe('block');
   });
 
+  it('uses dedicated jump instead of up for mini-game jumping', () => {
+    let snapshot = createBreakTargetMiniGame(character, stage, 12);
+    const up = emptyInputFrame();
+    up.up = true;
+    snapshot = stepBreakTargetMiniGame(snapshot, up, 1 / 60);
+    expect(snapshot.player.state).not.toBe('jump');
+    expect(snapshot.player.velocityY).toBe(0);
+
+    const jump = emptyInputFrame();
+    jump.jump = true;
+    snapshot = stepBreakTargetMiniGame(snapshot, jump, 1 / 60);
+    expect(snapshot.player.state).toBe('jump');
+    expect(snapshot.player.velocityY).toBeGreaterThan(0);
+  });
+
   it('destroys a target with authored move damage and adds points', () => {
     const snapshot = createBreakTargetMiniGame(character, stage, 22);
     const move = character.moves.find((candidate) => candidate.input === 'jab') ?? character.moves[0];

@@ -11,6 +11,7 @@ type TouchControlsProps = {
 
 const movement: ActionName[] = ['up', 'left', 'right', 'down'];
 const koreAttacks: Array<{ action: ActionName; label: string }> = [
+  { action: 'jump', label: 'JUMP' },
   { action: 'jab', label: '1 LH' },
   { action: 'heavy', label: '2 RH' },
   { action: 'kick', label: '3 LF' },
@@ -18,6 +19,7 @@ const koreAttacks: Array<{ action: ActionName; label: string }> = [
   { action: 'charge', label: 'KI' }
 ];
 const beginnerAttacks: Array<{ action: ActionName; label: string }> = [
+  { action: 'jump', label: 'Jump' },
   { action: 'jab', label: '1 Light' },
   { action: 'heavy', label: '2 Med' },
   { action: 'kick', label: '3 Heavy' },
