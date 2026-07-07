@@ -647,7 +647,7 @@ test('shows desktop installer downloads from the console installers tab', async 
             url: '/installers/KORE-SteamDeck.flatpak',
             size: 125829120,
             sha256: 'cccccc1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-            notes: 'Best for Steam Deck Desktop Mode: download the Flatpak bundle and open it with Discover.',
+            notes: 'Best for Steam Deck: install with Discover, then launch KORE from your apps or add it to Steam.',
             installCommand: 'curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash',
             assets: [
               {
@@ -710,6 +710,18 @@ test('shows desktop installer downloads from the console installers tab', async 
   await expect(page.getByText('curl -fsSL https://playkore.com/installers/install-kore-steamdeck.sh | bash')).toBeVisible();
   await expect(page.getByRole('link', { name: /Konsole fallback script/ })).toHaveAttribute('href', /\/installers\/install-kore-steamdeck\.sh$/);
   await expect(page.locator('a[href$="/installers/KORE-1.2.0-win-x64.exe"]')).toHaveAttribute('href', /\/installers\/KORE-1\.2\.0-win-x64\.exe$/);
+
+  await page.setViewportSize({ width: 1210, height: 350 });
+  await expect.poll(async () => page.locator('.installer-deck-help').evaluate((element) => {
+    const container = element.getBoundingClientRect();
+    const lastStep = element.querySelector('li:last-child')?.getBoundingClientRect();
+    return lastStep ? Math.ceil(lastStep.bottom - container.bottom) : 0;
+  })).toBeLessThanOrEqual(1);
+  await expect.poll(async () => page.locator('.installer-card-steamdeck').evaluate((element) => {
+    const container = element.getBoundingClientRect();
+    const childBottoms = Array.from(element.children, (child) => child.getBoundingClientRect().bottom);
+    return Math.ceil(Math.max(...childBottoms) - container.bottom);
+  })).toBeLessThanOrEqual(1);
 });
 
 test('shows installer preparation state when manifest is unavailable', async ({ page }) => {

@@ -10,6 +10,7 @@ const packageSource = await readFile('package.json', 'utf8').catch(() => '{}');
 const sourceVersion = appVersionSource.match(/KORE_APP_VERSION\s*=\s*['"]([^'"]+)['"]/)?.[1];
 const packageVersion = JSON.parse(packageSource).version ?? '0.0.0';
 const appVersion = sourceVersion || packageVersion;
+const deckNotes = 'Best for Steam Deck: install with Discover, then launch KORE from your apps or add it to Steam.';
 
 const platforms = [
   {
@@ -31,7 +32,7 @@ const platforms = [
     label: 'Steam Deck',
     match: (name) => /KORE-SteamDeck\.flatpak$/i.test(name),
     type: 'flatpak',
-    notes: 'Best for Steam Deck Desktop Mode: download the Flatpak bundle and open it with Discover.'
+    notes: deckNotes
   },
   {
     id: 'linux',

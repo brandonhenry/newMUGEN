@@ -28,6 +28,8 @@ const sourceVersion = appVersionSource.match(/KORE_APP_VERSION\s*=\s*['"]([^'"]+
 const packageVersion = JSON.parse(packageSource).version ?? '0.0.0';
 const appVersion = sourceVersion || packageVersion;
 const releaseDate = new Date().toISOString().slice(0, 10);
+const gameSummary = 'A free 3D fighter with arcade, training, ranked online, custom fighters, and wild stages.';
+const gameDescription = 'K.O.R.E. blends the anything-goes spirit of M.U.G.E.N with modern 3D arena fighting. Pick a fighter, learn frame-tight combos, unlock characters in arcade mode, test your game in training, and take matches online. Built to be fast, customizable, and easy to jump into.';
 
 async function ensureCommand(name) {
   try {
@@ -49,16 +51,17 @@ async function writeBuildFiles() {
   if (!(await resizeIconWithImageMagick())) {
     await cp(iconSourcePath, iconPath);
   }
-  await writeFile(launcherPath, `#!/usr/bin/env bash
+await writeFile(launcherPath, `#!/usr/bin/env bash
 set -euo pipefail
 export KORE_DESKTOP_URL="\${KORE_DESKTOP_URL:-https://playkore.com}"
-exec /app/kore/kore --no-sandbox "$@"
+export ELECTRON_OZONE_PLATFORM_HINT="\${ELECTRON_OZONE_PLATFORM_HINT:-x11}"
+exec /app/kore/kore --no-sandbox --ozone-platform=x11 "$@"
 `);
   await chmod(launcherPath, 0o755);
   await writeFile(desktopPath, `[Desktop Entry]
 Type=Application
 Name=${appName}
-Comment=Play KORE in a Chromium desktop shell
+Comment=${gameSummary}
 Exec=kore
 Icon=${appId}
 Categories=Game;
@@ -71,10 +74,9 @@ StartupNotify=true
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
   <name>${appName}</name>
-  <summary>Play KORE in a fullscreen Chromium desktop shell</summary>
+  <summary>${gameSummary}</summary>
   <description>
-    <p>KORE is a browser-powered 3D fighting game wrapped for Steam Deck Desktop Mode and Linux PCs.</p>
-    <p>This Flatpak launches the live KORE site at playkore.com and keeps the game fullscreen by default.</p>
+    <p>${gameDescription}</p>
   </description>
   <launchable type="desktop-id">${appId}.desktop</launchable>
   <categories>
@@ -112,10 +114,11 @@ async function buildBundle() {
       '--share=network',
       '--share=ipc',
       '--socket=wayland',
-      '--socket=fallback-x11',
+      '--socket=x11',
       '--socket=pulseaudio',
       '--device=dri',
-      '--device=all'
+      '--device=all',
+      '--filesystem=/run/udev:ro'
     ],
     modules: []
   };

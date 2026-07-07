@@ -11,8 +11,11 @@ on:
       - electron-builder.yml
       - package.json
       - package-lock.json
+      - public/installers/install-kore-steamdeck.sh
       - scripts/build-steamdeck-flatpak.mjs
+      - scripts/generate-steam-art.mjs
       - scripts/publish-installers.mjs
+      - public/steam-art/**
 
 jobs:
   flatpak:
@@ -45,6 +48,9 @@ jobs:
         env:
           DEBUG: "@malept/flatpak-bundler"
         run: node scripts/build-steamdeck-flatpak.mjs
+
+      - name: Generate Steam library artwork
+        run: npm run steam:generate-art
 
       - name: Regenerate installer manifest
         run: npm run desktop:publish-installers

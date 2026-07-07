@@ -3,8 +3,10 @@ const { app, BrowserWindow, globalShortcut, shell } = require('electron');
 const DEFAULT_URL = 'https://playkore.com';
 const START_URL = process.env.KORE_DESKTOP_URL || DEFAULT_URL;
 const WINDOWED = process.argv.includes('--windowed') || process.env.KORE_DESKTOP_WINDOWED === '1';
+const DECK_INPUT_DEBUG = process.argv.includes('--deck-input-debug') || process.env.KORE_DECK_INPUT_DEBUG === '1';
 
 let mainWindow = null;
+let inputDebugTimer = null;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -26,7 +28,14 @@ function createWindow() {
   mainWindow.once('ready-to-show', () => {
     if (!mainWindow) return;
     mainWindow.show();
+    mainWindow.focus();
     if (!WINDOWED) mainWindow.setFullScreen(true);
+  });
+
+  mainWindow.webContents.once('did-finish-load', () => {
+    if (!mainWindow) return;
+    mainWindow.focus();
+    if (DECK_INPUT_DEBUG) startDeckInputDebug();
   });
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
@@ -43,6 +52,32 @@ function createWindow() {
   });
 
   void mainWindow.loadURL(START_URL);
+}
+
+function startDeckInputDebug() {
+  if (!mainWindow || inputDebugTimer) return;
+  inputDebugTimer = setInterval(() => {
+    if (!mainWindow || mainWindow.isDestroyed()) return;
+    void mainWindow.webContents.executeJavaScript(`
+      (() => {
+        const pads = Array.from(navigator.getGamepads?.() || []).filter(Boolean);
+        return {
+          count: pads.length,
+          pads: pads.map((pad) => ({
+            index: pad.index,
+            id: pad.id,
+            connected: pad.connected,
+            buttons: pad.buttons.map((button, index) => button.pressed ? index : null).filter((index) => index !== null),
+            axes: pad.axes.map((axis) => Number(axis.toFixed(3)))
+          }))
+        };
+      })()
+    `).then((state) => {
+      console.log('[kore deck input]', JSON.stringify(state));
+    }).catch((error) => {
+      console.warn('[kore deck input] failed to read gamepads', error);
+    });
+  }, 2000);
 }
 
 function toggleFullscreen() {
@@ -65,5 +100,6 @@ app.on('window-all-closed', () => {
 });
 
 app.on('will-quit', () => {
+  if (inputDebugTimer) clearInterval(inputDebugTimer);
   globalShortcut.unregisterAll();
 });
