@@ -24,6 +24,7 @@ import type {
   GetupAction,
   InputFrame,
   ImpactSparkEvent,
+  MenuAttractPerformanceMode,
   MatchSnapshot,
   MoveEffectInstance,
   MoveDefinition,
@@ -2571,8 +2572,16 @@ function DefaultSkybox({ imagePath }: { imagePath: string }) {
   );
 }
 
-export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, reducedMotion = false, sceneTick: _sceneTick = 0 }: GameSceneProps & { sceneTick?: number }) {
+export function MenuAttractScene({
+  match,
+  sparkSettings = defaultSparkSettings,
+  reducedMotion = false,
+  sceneTick = 0,
+  performanceMode = 'full'
+}: GameSceneProps & { sceneTick?: number; performanceMode?: MenuAttractPerformanceMode }) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
+  const snappy = performanceMode === 'snappy';
+  const dpr: [number, number] = snappy ? [0.42, 0.6] : [0.55, 0.75];
   const stableScene = useMemo(() => (
     <>
       {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
@@ -2587,16 +2596,31 @@ export function MenuAttractScene({ match, sparkSettings = defaultSparkSettings, 
     </>
   ), [match, match.fighters, match.stage]);
   return (
-    <Canvas frameloop="always" dpr={[0.75, 1]} camera={{ position: [0, 2.55, 7.8], fov: 42 }} data-testid="menu-attract-canvas">
+    <Canvas
+      frameloop="demand"
+      dpr={dpr}
+      camera={{ position: [0, 2.55, 7.8], fov: 42 }}
+      gl={{ antialias: false, powerPreference: 'high-performance' }}
+      data-testid="menu-attract-canvas"
+    >
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
+        <MenuAttractFrameInvalidator sceneTick={sceneTick} />
         {stableScene}
-        <group scale={0.82}>
+        {!snappy && <group scale={0.82}>
           <EffectLayer match={match} reducedMotion={reducedMotion} />
           <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
-        </group>
+        </group>}
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
+}
+
+function MenuAttractFrameInvalidator({ sceneTick }: { sceneTick: number }) {
+  const invalidate = useThree((state) => state.invalidate);
+  useEffect(() => {
+    invalidate();
+  }, [invalidate, sceneTick]);
+  return null;
 }
 
 function MenuAttractCamera({ match }: { match: MatchSnapshot }) {

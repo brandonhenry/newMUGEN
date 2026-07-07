@@ -249,10 +249,6 @@ button {
 
 .menu-attract-background {
   pointer-events: none;
-  filter: brightness(0.74) saturate(0.86) contrast(0.98);
-  transition-property: filter;
-  transition-duration: 360ms;
-  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .menu-attract-background canvas {
@@ -272,12 +268,12 @@ button {
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-.menu-screen.is-chrome-hidden .menu-attract-background {
-  filter: brightness(1.2) saturate(1.14) contrast(1.05);
-}
-
 .menu-screen.is-chrome-hidden .menu-vignette {
   opacity: 0;
+}
+
+.menu-screen.is-menu-snappy .menu-vignette {
+  background: linear-gradient(180deg, rgba(2, 6, 21, 0.08) 0%, rgba(2, 6, 21, 0.7) 100%);
 }
 
 .menu-lag-dialog {
@@ -868,11 +864,19 @@ button {
 .installer-panel,
 .debug-panel {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
   gap: 14px;
   min-height: 100%;
   padding: 14px;
+}
+
+.debug-panel {
+  grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
+}
+
+.installer-panel {
+  grid-template-rows: auto auto;
+  overflow: visible;
 }
 
 .installer-panel-heading,
@@ -990,8 +994,9 @@ button {
   display: grid;
   grid-template-columns: repeat(2, minmax(220px, 1fr));
   gap: 12px;
-  min-height: 0;
-  overflow: auto;
+  align-items: start;
+  min-height: min-content;
+  overflow: visible;
   padding-right: 2px;
   scrollbar-color: rgba(46, 230, 255, 0.42) transparent;
 }

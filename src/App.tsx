@@ -1370,6 +1370,37 @@ function pickMenuAttractStage(stageRoster: StageDefinition[], attractMode: MenuA
   );
 }
 
+function shouldUseSnappyMenuPerformanceForDevice() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  const hintedNavigator = navigator as Navigator & { deviceMemory?: number; userAgentData?: { platform?: string } };
+  const userAgent = navigator.userAgent ?? '';
+  const platform = hintedNavigator.userAgentData?.platform ?? navigator.platform ?? '';
+  const deviceText = `${userAgent} ${platform}`;
+  const steamDeckLike = /steam deck|steamos|jupiter|galileo/i.test(deviceText);
+  const hardwareConcurrency = typeof navigator.hardwareConcurrency === 'number' ? navigator.hardwareConcurrency : null;
+  const deviceMemory = typeof hintedNavigator.deviceMemory === 'number' ? hintedNavigator.deviceMemory : null;
+  const viewportWidth = Math.max(1, window.innerWidth || window.screen.width || 1);
+  const viewportHeight = Math.max(1, window.innerHeight || window.screen.height || 1);
+  const shortSide = Math.min(viewportWidth, viewportHeight);
+  const longSide = Math.max(viewportWidth, viewportHeight);
+  const handheldViewport = shortSide <= 900 && longSide <= 1400;
+  const coarsePointer = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+  return (
+    steamDeckLike ||
+    (coarsePointer && handheldViewport) ||
+    (hardwareConcurrency !== null && hardwareConcurrency <= 4) ||
+    (deviceMemory !== null && deviceMemory <= 4)
+  );
+}
+
+function resolveEffectiveMenuAttractMode(performanceSettings: GameSettings['performance']): MenuAttractPerformanceMode {
+  return performanceSettings.menuAttractMode === 'snappy' || shouldUseSnappyMenuPerformanceForDevice() ? 'snappy' : 'full';
+}
+
+function resolveEffectiveMenuMotionMode(performanceSettings: GameSettings['performance']): MenuMotionPerformanceMode {
+  return performanceSettings.menuMotionMode === 'snappy' || shouldUseSnappyMenuPerformanceForDevice() ? 'snappy' : 'full';
+}
+
 function resolveUnlockedTrainingCharacters(
   roster: CharacterDefinition[],
   unlockedIds: Set<string>,
@@ -3495,7 +3526,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (settings.display.reducedMotion || (screen === 'menu' && settings.performance.menuMotionMode === 'snappy')) return;
+    if (settings.display.reducedMotion || (screen === 'menu' && resolveEffectiveMenuMotionMode(settings.performance) === 'snappy')) return;
     anime.remove('.screen-panel > *');
     anime({
       targets: '.screen-panel > *',
@@ -3505,7 +3536,7 @@ export default function App() {
       duration: 460,
       easing: 'easeOutCubic'
     });
-  }, [screen, settings.display.reducedMotion, settings.performance.menuMotionMode]);
+  }, [screen, settings.display.reducedMotion, settings.performance]);
 
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
@@ -4682,19 +4713,19 @@ function MenuAttractBackground({
   }, [makeFreshMatch]);
 
   useEffect(() => {
+    let cancelled = false;
     let frame = 0;
     let last = performance.now();
-    let lastPublish = last;
     let accumulator = 0;
     const fixedStep = 1 / 60;
-    const publishStepMs = 1000 / 60;
-    const maxStepsPerFrame = attractMode === 'snappy' ? 2 : 4;
+    const maxSimulationCatchupSteps = 3;
 
     const tick = (now: number) => {
+      if (cancelled) return;
       accumulator += Math.min(attractMode === 'snappy' ? 0.034 : 0.05, (now - last) / 1000);
       last = now;
       let steps = 0;
-      while (accumulator >= fixedStep && steps < maxStepsPerFrame) {
+      while (accumulator >= fixedStep && steps < maxSimulationCatchupSteps) {
         const current = matchRef.current ?? makeFreshMatch();
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
           copyMenuAttractMatchInto(current, makeFreshMatch(current.stage));
@@ -4704,22 +4735,22 @@ function MenuAttractBackground({
         accumulator -= fixedStep;
         steps += 1;
       }
-      if (steps >= maxStepsPerFrame) accumulator = 0;
-      if (now - lastPublish >= publishStepMs) {
-        lastPublish = now;
-        setSceneTick((tick) => (tick + 1) % 3600);
-      }
+      if (steps >= maxSimulationCatchupSteps) accumulator = 0;
+      setSceneTick((tick) => (tick + 1) % 3600);
       frame = requestAnimationFrame(tick);
     };
 
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+    };
   }, [attractMode, makeFreshMatch]);
 
   if (!attractMatch) return null;
   return (
     <div className="menu-attract-background" aria-hidden="true">
-      <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} sceneTick={sceneTick} />
+      <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} sceneTick={sceneTick} performanceMode={attractMode} />
     </div>
   );
 }
@@ -4788,7 +4819,9 @@ function MenuScreen({
   const menuIdleTimerRef = useRef<number | null>(null);
   const menuIdleGamepadActiveRef = useRef(false);
   const [menuLagReport, setMenuLagReport] = useState<MenuLagReport | null>(null);
-  const recommendedPerformanceActive = performanceSettings.menuAttractMode === 'snappy' && performanceSettings.menuMotionMode === 'snappy';
+  const effectiveMenuAttractMode = useMemo(() => resolveEffectiveMenuAttractMode(performanceSettings), [performanceSettings]);
+  const effectiveMenuMotionMode = useMemo(() => resolveEffectiveMenuMotionMode(performanceSettings), [performanceSettings]);
+  const recommendedPerformanceActive = effectiveMenuAttractMode === 'snappy' && effectiveMenuMotionMode === 'snappy';
 
   useEffect(() => {
     menuChromeHiddenRef.current = menuChromeHidden;
@@ -5007,7 +5040,7 @@ function MenuScreen({
   return (
     <div
       ref={menuScreenRef}
-      className={`menu-screen ${menuChromeHidden ? 'is-chrome-hidden' : ''}`}
+      className={`menu-screen ${menuChromeHidden ? 'is-chrome-hidden' : ''} ${effectiveMenuAttractMode === 'snappy' ? 'is-menu-snappy' : ''}`}
       tabIndex={-1}
       onKeyDown={handleHiddenMenuSurfaceKey}
     >
@@ -5019,7 +5052,7 @@ function MenuScreen({
           stages={stageRoster}
           sparkSettings={sparkSettings}
           reducedMotion={reducedMotion}
-          attractMode={performanceSettings.menuAttractMode}
+          attractMode={effectiveMenuAttractMode}
         />
       )}
       <div className="menu-vignette" />
