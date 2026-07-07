@@ -73,10 +73,10 @@ function makeBeginnerSchemeCharacter(options: { includeFinisherCommands?: boolea
       kickright: { damage: 40, blockDamage: 5 },
       ...(includeFinisherCommands
         ? {
-            'cmd:qcf+4': { damage: 50, blockDamage: 5, label: 'Test qcf+4' },
-            'cmd:1+2': { damage: 55, blockDamage: 5, label: 'Test 1+2' },
-            'cmd:2+3': { damage: 58, blockDamage: 5, label: 'Test 2+3' },
-            'cmd:O+4': { damage: 60, blockDamage: 5, label: 'Test O+4', usesKi: true, kiCost: 35 }
+            'cmd:qcf+4': { damage: 18, blockDamage: 5, label: 'Test qcf+4' },
+            'cmd:1+2': { damage: 19, blockDamage: 5, label: 'Test 1+2' },
+            'cmd:2+3': { damage: 20, blockDamage: 5, label: 'Test 2+3' },
+            'cmd:O+4': { damage: 24, blockDamage: 5, label: 'Test O+4', usesKi: true, kiCost: 35 }
           }
         : {})
     }
@@ -947,7 +947,7 @@ describe('character manifests', () => {
     match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
 
     expect(match.fighters[0].currentMove?.command).toBe('qcf+4');
-    expect(match.fighters[0].currentMove?.damage).toBe(50);
+    expect(match.fighters[0].currentMove?.damage).toBe(18);
   });
 
   it('makes Beginner button 4 advance a scaled auto-combo into an authored finisher', () => {
@@ -972,7 +972,34 @@ describe('character manifests', () => {
     match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('special');
     expect(match.fighters[0].currentMove?.command).toBe('qcf+4');
-    expect(match.fighters[0].currentMove?.damage).toBe(30);
+    expect(match.fighters[0].currentMove?.damage).toBe(11);
+  });
+
+  it('uses a route-aware character finisher for Beginner auto-combo step four', () => {
+    const character: CharacterDefinition = {
+      ...makeBeginnerSchemeCharacter(),
+      id: 'beginner-route-aware-finisher-test',
+      animationFrames: {
+        ...(makeBeginnerSchemeCharacter().animationFrames ?? {}),
+        'cmd:1+4': ['/test-14.png']
+      },
+      moveOverrides: {
+        ...(makeBeginnerSchemeCharacter().moveOverrides ?? {}),
+        'cmd:qcf+4': { damage: 18, blockDamage: 5, label: 'qcf+4 Frame Link' },
+        'cmd:1+4': { damage: 18, blockDamage: 5, label: 'Character-Specific Ender' }
+      }
+    };
+    let match = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+
+    for (let step = 0; step < 4; step += 1) {
+      if (step > 0) readyForBeginnerAutoComboLink(match);
+      match = stepMatch(match, makeInput('special'), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].currentMove?.input).toBe('special');
+    expect(match.fighters[0].currentMove?.command).toBe('1+4');
+    expect(match.fighters[0].currentMove?.label).toBe('Character-Specific Ender');
+    expect(match.fighters[0].currentMove?.damage).toBe(11);
   });
 
   it('falls Beginner auto-combo finishers back to base special when preferred commands are missing', () => {

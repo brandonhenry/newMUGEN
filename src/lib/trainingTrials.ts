@@ -1,5 +1,6 @@
 import type { ActionName, CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrame, MatchSnapshot, MoveInput } from '../types';
 import { emptyInputFrame } from '../types';
+import { BEGINNER_AUTO_COMBO_INPUTS, resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { commandRouteFamily, commandToActions as commandRouteToActions } from './commandRoutes';
 import {
   comboTrialCategoryLabels,
@@ -170,12 +171,14 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const fastestRoute = [...beginnerRoutes].sort((a, b) => a.move.startupFrames - b.move.startupFrames)[0];
   const safeRoute = [...beginnerRoutes].sort((a, b) => b.move.onBlockFrames - a.move.onBlockFrames || a.move.startupFrames - b.move.startupFrames)[0];
   const basicButtonSteps = makeBasicButtonSteps(character);
+  const beginnerAutoComboTrial = makeBeginnerAutoComboTrial(character, dummy);
   const trials: TrainingTrialDefinition[] = [
     makeSimpleTrial(character, dummy, 'movement', 'movement:walk', 'Walk In', ['f'], ['right'], 'Close space without swinging.', 'First, take the space. No wasted cuts.', 'Step forward and hold your ground.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:dash', 'Dash In', ['F'], ['dashForward'], 'Dash to punish distance quickly.', 'When the opening is far, move first.', 'Dash forward cleanly.', { requireState: 'walk' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:back-hop', 'Back Hop', ['b,b'], ['dashBack'], 'Back-back is a quick retreat for neutral spacing and whiff bait. Use it to make short attacks miss, then whiff punish, but it is unsafe if the enemy reads it or hits you during startup or airtime.', 'Retreat with care. Air has no guard.', 'Back hop complete.', { requireState: 'jump' }),
     makeSimpleTrial(character, dummy, 'movement', 'movement:sidestep', 'Sidestep Line', ['SSL'], ['sidestepUp'], 'Step off the center line to move or defend against linear pressure.', "Don't stand where the blade is falling.", 'Sidestep once.'),
     ...(basicButtonSteps.length > 0 ? [makeSequenceTrial(character, dummy, 'offense', 'offense:button-feel', 'Button Feel', basicButtonSteps, 'Press each basic attack button one at a time. Learn what your character feels like before worrying about combos.', 'One button. One result. Remember the feel.', 'Button feel complete.')] : []),
+    ...(beginnerAutoComboTrial ? [beginnerAutoComboTrial] : []),
     makeSimpleTrial(character, dummy, 'defense', 'defense:block', 'Standing Guard', ['B'], ['block'], 'Standing guard is your default answer to high, special, and unknown pressure in KORE.', 'Guard first. Then cut.', 'Hold block.', { dummyScript: 'attack', requireState: 'block' }),
     makeSimpleTrial(character, dummy, 'defense', 'defense:crouch-block', 'Low Guard', ['d', 'B'], ['down', 'block'], 'Crouch block is for lows. In KORE, mids beat crouch block, so return to standing guard when the threat is unknown.', 'Low strikes need low guard. Mids punish low guard.', 'Crouch block.', { dummyScript: 'attack', requireState: 'crouchBlock' }),
     makeSimpleTrial(character, dummy, 'defense', 'defense:duck-high', 'Duck Highs', ['d'], ['down'], 'Crouch without blocking to duck high strikes and throw-like pressure.', 'Some attacks pass over a low stance.', 'Duck under the high threat.', { dummyScript: 'attack', requireState: 'crouch' }),
@@ -769,7 +772,7 @@ function makeMixedTrial(
   lesson: string,
   zoroLine: string,
   successText: string,
-  options: { dummyScript?: TrainingDummyScript; setup?: Partial<TrainingTrialSetup> } = {}
+  options: { dummyScript?: TrainingDummyScript; setup?: Partial<TrainingTrialSetup>; sourceComboRoute?: GeneratedComboRoute } = {}
 ): TrainingTrialDefinition {
   const setup = makeSetup(dummy, options.dummyScript ?? options.setup?.dummyScript ?? 'idle', options.setup);
   const steps: TrainingTrialStep[] = stepInputs.map((step, index) => ({
@@ -811,7 +814,8 @@ function makeMixedTrial(
     lesson,
     zoroLine,
     successText,
-    previewScript: makePreviewScript(steps)
+    previewScript: makePreviewScript(steps),
+    sourceComboRoute: options.sourceComboRoute
   };
 }
 
@@ -1212,6 +1216,48 @@ function makeBasicButtonSteps(character: CharacterDefinition): Array<{
       requireState: 'attack',
       reason: `Press ${inputToButton[input]} and notice its range, speed, and recovery.`
     }));
+}
+
+function makeBeginnerAutoComboTrial(character: CharacterDefinition, dummy: CharacterDefinition | undefined) {
+  const plan = resolveBeginnerAutoComboPlan(character);
+  if (!BEGINNER_AUTO_COMBO_INPUTS.every((input) => character.moves.some((move) => move.input === input && !move.command))) return null;
+
+  const routeIntent = plan.sourceRoute ? comboRouteIntent(plan.sourceRoute) : undefined;
+  const steps: MixedTrialStepInput[] = BEGINNER_AUTO_COMBO_INPUTS.map((input, index) => {
+    const isFinisher = index === BEGINNER_AUTO_COMBO_INPUTS.length - 1;
+    const finisherStep = isFinisher ? plan.finisherStep : undefined;
+    return {
+      id: isFinisher ? 'finisher' : input,
+      routeKey: finisherStep?.routeKey,
+      animationKey: finisherStep?.animationKey,
+      notation: [inputToButton[input]],
+      label: isFinisher ? `${inputToButton[input]} Special: ${plan.finisherLabel}` : `${inputToButton[input]} Button`,
+      input,
+      actions: [inputToAction[input]],
+      kind: 'state',
+      requireState: 'attack',
+      reason: isFinisher
+        ? routeIntent
+          ? `Beginner 4 selects ${plan.finisherLabel}: ${routeIntent}.`
+          : `Beginner 4 finishes with ${plan.finisherLabel}.`
+        : `Press ${inputToButton[input]} as the Beginner auto combo advances.`
+    };
+  });
+
+  return makeMixedTrial(
+    character,
+    dummy,
+    'offense',
+    'offense:beginner-auto-combo',
+    'Beginner Auto Combo',
+    steps,
+    routeIntent
+      ? `Beginner controls keep the input simple while still using ${plan.finisherLabel}: ${routeIntent}.`
+      : `Beginner controls keep the input simple: press 4 through the chain and finish with ${plan.finisherLabel}.`,
+    'Simple inputs. Real finish.',
+    'Beginner auto combo complete.',
+    { sourceComboRoute: plan.sourceRoute }
+  );
 }
 
 function routeToTrialStep(

@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { CharacterDefinition, FighterRuntime, ImpactSparkEvent, MatchSnapshot } from '../types';
 import { emptyInputFrame } from '../types';
+import { resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { resolveMoveRoutes } from './comboRoutes';
 import {
   TRAINING_TRIAL_STORAGE_KEY,
@@ -470,6 +471,28 @@ describe('training trial catalog', () => {
     expect(comboStepLabels).toContain('Spirit Gun Burst');
     expect([...basicStepLabels, ...comboStepLabels].some((label) => /Frame Link/.test(label))).toBe(false);
     expect(comboTrials.find((trial) => trial.steps[0]?.label === 'Spirit Gun Burst')?.title).toContain('Spirit Gun Burst');
+  });
+
+  it('generates Beginner auto-combo previews from the route-aware finisher plan', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => resolveBeginnerAutoComboPlan(candidate).finisherCommand);
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const plan = resolveBeginnerAutoComboPlan(character);
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('offense:beginner-auto-combo'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    expect(trial.title).toBe('Beginner Auto Combo');
+    expect(trial.steps.map((step) => step.input)).toEqual(['jab', 'heavy', 'kick', 'special']);
+    expect(trial.steps[3].label).toContain(plan.finisherLabel);
+    expect(trial.steps[3].routeKey).toBe(plan.finisherStep?.routeKey);
+    expect(trial.sourceComboRoute?.id).toBe(plan.sourceRoute?.id);
+    expect(trial.lesson).toContain(plan.finisherLabel);
+
+    const finalPreviewFrame = [...trial.previewScript].reverse().find((frame) => frame.actions.includes('special'));
+    expect(finalPreviewFrame?.actions).toEqual(['special']);
   });
 
   it('sets up ki and command-family combo trials with executable previews', () => {

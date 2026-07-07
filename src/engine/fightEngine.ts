@@ -21,6 +21,7 @@ import type {
 } from '../types';
 import { ROUNDS_TO_WIN, emptyInputFrame } from '../types';
 import { getCharacterCombatScale, getCharacterGlobalScale } from '../lib/characterScale';
+import { BEGINNER_AUTO_COMBO_INPUTS, resolveBeginnerAutoComboPlan } from '../lib/beginnerAutoCombos';
 import { scaledComboDamage } from '../lib/comboDamage';
 import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
 import {
@@ -164,8 +165,6 @@ const PROJECTILE_MAX_HIT_PUSHBACK = 0.78;
 const PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET = 0.28;
 const PROJECTILE_SPAWN_VERTICAL_ALIGNMENT_OFFSET = -0.16;
 const BEGINNER_DAMAGE_SCALE = 0.6;
-const BEGINNER_AUTO_COMBO_FINISHERS = ['O+4', 'qcf+4', '1+2', '2+3', '4'] as const;
-const beginnerAutoComboInputs: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const clashInputOrder: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
@@ -1817,7 +1816,7 @@ function resolveControlSchemeMoveIntent(
   }
 
   const autoStep = getBeginnerAutoComboStep(fighter);
-  const moveInput = beginnerAutoComboInputs[Math.min(autoStep, beginnerAutoComboInputs.length - 1)] ?? 'special';
+  const moveInput = BEGINNER_AUTO_COMBO_INPUTS[Math.min(autoStep, BEGINNER_AUTO_COMBO_INPUTS.length - 1)] ?? 'special';
   const beginnerForcedCommand = moveInput === 'special'
     ? selectBeginnerAutoComboFinisher(fighter)
     : undefined;
@@ -1840,12 +1839,7 @@ function getBeginnerAutoComboStep(fighter: FighterRuntime) {
 }
 
 function selectBeginnerAutoComboFinisher(fighter: FighterRuntime): string | undefined {
-  for (const command of BEGINNER_AUTO_COMBO_FINISHERS) {
-    if (command.startsWith('O+') && fighter.ki < KI_BURST_COST) continue;
-    const animationKey = commandAnimationKey(command);
-    if ((fighter.character.animationFrames?.[animationKey]?.length ?? 0) > 0) return command;
-  }
-  return undefined;
+  return resolveBeginnerAutoComboPlan(fighter.character, { ki: fighter.ki }).finisherCommand;
 }
 
 function hasExplicitFullDamageKoreCommand(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame, moveInput: MoveInput) {
