@@ -4762,6 +4762,7 @@ function getKeyboardMenuPromptMode(event: KeyboardEvent): InputPromptMode {
 function isMenuNavigationActive(screen: Screen) {
   if (screen === 'boot') return false;
   if (document.querySelector('.starter-guide-overlay')) return true;
+  if (document.querySelector('.username-gate-overlay')) return false;
   if (screen === 'title' || screen === 'versus' || screen === 'unlockReveal') return false;
   if (screen === 'fight') return Boolean(document.querySelector('.pause-overlay'));
   if (screen === 'stageEditor') return false;
@@ -6555,7 +6556,24 @@ function UsernamePromptModal({
   onBack: () => void;
 }) {
   const [draft, setDraft] = useState(profile?.displayName ?? '');
+  const [controllerEditing, setControllerEditing] = useState(false);
+  const [controllerCursor, setControllerCursor] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const backButtonRef = useRef<HTMLButtonElement>(null);
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+  const controllerEditingRef = useRef(false);
+  const controllerPadStateRef = useRef({
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    confirm: false,
+    back: false,
+    select: false,
+    help: false,
+    helpNext: false
+  });
+  const controllerLastMoveAtRef = useRef(0);
   const displayName = sanitizeDisplayName(draft);
 
   useEffect(() => {
@@ -6563,17 +6581,130 @@ function UsernamePromptModal({
   }, [profile?.displayName]);
 
   useEffect(() => {
+    controllerEditingRef.current = controllerEditing;
+  }, [controllerEditing]);
+
+  useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  const confirm = () => {
+  const confirm = useCallback(() => {
     if (!displayName) return;
     onConfirm(displayName);
-  };
+  }, [displayName, onConfirm]);
+
+  const focusControl = useCallback((control: 'input' | 'back' | 'confirm') => {
+    const target = control === 'input' ? inputRef.current : control === 'back' ? backButtonRef.current : confirmButtonRef.current;
+    target?.focus({ preventScroll: true });
+    if (control !== 'input') setControllerEditing(false);
+  }, []);
+
+  const moveModalFocus = useCallback((direction: -1 | 1) => {
+    const controls: Array<'input' | 'back' | 'confirm'> = displayName ? ['input', 'back', 'confirm'] : ['input', 'back'];
+    const active = document.activeElement;
+    const currentControl =
+      active === inputRef.current ? 'input' :
+      active === backButtonRef.current ? 'back' :
+      active === confirmButtonRef.current ? 'confirm' :
+      'input';
+    const currentIndex = Math.max(0, controls.indexOf(currentControl));
+    focusControl(controls[(currentIndex + direction + controls.length) % controls.length] ?? 'input');
+  }, [displayName, focusControl]);
+
+  const moveControllerCursor = useCallback((direction: -1 | 1) => {
+    setControllerCursor((cursor) => {
+      const next = Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, cursor + direction));
+      window.requestAnimationFrame(() => inputRef.current?.setSelectionRange(next, next));
+      return next;
+    });
+  }, []);
+
+  const cycleControllerCharacter = useCallback((direction: -1 | 1) => {
+    setDraft((currentDraft) => {
+      const cursor = Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, controllerCursor));
+      const nextCharacters = currentDraft.padEnd(cursor + 1, ' ').slice(0, ARCADE_NAME_MAX_LENGTH).split('');
+      const currentCharacter = nextCharacters[cursor] ?? ' ';
+      const currentIndex = Math.max(0, ARCADE_NAME_CONTROLLER_CHARACTERS.indexOf(currentCharacter));
+      nextCharacters[cursor] = ARCADE_NAME_CONTROLLER_CHARACTERS[
+        (currentIndex + direction + ARCADE_NAME_CONTROLLER_CHARACTERS.length) % ARCADE_NAME_CONTROLLER_CHARACTERS.length
+      ];
+      window.requestAnimationFrame(() => inputRef.current?.setSelectionRange(cursor, cursor));
+      return sanitizeDisplayName(nextCharacters.join(''));
+    });
+  }, [controllerCursor]);
+
+  useEffect(() => {
+    let frame = 0;
+    const repeatDelayMs = 170;
+    const resetPadState = () => {
+      controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, help: false, helpNext: false };
+    };
+    const tick = () => {
+      const pad = getPrimaryGamepad();
+      if (!pad) {
+        resetPadState();
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      const now = performance.now();
+      const current = readMenuGamepadState(pad, false);
+      const previous = controllerPadStateRef.current;
+      const edge = {
+        up: current.up && !previous.up,
+        down: current.down && !previous.down,
+        left: current.left && !previous.left,
+        right: current.right && !previous.right,
+        confirm: current.confirm && !previous.confirm,
+        back: current.back && !previous.back
+      };
+      const repeatedMove = now - controllerLastMoveAtRef.current > repeatDelayMs;
+      const heldHorizontal = current.left ? 'left' : current.right ? 'right' : null;
+      const heldVertical = current.up ? 'up' : current.down ? 'down' : null;
+      const active = document.activeElement;
+      const inputActive = active === inputRef.current;
+      const backActive = active === backButtonRef.current;
+      const confirmActive = active === confirmButtonRef.current;
+
+      if (edge.back) {
+        onBack();
+      } else if (inputActive) {
+        if (!controllerEditingRef.current) setControllerEditing(true);
+        if (edge.confirm) {
+          confirm();
+        } else if (edge.left || edge.right || (heldHorizontal && repeatedMove)) {
+          moveControllerCursor(edge.left || heldHorizontal === 'left' ? -1 : 1);
+          controllerLastMoveAtRef.current = now;
+        } else if (edge.up || edge.down || (heldVertical && repeatedMove)) {
+          cycleControllerCharacter(edge.up || heldVertical === 'up' ? 1 : -1);
+          controllerLastMoveAtRef.current = now;
+        }
+      } else {
+        if (controllerEditingRef.current) setControllerEditing(false);
+        if (edge.confirm && backActive) {
+          backButtonRef.current?.click();
+        } else if (edge.confirm && confirmActive) {
+          confirmButtonRef.current?.click();
+        } else if (edge.up || edge.down || edge.left || edge.right || (heldHorizontal && repeatedMove) || (heldVertical && repeatedMove)) {
+          const direction = edge.up || edge.left || heldHorizontal === 'left' || heldVertical === 'up' ? -1 : 1;
+          moveModalFocus(direction);
+          controllerLastMoveAtRef.current = now;
+        }
+      }
+
+      controllerPadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [confirm, cycleControllerCharacter, moveControllerCursor, moveModalFocus, onBack]);
+
+  const controllerCharacters = Array.from({ length: ARCADE_NAME_MAX_LENGTH }, (_, index) => draft[index] ?? ' ');
 
   return (
     <div className="username-gate-overlay" role="presentation">
-      <section className="username-gate-dialog" role="dialog" aria-modal="true" aria-labelledby="username-gate-title">
+      <section className={`username-gate-dialog ${controllerEditing ? 'is-controller-editing' : ''}`} role="dialog" aria-modal="true" aria-labelledby="username-gate-title">
         <header>
           <span>Online Profile</span>
           <h2 id="username-gate-title">{title}</h2>
@@ -6589,7 +6720,18 @@ function UsernamePromptModal({
             aria-label="Player name"
             inputMode="text"
             autoComplete="nickname"
-            onChange={(event) => setDraft(sanitizeDisplayName(event.target.value))}
+            data-kore-suppress-fight-gamepad="true"
+            onChange={(event) => {
+              setDraft(sanitizeDisplayName(event.target.value));
+              setControllerCursor(Math.min(event.target.selectionStart ?? event.target.value.length, ARCADE_NAME_MAX_LENGTH - 1));
+            }}
+            onFocus={() => {
+              if (getPrimaryGamepad()) setControllerEditing(true);
+              setControllerCursor((cursor) => Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, cursor)));
+            }}
+            onSelect={(event) => {
+              setControllerCursor(Math.max(0, Math.min(ARCADE_NAME_MAX_LENGTH - 1, event.currentTarget.selectionStart ?? 0)));
+            }}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault();
@@ -6602,11 +6744,23 @@ function UsernamePromptModal({
             }}
           />
         </label>
+        {controllerEditing && (
+          <div className="username-gate-controller-editor arcade-name-controller-editor" aria-hidden="true">
+            <div className="arcade-name-controller-slots">
+              {controllerCharacters.map((character, index) => (
+                <span key={index} className={index === controllerCursor ? 'is-active' : ''}>
+                  {character === ' ' ? '\u00a0' : character}
+                </span>
+              ))}
+            </div>
+            <small>D-pad edit / A confirm / B cancel</small>
+          </div>
+        )}
         <div className="username-gate-actions">
-          <button type="button" className="secondary-button" onClick={onBack}>
+          <button ref={backButtonRef} type="button" className="secondary-button" onClick={onBack}>
             Back
           </button>
-          <button type="button" className="primary-button" onClick={confirm} disabled={!displayName}>
+          <button ref={confirmButtonRef} type="button" className="primary-button" onClick={confirm} disabled={!displayName}>
             Confirm
           </button>
         </div>

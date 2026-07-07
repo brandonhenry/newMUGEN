@@ -11357,6 +11357,29 @@ button {
   box-shadow: 0 0 0 4px rgba(45, 227, 255, 0.14);
 }
 
+.username-gate-dialog.is-controller-editing {
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.52),
+    0 0 0 2px rgba(45, 227, 255, 0.2) inset,
+    0 0 48px rgba(45, 227, 255, 0.12) inset;
+}
+
+.username-gate-controller-editor .arcade-name-controller-slots span {
+  display: grid;
+  place-items: center;
+  color: rgba(247, 247, 242, 0.76);
+  font-size: clamp(0.88rem, min(2.8vw, 3.5vh), 1.28rem);
+  letter-spacing: 0;
+}
+
+.username-gate-controller-editor .arcade-name-controller-slots span.is-active {
+  color: #071018;
+}
+
+.username-gate-controller-editor small {
+  color: rgba(247, 247, 242, 0.62);
+}
+
 .username-gate-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -1086,26 +1086,88 @@ test('keyboard navigation scrolls hidden character rows into view', async ({ pag
   await expectDocumentLocked(page);
 });
 
-test('controller can edit and save tournament player name without moving menu focus away', async ({ page }) => {
+test('controller can edit and save tournament username gate without moving menu focus away', async ({ page }) => {
   await installMockGamepad(page);
   await page.setViewportSize({ width: 1100, height: 560 });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
   await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await page.getByRole('button', { name: 'Enter Online' }).click();
 
-  const input = page.getByLabel('Player name');
+  const dialog = page.locator('.username-gate-dialog');
+  const input = page.getByRole('textbox', { name: 'Player name' });
+  await expect(dialog).toBeVisible();
   await expect(input).toBeVisible();
-  await input.focus();
+  await expect(input).toBeFocused();
 
   await tapMockGamepadButton(page, 12);
   await expect(input).toHaveValue('A');
-  await expect(page.locator('.arcade-name-card.is-controller-editing')).toBeVisible();
+  await expect(dialog).toHaveClass(/is-controller-editing/);
   await expect.poll(() => page.evaluate(() => document.activeElement?.getAttribute('aria-label'))).toBe('Player name');
 
   await tapMockGamepadButton(page, 0);
   await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.online.profile') ?? '{}').displayName)).toBe('A');
-  await expect(page.locator('.arcade-name-card.is-controller-editing')).toHaveCount(0);
+  await expect(dialog).toHaveCount(0);
   await expectDocumentLocked(page);
+});
+
+test('online username gate supports controller editing, confirm, and cancel', async ({ page }) => {
+  await installMockGamepad(page);
+  await page.setViewportSize({ width: 1100, height: 560 });
+  await startFromSplash(page);
+  await page.evaluate(() => window.localStorage.removeItem('kore.online.profile'));
+  await page.getByRole('button', { name: 'Online' }).click();
+
+  const dialog = page.locator('.username-gate-dialog');
+  const input = page.getByRole('textbox', { name: 'Player name' });
+  await expect(dialog).toBeVisible();
+  await expect(input).toBeFocused();
+
+  await tapMockGamepadButton(page, 12);
+  await expect(input).toHaveValue('A');
+  await expect(dialog).toHaveClass(/is-controller-editing/);
+  await expect(page.getByText('D-pad edit / A confirm / B cancel')).toBeVisible();
+  await tapMockGamepadButton(page, 15);
+  await tapMockGamepadButton(page, 12);
+  await expect(input).toHaveValue('AA');
+
+  await tapMockGamepadButton(page, 0);
+  await expect(dialog).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.online.profile') ?? '{}').displayName)).toBe('AA');
+  await expect(page.locator('.select-screen')).toBeVisible();
+
+  await page.evaluate(() => window.localStorage.removeItem('kore.online.profile'));
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Online' }).click();
+  await expect(dialog).toBeVisible();
+  await expect(input).toBeFocused();
+  await tapMockGamepadButton(page, 12);
+  await expect(input).toHaveValue('A');
+  await tapMockGamepadButton(page, 1);
+  await expect(dialog).toHaveCount(0);
+  await expectMainMenu(page);
+});
+
+test('online username gate lets controller A activate focused action buttons', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFromSplash(page);
+  await page.evaluate(() => window.localStorage.removeItem('kore.online.profile'));
+  await page.getByRole('button', { name: 'Online' }).click();
+
+  const dialog = page.locator('.username-gate-dialog');
+  const input = page.getByRole('textbox', { name: 'Player name' });
+  const backButton = page.getByRole('button', { name: 'Back' });
+  const confirmButton = page.getByRole('button', { name: 'Confirm' });
+  await expect(dialog).toBeVisible();
+  await tapMockGamepadButton(page, 12);
+  await expect(input).toHaveValue('A');
+
+  await backButton.focus();
+  await tapMockGamepadButton(page, 13);
+  await expect(confirmButton).toBeFocused();
+  await tapMockGamepadButton(page, 0);
+  await expect(dialog).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.online.profile') ?? '{}').displayName)).toBe('A');
 });
 
 test('starts a free local tournament with bracket intro', async ({ page }) => {
