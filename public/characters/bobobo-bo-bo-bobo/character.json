@@ -206,18 +206,13 @@
       "/characters/bobobo-bo-bo-bobo/frames/frame-097.png"
     ],
     "cmd:FC+2": [
-      "/characters/bobobo-bo-bo-bobo/frames/frame-135.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-136.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-137.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-138.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-139.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-140.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-141.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-142.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-143.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-144.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-145.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-146.png"
+      "/characters/bobobo-bo-bo-bobo/frames/frame-142.png"
     ],
     "cmd:1+2": [
       "/characters/bobobo-bo-bo-bobo/frames/frame-128.png",
@@ -244,22 +239,7 @@
       "/characters/bobobo-bo-bo-bobo/frames/frame-102.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-103.png"
     ],
-    "cmd:2+4": [
-      "/characters/bobobo-bo-bo-bobo/frames/frame-035.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-036.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-037.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-038.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-039.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-040.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-041.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-042.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-043.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-044.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-045.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-046.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-047.png",
-      "/characters/bobobo-bo-bo-bobo/frames/frame-048.png"
-    ],
+    "cmd:2+4": [],
     "cmd:3+4": [
       "/characters/bobobo-bo-bo-bobo/frames/frame-123.png",
       "/characters/bobobo-bo-bo-bobo/frames/frame-124.png",
@@ -796,9 +776,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 4,
-      "activeFrames": 42,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 10,
+      "recoveryFrames": 10,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
