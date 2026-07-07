@@ -95,11 +95,7 @@
       "/characters/eve/frames/frame-162.png",
       "/characters/eve/frames/frame-163.png",
       "/characters/eve/frames/frame-164.png",
-      "/characters/eve/frames/frame-165.png",
-      "/characters/eve/frames/frame-166.png",
-      "/characters/eve/frames/frame-167.png",
-      "/characters/eve/frames/frame-168.png",
-      "/characters/eve/frames/frame-169.png"
+      "/characters/eve/frames/frame-165.png"
     ],
     "kickright": [
       "/characters/eve/frames/frame-170.png",
@@ -756,9 +752,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 5,
-      "activeFrames": 18,
-      "recoveryFrames": 6,
+      "startupFrames": 15,
+      "activeFrames": 4,
+      "recoveryFrames": 16,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -1724,8 +1720,8 @@
     },
     "crouch": {
       "23": {
-        "width": 1.318,
-        "height": 0.906,
+        "width": 1.32,
+        "height": 0.91,
         "offsetX": 0
       }
     },
