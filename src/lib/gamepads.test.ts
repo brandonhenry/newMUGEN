@@ -63,6 +63,13 @@ describe('gamepad helpers', () => {
     expect(readMenuGamepadState(pad, true)).toMatchObject({ up: true, right: true, select: true, back: true });
     expect(readMenuGamepadState(pad, false)).toMatchObject({ up: true, right: true, select: true, back: false });
   });
+
+  it('reports shoulders as menu guide paging without changing fight block bindings', () => {
+    const pad = makeGamepad({ buttons: { 4: true, 5: true } });
+
+    expect(readMenuGamepadState(pad, false)).toMatchObject({ help: true, helpNext: true });
+    expect(readFightGamepadInput(pad, defaultGameSettings.controls, 0).block).toBe(true);
+  });
 });
 
 function mockGamepads(pads: Array<Gamepad | null>) {

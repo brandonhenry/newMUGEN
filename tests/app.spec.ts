@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
+const STARTER_GUIDE_DISMISSED_KEY = 'kore.starterGuide.dismissed.v1';
+
 async function gotoTitle(page: Page) {
   await page.goto('/');
   await expect(page.locator('.title-screen')).toBeVisible({ timeout: 5000 });
@@ -16,6 +18,17 @@ async function mockInitialWebGLSupport(page: Page, supported: boolean) {
 
 async function forceMenuLagDetection(page: Page) {
   await page.addInitScript(() => {
+    const originalMatchMedia = window.matchMedia.bind(window);
+    window.matchMedia = (query: string) => {
+      const result = originalMatchMedia(query);
+      if (query !== '(pointer: coarse)') return result;
+      return {
+        ...result,
+        matches: false
+      } as MediaQueryList;
+    };
+    Object.defineProperty(navigator, 'hardwareConcurrency', { configurable: true, value: 8 });
+    Object.defineProperty(navigator, 'deviceMemory', { configurable: true, value: 8 });
     (window as typeof window & {
       __KORE_FORCE_MENU_LAG_RESULT__?: unknown;
     }).__KORE_FORCE_MENU_LAG_RESULT__ = {
@@ -37,8 +50,20 @@ async function forceMenuLagDetection(page: Page) {
   });
 }
 
-async function startFromSplash(page: import('@playwright/test').Page) {
+async function forceMenuLagHealthy(page: Page) {
+  await page.addInitScript(() => {
+    (window as typeof window & {
+      __KORE_FORCE_MENU_LAG_RESULT__?: unknown;
+    }).__KORE_FORCE_MENU_LAG_RESULT__ = false;
+  });
+}
+
+async function startFromSplash(page: Page, options: { dismissStarterGuide?: boolean } = {}) {
+  const dismissStarterGuide = options.dismissStarterGuide ?? true;
   await page.goto('/');
+  if (dismissStarterGuide) {
+    await page.evaluate((key) => window.localStorage.setItem(key, '1'), STARTER_GUIDE_DISMISSED_KEY);
+  }
   await activateAnyInputScreen(page, '.title-screen');
   await expectMainMenu(page);
 }
@@ -367,6 +392,69 @@ test('title splash warns for unsupported WebGL and clears after start', async ({
   await activateAnyInputScreen(page, '.title-screen');
   await expectMainMenu(page);
   await expect(page.getByTestId('title-support-warning')).toBeHidden();
+});
+
+test('starter guide appears once on first main menu visit', async ({ page }) => {
+  await forceMenuLagHealthy(page);
+  await startFromSplash(page, { dismissStarterGuide: false });
+
+  const guide = page.getByTestId('starter-guide-dialog');
+  await expect(guide).toBeVisible({ timeout: 5_000 });
+  await expect(guide.getByRole('heading', { name: 'Welcome' })).toBeVisible();
+  await expect(guide.getByRole('button', { name: 'Modes' })).toHaveCount(0);
+  await page.keyboard.press('p');
+  await expect(guide).toContainText('Arcade');
+  await page.keyboard.press('o');
+  await expect(guide.getByRole('heading', { name: 'Welcome' })).toBeVisible();
+  await guide.getByRole('button', { name: 'Next' }).click();
+
+  await guide.getByRole('button', { name: 'Next' }).click();
+  await guide.getByRole('button', { name: 'Next' }).click();
+  await guide.getByRole('button', { name: 'Next' }).click();
+  await guide.getByRole('button', { name: 'Close' }).click();
+  await expect(guide).toBeHidden();
+  await expect.poll(() => page.evaluate((key) => window.localStorage.getItem(key), STARTER_GUIDE_DISMISSED_KEY)).toBe('1');
+
+  await page.goto('/');
+  await activateAnyInputScreen(page, '.title-screen');
+  await expectMainMenu(page);
+  await expect(guide).toBeHidden({ timeout: 2_000 });
+});
+
+test('starter guide opens from F1 after dismissal', async ({ page }) => {
+  await forceMenuLagHealthy(page);
+  await startFromSplash(page);
+
+  await page.keyboard.press('F1');
+
+  await expect(page.getByTestId('starter-guide-dialog')).toBeVisible({ timeout: 2_000 });
+});
+
+test('starter guide opens from gamepad L1 on menu screens', async ({ page }) => {
+  await installMockGamepad(page);
+  await forceMenuLagHealthy(page);
+  await startFromSplash(page);
+
+  await tapMockGamepadButton(page, 4);
+
+  const guide = page.getByTestId('starter-guide-dialog');
+  await expect(guide).toBeVisible({ timeout: 2_000 });
+  await tapMockGamepadButton(page, 5);
+  await expect(guide).toContainText('Arcade');
+  await tapMockGamepadButton(page, 4);
+  await expect(guide.getByRole('heading', { name: 'Welcome' })).toBeVisible();
+});
+
+test('starter guide opens from Console About', async ({ page }) => {
+  await forceMenuLagHealthy(page);
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.getByRole('button', { name: 'Console' }).click();
+  await page.getByRole('button', { name: 'About' }).click();
+
+  await page.getByRole('button', { name: 'Open Starter Guide' }).click();
+
+  await expect(page.getByTestId('starter-guide-dialog')).toBeVisible({ timeout: 2_000 });
 });
 
 test('menu lag prompt can be skipped once per detector version', async ({ page }) => {

@@ -346,6 +346,206 @@ button {
   padding: 0 12px;
 }
 
+.starter-guide-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 4vw, 44px);
+  background:
+    radial-gradient(circle at 50% 24%, rgba(46, 230, 255, 0.14), transparent 34%),
+    rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(10px);
+}
+
+.starter-guide-dialog {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(820px, 100%);
+  max-height: min(720px, calc(100vh - 28px));
+  max-height: min(720px, calc(100dvh - 28px));
+  overflow: hidden;
+  border-radius: 8px;
+  color: #f7f7f2;
+  background:
+    linear-gradient(135deg, rgba(46, 230, 255, 0.18), transparent 32%),
+    linear-gradient(315deg, rgba(247, 212, 90, 0.13), transparent 38%),
+    rgba(1, 5, 12, 0.96);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16) inset,
+    0 28px 80px rgba(0, 0, 0, 0.58);
+}
+
+.starter-guide-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(18px, 3vw, 28px) clamp(18px, 3vw, 30px) 14px;
+}
+
+.starter-guide-header > div {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.starter-guide-header span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: #2ee6ff;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.starter-guide-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(30px, 5vw, 54px);
+  font-weight: 950;
+  line-height: 0.98;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.starter-guide-step-count {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  min-height: 42px;
+  border-radius: 8px;
+  padding: 0 12px;
+  color: #f7d45a;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 1px rgba(247, 212, 90, 0.2) inset;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.starter-guide-body {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 0;
+  overflow: auto;
+  padding: clamp(18px, 3vw, 30px);
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+.starter-guide-body > span {
+  width: fit-content;
+  color: #f7d45a;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.starter-guide-body p {
+  max-width: 68ch;
+  margin: 0;
+  color: rgba(247, 247, 242, 0.86);
+  font-size: clamp(16px, 2.3vw, 20px);
+  font-weight: 800;
+  line-height: 1.48;
+}
+
+.starter-guide-body ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.starter-guide-body li {
+  position: relative;
+  padding-left: 22px;
+  color: rgba(247, 247, 242, 0.74);
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.starter-guide-body li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  background: #2ee6ff;
+  box-shadow: 0 0 14px rgba(46, 230, 255, 0.52);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.starter-guide-actions {
+  display: grid;
+  grid-template-columns: minmax(128px, 180px) minmax(160px, 220px);
+  justify-content: end;
+  gap: 10px;
+  padding: 16px clamp(18px, 3vw, 30px) clamp(18px, 3vw, 26px);
+}
+
+.starter-guide-actions .primary-button,
+.starter-guide-actions .secondary-button {
+  min-height: 52px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+.starter-guide-actions .secondary-button:disabled {
+  opacity: 0.42;
+  filter: grayscale(0.6);
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .starter-guide-dialog {
+    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+
+  .starter-guide-header {
+    align-items: center;
+  }
+
+  .starter-guide-header h2 {
+    font-size: clamp(28px, 10vw, 42px);
+  }
+
+  .starter-guide-body p {
+    font-size: 15px;
+  }
+
+  .starter-guide-actions {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .starter-guide-actions .primary-button,
+  .starter-guide-actions .secondary-button {
+    width: 100%;
+  }
+}
+
 .kore-menu-overlay {
   position: relative;
   z-index: 2;
@@ -1354,6 +1554,12 @@ button {
     0 2px 0 #050505,
     2px 2px 0 #050505,
     4px 4px 0 rgba(0, 0, 0, 0.36);
+}
+
+.about-kore-guide-button {
+  justify-self: center;
+  min-height: 44px;
+  padding: 0 18px;
 }
 
 .memory-card-panel > div:first-child strong {

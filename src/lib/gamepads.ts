@@ -9,6 +9,8 @@ export type MenuGamepadState = {
   confirm: boolean;
   back: boolean;
   select: boolean;
+  help: boolean;
+  helpNext: boolean;
 };
 
 export type PageGamepadState = {
@@ -17,6 +19,8 @@ export type PageGamepadState = {
 };
 
 export const MENU_GAMEPAD_SELECT_BUTTON = 8;
+export const MENU_HELP_GAMEPAD_BUTTON = 4;
+export const MENU_HELP_NEXT_GAMEPAD_BUTTON = 5;
 export const CHARACTER_SELECT_PREVIOUS_PAGE_GAMEPAD_BUTTON = 6;
 export const CHARACTER_SELECT_NEXT_PAGE_GAMEPAD_BUTTON = 7;
 
@@ -63,7 +67,9 @@ export function readMenuGamepadState(pad: Gamepad, selectActsAsBack: boolean): M
     right: isGamepadButtonPressed(pad, 15) || horizontal > MENU_GAMEPAD_DEADZONE,
     confirm: isGamepadButtonPressed(pad, 0),
     back: isGamepadButtonPressed(pad, 1) || (selectActsAsBack && selectPressed),
-    select: selectPressed
+    select: selectPressed,
+    help: isGamepadButtonPressed(pad, MENU_HELP_GAMEPAD_BUTTON),
+    helpNext: isGamepadButtonPressed(pad, MENU_HELP_NEXT_GAMEPAD_BUTTON)
   };
 }
 

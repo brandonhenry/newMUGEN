@@ -7,6 +7,7 @@ import {
   CheckCircle2,
   Award,
   BarChart3,
+  BookOpen,
   Copy,
   Download,
   Eye,
@@ -64,7 +65,7 @@ import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetL
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { detectGameplaySupport, getGameplaySupportChecks, type SupportCheck, type SupportWarning } from './lib/gameplaySupport';
 import { getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readPageGamepadState } from './lib/gamepads';
-import { clearMenuLagPromptDismissed, getMenuLagPromptDismissed, sampleMenuLandingLag, setMenuLagPromptDismissed, type MenuLagReport } from './lib/menuLagDetector';
+import { MENU_LAG_DETECTOR_VERSION, clearMenuLagPromptDismissed, getMenuLagPromptDismissed, sampleMenuLandingLag, setMenuLagPromptDismissed, type MenuLagReport } from './lib/menuLagDetector';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
@@ -279,6 +280,7 @@ const GAME_SETTINGS_STORAGE_KEY = 'kore.gameSettings';
 const ONLINE_PROFILE_STORAGE_KEY = 'kore.online.profile';
 const LOCAL_LEADERBOARD_STORAGE_KEY = 'kore.online.localLeaderboard';
 const CHARACTER_VIEWER_VIEW_MODE_STORAGE_KEY = 'kore.characterViewer.viewMode.v1';
+const STARTER_GUIDE_DISMISSED_KEY = 'kore.starterGuide.dismissed.v1';
 const MEMORY_CARD_FORMAT = 'kore.memorycard';
 const MEMORY_CARD_VERSION = 1;
 const MEMORY_CARD_SAVE_KEYS = [
@@ -1222,6 +1224,16 @@ function readUnlockedCharacterIds() {
 function writeUnlockedCharacterIds(ids: Set<string>) {
   if (typeof window === 'undefined') return;
   window.localStorage.setItem(UNLOCKED_CHARACTERS_KEY, JSON.stringify([...ids].sort()));
+}
+
+function getStarterGuideDismissed() {
+  if (typeof window === 'undefined') return true;
+  return window.localStorage.getItem(STARTER_GUIDE_DISMISSED_KEY) === '1';
+}
+
+function setStarterGuideDismissed() {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(STARTER_GUIDE_DISMISSED_KEY, '1');
 }
 
 type MemoryCardPayload = {
@@ -2639,6 +2651,8 @@ export default function App() {
   const audioUnlockedRef = useRef(false);
   const menuHoverLastPlayedAtRef = useRef(0);
   const infiniteTournamentRestartTimerRef = useRef(0);
+  const starterGuideAutoRequestedRef = useRef(false);
+  const [starterGuideOpen, setStarterGuideOpen] = useState(false);
   const { readInputsForStep, peekInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
   const isDevHost = isLocalDevHost();
   const effectiveUnlockedCharacterIds = useMemo(
@@ -2658,6 +2672,23 @@ export default function App() {
     });
   }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
   const screenAnalyticsRef = useRef<{ screen: Screen | null; enteredAt: number }>({ screen: null, enteredAt: performance.now() });
+
+  const openStarterGuide = useCallback((source: string) => {
+    setStarterGuideOpen(true);
+    captureAppAnalytics('navigation_clicked', { source, destination: 'starter_guide' });
+  }, [captureAppAnalytics]);
+
+  const dismissStarterGuide = useCallback(() => {
+    setStarterGuideDismissed();
+    setStarterGuideOpen(false);
+    captureAppAnalytics('navigation_clicked', { source: 'starter_guide', destination: 'dismiss' });
+  }, [captureAppAnalytics]);
+
+  const requestStarterGuideAutoOpen = useCallback(() => {
+    if (starterGuideAutoRequestedRef.current || getStarterGuideDismissed()) return;
+    starterGuideAutoRequestedRef.current = true;
+    openStarterGuide('starter_guide_auto');
+  }, [openStarterGuide]);
 
   useEffect(() => {
     return () => window.clearTimeout(infiniteTournamentRestartTimerRef.current);
@@ -3567,7 +3598,8 @@ export default function App() {
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
-  useMenuNavigation(screen);
+  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'));
+  useStarterGuideKeyboardShortcut(screen, () => openStarterGuide('keyboard_f1'));
   const handleAppMenuKeyDown = useCallback((event: ReactKeyboardEvent<HTMLElement>) => {
     if (handleMenuNavigationKeyEvent(event.nativeEvent, screen)) {
       event.stopPropagation();
@@ -3677,6 +3709,7 @@ export default function App() {
             reducedMotion={settings.display.reducedMotion}
             performanceSettings={settings.performance}
             onApplyRecommendedPerformance={applyRecommendedMenuPerformanceSettings}
+            onStarterGuideAutoRequest={requestStarterGuideAutoOpen}
             onAnalytics={captureAppAnalytics}
             onMenuSelect={playMenuSelectSound}
             onMenuHover={() => playMenuHoverSound(60)}
@@ -4134,6 +4167,7 @@ export default function App() {
             menuBgmTrackCount={KORE_MENU_BGM_SOURCE.tracks.length}
             onMenuBgmTrackChange={updateBgmTrackIndex}
             onOptionsShortcut={playInnerMenuSelectSound}
+            onOpenStarterGuide={() => openStarterGuide('options_about')}
             onMemoryCardLoaded={refreshMemoryCardState}
             onBack={() => setScreen('menu')}
             onAnalytics={captureAppAnalytics}
@@ -4244,6 +4278,7 @@ export default function App() {
           />
         )}
       </section>
+      {starterGuideOpen && <StarterGuideDialog onClose={dismissStarterGuide} />}
     </main>
   );
 }
@@ -4308,8 +4343,9 @@ const menuFocusableSelector = [
   '[tabindex]:not([tabindex="-1"])'
 ].join(',');
 
-function useMenuNavigation(screen: Screen) {
+function useMenuNavigation(screen: Screen, onHelpShortcut?: () => void) {
   const screenRef = useRef(screen);
+  const onHelpShortcutRef = useRef(onHelpShortcut);
   const lastDeviceRef = useRef<MenuNavigationDevice>('keyboard');
   const previousPadStateRef = useRef({
     up: false,
@@ -4318,12 +4354,18 @@ function useMenuNavigation(screen: Screen) {
     right: false,
     confirm: false,
     back: false,
-    select: false
+    select: false,
+    help: false,
+    helpNext: false
   });
 
   useEffect(() => {
     screenRef.current = screen;
   }, [screen]);
+
+  useEffect(() => {
+    onHelpShortcutRef.current = onHelpShortcut;
+  }, [onHelpShortcut]);
 
   useEffect(() => {
     if (!isMenuNavigationActive(screen)) return undefined;
@@ -4360,7 +4402,9 @@ function useMenuNavigation(screen: Screen) {
           right: current.right && !previous.right,
           confirm: current.confirm && !previous.confirm,
           back: current.back && !previous.back,
-          select: current.select && !previous.select
+          select: current.select && !previous.select,
+          help: current.help && !previous.help,
+          helpNext: current.helpNext && !previous.helpNext
         };
         const repeatedMove = now - lastMoveAt > repeatDelayMs;
         const heldDirection = current.up ? 'up' : current.down ? 'down' : current.left ? 'left' : current.right ? 'right' : null;
@@ -4371,7 +4415,13 @@ function useMenuNavigation(screen: Screen) {
             frame = window.requestAnimationFrame(tick);
             return;
           }
-          if (screenRef.current === 'menu' && edge.select) {
+          if (document.querySelector('.starter-guide-overlay') && (edge.help || edge.helpNext)) {
+            lastDeviceRef.current = 'gamepad';
+            activateStarterGuideStep(edge.helpNext ? 1 : -1);
+          } else if (edge.help && onHelpShortcutRef.current) {
+            lastDeviceRef.current = 'gamepad';
+            onHelpShortcutRef.current();
+          } else if (screenRef.current === 'menu' && edge.select) {
             lastDeviceRef.current = 'gamepad';
             window.dispatchEvent(new CustomEvent(MAIN_MENU_CHROME_TOGGLE_EVENT));
           } else if (edge.confirm) {
@@ -4391,13 +4441,40 @@ function useMenuNavigation(screen: Screen) {
         }
         previousPadStateRef.current = current;
       } else {
-        previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false };
+        previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, help: false, helpNext: false };
       }
       frame = window.requestAnimationFrame(tick);
     };
 
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
+  }, []);
+}
+
+function useStarterGuideKeyboardShortcut(screen: Screen, onOpen: () => void) {
+  const screenRef = useRef(screen);
+  const onOpenRef = useRef(onOpen);
+
+  useEffect(() => {
+    screenRef.current = screen;
+  }, [screen]);
+
+  useEffect(() => {
+    onOpenRef.current = onOpen;
+  }, [onOpen]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'F1' || event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (screenRef.current === 'boot') return;
+      if (document.querySelector('.capture')) return;
+      if (isTextEntryElement(event.target)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      onOpenRef.current();
+    };
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
   }, []);
 }
 
@@ -4424,6 +4501,7 @@ function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen) {
 
 function isMenuNavigationActive(screen: Screen) {
   if (screen === 'boot') return false;
+  if (document.querySelector('.starter-guide-overlay')) return true;
   if (screen === 'title' || screen === 'versus' || screen === 'unlockReveal') return false;
   if (screen === 'fight') return Boolean(document.querySelector('.pause-overlay'));
   if (screen === 'stageEditor') return false;
@@ -4442,6 +4520,8 @@ function isTextEntryElement(target: EventTarget | null) {
 }
 
 function getMenuRoot() {
+  const starterGuide = document.querySelector<HTMLElement>('.starter-guide-overlay');
+  if (starterGuide) return starterGuide;
   const overlay = document.querySelector<HTMLElement>('.pause-overlay');
   if (overlay) return overlay;
   return document.querySelector<HTMLElement>('.screen-panel');
@@ -4560,6 +4640,16 @@ function activateFocusedDirectionalControl(direction: Extract<MenuNavigationDire
   target.click();
   focusMenuElement(carousel, false);
   return true;
+}
+
+function activateStarterGuideStep(direction: -1 | 1) {
+  const root = document.querySelector<HTMLElement>('.starter-guide-overlay');
+  if (!root) return;
+  const selector = direction < 0 ? '[data-starter-guide-prev]' : '[data-starter-guide-next]';
+  const button = root.querySelector<HTMLButtonElement>(selector);
+  if (!button || button.disabled) return;
+  button.click();
+  focusMenuElement(button, false);
 }
 
 function activateBackMenuElement() {
@@ -4799,6 +4889,58 @@ function copyMenuAttractMatchInto(target: MatchSnapshot, source: MatchSnapshot) 
   });
 }
 
+type ForcedMenuLagWindow = Window & {
+  __KORE_FORCE_MENU_LAG_RESULT__?: boolean | Partial<MenuLagReport>;
+};
+
+function getForcedMenuLagReport(canvas?: HTMLCanvasElement | null): MenuLagReport | null | undefined {
+  if (typeof window === 'undefined') return undefined;
+  const forced = (window as ForcedMenuLagWindow).__KORE_FORCE_MENU_LAG_RESULT__;
+  if (forced === undefined) return undefined;
+  const fallbackStats: MenuLagReport['stats'] = {
+    sampleMs: 3200,
+    frameCount: 0,
+    averageMs: 0,
+    p95Ms: 0,
+    p99Ms: 0,
+    maxMs: 0,
+    averageFps: 60,
+    longTaskCount: 0,
+    longTaskTotalMs: 0,
+    longestLongTaskMs: 0
+  };
+  const memoryNavigator = navigator as Navigator & { deviceMemory?: number };
+  const fallbackDevice: MenuLagReport['device'] = {
+    userAgent: navigator.userAgent ?? '',
+    platform: navigator.platform ?? '',
+    hardwareConcurrency: typeof navigator.hardwareConcurrency === 'number' ? navigator.hardwareConcurrency : null,
+    deviceMemory: typeof memoryNavigator.deviceMemory === 'number' ? memoryNavigator.deviceMemory : null,
+    steamDeckLike: false,
+    linuxFirefox: false,
+    canvasSize: canvas
+      ? { width: canvas.width, height: canvas.height, clientWidth: canvas.clientWidth, clientHeight: canvas.clientHeight }
+      : null,
+    webglVendor: null,
+    webglRenderer: null
+  };
+  if (typeof forced === 'boolean') {
+    return forced
+      ? { laggy: true, reasons: ['forced'], stats: fallbackStats, device: fallbackDevice, detectorVersion: MENU_LAG_DETECTOR_VERSION }
+      : null;
+  }
+  const stats = forced.stats ?? fallbackStats;
+  const reasons = forced.reasons ?? (forced.laggy ? ['forced'] : []);
+  const laggy = forced.laggy ?? reasons.length > 0;
+  if (!laggy) return null;
+  return {
+    laggy,
+    reasons,
+    stats,
+    device: forced.device ?? fallbackDevice,
+    detectorVersion: forced.detectorVersion ?? MENU_LAG_DETECTOR_VERSION
+  };
+}
+
 function MenuScreen({
   roster,
   stages: stageRoster,
@@ -4807,6 +4949,7 @@ function MenuScreen({
   reducedMotion,
   performanceSettings,
   onApplyRecommendedPerformance,
+  onStarterGuideAutoRequest,
   onAnalytics,
   onMenuSelect,
   onMenuHover,
@@ -4827,6 +4970,7 @@ function MenuScreen({
   reducedMotion: boolean;
   performanceSettings: GameSettings['performance'];
   onApplyRecommendedPerformance: () => void;
+  onStarterGuideAutoRequest: () => void;
   onAnalytics: AnalyticsCapture;
   onMenuSelect: () => void;
   onMenuHover: () => void;
@@ -4852,6 +4996,7 @@ function MenuScreen({
   const menuIdleTimerRef = useRef<number | null>(null);
   const menuIdleGamepadActiveRef = useRef(false);
   const [menuLagReport, setMenuLagReport] = useState<MenuLagReport | null>(null);
+  const [menuLagCheckPending, setMenuLagCheckPending] = useState(false);
   const effectiveMenuAttractMode = useMemo(() => resolveEffectiveMenuAttractMode(performanceSettings), [performanceSettings]);
   const effectiveMenuMotionMode = useMemo(() => resolveEffectiveMenuMotionMode(performanceSettings), [performanceSettings]);
   const recommendedPerformanceActive = effectiveMenuAttractMode === 'snappy' && effectiveMenuMotionMode === 'snappy';
@@ -4862,30 +5007,49 @@ function MenuScreen({
 
   useEffect(() => {
     setMenuLagReport(null);
-    if (!performanceSettings.autoDetectMenuLag || recommendedPerformanceActive || getMenuLagPromptDismissed()) return undefined;
+    if (!performanceSettings.autoDetectMenuLag || recommendedPerformanceActive || getMenuLagPromptDismissed()) {
+      setMenuLagCheckPending(false);
+      return undefined;
+    }
     let cancelled = false;
     let timeout = 0;
+    setMenuLagCheckPending(true);
+    const showReport = (report: MenuLagReport) => {
+      if (!report.laggy || recommendedPerformanceActive || getMenuLagPromptDismissed()) return;
+      setMenuLagReport(report);
+      onAnalytics('menu_lag_prompt', {
+        action: 'shown',
+        detector_version: report.detectorVersion,
+        reasons: report.reasons.join(','),
+        p95_ms: report.stats.p95Ms,
+        p99_ms: report.stats.p99Ms,
+        average_fps: report.stats.averageFps,
+        long_task_count: report.stats.longTaskCount,
+        linux_firefox: report.device.linuxFirefox,
+        steam_deck_like: report.device.steamDeckLike
+      });
+    };
     const sample = () => {
       const canvas = menuScreenRef.current?.querySelector<HTMLCanvasElement>('[data-testid="menu-attract-canvas"]');
-      if (!canvas) {
+      const forcedReport = getForcedMenuLagReport(canvas);
+      if (!canvas && forcedReport === undefined) {
         timeout = window.setTimeout(sample, 250);
         return;
       }
-      void sampleMenuLandingLag(canvas).then((report) => {
-        if (cancelled || !report.laggy || recommendedPerformanceActive || getMenuLagPromptDismissed()) return;
-        setMenuLagReport(report);
-        onAnalytics('menu_lag_prompt', {
-          action: 'shown',
-          detector_version: report.detectorVersion,
-          reasons: report.reasons.join(','),
-          p95_ms: report.stats.p95Ms,
-          p99_ms: report.stats.p99Ms,
-          average_fps: report.stats.averageFps,
-          long_task_count: report.stats.longTaskCount,
-          linux_firefox: report.device.linuxFirefox,
-          steam_deck_like: report.device.steamDeckLike
+      if (forcedReport !== undefined) {
+        setMenuLagCheckPending(false);
+        if (forcedReport) showReport(forcedReport);
+        return;
+      }
+      void sampleMenuLandingLag(canvas)
+        .then((report) => {
+          if (cancelled) return;
+          setMenuLagCheckPending(false);
+          showReport(report);
+        })
+        .catch(() => {
+          if (!cancelled) setMenuLagCheckPending(false);
         });
-      });
     };
     timeout = window.setTimeout(sample, 900);
     return () => {
@@ -4893,6 +5057,11 @@ function MenuScreen({
       window.clearTimeout(timeout);
     };
   }, [onAnalytics, performanceSettings.autoDetectMenuLag, recommendedPerformanceActive]);
+
+  useEffect(() => {
+    if (menuChromeHidden || menuLagCheckPending || menuLagReport) return;
+    onStarterGuideAutoRequest();
+  }, [menuChromeHidden, menuLagCheckPending, menuLagReport, onStarterGuideAutoRequest]);
 
   const applyMenuLagRecommendation = useCallback(() => {
     onApplyRecommendedPerformance();
@@ -5171,6 +5340,148 @@ function MenuLagRecommendationDialog({
         </button>
       </div>
     </section>
+  );
+}
+
+type StarterGuideSection = {
+  id: string;
+  title: string;
+  eyebrow: string;
+  body: string;
+  points: string[];
+};
+
+const starterGuideSections: StarterGuideSection[] = [
+  {
+    id: 'welcome',
+    title: 'Welcome',
+    eyebrow: 'Start here',
+    body: 'K.O.R.E is a 3D arena fighter built around quick picks, dramatic stages, local play, training, online matches, and arcade progression.',
+    points: [
+      'Pick a fighter, pick a stage, and jump into a match.',
+      'Reduce the opponent HP to win rounds before the timer runs out.',
+      'Use Options any time you need controls, display, audio, or this guide again.'
+    ]
+  },
+  {
+    id: 'modes',
+    title: 'Modes',
+    eyebrow: 'Main menu',
+    body: 'Each main menu mode starts a different kind of session.',
+    points: [
+      'Arcade builds a solo run through CPU opponents and unlock progress.',
+      'Versus is local two-player fighting on one device.',
+      'Training gives you free practice and guided combo trials.',
+      'Online, private rooms, ranked profiles, and tournaments connect you to remote competition.',
+      'Characters and Stages are creation and review tools for the roster and arenas.'
+    ]
+  },
+  {
+    id: 'fights',
+    title: 'How Fights Work',
+    eyebrow: 'Round flow',
+    body: 'Fights reward spacing, blocking, movement, and reading the opponent before committing to big attacks.',
+    points: [
+      'Light, heavy, kick, and special attacks chain into character-specific routes.',
+      'Block to survive pressure, then punish unsafe moves when they recover.',
+      'Charge ki for stronger options and special routes.',
+      'Launchers, tornado extenders, wall pressure, and counter hits create bigger damage.'
+    ]
+  },
+  {
+    id: 'controls',
+    title: 'Controls',
+    eyebrow: 'Keyboard and gamepad',
+    body: 'Controls can be remapped from Options -> Controls, and Beginner or KORE notation can be chosen under Options -> Game.',
+    points: [
+      'WASD or D-pad/stick move; Enter or the south face button confirms menus.',
+      'Default attacks are U, I, J, K on keyboard or the four face buttons on gamepad.',
+      'Escape or Start pauses fights; F1 opens this guide.',
+      'L1 opens this guide on menu screens, but remains block during active fights.'
+    ]
+  },
+  {
+    id: 'progress',
+    title: 'Progress',
+    eyebrow: 'Save and improve',
+    body: 'Progress is local by default and can be carried between installs with the memory-card tools in the Console.',
+    points: [
+      'Arcade wins can unlock fighters and build score history.',
+      'Training trials help you learn routes before taking them online.',
+      'The Console can export, copy, or load a portable memory card.',
+      'Options -> Console -> About always has this guide if you need the rundown again.'
+    ]
+  }
+];
+
+function StarterGuideDialog({ onClose }: { onClose: () => void }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const nextRef = useRef<HTMLButtonElement | null>(null);
+  const activeSection = starterGuideSections[Math.min(activeIndex, starterGuideSections.length - 1)] ?? starterGuideSections[0];
+  const isFirstStep = activeIndex === 0;
+  const isLastStep = activeIndex >= starterGuideSections.length - 1;
+
+  const goPrevious = useCallback(() => {
+    setActiveIndex((current) => Math.max(0, current - 1));
+  }, []);
+
+  const goNext = useCallback(() => {
+    if (isLastStep) {
+      onClose();
+      return;
+    }
+    setActiveIndex((current) => Math.min(starterGuideSections.length - 1, current + 1));
+  }, [isLastStep, onClose]);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => nextRef.current?.focus({ preventScroll: true }));
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
+      const key = event.key.toLowerCase();
+      if (event.key !== 'Escape' && key !== 'o' && key !== 'p') return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (key === 'o') goPrevious();
+      else goNext();
+    };
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('keydown', onKeyDown, true);
+    };
+  }, [goNext, goPrevious, onClose]);
+
+  return (
+    <div className="starter-guide-overlay" role="presentation">
+      <section className="starter-guide-dialog" role="dialog" aria-modal="true" aria-label="KORE starter guide" data-testid="starter-guide-dialog">
+        <header className="starter-guide-header">
+          <div>
+            <span><BookOpen size={17} /> Starter Guide</span>
+            <h2>{activeSection.title}</h2>
+          </div>
+          <strong className="starter-guide-step-count">{activeIndex + 1} / {starterGuideSections.length}</strong>
+        </header>
+        <article className="starter-guide-body">
+          <span>{activeSection.eyebrow}</span>
+          <p>{activeSection.body}</p>
+          <ul>
+            {activeSection.points.map((point) => <li key={point}>{point}</li>)}
+          </ul>
+        </article>
+        <footer className="starter-guide-actions">
+          <button type="button" className="secondary-button" onClick={goPrevious} disabled={isFirstStep} data-starter-guide-prev>
+            Previous
+          </button>
+          <button ref={nextRef} type="button" className="primary-button" onClick={goNext} data-starter-guide-next>
+            {isLastStep ? 'Close' : 'Next'}
+          </button>
+        </footer>
+      </section>
+    </div>
   );
 }
 
@@ -5488,7 +5799,10 @@ function ArcadeNameCard({
     left: false,
     right: false,
     confirm: false,
-    back: false
+    back: false,
+    select: false,
+    help: false,
+    helpNext: false
   });
   const controllerLastMoveAtRef = useRef(0);
 
@@ -5535,7 +5849,7 @@ function ArcadeNameCard({
       const active = document.activeElement === input;
       const pad = getPrimaryGamepad();
       if (!input || !active || !pad) {
-        controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false };
+        controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, help: false, helpNext: false };
         if (!active && controllerEditingRef.current) setControllerEditing(false);
         frame = window.requestAnimationFrame(tick);
         return;
@@ -10040,6 +10354,7 @@ function SettingsScreen({
   menuBgmTrackCount,
   onMenuBgmTrackChange,
   onOptionsShortcut,
+  onOpenStarterGuide,
   onMemoryCardLoaded,
   onBack,
   onAnalytics
@@ -10056,6 +10371,7 @@ function SettingsScreen({
   menuBgmTrackCount: number;
   onMenuBgmTrackChange: (index: number) => void;
   onOptionsShortcut: () => void;
+  onOpenStarterGuide: () => void;
   onMemoryCardLoaded: () => void;
   onBack: () => void;
   onAnalytics: AnalyticsCapture;
@@ -10469,7 +10785,7 @@ function SettingsScreen({
     }
 
     if (activeTab === 'console') {
-      return <OptionsConsole onMemoryCardLoaded={onMemoryCardLoaded} activeSectionIndex={activeSectionIndex} onAnalytics={onAnalytics} />;
+      return <OptionsConsole onMemoryCardLoaded={onMemoryCardLoaded} activeSectionIndex={activeSectionIndex} onOpenStarterGuide={onOpenStarterGuide} onAnalytics={onAnalytics} />;
     }
 
     return (
@@ -10608,10 +10924,12 @@ let consoleLineId = 0;
 function OptionsConsole({
   onMemoryCardLoaded,
   activeSectionIndex,
+  onOpenStarterGuide,
   onAnalytics
 }: {
   onMemoryCardLoaded: () => void;
   activeSectionIndex: number;
+  onOpenStarterGuide: () => void;
   onAnalytics: AnalyticsCapture;
 }) {
   const [command, setCommand] = useState('');
@@ -10818,6 +11136,10 @@ function OptionsConsole({
             open-source 3D fighting game engine built in the browser. It can run on mobile, iPad, Xbox, PS5,
             PC, you name it. Full online support and arcade mode. Will you become a KORE fighter?
           </p>
+          <button type="button" className="secondary-button about-kore-guide-button" onClick={onOpenStarterGuide}>
+            <BookOpen size={18} />
+            Open Starter Guide
+          </button>
         </article>
       </SettingsSection>
     </div>
@@ -20960,7 +21282,9 @@ export function OnlineTrainingChat({
     right: false,
     confirm: false,
     back: false,
-    select: false
+    select: false,
+    help: false,
+    helpNext: false
   });
   const controllerLastMoveAtRef = useRef(0);
 
@@ -21020,7 +21344,7 @@ export function OnlineTrainingChat({
       const active = document.activeElement === input;
       const pad = getPrimaryGamepad();
       if (!input || !pad) {
-        controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false };
+        controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, help: false, helpNext: false };
         if (controllerEditingRef.current) setControllerEditing(false);
         frame = window.requestAnimationFrame(tick);
         return;
