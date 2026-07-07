@@ -125,6 +125,7 @@ const MENU_ATTRACT_FIGHTER_RENDER_STYLE: Partial<FighterRenderStyle> = {
   castShadow: false,
   receiveShadow: false
 };
+const MENU_ATTRACT_FIGHTER_VISUAL_SCALE = 0.82;
 const FULL_FIGHT_FIGHTER_RENDER_STYLE: Partial<FighterRenderStyle> = {
   castShadow: false,
   receiveShadow: false
@@ -2620,10 +2621,8 @@ export function MenuAttractScene({
       <MenuAttractCamera match={match} />
       <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
       <StageCameraOcclusionFader />
-      <group scale={0.82}>
-        <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
-        <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} />
-      </group>
+      <FighterRig fighter={match.fighters[0]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} visualScale={MENU_ATTRACT_FIGHTER_VISUAL_SCALE} />
+      <FighterRig fighter={match.fighters[1]} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} visualScale={MENU_ATTRACT_FIGHTER_VISUAL_SCALE} />
     </>
   ), [match, match.fighters, match.stage]);
   return (
@@ -2636,10 +2635,10 @@ export function MenuAttractScene({
     >
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         {stableScene}
-        {!snappy && <group scale={0.82}>
+        {!snappy && <>
           <EffectLayer match={match} reducedMotion={reducedMotion} />
           <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
-        </group>}
+        </>}
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
@@ -5081,7 +5080,8 @@ function FighterRig({
   frameTimeOverride,
   stage,
   renderStyle,
-  preferProcedural = false
+  preferProcedural = false,
+  visualScale = 1
 }: {
   fighter: FighterRuntime;
   timeScale?: number;
@@ -5089,6 +5089,7 @@ function FighterRig({
   stage?: StageDefinition;
   renderStyle?: Partial<FighterRenderStyle>;
   preferProcedural?: boolean;
+  visualScale?: number;
 }) {
   const group = useRef<THREE.Group>(null);
   const yawInitialized = useRef(false);
@@ -5122,11 +5123,12 @@ function FighterRig({
 
   const color = fighter.character.colors.primary;
   const globalScale = getCharacterGlobalScale(fighter.character);
+  const resolvedVisualScale = Math.max(0.1, visualScale);
   const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
   const materialStyle = useMemo(() => withDefaultRenderStyle(renderStyle), [renderStyle]);
   const effectiveOutlineStyle = materialStyle.opacity < 1 || renderStyle?.castShadow === false ? undefined : outlineStyle;
   return (
-    <group ref={group} scale={[globalScale.width, globalScale.height, globalScale.width]}>
+    <group ref={group} scale={[globalScale.width * resolvedVisualScale, globalScale.height * resolvedVisualScale, globalScale.width * resolvedVisualScale]}>
       <Bounds fit={false}>
         {preferProcedural ? (
           <ProceduralFighter fighter={fighter} color={color} timeScale={timeScale} frameTimeOverride={frameTimeOverride} outlineStyle={effectiveOutlineStyle} renderStyle={materialStyle} />

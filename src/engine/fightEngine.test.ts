@@ -3946,6 +3946,99 @@ describe('fight engine', () => {
     expect(laneDownResult.fighters[0].position.z).toBeGreaterThan(laneZBefore + 0.35);
   });
 
+  it('syncs both player control sides from their current stage-side positions', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].controlSideSign = 1;
+    match.fighters[1].controlSideSign = -1;
+    match.fighters[0].position.x = 1.4;
+    match.fighters[1].position.x = -1.4;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].controlSideSign).toBe(-1);
+    expect(match.fighters[1].controlSideSign).toBe(1);
+    expect(match.fighters[0].controlSideSign).toBe(-match.fighters[1].controlSideSign);
+  });
+
+  it('retargets P1 horizontal controls after crossing sides and releasing the held direction', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    match = stepMatch(match, { ...emptyInputFrame(), left: true }, emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].horizontalHoldIntent).toBe('back');
+
+    match.fighters[0].position.x = 1.3;
+    match.fighters[1].position.x = -1.3;
+    const heldBackWhileCrossed = stepMatch(match, { ...emptyInputFrame(), left: true }, emptyInputFrame(), 1 / 60);
+    expect(heldBackWhileCrossed.fighters[0].horizontalHoldIntent).toBe('back');
+
+    const released = stepMatch(heldBackWhileCrossed, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(released.fighters[0].horizontalHoldIntent).toBeNull();
+    expect(released.fighters[0].controlSideSign).toBe(-1);
+    expect(released.fighters[0].horizontalHoldControlSideSign).toBe(-1);
+
+    const forward = stepMatch(released, { ...emptyInputFrame(), left: true }, emptyInputFrame(), 1 / 60);
+    expect(forward.fighters[0].walkDirection).toBe(1);
+    expect(forward.fighters[0].position.x).toBeLessThan(released.fighters[0].position.x);
+
+    const back = stepMatch(released, { ...emptyInputFrame(), right: true }, emptyInputFrame(), 1 / 60);
+    expect(back.fighters[0].state).toBe('block');
+    expect(back.fighters[0].position.x).toBeGreaterThan(released.fighters[0].position.x);
+  });
+
+  it('retargets P2 horizontal controls after crossing sides and releasing the held direction', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+
+    match = stepMatch(match, emptyInputFrame(), { ...emptyInputFrame(), right: true }, 1 / 60);
+    expect(match.fighters[1].horizontalHoldIntent).toBe('back');
+
+    match.fighters[0].position.x = 1.3;
+    match.fighters[1].position.x = -1.3;
+    const heldBackWhileCrossed = stepMatch(match, emptyInputFrame(), { ...emptyInputFrame(), right: true }, 1 / 60);
+    expect(heldBackWhileCrossed.fighters[1].horizontalHoldIntent).toBe('back');
+
+    const released = stepMatch(heldBackWhileCrossed, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(released.fighters[1].horizontalHoldIntent).toBeNull();
+    expect(released.fighters[1].controlSideSign).toBe(1);
+    expect(released.fighters[1].horizontalHoldControlSideSign).toBe(1);
+
+    const forward = stepMatch(released, emptyInputFrame(), { ...emptyInputFrame(), right: true }, 1 / 60);
+    expect(forward.fighters[1].walkDirection).toBe(1);
+    expect(forward.fighters[1].position.x).toBeGreaterThan(released.fighters[1].position.x);
+
+    const back = stepMatch(released, emptyInputFrame(), { ...emptyInputFrame(), left: true }, 1 / 60);
+    expect(back.fighters[1].state).toBe('block');
+    expect(back.fighters[1].position.x).toBeLessThan(released.fighters[1].position.x);
+  });
+
+  it('syncs control sides from rotated stage-side coordinates', () => {
+    const rotatedStage: StageDefinition = {
+      ...stages[0],
+      fightPlane: { center: [4, 0, -2], width: 14, depth: 8, y: 0, rotationY: Math.PI / 2 },
+      playableBounds: { shape: 'box', width: 14, depth: 8 }
+    };
+    let match = createMatch(starterCharacters[0], starterCharacters[1], rotatedStage, 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const p1Right = boundsWorldPosition(rotatedStage, { x: 2.4, z: 0 });
+    const p2Left = boundsWorldPosition(rotatedStage, { x: -2.4, z: 0 });
+    match.fighters[0].position.x = p1Right.x;
+    match.fighters[0].position.z = p1Right.z;
+    match.fighters[1].position.x = p2Left.x;
+    match.fighters[1].position.z = p2Left.z;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(stageSideDelta(rotatedStage, match.fighters[0], match.fighters[1])).toBeLessThan(0);
+    expect(match.fighters[0].controlSideSign).toBe(-1);
+    expect(match.fighters[1].controlSideSign).toBe(1);
+  });
+
   it('uses back-back as an unsafe airborne retreat for both sides', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';

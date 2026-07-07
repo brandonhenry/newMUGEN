@@ -322,6 +322,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   updateControlSideSigns(next);
   resolveHits(next, frameDelta);
   constrainFightersToStageBounds(next);
+  updateControlSideSigns(next);
 
   if (next.roundFinisher) {
     resetIdleQuietState(next);
@@ -5110,15 +5111,23 @@ function resolveFighterFacing(stage: StageDefinition, fighter: FighterRuntime, o
 
 function updateControlSideSigns(match: MatchSnapshot) {
   const [p1, p2] = match.fighters;
-  updateControlSideSign(match.stage, p1, p2);
-  updateControlSideSign(match.stage, p2, p1);
+  const sideDelta = getPositionSideDelta(p1, p2, match.stage);
+  if (Math.abs(sideDelta) <= 0.001) return;
+  const p1Side = sideDelta > 0 ? 1 : -1;
+  setControlSideSignIfUnlocked(p1, p1Side);
+  setControlSideSignIfUnlocked(p2, -p1Side as 1 | -1);
 }
 
-function updateControlSideSign(stage: StageDefinition, fighter: FighterRuntime, opponent: FighterRuntime) {
-  if (isRecoverySideLocked(fighter)) return;
-  if (isLaneOrbitActive(fighter)) return;
-  if (fighter.horizontalHoldIntent === 'back') return;
-  fighter.controlSideSign = getPositionSideSign(fighter, opponent, stage) ?? fighter.controlSideSign;
+function setControlSideSignIfUnlocked(fighter: FighterRuntime, sideSign: 1 | -1) {
+  if (isControlSideLocked(fighter)) return;
+  fighter.controlSideSign = sideSign;
+  if (!fighter.horizontalHoldDirection && !fighter.horizontalHoldIntent) {
+    fighter.horizontalHoldControlSideSign = sideSign;
+  }
+}
+
+function isControlSideLocked(fighter: FighterRuntime) {
+  return isRecoverySideLocked(fighter) || isLaneOrbitActive(fighter);
 }
 
 function isLaneOrbitActive(fighter: FighterRuntime) {
@@ -5375,10 +5384,11 @@ function resolveHorizontalIntent(stage: StageDefinition | undefined, fighter: Fi
   if (!physicalDirection) {
     fighter.horizontalHoldDirection = null;
     fighter.horizontalHoldIntent = null;
+    fighter.horizontalHoldControlSideSign = getControlSideSign(fighter, opponent, stage);
     return { direction: 0, forward: false, back: false, neutral: true };
   }
   if (fighter.horizontalHoldDirection !== physicalDirection) {
-    const sideSign = isLaneOrbitActive(fighter) ? getControlSideSign(fighter, opponent, stage) : getOpponentSideSign(fighter, opponent, stage);
+    const sideSign = getControlSideSign(fighter, opponent, stage);
     const physicalForward = sideSign > 0 ? physicalDirection === 'right' : physicalDirection === 'left';
     fighter.horizontalHoldDirection = physicalDirection;
     fighter.horizontalHoldIntent = physicalForward ? 'forward' : 'back';

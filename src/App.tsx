@@ -20066,6 +20066,15 @@ function FightScreen({
       };
       applyPosition(fighter1, p1Position);
       applyPosition(fighter2, p2Position);
+      const sideCoordinate = (position: MatchSnapshot['fighters'][number]['position']) => {
+        const fightPlane = next.stage.fightPlane;
+        if (!fightPlane) return position.x;
+        const rotationY = fightPlane.rotationY ?? 0;
+        const center = fightPlane.center ?? [0, 0, 0];
+        const dx = position.x - center[0];
+        const dz = position.z - center[2];
+        return dx * Math.cos(rotationY) - dz * Math.sin(rotationY);
+      };
       next.phase = 'fighting';
       next.countdown = 0;
       next.message = '';
@@ -20088,9 +20097,12 @@ function FightScreen({
         fighter.sidestepDirection = 0;
         fighter.sidestepRepeatGraceFrames = 0;
         fighter.laneOrbitControlLocked = false;
-        const side = opponent.position.x - fighter.position.x;
+        fighter.horizontalHoldDirection = null;
+        fighter.horizontalHoldIntent = null;
+        const side = sideCoordinate(opponent.position) - sideCoordinate(fighter.position);
         if (Math.abs(side) > 0.001) {
           fighter.controlSideSign = side > 0 ? 1 : -1;
+          fighter.horizontalHoldControlSideSign = fighter.controlSideSign;
           fighter.facing = fighter.controlSideSign;
         }
         fighter.facingYaw = Math.atan2(opponent.position.x - fighter.position.x, opponent.position.z - fighter.position.z);
