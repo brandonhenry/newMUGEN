@@ -19987,6 +19987,7 @@ function FightScreen({
   const trainingTrialProgressRef = useRef<TrainingTrialProgress | null>(trainingTrialProgress);
   const previewPlaybackRef = useRef<{ trialId: string; frame: number } | null>(previewPlayback);
   const dismissedTrainingTrialOutcomeRef = useRef<string | null>(null);
+  const pendingTrainingTrialMenuRef = useRef(false);
   const trainingTrialAttemptCountsRef = useRef<Record<string, number>>({});
   const isTrainingOnline = mode === 'trainingOnline';
   const isRanked = mode === 'ranked';
@@ -20402,6 +20403,12 @@ function FightScreen({
   useEffect(() => {
     if (!paused) setPauseMenuView('menu');
   }, [paused]);
+
+  useEffect(() => {
+    if (!pendingTrainingTrialMenuRef.current || trainingTrialOutcome || !paused) return;
+    pendingTrainingTrialMenuRef.current = false;
+    setPauseMenuView('trainingTrials');
+  }, [paused, trainingTrialOutcome]);
 
   const cycleMoveListTab = useCallback((direction: -1 | 1) => {
     setActiveMoveListTab((current) => {
@@ -21730,6 +21737,7 @@ function FightScreen({
                   setTrainingTrialProgress(progress);
                   previewPlaybackRef.current = null;
                   setPreviewPlayback(null);
+                  setPauseMenuView('trainingTrials');
                   setPaused(true);
                 } else {
                   const nextPreview = { ...currentPreview, frame: nextFrame };
@@ -22006,6 +22014,7 @@ function FightScreen({
 
   const openTrainingTrialMenuFromOutcome = useCallback(() => {
     if (trainingTrialOutcome) dismissedTrainingTrialOutcomeRef.current = trainingTrialOutcome.trialId;
+    pendingTrainingTrialMenuRef.current = true;
     setTrainingTrialOutcome(null);
     setPauseMenuView('trainingTrials');
     setPaused(true);
