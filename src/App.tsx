@@ -4704,7 +4704,6 @@ function MenuAttractBackground({
   );
   const [attractMatch, setAttractMatch] = useState<MatchSnapshot | null>(() => makeFreshMatch());
   const matchRef = useRef<MatchSnapshot | null>(attractMatch);
-  const [sceneTick, setSceneTick] = useState(0);
 
   useEffect(() => {
     const fresh = makeFreshMatch();
@@ -4736,7 +4735,6 @@ function MenuAttractBackground({
         steps += 1;
       }
       if (steps >= maxSimulationCatchupSteps) accumulator = 0;
-      setSceneTick((tick) => (tick + 1) % 3600);
       frame = requestAnimationFrame(tick);
     };
 
@@ -4750,7 +4748,7 @@ function MenuAttractBackground({
   if (!attractMatch) return null;
   return (
     <div className="menu-attract-background" aria-hidden="true">
-      <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} sceneTick={sceneTick} performanceMode={attractMode} />
+      <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} performanceMode={attractMode} />
     </div>
   );
 }

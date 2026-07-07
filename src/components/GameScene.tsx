@@ -2576,9 +2576,8 @@ export function MenuAttractScene({
   match,
   sparkSettings = defaultSparkSettings,
   reducedMotion = false,
-  sceneTick = 0,
   performanceMode = 'full'
-}: GameSceneProps & { sceneTick?: number; performanceMode?: MenuAttractPerformanceMode }) {
+}: GameSceneProps & { performanceMode?: MenuAttractPerformanceMode }) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   const snappy = performanceMode === 'snappy';
   const dpr: [number, number] = snappy ? [0.42, 0.6] : [0.55, 0.75];
@@ -2597,14 +2596,13 @@ export function MenuAttractScene({
   ), [match, match.fighters, match.stage]);
   return (
     <Canvas
-      frameloop="demand"
+      frameloop="always"
       dpr={dpr}
       camera={{ position: [0, 2.55, 7.8], fov: 42 }}
       gl={{ antialias: false, powerPreference: 'high-performance' }}
       data-testid="menu-attract-canvas"
     >
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
-        <MenuAttractFrameInvalidator sceneTick={sceneTick} />
         {stableScene}
         {!snappy && <group scale={0.82}>
           <EffectLayer match={match} reducedMotion={reducedMotion} />
@@ -2613,14 +2611,6 @@ export function MenuAttractScene({
       </StageCameraCollisionContext.Provider>
     </Canvas>
   );
-}
-
-function MenuAttractFrameInvalidator({ sceneTick }: { sceneTick: number }) {
-  const invalidate = useThree((state) => state.invalidate);
-  useEffect(() => {
-    invalidate();
-  }, [invalidate, sceneTick]);
-  return null;
 }
 
 function MenuAttractCamera({ match }: { match: MatchSnapshot }) {
