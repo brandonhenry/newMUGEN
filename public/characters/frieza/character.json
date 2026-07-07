@@ -672,7 +672,8 @@
       "forwardForceStartFrame": 29,
       "forwardForceEndFrame": 35,
       "label": "Low Tail Scythe",
-      "hitLevel": "low"
+      "hitLevel": "throw",
+      "throwCapture": true
     },
     "kickright": {
       "startupFrames": 22,
@@ -1971,8 +1972,8 @@
     },
     "crouch": {
       "21": {
-        "width": 1.335,
-        "height": 1.026,
+        "width": 1.33,
+        "height": 1.03,
         "offsetX": 0
       }
     },
