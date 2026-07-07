@@ -406,9 +406,9 @@
       "id": "jab",
       "label": "Quick Hades Shot",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -448,9 +448,9 @@
       "id": "kick",
       "label": "Low Gunner Sweep",
       "input": "kick",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -490,9 +490,9 @@
       "id": "heavy",
       "label": "Hades Body Shot",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -532,9 +532,9 @@
       "id": "special",
       "label": "Sweeper Slide Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -599,9 +599,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 21,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -618,9 +618,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -637,9 +637,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 26,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -655,9 +655,9 @@
       "tracking": "medium"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 26,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -673,9 +673,9 @@
       "tracking": "medium"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -692,9 +692,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 17,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 26,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -715,9 +715,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 15,
-      "activeFrames": 35,
-      "recoveryFrames": 5,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -737,8 +737,8 @@
       "jumpBeforeMove": true
     },
     "cmd:WS+4": {
-      "startupFrames": 0,
-      "activeFrames": 21,
+      "startupFrames": 15,
+      "activeFrames": 3,
       "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
@@ -755,9 +755,9 @@
       "tracking": "medium"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 15,
-      "recoveryFrames": 2,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -776,7 +776,7 @@
     "cmd:FC+2": {
       "startupFrames": 17,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 26,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -794,9 +794,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -813,9 +813,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -832,9 +832,9 @@
       "tracking": "medium"
     },
     "cmd:2+3": {
-      "startupFrames": 29,
-      "activeFrames": 10,
-      "recoveryFrames": 4,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -851,9 +851,9 @@
       "endsInCrouch": true
     },
     "cmd:2+4": {
-      "startupFrames": 29,
-      "activeFrames": 15,
-      "recoveryFrames": 4,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -870,9 +870,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 17,
-      "activeFrames": 10,
-      "recoveryFrames": 16,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -897,9 +897,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 6,
-      "activeFrames": 53,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -916,7 +916,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -932,7 +932,7 @@
       "label": "Train Heartnet Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -948,7 +948,7 @@
       "label": "Train Heartnet Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -964,7 +964,7 @@
       "label": "Train Heartnet Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -980,7 +980,7 @@
       "label": "Train Heartnet Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -996,7 +996,7 @@
       "label": "Train Heartnet Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1012,7 +1012,7 @@
       "label": "Train Heartnet Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1028,7 +1028,7 @@
       "label": "Train Heartnet Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1044,7 +1044,7 @@
       "label": "Train Heartnet Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1060,7 +1060,7 @@
       "label": "Train Heartnet Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1076,7 +1076,7 @@
       "label": "Train Heartnet Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1092,7 +1092,7 @@
       "label": "Train Heartnet Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1108,7 +1108,7 @@
       "label": "Train Heartnet Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1124,7 +1124,7 @@
       "label": "Train Heartnet Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1140,7 +1140,7 @@
       "label": "Train Heartnet Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1156,7 +1156,7 @@
       "label": "Train Heartnet Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1172,7 +1172,7 @@
       "label": "Train Heartnet Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1188,7 +1188,7 @@
       "label": "Train Heartnet Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1204,7 +1204,7 @@
       "label": "Train Heartnet Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1220,7 +1220,7 @@
       "label": "Train Heartnet Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1236,7 +1236,7 @@
       "label": "Train Heartnet Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1252,7 +1252,7 @@
       "label": "Train Heartnet Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1268,7 +1268,7 @@
       "label": "Train Heartnet Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1284,7 +1284,7 @@
       "label": "Train Heartnet Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1300,7 +1300,7 @@
       "label": "Train Heartnet Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1316,7 +1316,7 @@
       "label": "Train Heartnet Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1332,7 +1332,7 @@
       "label": "Train Heartnet Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1348,7 +1348,7 @@
       "label": "Train Heartnet Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1364,7 +1364,7 @@
       "label": "Train Heartnet Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1380,9 +1380,9 @@
       "label": "Train Heartnet Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 13,
-      "activeFrames": 5,
-      "recoveryFrames": 25,
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1399,9 +1399,9 @@
       "jumpBeforeMove": true
     },
     "cmd:f+2": {
-      "startupFrames": 16,
-      "activeFrames": 10,
-      "recoveryFrames": 5,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1415,9 +1415,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 5,
-      "activeFrames": 21,
-      "recoveryFrames": 1,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1431,9 +1431,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 5,
-      "activeFrames": 21,
-      "recoveryFrames": 1,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1447,9 +1447,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 16,
-      "activeFrames": 10,
-      "recoveryFrames": 5,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1463,9 +1463,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 5,
-      "activeFrames": 21,
-      "recoveryFrames": 1,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,

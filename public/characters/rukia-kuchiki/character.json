@@ -463,9 +463,9 @@
       "id": "jab",
       "label": "Quick Zanpakuto Check",
       "input": "jab",
-      "startupFrames": 11,
-      "activeFrames": 3,
-      "recoveryFrames": 15,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -505,9 +505,9 @@
       "id": "kick",
       "label": "Low Snow Sweep",
       "input": "kick",
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -547,9 +547,9 @@
       "id": "heavy",
       "label": "Kuchiki Body Slash",
       "input": "heavy",
-      "startupFrames": 14,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 19,
+      "recoveryFrames": 21,
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -589,9 +589,9 @@
       "id": "special",
       "label": "Kuchiki Step Slash",
       "input": "special",
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -656,9 +656,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 5,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 22,
+      "recoveryFrames": 14,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -675,9 +675,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 5,
-      "recoveryFrames": 18,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -694,9 +694,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 22,
-      "activeFrames": 9,
-      "recoveryFrames": 11,
+      "startupFrames": 24,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -713,9 +713,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 21,
-      "activeFrames": 10,
-      "recoveryFrames": 12,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -732,9 +732,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -751,9 +751,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -774,9 +774,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
+      "startupFrames": 20,
       "activeFrames": 4,
-      "recoveryFrames": 29,
+      "recoveryFrames": 27,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -794,9 +794,9 @@
       "cancelable": false
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -813,9 +813,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 38,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -832,9 +832,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -852,9 +852,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -871,9 +871,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 18,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 28,
+      "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -892,8 +892,8 @@
     },
     "cmd:2+3": {
       "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -5,
@@ -910,9 +910,9 @@
       "cancelable": false
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 24,
       "activeFrames": 3,
-      "recoveryFrames": 25,
+      "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -930,9 +930,9 @@
       "cancelable": false
     },
     "cmd:3+4": {
-      "startupFrames": 22,
+      "startupFrames": 20,
       "activeFrames": 4,
-      "recoveryFrames": 30,
+      "recoveryFrames": 27,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -950,9 +950,9 @@
       "cancelable": false
     },
     "cmd:O+2": {
-      "startupFrames": 6,
-      "activeFrames": 53,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -969,7 +969,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -985,7 +985,7 @@
       "label": "Rukia Kuchiki Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1001,7 +1001,7 @@
       "label": "Rukia Kuchiki Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1017,7 +1017,7 @@
       "label": "Rukia Kuchiki Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1033,7 +1033,7 @@
       "label": "Rukia Kuchiki Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1049,7 +1049,7 @@
       "label": "Rukia Kuchiki Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1065,7 +1065,7 @@
       "label": "Rukia Kuchiki Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1081,7 +1081,7 @@
       "label": "Rukia Kuchiki Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1097,7 +1097,7 @@
       "label": "Rukia Kuchiki Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1113,7 +1113,7 @@
       "label": "Rukia Kuchiki Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1129,7 +1129,7 @@
       "label": "Rukia Kuchiki Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1145,7 +1145,7 @@
       "label": "Rukia Kuchiki Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1161,7 +1161,7 @@
       "label": "Rukia Kuchiki Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1177,7 +1177,7 @@
       "label": "Rukia Kuchiki Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1193,7 +1193,7 @@
       "label": "Rukia Kuchiki Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1209,7 +1209,7 @@
       "label": "Rukia Kuchiki Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1225,7 +1225,7 @@
       "label": "Rukia Kuchiki Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1241,7 +1241,7 @@
       "label": "Rukia Kuchiki Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1257,7 +1257,7 @@
       "label": "Rukia Kuchiki Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1273,7 +1273,7 @@
       "label": "Rukia Kuchiki Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1289,7 +1289,7 @@
       "label": "Rukia Kuchiki Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1305,7 +1305,7 @@
       "label": "Rukia Kuchiki Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1321,7 +1321,7 @@
       "label": "Rukia Kuchiki Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1337,7 +1337,7 @@
       "label": "Rukia Kuchiki Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1353,7 +1353,7 @@
       "label": "Rukia Kuchiki Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1369,7 +1369,7 @@
       "label": "Rukia Kuchiki Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1385,7 +1385,7 @@
       "label": "Rukia Kuchiki Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1401,7 +1401,7 @@
       "label": "Rukia Kuchiki Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1417,7 +1417,7 @@
       "label": "Rukia Kuchiki Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1433,8 +1433,8 @@
       "label": "Rukia Kuchiki Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 9,
-      "activeFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 2,
       "recoveryFrames": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -1449,9 +1449,9 @@
       "cancelable": false
     },
     "cmd:f+2": {
-      "startupFrames": 20,
-      "activeFrames": 7,
-      "recoveryFrames": 9,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1465,9 +1465,9 @@
       "cancelable": false
     },
     "cmd:f+3": {
-      "startupFrames": 17,
-      "activeFrames": 9,
-      "recoveryFrames": 16,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1481,9 +1481,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 13,
-      "activeFrames": 8,
-      "recoveryFrames": 8,
+      "startupFrames": 11,
+      "activeFrames": 3,
+      "recoveryFrames": 17,
       "onBlockFrames": 0,
       "onHitFrames": 13,
       "onCounterHitFrames": 17,
@@ -1497,9 +1497,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 17,
-      "activeFrames": 9,
-      "recoveryFrames": 16,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1513,9 +1513,9 @@
       "cancelable": false
     },
     "cmd:d/f+3": {
-      "startupFrames": 17,
-      "activeFrames": 9,
-      "recoveryFrames": 16,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1529,9 +1529,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 13,
-      "activeFrames": 8,
-      "recoveryFrames": 8,
+      "startupFrames": 11,
+      "activeFrames": 3,
+      "recoveryFrames": 17,
       "onBlockFrames": 0,
       "onHitFrames": 13,
       "onCounterHitFrames": 17,
@@ -1545,9 +1545,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 17,
-      "activeFrames": 9,
-      "recoveryFrames": 16,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1561,9 +1561,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 20,
-      "activeFrames": 7,
-      "recoveryFrames": 9,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1577,9 +1577,9 @@
       "cancelable": false
     },
     "cmd:SS+3": {
-      "startupFrames": 17,
-      "activeFrames": 9,
-      "recoveryFrames": 16,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1593,8 +1593,8 @@
       "cancelable": false
     },
     "cmd:SS+4": {
-      "startupFrames": 9,
-      "activeFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 2,
       "recoveryFrames": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -1609,9 +1609,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 13,
-      "activeFrames": 8,
-      "recoveryFrames": 8,
+      "startupFrames": 25,
+      "activeFrames": 6,
+      "recoveryFrames": 32,
       "onBlockFrames": 0,
       "onHitFrames": 13,
       "onCounterHitFrames": 17,
@@ -1625,9 +1625,9 @@
       "cancelable": false
     },
     "cmd:O+4": {
-      "startupFrames": 9,
-      "activeFrames": 17,
-      "recoveryFrames": 17,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,

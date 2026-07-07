@@ -42,9 +42,9 @@
       "id": "jab",
       "label": "Shadow Clone Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 5,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -83,9 +83,9 @@
       "id": "kick",
       "label": "Uzumaki Barrage Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 11,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -124,9 +124,9 @@
       "id": "heavy",
       "label": "Quick Rasengan Palm",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 16,
       "damage": 9,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -165,9 +165,9 @@
       "id": "special",
       "label": "Rasenshuriken Arc",
       "input": "special",
-      "startupFrames": 11,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 24,
+      "recoveryFrames": 25,
       "damage": 13,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -623,8 +623,8 @@
   "moveOverrides": {
     "cmd:f+1": {
       "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "damage": 12,
       "onBlockFrames": 0,
       "onHitFrames": 13,
@@ -639,9 +639,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 15,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 24,
+      "recoveryFrames": 25,
       "damage": 14,
       "onBlockFrames": -7,
       "onHitFrames": 15,
@@ -661,9 +661,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 18,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 24,
       "damage": 16,
       "onBlockFrames": -11,
       "onHitFrames": 17,
@@ -682,8 +682,8 @@
     },
     "cmd:WS+4": {
       "startupFrames": 13,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 12,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -703,9 +703,9 @@
       "jumpBeforeMove": true
     },
     "cmd:3+4": {
-      "startupFrames": 10,
-      "activeFrames": 6,
-      "recoveryFrames": 10,
+      "startupFrames": 29,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 13,
       "onBlockFrames": -12,
       "onHitFrames": 15,
@@ -738,35 +738,62 @@
       ]
     },
     "neutral:jab-jab": {
-      "label": "Multiple Shadow Clone Technique"
+      "label": "Multiple Shadow Clone Technique",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Clone Rasengan"
+      "label": "Clone Rasengan",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Rasengan Barrage"
+      "label": "Rasengan Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Massive Rasenshuriken"
+      "label": "Massive Rasenshuriken",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Leaf Gale Kick"
+      "label": "Leaf Gale Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Spiraling Clone Strike"
+      "label": "Spiraling Clone Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Giant Rasengan"
+      "label": "Giant Rasengan",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Shadow Leaf Drop"
+      "label": "Shadow Leaf Drop",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Uzumaki Heel Feint"
+      "label": "Uzumaki Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:1+4": {
-      "activeFrames": 5,
-      "recoveryFrames": 7,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "onBlockFrames": -11,
       "onHitFrames": 16,
       "onCounterHitFrames": 23,
@@ -778,67 +805,128 @@
       "hitLevel": "mid",
       "tracking": "strong",
       "knockdown": true,
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 22
     },
     "neutral:jab-jab-heavy": {
-      "label": "Shadow Clone Body Blow"
+      "label": "Shadow Clone Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Body Replacement Counter"
+      "label": "Body Replacement Counter",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Clone Transformation Feint"
+      "label": "Clone Transformation Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Uzumaki Barrage Palm"
+      "label": "Uzumaki Barrage Palm",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Naruto Uzumaki Two-Thousand Combo"
+      "label": "Naruto Uzumaki Two-Thousand Combo",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Shadow Shuriken Technique"
+      "label": "Shadow Shuriken Technique",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "All-Direction Shuriken Firing"
+      "label": "All-Direction Shuriken Firing",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Planetary Rasengan"
+      "label": "Planetary Rasengan",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Wind Release: Giant Rasengan"
+      "label": "Wind Release: Giant Rasengan",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Nine-Tails Chakra Cloak"
+      "label": "Nine-Tails Chakra Cloak",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25
     },
     "neutral:heavy-special-kick": {
-      "label": "Tailed-Beast Mode"
+      "label": "Tailed-Beast Mode",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Toad Summoning Technique"
+      "label": "Toad Summoning Technique",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Naruto Uzumaki Combo"
+      "label": "Naruto Uzumaki Combo",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Sage Mode"
+      "label": "Sage Mode",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Toad Sage Mode"
+      "label": "Toad Sage Mode",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Six Paths Sage Mode"
+      "label": "Six Paths Sage Mode",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Shadow Clone Gathering Assault"
+      "label": "Shadow Clone Gathering Assault",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Six Paths Senjutsu"
+      "label": "Six Paths Senjutsu",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Truth-Seeking Balls"
+      "label": "Truth-Seeking Balls",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Reverse Harem Technique"
+      "label": "Reverse Harem Technique",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:D+3": {
       "onBlockFrames": -5,
@@ -849,7 +937,10 @@
       "forwardForceEndFrame": 24,
       "label": "Low Uzumaki Kick",
       "hitLevel": "low",
-      "tracking": "medium"
+      "tracking": "medium",
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -863,12 +954,15 @@
       "hitLevel": "low",
       "tracking": "medium",
       "endsInCrouch": true,
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:1+2": {
-      "startupFrames": 9,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 25,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 15,
@@ -887,9 +981,9 @@
       "cancelable": false
     },
     "cmd:2+3": {
-      "startupFrames": 13,
-      "activeFrames": 5,
-      "recoveryFrames": 6,
+      "startupFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
       "onBlockFrames": -7,
       "onHitFrames": 14,
       "onCounterHitFrames": 19,
@@ -904,9 +998,9 @@
       "jumpBeforeMove": true
     },
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 18,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -919,8 +1013,8 @@
     },
     "kickleft": {
       "startupFrames": 10,
-      "activeFrames": 4,
-      "recoveryFrames": 5,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": -1,
       "onHitFrames": 12,
       "onCounterHitFrames": 16,
@@ -932,9 +1026,9 @@
       "tracking": "medium"
     },
     "jabright": {
-      "startupFrames": 9,
-      "activeFrames": 5,
-      "recoveryFrames": 9,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": -2,
       "onHitFrames": 11,
       "onCounterHitFrames": 15,
@@ -946,9 +1040,9 @@
       "tracking": "weakLeft"
     },
     "kickright": {
-      "startupFrames": 12,
-      "activeFrames": 6,
-      "recoveryFrames": 7,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -2,
       "onHitFrames": 10,
       "onCounterHitFrames": 14,
@@ -960,9 +1054,9 @@
       "tracking": "strong"
     },
     "cmd:O+2": {
-      "startupFrames": 15,
-      "activeFrames": 6,
-      "recoveryFrames": 25,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "damage": 20,
       "onBlockFrames": -10,
       "onHitFrames": 12,
@@ -989,9 +1083,9 @@
       ]
     },
     "cmd:1+3": {
-      "startupFrames": 6,
-      "activeFrames": 7,
-      "recoveryFrames": 13,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "onBlockFrames": -9,
       "onHitFrames": 12,
       "onCounterHitFrames": 17,
@@ -1009,9 +1103,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 8,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1039,10 +1133,13 @@
       "label": "Crouch Rasengan Pop-Up",
       "hitLevel": "high",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 15,
+      "activeFrames": 2,
+      "recoveryFrames": 22
     },
     "cmd:FC+4": {
-      "recoveryFrames": 10,
+      "recoveryFrames": 18,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1053,10 +1150,12 @@
       "label": "Low Rasenshuriken Feint",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "startupFrames": 16,
+      "activeFrames": 2
     },
     "cmd:FC+3": {
-      "startupFrames": 10,
+      "startupFrames": 16,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1067,10 +1166,12 @@
       "label": "Full-Crouch Low Kick",
       "hitLevel": "low",
       "tracking": "homing",
-      "endsInCrouch": true
+      "endsInCrouch": true,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:WR+4": {
-      "recoveryFrames": 14,
+      "recoveryFrames": 22,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1084,12 +1185,14 @@
       "juggleGravityScale": 0.52,
       "label": "Running Rasenshuriken Launcher",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "startupFrames": 15,
+      "activeFrames": 2
     },
     "cmd:2+4": {
       "startupFrames": 13,
-      "activeFrames": 7,
-      "recoveryFrames": 3,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -13,
       "onHitFrames": 14,
       "onCounterHitFrames": 21,
@@ -1113,7 +1216,10 @@
       "label": "Forward Rasengan Palm",
       "hitLevel": "high",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1126,7 +1232,10 @@
       "label": "Advancing Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1139,7 +1248,10 @@
       "label": "Ducking Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1152,7 +1264,10 @@
       "label": "Diagonal Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1165,7 +1280,10 @@
       "label": "Shadow Clone Rush Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:qcf+3": {
       "onBlockFrames": -5,
@@ -1178,7 +1296,10 @@
       "label": "Uzumaki Rush Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:WS+2": {
       "onBlockFrames": -5,
@@ -1191,7 +1312,10 @@
       "label": "While-Rising Rasengan",
       "hitLevel": "high",
       "tracking": "weakLeft",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1204,7 +1328,10 @@
       "label": "Sidestep Barrage Kick",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:SS+4": {
       "onBlockFrames": -9,
@@ -1217,7 +1344,10 @@
       "label": "Sidestep Rasenshuriken",
       "hitLevel": "mid",
       "tracking": "strong",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17
     },
     "cmd:O+1": {
       "onBlockFrames": 1,
@@ -1230,7 +1360,10 @@
       "label": "Overdrive Clone Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1244,12 +1377,18 @@
       "hitLevel": "mid",
       "tracking": "strong",
       "tornado": true,
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27
     },
     "cmd:FC+3+4": {
       "label": "Crouch Rasenshuriken",
       "hitLevel": "mid",
-      "tracking": "strong"
+      "tracking": "strong",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19
     }
   },
   "spriteFrameEdits": {
@@ -9791,8 +9930,8 @@
     },
     "crouch": {
       "124": {
-        "width": 1.256,
-        "height": 1.037,
+        "width": 1.26,
+        "height": 1.04,
         "offsetX": 0
       }
     },

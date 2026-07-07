@@ -468,9 +468,9 @@
       "id": "jab",
       "label": "Quick Pole Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -510,9 +510,9 @@
       "id": "kick",
       "label": "Low Sweep Kick",
       "input": "kick",
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "damage": 12,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -552,9 +552,9 @@
       "id": "heavy",
       "label": "Power Pole Body Check",
       "input": "heavy",
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 9,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -594,9 +594,9 @@
       "id": "special",
       "label": "Heavy Pole Wheel",
       "input": "special",
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 26,
+      "startupFrames": 24,
+      "activeFrames": 5,
+      "recoveryFrames": 33,
       "damage": 15,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -661,9 +661,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -680,9 +680,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -699,9 +699,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 25,
-      "activeFrames": 10,
-      "recoveryFrames": 13,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -718,9 +718,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 24,
-      "activeFrames": 12,
-      "recoveryFrames": 13,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -737,9 +737,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 4,
-      "activeFrames": 32,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -755,7 +755,7 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
@@ -777,9 +777,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 24,
+      "activeFrames": 5,
+      "recoveryFrames": 33,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -796,9 +796,9 @@
       "cancelable": false
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -814,9 +814,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 28,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -851,9 +851,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -891,9 +891,9 @@
       "jumpBeforeMove": true
     },
     "cmd:2+3": {
-      "startupFrames": 18,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -5,
@@ -912,9 +912,9 @@
       "jumpBeforeMove": true
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 29,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -931,9 +931,9 @@
       "cancelable": false
     },
     "cmd:3+4": {
-      "startupFrames": 16,
-      "activeFrames": 9,
-      "recoveryFrames": 16,
+      "startupFrames": 21,
+      "activeFrames": 3,
+      "recoveryFrames": 29,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -954,9 +954,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 30,
-      "recoveryFrames": 6,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -972,7 +972,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -988,7 +988,7 @@
       "label": "Goku Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1004,7 +1004,7 @@
       "label": "Goku Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1020,7 +1020,7 @@
       "label": "Goku Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1036,7 +1036,7 @@
       "label": "Goku Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1052,7 +1052,7 @@
       "label": "Goku Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1068,7 +1068,7 @@
       "label": "Goku Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1084,7 +1084,7 @@
       "label": "Goku Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1100,7 +1100,7 @@
       "label": "Goku Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1116,7 +1116,7 @@
       "label": "Goku Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1132,7 +1132,7 @@
       "label": "Goku Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1148,7 +1148,7 @@
       "label": "Goku Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1164,7 +1164,7 @@
       "label": "Goku Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1180,7 +1180,7 @@
       "label": "Goku Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1196,7 +1196,7 @@
       "label": "Goku Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1212,7 +1212,7 @@
       "label": "Goku Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1228,7 +1228,7 @@
       "label": "Goku Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1244,7 +1244,7 @@
       "label": "Goku Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1260,7 +1260,7 @@
       "label": "Goku Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1276,7 +1276,7 @@
       "label": "Goku Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1292,7 +1292,7 @@
       "label": "Goku Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1308,7 +1308,7 @@
       "label": "Goku Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1324,7 +1324,7 @@
       "label": "Goku Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1340,7 +1340,7 @@
       "label": "Goku Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1356,7 +1356,7 @@
       "label": "Goku Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1372,7 +1372,7 @@
       "label": "Goku Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1388,7 +1388,7 @@
       "label": "Goku Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1404,7 +1404,7 @@
       "label": "Goku Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1420,7 +1420,7 @@
       "label": "Goku Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1436,9 +1436,9 @@
       "label": "Goku Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 22,
-      "activeFrames": 6,
-      "recoveryFrames": 21,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
@@ -1452,8 +1452,8 @@
     },
     "cmd:f+2": {
       "startupFrames": 14,
-      "activeFrames": 9,
-      "recoveryFrames": 9,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1466,9 +1466,9 @@
       "cancelable": false
     },
     "cmd:f+3": {
-      "startupFrames": 12,
-      "activeFrames": 30,
-      "recoveryFrames": 6,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1484,9 +1484,9 @@
       "jumpBeforeMove": true
     },
     "cmd:d+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1499,9 +1499,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 12,
-      "activeFrames": 30,
-      "recoveryFrames": 6,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1517,9 +1517,9 @@
       "jumpBeforeMove": true
     },
     "cmd:d/f+3": {
-      "startupFrames": 12,
-      "activeFrames": 30,
-      "recoveryFrames": 6,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1535,9 +1535,9 @@
       "jumpBeforeMove": true
     },
     "cmd:qcf+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1550,9 +1550,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 12,
-      "activeFrames": 30,
-      "recoveryFrames": 6,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1569,8 +1569,8 @@
     },
     "cmd:WS+2": {
       "startupFrames": 14,
-      "activeFrames": 9,
-      "recoveryFrames": 9,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1583,9 +1583,9 @@
       "cancelable": false
     },
     "cmd:SS+3": {
-      "startupFrames": 12,
-      "activeFrames": 30,
-      "recoveryFrames": 6,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1601,9 +1601,9 @@
       "jumpBeforeMove": true
     },
     "cmd:SS+4": {
-      "startupFrames": 22,
-      "activeFrames": 6,
-      "recoveryFrames": 21,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
@@ -1616,9 +1616,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1631,9 +1631,9 @@
       "cancelable": false
     },
     "cmd:O+4": {
-      "startupFrames": 22,
-      "activeFrames": 6,
-      "recoveryFrames": 21,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,

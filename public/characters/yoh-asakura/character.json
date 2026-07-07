@@ -362,9 +362,9 @@
       "id": "jab",
       "label": "Quick Harusame Slash",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -404,9 +404,9 @@
       "id": "kick",
       "label": "Low Spirit Slide",
       "input": "kick",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -446,9 +446,9 @@
       "id": "heavy",
       "label": "Amidamaru Body Cut",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -488,9 +488,9 @@
       "id": "special",
       "label": "Heavy Spirit Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 24,
+      "activeFrames": 5,
+      "recoveryFrames": 33,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -555,9 +555,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 0,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -573,9 +573,9 @@
       "tracking": "medium"
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -592,9 +592,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 0,
-      "activeFrames": 32,
-      "recoveryFrames": 13,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -610,9 +610,9 @@
       "tracking": "medium"
     },
     "kickright": {
-      "startupFrames": 0,
-      "activeFrames": 42,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -628,9 +628,9 @@
       "tracking": "medium"
     },
     "cmd:f+1": {
-      "startupFrames": 7,
-      "activeFrames": 36,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -646,9 +646,9 @@
       "tracking": "medium"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 17,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 26,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -669,9 +669,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 6,
-      "activeFrames": 44,
-      "recoveryFrames": 5,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -688,9 +688,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 0,
-      "activeFrames": 41,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -706,9 +706,9 @@
       "tracking": "medium"
     },
     "cmd:FC+1": {
-      "startupFrames": 6,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -725,8 +725,8 @@
     },
     "cmd:FC+2": {
       "startupFrames": 19,
-      "activeFrames": 24,
-      "recoveryFrames": 4,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -744,9 +744,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -765,9 +765,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -784,9 +784,9 @@
       "tracking": "medium"
     },
     "cmd:2+3": {
-      "startupFrames": 23,
-      "activeFrames": 9,
-      "recoveryFrames": 11,
+      "startupFrames": 24,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -802,9 +802,9 @@
       "tracking": "medium"
     },
     "cmd:2+4": {
-      "startupFrames": 27,
-      "activeFrames": 15,
-      "recoveryFrames": 6,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -825,8 +825,8 @@
     },
     "cmd:3+4": {
       "startupFrames": 22,
-      "activeFrames": 13,
-      "recoveryFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -843,9 +843,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 18,
-      "activeFrames": 41,
-      "recoveryFrames": 1,
+      "startupFrames": 25,
+      "activeFrames": 6,
+      "recoveryFrames": 32,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -862,7 +862,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -878,7 +878,7 @@
       "label": "Yoh Asakura Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -894,7 +894,7 @@
       "label": "Yoh Asakura Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -910,7 +910,7 @@
       "label": "Yoh Asakura Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -926,7 +926,7 @@
       "label": "Yoh Asakura Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -942,7 +942,7 @@
       "label": "Yoh Asakura Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -958,7 +958,7 @@
       "label": "Yoh Asakura Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -974,7 +974,7 @@
       "label": "Yoh Asakura Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -990,7 +990,7 @@
       "label": "Yoh Asakura Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1006,7 +1006,7 @@
       "label": "Yoh Asakura Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1022,7 +1022,7 @@
       "label": "Yoh Asakura Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1038,7 +1038,7 @@
       "label": "Yoh Asakura Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1054,7 +1054,7 @@
       "label": "Yoh Asakura Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1070,7 +1070,7 @@
       "label": "Yoh Asakura Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1086,7 +1086,7 @@
       "label": "Yoh Asakura Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1102,7 +1102,7 @@
       "label": "Yoh Asakura Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1118,7 +1118,7 @@
       "label": "Yoh Asakura Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1134,7 +1134,7 @@
       "label": "Yoh Asakura Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1150,7 +1150,7 @@
       "label": "Yoh Asakura Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1166,7 +1166,7 @@
       "label": "Yoh Asakura Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1182,7 +1182,7 @@
       "label": "Yoh Asakura Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1198,7 +1198,7 @@
       "label": "Yoh Asakura Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1214,7 +1214,7 @@
       "label": "Yoh Asakura Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1230,7 +1230,7 @@
       "label": "Yoh Asakura Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1246,7 +1246,7 @@
       "label": "Yoh Asakura Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1262,7 +1262,7 @@
       "label": "Yoh Asakura Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1278,7 +1278,7 @@
       "label": "Yoh Asakura Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1294,7 +1294,7 @@
       "label": "Yoh Asakura Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1310,7 +1310,7 @@
       "label": "Yoh Asakura Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1326,9 +1326,9 @@
       "label": "Yoh Asakura Kick Ender"
     },
     "cmd:f+2": {
-      "startupFrames": 6,
-      "activeFrames": 15,
-      "recoveryFrames": 10,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1342,9 +1342,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 6,
-      "activeFrames": 15,
-      "recoveryFrames": 10,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1360,7 +1360,10 @@
     "cmd:1+4": {
       "label": "Spirit Crescent Kick",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20
     }
   },
   "effects": [],

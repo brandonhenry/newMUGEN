@@ -367,9 +367,9 @@
       "id": "jab",
       "label": "Quick Principal Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -409,9 +409,9 @@
       "id": "kick",
       "label": "Low Otokojuku Roll",
       "input": "kick",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -451,9 +451,9 @@
       "id": "heavy",
       "label": "Principal Body Blow",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -493,7 +493,7 @@
       "id": "special",
       "label": "Heihachi Edajima Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
@@ -559,9 +559,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -578,9 +578,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 15,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -597,9 +597,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 0,
-      "activeFrames": 44,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -631,9 +631,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 5,
-      "activeFrames": 35,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -649,9 +649,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -671,9 +671,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 28,
-      "activeFrames": 26,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -689,9 +689,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 0,
-      "activeFrames": 34,
-      "recoveryFrames": 8,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -706,9 +706,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 6,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -724,9 +724,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -743,9 +743,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -761,9 +761,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 11,
-      "activeFrames": 13,
-      "recoveryFrames": 25,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -780,8 +780,8 @@
     },
     "cmd:2+3": {
       "startupFrames": 23,
-      "activeFrames": 9,
-      "recoveryFrames": 11,
+      "activeFrames": 2,
+      "recoveryFrames": 27,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -796,9 +796,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 27,
-      "activeFrames": 15,
-      "recoveryFrames": 6,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -814,9 +814,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 14,
-      "activeFrames": 8,
-      "recoveryFrames": 14,
+      "startupFrames": 21,
+      "activeFrames": 3,
+      "recoveryFrames": 29,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -836,9 +836,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 0,
-      "activeFrames": 59,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -854,7 +854,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -870,7 +870,7 @@
       "label": "Heihachi Edajima Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -886,7 +886,7 @@
       "label": "Heihachi Edajima Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -902,7 +902,7 @@
       "label": "Heihachi Edajima Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -918,7 +918,7 @@
       "label": "Heihachi Edajima Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -934,7 +934,7 @@
       "label": "Heihachi Edajima Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -950,7 +950,7 @@
       "label": "Heihachi Edajima Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -966,7 +966,7 @@
       "label": "Heihachi Edajima Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -982,7 +982,7 @@
       "label": "Heihachi Edajima Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -998,7 +998,7 @@
       "label": "Heihachi Edajima Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1014,7 +1014,7 @@
       "label": "Heihachi Edajima Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1030,7 +1030,7 @@
       "label": "Heihachi Edajima Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1046,7 +1046,7 @@
       "label": "Heihachi Edajima Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1062,7 +1062,7 @@
       "label": "Heihachi Edajima Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1078,7 +1078,7 @@
       "label": "Heihachi Edajima Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1094,7 +1094,7 @@
       "label": "Heihachi Edajima Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1110,7 +1110,7 @@
       "label": "Heihachi Edajima Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1126,7 +1126,7 @@
       "label": "Heihachi Edajima Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1142,7 +1142,7 @@
       "label": "Heihachi Edajima Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1158,7 +1158,7 @@
       "label": "Heihachi Edajima Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1174,7 +1174,7 @@
       "label": "Heihachi Edajima Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1190,7 +1190,7 @@
       "label": "Heihachi Edajima Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1206,7 +1206,7 @@
       "label": "Heihachi Edajima Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1222,7 +1222,7 @@
       "label": "Heihachi Edajima Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1238,7 +1238,7 @@
       "label": "Heihachi Edajima Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1254,7 +1254,7 @@
       "label": "Heihachi Edajima Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1270,7 +1270,7 @@
       "label": "Heihachi Edajima Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1286,7 +1286,7 @@
       "label": "Heihachi Edajima Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1302,7 +1302,7 @@
       "label": "Heihachi Edajima Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1318,9 +1318,9 @@
       "label": "Heihachi Edajima Kick Ender"
     },
     "cmd:f+2": {
-      "startupFrames": 15,
-      "activeFrames": 8,
-      "recoveryFrames": 7,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1333,9 +1333,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1348,9 +1348,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1363,9 +1363,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 15,
-      "activeFrames": 8,
-      "recoveryFrames": 7,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1378,9 +1378,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1394,7 +1394,10 @@
     },
     "cmd:1+4": {
       "label": "Long Principal Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21
     }
   },
   "effects": [],

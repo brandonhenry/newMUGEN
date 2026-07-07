@@ -57,6 +57,7 @@ import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
+import { sanitizeMoveProjectiles, sanitizeProjectiles } from './lib/projectiles';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/stageLoader';
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
@@ -1466,6 +1467,8 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
   const getupFrameOverrides = sanitizeGetupFrameOverrides(character.getupFrameOverrides ?? {});
   const effects = sanitizeEffects(character.effects ?? []);
   const moveEffects = sanitizeMoveEffects(character.moveEffects ?? {});
+  const projectiles = sanitizeProjectiles(character.projectiles ?? []);
+  const moveProjectiles = sanitizeMoveProjectiles(character.moveProjectiles ?? {});
   const modelScale = normalizeCharacterModelScale(character.modelScale, character.scale);
   const response = await fetch('/__kore/dev/save-character-manifest', {
     method: 'POST',
@@ -1488,6 +1491,8 @@ async function saveCharacterManifestToDev(character: CharacterDefinition) {
       getupFrameOverrides,
       effects,
       moveEffects,
+      projectiles,
+      moveProjectiles,
       spriteFrameEdits: character.spriteFrameEdits ?? {},
       spriteSheets: getCharacterSpriteSheets(character),
       voxelProfile: character.voxelProfile ?? 'image-source',

@@ -435,9 +435,9 @@
       "id": "jab",
       "label": "Quick Kunai Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -477,9 +477,9 @@
       "id": "kick",
       "label": "Low Shinobi Kick",
       "input": "kick",
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -519,9 +519,9 @@
       "id": "heavy",
       "label": "Kunai Body Cut",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -561,9 +561,9 @@
       "id": "special",
       "label": "Chakra Arc Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -628,9 +628,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -647,9 +647,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -666,9 +666,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 22,
-      "activeFrames": 9,
-      "recoveryFrames": 11,
+      "startupFrames": 24,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -685,9 +685,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 10,
-      "activeFrames": 18,
-      "recoveryFrames": 18,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -702,9 +702,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 9,
-      "activeFrames": 31,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -720,9 +720,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 17,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 26,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -742,9 +742,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 19,
-      "activeFrames": 18,
-      "recoveryFrames": 18,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -760,9 +760,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 8,
-      "activeFrames": 24,
-      "recoveryFrames": 10,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -777,9 +777,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 15,
-      "activeFrames": 12,
-      "recoveryFrames": 2,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -797,7 +797,7 @@
     "cmd:FC+2": {
       "startupFrames": 17,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 26,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -814,9 +814,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -832,9 +832,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 6,
-      "activeFrames": 7,
-      "recoveryFrames": 14,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -851,9 +851,9 @@
       "cancelable": false
     },
     "cmd:2+3": {
-      "startupFrames": 23,
-      "activeFrames": 9,
-      "recoveryFrames": 11,
+      "startupFrames": 25,
+      "activeFrames": 3,
+      "recoveryFrames": 30,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -872,9 +872,9 @@
       "jumpBeforeMove": true
     },
     "cmd:2+4": {
-      "startupFrames": 27,
-      "activeFrames": 15,
-      "recoveryFrames": 6,
+      "startupFrames": 25,
+      "activeFrames": 3,
+      "recoveryFrames": 30,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -890,9 +890,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 28,
-      "activeFrames": 27,
-      "recoveryFrames": 1,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -908,9 +908,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 18,
-      "activeFrames": 36,
-      "recoveryFrames": 6,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -926,7 +926,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -942,7 +942,7 @@
       "label": "Kakashi Hatake Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -958,7 +958,7 @@
       "label": "Kakashi Hatake Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -974,7 +974,7 @@
       "label": "Kakashi Hatake Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -990,7 +990,7 @@
       "label": "Kakashi Hatake Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1006,7 +1006,7 @@
       "label": "Kakashi Hatake Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1022,7 +1022,7 @@
       "label": "Kakashi Hatake Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1038,7 +1038,7 @@
       "label": "Kakashi Hatake Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1054,7 +1054,7 @@
       "label": "Kakashi Hatake Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1070,7 +1070,7 @@
       "label": "Kakashi Hatake Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1086,7 +1086,7 @@
       "label": "Kakashi Hatake Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1102,7 +1102,7 @@
       "label": "Kakashi Hatake Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1118,7 +1118,7 @@
       "label": "Kakashi Hatake Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1134,7 +1134,7 @@
       "label": "Kakashi Hatake Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1150,7 +1150,7 @@
       "label": "Kakashi Hatake Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1166,7 +1166,7 @@
       "label": "Kakashi Hatake Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1182,7 +1182,7 @@
       "label": "Kakashi Hatake Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1198,7 +1198,7 @@
       "label": "Kakashi Hatake Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1214,7 +1214,7 @@
       "label": "Kakashi Hatake Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1230,7 +1230,7 @@
       "label": "Kakashi Hatake Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1246,7 +1246,7 @@
       "label": "Kakashi Hatake Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1262,7 +1262,7 @@
       "label": "Kakashi Hatake Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1278,7 +1278,7 @@
       "label": "Kakashi Hatake Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1294,7 +1294,7 @@
       "label": "Kakashi Hatake Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1310,7 +1310,7 @@
       "label": "Kakashi Hatake Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1326,7 +1326,7 @@
       "label": "Kakashi Hatake Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1342,7 +1342,7 @@
       "label": "Kakashi Hatake Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1358,7 +1358,7 @@
       "label": "Kakashi Hatake Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1374,7 +1374,7 @@
       "label": "Kakashi Hatake Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1390,9 +1390,9 @@
       "label": "Kakashi Hatake Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 13,
-      "activeFrames": 5,
-      "recoveryFrames": 25,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "onBlockFrames": -13,
       "onHitFrames": 14,
       "onCounterHitFrames": 21,
@@ -1404,9 +1404,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+2": {
-      "startupFrames": 16,
-      "activeFrames": 5,
-      "recoveryFrames": 10,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1419,9 +1419,9 @@
       "cancelable": false
     },
     "cmd:f+3": {
-      "startupFrames": 17,
-      "activeFrames": 17,
-      "recoveryFrames": 8,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1434,9 +1434,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 11,
-      "activeFrames": 5,
-      "recoveryFrames": 10,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1449,9 +1449,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 17,
-      "activeFrames": 17,
-      "recoveryFrames": 8,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1464,9 +1464,9 @@
       "cancelable": false
     },
     "cmd:d/f+3": {
-      "startupFrames": 17,
-      "activeFrames": 17,
-      "recoveryFrames": 8,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1479,9 +1479,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 11,
-      "activeFrames": 5,
-      "recoveryFrames": 10,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1494,9 +1494,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 17,
-      "activeFrames": 17,
-      "recoveryFrames": 8,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1509,9 +1509,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 16,
-      "activeFrames": 5,
-      "recoveryFrames": 10,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1524,9 +1524,9 @@
       "cancelable": false
     },
     "cmd:SS+3": {
-      "startupFrames": 17,
-      "activeFrames": 17,
-      "recoveryFrames": 8,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1539,9 +1539,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 11,
-      "activeFrames": 5,
-      "recoveryFrames": 10,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,

@@ -403,9 +403,9 @@
       "id": "jab",
       "label": "Quick Zabimaru Swipe",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -445,9 +445,9 @@
       "id": "kick",
       "label": "Low Zabimaru Sweep",
       "input": "kick",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -487,9 +487,9 @@
       "id": "heavy",
       "label": "Zabimaru Body Slash",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -529,9 +529,9 @@
       "id": "special",
       "label": "Zabimaru Driving Cut",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -596,9 +596,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -615,9 +615,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 15,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -634,9 +634,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 0,
-      "activeFrames": 36,
-      "recoveryFrames": 9,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -652,9 +652,9 @@
       "tracking": "medium"
     },
     "kickright": {
-      "startupFrames": 5,
-      "activeFrames": 37,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -670,9 +670,9 @@
       "tracking": "medium"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -689,9 +689,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -712,9 +712,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 6,
-      "activeFrames": 44,
-      "recoveryFrames": 5,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -735,9 +735,9 @@
       "jumpBeforeMove": true
     },
     "cmd:WS+4": {
-      "startupFrames": 0,
-      "activeFrames": 38,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -753,9 +753,9 @@
       "tracking": "medium"
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 25,
-      "recoveryFrames": 4,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -772,9 +772,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -792,9 +792,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 33,
-      "activeFrames": 14,
-      "recoveryFrames": 11,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -811,9 +811,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -830,9 +830,9 @@
       "tracking": "medium"
     },
     "cmd:2+3": {
-      "startupFrames": 17,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -5,
@@ -848,9 +848,9 @@
       "tracking": "medium"
     },
     "cmd:2+4": {
-      "startupFrames": 24,
-      "activeFrames": 23,
-      "recoveryFrames": 1,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -867,9 +867,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 14,
-      "activeFrames": 41,
-      "recoveryFrames": 1,
+      "startupFrames": 23,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -886,9 +886,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 0,
-      "activeFrames": 48,
-      "recoveryFrames": 12,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -905,7 +905,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -921,7 +921,7 @@
       "label": "Renji Abarai Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -937,7 +937,7 @@
       "label": "Renji Abarai Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -953,7 +953,7 @@
       "label": "Renji Abarai Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -969,7 +969,7 @@
       "label": "Renji Abarai Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -985,7 +985,7 @@
       "label": "Renji Abarai Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1001,7 +1001,7 @@
       "label": "Renji Abarai Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1017,7 +1017,7 @@
       "label": "Renji Abarai Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1033,7 +1033,7 @@
       "label": "Renji Abarai Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1049,7 +1049,7 @@
       "label": "Renji Abarai Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1065,7 +1065,7 @@
       "label": "Renji Abarai Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1081,7 +1081,7 @@
       "label": "Renji Abarai Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1097,7 +1097,7 @@
       "label": "Renji Abarai Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1113,7 +1113,7 @@
       "label": "Renji Abarai Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1129,7 +1129,7 @@
       "label": "Renji Abarai Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1145,7 +1145,7 @@
       "label": "Renji Abarai Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1161,7 +1161,7 @@
       "label": "Renji Abarai Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1177,7 +1177,7 @@
       "label": "Renji Abarai Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1193,7 +1193,7 @@
       "label": "Renji Abarai Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1209,7 +1209,7 @@
       "label": "Renji Abarai Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1225,7 +1225,7 @@
       "label": "Renji Abarai Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1241,7 +1241,7 @@
       "label": "Renji Abarai Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1257,7 +1257,7 @@
       "label": "Renji Abarai Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1273,7 +1273,7 @@
       "label": "Renji Abarai Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1289,7 +1289,7 @@
       "label": "Renji Abarai Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1305,7 +1305,7 @@
       "label": "Renji Abarai Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1321,7 +1321,7 @@
       "label": "Renji Abarai Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1337,7 +1337,7 @@
       "label": "Renji Abarai Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1353,7 +1353,7 @@
       "label": "Renji Abarai Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1369,9 +1369,9 @@
       "label": "Renji Abarai Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 4,
+      "startupFrames": 30,
       "activeFrames": 4,
-      "recoveryFrames": 35,
+      "recoveryFrames": 36,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1385,9 +1385,9 @@
       "knockdown": true
     },
     "cmd:f+2": {
-      "startupFrames": 15,
-      "activeFrames": 8,
-      "recoveryFrames": 7,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1401,9 +1401,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 6,
-      "activeFrames": 5,
-      "recoveryFrames": 15,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1417,9 +1417,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 6,
-      "activeFrames": 5,
-      "recoveryFrames": 15,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1433,9 +1433,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 15,
-      "activeFrames": 8,
-      "recoveryFrames": 7,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1449,9 +1449,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 6,
-      "activeFrames": 5,
-      "recoveryFrames": 15,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,

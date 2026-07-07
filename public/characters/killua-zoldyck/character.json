@@ -392,9 +392,9 @@
       "id": "jab",
       "label": "Quick Assassin Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -475,9 +475,9 @@
       "id": "heavy",
       "label": "Assassin Palm Cut",
       "input": "heavy",
-      "startupFrames": 13,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 18,
+      "recoveryFrames": 20,
       "damage": 9,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -517,7 +517,7 @@
       "id": "special",
       "label": "Killua Zoldyck Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
@@ -583,9 +583,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -602,9 +602,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 12,
-      "activeFrames": 4,
-      "recoveryFrames": 18,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -655,9 +655,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 10,
-      "activeFrames": 32,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -674,9 +674,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 18,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 28,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -697,9 +697,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 6,
-      "activeFrames": 22,
-      "recoveryFrames": 27,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -716,9 +716,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 18,
-      "activeFrames": 9,
-      "recoveryFrames": 17,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -734,9 +734,9 @@
       "tracking": "medium"
     },
     "cmd:FC+1": {
-      "startupFrames": 21,
-      "activeFrames": 20,
-      "recoveryFrames": 1,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -753,9 +753,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
+      "startupFrames": 18,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 28,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -773,9 +773,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -792,9 +792,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -811,9 +811,9 @@
       "tracking": "medium"
     },
     "cmd:2+3": {
-      "startupFrames": 30,
-      "activeFrames": 11,
-      "recoveryFrames": 4,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -830,8 +830,8 @@
     },
     "cmd:2+4": {
       "startupFrames": 27,
-      "activeFrames": 15,
-      "recoveryFrames": 6,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -866,9 +866,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 7,
-      "activeFrames": 20,
-      "recoveryFrames": 33,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -885,7 +885,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -901,7 +901,7 @@
       "label": "Killua Zoldyck Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -917,7 +917,7 @@
       "label": "Killua Zoldyck Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -933,7 +933,7 @@
       "label": "Killua Zoldyck Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -949,7 +949,7 @@
       "label": "Killua Zoldyck Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -965,7 +965,7 @@
       "label": "Killua Zoldyck Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -981,7 +981,7 @@
       "label": "Killua Zoldyck Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -997,7 +997,7 @@
       "label": "Killua Zoldyck Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1013,7 +1013,7 @@
       "label": "Killua Zoldyck Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1029,7 +1029,7 @@
       "label": "Killua Zoldyck Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1045,7 +1045,7 @@
       "label": "Killua Zoldyck Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1061,7 +1061,7 @@
       "label": "Killua Zoldyck Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1077,7 +1077,7 @@
       "label": "Killua Zoldyck Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1093,7 +1093,7 @@
       "label": "Killua Zoldyck Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1109,7 +1109,7 @@
       "label": "Killua Zoldyck Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1125,7 +1125,7 @@
       "label": "Killua Zoldyck Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1141,7 +1141,7 @@
       "label": "Killua Zoldyck Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1157,7 +1157,7 @@
       "label": "Killua Zoldyck Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1173,7 +1173,7 @@
       "label": "Killua Zoldyck Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1189,7 +1189,7 @@
       "label": "Killua Zoldyck Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1205,7 +1205,7 @@
       "label": "Killua Zoldyck Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1221,7 +1221,7 @@
       "label": "Killua Zoldyck Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1237,7 +1237,7 @@
       "label": "Killua Zoldyck Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1253,7 +1253,7 @@
       "label": "Killua Zoldyck Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1269,7 +1269,7 @@
       "label": "Killua Zoldyck Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1285,7 +1285,7 @@
       "label": "Killua Zoldyck Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1301,7 +1301,7 @@
       "label": "Killua Zoldyck Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1317,7 +1317,7 @@
       "label": "Killua Zoldyck Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1333,7 +1333,7 @@
       "label": "Killua Zoldyck Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1349,9 +1349,9 @@
       "label": "Killua Zoldyck Kick Ender"
     },
     "cmd:f+2": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1365,9 +1365,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 13,
-      "activeFrames": 7,
-      "recoveryFrames": 6,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1381,9 +1381,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 13,
-      "activeFrames": 7,
-      "recoveryFrames": 6,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1397,9 +1397,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1413,9 +1413,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 13,
-      "activeFrames": 7,
-      "recoveryFrames": 6,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1431,7 +1431,10 @@
     "cmd:1+4": {
       "label": "Heavy Palm Cut",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20
     }
   },
   "effects": [],

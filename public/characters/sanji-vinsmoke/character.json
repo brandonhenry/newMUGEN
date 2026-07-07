@@ -451,7 +451,7 @@
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 14,
+      "recoveryFrames": 15,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -491,9 +491,9 @@
       "id": "kick",
       "label": "Low Table Kick",
       "input": "kick",
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "damage": 12,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -533,9 +533,9 @@
       "id": "heavy",
       "label": "Black Leg Rush",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -575,9 +575,9 @@
       "id": "special",
       "label": "Heavy Chef Kick",
       "input": "special",
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
       "damage": 13,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -642,9 +642,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 0,
-      "activeFrames": 21,
-      "recoveryFrames": 5,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -660,9 +660,9 @@
       "tracking": "medium"
     },
     "jabright": {
-      "startupFrames": 0,
-      "activeFrames": 30,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -678,9 +678,9 @@
       "tracking": "medium"
     },
     "kickleft": {
-      "startupFrames": 25,
-      "activeFrames": 10,
-      "recoveryFrames": 13,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -697,9 +697,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 22,
-      "activeFrames": 11,
-      "recoveryFrames": 12,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -716,9 +716,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 26,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -734,9 +734,9 @@
       "tracking": "medium"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
-      "activeFrames": 29,
-      "recoveryFrames": 1,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -756,9 +756,9 @@
       "tracking": "medium"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
+      "startupFrames": 21,
       "activeFrames": 4,
-      "recoveryFrames": 29,
+      "recoveryFrames": 28,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -779,9 +779,9 @@
       "jumpBeforeMove": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -801,9 +801,9 @@
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
-      "startupFrames": 11,
-      "activeFrames": 17,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -819,9 +819,9 @@
       "tracking": "medium"
     },
     "cmd:FC+2": {
-      "startupFrames": 16,
-      "activeFrames": 30,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -838,9 +838,9 @@
       "tracking": "medium"
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -880,9 +880,9 @@
       "cancelable": false
     },
     "cmd:2+3": {
-      "startupFrames": 29,
-      "activeFrames": 10,
-      "recoveryFrames": 4,
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -901,9 +901,9 @@
       "cancelable": false
     },
     "cmd:2+4": {
-      "startupFrames": 12,
-      "activeFrames": 6,
-      "recoveryFrames": 3,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -928,9 +928,9 @@
       "jumpBeforeMove": true
     },
     "cmd:3+4": {
-      "startupFrames": 12,
-      "activeFrames": 7,
-      "recoveryFrames": 12,
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -952,9 +952,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 18,
-      "activeFrames": 36,
-      "recoveryFrames": 6,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -971,7 +971,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -987,7 +987,7 @@
       "label": "Sanji Vinsmoke Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1003,7 +1003,7 @@
       "label": "Sanji Vinsmoke Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1019,7 +1019,7 @@
       "label": "Sanji Vinsmoke Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1035,7 +1035,7 @@
       "label": "Sanji Vinsmoke Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1051,7 +1051,7 @@
       "label": "Sanji Vinsmoke Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1067,7 +1067,7 @@
       "label": "Sanji Vinsmoke Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1083,7 +1083,7 @@
       "label": "Sanji Vinsmoke Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1099,7 +1099,7 @@
       "label": "Sanji Vinsmoke Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1115,7 +1115,7 @@
       "label": "Sanji Vinsmoke Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1131,7 +1131,7 @@
       "label": "Sanji Vinsmoke Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1147,7 +1147,7 @@
       "label": "Sanji Vinsmoke Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1163,7 +1163,7 @@
       "label": "Sanji Vinsmoke Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1179,7 +1179,7 @@
       "label": "Sanji Vinsmoke Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1195,7 +1195,7 @@
       "label": "Sanji Vinsmoke Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1211,7 +1211,7 @@
       "label": "Sanji Vinsmoke Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1227,7 +1227,7 @@
       "label": "Sanji Vinsmoke Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1243,7 +1243,7 @@
       "label": "Sanji Vinsmoke Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1259,7 +1259,7 @@
       "label": "Sanji Vinsmoke Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1275,7 +1275,7 @@
       "label": "Sanji Vinsmoke Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1291,7 +1291,7 @@
       "label": "Sanji Vinsmoke Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1307,7 +1307,7 @@
       "label": "Sanji Vinsmoke Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1323,7 +1323,7 @@
       "label": "Sanji Vinsmoke Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1339,7 +1339,7 @@
       "label": "Sanji Vinsmoke Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1355,7 +1355,7 @@
       "label": "Sanji Vinsmoke Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1371,7 +1371,7 @@
       "label": "Sanji Vinsmoke Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1387,7 +1387,7 @@
       "label": "Sanji Vinsmoke Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1403,7 +1403,7 @@
       "label": "Sanji Vinsmoke Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1419,7 +1419,7 @@
       "label": "Sanji Vinsmoke Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1435,9 +1435,9 @@
       "label": "Sanji Vinsmoke Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 30,
-      "activeFrames": 8,
-      "recoveryFrames": 7,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1455,9 +1455,9 @@
       "jumpBeforeMove": true
     },
     "cmd:f+3": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 24,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1471,9 +1471,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 24,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1487,9 +1487,9 @@
       "cancelable": false
     },
     "cmd:d/f+3": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 24,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1503,9 +1503,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 18,
-      "activeFrames": 12,
-      "recoveryFrames": 18,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1519,9 +1519,9 @@
       "cancelable": false
     },
     "cmd:SS+3": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 24,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1535,9 +1535,9 @@
       "cancelable": false
     },
     "cmd:SS+4": {
-      "startupFrames": 15,
-      "activeFrames": 15,
-      "recoveryFrames": 15,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1554,9 +1554,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+4": {
-      "startupFrames": 15,
-      "activeFrames": 15,
-      "recoveryFrames": 15,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,

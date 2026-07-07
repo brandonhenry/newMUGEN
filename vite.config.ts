@@ -1877,6 +1877,7 @@ function sanitizeGetupFrameOverrides(overrides: Record<string, unknown>) {
 function sanitizeMoveOverride(override: Record<string, unknown>) {
   const allowed = new Set([
     'label',
+    'description',
     'startupFrames',
     'activeFrames',
     'recoveryFrames',
@@ -1886,6 +1887,8 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     'onBlockFrames',
     'onHitFrames',
     'onCounterHitFrames',
+    'counterHit',
+    'counterHitStunBonusFrames',
     'whiffRecoveryFrames',
     'range',
     'forwardForce',
@@ -1904,6 +1907,7 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
     'tornado',
     'throwCapture',
     'endsInCrouch',
+    'holdable',
     'cancelable',
     'tracking',
     'armorStartFrame',
@@ -1919,8 +1923,8 @@ function sanitizeMoveOverride(override: Record<string, unknown>) {
   const next = Object.fromEntries(
     Object.entries(override).filter(([key, value]) => {
       if (!allowed.has(key)) return false;
-      if (key === 'label' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
-      if (key === 'knockdown' || key === 'tornado' || key === 'throwCapture' || key === 'endsInCrouch' || key === 'cancelable' || key === 'jumpBeforeMove' || key === 'usesKi' || key === 'healsHp') {
+      if (key === 'label' || key === 'description' || key === 'hitLevel' || key === 'tracking') return typeof value === 'string';
+      if (key === 'knockdown' || key === 'tornado' || key === 'throwCapture' || key === 'endsInCrouch' || key === 'holdable' || key === 'cancelable' || key === 'counterHit' || key === 'jumpBeforeMove' || key === 'usesKi' || key === 'healsHp') {
         return typeof value === 'boolean';
       }
       if (key === 'cancelWindows') return Array.isArray(value);

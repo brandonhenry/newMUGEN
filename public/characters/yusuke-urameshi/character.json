@@ -380,7 +380,7 @@
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 14,
+      "recoveryFrames": 15,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -420,9 +420,9 @@
       "id": "kick",
       "label": "Low Street Sweep",
       "input": "kick",
-      "startupFrames": 16,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 24,
+      "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -462,9 +462,9 @@
       "id": "heavy",
       "label": "Spirit Detective Body Blow",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -504,9 +504,9 @@
       "id": "special",
       "label": "Heavy Street Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -571,9 +571,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 10,
-      "recoveryFrames": 5,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -589,9 +589,9 @@
       "tracking": "medium"
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -608,9 +608,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 7,
-      "activeFrames": 19,
-      "recoveryFrames": 19,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -626,9 +626,9 @@
       "tracking": "medium"
     },
     "kickright": {
-      "startupFrames": 18,
-      "activeFrames": 17,
-      "recoveryFrames": 8,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -644,9 +644,9 @@
       "tracking": "medium"
     },
     "cmd:f+1": {
-      "startupFrames": 17,
-      "activeFrames": 16,
-      "recoveryFrames": 11,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -662,9 +662,9 @@
       "tracking": "medium"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 17,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 26,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -685,9 +685,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 6,
-      "activeFrames": 27,
-      "recoveryFrames": 22,
+      "startupFrames": 27,
+      "activeFrames": 7,
+      "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -705,9 +705,9 @@
       "jumpBeforeMove": true
     },
     "cmd:WS+4": {
-      "startupFrames": 16,
-      "activeFrames": 11,
-      "recoveryFrames": 15,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -723,9 +723,9 @@
       "tracking": "medium"
     },
     "cmd:FC+1": {
-      "startupFrames": 10,
-      "activeFrames": 10,
-      "recoveryFrames": 9,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -741,9 +741,9 @@
       "tracking": "medium"
     },
     "cmd:FC+2": {
-      "startupFrames": 32,
-      "activeFrames": 14,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 2,
+      "recoveryFrames": 22,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -761,9 +761,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -783,9 +783,9 @@
       "jumpBeforeMove": true
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -802,9 +802,9 @@
       "tracking": "medium"
     },
     "cmd:2+3": {
-      "startupFrames": 29,
-      "activeFrames": 10,
-      "recoveryFrames": 4,
+      "startupFrames": 28,
+      "activeFrames": 3,
+      "recoveryFrames": 33,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -821,8 +821,8 @@
     },
     "cmd:2+4": {
       "startupFrames": 27,
-      "activeFrames": 15,
-      "recoveryFrames": 6,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -842,9 +842,9 @@
       "jumpBeforeMove": true
     },
     "cmd:3+4": {
-      "startupFrames": 12,
-      "activeFrames": 43,
-      "recoveryFrames": 1,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -861,9 +861,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 18,
-      "activeFrames": 36,
-      "recoveryFrames": 6,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -880,7 +880,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -896,7 +896,7 @@
       "label": "Yusuke Urameshi Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -912,7 +912,7 @@
       "label": "Yusuke Urameshi Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -928,7 +928,7 @@
       "label": "Yusuke Urameshi Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -944,7 +944,7 @@
       "label": "Yusuke Urameshi Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -960,7 +960,7 @@
       "label": "Yusuke Urameshi Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -976,7 +976,7 @@
       "label": "Yusuke Urameshi Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -992,7 +992,7 @@
       "label": "Yusuke Urameshi Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1008,7 +1008,7 @@
       "label": "Yusuke Urameshi Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1024,7 +1024,7 @@
       "label": "Yusuke Urameshi Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1040,7 +1040,7 @@
       "label": "Yusuke Urameshi Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1056,7 +1056,7 @@
       "label": "Yusuke Urameshi Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1072,7 +1072,7 @@
       "label": "Yusuke Urameshi Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1088,7 +1088,7 @@
       "label": "Yusuke Urameshi Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1104,7 +1104,7 @@
       "label": "Yusuke Urameshi Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1120,7 +1120,7 @@
       "label": "Yusuke Urameshi Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1136,7 +1136,7 @@
       "label": "Yusuke Urameshi Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1152,7 +1152,7 @@
       "label": "Yusuke Urameshi Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1168,7 +1168,7 @@
       "label": "Yusuke Urameshi Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1184,7 +1184,7 @@
       "label": "Yusuke Urameshi Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1200,7 +1200,7 @@
       "label": "Yusuke Urameshi Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1216,7 +1216,7 @@
       "label": "Yusuke Urameshi Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1232,7 +1232,7 @@
       "label": "Yusuke Urameshi Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1248,7 +1248,7 @@
       "label": "Yusuke Urameshi Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1264,7 +1264,7 @@
       "label": "Yusuke Urameshi Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1280,7 +1280,7 @@
       "label": "Yusuke Urameshi Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1296,7 +1296,7 @@
       "label": "Yusuke Urameshi Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1312,7 +1312,7 @@
       "label": "Yusuke Urameshi Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1328,7 +1328,7 @@
       "label": "Yusuke Urameshi Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1344,9 +1344,9 @@
       "label": "Yusuke Urameshi Kick Ender"
     },
     "cmd:f+2": {
-      "startupFrames": 11,
-      "activeFrames": 5,
-      "recoveryFrames": 15,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1360,9 +1360,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 11,
-      "activeFrames": 5,
-      "recoveryFrames": 15,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1378,12 +1378,18 @@
     "cmd:1+2+3": {
       "label": "Low Spirit Sweep",
       "hitLevel": "low",
-      "tracking": "medium"
+      "tracking": "medium",
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22
     },
     "cmd:1+4": {
       "label": "Street Arc Kick",
       "hitLevel": "mid",
-      "tracking": "medium"
+      "tracking": "medium",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

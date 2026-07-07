@@ -453,9 +453,9 @@
       "id": "jab",
       "label": "Quick Chakra Jab",
       "input": "jab",
-      "startupFrames": 12,
-      "activeFrames": 3,
-      "recoveryFrames": 17,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 7,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -495,9 +495,9 @@
       "id": "kick",
       "label": "Low Heel Sweep",
       "input": "kick",
-      "startupFrames": 21,
+      "startupFrames": 30,
       "activeFrames": 4,
-      "recoveryFrames": 28,
+      "recoveryFrames": 36,
       "damage": 13,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -537,7 +537,7 @@
       "id": "heavy",
       "label": "Sakura Haruno Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 17,
       "damage": 8,
@@ -578,7 +578,7 @@
       "id": "special",
       "label": "Sakura Haruno Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 12,
@@ -644,9 +644,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 5,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -680,9 +680,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 28,
-      "activeFrames": 11,
-      "recoveryFrames": 14,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -716,9 +716,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -735,7 +735,7 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 15,
@@ -774,9 +774,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -791,9 +791,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
-      "activeFrames": 15,
-      "recoveryFrames": 2,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -810,9 +810,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 21,
-      "activeFrames": 20,
-      "recoveryFrames": 6,
+      "startupFrames": 25,
+      "activeFrames": 6,
+      "recoveryFrames": 32,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -829,9 +829,9 @@
       "tracking": "medium"
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -847,9 +847,9 @@
       "tracking": "medium"
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 25,
+      "activeFrames": 6,
+      "recoveryFrames": 32,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -867,9 +867,9 @@
       "cancelable": false
     },
     "cmd:2+3": {
-      "startupFrames": 29,
-      "activeFrames": 10,
-      "recoveryFrames": 4,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -890,9 +890,9 @@
       "jumpBeforeMove": true
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 27,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -909,9 +909,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 12,
-      "activeFrames": 39,
-      "recoveryFrames": 5,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -928,9 +928,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 24,
-      "recoveryFrames": 12,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -947,7 +947,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -963,7 +963,7 @@
       "label": "Sakura Haruno Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -979,7 +979,7 @@
       "label": "Sakura Haruno Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -995,7 +995,7 @@
       "label": "Sakura Haruno Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1011,7 +1011,7 @@
       "label": "Sakura Haruno Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1027,7 +1027,7 @@
       "label": "Sakura Haruno Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1043,7 +1043,7 @@
       "label": "Sakura Haruno Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1059,7 +1059,7 @@
       "label": "Sakura Haruno Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1075,7 +1075,7 @@
       "label": "Sakura Haruno Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1091,7 +1091,7 @@
       "label": "Sakura Haruno Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1107,7 +1107,7 @@
       "label": "Sakura Haruno Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1123,7 +1123,7 @@
       "label": "Sakura Haruno Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1139,7 +1139,7 @@
       "label": "Sakura Haruno Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1155,7 +1155,7 @@
       "label": "Sakura Haruno Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1171,7 +1171,7 @@
       "label": "Sakura Haruno Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1187,7 +1187,7 @@
       "label": "Sakura Haruno Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1203,7 +1203,7 @@
       "label": "Sakura Haruno Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1219,7 +1219,7 @@
       "label": "Sakura Haruno Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1235,7 +1235,7 @@
       "label": "Sakura Haruno Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1251,7 +1251,7 @@
       "label": "Sakura Haruno Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1267,7 +1267,7 @@
       "label": "Sakura Haruno Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1283,7 +1283,7 @@
       "label": "Sakura Haruno Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1299,7 +1299,7 @@
       "label": "Sakura Haruno Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1315,7 +1315,7 @@
       "label": "Sakura Haruno Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1331,7 +1331,7 @@
       "label": "Sakura Haruno Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1347,7 +1347,7 @@
       "label": "Sakura Haruno Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1363,7 +1363,7 @@
       "label": "Sakura Haruno Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1379,7 +1379,7 @@
       "label": "Sakura Haruno Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1395,7 +1395,7 @@
       "label": "Sakura Haruno Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1411,9 +1411,9 @@
       "label": "Sakura Haruno Kick Ender"
     },
     "cmd:d+3+4": {
-      "startupFrames": 8,
-      "activeFrames": 16,
-      "recoveryFrames": 28,
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1434,9 +1434,9 @@
       "jumpBeforeMove": true
     },
     "cmd:f+3": {
-      "startupFrames": 9,
-      "activeFrames": 36,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1453,9 +1453,9 @@
       "jumpBeforeMove": true
     },
     "cmd:d+1": {
-      "startupFrames": 21,
-      "activeFrames": 3,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "onBlockFrames": 0,
       "onHitFrames": 13,
       "onCounterHitFrames": 17,
@@ -1469,9 +1469,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 9,
-      "activeFrames": 36,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1488,9 +1488,9 @@
       "jumpBeforeMove": true
     },
     "cmd:d/f+3": {
-      "startupFrames": 9,
-      "activeFrames": 36,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1507,9 +1507,9 @@
       "jumpBeforeMove": true
     },
     "cmd:qcf+1": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "onBlockFrames": 0,
       "onHitFrames": 13,
       "onCounterHitFrames": 17,
@@ -1523,9 +1523,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 9,
-      "activeFrames": 36,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1542,9 +1542,9 @@
       "jumpBeforeMove": true
     },
     "cmd:SS+3": {
-      "startupFrames": 9,
-      "activeFrames": 36,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "onBlockFrames": -7,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1561,9 +1561,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+1": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 8,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "onBlockFrames": 0,
       "onHitFrames": 13,
       "onCounterHitFrames": 17,

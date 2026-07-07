@@ -414,9 +414,9 @@
       "id": "jab",
       "label": "Quick Pegasus Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -457,8 +457,8 @@
       "label": "Low Pegasus Kick",
       "input": "kick",
       "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -498,9 +498,9 @@
       "id": "heavy",
       "label": "Pegasus Body Punch",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -540,9 +540,9 @@
       "id": "special",
       "label": "Golden Pegasus Rush",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -607,9 +607,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -626,9 +626,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 15,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -645,9 +645,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 9,
-      "activeFrames": 14,
-      "recoveryFrames": 17,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -664,9 +664,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 0,
-      "activeFrames": 42,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -682,9 +682,9 @@
       "tracking": "medium"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -701,9 +701,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -724,9 +724,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 19,
-      "activeFrames": 18,
-      "recoveryFrames": 18,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -743,9 +743,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 0,
-      "activeFrames": 28,
-      "recoveryFrames": 14,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -761,9 +761,9 @@
       "tracking": "medium"
     },
     "cmd:FC+1": {
-      "startupFrames": 4,
-      "activeFrames": 24,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -780,9 +780,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 25,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -800,9 +800,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -819,9 +819,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 5,
-      "activeFrames": 6,
-      "recoveryFrames": 10,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -840,9 +840,9 @@
       "cancelable": false
     },
     "cmd:2+3": {
-      "startupFrames": 29,
-      "activeFrames": 10,
-      "recoveryFrames": 4,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -859,9 +859,9 @@
       "cancelable": false
     },
     "cmd:2+4": {
-      "startupFrames": 22,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 29,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -878,9 +878,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 0,
-      "activeFrames": 50,
-      "recoveryFrames": 6,
+      "startupFrames": 24,
+      "activeFrames": 5,
+      "recoveryFrames": 33,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -897,9 +897,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 20,
-      "activeFrames": 27,
-      "recoveryFrames": 13,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -916,7 +916,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -932,7 +932,7 @@
       "label": "Pegasus Seiya Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -948,7 +948,7 @@
       "label": "Pegasus Seiya Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -964,7 +964,7 @@
       "label": "Pegasus Seiya Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -980,7 +980,7 @@
       "label": "Pegasus Seiya Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -996,7 +996,7 @@
       "label": "Pegasus Seiya Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1012,7 +1012,7 @@
       "label": "Pegasus Seiya Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1028,7 +1028,7 @@
       "label": "Pegasus Seiya Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1044,7 +1044,7 @@
       "label": "Pegasus Seiya Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1060,7 +1060,7 @@
       "label": "Pegasus Seiya Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1076,7 +1076,7 @@
       "label": "Pegasus Seiya Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1092,7 +1092,7 @@
       "label": "Pegasus Seiya Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1108,7 +1108,7 @@
       "label": "Pegasus Seiya Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1124,7 +1124,7 @@
       "label": "Pegasus Seiya Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1140,7 +1140,7 @@
       "label": "Pegasus Seiya Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1156,7 +1156,7 @@
       "label": "Pegasus Seiya Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1172,7 +1172,7 @@
       "label": "Pegasus Seiya Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1188,7 +1188,7 @@
       "label": "Pegasus Seiya Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1204,7 +1204,7 @@
       "label": "Pegasus Seiya Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1220,7 +1220,7 @@
       "label": "Pegasus Seiya Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1236,7 +1236,7 @@
       "label": "Pegasus Seiya Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1252,7 +1252,7 @@
       "label": "Pegasus Seiya Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1268,7 +1268,7 @@
       "label": "Pegasus Seiya Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1284,7 +1284,7 @@
       "label": "Pegasus Seiya Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1300,7 +1300,7 @@
       "label": "Pegasus Seiya Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1316,7 +1316,7 @@
       "label": "Pegasus Seiya Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1332,7 +1332,7 @@
       "label": "Pegasus Seiya Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1348,7 +1348,7 @@
       "label": "Pegasus Seiya Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1364,7 +1364,7 @@
       "label": "Pegasus Seiya Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1380,9 +1380,9 @@
       "label": "Pegasus Seiya Kick Ender"
     },
     "cmd:d+2": {
-      "startupFrames": 12,
-      "activeFrames": 12,
-      "recoveryFrames": 6,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "blockDamage": 1,
       "onBlockFrames": -5,
       "onHitFrames": 16,
@@ -1397,9 +1397,9 @@
       "throwCapture": true
     },
     "cmd:1+4": {
-      "startupFrames": 15,
-      "activeFrames": 27,
-      "recoveryFrames": 1,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1412,9 +1412,9 @@
       "tracking": "medium"
     },
     "cmd:f+2": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 6,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1428,9 +1428,9 @@
       "cancelable": false
     },
     "cmd:f+3": {
-      "startupFrames": 14,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1444,9 +1444,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1460,9 +1460,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 14,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1476,9 +1476,9 @@
       "cancelable": false
     },
     "cmd:d/f+3": {
-      "startupFrames": 14,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1492,9 +1492,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1508,9 +1508,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 14,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1524,9 +1524,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 18,
-      "activeFrames": 6,
-      "recoveryFrames": 6,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1540,9 +1540,9 @@
       "cancelable": false
     },
     "cmd:SS+3": {
-      "startupFrames": 14,
-      "activeFrames": 25,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1556,9 +1556,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 13,
-      "activeFrames": 12,
-      "recoveryFrames": 1,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,

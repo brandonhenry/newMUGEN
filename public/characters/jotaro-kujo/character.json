@@ -410,7 +410,7 @@
       "label": "Quick Jotaro Jab",
       "input": "jab",
       "startupFrames": 9,
-      "activeFrames": 2,
+      "activeFrames": 1,
       "recoveryFrames": 12,
       "damage": 5,
       "blockDamage": 1,
@@ -451,9 +451,9 @@
       "id": "kick",
       "label": "Low Coat Sweep",
       "input": "kick",
-      "startupFrames": 18,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 24,
+      "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -493,9 +493,9 @@
       "id": "heavy",
       "label": "Star Body Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -535,9 +535,9 @@
       "id": "special",
       "label": "Heavy Coat Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 11,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -602,9 +602,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 5,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -621,9 +621,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 15,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -640,9 +640,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 24,
-      "activeFrames": 9,
-      "recoveryFrames": 12,
+      "startupFrames": 27,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -659,9 +659,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 20,
-      "activeFrames": 10,
-      "recoveryFrames": 11,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -678,9 +678,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -696,9 +696,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -718,9 +718,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -737,9 +737,9 @@
       "cancelable": false
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -755,9 +755,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 28,
-      "recoveryFrames": 1,
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 16,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -773,9 +773,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 25,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -792,9 +792,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -810,9 +810,9 @@
       "cancelable": false
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -829,7 +829,7 @@
       "cancelable": false
     },
     "cmd:2+3": {
-      "startupFrames": 18,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
@@ -847,8 +847,8 @@
       "cancelable": false
     },
     "cmd:2+4": {
-      "startupFrames": 20,
-      "activeFrames": 3,
+      "startupFrames": 22,
+      "activeFrames": 2,
       "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
@@ -866,9 +866,9 @@
       "cancelable": false
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -885,9 +885,9 @@
       "cancelable": false
     },
     "cmd:O+2": {
-      "startupFrames": 20,
-      "activeFrames": 39,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -903,7 +903,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -919,7 +919,7 @@
       "label": "Jotaro Kujo Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -935,7 +935,7 @@
       "label": "Jotaro Kujo Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -951,7 +951,7 @@
       "label": "Jotaro Kujo Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -967,7 +967,7 @@
       "label": "Jotaro Kujo Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -983,7 +983,7 @@
       "label": "Jotaro Kujo Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -999,7 +999,7 @@
       "label": "Jotaro Kujo Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1015,7 +1015,7 @@
       "label": "Jotaro Kujo Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1031,7 +1031,7 @@
       "label": "Jotaro Kujo Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1047,7 +1047,7 @@
       "label": "Jotaro Kujo Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1063,7 +1063,7 @@
       "label": "Jotaro Kujo Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1079,7 +1079,7 @@
       "label": "Jotaro Kujo Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1095,7 +1095,7 @@
       "label": "Jotaro Kujo Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1111,7 +1111,7 @@
       "label": "Jotaro Kujo Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1127,7 +1127,7 @@
       "label": "Jotaro Kujo Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1143,7 +1143,7 @@
       "label": "Jotaro Kujo Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1159,7 +1159,7 @@
       "label": "Jotaro Kujo Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1175,7 +1175,7 @@
       "label": "Jotaro Kujo Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1191,7 +1191,7 @@
       "label": "Jotaro Kujo Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1207,7 +1207,7 @@
       "label": "Jotaro Kujo Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1223,7 +1223,7 @@
       "label": "Jotaro Kujo Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1239,7 +1239,7 @@
       "label": "Jotaro Kujo Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1255,7 +1255,7 @@
       "label": "Jotaro Kujo Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1271,7 +1271,7 @@
       "label": "Jotaro Kujo Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1287,7 +1287,7 @@
       "label": "Jotaro Kujo Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1303,7 +1303,7 @@
       "label": "Jotaro Kujo Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1319,7 +1319,7 @@
       "label": "Jotaro Kujo Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1335,7 +1335,7 @@
       "label": "Jotaro Kujo Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1351,7 +1351,7 @@
       "label": "Jotaro Kujo Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1367,9 +1367,9 @@
       "label": "Jotaro Kujo Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 14,
-      "activeFrames": 14,
-      "recoveryFrames": 13,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1382,9 +1382,9 @@
       "cancelable": false
     },
     "cmd:f+2": {
-      "startupFrames": 6,
-      "activeFrames": 6,
-      "recoveryFrames": 18,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1397,9 +1397,9 @@
       "cancelable": false
     },
     "cmd:f+3": {
-      "startupFrames": 20,
-      "activeFrames": 13,
-      "recoveryFrames": 12,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1412,9 +1412,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1427,9 +1427,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 20,
-      "activeFrames": 13,
-      "recoveryFrames": 12,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1442,9 +1442,9 @@
       "cancelable": false
     },
     "cmd:d/f+3": {
-      "startupFrames": 20,
-      "activeFrames": 13,
-      "recoveryFrames": 12,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1457,9 +1457,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1472,9 +1472,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 20,
-      "activeFrames": 13,
-      "recoveryFrames": 12,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1487,9 +1487,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 6,
-      "activeFrames": 6,
-      "recoveryFrames": 18,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1502,9 +1502,9 @@
       "cancelable": false
     },
     "cmd:SS+3": {
-      "startupFrames": 20,
-      "activeFrames": 13,
-      "recoveryFrames": 12,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1517,9 +1517,9 @@
       "cancelable": false
     },
     "cmd:SS+4": {
-      "startupFrames": 14,
-      "activeFrames": 14,
-      "recoveryFrames": 13,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1532,9 +1532,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1547,9 +1547,9 @@
       "cancelable": false
     },
     "cmd:O+4": {
-      "startupFrames": 14,
-      "activeFrames": 14,
-      "recoveryFrames": 13,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,

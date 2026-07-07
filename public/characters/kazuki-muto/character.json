@@ -420,9 +420,9 @@
       "id": "jab",
       "label": "Quick Sunlight Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -462,9 +462,9 @@
       "id": "kick",
       "label": "Low Sunlight Sweep",
       "input": "kick",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -504,9 +504,9 @@
       "id": "heavy",
       "label": "Sunlight Body Thrust",
       "input": "heavy",
-      "startupFrames": 13,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 18,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -546,9 +546,9 @@
       "id": "special",
       "label": "Sunlight Arc Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -613,9 +613,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 21,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -633,9 +633,9 @@
       "description": "Fast high spear jab with a tiny active window for checking close pressure."
     },
     "jabright": {
-      "startupFrames": 12,
-      "activeFrames": 4,
-      "recoveryFrames": 18,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -653,9 +653,9 @@
       "description": "Quick mid spear thrust with a short active window and steady recovery."
     },
     "kickleft": {
-      "startupFrames": 0,
-      "activeFrames": 41,
-      "recoveryFrames": 4,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -672,9 +672,9 @@
       "tracking": "medium"
     },
     "kickright": {
-      "startupFrames": 0,
-      "activeFrames": 45,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -691,9 +691,9 @@
       "tracking": "medium"
     },
     "cmd:f+1": {
-      "startupFrames": 5,
-      "activeFrames": 37,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -711,9 +711,9 @@
       "tracking": "medium"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -735,9 +735,9 @@
       "tracking": "weakRight"
     },
     "cmd:qcf+4": {
-      "startupFrames": 10,
-      "activeFrames": 44,
-      "recoveryFrames": 1,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -755,9 +755,9 @@
       "tracking": "medium"
     },
     "cmd:WS+4": {
-      "startupFrames": 5,
-      "activeFrames": 37,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -774,9 +774,9 @@
       "tracking": "medium"
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 41,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -794,9 +794,9 @@
       "tracking": "medium"
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -815,9 +815,9 @@
       "tracking": "weakRight"
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -839,9 +839,9 @@
       "tracking": "weakRight"
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -859,9 +859,9 @@
       "tracking": "medium"
     },
     "cmd:2+3": {
-      "startupFrames": 0,
-      "activeFrames": 44,
-      "recoveryFrames": 1,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -5,
@@ -878,9 +878,9 @@
       "tracking": "medium"
     },
     "cmd:2+4": {
-      "startupFrames": 14,
-      "activeFrames": 28,
-      "recoveryFrames": 6,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -898,9 +898,9 @@
       "tracking": "medium"
     },
     "cmd:3+4": {
-      "startupFrames": 0,
-      "activeFrames": 55,
-      "recoveryFrames": 1,
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -918,9 +918,9 @@
       "tracking": "medium"
     },
     "cmd:O+2": {
-      "startupFrames": 0,
-      "activeFrames": 54,
-      "recoveryFrames": 6,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -938,7 +938,7 @@
       "tracking": "weakRight"
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -954,7 +954,7 @@
       "label": "Kazuki Muto Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -970,7 +970,7 @@
       "label": "Kazuki Muto Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -986,7 +986,7 @@
       "label": "Kazuki Muto Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1002,7 +1002,7 @@
       "label": "Kazuki Muto Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1018,7 +1018,7 @@
       "label": "Kazuki Muto Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1034,7 +1034,7 @@
       "label": "Kazuki Muto Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1050,7 +1050,7 @@
       "label": "Kazuki Muto Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1066,7 +1066,7 @@
       "label": "Kazuki Muto Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1082,7 +1082,7 @@
       "label": "Kazuki Muto Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1098,7 +1098,7 @@
       "label": "Kazuki Muto Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1114,7 +1114,7 @@
       "label": "Kazuki Muto Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1130,7 +1130,7 @@
       "label": "Kazuki Muto Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1146,7 +1146,7 @@
       "label": "Kazuki Muto Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1162,7 +1162,7 @@
       "label": "Kazuki Muto Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1178,7 +1178,7 @@
       "label": "Kazuki Muto Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1194,7 +1194,7 @@
       "label": "Kazuki Muto Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1210,7 +1210,7 @@
       "label": "Kazuki Muto Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1226,7 +1226,7 @@
       "label": "Kazuki Muto Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1242,7 +1242,7 @@
       "label": "Kazuki Muto Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1258,7 +1258,7 @@
       "label": "Kazuki Muto Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1274,7 +1274,7 @@
       "label": "Kazuki Muto Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1290,7 +1290,7 @@
       "label": "Kazuki Muto Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1306,7 +1306,7 @@
       "label": "Kazuki Muto Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1322,7 +1322,7 @@
       "label": "Kazuki Muto Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1338,7 +1338,7 @@
       "label": "Kazuki Muto Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1354,7 +1354,7 @@
       "label": "Kazuki Muto Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1370,7 +1370,7 @@
       "label": "Kazuki Muto Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1386,7 +1386,7 @@
       "label": "Kazuki Muto Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1402,8 +1402,8 @@
       "label": "Kazuki Muto Kick Ender"
     },
     "cmd:1+4": {
-      "activeFrames": 12,
-      "recoveryFrames": 11,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "onBlockFrames": -12,
       "onHitFrames": 15,
       "onCounterHitFrames": 22,
@@ -1411,7 +1411,7 @@
       "forwardForce": 1.48,
       "forwardForceStartFrame": 18,
       "forwardForceEndFrame": 23,
-      "startupFrames": 18,
+      "startupFrames": 14,
       "label": "Grounded Lance Cut",
       "description": "Steady mid lance cut with a brief active window and grounded recovery.",
       "hitLevel": "mid",
@@ -1427,9 +1427,9 @@
       "forwardForceEndFrame": 7,
       "label": "Forward Spear Cut",
       "cancelable": false,
-      "startupFrames": 16,
-      "activeFrames": 15,
-      "recoveryFrames": 3,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "description": "Steady mid forward cut with moderate active time and quick recovery.",
       "hitLevel": "mid",
       "tracking": "weakRight"
@@ -1444,9 +1444,9 @@
       "forwardForceEndFrame": 17,
       "label": "Crouch Step Jab",
       "cancelable": false,
-      "startupFrames": 14,
-      "activeFrames": 4,
-      "recoveryFrames": 9,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "description": "Quick high jab with a short active window from a compact crouch-step poke.",
       "hitLevel": "high",
       "tracking": "medium"
@@ -1461,9 +1461,9 @@
       "forwardForceEndFrame": 17,
       "label": "Sunlight Rush Jab",
       "cancelable": false,
-      "startupFrames": 14,
-      "activeFrames": 4,
-      "recoveryFrames": 9,
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "description": "Quick high rush jab with a short active window for fast approach checks.",
       "hitLevel": "high",
       "tracking": "medium"
@@ -1478,9 +1478,9 @@
       "forwardForceEndFrame": 7,
       "label": "While-Rising Spear Cut",
       "cancelable": false,
-      "startupFrames": 16,
-      "activeFrames": 15,
-      "recoveryFrames": 3,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "description": "Steady mid while-rising cut with moderate active time and quick recovery.",
       "hitLevel": "mid",
       "tracking": "weakRight"
@@ -1495,9 +1495,9 @@
       "forwardForceEndFrame": 17,
       "label": "Overdrive Sunlight Jab",
       "cancelable": false,
-      "startupFrames": 14,
-      "activeFrames": 4,
-      "recoveryFrames": 9,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "description": "Quick high overdrive jab with a short active window and fast reset.",
       "hitLevel": "high",
       "tracking": "medium"
@@ -2788,4 +2788,5 @@
         "offsetX": 0
       }
     }
-  }}
+  }
+}

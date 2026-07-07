@@ -43,8 +43,8 @@
       "label": "Lion Combo Jab",
       "input": "jab",
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 5,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -83,9 +83,9 @@
       "id": "kick",
       "label": "Windmill Blade Sweep",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 11,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -124,9 +124,9 @@
       "id": "heavy",
       "label": "Chidori Thrust",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -165,9 +165,9 @@
       "id": "special",
       "label": "Grand Fireball Wheel",
       "input": "special",
-      "startupFrames": 11,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 13,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -648,9 +648,9 @@
   },
   "moveOverrides": {
     "cmd:f+2": {
-      "startupFrames": 17,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 29,
+      "recoveryFrames": 25,
       "damage": 14,
       "onBlockFrames": -7,
       "onHitFrames": 15,
@@ -669,7 +669,7 @@
     "cmd:d/f+1": {
       "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 10,
       "onBlockFrames": 1,
       "onHitFrames": 14,
@@ -682,9 +682,9 @@
       "tracking": "medium"
     },
     "cmd:qcf+3": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "damage": 16,
       "onBlockFrames": -7,
       "onHitFrames": 15,
@@ -704,9 +704,9 @@
       "jumpBeforeMove": true
     },
     "cmd:SS+4": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 14,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -724,96 +724,183 @@
       "jumpBeforeMove": true
     },
     "neutral:jab-jab": {
-      "label": "Lion Combo: Second Fang"
+      "label": "Lion Combo: Second Fang",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Chidori Drive"
+      "label": "Chidori Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Chidori Current"
+      "label": "Chidori Current",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Kirin"
+      "label": "Kirin",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Windmill Triple Blade: Return"
+      "label": "Windmill Triple Blade: Return",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Chidori Senbon"
+      "label": "Chidori Senbon",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Chidori Katana"
+      "label": "Chidori Katana",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Binding Snake Glare Spell"
+      "label": "Binding Snake Glare Spell",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Lion Combo: Rising Fang"
+      "label": "Lion Combo: Rising Fang",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Sharingan Trap"
+      "label": "Sharingan Trap",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Genjutsu Through Sharingan"
+      "label": "Genjutsu Through Sharingan",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Grand Fireball Burst"
+      "label": "Grand Fireball Burst",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25
     },
     "neutral:jab-kick-heavy": {
-      "label": "Phoenix Sage Flower"
+      "label": "Phoenix Sage Flower",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Dragon Fire Link"
+      "label": "Dragon Fire Link",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Fire Release: Great Dragon Fire Technique"
+      "label": "Fire Release: Great Dragon Fire Technique",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Amaterasu"
+      "label": "Amaterasu",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Chidori Spear Thrust"
+      "label": "Chidori Spear Thrust",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Kirin Break"
+      "label": "Kirin Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Blaze Release: Kagutsuchi"
+      "label": "Blaze Release: Kagutsuchi",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Amaterasu Edge"
+      "label": "Amaterasu Edge",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Hawk Summoning Technique"
+      "label": "Hawk Summoning Technique",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Snake Glare Snare"
+      "label": "Snake Glare Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Susanoo Ribcage"
+      "label": "Susanoo Ribcage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Great Dragon Fire Setup"
+      "label": "Great Dragon Fire Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Amenotejikara"
+      "label": "Amenotejikara",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Scorch Style: Nimbus Tempest"
+      "label": "Scorch Style: Nimbus Tempest",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Naraka Path Bind"
+      "label": "Naraka Path Bind",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Human Path Draw"
+      "label": "Human Path Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Snake Summoning Technique"
+      "label": "Snake Summoning Technique",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:1+3": {
-      "startupFrames": 14,
-      "activeFrames": 15,
-      "recoveryFrames": 5,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "onBlockFrames": -10,
       "onHitFrames": 11,
       "onCounterHitFrames": 16,
@@ -831,9 +918,9 @@
       "cancelable": false
     },
     "kickleft": {
-      "startupFrames": 5,
-      "activeFrames": 8,
-      "recoveryFrames": 10,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": -2,
       "onHitFrames": 10,
       "onCounterHitFrames": 14,
@@ -849,8 +936,8 @@
       "tracking": "medium"
     },
     "jableft": {
-      "activeFrames": 3,
-      "recoveryFrames": 13,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 0,
       "onHitFrames": 13,
       "onCounterHitFrames": 17,
@@ -859,12 +946,13 @@
       "forwardForceEndFrame": 16,
       "label": "Lion Combo Jab",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "startupFrames": 9
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "onBlockFrames": -1,
       "onHitFrames": 12,
       "onCounterHitFrames": 16,
@@ -877,9 +965,9 @@
       "tracking": "weakRight"
     },
     "cmd:1+2": {
-      "startupFrames": 23,
-      "activeFrames": 10,
-      "recoveryFrames": 7,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "onBlockFrames": -11,
       "onHitFrames": 11,
       "onCounterHitFrames": 16,
@@ -893,9 +981,9 @@
       "cancelable": false
     },
     "cmd:2+3": {
-      "startupFrames": 23,
-      "activeFrames": 8,
-      "recoveryFrames": 3,
+      "startupFrames": 27,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
       "onBlockFrames": -10,
       "onHitFrames": 11,
       "onCounterHitFrames": 16,
@@ -909,8 +997,8 @@
       "cancelable": false
     },
     "cmd:2+4": {
-      "startupFrames": 14,
-      "recoveryFrames": 15,
+      "startupFrames": 24,
+      "recoveryFrames": 28,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -923,11 +1011,12 @@
       "tracking": "strong",
       "knockdown": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "activeFrames": 3
     },
     "cmd:3+4": {
-      "startupFrames": 20,
-      "recoveryFrames": 8,
+      "startupFrames": 10,
+      "recoveryFrames": 16,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -940,7 +1029,8 @@
       "tracking": "strong",
       "endsInCrouch": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "activeFrames": 2
     },
     "cmd:FC+2": {
       "onBlockFrames": -5,
@@ -957,7 +1047,10 @@
       "label": "Crouch Chidori Launcher",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 26
     },
     "cmd:FC+4": {
       "onBlockFrames": -9,
@@ -970,11 +1063,14 @@
       "label": "Fire Release Flip Kick",
       "hitLevel": "mid",
       "tracking": "strong",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17
     },
     "cmd:O+1": {
-      "startupFrames": 24,
-      "recoveryFrames": 16,
+      "startupFrames": 25,
+      "recoveryFrames": 32,
       "damage": 32,
       "onBlockFrames": 1,
       "onHitFrames": 14,
@@ -1000,12 +1096,13 @@
           "pan": 0,
           "retrigger": false
         }
-      ]
+      ],
+      "activeFrames": 6
     },
     "kickright": {
-      "startupFrames": 9,
-      "activeFrames": 21,
-      "recoveryFrames": 10,
+      "startupFrames": 12,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "onBlockFrames": -2,
       "onHitFrames": 10,
       "onCounterHitFrames": 14,
@@ -1018,9 +1115,9 @@
       "jumpBeforeMove": true
     },
     "cmd:1+4": {
-      "startupFrames": 18,
+      "startupFrames": 11,
       "activeFrames": 3,
-      "recoveryFrames": 11,
+      "recoveryFrames": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1045,7 +1142,10 @@
       "label": "Forward Lion Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15
     },
     "cmd:f+3": {
       "onBlockFrames": -5,
@@ -1058,7 +1158,10 @@
       "label": "Advancing Windmill Blade",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:d+1": {
       "onBlockFrames": 1,
@@ -1071,7 +1174,10 @@
       "label": "Ducking Lion Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15
     },
     "cmd:d+3": {
       "onBlockFrames": -5,
@@ -1084,7 +1190,10 @@
       "label": "Ducking Windmill Blade",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:d/f+2": {
       "onBlockFrames": -5,
@@ -1097,7 +1206,10 @@
       "label": "Diagonal Chidori Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:d/f+3": {
       "onBlockFrames": -5,
@@ -1110,7 +1222,10 @@
       "label": "Diagonal Windmill Blade",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:qcf+1": {
       "onBlockFrames": 1,
@@ -1123,7 +1238,10 @@
       "label": "Sharingan Quick Jab",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15
     },
     "cmd:qcf+4": {
       "onBlockFrames": -9,
@@ -1140,12 +1258,15 @@
       "tracking": "strong",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34
     },
     "cmd:FC+1": {
-      "startupFrames": 8,
-      "activeFrames": 16,
-      "recoveryFrames": 4,
+      "startupFrames": 11,
+      "activeFrames": 3,
+      "recoveryFrames": 17,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1169,7 +1290,10 @@
       "label": "Rising Chidori Check",
       "hitLevel": "mid",
       "tracking": "weakRight",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:WS+4": {
       "onBlockFrames": -9,
@@ -1186,7 +1310,10 @@
       "hitLevel": "high",
       "tracking": "strong",
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31
     },
     "cmd:SS+3": {
       "onBlockFrames": -5,
@@ -1199,7 +1326,10 @@
       "label": "Sidestep Windmill Blade",
       "hitLevel": "high",
       "tracking": "medium",
-      "cancelable": false
+      "cancelable": false,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16
     },
     "cmd:O+4": {
       "onBlockFrames": -9,
@@ -1216,18 +1346,27 @@
       "tracking": "strong",
       "tornado": true,
       "cancelable": false,
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 30,
+      "activeFrames": 8,
+      "recoveryFrames": 38
     },
     "cmd:FC+3": {
       "label": "Crouch Windmill Blade",
       "hitLevel": "high",
-      "tracking": "medium"
+      "tracking": "medium",
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15
     },
     "cmd:FC+3+4": {
       "label": "Crouch Fireball Wheel",
       "hitLevel": "high",
       "tracking": "strong",
-      "jumpBeforeMove": true
+      "jumpBeforeMove": true,
+      "startupFrames": 12,
+      "activeFrames": 3,
+      "recoveryFrames": 19
     }
   },
   "spriteFrameEdits": {

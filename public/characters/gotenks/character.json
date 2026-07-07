@@ -365,7 +365,7 @@
       "label": "Quick Fusion Jab",
       "input": "jab",
       "startupFrames": 9,
-      "activeFrames": 2,
+      "activeFrames": 1,
       "recoveryFrames": 12,
       "damage": 5,
       "blockDamage": 1,
@@ -406,9 +406,9 @@
       "id": "kick",
       "label": "Low Fusion Roll",
       "input": "kick",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -448,9 +448,9 @@
       "id": "heavy",
       "label": "Fusion Body Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -490,9 +490,9 @@
       "id": "special",
       "label": "Heavy Fusion Kick",
       "input": "special",
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 14,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -557,9 +557,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 5,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -576,9 +576,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 4,
-      "recoveryFrames": 15,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -595,9 +595,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 0,
-      "activeFrames": 27,
-      "recoveryFrames": 18,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -612,9 +612,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 22,
-      "activeFrames": 11,
-      "recoveryFrames": 13,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -631,9 +631,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -649,9 +649,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 25,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -671,9 +671,9 @@
       "cancelable": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 13,
-      "activeFrames": 36,
-      "recoveryFrames": 6,
+      "startupFrames": 27,
+      "activeFrames": 7,
+      "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -690,9 +690,9 @@
       "cancelable": false
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 19,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -708,9 +708,9 @@
       "cancelable": false
     },
     "cmd:FC+1": {
-      "startupFrames": 3,
-      "activeFrames": 18,
-      "recoveryFrames": 8,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -726,9 +726,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 27,
+      "recoveryFrames": 25,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -745,9 +745,9 @@
       "cancelable": false
     },
     "cmd:1+2": {
-      "startupFrames": 16,
-      "activeFrames": 7,
-      "recoveryFrames": 4,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -766,9 +766,9 @@
       "jumpBeforeMove": true
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -787,9 +787,9 @@
       "jumpBeforeMove": true
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 7,
-      "recoveryFrames": 8,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -811,9 +811,9 @@
       "jumpBeforeMove": true
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 27,
       "activeFrames": 3,
-      "recoveryFrames": 25,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -849,9 +849,9 @@
       "cancelable": false
     },
     "cmd:O+2": {
-      "startupFrames": 12,
-      "activeFrames": 47,
-      "recoveryFrames": 1,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -867,7 +867,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -883,7 +883,7 @@
       "label": "Gotenks Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -899,7 +899,7 @@
       "label": "Gotenks Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -915,7 +915,7 @@
       "label": "Gotenks Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -931,7 +931,7 @@
       "label": "Gotenks Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -947,7 +947,7 @@
       "label": "Gotenks Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -963,7 +963,7 @@
       "label": "Gotenks Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -979,7 +979,7 @@
       "label": "Gotenks Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -995,7 +995,7 @@
       "label": "Gotenks Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1011,7 +1011,7 @@
       "label": "Gotenks Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1027,7 +1027,7 @@
       "label": "Gotenks Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1043,7 +1043,7 @@
       "label": "Gotenks Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1059,7 +1059,7 @@
       "label": "Gotenks Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1075,7 +1075,7 @@
       "label": "Gotenks Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1091,7 +1091,7 @@
       "label": "Gotenks Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1107,7 +1107,7 @@
       "label": "Gotenks Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1123,7 +1123,7 @@
       "label": "Gotenks Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1139,7 +1139,7 @@
       "label": "Gotenks Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1155,7 +1155,7 @@
       "label": "Gotenks Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1171,7 +1171,7 @@
       "label": "Gotenks Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1187,7 +1187,7 @@
       "label": "Gotenks Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1203,7 +1203,7 @@
       "label": "Gotenks Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1219,7 +1219,7 @@
       "label": "Gotenks Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1235,7 +1235,7 @@
       "label": "Gotenks Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1251,7 +1251,7 @@
       "label": "Gotenks Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1267,7 +1267,7 @@
       "label": "Gotenks Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1283,7 +1283,7 @@
       "label": "Gotenks Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1299,7 +1299,7 @@
       "label": "Gotenks Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1315,7 +1315,7 @@
       "label": "Gotenks Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1331,9 +1331,9 @@
       "label": "Gotenks Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 16,
-      "activeFrames": 7,
-      "recoveryFrames": 23,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1350,9 +1350,9 @@
       "jumpBeforeMove": true
     },
     "cmd:f+2": {
-      "startupFrames": 12,
-      "activeFrames": 12,
-      "recoveryFrames": 6,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1365,9 +1365,9 @@
       "cancelable": false
     },
     "cmd:d+1": {
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1380,9 +1380,9 @@
       "cancelable": false
     },
     "cmd:qcf+1": {
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1395,9 +1395,9 @@
       "cancelable": false
     },
     "cmd:WS+2": {
-      "startupFrames": 12,
-      "activeFrames": 12,
-      "recoveryFrames": 6,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1410,8 +1410,8 @@
       "cancelable": false
     },
     "cmd:SS+4": {
-      "startupFrames": 20,
-      "activeFrames": 7,
+      "startupFrames": 14,
+      "activeFrames": 3,
       "recoveryFrames": 19,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -1425,9 +1425,9 @@
       "cancelable": false
     },
     "cmd:O+1": {
-      "startupFrames": 0,
-      "activeFrames": 22,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1440,9 +1440,9 @@
       "cancelable": false
     },
     "cmd:O+4": {
-      "startupFrames": 20,
-      "activeFrames": 7,
-      "recoveryFrames": 19,
+      "startupFrames": 25,
+      "activeFrames": 6,
+      "recoveryFrames": 32,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,

@@ -431,9 +431,9 @@
       "id": "jab",
       "label": "Quick Dark Boots Jab",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -473,9 +473,9 @@
       "id": "kick",
       "label": "Low Dark Boots Sweep",
       "input": "kick",
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 23,
+      "startupFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
       "damage": 10,
       "blockDamage": 1,
       "hitLevel": "low",
@@ -515,7 +515,7 @@
       "id": "heavy",
       "label": "Dark Boots Body Kick",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
       "recoveryFrames": 17,
       "damage": 8,
@@ -557,9 +557,9 @@
       "id": "special",
       "label": "Heavy Dark Boots Kick",
       "input": "special",
-      "startupFrames": 19,
+      "startupFrames": 23,
       "activeFrames": 4,
-      "recoveryFrames": 26,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -624,9 +624,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 4,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -643,9 +643,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 7,
-      "activeFrames": 18,
-      "recoveryFrames": 6,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -661,9 +661,9 @@
       "tracking": "medium"
     },
     "kickleft": {
-      "startupFrames": 23,
-      "activeFrames": 9,
-      "recoveryFrames": 12,
+      "startupFrames": 25,
+      "activeFrames": 3,
+      "recoveryFrames": 30,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -680,9 +680,9 @@
       "knockdown": false
     },
     "kickright": {
-      "startupFrames": 24,
-      "activeFrames": 12,
-      "recoveryFrames": 13,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -699,9 +699,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -718,9 +718,9 @@
       "cancelable": false
     },
     "cmd:d/f+2": {
-      "startupFrames": 10,
-      "activeFrames": 32,
-      "recoveryFrames": 4,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -741,8 +741,8 @@
     },
     "cmd:qcf+4": {
       "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -764,9 +764,9 @@
       "jumpBeforeMove": true
     },
     "cmd:WS+4": {
-      "startupFrames": 9,
-      "activeFrames": 29,
-      "recoveryFrames": 4,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -786,9 +786,9 @@
       "jumpBeforeMove": true
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 28,
-      "recoveryFrames": 1,
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 16,
       "damage": 7,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -805,9 +805,9 @@
       "cancelable": false
     },
     "cmd:FC+2": {
-      "startupFrames": 12,
-      "activeFrames": 30,
-      "recoveryFrames": 5,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -824,9 +824,9 @@
       "tracking": "medium"
     },
     "cmd:1+2": {
-      "startupFrames": 26,
-      "activeFrames": 11,
-      "recoveryFrames": 8,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -845,9 +845,9 @@
       "jumpBeforeMove": true
     },
     "cmd:1+3": {
-      "startupFrames": 20,
-      "activeFrames": 22,
-      "recoveryFrames": 7,
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -869,8 +869,8 @@
     },
     "cmd:2+3": {
       "startupFrames": 23,
-      "activeFrames": 9,
-      "recoveryFrames": 11,
+      "activeFrames": 2,
+      "recoveryFrames": 27,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -887,9 +887,9 @@
       "cancelable": false
     },
     "cmd:2+4": {
-      "startupFrames": 27,
-      "activeFrames": 15,
-      "recoveryFrames": 6,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -910,9 +910,9 @@
       "jumpBeforeMove": true
     },
     "cmd:3+4": {
-      "startupFrames": 13,
-      "activeFrames": 8,
-      "recoveryFrames": 12,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "damage": 18,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -934,9 +934,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+2": {
-      "startupFrames": 15,
-      "activeFrames": 38,
-      "recoveryFrames": 7,
+      "startupFrames": 27,
+      "activeFrames": 7,
+      "recoveryFrames": 34,
       "damage": 22,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -953,7 +953,7 @@
       "knockdown": true
     },
     "neutral:jab-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -969,7 +969,7 @@
       "label": "Lenalee Lee Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -985,7 +985,7 @@
       "label": "Lenalee Lee Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1001,7 +1001,7 @@
       "label": "Lenalee Lee Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1017,7 +1017,7 @@
       "label": "Lenalee Lee Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1033,7 +1033,7 @@
       "label": "Lenalee Lee Drive"
     },
     "neutral:jab-heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1049,7 +1049,7 @@
       "label": "Lenalee Lee Barrage"
     },
     "neutral:jab-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1065,7 +1065,7 @@
       "label": "Lenalee Lee Finisher"
     },
     "neutral:jab-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1081,7 +1081,7 @@
       "label": "Lenalee Lee Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1097,7 +1097,7 @@
       "label": "Lenalee Lee Palm String"
     },
     "neutral:jab-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1113,7 +1113,7 @@
       "label": "Lenalee Lee Rising Chain"
     },
     "neutral:jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1129,7 +1129,7 @@
       "label": "Lenalee Lee Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1145,7 +1145,7 @@
       "label": "Lenalee Lee Break Art"
     },
     "neutral:heavy-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1161,7 +1161,7 @@
       "label": "Lenalee Lee Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1177,7 +1177,7 @@
       "label": "Lenalee Lee Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1193,7 +1193,7 @@
       "label": "Lenalee Lee Charged Follow"
     },
     "neutral:heavy-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1209,7 +1209,7 @@
       "label": "Lenalee Lee Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1225,7 +1225,7 @@
       "label": "Lenalee Lee Arc Finisher"
     },
     "neutral:heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1241,7 +1241,7 @@
       "label": "Lenalee Lee Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1257,7 +1257,7 @@
       "label": "Lenalee Lee Mode Shift"
     },
     "neutral:kick-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1273,7 +1273,7 @@
       "label": "Lenalee Lee Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1289,7 +1289,7 @@
       "label": "Lenalee Lee Summon Strike"
     },
     "neutral:kick-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1305,7 +1305,7 @@
       "label": "Lenalee Lee Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1321,7 +1321,7 @@
       "label": "Lenalee Lee Armor Break"
     },
     "neutral:kick-special": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1337,7 +1337,7 @@
       "label": "Lenalee Lee Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1353,7 +1353,7 @@
       "label": "Lenalee Lee Switch Strike"
     },
     "neutral:special-jab": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1369,7 +1369,7 @@
       "label": "Lenalee Lee Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1385,7 +1385,7 @@
       "label": "Lenalee Lee Binding Blow"
     },
     "neutral:special-heavy": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 10,
@@ -1401,7 +1401,7 @@
       "label": "Lenalee Lee Heavy Draw"
     },
     "neutral:special-kick": {
-      "startupFrames": 16,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 24,
       "damage": 10,
@@ -1417,9 +1417,9 @@
       "label": "Lenalee Lee Kick Ender"
     },
     "cmd:1+4": {
-      "startupFrames": 28,
-      "activeFrames": 11,
-      "recoveryFrames": 10,
+      "startupFrames": 23,
+      "activeFrames": 4,
+      "recoveryFrames": 32,
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
@@ -1437,9 +1437,9 @@
       "jumpBeforeMove": true
     },
     "cmd:f+3": {
-      "startupFrames": 15,
-      "activeFrames": 7,
-      "recoveryFrames": 22,
+      "startupFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1456,9 +1456,9 @@
       "jumpBeforeMove": true
     },
     "cmd:d+1": {
-      "startupFrames": 0,
-      "activeFrames": 7,
-      "recoveryFrames": 19,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1472,9 +1472,9 @@
       "cancelable": false
     },
     "cmd:d+3": {
-      "startupFrames": 15,
-      "activeFrames": 7,
-      "recoveryFrames": 22,
+      "startupFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1491,9 +1491,9 @@
       "jumpBeforeMove": true
     },
     "cmd:d/f+3": {
-      "startupFrames": 15,
-      "activeFrames": 7,
-      "recoveryFrames": 22,
+      "startupFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1510,9 +1510,9 @@
       "jumpBeforeMove": true
     },
     "cmd:qcf+1": {
-      "startupFrames": 0,
-      "activeFrames": 7,
-      "recoveryFrames": 19,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1526,9 +1526,9 @@
       "cancelable": false
     },
     "cmd:qcf+3": {
-      "startupFrames": 15,
-      "activeFrames": 7,
-      "recoveryFrames": 22,
+      "startupFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1545,9 +1545,9 @@
       "jumpBeforeMove": true
     },
     "cmd:SS+3": {
-      "startupFrames": 15,
-      "activeFrames": 7,
-      "recoveryFrames": 22,
+      "startupFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1564,9 +1564,9 @@
       "jumpBeforeMove": true
     },
     "cmd:SS+4": {
-      "startupFrames": 31,
-      "activeFrames": 6,
-      "recoveryFrames": 12,
+      "startupFrames": 22,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
@@ -1584,9 +1584,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+1": {
-      "startupFrames": 0,
-      "activeFrames": 7,
-      "recoveryFrames": 19,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1600,9 +1600,9 @@
       "cancelable": false
     },
     "cmd:O+4": {
-      "startupFrames": 31,
-      "activeFrames": 6,
-      "recoveryFrames": 12,
+      "startupFrames": 27,
+      "activeFrames": 7,
+      "recoveryFrames": 34,
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,
