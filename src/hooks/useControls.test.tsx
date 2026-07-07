@@ -5,7 +5,7 @@ import { stages } from '../data/stages';
 import { createMatch, stepMatch } from '../engine/fightEngine';
 import { cloneSettings, defaultGameSettings } from '../lib/gameSettings';
 import { emptyInputFrame, type InputFrameWithMetadata } from '../types';
-import { applyVerticalTap, createVerticalTapState, prepareVerticalTapForRead, useControls } from './useControls';
+import { applyHorizontalTap, applyVerticalTap, createHorizontalTapState, createVerticalTapState, prepareVerticalTapForRead, useControls } from './useControls';
 
 type ControlsApi = ReturnType<typeof useControls>;
 
@@ -141,6 +141,69 @@ describe('useControls', () => {
     expect(p1Input.dashForward).toBe(false);
   });
 
+  it('turns slower gamepad D-pad back double taps into physical dash metadata', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 14, true);
+    expect(controlsApi!.readInputsForStep()[0]).toMatchObject({ left: true, right: false });
+
+    setNow(220);
+    setGamepadButton(pad, 14, false);
+    controlsApi!.readInputsForStep();
+
+    setNow(860);
+    setGamepadButton(pad, 14, true);
+    const [p1Input] = controlsApi!.readInputsForStep();
+    expect(p1Input).toMatchObject({ left: true, right: false, dashForward: false, dashBack: false });
+    expect((p1Input as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
+  });
+
+  it('preserves slower gamepad back-back through a non-consuming peek', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 14, true);
+    controlsApi!.readInputsForStep();
+    setNow(220);
+    setGamepadButton(pad, 14, false);
+    controlsApi!.readInputsForStep();
+    setNow(860);
+    setGamepadButton(pad, 14, true);
+    expect((controlsApi!.peekInputs()[0] as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
+    expect((controlsApi!.readInputsForStep()[0] as InputFrameWithMetadata).__horizontalDashDirection).toBe('left');
+  });
+
+  it('feeds slower gamepad back-back into the engine as a back hop', () => {
+    const pad = makeMutableGamepad({ index: 0 });
+    mockGamepads([pad]);
+    render(<Harness />);
+    setNow(0);
+    controlsApi!.peekInputs();
+
+    setNow(100);
+    setGamepadButton(pad, 14, true);
+    controlsApi!.readInputsForStep();
+    setNow(220);
+    setGamepadButton(pad, 14, false);
+    controlsApi!.readInputsForStep();
+    setNow(860);
+    setGamepadButton(pad, 14, true);
+    const [p1Input] = controlsApi!.readInputsForStep();
+    const match = stepMatch(createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p'), p1Input, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('jump');
+    expect(match.fighters[0].backHopTotalFrames).toBeGreaterThan(0);
+  });
+
   it('does not synthesize forward dash while holding mobile back', () => {
     render(<Harness />);
 
@@ -220,6 +283,18 @@ describe('useControls', () => {
 
     expect(input.up).toBe(false);
     expect(input.sidestepUp).toBe(false);
+  });
+
+  it('keeps the keyboard horizontal double-tap window stricter than the gamepad window', () => {
+    const input = emptyInputFrame();
+    const state = createHorizontalTapState();
+
+    applyHorizontalTap(input, state, 'left', true, 'keyboard', 100);
+    applyHorizontalTap(input, state, 'left', false, 'keyboard', 180);
+    applyHorizontalTap(input, state, 'left', true, 'keyboard', 720);
+
+    expect(input.left).toBe(true);
+    expect((input as InputFrameWithMetadata).__horizontalDashDirection).toBeUndefined();
   });
 });
 

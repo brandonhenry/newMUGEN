@@ -1233,6 +1233,31 @@ test('gamepad double-tap up sidesteps with a forgiving controller window', async
   expect(zAfter).toBeLessThan(zBefore - 0.25);
 });
 
+test('gamepad back-back back-hops with a forgiving controller window', async ({ page }) => {
+  await installMockGamepad(page);
+  await startFight(page, true);
+  const initialP1X = xFromPosition(await page.getByTestId('p1-position').innerText());
+  const p2X = xFromPosition(await page.getByTestId('p2-position').innerText());
+  const initialSpacing = Math.abs(p2X - initialP1X);
+  let sawRetreat = false;
+
+  for (const button of [14, 15]) {
+    await setMockGamepadButton(page, button, true);
+    await page.waitForTimeout(120);
+    await setMockGamepadButton(page, button, false);
+    await page.waitForTimeout(560);
+    await setMockGamepadButton(page, button, true);
+    await page.waitForTimeout(650);
+    await setMockGamepadButton(page, button, false);
+    const p1X = xFromPosition(await page.getByTestId('p1-position').innerText());
+    sawRetreat ||= Math.abs(p2X - p1X) > initialSpacing + 0.08;
+    if (sawRetreat) break;
+    await page.waitForTimeout(500);
+  }
+
+  expect(sawRetreat).toBe(true);
+});
+
 test('mobile touch controls drive movement, attacks, and clear released inputs', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
   await startFight(page, true);

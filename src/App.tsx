@@ -828,6 +828,7 @@ const cpuDifficultyLabels: Record<CpuDifficulty, string> = {
   5: 'KORE'
 };
 const KORE_CPU_DIFFICULTY: CpuDifficulty = 5;
+const MENU_ATTRACT_STAGE_ROTATION_MS = 60_000;
 
 function getEffectiveCpuDifficulty(mode: MatchMode, cpuDifficulty: CpuDifficulty) {
   return mode === 'cpu' || mode === 'tournamentInfinite' ? KORE_CPU_DIFFICULTY : cpuDifficulty;
@@ -1416,6 +1417,13 @@ function pickMenuAttractStage(stageRoster: StageDefinition[], attractMode: MenuA
     pickRandomStage(stageRoster) ??
     stages[0]
   );
+}
+
+function pickNextMenuAttractStage(stageRoster: StageDefinition[], currentStageId?: string) {
+  const visibleStages = stageRoster.filter((stage) => !stage.hidden);
+  const pool = visibleStages.length > 0 ? visibleStages : stageRoster;
+  const nextPool = currentStageId ? pool.filter((stage) => stage.id !== currentStageId) : pool;
+  return pickRandomStage(nextPool.length > 0 ? nextPool : pool) ?? stages[0];
 }
 
 function shouldUseSnappyMenuPerformanceForDevice() {
@@ -5115,6 +5123,7 @@ function MenuAttractBackground({
     let cancelled = false;
     let frame = 0;
     let last = performance.now();
+    let lastStageRotationAt = last;
     let accumulator = 0;
     const fixedStep = 1 / 60;
     const maxSimulationCatchupSteps = 3;
@@ -5123,6 +5132,16 @@ function MenuAttractBackground({
       if (cancelled) return;
       accumulator += Math.min(attractMode === 'snappy' ? 0.034 : 0.05, (now - last) / 1000);
       last = now;
+      if (attractMode !== 'snappy' && now - lastStageRotationAt >= MENU_ATTRACT_STAGE_ROTATION_MS) {
+        const nextStage = pickNextMenuAttractStage(stageRoster, matchRef.current?.stage.id);
+        const fresh = makeFreshMatch(nextStage);
+        matchRef.current = fresh;
+        setAttractMatch(fresh);
+        lastStageRotationAt = now;
+        accumulator = 0;
+        frame = requestAnimationFrame(tick);
+        return;
+      }
       let steps = 0;
       while (accumulator >= fixedStep && steps < maxSimulationCatchupSteps) {
         const current = matchRef.current ?? makeFreshMatch();
@@ -5143,7 +5162,7 @@ function MenuAttractBackground({
       cancelled = true;
       cancelAnimationFrame(frame);
     };
-  }, [attractMode, makeFreshMatch]);
+  }, [attractMode, makeFreshMatch, stageRoster]);
 
   if (!attractMatch) return null;
   return (

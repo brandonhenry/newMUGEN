@@ -44,12 +44,14 @@ export type HorizontalTapState = {
   lastLeftTap: number;
   lastRightTap: number;
   heldAction: 'left' | 'right' | null;
+  dashAction: 'left' | 'right' | null;
 };
 
 const DOUBLE_TAP_MS = 460;
 const VERTICAL_HOLD_MS = 185;
 const GAMEPAD_VERTICAL_DOUBLE_TAP_MS = 700;
 const GAMEPAD_VERTICAL_HOLD_MS = 240;
+const GAMEPAD_HORIZONTAL_DOUBLE_TAP_MS = 700;
 const menuQueuedActions = new Set<ActionName>(['confirm', 'pause']);
 const queuedPulseActions = new Set<ActionName>(['jab', 'heavy', 'kick', 'special', 'confirm', 'pause', 'back', 'lockTarget', 'cycleTargetUp', 'cycleTargetDown']);
 
@@ -89,7 +91,8 @@ export function createHorizontalTapState(): HorizontalTapState {
   return {
     lastLeftTap: Number.NEGATIVE_INFINITY,
     lastRightTap: Number.NEGATIVE_INFINITY,
-    heldAction: null
+    heldAction: null,
+    dashAction: null
   };
 }
 
@@ -356,6 +359,11 @@ function mergeInputsForRead(
     for (const action of Object.keys(merged[player]) as ActionName[]) {
       merged[player][action] = keyboardInputs[player][action] || virtualInputs[player][action] || gamepadInputs[player][action];
     }
+    const horizontalDashDirection =
+      (keyboardInputs[player] as InputFrameWithMetadata).__horizontalDashDirection ??
+      (virtualInputs[player] as InputFrameWithMetadata).__horizontalDashDirection ??
+      (gamepadInputs[player] as InputFrameWithMetadata).__horizontalDashDirection;
+    if (horizontalDashDirection) (merged[player] as InputFrameWithMetadata).__horizontalDashDirection = horizontalDashDirection;
   }
   applyQueuedPressesToInputs(merged, queue, consumeQueuedPresses, consumeQueuedPresses ? undefined : menuQueuedActions);
   return merged;
@@ -609,10 +617,11 @@ export function applyHorizontalTap(
   state: HorizontalTapState,
   action: ActionName,
   pressed: boolean,
-  _source: VerticalInputSource = 'keyboard',
+  source: VerticalInputSource = 'keyboard',
   now = performance.now()
 ) {
   if (action !== 'left' && action !== 'right') return false;
+  const doubleTapMs = getHorizontalDoubleTapMs(source);
   const lastTapKey = action === 'left' ? 'lastLeftTap' : 'lastRightTap';
   const oppositeAction = action === 'left' ? 'right' : 'left';
   const oppositeLastTapKey = action === 'left' ? 'lastRightTap' : 'lastLeftTap';
@@ -622,9 +631,13 @@ export function applyHorizontalTap(
     input[oppositeAction] = false;
     state[oppositeLastTapKey] = Number.NEGATIVE_INFINITY;
     if (state.heldAction === oppositeAction) state.heldAction = null;
-    if (state.heldAction === action) return true;
-    if (now - state[lastTapKey] <= DOUBLE_TAP_MS) {
+    if (state.heldAction === action) {
+      if (state.dashAction === action) (input as InputFrameWithMetadata).__horizontalDashDirection = action;
+      return true;
+    }
+    if (now - state[lastTapKey] <= doubleTapMs) {
       (input as InputFrameWithMetadata).__horizontalDashDirection = action;
+      state.dashAction = action;
       state[lastTapKey] = Number.NEGATIVE_INFINITY;
     }
     state.heldAction = action;
@@ -638,10 +651,11 @@ export function applyHorizontalTap(
   return true;
 }
 
-export function consumeHorizontalTapAfterRead(input: InputFrame, _state: HorizontalTapState, _source: VerticalInputSource) {
+export function consumeHorizontalTapAfterRead(input: InputFrame, state: HorizontalTapState, _source: VerticalInputSource) {
   input.dashForward = false;
   input.dashBack = false;
   delete (input as InputFrameWithMetadata).__horizontalDashDirection;
+  state.dashAction = null;
 }
 
 export function prepareVerticalTapForRead(input: InputFrame, state: VerticalTapState, source: VerticalInputSource, now = performance.now()) {
@@ -676,6 +690,10 @@ function getVerticalTapConfig(source: VerticalInputSource) {
   return source === 'gamepad'
     ? { doubleTapMs: GAMEPAD_VERTICAL_DOUBLE_TAP_MS, holdMs: GAMEPAD_VERTICAL_HOLD_MS }
     : { doubleTapMs: DOUBLE_TAP_MS, holdMs: VERTICAL_HOLD_MS };
+}
+
+function getHorizontalDoubleTapMs(source: VerticalInputSource) {
+  return source === 'gamepad' ? GAMEPAD_HORIZONTAL_DOUBLE_TAP_MS : DOUBLE_TAP_MS;
 }
 
 export function consumeVerticalTapAfterRead(input: InputFrame, state: VerticalTapState, _source: VerticalInputSource) {
