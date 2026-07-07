@@ -130,6 +130,16 @@ export const comboTrialCategoryLabels: Record<ComboRouteCategory, string> = {
 };
 
 export function generateCharacterComboRoutes(character: CharacterDefinition): GeneratedComboRoute[] {
+  const cached = generatedComboRouteCache.get(character);
+  if (cached) return cached;
+  const routes = buildCharacterComboRoutes(character);
+  generatedComboRouteCache.set(character, routes);
+  return routes;
+}
+
+const generatedComboRouteCache = new WeakMap<CharacterDefinition, GeneratedComboRoute[]>();
+
+function buildCharacterComboRoutes(character: CharacterDefinition): GeneratedComboRoute[] {
   const routes = resolveMoveRoutes(character);
   const trials: GeneratedComboRoute[] = [];
   const used = new Set<string>();

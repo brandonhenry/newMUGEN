@@ -45,6 +45,7 @@ import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../li
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
+import { decodeVoxelPackFrame, normalizeHdVoxelPayload, type PackedImageVoxel, type VoxelPackManifest, type VoxelPackPart } from '../lib/voxelPack';
 import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 import { KORE_APP_VERSION } from '../appVersion';
@@ -615,6 +616,14 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
     makeFightFighterRenderStyle(match, 1),
     makeFightFighterRenderStyle(match, 2)
   ] as const), [match.fighters[0].baseCharacter.id, match.fighters[1].baseCharacter.id]);
+  useEffect(() => {
+    const cancelP1 = prewarmImageVoxelFrames(match.fighters[0].character, collectImageVoxelFrameSources(match.fighters[0].character));
+    const cancelP2 = prewarmImageVoxelFrames(match.fighters[1].character, collectImageVoxelFrameSources(match.fighters[1].character));
+    return () => {
+      cancelP1();
+      cancelP2();
+    };
+  }, [match.fighters[0].character.id, match.fighters[1].character.id]);
   return (
     <Canvas dpr={[1, 1.25]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
       <AssetLoadingReporter onAssetLoadingChange={onAssetLoadingChange} />
@@ -5116,7 +5125,7 @@ function getFighterOutlineStyle(stage?: StageDefinition): FighterOutlineStyle {
   };
 }
 
-type ImageVoxelPart = 'head' | 'torso' | 'leadArm' | 'rearArm' | 'leadLeg' | 'rearLeg';
+type ImageVoxelPart = VoxelPackPart;
 
 type ImageVoxel = {
   part: ImageVoxelPart;
@@ -5133,30 +5142,59 @@ type ImageVoxelPartRender = {
   cacheKey?: string;
 };
 
-const imageVoxelOutlineMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
-const imageVoxelRenderMeshCache = new Map<string, THREE.InstancedMesh>();
-
-type HdImageVoxelPayload = {
-  format: 'kore-hd-voxels-v1';
-  palette: string[];
-  voxels: Array<{
-    part: ImageVoxelPart;
-    x: number;
-    y: number;
-    z: number;
-    w: number;
-    h: number;
-    d: number;
-    c: number;
-    s?: number;
-  }>;
+type PreparedImageVoxelPartRender = {
+  anchor: [number, number, number];
+  count: number;
+  matrixArray: Float32Array;
+  frontColors: Float32Array;
+  sideColors: Float32Array;
 };
 
+type MenuPerfProbeWindow = Window & {
+  __KORE_MENU_PERF__?: {
+    voxelPackHits: number;
+    voxelPackMisses: number;
+    voxelJsonFallbacks: number;
+    voxelLoadMs: number[];
+    voxelBuildMs: number[];
+  };
+};
+
+const imageVoxelOutlineMeshCache = new Map<string, { geometry: THREE.BufferGeometry; material: THREE.Material }>();
+const imageVoxelRenderMeshCache = new Map<string, THREE.InstancedMesh>();
+const imageVoxelPreparedPartCache = new Map<string, PreparedImageVoxelPartRender>();
+
 const imageVoxelCache = new Map<string, Promise<ImageVoxel[]>>();
+const imageVoxelPackCache = new Map<string, Promise<{ manifest: VoxelPackManifest; records: Float64Array } | null>>();
 const IMAGE_VOXEL_PIXEL_SCALE = 1.2;
 const IMAGE_VOXEL_DEPTH_SCALE = 1.32;
 const IMAGE_VOXEL_MIN_DEPTH = 0.14;
 const IMAGE_VOXEL_MAX_DEPTH = 0.28;
+
+function menuPerfProbe() {
+  if (typeof window === 'undefined') return null;
+  const perfWindow = window as MenuPerfProbeWindow;
+  perfWindow.__KORE_MENU_PERF__ ??= {
+    voxelPackHits: 0,
+    voxelPackMisses: 0,
+    voxelJsonFallbacks: 0,
+    voxelLoadMs: [],
+    voxelBuildMs: []
+  };
+  return perfWindow.__KORE_MENU_PERF__;
+}
+
+function recordMenuPerfDuration(kind: 'voxelLoadMs' | 'voxelBuildMs', startedAt: number) {
+  const probe = menuPerfProbe();
+  if (!probe) return;
+  probe[kind].push(Number((performance.now() - startedAt).toFixed(2)));
+  if (probe[kind].length > 80) probe[kind].shift();
+}
+
+function incrementMenuPerfCounter(kind: 'voxelPackHits' | 'voxelPackMisses' | 'voxelJsonFallbacks') {
+  const probe = menuPerfProbe();
+  if (probe) probe[kind] += 1;
+}
 
 export function clearImageVoxelCacheForFrame(characterId: string, frameIndex?: number) {
   const framePrefix = Number.isFinite(frameIndex)
@@ -5170,6 +5208,11 @@ export function clearImageVoxelCacheForFrame(characterId: string, frameIndex?: n
   Array.from(imageVoxelRenderMeshCache.keys()).forEach((key) => {
     if (key.includes(framePrefix)) {
       imageVoxelRenderMeshCache.delete(key);
+    }
+  });
+  Array.from(imageVoxelPreparedPartCache.keys()).forEach((key) => {
+    if (key.includes(framePrefix)) {
+      imageVoxelPreparedPartCache.delete(key);
     }
   });
   Array.from(imageVoxelOutlineMeshCache.keys()).forEach((key) => {
@@ -5296,12 +5339,12 @@ function ImageVoxelFighter({
 
   return (
     <group ref={root} rotation={[0, -Math.PI / 2, 0]}>
-      <ImageVoxelPartGroup part={parts.head} groupRef={head} outlineStyle={outlineStyle} renderStyle={renderStyle} />
-      <ImageVoxelPartGroup part={parts.torso} groupRef={torso} outlineStyle={outlineStyle} renderStyle={renderStyle} />
-      <ImageVoxelPartGroup part={parts.leadArm} groupRef={leadArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
-      <ImageVoxelPartGroup part={parts.rearArm} groupRef={rearArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
-      <ImageVoxelPartGroup part={parts.leadLeg} groupRef={leadLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
-      <ImageVoxelPartGroup part={parts.rearLeg} groupRef={rearLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <LiveImageVoxelPartGroup part={parts.head} groupRef={head} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <LiveImageVoxelPartGroup part={parts.torso} groupRef={torso} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <LiveImageVoxelPartGroup part={parts.leadArm} groupRef={leadArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <LiveImageVoxelPartGroup part={parts.rearArm} groupRef={rearArm} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <LiveImageVoxelPartGroup part={parts.leadLeg} groupRef={leadLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
+      <LiveImageVoxelPartGroup part={parts.rearLeg} groupRef={rearLeg} outlineStyle={outlineStyle} renderStyle={renderStyle} />
     </group>
   );
 }
@@ -5344,9 +5387,42 @@ function getCachedImageVoxels(src: string, character: CharacterDefinition): Prom
   const cacheKey = `${character.id}:${character.voxelProfile ?? 'image-source'}:${src}`;
   const cached = imageVoxelCache.get(cacheKey);
   if (cached) return cached;
-  const request = loadImageVoxels(src, character);
+  const startedAt = performance.now();
+  const request = loadImageVoxels(src, character).then((voxels) => {
+    recordMenuPerfDuration('voxelLoadMs', startedAt);
+    return voxels;
+  });
   imageVoxelCache.set(cacheKey, request);
   return request;
+}
+
+export function prewarmImageVoxelFrames(character: CharacterDefinition, frameSources: string[]) {
+  if (typeof window === 'undefined' || character.voxelProfile !== 'hd-image-source') return () => undefined;
+  const uniqueFrames = [...new Set(frameSources.filter(Boolean))];
+  let cancelled = false;
+  let index = 0;
+  const schedule = (callback: () => void) => {
+    const requestIdle = window.requestIdleCallback as ((handler: IdleRequestCallback, options?: IdleRequestOptions) => number) | undefined;
+    if (requestIdle) requestIdle(callback, { timeout: 120 });
+    else window.setTimeout(callback, 16);
+  };
+  const pump = () => {
+    if (cancelled) return;
+    const batch = uniqueFrames.slice(index, index + 4);
+    index += batch.length;
+    batch.forEach((frame) => {
+      void getCachedImageVoxels(frame, character).catch(() => undefined);
+    });
+    if (index < uniqueFrames.length) schedule(pump);
+  };
+  schedule(pump);
+  return () => {
+    cancelled = true;
+  };
+}
+
+function collectImageVoxelFrameSources(character: CharacterDefinition) {
+  return Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []);
 }
 
 function getImageVoxelFramePath(fighter: FighterRuntime, progress: number, elapsedTime: number) {
@@ -5552,6 +5628,59 @@ function hashSpriteEditSignature(value: string) {
   return (hash >>> 0).toString(36);
 }
 
+function LiveImageVoxelPartGroup({
+  part,
+  groupRef,
+  outlineStyle,
+  renderStyle
+}: {
+  part: ImageVoxelPartRender;
+  groupRef?: React.RefObject<THREE.Group>;
+  outlineStyle?: FighterOutlineStyle;
+  renderStyle: FighterRenderStyle;
+}) {
+  if (outlineStyle?.enabled) {
+    return <ImageVoxelPartGroup part={part} groupRef={groupRef} outlineStyle={outlineStyle} renderStyle={renderStyle} />;
+  }
+  return <ReusableImageVoxelPartGroup part={part} groupRef={groupRef} renderStyle={renderStyle} />;
+}
+
+function ReusableImageVoxelPartGroup({
+  part,
+  groupRef,
+  renderStyle
+}: {
+  part: ImageVoxelPartRender;
+  groupRef?: React.RefObject<THREE.Group>;
+  renderStyle: FighterRenderStyle;
+}) {
+  const prepared = useMemo(() => prepareImageVoxelPartForRender(part, renderStyle), [part, renderStyle]);
+  const requiredCapacity = Math.max(1, nextImageVoxelCapacity(prepared.count));
+  const [capacity, setCapacity] = useState(requiredCapacity);
+  const mesh = useMemo(() => createReusableImageVoxelMesh(capacity, renderStyle), [capacity, renderStyle]);
+
+  useEffect(() => {
+    return () => {
+      disposeVoxelObject(mesh);
+    };
+  }, [mesh]);
+
+  useEffect(() => {
+    if (requiredCapacity > capacity) setCapacity(requiredCapacity);
+  }, [capacity, requiredCapacity]);
+
+  useEffect(() => {
+    if (prepared.count > capacity) return;
+    applyPreparedImageVoxelPart(mesh, prepared);
+  }, [capacity, mesh, prepared]);
+
+  return (
+    <group ref={groupRef} position={prepared.anchor}>
+      <primitive object={mesh} />
+    </group>
+  );
+}
+
 function ImageVoxelPartGroup({
   part,
   groupRef,
@@ -5629,6 +5758,97 @@ function makeImageVoxelRenderMeshCacheKey(part: ImageVoxelPartRender, renderStyl
     renderStyle.hueShiftDegrees,
     renderStyle.depthWrite ? 'dw1' : 'dw0'
   ].join('|');
+}
+
+function makeImageVoxelPreparedPartCacheKey(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle) {
+  const renderKey = makeImageVoxelRenderMeshCacheKey(part, renderStyle);
+  return renderKey ? `${renderKey}|prepared-v1` : null;
+}
+
+function nextImageVoxelCapacity(count: number) {
+  let capacity = 256;
+  while (capacity < count) capacity *= 2;
+  return capacity;
+}
+
+function createReusableImageVoxelMesh(capacity: number, renderStyle: FighterRenderStyle) {
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const frontColors = new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
+  const sideColors = new THREE.InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
+  frontColors.setUsage(THREE.DynamicDrawUsage);
+  sideColors.setUsage(THREE.DynamicDrawUsage);
+  geometry.setAttribute('instanceFrontColor', frontColors);
+  geometry.setAttribute('instanceSideColor', sideColors);
+  const material = makeImageVoxelSideFillMaterial(renderStyle);
+  const mesh = new THREE.InstancedMesh(geometry, material, capacity);
+  mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  mesh.count = 0;
+  mesh.castShadow = renderStyle.castShadow;
+  mesh.receiveShadow = renderStyle.receiveShadow;
+  mesh.renderOrder = renderStyle.renderOrder;
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+function applyPreparedImageVoxelPart(mesh: THREE.InstancedMesh, prepared: PreparedImageVoxelPartRender) {
+  mesh.count = prepared.count;
+  mesh.instanceMatrix.array.set(prepared.matrixArray, 0);
+  mesh.instanceMatrix.needsUpdate = true;
+  const geometry = mesh.geometry;
+  const frontColors = geometry.getAttribute('instanceFrontColor') as THREE.InstancedBufferAttribute | undefined;
+  const sideColors = geometry.getAttribute('instanceSideColor') as THREE.InstancedBufferAttribute | undefined;
+  frontColors?.array.set(prepared.frontColors, 0);
+  sideColors?.array.set(prepared.sideColors, 0);
+  if (frontColors) frontColors.needsUpdate = true;
+  if (sideColors) sideColors.needsUpdate = true;
+}
+
+function prepareImageVoxelPartForRender(part: ImageVoxelPartRender, renderStyle: FighterRenderStyle): PreparedImageVoxelPartRender {
+  const cacheKey = makeImageVoxelPreparedPartCacheKey(part, renderStyle);
+  const cached = cacheKey ? imageVoxelPreparedPartCache.get(cacheKey) : undefined;
+  if (cached) return cached;
+
+  const startedAt = performance.now();
+  const matrix = new THREE.Matrix4();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  const rotation = new THREE.Quaternion();
+  const frontColor = new THREE.Color();
+  const sideColor = new THREE.Color();
+  const renderVoxels = part.voxels.map(normalizeImageVoxelForRender);
+  const matrixArray = new Float32Array(renderVoxels.length * 16);
+  const frontColors = new Float32Array(renderVoxels.length * 3);
+  const sideColors = new Float32Array(renderVoxels.length * 3);
+
+  renderVoxels.forEach((renderVoxel, index) => {
+    frontColor.set(renderStyleColor(renderVoxel.color, renderStyle));
+    sideColor.set(renderStyleColor(renderVoxel.sideColor ?? renderVoxel.color, renderStyle));
+    position.set(
+      renderVoxel.position[0] - part.anchor[0],
+      renderVoxel.position[1] - part.anchor[1],
+      renderVoxel.position[2] - part.anchor[2]
+    );
+    scale.set(renderVoxel.size[0], renderVoxel.size[1], renderVoxel.size[2]);
+    matrix.compose(position, rotation, scale);
+    matrix.toArray(matrixArray, index * 16);
+    frontColors[index * 3] = frontColor.r;
+    frontColors[index * 3 + 1] = frontColor.g;
+    frontColors[index * 3 + 2] = frontColor.b;
+    sideColors[index * 3] = sideColor.r;
+    sideColors[index * 3 + 1] = sideColor.g;
+    sideColors[index * 3 + 2] = sideColor.b;
+  });
+
+  const prepared = {
+    anchor: part.anchor,
+    count: renderVoxels.length,
+    matrixArray,
+    frontColors,
+    sideColors
+  };
+  if (cacheKey) imageVoxelPreparedPartCache.set(cacheKey, prepared);
+  recordMenuPerfDuration('voxelBuildMs', startedAt);
+  return prepared;
 }
 
 function buildInstancedVoxelOutlineMesh(part: ImageVoxelPartRender, outlineStyle?: FighterOutlineStyle) {
@@ -5855,13 +6075,17 @@ function getPartAnchor(part: ImageVoxelPart, voxels: ImageVoxel[]): [number, num
     rearLeg: [-0.17, 0.48, 0]
   };
   if (voxels.length === 0) return fallback[part];
-  const min = new THREE.Vector3(Infinity, Infinity, Infinity);
-  const max = new THREE.Vector3(-Infinity, -Infinity, -Infinity);
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
   for (const voxel of voxels) {
-    min.min(new THREE.Vector3(...voxel.position));
-    max.max(new THREE.Vector3(...voxel.position));
+    minX = Math.min(minX, voxel.position[0]);
+    minY = Math.min(minY, voxel.position[1]);
+    maxX = Math.max(maxX, voxel.position[0]);
+    maxY = Math.max(maxY, voxel.position[1]);
   }
-  return [(min.x + max.x) / 2, (min.y + max.y) / 2, 0];
+  return [(minX + maxX) / 2, (minY + maxY) / 2, 0];
 }
 
 async function extractImageVoxels(src: string): Promise<ImageVoxel[]> {
@@ -5926,6 +6150,53 @@ async function loadPrecomputedImageVoxels(src: string, character: CharacterDefin
   }
 }
 
+async function loadPackedImageVoxels(src: string, character: CharacterDefinition): Promise<ImageVoxel[] | null> {
+  const frame = getVoxelPackFrameName(src);
+  if (!frame || character.voxelProfile !== 'hd-image-source') return null;
+  const pack = await getCharacterVoxelPack(character.id);
+  if (!pack) {
+    incrementMenuPerfCounter('voxelPackMisses');
+    return null;
+  }
+  const voxels = decodeVoxelPackFrame(pack.manifest, pack.records, frame) as PackedImageVoxel[] | null;
+  if (!voxels) {
+    incrementMenuPerfCounter('voxelPackMisses');
+    return null;
+  }
+  incrementMenuPerfCounter('voxelPackHits');
+  return voxels;
+}
+
+async function getCharacterVoxelPack(characterId: string) {
+  const cached = imageVoxelPackCache.get(characterId);
+  if (cached) return cached;
+  const request = fetchCharacterVoxelPack(characterId);
+  imageVoxelPackCache.set(characterId, request);
+  return request;
+}
+
+async function fetchCharacterVoxelPack(characterId: string) {
+  try {
+    const manifestResponse = await fetch(`/characters/${characterId}/voxels-hd/voxel-pack-v1.json`);
+    if (!manifestResponse.ok) return null;
+    const manifest = await manifestResponse.json() as VoxelPackManifest;
+    const binaryResponse = await fetch(`/characters/${characterId}/voxels-hd/${manifest.binary}`);
+    if (!binaryResponse.ok) return null;
+    const buffer = await binaryResponse.arrayBuffer();
+    return {
+      manifest,
+      records: new Float64Array(buffer)
+    };
+  } catch {
+    return null;
+  }
+}
+
+function getVoxelPackFrameName(src: string | undefined) {
+  const frameIndex = src?.split('?')[0]?.match(/frame-(\d+)\.png$/)?.[1];
+  return frameIndex ? `frame-${frameIndex}` : null;
+}
+
 function getPrecomputedVoxelPath(src: string, hd = false) {
   const cleanSrc = src.split('?')[0] ?? src;
   const match = cleanSrc.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/)
@@ -5938,23 +6209,18 @@ function getPrecomputedVoxelPath(src: string, hd = false) {
 
 function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null {
   if (Array.isArray(payload)) return payload as ImageVoxel[];
-  if (!payload || typeof payload !== 'object') return null;
-  const candidate = payload as HdImageVoxelPayload;
-  if (candidate.format !== 'kore-hd-voxels-v1' || !Array.isArray(candidate.palette) || !Array.isArray(candidate.voxels)) return null;
-  return candidate.voxels.map((voxel) => ({
-    part: voxel.part,
-    position: [voxel.x, voxel.y, voxel.z],
-    size: [voxel.w, voxel.h, voxel.d],
-    color: candidate.palette[voxel.c] ?? '#ffffff',
-    sideColor: candidate.palette[voxel.s ?? voxel.c] ?? candidate.palette[voxel.c] ?? '#ffffff',
-    source: 'hd'
-  }));
+  return normalizeHdVoxelPayload(payload) as ImageVoxel[] | null;
 }
 
 async function loadImageVoxels(src: string, character: CharacterDefinition) {
   if (character.voxelProfile === 'hd-image-source') {
+    const packedVoxels = await loadPackedImageVoxels(src, character);
+    if (packedVoxels) return packedVoxels;
     const hdVoxels = await loadPrecomputedImageVoxels(src, character);
-    if (hdVoxels) return hdVoxels;
+    if (hdVoxels) {
+      incrementMenuPerfCounter('voxelJsonFallbacks');
+      return hdVoxels;
+    }
   }
   return (await loadPrecomputedImageVoxels(src, { ...character, voxelProfile: 'image-source' })) ?? extractImageVoxels(src);
 }

@@ -58,6 +58,27 @@ async function openMenuAttract(page: Page) {
   await expect(page.getByTestId('menu-attract-canvas')).toBeVisible({ timeout: 30_000 });
 }
 
+async function forceKiroRivenMenuAttract(page: Page) {
+  await page.addInitScript(() => {
+    (window as typeof window & { __KORE_FORCE_MENU_ATTRACT_IDS__?: [string, string] }).__KORE_FORCE_MENU_ATTRACT_IDS__ = ['kiro', 'riven'];
+  });
+}
+
+async function forceSnappyMenuPerformance(page: Page) {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.gameSettings', JSON.stringify({
+      version: 7,
+      settings: {
+        performance: {
+          autoDetectMenuLag: false,
+          menuAttractMode: 'snappy',
+          menuMotionMode: 'snappy'
+        }
+      }
+    }));
+  });
+}
+
 async function enterMainMenu(page: Page) {
   const title = page.locator('.title-screen');
   const arcade = page.getByRole('button', { name: 'Arcade' });
@@ -203,6 +224,25 @@ async function sampleFramePacing(page: Page, sampleMs: number): Promise<FrameSta
   }, sampleMs);
 }
 
+async function getWebglRendererInfo(page: Page) {
+  return page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return { vendor: 'unavailable', renderer: 'unavailable' };
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    if (!debugInfo) {
+      return {
+        vendor: String(gl.getParameter(gl.VENDOR)),
+        renderer: String(gl.getParameter(gl.RENDERER))
+      };
+    }
+    return {
+      vendor: String(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)),
+      renderer: String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL))
+    };
+  });
+}
+
 function expectSmoothFight(stats: FrameStats) {
   expect(stats.frameCount, JSON.stringify(stats)).toBeGreaterThanOrEqual(FIGHT_FRAME_BUDGET.minFrames);
   expect(stats.p95Ms, JSON.stringify(stats)).toBeLessThanOrEqual(FIGHT_FRAME_BUDGET.p95Ms);
@@ -224,9 +264,10 @@ function recordResponse(records: ResourceRecord[], response: Response) {
 }
 
 test.describe('menu attract performance', () => {
-  test('keeps Chamber stage and HD voxel assets with recommended menu performance settings', async ({ page }, testInfo) => {
+  test('keeps Chamber stage and packed HD voxel assets with recommended menu performance settings', async ({ page }, testInfo) => {
     const responses: ResourceRecord[] = [];
     page.on('response', (response) => recordResponse(responses, response));
+    await forceKiroRivenMenuAttract(page);
     await page.addInitScript(() => {
       window.localStorage.setItem('kore.gameSettings', JSON.stringify({
         version: 7,
@@ -250,12 +291,15 @@ test.describe('menu attract performance', () => {
       contentType: 'application/json'
     });
     expect(loadedAttractAssets.some((url) => url.includes('/stages/the-chamber/stage.json') || url.includes('/stages/chamber/')), loadedAttractAssets.join('\n')).toBe(true);
-    expect(loadedAttractAssets.filter((url) => url.includes('/voxels-hd') && url.includes('.json')).length, loadedAttractAssets.join('\n')).toBeGreaterThan(0);
+    expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedAttractAssets.join('\n')).toBe(true);
+    expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedAttractAssets.join('\n')).toBe(true);
   });
 
   test('keeps the CPU-vs-CPU menu fight smooth after warmup', async ({ page }, testInfo) => {
     const responses: ResourceRecord[] = [];
     page.on('response', (response) => recordResponse(responses, response));
+    await forceKiroRivenMenuAttract(page);
+    await forceSnappyMenuPerformance(page);
     await installLongTaskCollector(page);
     await openMenuAttract(page);
     await page.waitForTimeout(5_000);
@@ -267,18 +311,22 @@ test.describe('menu attract performance', () => {
       body: JSON.stringify(loadedAttractAssets.slice(-80), null, 2),
       contentType: 'application/json'
     });
-    expect(loadedAttractAssets.some((url) => url.includes('/stages/') && url.includes('.glb')), loadedAttractAssets.join('\n')).toBe(true);
-    expect(loadedAttractAssets.filter((url) => url.includes('/voxels') && url.includes('.json')).length, loadedAttractAssets.join('\n')).toBeGreaterThan(0);
+    expect(loadedAttractAssets.some((url) => url.includes('/stages/chamber/') || (url.includes('/stages/') && url.includes('.glb'))), loadedAttractAssets.join('\n')).toBe(true);
+    expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedAttractAssets.join('\n')).toBe(true);
+    expect(loadedAttractAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedAttractAssets.join('\n')).toBe(true);
     await resetLongTaskCollector(page);
     const stats = await sampleFramePacing(page, 8_000);
+    const renderer = await getWebglRendererInfo(page);
     testInfo.attach('frame-stats.json', {
-      body: JSON.stringify(stats, null, 2),
+      body: JSON.stringify({ renderer, stats }, null, 2),
       contentType: 'application/json'
     });
+    const softwareRenderer = /swiftshader|software|llvmpipe/i.test(`${renderer.vendor} ${renderer.renderer}`);
 
-    expect(stats.frameCount, JSON.stringify(stats)).toBeGreaterThanOrEqual(120);
-    expect(stats.p95Ms, JSON.stringify(stats)).toBeLessThanOrEqual(50);
-    expect(stats.p99Ms, JSON.stringify(stats)).toBeLessThanOrEqual(85);
+    expect(stats.frameCount, JSON.stringify({ renderer, stats })).toBeGreaterThanOrEqual(softwareRenderer ? 240 : 470);
+    expect(stats.averageMs, JSON.stringify({ renderer, stats })).toBeLessThanOrEqual(softwareRenderer ? 35 : 17.5);
+    expect(stats.p95Ms, JSON.stringify({ renderer, stats })).toBeLessThanOrEqual(softwareRenderer ? 50 : 20);
+    expect(stats.p99Ms, JSON.stringify({ renderer, stats })).toBeLessThanOrEqual(softwareRenderer ? 85 : 34);
     expect(stats.over100ms, JSON.stringify(stats)).toBeLessThanOrEqual(5);
     expect(stats.longTaskTotalMs, JSON.stringify(stats)).toBeLessThanOrEqual(1_000);
     expect(stats.longestLongTaskMs, JSON.stringify(stats)).toBeLessThanOrEqual(250);
@@ -293,6 +341,7 @@ test.describe('menu attract performance', () => {
       contentType: 'application/json'
     });
     expect(postWarmupRequests.filter((url) => url.includes('/stage.json?v=')).length).toBe(0);
+    expect(postWarmupRequests.filter((url) => /\/voxels-hd\/frame-\d+\.json/.test(url)).length).toBe(0);
     expect(postWarmupRequests.filter((url) => url.endsWith('.wav')).length).toBeLessThanOrEqual(4);
 
     if (runLivePerfTests) {
@@ -339,15 +388,37 @@ test.describe('menu attract performance', () => {
 
 test.describe('in-game fight performance', () => {
   test('keeps local playable fights smooth after warmup', async ({ page }, testInfo) => {
+    const responses: ResourceRecord[] = [];
+    page.on('response', (response) => recordResponse(responses, response));
     await installLongTaskCollector(page);
     await startLocalFight(page);
+    const loadedFightAssets = responses
+      .map((entry) => entry.url)
+      .filter((url) => url.includes('/voxels'));
+    testInfo.attach('local-fight-voxel-assets.json', {
+      body: JSON.stringify(loadedFightAssets.slice(-80), null, 2),
+      contentType: 'application/json'
+    });
+    expect(loadedFightAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.json')), loadedFightAssets.join('\n')).toBe(true);
+    expect(loadedFightAssets.some((url) => url.includes('/voxels-hd/voxel-pack-v1.bin')), loadedFightAssets.join('\n')).toBe(true);
     await resetLongTaskCollector(page);
+    await page.evaluate(() => performance.clearResourceTimings());
     const stats = await sampleFramePacing(page, 8_000);
     testInfo.attach('local-fight-frame-stats.json', {
       body: JSON.stringify(stats, null, 2),
       contentType: 'application/json'
     });
     expectSmoothFight(stats);
+    const postWarmupRequests = await page.evaluate(() =>
+      performance.getEntriesByType('resource')
+        .filter((entry) => entry.name.startsWith(location.origin))
+        .map((entry) => entry.name.replace(location.origin, ''))
+    );
+    testInfo.attach('local-fight-post-warmup-resources.json', {
+      body: JSON.stringify(postWarmupRequests.slice(0, 80), null, 2),
+      contentType: 'application/json'
+    });
+    expect(postWarmupRequests.filter((url) => /\/voxels-hd\/frame-\d+\.json/.test(url)).length).toBe(0);
   });
 
   test('keeps online bot fights smooth after matchmaking connects', async ({ page }, testInfo) => {

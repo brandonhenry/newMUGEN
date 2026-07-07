@@ -46,7 +46,7 @@ import {
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
+import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmImageVoxelFrames, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { stages } from './data/stages';
@@ -4712,6 +4712,15 @@ function MenuAttractBackground({
   }, [makeFreshMatch]);
 
   useEffect(() => {
+    const cancelP1 = prewarmImageVoxelFrames(p1, collectCharacterAnimationFrameSources(p1));
+    const cancelP2 = prewarmImageVoxelFrames(p2, collectCharacterAnimationFrameSources(p2));
+    return () => {
+      cancelP1();
+      cancelP2();
+    };
+  }, [p1, p2]);
+
+  useEffect(() => {
     let cancelled = false;
     let frame = 0;
     let last = performance.now();
@@ -4751,6 +4760,10 @@ function MenuAttractBackground({
       <MenuAttractScene match={attractMatch} sparkSettings={sparkSettings} reducedMotion={reducedMotion} performanceMode={attractMode} />
     </div>
   );
+}
+
+function collectCharacterAnimationFrameSources(character: CharacterDefinition) {
+  return Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []);
 }
 
 function copyMenuAttractMatchInto(target: MatchSnapshot, source: MatchSnapshot) {
@@ -5145,6 +5158,8 @@ function formatMenuLagSummary(report: MenuLagReport) {
 }
 
 function pickAttractCharacterIds(roster: CharacterDefinition[], unlockedCharacterIds: Set<string>): [string, string] {
+  const forcedIds = getForcedMenuAttractIds(roster);
+  if (forcedIds) return forcedIds;
   const unlockedRoster = roster.filter((character) => isCharacterUnlocked(character, unlockedCharacterIds));
   const pool = unlockedRoster.length > 0 ? unlockedRoster : roster;
   if (pool.length === 0) return ['', ''];
@@ -5153,6 +5168,19 @@ function pickAttractCharacterIds(roster: CharacterDefinition[], unlockedCharacte
   const opponents = pool.filter((character) => character.id !== first.id);
   const second = opponents.length > 0 ? opponents[Math.floor(Math.random() * opponents.length)] : first;
   return [first.id, second.id];
+}
+
+type MenuAttractTestWindow = Window & {
+  __KORE_FORCE_MENU_ATTRACT_IDS__?: [string, string];
+};
+
+function getForcedMenuAttractIds(roster: CharacterDefinition[]): [string, string] | null {
+  if (!import.meta.env.DEV || typeof window === 'undefined') return null;
+  const forcedIds = (window as MenuAttractTestWindow).__KORE_FORCE_MENU_ATTRACT_IDS__;
+  if (!Array.isArray(forcedIds) || forcedIds.length !== 2) return null;
+  const rosterIds = new Set(roster.map((character) => character.id));
+  if (!rosterIds.has(forcedIds[0]) || !rosterIds.has(forcedIds[1])) return null;
+  return forcedIds;
 }
 
 function LeaderboardScreen({
