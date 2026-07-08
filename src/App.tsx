@@ -25010,12 +25010,13 @@ function FightDebug({
 }) {
   const [p1, p2] = match.fighters;
   const lastImpact = match.impactEvents[match.impactEvents.length - 1];
+  const timerText = formatFightTimer(match);
   return (
     <div className="fight-debug" aria-hidden="true">
       <span data-testid="match-phase">{paused ? 'paused' : match.phase}</span>
       <span data-testid="match-mode">{match.mode}</span>
       <span data-testid="cpu-difficulty">{match.cpuDifficulty}</span>
-      <span data-testid="match-timer">{match.timer.toFixed(2)}</span>
+      <span data-testid="match-timer">{timerText}</span>
       <span data-testid="p1-position">{`${p1.position.x.toFixed(3)},${p1.position.z.toFixed(3)}`}</span>
       <span data-testid="p2-position">{`${p2.position.x.toFixed(3)},${p2.position.z.toFixed(3)}`}</span>
       <span data-testid="p1-height">{p1.position.y.toFixed(3)}</span>
@@ -25087,15 +25088,21 @@ function ClashProgress({ name, progress, total, failed }: { name: string; progre
 
 function FightHud({ match, hudScale, onlineWins }: { match: MatchSnapshot; hudScale: number; onlineWins?: OnlineWins }) {
   const [p1, p2] = match.fighters;
+  const timerText = formatFightTimer(match, true);
   return (
     <div className="fight-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
       <HealthBar fighter={p1} align="left" onlineWins={onlineWins?.[0]} />
       <div className="round-box">
-        <strong>{match.roundTime <= 0 ? '∞' : Math.ceil(match.timer)}</strong>
+        <strong>{timerText}</strong>
       </div>
       <HealthBar fighter={p2} align="right" onlineWins={onlineWins?.[1]} />
     </div>
   );
+}
+
+function formatFightTimer(match: MatchSnapshot, rounded = false) {
+  if (match.mode === 'training' || match.mode === 'trainingOnline' || match.roundTime <= 0) return '∞';
+  return rounded ? String(Math.ceil(match.timer)) : match.timer.toFixed(2);
 }
 
 function CombatPopupLayer({ popups }: { popups: ActiveCombatPopup[] }) {

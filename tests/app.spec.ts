@@ -746,6 +746,7 @@ test('shows asset warmup before entering training', async ({ page }) => {
   await expect(page.getByTestId('asset-warmup-screen')).toContainText('Training Chamber Loading');
   await expect(page.getByTestId('asset-warmup-screen')).toContainText('The Chamber');
   await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
+  await expect(page.getByTestId('match-timer')).toHaveText('∞');
   await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
 });
 
