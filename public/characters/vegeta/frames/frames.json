@@ -1,13 +1,13 @@
 {
   "source": "Vegeta.png",
-  "count": 148,
+  "count": 149,
   "sheets": [
     {
       "id": "main",
       "name": "Main Sheet",
       "path": "/characters/vegeta/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 147
+      "frameCount": 148
     }
   ],
   "frames": [
@@ -2338,13 +2338,13 @@
       "sheetPath": "/characters/vegeta/animation-sheet.png",
       "sourceName": "Vegeta.png",
       "box": [
-        417,
-        1361,
-        506,
-        1414
+        418,
+        1362,
+        455,
+        1413
       ],
-      "width": 89,
-      "height": 53,
+      "width": 37,
+      "height": 51,
       "row": 14
     },
     {
@@ -2389,6 +2389,22 @@
       "generatedTransform": {
         "widthScale": 0.96
       }
+    },
+    {
+      "index": 148,
+      "path": "/characters/vegeta/frames/frame-148.png",
+      "sheetId": "main",
+      "sheetPath": "/characters/vegeta/animation-sheet.png",
+      "sourceName": "Vegeta.png",
+      "box": [
+        461,
+        1364,
+        505,
+        1413
+      ],
+      "width": 44,
+      "height": 49,
+      "row": 14
     }
   ]
 }
