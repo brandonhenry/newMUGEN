@@ -3926,7 +3926,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const sidestepping = isFighterLaneOrbitCameraActive(p1) || isFighterLaneOrbitCameraActive(p2);
     const sidestepCameraBoost = sidestepping ? 4.5 : 1;
     const sidestepRigBoost = sidestepping ? 2.4 : 1;
-    const sideFollowScale = sidestepping ? 0.55 : 1;
+    const sideFollowScale = sidestepping ? 0.82 : 1;
     focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing * sidestepCameraBoost));
     lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing * sidestepCameraBoost));
     side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing * sideFollowScale)).normalize();

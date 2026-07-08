@@ -173,6 +173,36 @@ describe('training trial catalog', () => {
     }
   });
 
+  it('requires the requested dash action instead of accepting shared walk state', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('movement:dash'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    const wrongInput = emptyInputFrame();
+    wrongInput.left = true;
+    let wrongProgress = makeTrainingTrialProgress(trial)!;
+    let rightProgress = makeTrainingTrialProgress(trial)!;
+    for (let frame = 0; frame < 13; frame += 1) {
+      wrongProgress = advanceTrainingTrialWithInput(wrongProgress, trial, emptyInputFrame(), mockMatch());
+      rightProgress = advanceTrainingTrialWithInput(rightProgress, trial, emptyInputFrame(), mockMatch());
+    }
+
+    wrongProgress = advanceTrainingTrialWithInput(wrongProgress, trial, wrongInput, mockMatch('walk'));
+    expect(wrongProgress.completed).toBe(false);
+    expect(wrongProgress.statuses[0]).toBe('current');
+
+    const rightInput = emptyInputFrame();
+    rightInput.dashForward = true;
+    rightProgress = advanceTrainingTrialWithInput(rightProgress, trial, rightInput, mockMatch('walk'));
+    expect(rightProgress.completed).toBe(true);
+    expect(rightProgress.statuses[0]).toBe('perfect');
+  });
+
   it('labels jump-in basics with the dedicated jump binding instead of up', () => {
     const roster = readRosterCharacters();
     const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
@@ -434,6 +464,24 @@ describe('training trial catalog', () => {
     expect(rightProgress.statuses[0]).toBe('perfect');
   });
 
+  it('still allows actionless state-recognition basics', () => {
+    const character = readRosterCharacters().find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+    const trial = generateBasicTrainingTrials(character, readRosterCharacters()).find((item) => item.id.endsWith('oki:knockdown-state'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    let progress = makeTrainingTrialProgress(trial)!;
+    for (let frame = 0; frame < 7; frame += 1) {
+      progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch('knockdown'));
+    }
+    progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch('knockdown'));
+
+    expect(progress.completed).toBe(true);
+    expect(progress.statuses[0]).toBe('perfect');
+  });
+
   it('grades a timed ki block from a blocked ki impact', () => {
     const character = readRosterCharacters().find((candidate) => hasAttackAnimation(candidate));
     expect(character).toBeTruthy();
@@ -647,7 +695,7 @@ describe('training trial catalog', () => {
     for (let frame = 0; frame < 13; frame += 1) {
       progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch());
     }
-    progress = advanceTrainingTrialWithInput(progress, trial, input, mockMatch());
+    progress = advanceTrainingTrialWithInput(progress, trial, input, mockMatch('walk'));
     expect(progress.completed).toBe(true);
 
     const retry = makeTrainingTrialProgress(trial, false, 2)!;
@@ -665,7 +713,7 @@ describe('training trial catalog', () => {
 
     const earlyInput = emptyInputFrame();
     earlyInput.right = true;
-    const early = advanceTrainingTrialWithInput(makeTrainingTrialProgress(trial)!, trial, earlyInput, mockMatch());
+    const early = advanceTrainingTrialWithInput(makeTrainingTrialProgress(trial)!, trial, earlyInput, mockMatch('walk'));
     expect(early.statuses[0]).toBe('early');
     expect(early.lastFeedback).toContain('early');
 
@@ -673,7 +721,7 @@ describe('training trial catalog', () => {
     for (let frame = 0; frame < 13; frame += 1) {
       perfectProgress = advanceTrainingTrialWithInput(perfectProgress, trial, emptyInputFrame(), mockMatch());
     }
-    perfectProgress = advanceTrainingTrialWithInput(perfectProgress, trial, earlyInput, mockMatch());
+    perfectProgress = advanceTrainingTrialWithInput(perfectProgress, trial, earlyInput, mockMatch('walk'));
     expect(perfectProgress.completed).toBe(true);
     expect(perfectProgress.statuses[0]).toBe('perfect');
 
@@ -681,7 +729,7 @@ describe('training trial catalog', () => {
     for (let frame = 0; frame < 40; frame += 1) {
       lateProgress = advanceTrainingTrialWithInput(lateProgress, trial, emptyInputFrame(), mockMatch());
     }
-    lateProgress = advanceTrainingTrialWithInput(lateProgress, trial, earlyInput, mockMatch());
+    lateProgress = advanceTrainingTrialWithInput(lateProgress, trial, earlyInput, mockMatch('walk'));
     expect(lateProgress.completed).toBe(true);
     expect(lateProgress.statuses[0]).toBe('late');
   });

@@ -113,6 +113,36 @@ async function startLocalFight(page: Page) {
   await page.waitForTimeout(4_200);
 }
 
+async function startBasicTrainingTrial(page: Page) {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await enterMainMenu(page);
+  await page.getByRole('button', { name: 'Training' }).click({ force: true });
+  await expect(page.locator('.training-select-screen')).toBeVisible({ timeout: 10_000 });
+  await page.getByRole('button', { name: 'Start Training' }).click();
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('Ready', { timeout: 15_000 });
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 15_000 });
+  await page.waitForTimeout(4_200);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Training Mode' }).click();
+  await page.getByRole('button', { name: /Basics/ }).click();
+  await page.getByRole('button', { name: /Walk In/ }).click();
+  await page.getByRole('button', { name: 'Try', exact: true }).click();
+  await expect(page.locator('.training-trial-hud')).toBeVisible({ timeout: 5_000 });
+}
+
+async function completeTrainingTrialAndContinue(page: Page) {
+  await page.evaluate(() => {
+    const testWindow = window as typeof window & { __koreE2ECompleteTrainingTrial?: () => void };
+    if (!testWindow.__koreE2ECompleteTrainingTrial) throw new Error('Missing KORE e2e training completion hook');
+    testWindow.__koreE2ECompleteTrainingTrial();
+  });
+  await expect(page.getByTestId('training-success-overlay')).toContainText('SUCCESS', { timeout: 5_000 });
+  await page.getByRole('button', { name: /Next Trial|Review Next/ }).click();
+  await expect(page.getByTestId('training-success-overlay')).toHaveCount(0);
+  await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 3_000 });
+}
+
 async function startOnlineBotFight(page: Page) {
   await page.addInitScript(() => {
     window.localStorage.setItem('kore.online.profile', JSON.stringify({ playerId: 'perf-player', displayName: 'PERF' }));
@@ -439,6 +469,21 @@ test.describe('in-game fight performance', () => {
       contentType: 'application/json'
     });
     expect(postWarmupRequests.filter((url) => /\/voxels-hd\/frame-\d+\.json/.test(url)).length).toBe(0);
+  });
+
+  test('keeps training trials smooth after repeated success transitions', async ({ page }, testInfo) => {
+    await installLongTaskCollector(page);
+    await startBasicTrainingTrial(page);
+    for (let index = 0; index < 3; index += 1) {
+      await completeTrainingTrialAndContinue(page);
+    }
+    await resetLongTaskCollector(page);
+    const stats = await sampleFramePacing(page, 8_000);
+    testInfo.attach('training-trial-frame-stats.json', {
+      body: JSON.stringify(stats, null, 2),
+      contentType: 'application/json'
+    });
+    expectSmoothFight(stats);
   });
 
   test('keeps online bot fights smooth after matchmaking connects', async ({ page }, testInfo) => {

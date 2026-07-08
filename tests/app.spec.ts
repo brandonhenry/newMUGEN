@@ -311,10 +311,49 @@ async function forceMatchOver(page: Page, winnerSlot: 1 | 2 = 1) {
   }, winnerSlot);
 }
 
+async function completeActiveTrainingTrial(page: Page) {
+  await page.evaluate(() => {
+    const testWindow = window as typeof window & { __koreE2ECompleteTrainingTrial?: () => void };
+    if (!testWindow.__koreE2ECompleteTrainingTrial) throw new Error('Missing KORE e2e training completion hook');
+    testWindow.__koreE2ECompleteTrainingTrial();
+  });
+}
+
 async function fightSessionId(page: Page) {
   const value = await page.locator('.fight-screen').getAttribute('data-fight-session-id');
   if (value === null) throw new Error('Missing fight session id');
   return value;
+}
+
+async function expectSuccessPanelFitsViewport(page: Page) {
+  const result = await page.getByTestId('training-success-overlay').evaluate((overlay) => {
+    const panel = overlay.querySelector<HTMLElement>('.training-success-panel');
+    const heading = overlay.querySelector<HTMLElement>('.training-success-panel h2');
+    const actions = overlay.querySelector<HTMLElement>('.training-success-actions');
+    if (!panel || !heading || !actions) return { ok: false, reason: 'missing-elements' };
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const panelRect = panel.getBoundingClientRect();
+    const headingRect = heading.getBoundingClientRect();
+    const actionsRect = actions.getBoundingClientRect();
+    return {
+      ok:
+        panelRect.left >= -1 &&
+        panelRect.right <= viewportWidth + 1 &&
+        panelRect.top >= -1 &&
+        panelRect.bottom <= viewportHeight + 1 &&
+        headingRect.left >= panelRect.left - 1 &&
+        headingRect.right <= panelRect.right + 1 &&
+        actionsRect.left >= panelRect.left - 1 &&
+        actionsRect.right <= panelRect.right + 1,
+      viewportWidth,
+      viewportHeight,
+      panel: { left: panelRect.left, right: panelRect.right, top: panelRect.top, bottom: panelRect.bottom },
+      heading: { left: headingRect.left, right: headingRect.right },
+      actions: { left: actionsRect.left, right: actionsRect.right }
+    };
+  });
+  expect(result).toMatchObject({ ok: true });
 }
 
 function keyValue(code: string) {
@@ -704,8 +743,40 @@ test('shows asset warmup before entering training', async ({ page }) => {
   await expect(page.locator('.training-select-screen')).toBeVisible();
   await page.getByRole('button', { name: 'Start Training' }).click();
   await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('Training Chamber Loading');
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('The Chamber');
   await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
   await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
+});
+
+test('start basics loads the chamber then opens the trial picker', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Desktop training picker flow covers the large preview layout');
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Training' }).click({ force: true });
+  await expect(page.locator('.training-select-screen')).toBeVisible();
+  await page.getByRole('button', { name: 'Next training mode' }).click();
+  await expect(page.getByRole('group', { name: 'Training mode' })).toContainText('Basics');
+  await page.getByRole('button', { name: 'Start Basics' }).click();
+
+  await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('Training Chamber Loading');
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('The Chamber');
+  await expect(page.getByTestId('asset-warmup-screen')).not.toContainText('Loading world');
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('Ready', { timeout: 12000 });
+  await activateAnyInputScreen(page, '[data-testid="asset-warmup-screen"]');
+
+  await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 12000 });
+  await expect(page.locator('.combo-trial-list')).toContainText('Basic Trials');
+  await expect(page.getByTestId('training-trial-detail')).toContainText('Walk In');
+  await expect(page.getByTestId('training-trial-active-preview')).toBeVisible({ timeout: 10000 });
+  await expect(page.getByTestId('training-trial-command-table')).toContainText('Ready');
+
+  await page.getByRole('button', { name: /Dash In/ }).click();
+  await expect(page.getByTestId('training-trial-detail')).toContainText('Dash In');
+  await expect(page.locator('.training-trial-challenge-list section button.active')).toContainText('Dash In');
+  await page.getByRole('button', { name: 'Try', exact: true }).click();
+  await expect(page.locator('.training-trial-hud')).toContainText('Dash In');
+  await expect(page.getByTestId('match-mode')).toHaveText('training');
 });
 
 test('defaults character and stage select to random slots', async ({ page }) => {
@@ -1508,6 +1579,42 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
   await expect(page.locator('.training-trial-hud')).toContainText('Preview');
   await expect(page.locator('.training-trial-hud')).not.toContainText('↑');
   await expect(page.locator('.training-trial-hud')).toBeHidden({ timeout: 12000 });
+});
+
+test('training trial next flow stays responsive and success overlay fits Steam Deck', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Steam Deck-sized training flow is covered by the desktop project');
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await startTraining(page);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Training Mode' }).click();
+  await page.getByRole('button', { name: /Basics/ }).click();
+  await page.getByRole('button', { name: /Walk In/ }).click();
+  await page.getByRole('button', { name: 'Try', exact: true }).click();
+  await expect(page.locator('.training-trial-hud')).toBeVisible();
+
+  for (let index = 0; index < 3; index += 1) {
+    const sessionBefore = await fightSessionId(page);
+    await completeActiveTrainingTrial(page);
+    await expect(page.getByTestId('training-success-overlay')).toContainText('SUCCESS', { timeout: 5_000 });
+    await expectSuccessPanelFitsViewport(page);
+    await page.getByRole('button', { name: /Next Trial|Review Next/ }).click();
+    await expect.poll(() => fightSessionId(page)).not.toBe(sessionBefore);
+    await expect(page.getByTestId('training-success-overlay')).toHaveCount(0);
+    await expect(page.locator('.combat-popup-card')).toHaveCount(0);
+    await expect(page.getByTestId('frame-input')).toHaveText('none');
+  }
+
+  await setFightPositions(page, { p1: { x: -0.45, z: 0 }, p2: { x: 0.45, z: 0 } });
+  await keyDown(page, 'KeyA');
+  await expect(page.getByTestId('frame-input')).toHaveText('p1:left', { timeout: 3_000 });
+  await expect(page.getByTestId('p1-state')).toHaveText('block', { timeout: 3_000 });
+  await keyUp(page, 'KeyA');
+  await expectNoHeldFightInput(page);
+
+  await keyDown(page, 'KeyU');
+  await expect(page.getByTestId('frame-input')).toHaveText('p1:jab', { timeout: 3_000 });
+  await expect(page.getByTestId('p1-state')).toHaveText('attack', { timeout: 3_000 });
+  await keyUp(page, 'KeyU');
 });
 
 test('opens training combo trials and shows counter-hit progress', async ({ page }, testInfo) => {

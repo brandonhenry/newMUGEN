@@ -229,6 +229,7 @@ import {
 } from './lib/tournament';
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type FightPauseMenuView = 'menu' | 'movelist' | 'trainingTrials';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
 type AssetWarmupMatchOptions = NonNullable<Parameters<typeof createMatch>[5]>;
 type AssetWarmupIntent = {
@@ -3836,6 +3837,11 @@ export default function App() {
     playableStageRoster.find((stage) => stage.id === 'the-chamber') ??
     stages.find((stage) => stage.id === 'the-chamber') ??
     selectedStage;
+  const trainingChamberStage =
+    playableStageRoster.find((stage) => stage.id === 'the-chamber') ??
+    stageRoster.find((stage) => stage.id === 'the-chamber') ??
+    stages.find((stage) => stage.id === 'the-chamber') ??
+    selectedStage;
 
   useEffect(() => {
     prefetchStageModelDecoders();
@@ -3853,14 +3859,15 @@ export default function App() {
     continuation: () => void,
     previousScreen: Screen = screen,
     options: Partial<AssetWarmupMatchOptions> = {},
-    warmupFighters: { p1?: CharacterDefinition; p2?: CharacterDefinition } = {}
+    warmupFighters: { p1?: CharacterDefinition; p2?: CharacterDefinition } = {},
+    modeOverride?: MatchMode
   ) => {
     assetReadyContinuationRef.current = continuation;
     setAssetWarmupIntent({
       stage,
       previousScreen,
       destination,
-      mode,
+      mode: modeOverride ?? mode,
       p1: warmupFighters.p1 ?? p1,
       p2: warmupFighters.p2 ?? p2,
       matchOptions: options
@@ -4319,12 +4326,13 @@ export default function App() {
             onBack={() => setScreen('menu')}
             onStart={() => {
               const startTraining = () => {
-                const fightStage = resolveRandomStageSelection();
+                const fightStage = trainingChamberStage;
                 if (!fightStage) return;
                 const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
                 if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
                 if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
-                setMode(selectedTrainingMode === 'online' ? 'trainingOnline' : 'training');
+                const trainingMatchMode = selectedTrainingMode === 'online' ? 'trainingOnline' : 'training';
+                setMode(trainingMatchMode);
                 captureAppAnalytics('character_selected', {
                   p1_character_id: trainingCharacters.p1?.id ?? p1Id,
                   p2_character_id: trainingCharacters.p2?.id ?? p2Id,
@@ -4332,10 +4340,21 @@ export default function App() {
                 });
                 captureAppAnalytics('stage_selected', {
                   stage_id: fightStage.id,
-                  stage_random: randomStageSelected,
+                  stage_random: false,
                   training_submode: selectedTrainingMode
                 });
-                continueWhenAssetsReady(fightStage, 'fight', () => setScreen('fight'), 'training', { roster });
+                continueWhenAssetsReady(
+                  fightStage,
+                  'fight',
+                  () => setScreen('fight'),
+                  'training',
+                  { roster },
+                  {
+                    p1: trainingCharacters.p1 ?? p1,
+                    p2: trainingCharacters.p2 ?? p2
+                  },
+                  trainingMatchMode
+                );
               };
               if (selectedTrainingMode === 'online' && !onlineProfile) {
                 promptForUsername({
@@ -4737,6 +4756,7 @@ export default function App() {
             onPausedChange={setFightPaused}
             onMenu={() => setScreen('menu')}
             initialTrainingMode={selectedTrainingMode}
+            initialPauseMenuView={selectedTrainingMode === 'basics' || selectedTrainingMode === 'combos' ? 'trainingTrials' : undefined}
             onCharacterSelect={() => setScreen(mode === 'training' || mode === 'trainingOnline' ? 'training' : 'select')}
             onTournamentMatchComplete={handleTournamentMatchComplete}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId, playerHealth, playerMaxHealth }) => {
@@ -20604,6 +20624,7 @@ function FightScreen({
   privateRoomIntent,
   arcadeRun,
   initialTrainingMode = 'free',
+  initialPauseMenuView,
   onPausedChange,
   onMenu,
   onCharacterSelect,
@@ -20636,14 +20657,15 @@ function FightScreen({
   privateRoomIntent: PrivateRoomIntent | null;
   arcadeRun?: ArcadeRunState;
   initialTrainingMode?: TrainingTrialMode;
+  initialPauseMenuView?: FightPauseMenuView;
   onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onCharacterSelect: () => void;
   onTournamentMatchComplete?: (result: { winnerSlot: 1 | 2 }) => void;
   onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string; playerHealth: number; playerMaxHealth: number }) => void;
 }) {
-  const [paused, setPaused] = useState(false);
-  const [pauseMenuView, setPauseMenuView] = useState<'menu' | 'movelist' | 'trainingTrials'>('menu');
+  const [paused, setPaused] = useState(() => Boolean(initialPauseMenuView));
+  const [pauseMenuView, setPauseMenuView] = useState<FightPauseMenuView>(() => initialPauseMenuView ?? 'menu');
   const [activeMoveListTab, setActiveMoveListTab] = useState<MoveListTab>('raw');
   const [trainingMode, setTrainingMode] = useState<TrainingTrialMode>(initialTrainingMode);
   const basicTrainingTrials = useMemo(() => generateBasicTrainingTrials(p1, roster), [p1, roster]);
@@ -22770,7 +22792,9 @@ function FightScreen({
               if (currentProgress && !currentProgress.completed) {
                 const nextProgress = advanceTrainingTrialWithInput(currentProgress, currentTrial, trialInput, matchRef.current);
                 trainingTrialProgressRef.current = nextProgress;
-                setTrainingTrialProgress(nextProgress);
+                if (shouldPublishTrainingTrialProgress(currentProgress, nextProgress)) {
+                  setTrainingTrialProgress(nextProgress);
+                }
                 if (!currentPreview && nextProgress.completed && nextProgress.succeeded) {
                   setCompletedTrainingTrialIds((completed) => {
                     if (completed.has(currentTrial.id)) return completed;
@@ -22808,7 +22832,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, installFreshMatch, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
+  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, installFreshMatch, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame]);
 
   const requestOnlineRematch = () => {
     if (isTournamentMatchMode(mode)) {
@@ -23970,6 +23994,17 @@ function formatTrainingFeedback(progress: TrainingTrialProgress, previewing: boo
   return 'Ready';
 }
 
+function shouldPublishTrainingTrialProgress(previous: TrainingTrialProgress, next: TrainingTrialProgress) {
+  if (previous.stepIndex !== next.stepIndex) return true;
+  if (previous.completed !== next.completed || previous.succeeded !== next.succeeded) return true;
+  if (previous.lastFeedback !== next.lastFeedback || previous.preview !== next.preview || previous.attempts !== next.attempts) return true;
+  return !sameTrainingProgressList(previous.statuses, next.statuses) || !sameTrainingProgressList(previous.ratings, next.ratings);
+}
+
+function sameTrainingProgressList<T extends string>(left: T[], right: T[]) {
+  return left.length === right.length && left.every((item, index) => item === right[index]);
+}
+
 function TrainingTrialHud({
   trial,
   progress,
@@ -24143,6 +24178,9 @@ function TrainingTrialPanel({
     const nextMode = cycleModeValue(modes, mode, direction);
     if (nextMode !== mode) onModeChange(nextMode);
   }, [mode, modes, onModeChange]);
+  const activeTrialNumber = activeTrial ? Math.max(1, trials.findIndex((trial) => trial.id === activeTrial.id) + 1) : 0;
+  const activeTrialStatus = progress?.completed ? (progress.succeeded ? 'Success' : 'Missed') : previewing ? 'Preview' : progress ? formatTrainingFeedback(progress, previewing) : 'Ready';
+  const activePreviewDuration = activeTrial ? previewScriptLength(activeTrial.previewScript) + 72 : 1;
 
   useEffect(() => {
     let frame = 0;
@@ -24165,9 +24203,12 @@ function TrainingTrialPanel({
   }, [cyclePanelMode]);
 
   return (
-    <div className="combo-trial-panel">
-      <aside className="combo-trial-list" aria-label="Training trials">
-        <h3>{character.displayName} Training</h3>
+    <div className="combo-trial-panel training-trial-picker">
+      <aside className="combo-trial-list training-trial-challenge-list" aria-label="Training trials">
+        <header className="training-trial-list-header">
+          <h3>{character.displayName}</h3>
+          <span>{mode === 'combos' ? 'Combo Trials' : mode === 'basics' ? 'Basic Trials' : 'Training'}</span>
+        </header>
         <div className="training-mode-switch" role="tablist" aria-label="Training mode">
           {modes.map((item) => (
             <button
@@ -24184,47 +24225,74 @@ function TrainingTrialPanel({
         {mode === 'free' && (
           <section>
             <strong>Free Training</strong>
-            <p>Use the arena freely, or switch to Basics for guided fundamentals and Combos for route drills.</p>
+            <p>Use the chamber freely, or switch to Basics for guided fundamentals and Combos for route drills.</p>
           </section>
         )}
         {groupedTrials.map((group) => (
           <section key={group.category}>
             <strong>{trainingTrialCategoryLabels[group.category]}</strong>
-            {group.trials.map((trial) => (
-              <button
-                key={trial.id}
-                className={activeTrial?.id === trial.id ? 'active' : ''}
-                onClick={() => onSelectTrial(trial)}
-              >
-                <span>
+            {group.trials.map((trial) => {
+              const active = activeTrial?.id === trial.id;
+              const trialIndex = Math.max(1, trials.findIndex((item) => item.id === trial.id) + 1);
+              return (
+                <button
+                  key={trial.id}
+                  className={active ? 'active' : ''}
+                  aria-current={active ? 'true' : undefined}
+                  onClick={() => onSelectTrial(trial)}
+                  onFocus={() => {
+                    if (!active) onSelectTrial(trial);
+                  }}
+                >
                   <span className={`trial-complete-mark ${completedTrialIds.has(trial.id) ? 'done' : ''}`} aria-hidden="true">
-                    {completedTrialIds.has(trial.id) ? '✓' : '○'}
+                    {completedTrialIds.has(trial.id) ? '✓' : String(trialIndex).padStart(2, '0')}
                   </span>
-                  Lv {trial.difficulty}
-                  {trial.sourceComboRoute ? ` | ${trial.sourceComboRoute.estimatedHits} hits` : ''}
-                </span>
-                {trial.title}
-              </button>
-            ))}
+                  <span className="trial-list-copy">
+                    <strong>{trial.title}</strong>
+                    <small>
+                      Lv {trial.difficulty}
+                      {trial.sourceComboRoute ? ` | ${trial.sourceComboRoute.estimatedHits} hits` : ` | ${trainingTrialCategoryLabels[trial.category]}`}
+                    </small>
+                  </span>
+                </button>
+              );
+            })}
           </section>
         ))}
       </aside>
-      <section className="combo-trial-detail" aria-live="polite">
+      <section className="combo-trial-detail training-trial-detail" aria-live="polite" data-testid="training-trial-detail">
         {activeTrial ? (
           <>
-            <header>
-              <span>
-                {trainingTrialCategoryLabels[activeTrial.category]} Lv {activeTrial.difficulty}
-                {activeTrial.sourceComboRoute ? ` | ${activeTrial.sourceComboRoute.estimatedHits} hits` : ''}
-              </span>
-              <h3>{activeTrial.title}</h3>
-              <small>{activeTrial.lesson}</small>
-            </header>
+            <div className="training-trial-detail-main">
+              <div className="training-trial-preview-frame" aria-label={`${activeTrial.title} preview`}>
+                <MoveDemoCanvas
+                  key={`${activeTrial.id}:${match.stage.id}`}
+                  character={character}
+                  stage={match.stage}
+                  script={activeTrial.previewScript}
+                  durationFrames={activePreviewDuration}
+                  dummyCharacter={match.fighters[1].character}
+                  label={`${activeTrial.title} trial preview`}
+                  testId="training-trial-active-preview"
+                />
+              </div>
+              <aside className="training-trial-info-panel">
+                <span>{trainingTrialCategoryLabels[activeTrial.category]}</span>
+                <h3>{activeTrial.title}</h3>
+                <div className="combo-trial-stats">
+                  <span><small>Challenge</small>{String(activeTrialNumber).padStart(2, '0')}</span>
+                  <span><small>Difficulty</small>Lv {activeTrial.difficulty}</span>
+                  <span><small>Damage</small>{Math.round(match.fighters[0].comboDamage)}</span>
+                  <span><small>Status</small>{activeTrialStatus}</span>
+                </div>
+                <p>{activeTrial.lesson}</p>
+              </aside>
+            </div>
             <div className="zoro-trainer-callout">
               <TrainerPortrait />
               <p><strong>Zoro</strong>{activeTrial.zoroLine}</p>
             </div>
-            <div className="combo-trial-sequence">
+            <div className="combo-trial-sequence training-trial-command-table" data-testid="training-trial-command-table">
               {activeTrial.steps.map((step, index) => {
                 const status = progress?.statuses[index] ?? (index === 0 ? 'current' : 'pending');
                 const rating = progress?.ratings[index] ?? 'Ready';
@@ -24239,12 +24307,6 @@ function TrainingTrialPanel({
                   </div>
                 );
               })}
-            </div>
-            <div className="combo-trial-stats">
-              <span>{match.fighters[0].comboHits} hits</span>
-              <span>{Math.round(match.fighters[0].comboDamage)} damage</span>
-              <span>{progress?.completed ? (progress.succeeded ? 'Success' : 'Missed') : previewing ? 'Preview' : 'Ready'}</span>
-              <span>{progress ? formatTrainingFeedback(progress, previewing) : 'Ready'}</span>
             </div>
           </>
         ) : (
@@ -24730,13 +24792,14 @@ function AssetWarmupScreen({
   const continuedRef = useRef(false);
   const screenRef = useRef<HTMLDivElement>(null);
   const warmupMatch = useMemo(() => createAssetWarmupMatch(intent, cpuDifficulty), [cpuDifficulty, intent]);
+  const trainingWarmup = intent.previousScreen === 'training' || intent.mode === 'training' || intent.mode === 'trainingOnline';
   const stageReady = !isModelStage(intent.stage) || assetStatus.ready || assetStatus.phase === 'error';
   const sceneReady = sceneAssetState.ready || sceneAssetState.errors.length > 0;
   const ready = stageReady && sceneReady;
   const progress = Math.max(0, Math.min(100, Math.round((Math.max(assetStatus.progress, stageReady ? 100 : 0) + sceneAssetState.progress) / 2)));
   const statusText = !stageReady
     ? assetStatus.phase === 'error'
-    ? 'Stage fallback ready'
+    ? trainingWarmup ? 'Chamber fallback ready' : 'Stage fallback ready'
       : assetStatus.ready
         ? 'Ready'
         : assetStatus.phase === 'gpuWarm'
@@ -24744,8 +24807,8 @@ function AssetWarmupScreen({
           : assetStatus.phase === 'decoded'
             ? 'Preparing GPU'
             : assetStatus.phase === 'downloading'
-              ? 'Loading world'
-              : 'Finding world'
+              ? trainingWarmup ? 'Loading chamber' : 'Loading stage'
+              : trainingWarmup ? 'Finding chamber' : 'Finding stage'
     : !sceneReady
       ? 'Loading fighters'
       : 'Ready';
@@ -24830,12 +24893,16 @@ function AssetWarmupScreen({
       <div className="arcade-transition-route-line" aria-hidden="true" />
       <section className="arcade-transition-copy" aria-live="polite">
         <div className="arcade-transition-kicker">
-          <span>{intent.destination === 'fight' ? 'Fight Loading' : 'Versus Loading'}</span>
+          <span>{trainingWarmup ? 'Training Chamber Loading' : intent.destination === 'fight' ? 'Fight Loading' : 'Versus Loading'}</span>
           <b>{ready && minimumElapsed ? 'Ready' : statusText}</b>
         </div>
         <h1>{intent.stage.name}</h1>
         <div className="arcade-transition-subtitle">{modeLabel(intent.mode)}</div>
-        <p>{assetStatus.phase === 'error' ? 'The arena model did not finish cleanly, so K.O.R.E will use the stage fallback.' : 'Preparing the fighters and arena before the match starts.'}</p>
+        <p>
+          {assetStatus.phase === 'error'
+            ? trainingWarmup ? 'The chamber did not finish cleanly, so K.O.R.E will use the training fallback.' : 'The arena model did not finish cleanly, so K.O.R.E will use the stage fallback.'
+            : trainingWarmup ? 'Preparing the trainer, fighters, and chamber before training starts.' : 'Preparing the fighters and arena before the match starts.'}
+        </p>
         <div className="arcade-transition-stats stage-warmup-stats">
           <span>
             <strong>{progress}%</strong>
@@ -24853,7 +24920,7 @@ function AssetWarmupScreen({
       </section>
       <div className="arcade-transition-footer">
         <Timer size={18} />
-        <span>{ready && minimumElapsed ? 'Entering stage' : statusText}</span>
+        <span>{ready && minimumElapsed ? trainingWarmup ? 'Entering chamber' : 'Entering stage' : statusText}</span>
       </div>
     </div>
   );

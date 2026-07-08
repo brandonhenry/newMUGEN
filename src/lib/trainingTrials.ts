@@ -538,10 +538,7 @@ export function advanceTrainingTrialWithInput(progress: TrainingTrialProgress, t
   }
 
   const next = { ...progress, statuses: [...progress.statuses], ratings: [...progress.ratings], stepFrame: progress.stepFrame + 1 };
-  const pressed = step.actions.length > 0 && step.actions.every((action) => input[action]);
-  const stateMatches = matchesStateStep(step, match);
-  if (step.requireGetupAction && (!pressed || !stateMatches)) return next;
-  if (!pressed && !stateMatches) return next;
+  if (!matchesInputStateStep(step, input, match)) return next;
 
   const target = step.targetFrame ?? 12;
   const before = step.windowBefore ?? 5;
@@ -1233,6 +1230,14 @@ function matchesStateStep(step: TrainingTrialStep, match: MatchSnapshot) {
   if (step.requireGetupAction && player.getupAction !== step.requireGetupAction) return false;
   if (!step.requireState && !step.requireDummyState && !step.requireGetupAction) return false;
   return true;
+}
+
+function matchesInputStateStep(step: TrainingTrialStep, input: InputFrame, match: MatchSnapshot) {
+  const needsActions = step.actions.length > 0;
+  const needsState = Boolean(step.requireState || step.requireDummyState || step.requireGetupAction);
+  const actionsMatch = !needsActions || step.actions.every((action) => input[action]);
+  const stateMatches = !needsState || matchesStateStep(step, match);
+  return actionsMatch && stateMatches && (needsActions || needsState);
 }
 
 function pickDummy(character: CharacterDefinition, roster: CharacterDefinition[]) {
