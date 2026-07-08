@@ -13521,6 +13521,21 @@ function movePropertyBadges(move: MoveDefinition | null) {
   ].filter((badge): badge is string => Boolean(badge));
 }
 
+function moveProjectileBadges(character: CharacterDefinition, slot: AnimationSlot) {
+  const dataKey = getSlotDataKey(slot);
+  const instances = character.moveProjectiles?.[dataKey] ?? [];
+  if (instances.length === 0) return [];
+  const hasBlast = instances.some((instance) => (
+    instance.kind === 'blast' ||
+    character.projectiles?.some((projectile) => projectile.id === instance.projectileId && projectile.kind === 'blast')
+  ));
+  const releaseGated = instances.some((instance) => instance.releaseGated);
+  return [
+    hasBlast ? 'Blast' : 'Projectile',
+    releaseGated ? 'Charge/Hold' : null
+  ].filter((badge): badge is string => Boolean(badge));
+}
+
 function trackingBadgeLabel(tracking: MoveTracking) {
   if (tracking === 'weakLeft') return 'Tracks Left';
   if (tracking === 'weakRight') return 'Tracks Right';
@@ -23962,7 +23977,7 @@ function buildPauseMovePreviewRows(
       notation: slot.notation,
       description: move?.description,
       summary: formatFrameSummary(move),
-      badges: movePropertyBadges(move),
+      badges: [...movePropertyBadges(move), ...moveProjectileBadges(character, slot)],
       script,
       durationFrames: previewScriptLength(script) + Math.max(42, moveDuration + 18)
     };
