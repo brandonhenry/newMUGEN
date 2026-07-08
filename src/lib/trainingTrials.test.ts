@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
-import type { CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrameWithMetadata, MatchSnapshot } from '../types';
+import type { CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrameWithMetadata, MatchSnapshot, MoveProjectileInstance } from '../types';
 import { emptyInputFrame } from '../types';
 import { resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { resolveMoveRoutes } from './comboRoutes';
@@ -60,6 +60,50 @@ function mockImpact(overrides: Partial<ImpactSparkEvent> = {}): ImpactSparkEvent
     moveInput: 'jab',
     ...overrides
   };
+}
+
+function routeForStep(routes: ReturnType<typeof resolveMoveRoutes>, step: ReturnType<typeof generateBasicTrainingTrials>[number]['steps'][number]) {
+  return routes.find((item) => step.routeKey ? item.routeKey === step.routeKey : item.command === step.command || (!step.command && item.input === step.input));
+}
+
+function routeUsesKi(route: ReturnType<typeof resolveMoveRoutes>[number] | undefined) {
+  return Boolean(route?.command?.startsWith('O+') || route?.move.usesKi || route?.move.kiBurst || route?.requiresKi);
+}
+
+function routeProjectileInstances(character: CharacterDefinition, route: ReturnType<typeof resolveMoveRoutes>[number] | undefined): MoveProjectileInstance[] {
+  if (!route) return [];
+  const keys = projectileMoveKeys(route);
+  const instances = keys.flatMap((key) => character.moveProjectiles?.[key] ?? []);
+  return instances.filter((instance, index) => instances.findIndex((candidate) => candidate.id === instance.id) === index);
+}
+
+function projectileMoveKeys(route: ReturnType<typeof resolveMoveRoutes>[number]) {
+  const baseInputKeys: Record<string, string> = {
+    jab: 'jableft',
+    heavy: 'jabright',
+    kick: 'kickleft',
+    special: 'kickright',
+    '1': 'jableft',
+    '2': 'jabright',
+    '3': 'kickleft',
+    '4': 'kickright'
+  };
+  const commandKeys = route.command
+    ? [route.command, route.command.startsWith('cmd:') ? route.command.slice(4) : `cmd:${route.command}`]
+    : [];
+  return [...new Set([
+    route.animationKey,
+    route.move.animationKey,
+    ...commandKeys,
+    route.move.comboKey,
+    route.move.id,
+    baseInputKeys[route.input],
+    route.input
+  ].filter((key): key is string => Boolean(key)))];
+}
+
+function projectileInstanceKind(character: CharacterDefinition, instance: MoveProjectileInstance) {
+  return instance.kind ?? character.projectiles?.find((projectile) => projectile.id === instance.projectileId)?.kind ?? 'projectile';
 }
 
 function progressAtImpactFrame(trial: ReturnType<typeof generateBasicTrainingTrials>[number], frame = trial.steps[0]?.targetFrame ?? 18) {
@@ -432,8 +476,9 @@ describe('training trial catalog', () => {
         if (trial.category === 'ki') {
           if (trial.id.endsWith('ki:perfect-block') || trial.id.endsWith('ki:charge')) continue;
           const step = trial.steps[0];
-          const route = routes.find((item) => step.routeKey ? item.routeKey === step.routeKey : item.command === step.command || (!step.command && item.input === step.input));
-          expect(Boolean(route?.command?.startsWith('O+') || route?.move.usesKi || route?.move.kiBurst), `${character.id}:${trial.id}`).toBe(true);
+          const route = routeForStep(routes, step);
+          const hasProjectile = routeProjectileInstances(character, route).length > 0;
+          expect(Boolean(routeUsesKi(route) || hasProjectile), `${character.id}:${trial.id}`).toBe(true);
         }
       }
     }
@@ -466,6 +511,38 @@ describe('training trial catalog', () => {
       requireAirborneDefender: true
     });
     expect(byId('punish:counter-hit')?.steps[0].expectImpactKinds).toEqual(['counterHit']);
+  });
+
+  it('adds representative projectile, blast, ki, and clash basics from character metadata', () => {
+    const roster = readRosterCharacters();
+    const routable = roster.filter((character) => !character.unplayable && hasAttackAnimation(character));
+    expect(routable.length).toBeGreaterThan(0);
+
+    for (const character of routable) {
+      const routes = resolveMoveRoutes(character);
+      const trials = generateBasicTrainingTrials(character, roster);
+      const hasTrial = (suffix: string) => trials.some((trial) => trial.id.endsWith(suffix));
+      const hasProjectileRoute = routes.some((route) => routeProjectileInstances(character, route).length > 0);
+      const hasNonBlastProjectileRoute = routes.some((route) => routeProjectileInstances(character, route).some((instance) => projectileInstanceKind(character, instance) !== 'blast'));
+      const hasBlastRoute = routes.some((route) => routeProjectileInstances(character, route).some((instance) => projectileInstanceKind(character, instance) === 'blast'));
+      const hasKiRoute = routes.some((route) => routeUsesKi(route));
+      const hasClashRoute = routes.some((route) => route.move.kiBurst);
+
+      if (hasProjectileRoute) expect(hasTrial('ki:projectile') || hasTrial('ki:blast'), character.id).toBe(true);
+      if (hasNonBlastProjectileRoute) expect(hasTrial('ki:projectile'), character.id).toBe(true);
+      if (hasBlastRoute) expect(hasTrial('ki:blast'), character.id).toBe(true);
+      if (hasKiRoute) expect(hasTrial('ki:route'), character.id).toBe(true);
+      if (hasClashRoute) {
+        const trial = trials.find((item) => item.id.endsWith('ki:clash-qte'));
+        expect(trial, character.id).toBeTruthy();
+        expect(trial?.setup).toMatchObject({ dummyScript: 'kiAttack', p1Ki: 100, p2Ki: 100 });
+        expect(trial?.steps[0]).toMatchObject({
+          expectImpactKinds: ['clash'],
+          requireImpactKiBurst: true,
+          requireImpactDamage: true
+        });
+      }
+    }
   });
 
   it('adds wakeup basics that start the player knocked down', () => {
@@ -601,6 +678,44 @@ describe('training trial catalog', () => {
 
     expect(progress.completed).toBe(true);
     expect(progress.statuses[0]).toBe('perfect');
+  });
+
+  it('only grades clash impacts for explicit clash trials and waits for QTE damage', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => resolveMoveRoutes(candidate).some((route) => route.move.kiBurst));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trials = generateBasicTrainingTrials(character, roster);
+    const clashTrial = trials.find((item) => item.id.endsWith('ki:clash-qte'));
+    const normalTrial = trials.find((item) => item.id.endsWith('ki:perfect-block'));
+    expect(clashTrial).toBeTruthy();
+    expect(normalTrial).toBeTruthy();
+    if (!clashTrial || !normalTrial) return;
+
+    const ignoredNormal = advanceTrainingTrialWithImpact(
+      progressAtImpactFrame(normalTrial),
+      normalTrial,
+      mockImpact({ kind: 'clash', damage: 24, kiBurst: true })
+    );
+    expect(ignoredNormal.completed).toBe(false);
+    expect(ignoredNormal.statuses[0]).toBe('current');
+
+    const clashStart = advanceTrainingTrialWithImpact(
+      progressAtImpactFrame(clashTrial),
+      clashTrial,
+      mockImpact({ kind: 'clash', damage: 0, kiBurst: true })
+    );
+    expect(clashStart.completed).toBe(false);
+    expect(clashStart.statuses[0]).toBe('current');
+
+    const clashWin = advanceTrainingTrialWithImpact(
+      progressAtImpactFrame(clashTrial),
+      clashTrial,
+      mockImpact({ kind: 'clash', damage: 24, kiBurst: true })
+    );
+    expect(clashWin.completed).toBe(true);
+    expect(clashWin.statuses[0]).toBe('perfect');
   });
 
   it('requires whiff punish, airborne anti-air, and counter-hit impacts for their basics drills', () => {

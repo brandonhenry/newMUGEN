@@ -1,4 +1,4 @@
-import type { ActionName, CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrame, InputFrameWithMetadata, MatchSnapshot, MoveInput } from '../types';
+import type { ActionName, CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrame, InputFrameWithMetadata, MatchSnapshot, MoveInput, MoveProjectileInstance } from '../types';
 import { emptyInputFrame } from '../types';
 import { BEGINNER_AUTO_COMBO_INPUTS, resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { commandRouteFamily, commandToActions as commandRouteToActions } from './commandRoutes';
@@ -40,6 +40,7 @@ export type TrainingTrialStep = {
   expectImpactAttackerSlot?: 1 | 2;
   expectImpactDefenderSlot?: 1 | 2;
   requireImpactKiBurst?: boolean;
+  requireImpactDamage?: boolean;
   requireAirborneDefender?: boolean;
   missAfterFrame?: number;
   counterHit?: boolean;
@@ -142,6 +143,13 @@ const inputToButton: Record<MoveInput, string> = {
   heavy: '2',
   kick: '3',
   special: '4'
+};
+
+const buttonToInput: Record<string, MoveInput> = {
+  '1': 'jab',
+  '2': 'heavy',
+  '3': 'kick',
+  '4': 'special'
 };
 
 const categoryLabels: Record<TrainingTrialCategory, string> = {
@@ -302,6 +310,9 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   const tornado = routes.find((route) => route.move.tornado);
   const crouch = routes.find((route) => route.command?.startsWith('FC+') || route.command?.startsWith('WS+'));
   const ki = routes.find((route) => route.command?.startsWith('O+') || route.move.usesKi || route.move.kiBurst);
+  const projectile = pickProjectileRoute(character, routes, 'projectile');
+  const blast = pickProjectileRoute(character, routes, 'blast');
+  const clash = routes.find((route) => route.move.kiBurst);
   const advanced = routes.find((route) => route.category === 'advanced' || route.command);
   const antiAir = pickAntiAirRoute(routes);
   const counterHit = routes.find((route) => route.move.counterHit && route.move.damage > 0) ?? antiAir ?? routes.find((route) => route.move.damage > 0);
@@ -375,6 +386,34 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   trials.push(makeSimpleTrial(character, dummy, 'ki', 'ki:charge', 'Ki Charge', ['O'], ['charge'], 'Hold charge to build ki. Get used to checking your resource before spending it.', 'Power is only useful when you know you have it.', 'Ki charge started.', { requireState: 'chargeKi' }));
   trials.push(makeImpactOnlyTrial(character, dummy, 'ki', 'ki:perfect-block', 'Ki Perfect Block', ['B'], ['block'], 'Time your guard against ki attacks. A close block earns Perfect timing here.', 'Meet power with timing, not panic.', 'Ki attack blocked.', { dummyScript: 'kiAttack', setup: { p2Ki: 100, p1Position: { x: -0.55, z: 0 }, p2Position: { x: 0.55, z: 0 } }, expectImpactKinds: ['block'], expectImpactAttackerSlot: 2, expectImpactDefenderSlot: 1, requireImpactKiBurst: true, targetFrame: 20, windowBefore: 8, windowAfter: 12, missAfterFrame: 80 }));
   if (ki) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:route', 'Ki Route', ki, 'Ki routes spend charge for a stronger route.', 'Spend power only when the cut matters.', 'Use the ki route.', { setup: { p1Ki: 100, dummyScript: 'idle' } }));
+  if (projectile) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:projectile', 'Projectile Check', projectile, 'Projectile routes let you threaten space without standing directly next to the opponent. Fire the shot, then watch whether they block, sidestep, or get clipped.', 'Power at range still needs aim.', 'Projectile connected.', { setup: { p1Ki: routeUsesKi(projectile) ? 100 : undefined, dummyScript: 'idle', p1Position: { x: -0.95, z: 0 }, p2Position: { x: 0.85, z: 0 } }, expectImpactKinds: ['hit', 'counterHit'], missAfterFrame: 150 }));
+  if (blast) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:blast', 'Blast Control', blast, 'Blast routes commit to a larger lane of power. Set your spacing first, then release the blast before the opponent walks through your startup.', 'Big power needs clean spacing.', 'Blast connected.', { setup: { p1Ki: routeUsesKi(blast) ? 100 : undefined, dummyScript: 'idle', p1Position: { x: -1, z: 0 }, p2Position: { x: 0.95, z: 0 } }, expectImpactKinds: ['hit', 'counterHit'], missAfterFrame: 170 }));
+  if (clash) {
+    const clashDummy = pickClashDummy(character, roster) ?? dummy;
+    trials.push(makeMixedTrial(
+      character,
+      clashDummy,
+      'ki',
+      'ki:clash-qte',
+      'Clash QTE',
+      [
+        routeToTrialStep('clash', clash, {
+          expectImpactKinds: ['clash'],
+          requireImpactKiBurst: true,
+          requireImpactDamage: true,
+          targetFrame: 80,
+          windowBefore: 80,
+          windowAfter: 120,
+          missAfterFrame: 240,
+          reason: 'Meet a ki attack with your own powered attack, then finish the clash sequence cleanly.'
+        })
+      ],
+      'When two powered ki attacks collide, KORE starts a clash. Win the quick-time sequence to turn the power struggle into damage.',
+      'Do not freeze when power meets power. Finish the sequence.',
+      'Clash won.',
+      { dummyScript: 'kiAttack', setup: { p1Ki: 100, p2Ki: 100, p1Position: { x: -0.42, z: 0 }, p2Position: { x: 0.42, z: 0 } } }
+    ));
+  }
   trials.push(makeSimpleTrial(character, dummy, 'corner', 'corner:carry', 'Corner Space', ['f', '1'], ['right', 'jab'], 'Corner pressure starts by taking space before attacking.', 'Put their back to the wall, then make it count.', 'Walk in and jab.', { setup: { p1Position: { x: -1.1, z: 0 }, p2Position: { x: -0.18, z: 0 }, corner: 'left', dummyScript: 'guard' } }));
   trials.push(
     makeGetupTrial(character, dummy, 'oki:knockdown-state', 'Knockdown Choice', ['KD'], [], 'Knockdown means you are on the floor until you choose a wakeup: stand in place, side roll to change lanes, or back roll to make space.', 'First lesson: do not panic on the floor. Choose the rise.', 'Knockdown recognized.', { requireState: 'knockdown', targetFrame: 8, windowBefore: 0 }),
@@ -561,9 +600,10 @@ export function advanceTrainingTrialWithInput(progress: TrainingTrialProgress, t
 }
 
 export function advanceTrainingTrialWithImpact(progress: TrainingTrialProgress, trial: TrainingTrialDefinition, event: ImpactSparkEvent): TrainingTrialProgress {
-  if (progress.completed || event.kind === 'clash') return progress;
+  if (progress.completed) return progress;
   const step = trial.steps[progress.stepIndex];
   if (!step || step.kind !== 'impact') return progress;
+  if (shouldIgnoreTrainingImpact(step, event)) return progress;
   const matches = trainingTrialStepMatchesImpact(step, event);
   if (!matches) {
     const statuses = [...progress.statuses];
@@ -585,7 +625,7 @@ export function advanceTrainingTrialWithImpact(progress: TrainingTrialProgress, 
   }
   const rating: TrainingTrialTimingRating = progress.stepFrame > target + after ? 'Late' : Math.abs(delta) <= 2 ? 'Perfect' : 'Confirmed';
   const status: TrainingTrialStepStatus = rating === 'Late' ? 'late' : rating === 'Perfect' ? 'perfect' : 'confirmed';
-  const feedback = step.counterHit || step.expectImpactKinds?.includes('counterHit') ? 'Counter Hit' : rating === 'Perfect' ? 'Perfect' : rating;
+  const feedback = step.expectImpactKinds?.includes('clash') ? 'Clash' : step.counterHit || step.expectImpactKinds?.includes('counterHit') ? 'Counter Hit' : rating === 'Perfect' ? 'Perfect' : rating;
   return completeTrainingStep(progress, trial, status, rating, feedback);
 }
 
@@ -640,7 +680,7 @@ export function makeTrialDummyInput(trial: TrainingTrialDefinition | null, match
   if (script === 'attack' && dummy.state !== 'attack' && dummy.state !== 'hit' && dummy.state !== 'juggle') input.heavy = true;
   if (script === 'kiAttack' && dummy.state !== 'attack' && dummy.state !== 'hit' && dummy.state !== 'juggle') {
     input.charge = true;
-    input.special = true;
+    input[pickKiAttackInput(dummy.character)] = true;
   }
   if (script === 'whiff' && dummy.state !== 'attack' && dummy.state !== 'hit' && dummy.state !== 'juggle') input.heavy = true;
   if (script === 'jumpIn') {
@@ -785,7 +825,11 @@ type MixedTrialStepInput = {
   expectImpactAttackerSlot?: 1 | 2;
   expectImpactDefenderSlot?: 1 | 2;
   requireImpactKiBurst?: boolean;
+  requireImpactDamage?: boolean;
   requireAirborneDefender?: boolean;
+  targetFrame?: number;
+  windowBefore?: number;
+  windowAfter?: number;
   missAfterFrame?: number;
   counterHit?: boolean;
   reason: string;
@@ -814,9 +858,9 @@ function makeMixedTrial(
     command: step.command,
     actions: step.actions,
     kind: step.kind,
-    targetFrame: index === 0 ? 14 : 18,
-    windowBefore: step.kind === 'impact' ? 7 : 8,
-    windowAfter: step.kind === 'impact' ? 12 : 20,
+    targetFrame: step.targetFrame ?? (index === 0 ? 14 : 18),
+    windowBefore: step.windowBefore ?? (step.kind === 'impact' ? 7 : 8),
+    windowAfter: step.windowAfter ?? (step.kind === 'impact' ? 12 : 20),
     requireState: step.requireState,
     requireDummyState: step.requireDummyState,
     expectImpact: step.expectImpact,
@@ -824,6 +868,7 @@ function makeMixedTrial(
     expectImpactAttackerSlot: step.expectImpactAttackerSlot,
     expectImpactDefenderSlot: step.expectImpactDefenderSlot,
     requireImpactKiBurst: step.requireImpactKiBurst,
+    requireImpactDamage: step.requireImpactDamage,
     requireAirborneDefender: step.requireAirborneDefender,
     missAfterFrame: step.missAfterFrame,
     counterHit: step.counterHit,
@@ -868,6 +913,7 @@ function makeMoveTrial(
     expectImpactAttackerSlot?: 1 | 2;
     expectImpactDefenderSlot?: 1 | 2;
     requireImpactKiBurst?: boolean;
+    requireImpactDamage?: boolean;
     requireAirborneDefender?: boolean;
     missAfterFrame?: number;
   } = {}
@@ -887,6 +933,7 @@ function makeMoveTrial(
     expectImpactAttackerSlot: options.expectImpactAttackerSlot ?? 1,
     expectImpactDefenderSlot: options.expectImpactDefenderSlot,
     requireImpactKiBurst: options.requireImpactKiBurst,
+    requireImpactDamage: options.requireImpactDamage,
     requireAirborneDefender: options.requireAirborneDefender,
     missAfterFrame: options.missAfterFrame,
     reason: lesson
@@ -926,6 +973,7 @@ function makeRouteStarterTrial(
     expectImpactKinds?: ImpactSparkEvent['kind'][];
     expectDummyState?: FighterRuntime['state'];
     requireImpactKiBurst?: boolean;
+    requireImpactDamage?: boolean;
     requireAirborneDefender?: boolean;
     missAfterFrame?: number;
   } = {}
@@ -948,6 +996,7 @@ function makeRouteStarterTrial(
     expectImpactKinds: options.expectImpactKinds,
     expectImpactAttackerSlot: 1,
     requireImpactKiBurst: options.requireImpactKiBurst,
+    requireImpactDamage: options.requireImpactDamage,
     requireAirborneDefender: options.requireAirborneDefender,
     missAfterFrame: options.missAfterFrame,
     requireDummyState: options.expectDummyState,
@@ -1000,6 +1049,7 @@ function makeImpactOnlyTrial(
     expectImpactAttackerSlot?: 1 | 2;
     expectImpactDefenderSlot?: 1 | 2;
     requireImpactKiBurst?: boolean;
+    requireImpactDamage?: boolean;
     requireAirborneDefender?: boolean;
     targetFrame?: number;
     windowBefore?: number;
@@ -1021,6 +1071,7 @@ function makeImpactOnlyTrial(
     expectImpactAttackerSlot: options.expectImpactAttackerSlot,
     expectImpactDefenderSlot: options.expectImpactDefenderSlot,
     requireImpactKiBurst: options.requireImpactKiBurst,
+    requireImpactDamage: options.requireImpactDamage,
     requireAirborneDefender: options.requireAirborneDefender,
     missAfterFrame: options.missAfterFrame,
     reason: lesson
@@ -1215,11 +1266,19 @@ function trainingTrialStepMatchesImpact(step: TrainingTrialStep, event: ImpactSp
   if (!step.expectImpactAttackerSlot && event.attackerSlot !== 1) return false;
   if (step.expectImpactKinds && !step.expectImpactKinds.includes(event.kind)) return false;
   if (step.requireImpactKiBurst && !event.kiBurst) return false;
+  if (step.requireImpactDamage && event.damage <= 0) return false;
   if (step.requireAirborneDefender && !event.juggled) return false;
+  if (event.kind === 'clash' && step.expectImpactKinds?.includes('clash')) return true;
   if (step.command || step.input || step.counterHit || step.expectImpact) {
     return comboTrialStepMatchesImpact(stepToComboStep(step), event);
   }
   return true;
+}
+
+function shouldIgnoreTrainingImpact(step: TrainingTrialStep, event: ImpactSparkEvent) {
+  if (event.kind !== 'clash') return false;
+  if (!step.expectImpactKinds?.includes('clash')) return true;
+  return Boolean(step.requireImpactDamage && event.damage <= 0);
 }
 
 function matchesStateStep(step: TrainingTrialStep, match: MatchSnapshot) {
@@ -1261,6 +1320,39 @@ function pickDummy(character: CharacterDefinition, roster: CharacterDefinition[]
   return roster.find((candidate) => candidate.id !== character.id && !candidate.unplayable && !candidate.locked) ??
     roster.find((candidate) => candidate.id !== character.id && !candidate.unplayable) ??
     undefined;
+}
+
+function pickClashDummy(character: CharacterDefinition, roster: CharacterDefinition[]) {
+  return roster.find((candidate) => candidate.id !== character.id && !candidate.unplayable && !candidate.locked && hasKiBurstRoute(candidate)) ??
+    roster.find((candidate) => candidate.id !== character.id && !candidate.unplayable && hasKiBurstRoute(candidate)) ??
+    (hasKiBurstRoute(character) ? character : undefined);
+}
+
+function hasKiBurstRoute(character: CharacterDefinition) {
+  return resolveMoveRoutes(character).some((route) => route.move.kiBurst);
+}
+
+function pickKiAttackInput(character: CharacterDefinition | undefined): MoveInput {
+  if (!character) return 'special';
+  const scored: Array<{ input: MoveInput; score: number }> = [];
+  for (const move of character.moves) {
+    if (!move.kiBurst && !move.usesKi && !move.command?.startsWith('O+')) continue;
+    scored.push({ input: move.input, score: move.kiBurst ? 4 : move.command?.startsWith('O+') ? 2 : 1 });
+  }
+  for (const [key, override] of Object.entries(character.moveOverrides ?? {})) {
+    const command = override.command ?? (key.startsWith('cmd:') ? key.slice(4) : key);
+    if (!override.kiBurst && !override.usesKi && !command.startsWith('O+')) continue;
+    const input = override.input ?? commandInputFromNotation(command);
+    if (!input) continue;
+    scored.push({ input, score: override.kiBurst ? 5 : command.startsWith('O+') ? 3 : 1 });
+  }
+  return scored.sort((a, b) => b.score - a.score)[0]?.input ?? 'special';
+}
+
+function commandInputFromNotation(command: string | undefined): MoveInput | null {
+  const buttons = command?.match(/[1-4]/g) ?? [];
+  const button = buttons[buttons.length - 1];
+  return button ? buttonToInput[button] ?? null : null;
 }
 
 function makeBasicButtonSteps(character: CharacterDefinition): Array<{
@@ -1334,7 +1426,11 @@ function routeToTrialStep(
     expectImpactAttackerSlot?: 1 | 2;
     expectImpactDefenderSlot?: 1 | 2;
     requireImpactKiBurst?: boolean;
+    requireImpactDamage?: boolean;
     requireAirborneDefender?: boolean;
+    targetFrame?: number;
+    windowBefore?: number;
+    windowAfter?: number;
     missAfterFrame?: number;
     counterHit?: boolean;
     reason: string;
@@ -1351,11 +1447,15 @@ function routeToTrialStep(
     command: route.command,
     actions,
     kind: 'impact',
+    targetFrame: options.targetFrame,
+    windowBefore: options.windowBefore,
+    windowAfter: options.windowAfter,
     expectImpact: options.expectImpact,
     expectImpactKinds: options.expectImpactKinds,
     expectImpactAttackerSlot: options.expectImpactAttackerSlot ?? 1,
     expectImpactDefenderSlot: options.expectImpactDefenderSlot,
     requireImpactKiBurst: options.requireImpactKiBurst,
+    requireImpactDamage: options.requireImpactDamage,
     requireAirborneDefender: options.requireAirborneDefender,
     missAfterFrame: options.missAfterFrame,
     counterHit: options.counterHit,
@@ -1372,6 +1472,68 @@ function pickAntiAirRoute(routes: ReturnType<typeof resolveMoveRoutes>) {
   const candidates = routes.filter((route) => route.move.damage > 0 && route.move.hitLevel !== 'low');
   const pool = candidates.length > 0 ? candidates : routes.filter((route) => route.move.damage > 0);
   return [...pool].sort((a, b) => scoreAntiAirRoute(b) - scoreAntiAirRoute(a))[0];
+}
+
+function pickProjectileRoute(character: CharacterDefinition, routes: ReturnType<typeof resolveMoveRoutes>, kind: 'projectile' | 'blast') {
+  return routes
+    .filter((route) => {
+      const instances = routeProjectileInstances(character, route);
+      if (kind === 'blast') return instances.some((instance) => projectileInstanceKind(character, instance) === 'blast');
+      return instances.some((instance) => projectileInstanceKind(character, instance) !== 'blast');
+    })
+    .sort((a, b) => scoreProjectileRoute(character, b, kind) - scoreProjectileRoute(character, a, kind))[0];
+}
+
+function scoreProjectileRoute(character: CharacterDefinition, route: ReturnType<typeof resolveMoveRoutes>[number], kind: 'projectile' | 'blast') {
+  const instances = routeProjectileInstances(character, route);
+  const matching = instances.filter((instance) => kind === 'blast' ? projectileInstanceKind(character, instance) === 'blast' : projectileInstanceKind(character, instance) !== 'blast');
+  return (
+    matching.length * 20 +
+    (routeUsesKi(route) ? 8 : 0) +
+    (route.command ? 4 : 0) +
+    Math.max(0, 20 - route.move.startupFrames) * 0.2 +
+    route.move.damage * 0.05
+  );
+}
+
+function routeUsesKi(route: ReturnType<typeof resolveMoveRoutes>[number]) {
+  return Boolean(route.requiresKi || route.command?.startsWith('O+') || route.move.usesKi || route.move.kiBurst);
+}
+
+function routeProjectileInstances(character: CharacterDefinition, route: ReturnType<typeof resolveMoveRoutes>[number]): MoveProjectileInstance[] {
+  const keys = projectileMoveKeys(route);
+  const instances = keys.flatMap((key) => character.moveProjectiles?.[key] ?? []);
+  return instances.filter((instance, index) => instances.findIndex((candidate) => candidate.id === instance.id) === index);
+}
+
+function projectileMoveKeys(route: ReturnType<typeof resolveMoveRoutes>[number]) {
+  const baseInputKeys: Record<string, string> = {
+    jab: 'jableft',
+    heavy: 'jabright',
+    kick: 'kickleft',
+    special: 'kickright',
+    '1': 'jableft',
+    '2': 'jabright',
+    '3': 'kickleft',
+    '4': 'kickright'
+  };
+  const commandKeys = route.command
+    ? [route.command, route.command.startsWith('cmd:') ? route.command.slice(4) : `cmd:${route.command}`]
+    : [];
+  const candidates = [
+    route.animationKey,
+    route.move.animationKey,
+    ...commandKeys,
+    route.move.comboKey,
+    route.move.id,
+    baseInputKeys[route.input],
+    route.input
+  ].filter((key): key is string => Boolean(key));
+  return [...new Set(candidates)];
+}
+
+function projectileInstanceKind(character: CharacterDefinition, instance: MoveProjectileInstance) {
+  return instance.kind ?? character.projectiles?.find((projectile) => projectile.id === instance.projectileId)?.kind ?? 'projectile';
 }
 
 function scoreAntiAirRoute(route: ReturnType<typeof resolveMoveRoutes>[number]) {
