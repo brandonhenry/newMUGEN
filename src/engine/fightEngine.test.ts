@@ -8152,6 +8152,133 @@ describe('fight engine', () => {
     expect(match.impactEvents.some((event) => event.kind === 'clash' && event.moveLabel === 'Projectile Clash')).toBe(true);
   });
 
+  it('starts a QTE clash when opposing blasts overlap', () => {
+    const blastOptions: Partial<MoveProjectileInstance> = {
+      kind: 'blast',
+      releaseGated: false,
+      blastRange: 1.8,
+      spawnFrame: 2,
+      startupFrames: 0,
+      activeFrames: 18,
+      recoveryFrames: 8,
+      lifetimeFrames: 26,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      hitbox: { offset: [0, 0, 0], size: [0.48, 0.58, 1] }
+    };
+    const p1 = makeProjectileCharacter('blast-clash-p1', {}, blastOptions);
+    const p2 = makeProjectileCharacter('blast-clash-p2', {}, blastOptions);
+    let match = createMatch(p1, p2, stages[0], 'local2p');
+    match.fighters[0].position.x = -2;
+    match.fighters[1].position.x = 2;
+
+    match = stepMatch(match, makeInput('jab'), makeInput('jab'), 1 / 60);
+    match = stepFrames(match, 4);
+
+    expect(match.projectiles).toHaveLength(0);
+    expect(match.clashState.status).toBe('intro');
+    expect(match.clashState.sequence).toHaveLength(3);
+    expect(match.fighters[0].hp).toBe(match.fighters[0].maxHp);
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+    expect(match.impactEvents.some((event) => event.kind === 'clash' && event.moveLabel === 'Beam Clash')).toBe(true);
+  });
+
+  it('resolves a beam QTE clash win after opposing blasts overlap', () => {
+    const blastOptions: Partial<MoveProjectileInstance> = {
+      kind: 'blast',
+      releaseGated: false,
+      blastRange: 1.8,
+      spawnFrame: 2,
+      startupFrames: 0,
+      activeFrames: 18,
+      recoveryFrames: 8,
+      lifetimeFrames: 26,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      hitbox: { offset: [0, 0, 0], size: [0.48, 0.58, 1] }
+    };
+    const p1 = makeProjectileCharacter('beam-qte-win-p1', {}, blastOptions);
+    const p2 = makeProjectileCharacter('beam-qte-win-p2', {}, blastOptions);
+    let match = createMatch(p1, p2, stages[0], 'local2p');
+    match.fighters[0].position.x = -2;
+    match.fighters[1].position.x = 2;
+
+    match = stepMatch(match, makeInput('jab'), makeInput('jab'), 1 / 60);
+    match = stepFrames(match, 4);
+    for (let frame = 0; frame < 45; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    const sequence = match.clashState.sequence;
+    const wrong = clashWrongButton(sequence[0]);
+    const p2Wrong = emptyInputFrame();
+    p2Wrong[wrong] = true;
+    match = stepMatch(match, emptyInputFrame(), p2Wrong, 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    for (const button of sequence) {
+      const input = emptyInputFrame();
+      input[button] = true;
+      match = stepMatch(match, input, emptyInputFrame(), 1 / 60);
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.clashState.status).toBe('result');
+    expect(match.clashState.winnerSlot).toBe(1);
+    expect(match.fighters[1].hp).toBeLessThan(match.fighters[1].maxHp);
+    expect(match.combatEvents[match.combatEvents.length - 1]?.kind).toMatch(/clash/);
+  });
+
+  it('removes opposing ki-burst projectiles when they overlap', () => {
+    const kiOptions: Partial<MoveProjectileInstance> = {
+      kiBurst: true,
+      homingMode: 'none',
+      hitbox: { offset: [0, 0, 0], size: [0.65, 0.65, 0.75] }
+    };
+    const p1 = makeProjectileCharacter('ki-projectile-clash-p1', {}, kiOptions);
+    const p2 = makeProjectileCharacter('ki-projectile-clash-p2', {}, kiOptions);
+    let match = createMatch(p1, p2, stages[0], 'local2p');
+    match.fighters[0].position.x = -2;
+    match.fighters[1].position.x = 2;
+
+    match = stepMatch(match, makeInput('jab'), makeInput('jab'), 1 / 60);
+    match = stepFrames(match, 24);
+
+    expect(match.projectiles).toHaveLength(0);
+    expect(match.impactEvents.some((event) => event.kind === 'clash' && event.moveLabel === 'Projectile Clash' && event.kiBurst)).toBe(true);
+  });
+
+  it('removes blasts and ki-burst projectiles when they overlap', () => {
+    const blast = makeProjectileCharacter('blast-ki-clash-blast', {}, {
+      kind: 'blast',
+      releaseGated: false,
+      blastRange: 1.8,
+      spawnFrame: 2,
+      startupFrames: 0,
+      activeFrames: 18,
+      recoveryFrames: 8,
+      lifetimeFrames: 26,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      hitbox: { offset: [0, 0, 0], size: [0.48, 0.58, 1] }
+    });
+    const ki = makeProjectileCharacter('blast-ki-clash-ki', {}, {
+      kiBurst: true,
+      homingMode: 'none',
+      hitbox: { offset: [0, 0, 0], size: [0.65, 0.65, 0.75] }
+    });
+    let match = createMatch(blast, ki, stages[0], 'local2p');
+    match.fighters[0].position.x = -2;
+    match.fighters[1].position.x = 2;
+
+    match = stepMatch(match, makeInput('jab'), makeInput('jab'), 1 / 60);
+    match = stepFrames(match, 8);
+
+    expect(match.projectiles).toHaveLength(0);
+    expect(match.fighters[0].hp).toBe(match.fighters[0].maxHp);
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+    expect(match.impactEvents.some((event) => event.kind === 'clash' && event.moveLabel === 'Projectile Clash' && event.kiBurst)).toBe(true);
+  });
+
   it('lets active ki-burst attacks remove clash-enabled projectiles', () => {
     const shooter = makeProjectileCharacter(
       'projectile-attack-clash-test',

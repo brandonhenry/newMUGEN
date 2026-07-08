@@ -3504,7 +3504,7 @@ function resolveProjectileClashes(match: MatchSnapshot, frameDelta: number) {
 }
 
 function projectileCanClash(projectile: ProjectileRuntime) {
-  return !projectile.expired && projectile.phase === 'active' && (projectile.clash || projectile.move.kiBurst);
+  return !projectile.expired && projectile.phase === 'active' && (projectile.kind === 'blast' || projectile.clash || projectile.move.kiBurst);
 }
 
 function resolveProjectileProjectileClashes(match: MatchSnapshot) {
@@ -3517,12 +3517,56 @@ function resolveProjectileProjectileClashes(match: MatchSnapshot) {
       if (!projectileCanClash(second) || first.ownerSlot === second.ownerSlot) continue;
       const secondBox = projectileHitboxToWorldAabb(second);
       if (!boxesIntersect(firstBox, secondBox)) continue;
+      if (first.kind === 'blast' && second.kind === 'blast') {
+        first.expired = true;
+        second.expired = true;
+        startProjectileBeamClash(match, first, second, getAabbOverlapCenter(firstBox, secondBox));
+        break;
+      }
       first.expired = true;
       second.expired = true;
       pushProjectileClashSpark(match, first, second, getAabbOverlapCenter(firstBox, secondBox));
       break;
     }
   }
+}
+
+function startProjectileBeamClash(match: MatchSnapshot, first: ProjectileRuntime, second: ProjectileRuntime, contactPoint: [number, number, number]) {
+  if (isClashActive(match.clashState)) return;
+  const id = nextHitEventId(match);
+  const firstOwner = match.fighters[first.ownerSlot - 1];
+  const secondOwner = match.fighters[second.ownerSlot - 1];
+  firstOwner.currentMove = first.move;
+  firstOwner.state = 'attack';
+  firstOwner.actionFramesRemaining = Math.max(firstOwner.actionFramesRemaining, CLASH_INTRO_FRAMES + CLASH_INPUT_FRAMES);
+  firstOwner.actionTimer = framesToSeconds(firstOwner.actionFramesRemaining);
+  secondOwner.currentMove = second.move;
+  secondOwner.state = 'attack';
+  secondOwner.actionFramesRemaining = Math.max(secondOwner.actionFramesRemaining, CLASH_INTRO_FRAMES + CLASH_INPUT_FRAMES);
+  secondOwner.actionTimer = framesToSeconds(secondOwner.actionFramesRemaining);
+  match.clashState = {
+    ...createEmptyClashState(),
+    id,
+    status: 'intro',
+    sequence: makeClashSequence(match, id),
+    contactPoint
+  };
+  match.message = 'CLASH';
+  const clashSpark: ImpactSparkEvent = {
+    id,
+    kind: 'clash',
+    position: contactPoint,
+    attackerSlot: first.ownerSlot,
+    defenderSlot: second.ownerSlot,
+    hitLevel: 'special',
+    damage: 0,
+    moveLabel: 'Beam Clash',
+    kiBurst: Boolean(first.move.kiBurst || second.move.kiBurst)
+  };
+  match.impactEvents = [
+    ...match.impactEvents,
+    clashSpark
+  ].slice(-12);
 }
 
 function resolveProjectileAttackClashes(match: MatchSnapshot, frameDelta: number) {
