@@ -4,7 +4,7 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 8;
+const settingsVersion = 9;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -118,6 +118,7 @@ export const defaultGameSettings: GameSettings = {
     master: 1,
     music: 0.72,
     sfx: 0.85,
+    voices: 0.85,
     hitSfx: 1.35,
     muted: false,
     menuMusic: true,
@@ -161,6 +162,8 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
   const gamepad = Array.isArray(controls.gamepad) ? controls.gamepad : [];
   const keyboardCombos = Array.isArray(controls.keyboardCombos) ? controls.keyboardCombos : [];
   const gamepadCombos = Array.isArray(controls.gamepadCombos) ? controls.gamepadCombos : [];
+  const sanitizedSfx = clampNumber(audio.sfx, 0, 1, defaults.audio.sfx);
+  const sanitizedVoices = clampNumber(audio.voices, 0, 1, sanitizedSfx);
 
   return {
     game: {
@@ -219,7 +222,8 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
     audio: {
       master: clampNumber(audio.master, 0, 1, defaults.audio.master),
       music: clampNumber(audio.music, 0, 1, defaults.audio.music),
-      sfx: clampNumber(audio.sfx, 0, 1, defaults.audio.sfx),
+      sfx: sanitizedSfx,
+      voices: sanitizedVoices,
       hitSfx: clampNumber(audio.hitSfx, 0, 2, defaults.audio.hitSfx),
       muted: booleanOr(audio.muted, defaults.audio.muted),
       menuMusic: booleanOr(audio.menuMusic, defaults.audio.menuMusic),

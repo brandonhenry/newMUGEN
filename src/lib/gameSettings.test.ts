@@ -92,4 +92,28 @@ describe('game settings', () => {
     expect(defaultGameSettings.performance.menuAttractMode).toBe('full');
     expect(clone.performance.menuAttractMode).toBe('snappy');
   });
+
+  it('defaults and sanitizes voice volume settings', () => {
+    expect(sanitizeGameSettings(null).audio.voices).toBe(defaultGameSettings.audio.voices);
+
+    const migrated = sanitizeGameSettings({
+      audio: {
+        sfx: 0.32
+      }
+    });
+
+    expect(migrated.audio.sfx).toBe(0.32);
+    expect(migrated.audio.voices).toBe(0.32);
+
+    expect(sanitizeGameSettings({ audio: { sfx: 0.4, voices: -1 } }).audio.voices).toBe(0);
+    expect(sanitizeGameSettings({ audio: { sfx: 0.4, voices: 5 } }).audio.voices).toBe(1);
+  });
+
+  it('clones audio settings independently', () => {
+    const clone = cloneSettings(defaultGameSettings);
+    clone.audio.voices = 0.2;
+
+    expect(defaultGameSettings.audio.voices).toBe(0.85);
+    expect(clone.audio.voices).toBe(0.2);
+  });
 });

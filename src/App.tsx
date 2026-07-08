@@ -11971,6 +11971,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('audio', 'master', previous.audio.master, next.audio.master);
   add('audio', 'music', previous.audio.music, next.audio.music);
   add('audio', 'sfx', previous.audio.sfx, next.audio.sfx);
+  add('audio', 'voices', previous.audio.voices, next.audio.voices);
   add('audio', 'hit_sfx', previous.audio.hitSfx, next.audio.hitSfx);
   add('audio', 'muted', previous.audio.muted, next.audio.muted);
 
@@ -12545,6 +12546,7 @@ function SettingsScreen({
           <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
           <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
           <SettingSlider label="SFX" value={settings.audio.sfx} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, sfx: value } }))} />
+          <SettingSlider label="Voices" value={settings.audio.voices} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, voices: value } }))} />
           <SettingSlider label="Hit Effects" value={settings.audio.hitSfx} min={0} max={2} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, hitSfx: value } }))} />
           <SettingToggle label="Mute All" checked={settings.audio.muted} onChange={(checked) => updateSettings((current) => ({ ...current, audio: { ...current.audio, muted: checked } }))} />
         </SettingsSection>
@@ -13513,16 +13515,16 @@ function canPlayCharacterVoice(character: CharacterDefinition, category: Charact
 }
 
 function playCharacterVoiceSfx(character: CharacterDefinition, category: CharacterVoiceCategory, audioSettings: GameSettings['audio'], volumeScale: number, fallbackCategory?: CharacterVoiceCategory) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return false;
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.voices <= 0) return false;
   const voiceSfx = chooseCharacterVoiceSfx(character, category, fallbackCategory);
   if (!voiceSfx) return false;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * volumeScale, 0, 0.88);
+  const volume = clamp(audioSettings.master * audioSettings.voices * volumeScale, 0, 0.88);
   playPooledSfx(voiceSfx, volume, 1);
   return true;
 }
 
 function playCharacterAttackVoiceSfx(attacker: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.voices <= 0) return;
   if (event.kind === 'block' || event.kind === 'clash') return;
   const category: CharacterVoiceCategory = event.tornado ? 'tornado' : event.launched ? 'launcher' : 'attackLand';
   const cooldown = category === 'attackLand' ? CHARACTER_ATTACK_VOICE_COOLDOWN_MS : CHARACTER_SPECIAL_VOICE_COOLDOWN_MS;
@@ -13532,7 +13534,7 @@ function playCharacterAttackVoiceSfx(attacker: CharacterDefinition, event: Impac
 }
 
 function playCharacterHurtVoiceSfx(defender: CharacterDefinition, event: ImpactSparkEvent, audioSettings: GameSettings['audio']) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.voices <= 0) return;
   if (event.kind === 'block' || event.kind === 'clash' || event.comboHits !== 1) return;
   if (!canPlayCharacterVoice(defender, 'hit', CHARACTER_HURT_VOICE_COOLDOWN_MS)) return;
   playCharacterVoiceSfx(defender, 'hit', audioSettings, 0.56);
@@ -13547,16 +13549,16 @@ function playCharacterStageIntroVoiceSfx(character: CharacterDefinition, audioSe
 }
 
 function playNarutoShadowCloneVoiceSfx(character: CharacterDefinition, audioSettings: GameSettings['audio']) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return;
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.voices <= 0) return;
   if (!canPlayCharacterVoice(character, 'shadowClone', CHARACTER_SPECIAL_VOICE_COOLDOWN_MS)) return;
   playCharacterVoiceSfx(character, 'shadowClone', audioSettings, 0.62);
 }
 
 function playRoundAnnouncerSfx(round: number, audioSettings: GameSettings['audio']) {
-  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return false;
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.voices <= 0) return false;
   const url = ROUND_ANNOUNCER_SFX[round - 1];
   if (!url) return false;
-  const volume = clamp(audioSettings.master * audioSettings.sfx * 0.92, 0, 1);
+  const volume = clamp(audioSettings.master * audioSettings.voices * 0.92, 0, 1);
   playPooledSfx(url, volume, 1);
   return true;
 }

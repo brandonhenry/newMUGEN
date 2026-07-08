@@ -1310,7 +1310,7 @@ describe('character manifests', () => {
         gamepadCombos: [{ '1+2': [7, 11, 17] }]
       },
       display: { touchControls: 'on', impactSparks: { cinematic: false, shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } },
-      audio: { bgmTrackIndex: 300, hitSfx: 5 }
+      audio: { bgmTrackIndex: 300, hitSfx: 5, voices: 5 }
     });
 
     expect(settings.game.roundTimer).toBe(75);
@@ -1332,6 +1332,7 @@ describe('character manifests', () => {
     expect(settings.camera.distance).toBe(defaultGameSettings.camera.distance);
     expect(settings.audio.bgmTrackIndex).toBe(99);
     expect(settings.audio.hitSfx).toBe(2);
+    expect(settings.audio.voices).toBe(1);
   });
 
   it('sanitizes control scheme settings', () => {

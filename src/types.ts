@@ -1077,6 +1077,7 @@ export type GameSettings = {
     master: number;
     music: number;
     sfx: number;
+    voices: number;
     hitSfx: number;
     muted: boolean;
     menuMusic: boolean;
