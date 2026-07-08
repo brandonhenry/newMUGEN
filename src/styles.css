@@ -9861,6 +9861,10 @@ button {
   font-size: clamp(28px, 4vw, 54px);
 }
 
+.pause-training-trials-overlay {
+  grid-template-rows: minmax(0, 1fr);
+}
+
 .pause-menu-actions {
   display: grid;
   width: min(460px, 88vw);
@@ -10375,6 +10379,22 @@ button {
     rgba(2, 7, 15, 0.66);
 }
 
+.training-trial-empty-state {
+  display: grid;
+  min-height: 100%;
+  align-content: start;
+  border-radius: 7px;
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.78);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
+    rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.055) inset;
+  font-size: 18px;
+  font-weight: 760;
+  line-height: 1.4;
+}
+
 .training-trial-list-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -10600,6 +10620,14 @@ button {
 .combo-trial-step > div > strong {
   font-size: 26px;
   line-height: 1.1;
+}
+
+.combo-trial-step > div {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .combo-trial-step small {

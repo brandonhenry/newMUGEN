@@ -23334,7 +23334,7 @@ function FightScreen({
         />
       )}
       {paused && !onlineAssetGateActive && !trainingTrialOutcome && (
-        <div className={`pause-overlay ${pauseMenuView === 'movelist' || pauseMenuView === 'trainingTrials' ? 'pause-movelist-overlay' : ''}`}>
+        <div className={`pause-overlay ${pauseMenuView === 'movelist' || pauseMenuView === 'trainingTrials' ? 'pause-movelist-overlay' : ''} ${pauseMenuView === 'trainingTrials' ? 'pause-training-trials-overlay' : ''}`}>
           {pauseMenuView === 'movelist' ? (
             <>
               <List size={32} />
@@ -24337,7 +24337,7 @@ function TrainingTrialPanel({
             </div>
           </>
         ) : (
-          <p>{mode === 'free' ? 'Free Training is active.' : 'No trials are available for this character yet.'}</p>
+          <p className="training-trial-empty-state">{mode === 'free' ? 'Free Training is active.' : 'No trials are available for this character yet.'}</p>
         )}
       </section>
       <div className="overlay-actions pause-menu-actions pause-movelist-actions combo-trial-actions">
