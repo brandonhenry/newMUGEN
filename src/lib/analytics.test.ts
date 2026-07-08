@@ -72,6 +72,36 @@ describe('analytics', () => {
     });
   });
 
+  it('captures gameplay popularity events', async () => {
+    vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
+    const analytics = await loadAnalytics();
+
+    analytics.captureAnalyticsEvent('character_picked', {
+      character_id: 'naruto',
+      slot: 1,
+      actor_type: 'human',
+      random_pick: false
+    });
+    analytics.captureAnalyticsEvent('combo_route_completed', {
+      character_id: 'naruto',
+      route_key: 'jab:1>kick:2',
+      combo_hits: 2,
+      omitted: undefined
+    });
+
+    expect(posthogMock.capture).toHaveBeenCalledWith('character_picked', {
+      character_id: 'naruto',
+      slot: 1,
+      actor_type: 'human',
+      random_pick: false
+    });
+    expect(posthogMock.capture).toHaveBeenCalledWith('combo_route_completed', {
+      character_id: 'naruto',
+      route_key: 'jab:1>kick:2',
+      combo_hits: 2
+    });
+  });
+
   it('captures normalized errors', async () => {
     vi.stubEnv('VITE_POSTHOG_KEY', 'ph_test_key');
     const analytics = await loadAnalytics();

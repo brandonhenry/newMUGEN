@@ -1,8 +1,32 @@
 import type { CombatPopupEvent, ImpactSparkEvent, MatchSnapshot } from '../types';
 import type { AnalyticsEventName, AnalyticsProperties } from './analytics';
 
-type FightAnalyticsLifecycleEvent = Extract<AnalyticsEventName, 'round_started' | 'round_ended' | 'match_completed'>;
+export type FightAnalyticsActorType = 'human' | 'cpu' | 'dummy' | 'remote_human';
+
+type FightAnalyticsLifecycleEvent = Extract<AnalyticsEventName, 'round_started' | 'round_ended' | 'match_completed' | 'combo_route_completed'>;
 type FightAnalyticsCapture = (name: FightAnalyticsLifecycleEvent, properties: AnalyticsProperties) => void;
+
+export type FightAnalyticsOptions = {
+  actorTypesBySlot?: Partial<Record<1 | 2, FightAnalyticsActorType>>;
+  captureComboRoutesForActorTypes?: FightAnalyticsActorType[];
+};
+
+type ActiveComboRouteAnalytics = {
+  slot: 1 | 2;
+  routeKey: string;
+  routeInputs: string;
+  routeFamilies: string;
+  routeVisualFamilies: string;
+  comboHits: number;
+  comboDamage: number;
+  characterId: string;
+  opponentCharacterId: string;
+  actorType: FightAnalyticsActorType;
+  round: number;
+  includedLauncher: boolean;
+  includedTornado: boolean;
+  includedKiBurst: boolean;
+};
 
 export type FightAnalyticsCounters = {
   hitCount: number;
@@ -22,6 +46,8 @@ export type FightAnalyticsState = {
   seenRoundEnds: Set<string>;
   seenCombatEventIds: Set<number>;
   seenImpactEventIds: Set<number>;
+  activeComboRoutes: [ActiveComboRouteAnalytics | null, ActiveComboRouteAnalytics | null];
+  emittedComboRouteKeys: Set<string>;
   matchCompleted: boolean;
   counters: FightAnalyticsCounters;
 };
@@ -47,6 +73,8 @@ export function createFightAnalyticsState(now = performance.now()): FightAnalyti
     seenRoundEnds: new Set(),
     seenCombatEventIds: new Set(),
     seenImpactEventIds: new Set(),
+    activeComboRoutes: [null, null],
+    emittedComboRouteKeys: new Set(),
     matchCompleted: false,
     counters: createEmptyFightAnalyticsCounters()
   };
@@ -61,6 +89,8 @@ export function resetFightAnalyticsState(state: FightAnalyticsState, now = perfo
   state.seenRoundEnds.clear();
   state.seenCombatEventIds.clear();
   state.seenImpactEventIds.clear();
+  state.activeComboRoutes = [null, null];
+  state.emittedComboRouteKeys.clear();
   state.matchCompleted = false;
   state.counters = createEmptyFightAnalyticsCounters();
 }
@@ -70,10 +100,12 @@ export function recordFightAnalyticsSnapshot(
   match: MatchSnapshot,
   commonProperties: AnalyticsProperties,
   capture: FightAnalyticsCapture,
-  now = performance.now()
+  now = performance.now(),
+  options: FightAnalyticsOptions = {}
 ) {
   addCombatEventsToCounters(state, match.combatEvents);
   addImpactEventsToCounters(state, match.impactEvents);
+  recordComboRouteAnalytics(state, match, commonProperties, capture, options);
 
   if (!state.seenRoundStarts.has(match.round)) {
     state.seenRoundStarts.add(match.round);
@@ -85,6 +117,7 @@ export function recordFightAnalyticsSnapshot(
   }
 
   if (match.phase === 'roundOver' && state.lastPhase !== 'roundOver') {
+    flushActiveComboRoutes(state, commonProperties, capture, options);
     const winnerSlot = getRoundWinnerSlot(match, state.previousRoundsWon);
     const roundEndKey = `${match.round}:${match.fighters[0].roundsWon}:${match.fighters[1].roundsWon}`;
     if (!state.seenRoundEnds.has(roundEndKey)) {
@@ -104,6 +137,7 @@ export function recordFightAnalyticsSnapshot(
   }
 
   if (match.phase === 'matchOver' && match.winnerSlot && !state.matchCompleted) {
+    flushActiveComboRoutes(state, commonProperties, capture, options);
     state.matchCompleted = true;
     capture('match_completed', {
       ...commonProperties,
@@ -121,6 +155,145 @@ export function recordFightAnalyticsSnapshot(
 
   state.lastPhase = match.phase;
   state.previousRoundsWon = [match.fighters[0].roundsWon, match.fighters[1].roundsWon];
+}
+
+function recordComboRouteAnalytics(
+  state: FightAnalyticsState,
+  match: MatchSnapshot,
+  commonProperties: AnalyticsProperties,
+  capture: FightAnalyticsCapture,
+  options: FightAnalyticsOptions
+) {
+  ([1, 2] as const).forEach((slot) => {
+    const current = makeActiveComboRoute(match, slot, options);
+    const previous = state.activeComboRoutes[slot - 1];
+
+    if (!current) {
+      if (previous) emitComboRoute(state, previous, commonProperties, capture, options);
+      state.activeComboRoutes[slot - 1] = null;
+      return;
+    }
+
+    const flags = collectComboRouteFlags(match, slot);
+    current.includedLauncher = previous?.routeKey === current.routeKey
+      ? previous.includedLauncher || flags.includedLauncher
+      : flags.includedLauncher;
+    current.includedTornado = previous?.routeKey === current.routeKey
+      ? previous.includedTornado || flags.includedTornado
+      : flags.includedTornado;
+    current.includedKiBurst = previous?.routeKey === current.routeKey
+      ? previous.includedKiBurst || flags.includedKiBurst
+      : flags.includedKiBurst;
+
+    if (previous && !isComboRouteContinuation(previous, current)) {
+      emitComboRoute(state, previous, commonProperties, capture, options);
+    } else if (previous) {
+      current.includedLauncher = current.includedLauncher || previous.includedLauncher;
+      current.includedTornado = current.includedTornado || previous.includedTornado;
+      current.includedKiBurst = current.includedKiBurst || previous.includedKiBurst;
+    }
+
+    state.activeComboRoutes[slot - 1] = current;
+  });
+}
+
+function makeActiveComboRoute(match: MatchSnapshot, slot: 1 | 2, options: FightAnalyticsOptions): ActiveComboRouteAnalytics | null {
+  const fighter = match.fighters[slot - 1];
+  const comboHits = fighter?.comboHits ?? 0;
+  const comboIdentitySequence = fighter?.comboIdentitySequence ?? [];
+  if (!fighter || comboHits < 2 || comboIdentitySequence.length < 2) return null;
+  const opponent = match.fighters[slot === 1 ? 1 : 0];
+  const routeKey = comboIdentitySequence.join('>');
+  if (!routeKey) return null;
+  const flags = collectComboRouteFlags(match, slot);
+  return {
+    slot,
+    routeKey,
+    routeInputs: (fighter.comboSequence ?? []).join('>'),
+    routeFamilies: (fighter.comboFamilySequence ?? []).join('>'),
+    routeVisualFamilies: (fighter.comboVisualFamilySequence ?? []).join('>'),
+    comboHits: Math.max(0, Math.round(comboHits)),
+    comboDamage: Math.max(0, Math.round(fighter.comboDamage)),
+    characterId: getFighterCharacterId(fighter),
+    opponentCharacterId: getFighterCharacterId(opponent),
+    actorType: getFightAnalyticsActorType(slot, options),
+    round: match.round,
+    includedLauncher: flags.includedLauncher,
+    includedTornado: flags.includedTornado,
+    includedKiBurst: flags.includedKiBurst
+  };
+}
+
+function collectComboRouteFlags(match: MatchSnapshot, slot: 1 | 2) {
+  const impactEvents = match.impactEvents.filter((event) => event.attackerSlot === slot && (event.comboHits ?? 0) >= 1);
+  const combatEvents = match.combatEvents.filter((event) => event.slot === slot && event.hits >= 1);
+  return {
+    includedLauncher: impactEvents.some((event) => Boolean(event.launched)) || combatEvents.some((event) => Boolean(event.launched)),
+    includedTornado: impactEvents.some((event) => Boolean(event.tornado)) || combatEvents.some((event) => Boolean(event.tornado)),
+    includedKiBurst: impactEvents.some((event) => Boolean(event.kiBurst)) || combatEvents.some((event) => Boolean(event.kiBurst))
+  };
+}
+
+function isComboRouteContinuation(previous: ActiveComboRouteAnalytics, current: ActiveComboRouteAnalytics) {
+  return previous.slot === current.slot && (
+    current.routeKey === previous.routeKey ||
+    current.routeKey.startsWith(`${previous.routeKey}>`)
+  );
+}
+
+function flushActiveComboRoutes(
+  state: FightAnalyticsState,
+  commonProperties: AnalyticsProperties,
+  capture: FightAnalyticsCapture,
+  options: FightAnalyticsOptions
+) {
+  state.activeComboRoutes.forEach((route) => {
+    if (route) emitComboRoute(state, route, commonProperties, capture, options);
+  });
+  state.activeComboRoutes = [null, null];
+}
+
+function emitComboRoute(
+  state: FightAnalyticsState,
+  route: ActiveComboRouteAnalytics,
+  commonProperties: AnalyticsProperties,
+  capture: FightAnalyticsCapture,
+  options: FightAnalyticsOptions
+) {
+  if (route.comboHits < 2) return;
+  if (!shouldCaptureComboRouteActor(route.actorType, options)) return;
+  const emittedKey = `${route.round}:${route.slot}:${route.routeKey}:${route.comboHits}:${route.comboDamage}`;
+  if (state.emittedComboRouteKeys.has(emittedKey)) return;
+  state.emittedComboRouteKeys.add(emittedKey);
+  capture('combo_route_completed', {
+    ...commonProperties,
+    character_id: route.characterId,
+    opponent_character_id: route.opponentCharacterId,
+    slot: route.slot,
+    actor_type: route.actorType,
+    route_key: route.routeKey,
+    route_inputs: route.routeInputs,
+    route_families: route.routeFamilies,
+    route_visual_families: route.routeVisualFamilies,
+    combo_hits: route.comboHits,
+    combo_damage: route.comboDamage,
+    round: route.round,
+    included_launcher: route.includedLauncher,
+    included_tornado: route.includedTornado,
+    included_ki_burst: route.includedKiBurst
+  });
+}
+
+function shouldCaptureComboRouteActor(actorType: FightAnalyticsActorType, options: FightAnalyticsOptions) {
+  return (options.captureComboRoutesForActorTypes ?? ['human']).includes(actorType);
+}
+
+function getFightAnalyticsActorType(slot: 1 | 2, options: FightAnalyticsOptions): FightAnalyticsActorType {
+  return options.actorTypesBySlot?.[slot] ?? 'human';
+}
+
+function getFighterCharacterId(fighter: MatchSnapshot['fighters'][number] | undefined) {
+  return fighter?.baseCharacter?.id ?? fighter?.character?.id ?? '';
 }
 
 function addCombatEventsToCounters(state: FightAnalyticsState, events: CombatPopupEvent[]) {

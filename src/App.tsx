@@ -134,7 +134,7 @@ import {
 } from './types';
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
 import { captureAnalyticsError, captureAnalyticsEvent, getPostHogDeviceId, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
-import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState } from './lib/fightAnalytics';
+import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState, type FightAnalyticsActorType } from './lib/fightAnalytics';
 import {
   FRIENDS_STORAGE_KEY,
   MATCH_HISTORY_STORAGE_KEY,
@@ -936,6 +936,23 @@ function getEffectiveCpuDifficulty(mode: MatchMode, cpuDifficulty: CpuDifficulty
 
 function isArcadeMatchMode(mode: MatchMode) {
   return mode === 'ai' || mode === 'cpuArcade';
+}
+
+function getLocalSelectionActorTypes(mode: MatchMode): Partial<Record<1 | 2, FightAnalyticsActorType>> {
+  if (mode === 'local2p') return { 1: 'human', 2: 'human' };
+  if (mode === 'training') return { 1: 'human', 2: 'dummy' };
+  if (mode === 'trainingOnline') return { 1: 'human', 2: 'remote_human' };
+  if (requiresOnlineProfileForMode(mode)) return { 1: 'human', 2: 'remote_human' };
+  if (mode === 'cpu' || isArcadeMatchMode(mode) || mode === 'tournamentLocal' || mode === 'tournamentInfinite') return { 1: 'human', 2: 'cpu' };
+  return { 1: 'human', 2: 'cpu' };
+}
+
+function getFightActorTypes(mode: MatchMode, onlineRole: OnlineRole | null): Partial<Record<1 | 2, FightAnalyticsActorType>> {
+  if (mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'trainingOnline' || mode === 'tournamentOnline') {
+    if (onlineRole === 'guest') return { 1: 'remote_human', 2: 'human' };
+    return { 1: 'human', 2: 'remote_human' };
+  }
+  return getLocalSelectionActorTypes(mode);
 }
 
 function requiresOnlineProfileForMode(mode: MatchMode) {
@@ -2863,6 +2880,33 @@ export default function App() {
       ...properties
     });
   }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
+  const captureCharacterPickedAnalytics = useCallback((
+    source: string,
+    selections: { p1CharacterId: string; p2CharacterId: string; p1Random?: boolean; p2Random?: boolean; stageId?: string }
+  ) => {
+    const actorTypes = getLocalSelectionActorTypes(mode);
+    const picks = [
+      { slot: 1 as const, characterId: selections.p1CharacterId, actorType: actorTypes[1], randomPick: Boolean(selections.p1Random) },
+      { slot: 2 as const, characterId: selections.p2CharacterId, actorType: actorTypes[2], randomPick: Boolean(selections.p2Random) }
+    ];
+    picks.forEach((pick) => {
+      if (pick.actorType !== 'human') return;
+      captureAnalyticsEvent('character_picked', {
+        app_version: KORE_APP_VERSION,
+        mode,
+        stage_id: selections.stageId ?? stageId,
+        p1_character_id: selections.p1CharacterId,
+        p2_character_id: selections.p2CharacterId,
+        cpu_difficulty: getEffectiveCpuDifficulty(mode, cpuDifficulty),
+        screen,
+        character_id: pick.characterId,
+        slot: pick.slot,
+        actor_type: pick.actorType,
+        source,
+        random_pick: pick.randomPick
+      });
+    });
+  }, [cpuDifficulty, mode, screen, stageId]);
   const screenAnalyticsRef = useRef<{ screen: Screen | null; enteredAt: number }>({ screen: null, enteredAt: performance.now() });
 
   const saveOnlineProfile = useCallback((profile: Partial<OnlinePlayerProfile>, source: string) => {
@@ -4378,6 +4422,13 @@ export default function App() {
                   p2_character_id: trainingCharacters.p2?.id ?? p2Id,
                   training_submode: selectedTrainingMode
                 });
+                captureCharacterPickedAnalytics('training_select', {
+                  p1CharacterId: trainingCharacters.p1?.id ?? p1Id,
+                  p2CharacterId: trainingCharacters.p2?.id ?? p2Id,
+                  p1Random: false,
+                  p2Random: false,
+                  stageId: fightStage.id
+                });
                 captureAppAnalytics('stage_selected', {
                   stage_id: fightStage.id,
                   stage_random: false,
@@ -4481,6 +4532,12 @@ export default function App() {
                   p2_character_id: resolvedCharacters.p2Id,
                   p1_random: randomCharacterSlots[1],
                   p2_random: !isArcadeMatchMode(mode) && randomCharacterSlots[2]
+                });
+                captureCharacterPickedAnalytics('character_select', {
+                  p1CharacterId: resolvedCharacters.p1Id,
+                  p2CharacterId: resolvedCharacters.p2Id,
+                  p1Random: randomCharacterSlots[1],
+                  p2Random: !isArcadeMatchMode(mode) && randomCharacterSlots[2]
                 });
                 if (mode !== 'private') setPrivateRoomIntent(null);
                 setScreen('stage');
@@ -21314,7 +21371,12 @@ function FightScreen({
         p2_character_id: match.fighters[1].baseCharacter.id,
         cpu_difficulty: match.cpuDifficulty
       },
-      captureFightAnalytics
+      captureFightAnalytics,
+      undefined,
+      {
+        actorTypesBySlot: getFightActorTypes(mode, onlineRoleRef.current),
+        captureComboRoutesForActorTypes: ['human']
+      }
     );
   }, [captureFightAnalytics, isOnline, match, mode, onlineState]);
 
