@@ -10678,8 +10678,21 @@ button {
 
 .combo-trial-actions {
   grid-column: 1 / -1;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  justify-self: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
+}
+
+.pause-movelist-overlay .combo-trial-actions {
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  justify-self: stretch;
+  width: 100%;
+}
+
+.pause-overlay .combo-trial-actions .primary-button,
+.pause-overlay .combo-trial-actions .secondary-button {
+  min-height: 64px;
 }
 
 .training-trial-hud {

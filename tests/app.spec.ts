@@ -766,7 +766,8 @@ test('start basics loads the chamber then opens the trial picker', async ({ page
   await expect(page.getByTestId('asset-warmup-screen')).toContainText('Ready', { timeout: 12000 });
   await activateAnyInputScreen(page, '[data-testid="asset-warmup-screen"]');
 
-  await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 12000 });
+  await expect(page.getByRole('heading', { name: 'Training Mode' })).toHaveCount(0);
+  await expect(page.locator('.training-trial-picker')).toBeVisible({ timeout: 12000 });
   await expect(page.locator('.combo-trial-list')).toContainText('Basic Trials');
   await expect(page.getByTestId('training-trial-detail')).toContainText('Walk In');
   await expect(page.getByTestId('training-trial-active-preview')).toBeVisible({ timeout: 10000 });

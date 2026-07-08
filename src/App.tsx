@@ -23357,8 +23357,6 @@ function FightScreen({
             </>
           ) : pauseMenuView === 'trainingTrials' ? (
             <>
-              <Target size={32} />
-              <h2>Training Mode</h2>
               <TrainingTrialPanel
                 character={p1}
                 mode={trainingMode}
