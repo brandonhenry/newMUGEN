@@ -2636,6 +2636,28 @@ function getVariantFamily(roster: CharacterDefinition[], baseId: string, unlocke
   return unlockedCharacterIds ? ordered.filter((character) => isCharacterUnlocked(character, unlockedCharacterIds)) : ordered;
 }
 
+function isCharacterFamilyUnlocked(character: CharacterDefinition, roster: CharacterDefinition[], unlockedCharacterIds: Set<string>) {
+  const baseId = getCharacterBaseId(character);
+  return roster.some((candidate) => (
+    (candidate.id === baseId || (candidate.variant && candidate.variantOf === baseId)) &&
+    isCharacterUnlocked(candidate, unlockedCharacterIds)
+  ));
+}
+
+export function sortRosterByUnlockState(
+  roster: CharacterDefinition[],
+  unlockedCharacterIds: Set<string>,
+  fullRoster: CharacterDefinition[] = roster
+) {
+  const originalIndexes = new Map(roster.map((character, index) => [character.id, index]));
+  return [...roster].sort((a, b) => {
+    const aUnlocked = isCharacterFamilyUnlocked(a, fullRoster, unlockedCharacterIds);
+    const bUnlocked = isCharacterFamilyUnlocked(b, fullRoster, unlockedCharacterIds);
+    if (aUnlocked !== bUnlocked) return aUnlocked ? -1 : 1;
+    return (originalIndexes.get(a.id) ?? 0) - (originalIndexes.get(b.id) ?? 0);
+  });
+}
+
 function isLocalDevHost() {
   const isViteDev = Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
   return isViteDev && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
@@ -7410,7 +7432,9 @@ function TrainingSelect({
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster.find((character) => character.id !== p1Character?.id) ?? roster[1] ?? p1Character;
   const basicCount = p1Character ? generateBasicTrainingTrials(p1Character, roster).length : 0;
   const comboCount = p1Character ? generateComboTrainingTrials(p1Character).length : 0;
-  const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
+  const baseRoster = useMemo(() => (
+    sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
+  ), [roster, unlockedCharacterIds]);
   const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const pagedBaseRoster = baseRoster.slice(
@@ -7708,7 +7732,9 @@ function TournamentSelect({
   const pageGamepadStateRef = useRef({ previous: false, next: false });
   const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
-  const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
+  const baseRoster = useMemo(() => (
+    sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
+  ), [roster, unlockedCharacterIds]);
   const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const pagedBaseRoster = baseRoster.slice(
@@ -8751,7 +8777,9 @@ function CharacterSelect({
   const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
-  const baseRoster = useMemo(() => roster.filter((character) => !isCharacterVariant(character)), [roster]);
+  const baseRoster = useMemo(() => (
+    sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
+  ), [roster, unlockedCharacterIds]);
   const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const rosterPageStart = visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE;
