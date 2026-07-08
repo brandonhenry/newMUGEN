@@ -21191,6 +21191,8 @@ function FightScreen({
   const rankedSubmitResultRef = useRef<RankedSubmitResult | null>(null);
   const [rankedPlayerResult, setRankedPlayerResult] = useState<RankedPlayerResult | null>(null);
   const [rankedPromotionAccepted, setRankedPromotionAccepted] = useState(false);
+  const [tournamentFriendAdded, setTournamentFriendAdded] = useState(false);
+  const [tournamentAdvanceRequested, setTournamentAdvanceRequested] = useState(false);
   const onlineAttackTrackerRef = useRef([
     { attacking: false, hitConnected: false },
     { attacking: false, hitConnected: false }
@@ -21331,6 +21333,11 @@ function FightScreen({
   useEffect(() => {
     matchRef.current = match;
   }, [match]);
+
+  useEffect(() => {
+    setTournamentFriendAdded(false);
+    setTournamentAdvanceRequested(false);
+  }, [mode, onlineTournamentStatus?.assignedMatch?.id, onlineTournamentStatus?.entry?.id, fightSessionId]);
 
   useEffect(() => {
     if (!import.meta.env.DEV || typeof window === 'undefined') return undefined;
@@ -22544,7 +22551,7 @@ function FightScreen({
         online_role: onlineRoleRef.current
       });
     }
-    setOnlineStatusText(isPlacementMatch ? 'PLACEMENT RESULT' : rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
+    setOnlineStatusText(mode === 'tournamentOnline' ? 'TOURNAMENT RESULT' : isPlacementMatch ? 'PLACEMENT RESULT' : rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
     if (bot && !isPlacementMatch && (mode === 'online' || mode === 'ranked')) {
       recordOnlineBotMatchOutcome(bot, {
         queue: mode === 'ranked' ? 'ranked' : 'casual',
@@ -22960,14 +22967,15 @@ function FightScreen({
         }
         onlineSessionRef.current = session;
 
-        if (mode === 'tournamentOnline' && onlineTournamentStatus?.bracket.kind === 'paidOnline' && onlineTournamentStatus.assignedMatch && onlineTournamentStatus.entry) {
-          if (!posthogDeviceId) throw new Error('Tournament device id unavailable');
+        if (mode === 'tournamentOnline' && onlineTournamentStatus?.assignedMatch && onlineTournamentStatus.entry) {
+          const paidTournamentRoom = onlineTournamentStatus.bracket.kind === 'paidOnline';
+          if (paidTournamentRoom && !posthogDeviceId) throw new Error('Tournament device id unavailable');
           const joinOrPollTournamentRoom = async (join: boolean) => {
             const request = {
               tournamentId: onlineTournamentStatus.bracket.id,
               matchId: onlineTournamentStatus.assignedMatch?.id ?? '',
               playerId: onlineTournamentStatus.entry?.playerId ?? onlineProfile?.playerId ?? '',
-              posthogDeviceId
+              posthogDeviceId: paidTournamentRoom ? posthogDeviceId : undefined
             };
             const status = join
               ? await joinTournamentMatchRoom({ ...request, peerId: session.peerId })
@@ -23110,7 +23118,7 @@ function FightScreen({
       } catch (error) {
         if (!cancelled) {
           const message = error instanceof Error ? error.message : 'ONLINE ERROR';
-          if (mode === 'tournamentOnline' && onlineTournamentStatus?.bracket.kind === 'paidOnline') {
+          if (mode === 'tournamentOnline') {
             onTournamentRoomFailure?.(message);
             return;
           }
@@ -23393,7 +23401,7 @@ function FightScreen({
   }, [arcadeDefeatedCharacterId, arcadeMatchPhase, arcadeWinnerSlot, mode, onArcadeAdvance]);
 
   useEffect(() => {
-    if ((mode !== 'tournamentLocal' && mode !== 'tournamentOnline' && mode !== 'tournamentInfinite') || tournamentMatchPhase !== 'matchOver' || !tournamentWinnerSlot || arcadeAdvanceRef.current) return undefined;
+    if ((mode !== 'tournamentLocal' && mode !== 'tournamentInfinite') || tournamentMatchPhase !== 'matchOver' || !tournamentWinnerSlot || arcadeAdvanceRef.current) return undefined;
     arcadeAdvanceRef.current = true;
     const timeout = window.setTimeout(() => {
       onTournamentMatchComplete?.({ winnerSlot: tournamentWinnerSlot });
@@ -23699,6 +23707,31 @@ function FightScreen({
     });
   };
 
+  const tournamentFriendTarget = useMemo<MatchHistoryOpponent | null>(() => {
+    if (mode !== 'tournamentOnline' || !onlineTournamentStatus?.assignedMatch || !onlineTournamentStatus.entry) return null;
+    const opponent = getTournamentOpponentEntry(onlineTournamentStatus.bracket, onlineTournamentStatus.assignedMatch, onlineTournamentStatus.entry.id);
+    if (!opponent?.playerId || opponent.isBot) return null;
+    return {
+      playerId: opponent.playerId,
+      displayName: opponent.displayName,
+      characterId: opponent.characterId,
+      isBot: Boolean(opponent.isBot)
+    };
+  }, [mode, onlineTournamentStatus]);
+  const tournamentOpponentAlreadyFriend = Boolean(tournamentFriendTarget?.playerId && (tournamentFriendAdded || isFriend(onlineProfile, tournamentFriendTarget.playerId)));
+  const addTournamentOpponentFriend = useCallback(() => {
+    if (!tournamentFriendTarget) return;
+    addFriend(onlineProfile, tournamentFriendTarget, Date.now());
+    setTournamentFriendAdded(true);
+  }, [onlineProfile, tournamentFriendTarget]);
+
+  const advanceOnlineTournamentRound = useCallback(() => {
+    if (mode !== 'tournamentOnline' || !match.winnerSlot || tournamentAdvanceRequested) return;
+    setTournamentAdvanceRequested(true);
+    setOnlineStatusText('REPORTING TOURNAMENT RESULT');
+    onTournamentMatchComplete?.({ winnerSlot: match.winnerSlot });
+  }, [match.winnerSlot, mode, onTournamentMatchComplete, tournamentAdvanceRequested]);
+
   const trackMobileControlsUsed = useCallback((action: ActionName) => {
     if (mobileControlsTrackedRef.current) return;
     mobileControlsTrackedRef.current = true;
@@ -24001,14 +24034,31 @@ function FightScreen({
                 {rematchButtonLabel}
               </button>
             )}
-            <button className="secondary-button" onClick={leaveToCharacterSelect} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
-              <Users size={18} />
-              Character Select
-            </button>
-            <button className="secondary-button" onClick={leaveToMenu} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
-              <Home size={18} />
-              Menu
-            </button>
+            {mode === 'tournamentOnline' ? (
+              <>
+                {tournamentFriendTarget && (
+                  <button className="secondary-button" onClick={addTournamentOpponentFriend} disabled={tournamentOpponentAlreadyFriend}>
+                    <UserPlus size={18} />
+                    {tournamentOpponentAlreadyFriend ? 'Added' : 'Add Friend'}
+                  </button>
+                )}
+                <button className="primary-button" onClick={advanceOnlineTournamentRound} disabled={tournamentAdvanceRequested}>
+                  <ChevronRight size={18} />
+                  {tournamentAdvanceRequested ? 'Reporting' : 'Next Round'}
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="secondary-button" onClick={leaveToCharacterSelect} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
+                  <Users size={18} />
+                  Character Select
+                </button>
+                <button className="secondary-button" onClick={leaveToMenu} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
+                  <Home size={18} />
+                  Menu
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

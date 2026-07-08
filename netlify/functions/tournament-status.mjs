@@ -10,6 +10,7 @@ import {
   readTournament,
   statusText
 } from './_tournament-store.mjs';
+import { readTournamentMatchRoom } from './_tournament-rooms.mjs';
 import {
   getPaidTournamentStatus,
   getPaidTournamentStores,
@@ -32,10 +33,12 @@ export async function handler(event) {
       : await readTournament(store, tournamentId);
     if (!bracket) return json(404, { error: 'tournament_not_found' });
     const assignment = playerId ? assignedMatch(bracket, playerId) : { entry: undefined, match: undefined };
+    const matchRoom = assignment.match && assignment.entry ? await readTournamentMatchRoom(store, bracket, assignment.match, assignment.entry) : undefined;
     return json(200, {
       bracket,
       entry: assignment.entry,
       assignedMatch: assignment.match,
+      matchRoom,
       payment: paymentSummary(assignment.entry),
       statusText: statusText(bracket, assignment.match)
     });

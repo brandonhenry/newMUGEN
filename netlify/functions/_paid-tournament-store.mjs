@@ -17,6 +17,13 @@ import {
   paymentIsPaid,
   usdToSats
 } from './_lnbits.mjs';
+import {
+  assertTournamentEntryAssignedToMatch,
+  attachTournamentRoomToMatch,
+  attachTournamentRoomsToReadyMatches,
+  readTournamentMatchRoom,
+  upsertTournamentMatchRoom
+} from './_tournament-rooms.mjs';
 
 export const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 const TOURNAMENT_STORE_NAME = 'kore-paid-tournaments';
@@ -27,7 +34,6 @@ const LEDGER_STORE_NAME = 'kore-paid-ledger-events';
 const ROOM_STORE_NAME = 'kore-paid-match-rooms';
 const ACTIVE_KEY = 'active.json';
 const PAID_SERIES_ID = 'paid-lightning';
-const SLOT_MS = 60 * 60 * 1000;
 const PAID_TOURNAMENT_STAGE_POOL = ['the-chamber', 'the-chamber-green', 'metro-ring', 'forge-yard'];
 
 export function getPaidTournamentStores(event) {
@@ -268,7 +274,7 @@ export async function getPaidTournamentStatus(stores, playerId, posthogDeviceId)
   const assignment = cleanPlayerId ? assignedMatch(bracket, cleanPlayerId) : { entry: undefined, match: undefined };
   const entry = assignment.entry || deviceEntry || (cleanPlayerId ? await readEntry(stores, bracket.id, cleanPlayerId) : undefined);
   if (entry) assertEntryDevice(entry, deviceId);
-  const matchRoom = assignment.match && entry ? await readMatchRoom(stores, bracket, assignment.match, entry) : undefined;
+  const matchRoom = assignment.match && entry ? await readTournamentMatchRoom(stores.rooms, bracket, assignment.match, entry) : undefined;
   const timing = paidTimingSummary(bracket);
   return {
     bracket,
@@ -320,7 +326,7 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
       updatedAt: now
     };
   } else {
-    bracket = attachRoomsToReadyMatches(reportWinner(bracket, matchId, cleanWinnerEntryId, now), now);
+    bracket = attachTournamentRoomsToReadyMatches(reportWinner(bracket, matchId, cleanWinnerEntryId, now), now, PAID_TOURNAMENT_STAGE_POOL);
     bracket = {
       ...bracket,
       matches: bracket.matches.map((candidate) => candidate.id === matchId ? { ...candidate, resultReports: reports, reportState: 'agreed' } : candidate)
@@ -332,7 +338,7 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
   await writePaidTournament(stores, bracket);
   const assignment = assignedMatch(bracket, cleanReporterId);
   const nextMatch = assignment.match || bracket.matches.find((candidate) => candidate.id === matchId);
-  const matchRoom = nextMatch && assignment.entry ? await readMatchRoom(stores, bracket, nextMatch, assignment.entry, now) : undefined;
+  const matchRoom = nextMatch && assignment.entry ? await readTournamentMatchRoom(stores.rooms, bracket, nextMatch, assignment.entry, now) : undefined;
   const timing = paidTimingSummary(bracket);
   return {
     bracket,
@@ -397,8 +403,8 @@ export async function joinPaidTournamentRoom(stores, { tournamentId, matchId, pl
   const entry = findEntryByPlayer(bracket, playerId);
   assertEntryDevice(entry, deviceId);
   const match = bracket.matches.find((candidate) => candidate.id === matchId);
-  assertEntryAssignedToMatch(entry, match);
-  const room = await upsertMatchRoom(stores, bracket, match, entry, cleanPeerId, now);
+  assertTournamentEntryAssignedToMatch(entry, match);
+  const room = await upsertTournamentMatchRoom(stores.rooms, bracket, match, entry, cleanPeerId, now);
   const assignment = assignedMatch(bracket, entry.playerId);
   const timing = paidTimingSummary(bracket);
   return {
@@ -421,8 +427,8 @@ export async function getPaidTournamentRoomStatus(stores, { tournamentId, matchI
   const entry = findEntryByPlayer(bracket, playerId);
   assertEntryDevice(entry, cleanDeviceId(posthogDeviceId));
   const match = bracket.matches.find((candidate) => candidate.id === matchId);
-  assertEntryAssignedToMatch(entry, match);
-  const room = await readMatchRoom(stores, bracket, match, entry, now);
+  assertTournamentEntryAssignedToMatch(entry, match);
+  const room = await readTournamentMatchRoom(stores.rooms, bracket, match, entry, now);
   const timing = paidTimingSummary(bracket);
   return {
     bracket,
@@ -469,7 +475,7 @@ async function lockPaidTournament(bracket, now) {
   }, now);
   return {
     ...generated,
-    matches: generated.matches.map((match) => attachRoomToMatch(generated, match, now))
+    matches: generated.matches.map((match) => attachTournamentRoomToMatch(generated, match, now, PAID_TOURNAMENT_STAGE_POOL))
   };
 }
 
@@ -611,74 +617,6 @@ function assertEntryDevice(entry, posthogDeviceId) {
   }
 }
 
-function assertEntryAssignedToMatch(entry, match) {
-  if (!match || match.status !== 'ready') throw Object.assign(new Error('Match is not ready'), { statusCode: 409, code: 'match_not_ready' });
-  if (match.entryAId !== entry.id && match.entryBId !== entry.id) {
-    throw Object.assign(new Error('Entry is not assigned to this match'), { statusCode: 403, code: 'match_not_assigned' });
-  }
-}
-
-function attachRoomsToReadyMatches(bracket, now) {
-  return {
-    ...bracket,
-    matches: bracket.matches.map((match) => attachRoomToMatch(bracket, match, now))
-  };
-}
-
-function attachRoomToMatch(bracket, match, now) {
-  if (match.status !== 'ready' || !match.entryAId || !match.entryBId) return match;
-  const roomId = match.roomId || `${bracket.id}:${match.id}`;
-  const slotStartsAt = match.slotStartsAt || now;
-  return {
-    ...match,
-    stageId: match.stageId || deterministicStageId(bracket.id, match.id),
-    roomId,
-    slotStartsAt,
-    slotEndsAt: match.slotEndsAt || slotStartsAt + SLOT_MS,
-    roomStatus: match.roomStatus || 'pending',
-    reportState: match.reportState || 'none'
-  };
-}
-
-async function readMatchRoom(stores, bracket, match, entry, now = Date.now()) {
-  if (!match?.roomId) return undefined;
-  const stored = await stores.rooms.get(roomKey(bracket.id, match.id), { type: 'json' }).catch(() => null);
-  if (!stored) {
-    return {
-      tournamentId: bracket.id,
-      matchId: match.id,
-      roomId: match.roomId,
-      slotStartsAt: match.slotStartsAt,
-      slotEndsAt: match.slotEndsAt,
-      status: now > match.slotEndsAt ? 'closed' : 'waiting',
-      localRole: undefined
-    };
-  }
-  const localRole = stored.hostEntryId === entry?.id ? 'host' : stored.guestEntryId === entry?.id ? 'guest' : undefined;
-  const status = now > stored.slotEndsAt && stored.status !== 'forfeit' && stored.status !== 'review' ? 'closed' : stored.status;
-  return { ...stored, status, localRole };
-}
-
-async function upsertMatchRoom(stores, bracket, match, entry, peerId, now) {
-  const base = await readMatchRoom(stores, bracket, match, entry, now);
-  if (!base) throw Object.assign(new Error('Match room not found'), { statusCode: 404, code: 'room_not_found' });
-  if (now > base.slotEndsAt) {
-    const closed = { ...base, status: 'closed' };
-    await stores.rooms.setJSON(roomKey(bracket.id, match.id), closed);
-    return closed;
-  }
-  let next = { ...base };
-  if (!next.hostEntryId || next.hostEntryId === entry.id) {
-    next = { ...next, hostEntryId: entry.id, hostPeerId: peerId, status: next.guestEntryId ? 'ready' : 'waiting', localRole: 'host' };
-  } else if (!next.guestEntryId || next.guestEntryId === entry.id) {
-    next = { ...next, guestEntryId: entry.id, guestPeerId: peerId, status: 'ready', localRole: 'guest' };
-  } else {
-    throw Object.assign(new Error('Match room is full'), { statusCode: 409, code: 'room_full' });
-  }
-  await stores.rooms.setJSON(roomKey(bracket.id, match.id), next);
-  return next;
-}
-
 function paidStatusText(bracket, match) {
   if (bracket.status === 'open') return `${confirmedPaidEntries(bracket).length} / ${bracket.minEntries} entries`;
   if (bracket.status === 'completed') return 'Tournament complete';
@@ -706,22 +644,9 @@ function payoutKey(tournamentId, playerId) {
   return `${tournamentId}/${playerId}.json`;
 }
 
-function roomKey(tournamentId, matchId) {
-  return `${tournamentId}/${matchId}.json`;
-}
-
 function cleanDeviceId(value) {
   if (typeof value !== 'string') return '';
   return value.replace(/[^a-zA-Z0-9:_.-]/g, '').slice(0, 160);
-}
-
-function deterministicStageId(tournamentId, matchId) {
-  const seed = `${tournamentId}:${matchId}`;
-  let hash = 0;
-  for (let index = 0; index < seed.length; index += 1) {
-    hash = (hash * 31 + seed.charCodeAt(index)) >>> 0;
-  }
-  return PAID_TOURNAMENT_STAGE_POOL[hash % PAID_TOURNAMENT_STAGE_POOL.length];
 }
 
 function cleanBolt11(value) {

@@ -55,9 +55,9 @@ export async function fetchTournamentMatchRoomStatus(request: TournamentRoomStat
   const query = new URLSearchParams({
     tournamentId: request.tournamentId,
     matchId: request.matchId,
-    playerId: request.playerId,
-    posthogDeviceId: request.posthogDeviceId
+    playerId: request.playerId
   });
+  if (request.posthogDeviceId) query.set('posthogDeviceId', request.posthogDeviceId);
   return getJson<TournamentStatusResult>(`/.netlify/functions/tournament-room-status?${query.toString()}`);
 }
 

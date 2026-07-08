@@ -31,6 +31,13 @@ export async function handler(event) {
     const store = getTournamentStore(event);
     const bracket = await readTournament(store, tournamentId);
     if (!bracket) return json(404, { error: 'tournament_not_found' });
+    const currentAssignment = assignedMatch(bracket, reporterPlayerId);
+    if (!currentAssignment.match || currentAssignment.match.id !== matchId) {
+      return json(403, { error: 'match_not_assigned', message: 'Reporter is not assigned to this match' });
+    }
+    if (currentAssignment.match.roomId && cleanId(body.roomId) !== currentAssignment.match.roomId) {
+      return json(403, { error: 'room_required', message: 'Match room is required to report this result' });
+    }
     const reported = reportWinner(bracket, matchId, winnerEntryId, Date.now());
     await writeTournament(store, reported);
     const assignment = assignedMatch(reported, reporterPlayerId);

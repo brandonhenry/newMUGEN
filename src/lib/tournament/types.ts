@@ -200,7 +200,7 @@ export type TournamentRoomJoinRequest = {
   tournamentId: string;
   matchId: string;
   playerId: string;
-  posthogDeviceId: string;
+  posthogDeviceId?: string;
   peerId: string;
 };
 
@@ -208,7 +208,7 @@ export type TournamentRoomStatusRequest = {
   tournamentId: string;
   matchId: string;
   playerId: string;
-  posthogDeviceId: string;
+  posthogDeviceId?: string;
 };
 
 export type TournamentClaimPrizeResult = {

@@ -1,5 +1,11 @@
 import { getBlobStore } from './_blob-store.mjs';
 import { TOURNAMENT_BOT_FILL_MS, cleanCharacterIds, cleanKrScores, createOnlineBotOpponent } from './_online-bots.mjs';
+import {
+  assertTournamentEntryAssignedToMatch,
+  attachTournamentRoomsToReadyMatches,
+  readTournamentMatchRoom,
+  upsertTournamentMatchRoom
+} from './_tournament-rooms.mjs';
 
 export const TOURNAMENT_STORE_NAME = 'kore-tournaments';
 export const FREE_ONLINE_TOURNAMENT_ID = 'free-online-daily';
@@ -330,7 +336,7 @@ export function generateOnlineBracket(bracket, now = Date.now()) {
   return resolveBotOnlyMatches({
     ...bracket,
     status: 'roundActive',
-    matches,
+    matches: attachTournamentRoomsToReadyMatches({ ...bracket, matches }, now).matches,
     currentRound: 1,
     updatedAt: now
   }, now);
@@ -347,7 +353,53 @@ export function assignedMatch(bracket, playerId) {
 }
 
 export function reportWinner(bracket, matchId, winnerEntryId, now = Date.now()) {
-  return resolveBotOnlyMatches(applyReportedWinner(bracket, matchId, winnerEntryId, now), now);
+  return resolveBotOnlyMatches(attachTournamentRoomsToReadyMatches(applyReportedWinner(bracket, matchId, winnerEntryId, now), now), now);
+}
+
+export async function joinFreeTournamentRoom(store, { tournamentId, matchId, playerId, peerId }, now = Date.now()) {
+  let bracket = await readTournament(store, tournamentId);
+  if (!bracket) throw Object.assign(new Error('Free tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
+  bracket = await ensureFreeTournamentRooms(store, bracket, now);
+  const cleanPeerId = cleanId(peerId);
+  if (!cleanPeerId) throw Object.assign(new Error('Peer id is required'), { statusCode: 400, code: 'missing_fields' });
+  const entry = findEntryByPlayer(bracket, playerId);
+  if (!entry) throw Object.assign(new Error('Free tournament entry not found'), { statusCode: 404, code: 'entry_not_found' });
+  const match = bracket.matches.find((candidate) => candidate.id === cleanId(matchId));
+  assertTournamentEntryAssignedToMatch(entry, match);
+  const room = await upsertTournamentMatchRoom(store, bracket, match, entry, cleanPeerId, now);
+  const assignment = assignedMatch(bracket, entry.playerId);
+  return {
+    bracket,
+    entry,
+    assignedMatch: assignment.match,
+    matchRoom: room,
+    payment: paymentSummary(entry),
+    statusText: room.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
+  };
+}
+
+export async function getFreeTournamentRoomStatus(store, { tournamentId, matchId, playerId }, now = Date.now()) {
+  let bracket = await readTournament(store, tournamentId);
+  if (!bracket) throw Object.assign(new Error('Free tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
+  bracket = await ensureFreeTournamentRooms(store, bracket, now);
+  const entry = findEntryByPlayer(bracket, playerId);
+  if (!entry) throw Object.assign(new Error('Free tournament entry not found'), { statusCode: 404, code: 'entry_not_found' });
+  const match = bracket.matches.find((candidate) => candidate.id === cleanId(matchId));
+  assertTournamentEntryAssignedToMatch(entry, match);
+  const room = await readTournamentMatchRoom(store, bracket, match, entry, now);
+  return {
+    bracket,
+    entry,
+    assignedMatch: match,
+    matchRoom: room,
+    payment: paymentSummary(entry),
+    statusText: room?.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
+  };
+}
+
+async function ensureFreeTournamentRooms(store, bracket, now = Date.now()) {
+  if (bracket.kind !== 'freeOnline' || !bracket.matches.some((match) => match.status === 'ready' && match.entryAId && match.entryBId && !match.roomId)) return bracket;
+  return writeTournament(store, attachTournamentRoomsToReadyMatches(bracket, now));
 }
 
 function applyReportedWinner(bracket, matchId, winnerEntryId, now = Date.now()) {
@@ -414,6 +466,11 @@ export function paymentSummary(entry) {
     invoiceId: entry.paymentInvoiceId,
     paidAt: entry.paidAt
   };
+}
+
+function findEntryByPlayer(bracket, playerId) {
+  const cleanPlayerId = cleanId(playerId);
+  return bracket.entries.find((candidate) => candidate.playerId === cleanPlayerId || candidate.id === cleanPlayerId);
 }
 
 export function cleanId(value) {
