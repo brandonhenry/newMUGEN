@@ -3468,11 +3468,6 @@ function stableFightCameraSide(dx: number, dz: number) {
   return [-dz / lineLength, dx / lineLength] as const;
 }
 
-function stageAnchoredFightCameraSide(stage: StageDefinition) {
-  const rotationY = stage.fightPlane?.rotationY ?? 0;
-  return [Math.sin(rotationY), Math.cos(rotationY)] as const;
-}
-
 let lastFightCameraInputDebugAt = 0;
 
 function logFightCameraInputDebug(payload: Record<string, unknown>) {
@@ -3871,7 +3866,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const dx = p2x - p1x;
     const dz = p2z - p1z;
     const distance = Math.hypot(dx, dz);
-    const [cameraX, cameraZ] = stageAnchoredFightCameraSide(match.stage);
+    const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
     rawSide.set(cameraX, 0, cameraZ).normalize();
     if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
     if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
@@ -3933,9 +3928,10 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const sidestepping = isFighterLaneOrbitCameraActive(p1) || isFighterLaneOrbitCameraActive(p2);
     const sidestepCameraBoost = sidestepping ? 4.5 : 1;
     const sidestepRigBoost = sidestepping ? 2.4 : 1;
+    const sideFollowScale = sidestepping ? 0.55 : 1;
     focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing * sidestepCameraBoost));
     lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing * sidestepCameraBoost));
-    side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing * sidestepCameraBoost)).normalize();
+    side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing * sideFollowScale)).normalize();
     cameraDistanceRef.current = THREE.MathUtils.lerp(cameraDistanceRef.current, cameraDistance, cameraDamp(delta, 2.35 * smoothing * sidestepRigBoost));
     cameraHeightRef.current = THREE.MathUtils.lerp(cameraHeightRef.current, cameraHeight, cameraDamp(delta, 2.75 * smoothing * sidestepRigBoost));
 
