@@ -94,16 +94,29 @@ const ribbons = new THREE.Group();
 scene.add(ribbons);
 const ribbonAxis = new THREE.Group();
 ribbons.add(ribbonAxis);
-const ribbonMats = [mat(0xeaffff, 0.54), mat(0x64d7ff, 0.34), mat(0xeaffff, 0.46), mat(0x64d7ff, 0.28)];
-for (let i = 0; i < 4; i += 1) {
-  const mesh = new THREE.Mesh(ribbonGeometry(0.21 + i * 0.035, 1.7 + i * 0.04, 1.05 + i * 0.16, i * 1.41), ribbonMats[i]);
-  mesh.userData.spin = (i % 2 === 0 ? 1 : -1) * (2.4 + i * 0.28);
+const ribbonMats = [mat(0xffffff, 0.68), mat(0x64d7ff, 0.42), mat(0xd6fbff, 0.54), mat(0xffffff, 0.62), mat(0x64d7ff, 0.4), mat(0xd6fbff, 0.5), mat(0xffffff, 0.58)];
+for (let i = 0; i < 7; i += 1) {
+  const mesh = new THREE.Mesh(ribbonGeometry(0.18 + i * 0.022, 1.62 + i * 0.035, 1.08 + i * 0.13, i * 1.41), ribbonMats[i]);
+  mesh.userData.spin = (i % 2 === 0 ? 1 : -1) * (2.55 + i * 0.24);
+  mesh.position.y = -0.08 + (i % 4) * 0.045;
   ribbonAxis.add(mesh);
 }
 const ring = new THREE.Mesh(new THREE.RingGeometry(0.32, 0.36, 48), mat(0xdffcff, 0.3));
 ring.rotation.x = -Math.PI / 2;
 ring.position.y = 0.13;
 ribbonAxis.add(ring);
+const particleGroup = new THREE.Group();
+ribbonAxis.add(particleGroup);
+for (let i = 0; i < 34; i += 1) {
+  const angle = i * 2.399;
+  const pr = 0.11 + ((i * 37) % 100) / 100 * 0.42;
+  const p = new THREE.Mesh(new THREE.SphereGeometry(1, 8, 6), mat(i % 3 === 0 ? 0xffffff : i % 2 === 0 ? 0xeaffff : 0x7edcff, 0.36 + ((i * 19) % 100) / 100 * 0.36));
+  p.position.set(Math.cos(angle) * pr, 0.08 + ((i * 53) % 100) / 100 * 1.55, Math.sin(angle) * pr);
+  p.scale.setScalar(0.014 + ((i * 29) % 100) / 100 * 0.024);
+  p.userData.rise = 0.25 + ((i * 11) % 100) / 100 * 0.5;
+  p.userData.phase = angle;
+  particleGroup.add(p);
+}
 
 let start = performance.now();
 document.querySelector('#restart').onclick = () => { start = performance.now(); };
@@ -127,7 +140,14 @@ function animate(now) {
   const fade = cue ? Math.pow(1 - cycle / 0.55, 1.25) : 0;
   ribbonAxis.children.forEach((child, index) => {
     child.rotation.y += (child.userData.spin || 0) * 0.012;
-    if (child.material) child.material.opacity = (index % 2 === 0 ? 0.5 : 0.34) * Math.max(0.18, fade);
+    if (child.material) child.material.opacity = (index % 2 === 0 ? 0.62 : 0.42) * Math.max(0.28, fade);
+  });
+  particleGroup.children.forEach((child, index) => {
+    child.position.y += child.userData.rise * 0.006;
+    if (child.position.y > 1.7) child.position.y = 0.08;
+    child.position.x += Math.sin(now * 0.003 + child.userData.phase) * 0.0008;
+    child.position.z += Math.cos(now * 0.003 + child.userData.phase) * 0.0008;
+    child.material.opacity = (0.32 + (index % 5) * 0.07) * Math.max(0.28, fade);
   });
   controls.update();
   renderer.render(scene, camera);

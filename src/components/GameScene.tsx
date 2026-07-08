@@ -1660,21 +1660,21 @@ function TornadoRibbonEffect({
   const characterScale = getCharacterGlobalScale(defender.character);
   const height = THREE.MathUtils.clamp(1.55 * characterScale.height, 0.95, 2.35);
   const radius = THREE.MathUtils.clamp(0.23 * characterScale.width, 0.16, 0.38);
-  const ribbonCount = reducedMotion ? 2 : 4;
+  const ribbonCount = reducedMotion ? 3 : 7;
   const duration = reducedMotion ? 0.38 : 0.72;
   const ribbons = useMemo(
     () => Array.from({ length: ribbonCount }, (_, index) => ({
       geometry: makeTornadoRibbonGeometry(
-        radius * (0.82 + index * 0.13),
-        height * (0.88 + seededUnit(event.id + 17, index) * 0.16),
-        1.05 + index * 0.16,
+        radius * (0.72 + index * 0.08),
+        height * (0.86 + seededUnit(event.id + 17, index) * 0.22),
+        1.08 + index * 0.13,
         event.id * 0.37 + index * 1.41,
-        72
+        88
       ),
-      color: index % 2 === 0 ? '#eaffff' : '#64d7ff',
-      opacity: index % 2 === 0 ? 0.54 : 0.34,
-      spin: (index % 2 === 0 ? 1 : -1) * (2.4 + index * 0.28),
-      yOffset: seededUnit(event.id + 31, index) * 0.08
+      color: index % 3 === 0 ? '#ffffff' : index % 2 === 0 ? '#d6fbff' : '#64d7ff',
+      opacity: index % 3 === 0 ? 0.68 : index % 2 === 0 ? 0.54 : 0.4,
+      spin: (index % 2 === 0 ? 1 : -1) * (2.55 + index * 0.24),
+      yOffset: -height * 0.05 + seededUnit(event.id + 31, index) * height * 0.12
     })),
     [event.id, height, radius, ribbonCount]
   );
@@ -1684,15 +1684,16 @@ function TornadoRibbonEffect({
     };
   }, [ribbons]);
   const particles = useMemo(
-    () => Array.from({ length: reducedMotion ? 5 : 12 }, (_, index) => {
+    () => Array.from({ length: reducedMotion ? 8 : 34 }, (_, index) => {
       const angle = index * 2.399 + seededUnit(event.id + 47, index) * 0.8;
-      const particleRadius = radius * (0.5 + seededUnit(event.id + 59, index) * 1.25);
+      const particleRadius = radius * (0.38 + seededUnit(event.id + 59, index) * 1.55);
       return {
         x: Math.cos(angle) * particleRadius,
         z: Math.sin(angle) * particleRadius,
-        y: height * (0.1 + seededUnit(event.id + 71, index) * 0.78),
+        y: height * (0.04 + seededUnit(event.id + 71, index) * 0.94),
         phase: angle,
-        scale: 0.018 + seededUnit(event.id + 83, index) * 0.022
+        scale: 0.014 + seededUnit(event.id + 83, index) * 0.024,
+        opacity: 0.36 + seededUnit(event.id + 97, index) * 0.36
       };
     }),
     [event.id, height, radius, reducedMotion]
@@ -1718,7 +1719,7 @@ function TornadoRibbonEffect({
         if (!('opacity' in material)) return;
         const typed = material as THREE.Material & { opacity: number; userData: { baseOpacity?: number } };
         if (typed.userData.baseOpacity === undefined) typed.userData.baseOpacity = typed.opacity;
-        typed.opacity = typed.userData.baseOpacity * fade;
+      typed.opacity = typed.userData.baseOpacity * Math.max(0.28, fade);
       });
     });
     if (lightRef.current) {
@@ -1745,7 +1746,7 @@ function TornadoRibbonEffect({
         {particles.map((particle, index) => (
           <mesh key={`tornado-particle-${event.id}-${index}`} position={[particle.x, particle.y, particle.z]} scale={particle.scale}>
             <sphereGeometry args={[1, 8, 6]} />
-            <meshBasicMaterial color={index % 2 === 0 ? '#eaffff' : '#7edcff'} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+            <meshBasicMaterial color={index % 3 === 0 ? '#ffffff' : index % 2 === 0 ? '#eaffff' : '#7edcff'} transparent opacity={particle.opacity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
           </mesh>
         ))}
       </group>
