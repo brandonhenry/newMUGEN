@@ -8001,6 +8001,19 @@ function TournamentSelect({
   const freeOnlineSummary = summaries.find((summary) => summary.kind === 'freeOnline');
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
   const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
+  const hasKnownPaidEntry = Boolean(knownPaidTournamentStatus?.entry);
+  const freeOnlineEntryLabel = summaryStatus === 'loading'
+    ? 'Loading tourneys'
+    : freeOnlineSummary
+      ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} forming`
+      : 'Free bracket queue';
+  const freeOnlineActivityLabel = formatTournamentActivityLabel(freeOnlineSummary, 'Free entry');
+  const paidEntryLabel = hasKnownPaidEntry
+    ? knownPaidTournamentStatus?.statusText ?? 'Entry found'
+    : paidEnabled
+      ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} forming`
+      : 'Paid beta unavailable';
+  const paidActivityLabel = paidEnabled ? formatTournamentActivityLabel(paidSummary, paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning') : paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning';
   const canStart = Boolean(
     customTournamentMode
       ? roster.filter((character) => isCharacterPlayable(character)).length >= 2
@@ -8008,7 +8021,6 @@ function TournamentSelect({
     isCharacterUnlocked(p1Character, unlockedCharacterIds) &&
     (tournamentMode !== 'free' || localPlayerCount === 1 || (p2Character && isCharacterUnlocked(p2Character, unlockedCharacterIds)))
   );
-  const hasKnownPaidEntry = Boolean(knownPaidTournamentStatus?.entry);
   const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'custom' ? 'Start Custom' : tournamentMode === 'paid' ? hasKnownPaidEntry ? 'View Tournament' : 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
   const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
 
@@ -8202,8 +8214,8 @@ function TournamentSelect({
               onClick={() => selectTournamentMode('online')}
             >
               <strong>ONLINE</strong>
-              <span>{summaryStatus === 'loading' ? 'Loading tourneys' : freeOnlineSummary ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} entered` : 'Free bracket queue'}</span>
-              <small>Free entry</small>
+              <span>{freeOnlineEntryLabel}</span>
+              <small>{freeOnlineActivityLabel}</small>
             </button>
             <button
               type="button"
@@ -8212,8 +8224,8 @@ function TournamentSelect({
               disabled={!paidEnabled}
             >
               <strong>Prizepool</strong>
-              <span>{hasKnownPaidEntry ? knownPaidTournamentStatus?.statusText ?? 'Entry found' : paidEnabled ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries` : 'Paid beta unavailable'}</span>
-              <small>{paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning'}</small>
+              <span>{paidEntryLabel}</span>
+              <small>{paidActivityLabel}</small>
             </button>
             {isDevHost && (
               <button
@@ -8969,6 +8981,16 @@ function normalizeRankedKrScores(value: Partial<RankedKrScores> | undefined): Ra
 
 function isPaidTournamentUiEnabled(summary?: TournamentSummary) {
   return import.meta.env.VITE_TOURNAMENT_PAID_ENABLED === 'true' && Boolean(summary?.paidEnabled);
+}
+
+function formatTournamentActivityLabel(summary: TournamentSummary | undefined, fallback: string) {
+  if (!summary) return fallback;
+  const live = Math.max(0, Math.round(summary.liveTournamentCount ?? 0));
+  const forming = Math.max(0, Math.round(summary.formingTournamentCount ?? (summary.status === 'open' ? 1 : 0)));
+  if (live > 0 && forming > 0) return `${live} live, ${forming} forming`;
+  if (live > 0) return `${live} live tournament${live === 1 ? '' : 's'}`;
+  if (forming > 0) return `${forming} forming tournament${forming === 1 ? '' : 's'}`;
+  return fallback;
 }
 
 function getTournamentTotalRounds(bracket: TournamentBracket | null | undefined) {

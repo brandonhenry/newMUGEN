@@ -1,5 +1,4 @@
 import {
-  FREE_ONLINE_TOURNAMENT_ID,
   cleanId,
   cleanName,
   enterFreeTournament,
@@ -7,7 +6,6 @@ import {
   getOrCreateFreeTournament,
   getTournamentStore,
   json,
-  readTournament,
   writeTournament
 } from './_tournament-store.mjs';
 import {
@@ -40,8 +38,7 @@ export async function handler(event) {
 
     const store = getTournamentStore(event);
     const current = await getOrCreateFreeTournament(store);
-    const latest = await readTournament(store, FREE_ONLINE_TOURNAMENT_ID).then((value) => value || current);
-    const result = enterFreeTournament(latest, { playerId, displayName, characterId }, Date.now());
+    const result = enterFreeTournament(current, { playerId, displayName, characterId }, Date.now());
     await writeTournament(store, result.bracket);
     return json(200, result);
   } catch (error) {

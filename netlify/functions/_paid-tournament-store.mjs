@@ -69,7 +69,8 @@ export function paidDisabledSummary() {
 
 export async function paidSummaryWithStores(stores) {
   const bracket = await getOrCreatePaidTournament(stores);
-  return paidSummary(bracket);
+  const activity = await paidTournamentActivitySummary(stores, bracket);
+  return { ...paidSummary(bracket), ...activity };
 }
 
 export function paidSummary(bracket) {
@@ -94,6 +95,22 @@ export function paidSummary(bracket) {
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
     startsLabel: bracket.status === 'open' ? 'Starts when full' : bracket.status === 'roundActive' ? 'Bracket active' : 'Completed'
+  };
+}
+
+export async function paidTournamentActivitySummary(stores, currentBracket) {
+  const listed = await stores.tournaments.list({ prefix: 'tournaments/' }).catch(() => ({ blobs: [] }));
+  const ids = new Set(
+    (listed.blobs || [])
+      .map((blob) => String(blob.key || '').replace(/^tournaments\//, ''))
+      .filter(Boolean)
+  );
+  if (currentBracket?.id) ids.add(currentBracket.id);
+  const brackets = await Promise.all([...ids].map((id) => readPaidTournament(stores, id).catch(() => null)));
+  const paidBrackets = brackets.filter((bracket) => bracket?.kind === 'paidOnline');
+  return {
+    liveTournamentCount: paidBrackets.filter((bracket) => bracket.status === 'roundActive' || bracket.status === 'bracketGenerated' || bracket.status === 'locked').length,
+    formingTournamentCount: paidBrackets.filter((bracket) => bracket.status === 'open').length
   };
 }
 

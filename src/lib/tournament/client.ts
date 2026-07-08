@@ -105,6 +105,11 @@ function localTournamentList() {
         minEntries: 8,
         capacity: 8,
         paidEnabled: false,
+        confirmedEntries: bracket.entries.length,
+        entriesNeeded: Math.max(0, 8 - bracket.entries.length),
+        formingEntries: bracket.status === 'open' ? bracket.entries.length : 0,
+        liveTournamentCount: bracket.status === 'open' ? 0 : 1,
+        formingTournamentCount: bracket.status === 'open' ? 1 : 0,
         startsLabel: 'Starts when full'
       },
       {
@@ -120,6 +125,9 @@ function localTournamentList() {
         minEntries: 25,
         capacity: 25,
         paidEnabled: false,
+        formingEntries: 0,
+        liveTournamentCount: 0,
+        formingTournamentCount: 0,
         estimatedStartLabel: 'Starts once 25 entries enter',
         startsWhenFullLabel: 'Tournament starts once 25 entries enter',
         startsLabel: 'Paid beta unavailable'

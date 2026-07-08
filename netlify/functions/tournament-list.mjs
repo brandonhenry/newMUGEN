@@ -1,4 +1,5 @@
 import {
+  freeTournamentActivitySummary,
   getOrCreateFreeTournament,
   getTournamentStore,
   json,
@@ -16,8 +17,9 @@ export async function handler(event) {
   try {
     const store = getTournamentStore(event);
     const free = await getOrCreateFreeTournament(store);
+    const freeActivity = await freeTournamentActivitySummary(store, free);
     const paid = paidEnabled() ? await paidSummaryWithStores(getPaidTournamentStores(event)) : paidDisabledSummary();
-    return json(200, { tournaments: [toSummary(free), paid] });
+    return json(200, { tournaments: [{ ...toSummary(free), ...freeActivity }, paid] });
   } catch (error) {
     return json(500, { error: 'tournament_list_failed', message: error instanceof Error ? error.message : String(error) });
   }

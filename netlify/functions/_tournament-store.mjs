@@ -8,6 +8,8 @@ export const FREE_ONLINE_CAPACITY = 8;
 export const FREE_ONLINE_MIN_ENTRIES = 8;
 export const PAID_LIGHTNING_CAPACITY = 25;
 export const PAID_LIGHTNING_MIN_ENTRIES = 25;
+const FREE_ACTIVE_KEY = 'tournaments/free-online-active.json';
+const FREE_SERIES_ID = 'free-online';
 const DEFAULT_BOT_CHARACTER_IDS = ['kiro', 'riven'];
 
 export function getTournamentStore(event) {
@@ -24,18 +26,44 @@ export async function readTournament(store, id) {
 
 export async function writeTournament(store, bracket) {
   await store.setJSON(tournamentKey(bracket.id), bracket);
+  if (bracket.kind === 'freeOnline' && bracket.status === 'open') await writeFreeActiveTournament(store, bracket);
   return bracket;
 }
 
+async function writeFreeActiveTournament(store, bracket) {
+  await store.setJSON(FREE_ACTIVE_KEY, { id: bracket.id, updatedAt: bracket.updatedAt });
+}
+
 export async function getOrCreateFreeTournament(store, now = Date.now()) {
-  const existing = await readTournament(store, FREE_ONLINE_TOURNAMENT_ID);
-  if (existing?.id) {
-    const bracket = maybeFillFreeTournamentWithBots(sanitizeBracket(existing), now);
-    if (bracket.updatedAt !== existing.updatedAt || bracket.entries.length !== existing.entries?.length || bracket.matches.length !== existing.matches?.length) {
-      await writeTournament(store, bracket);
+  const active = await store.get(FREE_ACTIVE_KEY, { type: 'json' }).catch(() => null);
+  if (active?.id) {
+    const bracket = await readTournament(store, active.id);
+    if (bracket?.id) {
+      const sanitized = maybeFillFreeTournamentWithBots(sanitizeBracket(bracket), now);
+      if (sanitized.status === 'open' && confirmedTournamentEntries(sanitized).length < sanitized.capacity) {
+        if (sanitized.updatedAt !== bracket.updatedAt || sanitized.entries.length !== bracket.entries?.length || sanitized.matches.length !== bracket.matches?.length) {
+          await writeTournament(store, sanitized);
+        }
+        return sanitized;
+      }
+      if (sanitized.updatedAt !== bracket.updatedAt || sanitized.status !== bracket.status) await writeTournament(store, sanitized);
     }
-    return bracket;
   }
+
+  const legacy = await readTournament(store, FREE_ONLINE_TOURNAMENT_ID);
+  if (legacy?.id) {
+    const bracket = maybeFillFreeTournamentWithBots(sanitizeBracket(legacy), now);
+    if (bracket.status === 'open' && confirmedTournamentEntries(bracket).length < bracket.capacity) {
+      if (bracket.updatedAt !== legacy.updatedAt || bracket.entries.length !== legacy.entries?.length || bracket.matches.length !== legacy.matches?.length) {
+        await writeTournament(store, bracket);
+      } else {
+        await writeFreeActiveTournament(store, bracket);
+      }
+      return bracket;
+    }
+    if (bracket.updatedAt !== legacy.updatedAt || bracket.status !== legacy.status) await writeTournament(store, bracket);
+  }
+
   const bracket = makeOpenFreeTournament(now);
   await writeTournament(store, bracket);
   return bracket;
@@ -51,7 +79,8 @@ export async function getOrCreatePaidTournament(store, now = Date.now()) {
 
 export function makeOpenFreeTournament(now = Date.now()) {
   return {
-    id: FREE_ONLINE_TOURNAMENT_ID,
+    id: `${FREE_ONLINE_TOURNAMENT_ID}-${now}`,
+    seriesId: FREE_SERIES_ID,
     kind: 'freeOnline',
     status: 'open',
     entries: [],
@@ -123,7 +152,30 @@ export function toSummary(bracket) {
     minEntries: bracket.minEntries,
     capacity: bracket.capacity,
     paidEnabled: Boolean(bracket.paidEnabled),
+    confirmedEntries: confirmedEntries.length,
+    entriesNeeded: Math.max(0, bracket.minEntries - confirmedEntries.length),
+    formingEntries: bracket.status === 'open' ? confirmedEntries.length : 0,
+    liveBracketId: bracket.status !== 'open' ? bracket.id : undefined,
+    nextBracketId: bracket.status === 'open' ? bracket.id : undefined,
     startsLabel: bracket.status === 'open' ? 'Starts when full' : bracket.status === 'roundActive' ? 'Bracket active' : 'Completed'
+  };
+}
+
+export async function freeTournamentActivitySummary(store, currentBracket) {
+  const listed = await store.list({ prefix: 'tournaments/' }).catch(() => ({ blobs: [] }));
+  const ids = new Set(
+    (listed.blobs || [])
+      .map((blob) => String(blob.key || '').replace(/^tournaments\//, ''))
+      .filter((id) => id && id !== 'free-online-active.json')
+  );
+  if (currentBracket?.id) ids.add(currentBracket.id);
+  const brackets = await Promise.all([...ids].map((id) => readTournament(store, id).catch(() => null)));
+  const freeBrackets = brackets
+    .filter((bracket) => bracket?.kind === 'freeOnline')
+    .map((bracket) => sanitizeBracket(bracket));
+  return {
+    liveTournamentCount: freeBrackets.filter((bracket) => bracket.status === 'roundActive' || bracket.status === 'bracketGenerated' || bracket.status === 'locked').length,
+    formingTournamentCount: freeBrackets.filter((bracket) => bracket.status === 'open').length
   };
 }
 

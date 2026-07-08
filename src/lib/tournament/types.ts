@@ -125,6 +125,8 @@ export type TournamentSummary = {
   formingEntries?: number;
   liveBracketId?: string;
   nextBracketId?: string;
+  liveTournamentCount?: number;
+  formingTournamentCount?: number;
   estimatedStartLabel?: string;
   startsWhenFullLabel?: string;
   startsLabel: string;

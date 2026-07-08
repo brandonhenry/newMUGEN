@@ -28,7 +28,7 @@ export async function handler(event) {
     }
     const store = getTournamentStore(event);
     const bracket = tournamentId === FREE_ONLINE_TOURNAMENT_ID
-      ? await getOrCreateFreeTournament(store)
+      ? await resolveFreeTournamentStatusBracket(store, playerId)
       : await readTournament(store, tournamentId);
     if (!bracket) return json(404, { error: 'tournament_not_found' });
     const assignment = playerId ? assignedMatch(bracket, playerId) : { entry: undefined, match: undefined };
@@ -42,4 +42,13 @@ export async function handler(event) {
   } catch (error) {
     return errorJson(error);
   }
+}
+
+async function resolveFreeTournamentStatusBracket(store, playerId) {
+  const legacy = await readTournament(store, FREE_ONLINE_TOURNAMENT_ID);
+  if (legacy?.id) {
+    const hasPlayer = playerId && legacy.entries?.some((entry) => entry.playerId === playerId || entry.id === playerId);
+    if (hasPlayer || legacy.status !== 'open') return legacy;
+  }
+  return getOrCreateFreeTournament(store);
 }
