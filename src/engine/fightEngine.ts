@@ -5400,25 +5400,57 @@ type HorizontalControlIntent = {
 };
 
 function resolveForwardInput(fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {
-  return resolveHorizontalIntent(undefined, fighter, opponent, input).direction;
+  return readHorizontalIntent(undefined, fighter, opponent, input).direction;
 }
 
 function resolveHorizontalIntent(stage: StageDefinition | undefined, fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): HorizontalControlIntent {
+  const intent = readHorizontalIntent(stage, fighter, opponent, input);
   const physicalDirection = input.left === input.right ? null : input.left ? 'left' : 'right';
   if (!physicalDirection) {
     fighter.horizontalHoldDirection = null;
     fighter.horizontalHoldIntent = null;
-    fighter.horizontalHoldControlSideSign = getControlSideSign(fighter, opponent, stage);
+    fighter.horizontalHoldControlSideSign = getHorizontalControlSideSign(fighter, opponent, stage);
+  } else {
+    const sideSign = getHorizontalControlSideSign(fighter, opponent, stage);
+    fighter.horizontalHoldDirection = physicalDirection;
+    fighter.horizontalHoldIntent = intent.forward ? 'forward' : 'back';
+    fighter.horizontalHoldControlSideSign = sideSign;
+    logFightInputDebug('horizontal-resolve', {
+      slot: fighter.slot,
+      physicalDirection,
+      intent: fighter.horizontalHoldIntent,
+      liveSide: sideSign,
+      storedControlSide: fighter.controlSideSign,
+      facing: fighter.facing,
+      laneOrbitControlLocked: fighter.laneOrbitControlLocked,
+      sidestepDirection: fighter.sidestepDirection,
+      sidestepTimer: Number(fighter.sidestepTimer.toFixed(3)),
+      sidestepRepeatGraceFrames: fighter.sidestepRepeatGraceFrames,
+      fighterX: Number(fighter.position.x.toFixed(3)),
+      fighterZ: Number(fighter.position.z.toFixed(3)),
+      opponentX: Number(opponent.position.x.toFixed(3)),
+      opponentZ: Number(opponent.position.z.toFixed(3))
+    });
+  }
+  return intent;
+}
+
+function readHorizontalIntent(stage: StageDefinition | undefined, fighter: FighterRuntime, opponent: FighterRuntime, input: InputFrame): HorizontalControlIntent {
+  const physicalDirection = input.left === input.right ? null : input.left ? 'left' : 'right';
+  if (!physicalDirection) {
     return { direction: 0, forward: false, back: false, neutral: true };
   }
-  const sideSign = getControlSideSign(fighter, opponent, stage);
+  const sideSign = getHorizontalControlSideSign(fighter, opponent, stage);
   const physicalForward = sideSign > 0 ? physicalDirection === 'right' : physicalDirection === 'left';
-  fighter.horizontalHoldDirection = physicalDirection;
-  fighter.horizontalHoldIntent = physicalForward ? 'forward' : 'back';
-  fighter.horizontalHoldControlSideSign = sideSign;
   return physicalForward
     ? { direction: 1, forward: true, back: false, neutral: false }
     : { direction: -1, forward: false, back: true, neutral: false };
+}
+
+function logFightInputDebug(event: string, payload: Record<string, unknown>) {
+  if (typeof window === 'undefined') return;
+  if (!window.location.search.includes('inputDebug=1') && window.localStorage?.getItem('kore:input-debug') !== '1') return;
+  console.info(`[KORE input-debug] ${event} ${JSON.stringify(payload)}`);
 }
 
 function resolveHorizontalDashIntent(input: InputFrame, horizontalIntent: HorizontalControlIntent) {
@@ -5457,6 +5489,10 @@ function getStageSideCoordinate(position: { x: number; z: number }, stage?: Stag
 
 function getControlSideSign(fighter: FighterRuntime, opponent: FighterRuntime, stage?: StageDefinition): 1 | -1 {
   return fighter.controlSideSign || getOpponentSideSign(fighter, opponent, stage);
+}
+
+function getHorizontalControlSideSign(fighter: FighterRuntime, opponent: FighterRuntime, stage?: StageDefinition): 1 | -1 {
+  return getOpponentSideSign(fighter, opponent, stage);
 }
 
 function getFacingYawTowardOpponent(fighter: FighterRuntime, opponent: FighterRuntime) {

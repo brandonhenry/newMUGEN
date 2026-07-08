@@ -4666,7 +4666,7 @@ describe('fight engine', () => {
     expect(rightResult.fighters[0].state).toBe('block');
   });
 
-  it('keeps side-relative horizontal controls after repeated up-up sidesteps', () => {
+  it('keeps horizontal controls tied to live sides after repeated up-up sidesteps', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -4702,13 +4702,14 @@ describe('fight engine', () => {
     const crossedStillOriginalForward = emptyInputFrame();
     crossedStillOriginalForward.right = true;
     const crossedForwardResult = stepMatch(match, crossedStillOriginalForward, emptyInputFrame(), 1 / 60);
-    expect(crossedForwardResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
+    expect(crossedForwardResult.fighters[0].state).toBe('block');
+    expect(crossedForwardResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
 
     const crossedStillOriginalBack = emptyInputFrame();
     crossedStillOriginalBack.left = true;
     const crossedBackResult = stepMatch(match, crossedStillOriginalBack, emptyInputFrame(), 1 / 60);
-    expect(crossedBackResult.fighters[0].state).toBe('block');
-    expect(crossedBackResult.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
+    expect(crossedBackResult.fighters[0].walkDirection).toBe(1);
+    expect(crossedBackResult.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
 
     let p2Match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     p2Match.phase = 'fighting';
@@ -4723,6 +4724,26 @@ describe('fight engine', () => {
     const p2BackResult = stepMatch(p2Match, emptyInputFrame(), p2Back, 1 / 60);
     expect(p2BackResult.fighters[1].state).toBe('block');
     expect(p2BackResult.fighters[1].position.x).toBeGreaterThan(p2Match.fighters[1].position.x);
+  });
+
+  it('does not let a stale sidestep side lock invert horizontal controls', () => {
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -1.3;
+    match.fighters[1].position.x = 1.3;
+    match.fighters[0].controlSideSign = -1;
+    match.fighters[0].horizontalHoldControlSideSign = -1;
+    match.fighters[0].laneOrbitControlLocked = true;
+    match.fighters[0].sidestepDirection = -1;
+
+    const liveForward = stepMatch(match, { ...emptyInputFrame(), right: true }, emptyInputFrame(), 1 / 60);
+    expect(liveForward.fighters[0].walkDirection).toBe(1);
+    expect(liveForward.fighters[0].position.x).toBeGreaterThan(match.fighters[0].position.x);
+
+    const liveBack = stepMatch(match, { ...emptyInputFrame(), left: true }, emptyInputFrame(), 1 / 60);
+    expect(liveBack.fighters[0].state).toBe('block');
+    expect(liveBack.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
   });
 
   it('treats simultaneous left and right as neutral movement', () => {

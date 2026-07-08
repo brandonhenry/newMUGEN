@@ -3468,6 +3468,22 @@ function stableFightCameraSide(dx: number, dz: number) {
   return [-dz / lineLength, dx / lineLength] as const;
 }
 
+function stageAnchoredFightCameraSide(stage: StageDefinition) {
+  const rotationY = stage.fightPlane?.rotationY ?? 0;
+  return [Math.sin(rotationY), Math.cos(rotationY)] as const;
+}
+
+let lastFightCameraInputDebugAt = 0;
+
+function logFightCameraInputDebug(payload: Record<string, unknown>) {
+  if (typeof window === 'undefined') return;
+  if (!window.location.search.includes('inputDebug=1') && window.localStorage?.getItem('kore:input-debug') !== '1') return;
+  const now = performance.now();
+  if (now - lastFightCameraInputDebugAt < 350) return;
+  lastFightCameraInputDebugAt = now;
+  console.info(`[KORE input-debug] camera-side ${JSON.stringify(payload)}`);
+}
+
 function enforceCameraHorizontalDistance(camera: THREE.Camera, focus: THREE.Vector3, fallbackSide: THREE.Vector3, minDistance: number) {
   enforceVectorHorizontalDistance(camera.position, focus, fallbackSide, minDistance);
 }
@@ -3855,10 +3871,33 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const dx = p2x - p1x;
     const dz = p2z - p1z;
     const distance = Math.hypot(dx, dz);
-    const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
+    const [cameraX, cameraZ] = stageAnchoredFightCameraSide(match.stage);
     rawSide.set(cameraX, 0, cameraZ).normalize();
     if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
     if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
+    logFightCameraInputDebug({
+      mode: 'normal',
+      rawSideX: Number(rawSide.x.toFixed(3)),
+      rawSideZ: Number(rawSide.z.toFixed(3)),
+      smoothedSideX: Number(side.x.toFixed(3)),
+      smoothedSideZ: Number(side.z.toFixed(3)),
+      p1: {
+        x: Number(p1x.toFixed(3)),
+        z: Number(p1z.toFixed(3)),
+        controlSideSign: p1.controlSideSign,
+        facing: p1.facing,
+        laneOrbitControlLocked: p1.laneOrbitControlLocked,
+        sidestepDirection: p1.sidestepDirection
+      },
+      p2: {
+        x: Number(p2x.toFixed(3)),
+        z: Number(p2z.toFixed(3)),
+        controlSideSign: p2.controlSideSign,
+        facing: p2.facing,
+        laneOrbitControlLocked: p2.laneOrbitControlLocked,
+        sidestepDirection: p2.sidestepDirection
+      }
+    });
 
     const perspective = camera as THREE.PerspectiveCamera;
     const aspect = size.width / Math.max(1, size.height);

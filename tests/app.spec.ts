@@ -299,6 +299,22 @@ async function setFightPositions(page: Page, positions: { p1?: { x?: number; y?:
   }, positions);
 }
 
+async function forceMatchOver(page: Page, winnerSlot: 1 | 2 = 1) {
+  await page.evaluate((nextWinnerSlot) => {
+    const testWindow = window as typeof window & {
+      __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void;
+    };
+    if (!testWindow.__koreE2EForceMatchOver) throw new Error('Missing KORE e2e match-over hook');
+    testWindow.__koreE2EForceMatchOver(nextWinnerSlot);
+  }, winnerSlot);
+}
+
+async function fightSessionId(page: Page) {
+  const value = await page.locator('.fight-screen').getAttribute('data-fight-session-id');
+  if (value === null) throw new Error('Missing fight session id');
+  return value;
+}
+
 function keyValue(code: string) {
   if (code.startsWith('Key')) return code.slice(3).toLowerCase();
   return code;
@@ -667,6 +683,17 @@ test('starts a playable match from the menu', async ({ page }) => {
   await expect(page.getByTestId('fight-canvas')).toBeVisible();
   await expect(page.locator('.fight-hud')).toBeVisible();
   await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
+});
+
+test('same-stage rematch starts a fresh fight session', async ({ page }) => {
+  await startFight(page, true);
+  const firstSession = await fightSessionId(page);
+  await forceMatchOver(page, 1);
+  await expect(page.getByRole('button', { name: 'Rematch' })).toBeVisible();
+  await page.getByRole('button', { name: 'Rematch' }).click();
+  await expect.poll(() => fightSessionId(page)).not.toBe(firstSession);
+  await expect(page.getByTestId('frame-input')).toHaveText('none');
+  await expect(page.locator('.results-overlay')).toHaveCount(0);
 });
 
 test('shows asset warmup before entering training', async ({ page }) => {
@@ -1458,8 +1485,16 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
   await expect(page.getByRole('button', { name: /Next Trial|Review Next/ })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Retry' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Next Trial|Review Next/ })).toBeFocused();
+  const completedSession = await fightSessionId(page);
+  await page.getByRole('button', { name: /Next Trial|Review Next/ }).click();
+  await expect.poll(() => fightSessionId(page)).not.toBe(completedSession);
+  await expect(page.getByTestId('training-success-overlay')).toHaveCount(0);
+  await expect(page.locator('.combat-popup-card')).toHaveCount(0);
+  await expect(page.getByTestId('frame-input')).toHaveText('none');
+  await expect(page.locator('.training-trial-hud')).toBeVisible();
 
-  await page.getByRole('button', { name: 'Training Menu' }).click();
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Training Mode' }).click();
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
   await page.getByRole('button', { name: /Combos/ }).click();
   await expect(page.locator('.combo-trial-list')).toContainText('Combos');

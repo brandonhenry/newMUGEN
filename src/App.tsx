@@ -245,6 +245,7 @@ type E2EFightPosition = { x?: number; y?: number; z?: number };
 type E2EWindow = Window & {
   __koreE2ESetFightPositions?: (positions: { p1?: E2EFightPosition; p2?: E2EFightPosition }) => void;
   __koreE2ECompleteTrainingTrial?: () => void;
+  __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void;
 };
 type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -20686,6 +20687,7 @@ function FightScreen({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [match, setMatch] = useState<MatchSnapshot>(() => createMatch(p1, p2, mode === 'training' && initialTrialStage ? initialTrialStage : stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions)));
+  const [fightSessionId, setFightSessionId] = useState(0);
   const matchRef = useRef(match);
   const pausedRef = useRef(paused);
   const pauseLatch = useRef(false);
@@ -20795,6 +20797,59 @@ function FightScreen({
     matchStartedTrackedRef.current = false;
   }, []);
 
+  const resetTransientFightRuntime = useCallback((freshMatch: MatchSnapshot) => {
+    resetTrackedMatchAnalytics(freshMatch);
+    setCombatPopups([]);
+    seenCombatEventIds.current.clear();
+    seenImpactScoreEventIds.current.clear();
+    seenImpactAudioEventIds.current.clear();
+    seenTrialImpactEventIds.current.clear();
+    lastCombatEventId.current = freshMatch.lastHitId;
+    playedRoundAnnouncerKeyRef.current = null;
+    playedWinVoiceKeyRef.current = null;
+    frameInputRef.current = 'none';
+    pauseLatch.current = false;
+    moveListTabLatch.current = false;
+    arcadeAdvanceRef.current = false;
+    previousKiBySlotRef.current = [freshMatch.fighters[0].ki, freshMatch.fighters[1].ki];
+    previousShadowCloneActiveBySlotRef.current = [Boolean(freshMatch.fighters[0].shadowClone), Boolean(freshMatch.fighters[1].shadowClone)];
+    previousFloorAudioBySlotRef.current = [
+      makeStageFloorAudioSnapshot(freshMatch.fighters[0]),
+      makeStageFloorAudioSnapshot(freshMatch.fighters[1])
+    ];
+    onlineAttackTrackerRef.current = [
+      { attacking: false, hitConnected: false },
+      { attacking: false, hitConnected: false }
+    ];
+    const chargeAudio = kiChargeAudioRef.current;
+    if (chargeAudio) {
+      chargeAudio.pause();
+      chargeAudio.currentTime = 0;
+    }
+    const maxChargeAudio = kiMaxChargeAudioRef.current;
+    if (maxChargeAudio) {
+      maxChargeAudio.pause();
+      maxChargeAudio.currentTime = 0;
+      maxChargeAudio.onended = null;
+    }
+    kiChargeCutawayPlayingRef.current = false;
+    setAssetLoadingState({
+      active: true,
+      progress: 0,
+      item: '',
+      errors: [],
+      ready: false
+    });
+    setShowLateAssetFallback(false);
+  }, [resetTrackedMatchAnalytics]);
+
+  const installFreshMatch = useCallback((freshMatch: MatchSnapshot) => {
+    resetTransientFightRuntime(freshMatch);
+    matchRef.current = freshMatch;
+    setMatch(freshMatch);
+    setFightSessionId((current) => current + 1);
+  }, [resetTransientFightRuntime]);
+
   useEffect(() => {
     setAssetLoadingState({
       active: true,
@@ -20806,7 +20861,7 @@ function FightScreen({
     setShowLateAssetFallback(false);
     const timer = window.setTimeout(() => setShowLateAssetFallback(true), 900);
     return () => window.clearTimeout(timer);
-  }, [mode, p1.id, p2.id, stage.id]);
+  }, [fightSessionId, mode, p1.id, p2.id, stage.id]);
 
   useEffect(() => {
     const gate = onlineAssetGateRef.current;
@@ -20911,9 +20966,33 @@ function FightScreen({
         return updated;
       });
     };
+    testWindow.__koreE2EForceMatchOver = (winnerSlot = 1) => {
+      const next = cloneMatchSnapshot(matchRef.current);
+      const winner = winnerSlot === 2 ? next.fighters[1] : next.fighters[0];
+      const loser = winnerSlot === 2 ? next.fighters[0] : next.fighters[1];
+      winner.roundsWon = ROUNDS_TO_WIN;
+      loser.roundsWon = 0;
+      next.phase = 'matchOver';
+      next.winnerSlot = winner.slot;
+      next.message = `${winner.character.displayName} wins`;
+      next.countdown = 0;
+      next.roundFinisher = null;
+      next.projectiles = [];
+      next.combatEvents = [];
+      next.impactEvents = [];
+      next.fighters.forEach((fighter) => {
+        fighter.state = fighter.slot === winner.slot ? 'win' : 'lose';
+        fighter.currentMove = null;
+        fighter.actionTimer = 0;
+        fighter.actionFramesRemaining = 0;
+      });
+      matchRef.current = next;
+      setMatch(next);
+    };
     return () => {
       if (testWindow.__koreE2ESetFightPositions) delete testWindow.__koreE2ESetFightPositions;
       if (testWindow.__koreE2ECompleteTrainingTrial) delete testWindow.__koreE2ECompleteTrainingTrial;
+      if (testWindow.__koreE2EForceMatchOver) delete testWindow.__koreE2EForceMatchOver;
     };
   }, [p1.id]);
 
@@ -21494,7 +21573,6 @@ function FightScreen({
       botOpponent: bot
     };
     const fresh = makeOnlineBotMatch(bot, nextRoom.stageId);
-    resetTrackedMatchAnalytics(fresh);
     onlineBotOpponentRef.current = bot;
     onlinePlacementMatchRef.current = Boolean(nextRoom.placement && mode === 'ranked' && isRankedPlacementActive(rankedProfileRef.current));
     onlineRemoteProfileRef.current = { playerId: bot.playerId, displayName: bot.displayName };
@@ -21509,13 +21587,12 @@ function FightScreen({
       onlineWinsRef.current = [0, 0];
       setOnlineWins([0, 0]);
     }
-    matchRef.current = fresh;
-    setMatch(fresh);
+    installFreshMatch(fresh);
     setOnlineRole('host');
     onlineStateRef.current = 'connected';
     setOnlineState('connected');
     setOnlineStatusText(onlinePlacementMatchRef.current ? rankedPlacementStatus(rankedProfileRef.current) : 'CONNECTED');
-  }, [makeOnlineBotMatch, mode, onlineProfile?.playerId, p1.id, resetTrackedMatchAnalytics, stage.id]);
+  }, [installFreshMatch, makeOnlineBotMatch, mode, onlineProfile?.playerId, p1.id, stage.id]);
 
   const startNextPlacementMatch = useCallback(async () => {
     const session = onlineSessionRef.current;
@@ -21716,24 +21793,11 @@ function FightScreen({
       localProgress: 0,
       remoteProgress: 0
     };
-    resetTrackedMatchAnalytics(onlineMatch);
-    setAssetLoadingState({
-      active: true,
-      progress: 0,
-      item: '',
-      errors: [],
-      ready: false
-    });
-    matchRef.current = onlineMatch;
-    setMatch(onlineMatch);
+    installFreshMatch(onlineMatch);
     onlineRollbackRef.current = null;
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     onlineWinnerRecordedRef.current = false;
     matchHistoryRecordedRef.current = '';
-    seenCombatEventIds.current.clear();
-    seenImpactScoreEventIds.current.clear();
-    seenImpactAudioEventIds.current.clear();
-    lastCombatEventId.current = 0;
     setOnlineAssetGateState(gate);
     onlineStateRef.current = 'connecting';
     setOnlineState('connecting');
@@ -21747,7 +21811,7 @@ function FightScreen({
       pendingOnlineAssetReadyRef.current = null;
       window.setTimeout(() => applyRemoteOnlineAssetReady(pending), 0);
     }
-  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, resetTrackedMatchAnalytics, setOnlineAssetGateState]);
+  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, installFreshMatch, setOnlineAssetGateState]);
 
   useEffect(() => {
     if (!onlineAssetGate) return undefined;
@@ -21820,32 +21884,22 @@ function FightScreen({
     }
     const current = matchRef.current;
     const fresh = makeOnlineMatch(current.fighters[0].baseCharacter.id, current.fighters[1].baseCharacter.id, current.stage.id);
-    resetTrackedMatchAnalytics(fresh);
     captureFightAnalytics('online_rematch_started', {
       online_role: onlineRoleRef.current,
       p1_wins: onlineWinsRef.current[0],
       p2_wins: onlineWinsRef.current[1]
     });
-    matchRef.current = fresh;
-    setMatch(fresh);
+    installFreshMatch(fresh);
     onlineWinnerRecordedRef.current = false;
     matchHistoryRecordedRef.current = '';
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
     rankedSubmitResultRef.current = null;
     setRankedPlayerResult(null);
     setRankedPromotionAccepted(false);
-    onlineAttackTrackerRef.current = [
-      { attacking: false, hitConnected: false },
-      { attacking: false, hitConnected: false }
-    ];
-    seenCombatEventIds.current.clear();
-    seenImpactScoreEventIds.current.clear();
-    seenImpactAudioEventIds.current.clear();
-    lastCombatEventId.current = 0;
     onlineRematchReadyRef.current = { local: false, remote: false };
     onlineSessionRef.current?.send({ type: 'rematchStart', wins: onlineWinsRef.current, stageId: fresh.stage.id });
     beginOnlineAssetWarmup(fresh, 'rematch');
-  }, [beginOnlineAssetWarmup, captureFightAnalytics, clearBotRematchTimers, incrementOnlineRematchCount, makeOnlineMatch, mode, rankedRematchLimitReached, resetTrackedMatchAnalytics, startOnlineBotMatch]);
+  }, [beginOnlineAssetWarmup, captureFightAnalytics, clearBotRematchTimers, incrementOnlineRematchCount, installFreshMatch, makeOnlineMatch, mode, rankedRematchLimitReached, startOnlineBotMatch]);
 
   const trackOnlinePerformanceFrame = useCallback((candidate: MatchSnapshot) => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected' || candidate.phase !== 'fighting') return;
@@ -22193,12 +22247,15 @@ function FightScreen({
           )
         : current;
       const hydrated = hydrateMatchSnapshot(base, message.snapshot);
-      if (needsBase) resetTrackedMatchAnalytics(hydrated);
       clearOnlineAssetGate();
-      matchRef.current = hydrated;
       onlineWinsRef.current = message.wins;
       startOnlineRollback(hydrated, 'guest');
-      setMatch(hydrated);
+      if (needsBase || message.reason === 'start' || message.reason === 'rematch') {
+        installFreshMatch(hydrated);
+      } else {
+        matchRef.current = hydrated;
+        setMatch(hydrated);
+      }
       setOnlineWins(message.wins);
       onlineStateRef.current = 'connected';
       setOnlineState('connected');
@@ -22285,7 +22342,7 @@ function FightScreen({
         }
       ].slice(-8));
     }
-  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, beginOnlineAssetWarmup, captureFightAnalytics, clearOnlineAssetGate, incrementOnlineRematchCount, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
+  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, beginOnlineAssetWarmup, captureFightAnalytics, clearOnlineAssetGate, incrementOnlineRematchCount, installFreshMatch, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -22681,13 +22738,17 @@ function FightScreen({
               matchRef.current.phase === 'matchOver' ||
               matchRef.current.fighters.some((fighter) => fighter.hp <= fighter.maxHp * 0.2);
             if (isTrainingOnline) {
-              matchRef.current = shouldRefreshWarmup
-                ? createMatch(p1, p2, stage, 'trainingOnline', cpuDifficulty, withFreshAiSeed(matchOptions))
-                : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+              if (shouldRefreshWarmup) {
+                installFreshMatch(createMatch(p1, p2, stage, 'trainingOnline', cpuDifficulty, withFreshAiSeed(matchOptions)));
+              } else {
+                matchRef.current = stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+              }
             } else {
-              matchRef.current = shouldRefreshWarmup
-                ? createMatch(p1, p2, stage, 'ai', cpuDifficulty, withFreshAiSeed(matchOptions))
-                : stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+              if (shouldRefreshWarmup) {
+                installFreshMatch(createMatch(p1, p2, stage, 'ai', cpuDifficulty, withFreshAiSeed(matchOptions)));
+              } else {
+                matchRef.current = stepMatch(matchRef.current, localOnlineInput, emptyInputFrame(), fixedStep);
+              }
             }
           } else {
             if (mode === 'training') {
@@ -22747,7 +22808,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
+  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, installFreshMatch, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame, trainingTrialProgress]);
 
   const requestOnlineRematch = () => {
     if (isTournamentMatchMode(mode)) {
@@ -22760,8 +22821,7 @@ function FightScreen({
     });
     if (!isOnline || onlineStateRef.current !== 'connected') {
       const warmup = createMatch(p1, p2, stage, isTrainingOnline ? 'trainingOnline' : isOnline ? 'ai' : mode, cpuDifficulty, withFreshAiSeed(matchOptions));
-      matchRef.current = warmup;
-      setMatch(warmup);
+      installFreshMatch(warmup);
       setPaused(false);
       return;
     }
@@ -22830,9 +22890,7 @@ function FightScreen({
       return;
     }
     const fresh = createMatch(p1, p2, stage, mode, cpuDifficulty, withFreshAiSeed(matchOptions));
-    resetTrackedMatchAnalytics(fresh);
-    matchRef.current = fresh;
-    setMatch(fresh);
+    installFreshMatch(fresh);
     setPaused(false);
   };
 
@@ -22908,10 +22966,7 @@ function FightScreen({
     setTrainingTrialOutcome(null);
     dismissedTrainingTrialOutcomeRef.current = null;
     const fresh = prepareTrainingTrialMatch(makeTrialMatch(trial), trial);
-    resetTrackedMatchAnalytics(fresh);
-    seenTrialImpactEventIds.current.clear();
-    matchRef.current = fresh;
-    setMatch(fresh);
+    installFreshMatch(fresh);
     const attempts = preview
       ? trainingTrialAttemptCountsRef.current[trial.id] ?? 0
       : (trainingTrialAttemptCountsRef.current[trial.id] ?? 0) + 1;
@@ -22923,7 +22978,7 @@ function FightScreen({
     const playback = preview ? { trialId: trial.id, frame: 0 } : null;
     previewPlaybackRef.current = playback;
     setPreviewPlayback(playback);
-  }, [activeTrainingTrial, makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
+  }, [activeTrainingTrial, installFreshMatch, makeTrialMatch, prepareTrainingTrialMatch]);
 
   useEffect(() => {
     if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
@@ -22984,10 +23039,8 @@ function FightScreen({
     setTrainingTrialProgress(progress);
     seenTrialImpactEventIds.current.clear();
     const fresh = prepareTrainingTrialMatch(makeTrialMatch(trial), trial);
-    resetTrackedMatchAnalytics(fresh);
-    matchRef.current = fresh;
-    setMatch(fresh);
-  }, [captureFightAnalytics, makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
+    installFreshMatch(fresh);
+  }, [captureFightAnalytics, installFreshMatch, makeTrialMatch, prepareTrainingTrialMatch]);
 
   const trainActiveTrainingTrial = useCallback(() => {
     const trial = activeTrainingTrialRef.current ?? activeTrainingTrial ?? null;
@@ -23141,9 +23194,11 @@ function FightScreen({
       className="fight-screen"
       ref={screenRef}
       tabIndex={-1}
+      data-fight-session-id={fightSessionId}
       onPointerDown={() => screenRef.current?.focus()}
     >
       <GameScene
+        key={fightSessionId}
         match={match}
         cameraSettings={settings.camera}
         sparkSettings={settings.display.impactSparks}
@@ -24764,6 +24819,7 @@ function AssetWarmupScreen({
         }}
       >
         <GameScene
+          key={`${intent.mode}:${intent.destination}:${intent.stage.id}:${intent.p1.id}:${intent.p2.id}`}
           match={warmupMatch}
           sparkSettings={sparkSettings}
           reducedMotion={reducedMotion}
