@@ -79,6 +79,7 @@ const JUGGLE_REFLOAT_MIN_HEIGHT = 1.12;
 const TORNADO_REFLOAT_MIN_HEIGHT = 1.26;
 const TORNADO_REFLOAT_STUN_FRAMES = 30;
 const TORNADO_EXTENSION_LIMIT = 2;
+const TORNADO_REACTION_FRAMES = 30;
 const JUGGLE_LANDING_RECOVERY_FRAMES = 18;
 const JUGGLE_KEEP_CLOSE_DISTANCE = 1.16;
 const JUGGLE_KEEP_CLOSE_PULL = 0.34;
@@ -625,6 +626,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     juggleSequenceDamage: 0,
     juggleTornadoCount: 0,
     juggleGravityScale: JUGGLE_GRAVITY_SCALE,
+    tornadoReactionFrames: 0,
     throwOpponentSlot: null,
     throwCaptorSlot: null,
     throwAnchorMove: null,
@@ -779,6 +781,8 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.aiActiveComboRouteId = null;
   }
   fighter.aiJuggleLockoutFrames = Math.max(0, fighter.aiJuggleLockoutFrames - frameDelta);
+  fighter.tornadoReactionFrames = Math.max(0, fighter.tornadoReactionFrames - frameDelta);
+  if (fighter.state !== 'juggle') fighter.tornadoReactionFrames = 0;
   if (opponent.state !== 'juggle' && !isAirborne(opponent)) fighter.aiJuggleLockoutFrames = 0;
   fighter.sidestepTimer = Math.max(0, fighter.sidestepTimer - dt);
   fighter.sidestepRepeatGraceFrames = Math.max(0, fighter.sidestepRepeatGraceFrames - frameDelta);
@@ -897,6 +901,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.juggleSequenceDamage = 0;
       fighter.juggleTornadoCount = 0;
       fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
+      fighter.tornadoReactionFrames = 0;
     }
     applyGravity(fighter, dt);
     finishFighterStep();
@@ -914,6 +919,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
       fighter.juggleSequenceDamage = 0;
       fighter.juggleTornadoCount = 0;
       fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
+      fighter.tornadoReactionFrames = 0;
     }
     finishFighterStep();
     return;
@@ -3690,6 +3696,7 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     defender.stunFramesRemaining = 0;
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
     defender.state = defender.state === 'crouchBlock' ? 'crouchBlock' : 'block';
+    defender.tornadoReactionFrames = 0;
     defender.position.x += pushX * move.blockPushback * 0.14;
     defender.position.z += pushZ * move.blockPushback * 0.14;
     applyVisualHitstop(attacker, defender, move, 'block');
@@ -3741,8 +3748,12 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     defender.juggleSequenceDamage = entersJuggle ? juggleSequenceDamage : 0;
     if (tornadoExtendsJuggle) {
       defender.juggleTornadoCount = Math.min(TORNADO_EXTENSION_LIMIT, defender.juggleTornadoCount + 1);
+      defender.tornadoReactionFrames = TORNADO_REACTION_FRAMES;
     } else if (!entersJuggle) {
       defender.juggleTornadoCount = 0;
+      defender.tornadoReactionFrames = 0;
+    } else {
+      defender.tornadoReactionFrames = 0;
     }
     if (entersJuggle) {
       const refloatVelocity = tornadoExtendsJuggle ? getTornadoRefloatVelocity(move) : getJuggleVelocity(move, wasAirborne, attacker.comboHits);
@@ -4052,6 +4063,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.juggleSequenceDamage = 0;
     defender.juggleTornadoCount = 0;
     defender.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
+    defender.tornadoReactionFrames = 0;
     defender.position.x += pushX * move.blockPushback * 0.14;
     defender.position.z += pushZ * move.blockPushback * 0.14;
     applyVisualHitstop(attacker, defender, move, 'block');
@@ -4128,8 +4140,12 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     defender.juggleSequenceDamage = entersJuggle ? juggleSequenceDamage : 0;
     if (tornadoExtendsJuggle) {
       defender.juggleTornadoCount = Math.min(TORNADO_EXTENSION_LIMIT, defender.juggleTornadoCount + 1);
+      defender.tornadoReactionFrames = TORNADO_REACTION_FRAMES;
     } else if (!entersJuggle) {
       defender.juggleTornadoCount = 0;
+      defender.tornadoReactionFrames = 0;
+    } else {
+      defender.tornadoReactionFrames = 0;
     }
   }
 
@@ -4483,6 +4499,7 @@ function enterKnockdown(fighter: FighterRuntime, frames: number) {
   fighter.juggleSequenceDamage = 0;
   fighter.juggleTornadoCount = 0;
   fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
+  fighter.tornadoReactionFrames = 0;
 }
 
 function getSweptActiveMoveFrame(move: MoveDefinition, moveFrame: number, frameDelta: number) {
@@ -4952,6 +4969,7 @@ function getFighterAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'throwHold') return fighter.currentMove?.animationKey ?? resolveBaseAttackAnimationKey(fighter.character, fighter.currentMove?.input ?? 'jab');
   if (fighter.state === 'throwHeld') return 'hitLight';
   if (fighter.state === 'hit') return 'hitLight';
+  if (fighter.state === 'juggle' && fighter.tornadoReactionFrames > 0 && fighter.character.animationFrames?.knockdown?.length) return 'knockdown';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'getup') return getGetupAnimationKey(fighter.getupAction) ?? 'knockdown';
   if (fighter.state === 'entry') return 'entry';
@@ -7410,6 +7428,7 @@ export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
       aiJuggleLockoutFrames: fighter.aiJuggleLockoutFrames,
       aiActionableIdleFrames: getCpuActionableIdleFrames(fighter),
       previousAttackInputs: { ...fighter.previousAttackInputs },
+      tornadoReactionFrames: fighter.tornadoReactionFrames,
       visualHitstop: { ...fighter.visualHitstop },
       bufferedMoveIntent: fighter.bufferedMoveIntent
         ? {

@@ -686,6 +686,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <StageCameraOcclusionFader />
         <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
         <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+        <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
         <TransformEffectLayer fighter={match.fighters[0]} />
         <TransformEffectLayer fighter={match.fighters[1]} />
         <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
@@ -926,6 +927,7 @@ export function MoveDemoCanvas({
         <StageCameraOcclusionFader />
         <FighterRig fighter={previewMatch.fighters[0]} timeScale={previewMatch.visualTimeScale} stage={stage} renderStyle={fighterRenderStyles[0]} />
         <FighterRig fighter={previewMatch.fighters[1]} timeScale={previewMatch.visualTimeScale} stage={stage} renderStyle={fighterRenderStyles[1]} />
+        <TornadoRibbonLayer events={previewMatch.impactEvents} fighters={previewMatch.fighters} reducedMotion />
         <EffectLayer match={previewMatch} reducedMotion />
         <ProjectileLayer match={previewMatch} stage={stage} />
         <ImpactSparkLayer events={previewMatch.impactEvents} settings={defaultSparkSettings} reducedMotion />
@@ -1618,6 +1620,147 @@ function ImpactSparkLayer({
       ))}
     </group>
   );
+}
+
+function TornadoRibbonLayer({
+  events,
+  fighters,
+  reducedMotion
+}: {
+  events: ImpactSparkEvent[];
+  fighters: FighterRuntime[];
+  reducedMotion: boolean;
+}) {
+  const tornadoEvents = events.filter((event) => event.tornado).slice(-4);
+  if (tornadoEvents.length === 0) return null;
+  return (
+    <group>
+      {tornadoEvents.map((event) => {
+        const defender = fighters.find((fighter) => fighter.slot === event.defenderSlot);
+        return defender ? <TornadoRibbonEffect key={event.id} event={event} defender={defender} reducedMotion={reducedMotion} /> : null;
+      })}
+    </group>
+  );
+}
+
+function TornadoRibbonEffect({
+  event,
+  defender,
+  reducedMotion
+}: {
+  event: ImpactSparkEvent;
+  defender: FighterRuntime;
+  reducedMotion: boolean;
+}) {
+  const groupRef = useRef<THREE.Group>(null);
+  const ribbonAxisRef = useRef<THREE.Group>(null);
+  const lightRef = useRef<THREE.PointLight>(null);
+  const ageRef = useRef(0);
+  const spinRef = useRef(0);
+  const characterScale = getCharacterGlobalScale(defender.character);
+  const height = THREE.MathUtils.clamp(1.55 * characterScale.height, 0.95, 2.35);
+  const radius = THREE.MathUtils.clamp(0.23 * characterScale.width, 0.16, 0.38);
+  const ribbonCount = reducedMotion ? 2 : 4;
+  const duration = reducedMotion ? 0.38 : 0.72;
+  const ribbons = useMemo(
+    () => Array.from({ length: ribbonCount }, (_, index) => ({
+      geometry: makeTornadoRibbonGeometry(
+        radius * (0.82 + index * 0.13),
+        height * (0.88 + seededUnit(event.id + 17, index) * 0.16),
+        1.05 + index * 0.16,
+        event.id * 0.37 + index * 1.41,
+        72
+      ),
+      color: index % 2 === 0 ? '#eaffff' : '#64d7ff',
+      opacity: index % 2 === 0 ? 0.54 : 0.34,
+      spin: (index % 2 === 0 ? 1 : -1) * (2.4 + index * 0.28),
+      yOffset: seededUnit(event.id + 31, index) * 0.08
+    })),
+    [event.id, height, radius, ribbonCount]
+  );
+  useEffect(() => {
+    return () => {
+      ribbons.forEach((ribbon) => ribbon.geometry.dispose());
+    };
+  }, [ribbons]);
+  const particles = useMemo(
+    () => Array.from({ length: reducedMotion ? 5 : 12 }, (_, index) => {
+      const angle = index * 2.399 + seededUnit(event.id + 47, index) * 0.8;
+      const particleRadius = radius * (0.5 + seededUnit(event.id + 59, index) * 1.25);
+      return {
+        x: Math.cos(angle) * particleRadius,
+        z: Math.sin(angle) * particleRadius,
+        y: height * (0.1 + seededUnit(event.id + 71, index) * 0.78),
+        phase: angle,
+        scale: 0.018 + seededUnit(event.id + 83, index) * 0.022
+      };
+    }),
+    [event.id, height, radius, reducedMotion]
+  );
+
+  useFrame((_, delta) => {
+    ageRef.current += delta;
+    const progress = THREE.MathUtils.clamp(ageRef.current / duration, 0, 1);
+    const fade = Math.pow(1 - progress, 1.35);
+    const root = groupRef.current;
+    if (!root) return;
+    root.visible = progress < 1;
+    root.rotation.set(-0.85, defender.facingYaw, defender.facing * 0.08);
+    const bodyCenter = new THREE.Vector3(0, height * 0.52, 0).applyEuler(root.rotation);
+    root.position.set(defender.position.x + bodyCenter.x, defender.position.y + bodyCenter.y, defender.position.z + bodyCenter.z);
+    spinRef.current += delta * (reducedMotion ? 1.15 : 2.35);
+    if (ribbonAxisRef.current) ribbonAxisRef.current.rotation.y = spinRef.current;
+    root.scale.setScalar(0.88 + Math.sin(progress * Math.PI) * 0.12);
+    root.traverse((child) => {
+      const mesh = child as THREE.Mesh;
+      const materials = Array.isArray(mesh.material) ? mesh.material : mesh.material ? [mesh.material] : [];
+      materials.forEach((material) => {
+        if (!('opacity' in material)) return;
+        const typed = material as THREE.Material & { opacity: number; userData: { baseOpacity?: number } };
+        if (typed.userData.baseOpacity === undefined) typed.userData.baseOpacity = typed.opacity;
+        typed.opacity = typed.userData.baseOpacity * fade;
+      });
+    });
+    if (lightRef.current) {
+      lightRef.current.position.y = height * 0.5;
+      lightRef.current.intensity = reducedMotion ? 0 : 1.65 * fade;
+    }
+  });
+
+  return (
+    <group ref={groupRef} renderOrder={36}>
+      {!reducedMotion && <pointLight ref={lightRef} color="#8eeaff" intensity={0} distance={2.2} />}
+      <group ref={ribbonAxisRef} position={[0, -height * 0.5, 0]}>
+        {ribbons.map((ribbon, index) => (
+          <mesh key={`tornado-ribbon-${event.id}-${index}`} geometry={ribbon.geometry} position={[0, ribbon.yOffset, 0]} rotation={[0, ribbon.spin * 0.08, 0]}>
+            <meshBasicMaterial color={ribbon.color} transparent opacity={ribbon.opacity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        ))}
+        {!reducedMotion && (
+          <mesh position={[0, height * 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <ringGeometry args={[radius * 1.45, radius * 1.62, 48]} />
+            <meshBasicMaterial color="#dffcff" transparent opacity={0.3} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        )}
+        {particles.map((particle, index) => (
+          <mesh key={`tornado-particle-${event.id}-${index}`} position={[particle.x, particle.y, particle.z]} scale={particle.scale}>
+            <sphereGeometry args={[1, 8, 6]} />
+            <meshBasicMaterial color={index % 2 === 0 ? '#eaffff' : '#7edcff'} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        ))}
+      </group>
+    </group>
+  );
+}
+
+function makeTornadoRibbonGeometry(radius: number, height: number, turns: number, phase: number, segments: number) {
+  const points = Array.from({ length: segments }, (_, index) => {
+    const u = index / Math.max(1, segments - 1);
+    const angle = u * Math.PI * 2 * turns + phase;
+    const taperedRadius = radius * (0.72 + Math.sin(u * Math.PI) * 0.34);
+    return new THREE.Vector3(Math.cos(angle) * taperedRadius, u * height, Math.sin(angle) * taperedRadius);
+  });
+  return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), segments, 0.012, 6, false);
 }
 
 function ImpactSpark({
@@ -3845,6 +3988,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     juggleSequenceDamage: 0,
     juggleTornadoCount: 0,
     juggleGravityScale: 0.52,
+    tornadoReactionFrames: 0,
     throwOpponentSlot: null,
     throwCaptorSlot: null,
     throwAnchorMove: null,
@@ -5699,7 +5843,8 @@ function FighterRig({
     const blockBreath = fighter.state === 'block' || fighter.state === 'crouchBlock' ? Math.sin(renderTime * 3.2 + fighter.slot * 0.7) : 0;
     const bob = fighter.state === 'idle' ? Math.sin(renderTime * 4 + fighter.slot) * 0.025 : blockBreath * 0.018;
     const hitLean = fighter.state === 'hit' || fighter.state === 'throwHeld' ? -fighter.facing * 0.16 : 0;
-    const juggle = fighter.state === 'juggle' ? 1 : 0;
+    const tornadoReaction = hasTornadoReactionVisual(fighter);
+    const juggle = fighter.state === 'juggle' && !tornadoReaction ? 1 : 0;
     const getupProgress = getGetupRenderProgress(fighter);
     const juggleRoll = juggle * Math.sin(renderTime * 3.8 + fighter.slot) * 0.34;
     const attackLean = fighter.state === 'attack' || fighter.state === 'throwHold' ? fighter.facing * Math.sin(liveProgress * Math.PI) * 0.2 : 0;
@@ -5713,7 +5858,7 @@ function FighterRig({
     const yaw = currentYaw + yawDelta * (1 - Math.pow(0.0001, delta));
     yawInitialized.current = true;
     group.current.position.set(fighter.position.x + offsetX + shakeX, fighter.position.y + bob, fighter.position.z + shakeZ);
-    group.current.rotation.set(fighter.state === 'knockdown' ? -0.85 : fighter.state === 'getup' ? -0.85 * (1 - getupProgress) : juggle ? -1.16 : 0, yaw, hitLean + attackLean + juggleRoll);
+    group.current.rotation.set(fighter.state === 'knockdown' || tornadoReaction ? -0.85 : fighter.state === 'getup' ? -0.85 * (1 - getupProgress) : juggle ? -1.16 : 0, yaw, hitLean + attackLean + juggleRoll);
   });
 
   const color = fighter.character.colors.primary;
@@ -6018,6 +6163,10 @@ function hasVisualHitstop(fighter: FighterRuntime) {
   return fighter.visualHitstop.framesRemaining > 0 && fighter.visualHitstop.animationKey !== null;
 }
 
+function hasTornadoReactionVisual(fighter: FighterRuntime) {
+  return fighter.state === 'juggle' && fighter.tornadoReactionFrames > 0;
+}
+
 function getFighterRenderProgress(fighter: FighterRuntime) {
   if (isIdleFlourishActive(fighter)) return getIdleFlourishProgress(fighter);
   return hasVisualHitstop(fighter) ? fighter.visualHitstop.progress : activeMoveProgress(fighter);
@@ -6167,7 +6316,7 @@ function getImageVoxelFrameSelection(fighter: FighterRuntime, progress: number, 
     frameIndex = Math.min(sequence.length - 1, Math.floor(getIdleFlourishProgress(fighter) * sequence.length));
   } else if (fighter.state === 'chargeKi') {
     frameIndex = getChargeKiFrameIndex(fighter, sequence.length);
-  } else if (fighter.state === 'knockdown') {
+  } else if (fighter.state === 'knockdown' || (requestedKey === 'knockdown' && hasTornadoReactionVisual(fighter))) {
     frameIndex = 0;
   } else if (fighter.state === 'getup') {
     frameIndex = Math.min(sequence.length - 1, Math.floor(getGetupRenderProgress(fighter) * sequence.length));
@@ -6258,7 +6407,7 @@ function getChargeKiFrameIndex(fighter: FighterRuntime, sequenceLength: number) 
   return Math.max(0, Math.min(sequenceLength - 1, Math.floor(forwardProgress * sequenceLength)));
 }
 
-function getImageVoxelAnimationKey(fighter: FighterRuntime) {
+export function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (hasVisualHitstop(fighter) && fighter.visualHitstop.animationKey) return fighter.visualHitstop.animationKey;
   if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
   if (isIdleFlourishActive(fighter)) return 'win';
@@ -6276,6 +6425,7 @@ function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'throwHold') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
   if (fighter.state === 'throwHeld') return 'throwHeld';
   if (fighter.state === 'hit') return 'hitLight';
+  if (hasTornadoReactionVisual(fighter) && fighter.character.animationFrames?.knockdown?.length) return 'knockdown';
   if (fighter.state === 'juggle') return fighter.character.animationFrames?.juggle?.length ? 'juggle' : fighter.character.animationFrames?.hitHeavy?.length ? 'hitHeavy' : 'hitLight';
   if (fighter.state === 'getup') return getGetupAnimationKey(fighter);
   if (fighter.state === 'entry') return 'entry';
@@ -7254,9 +7404,10 @@ function ExternalFighter({ fighter, url, timeScale = 1, renderStyle }: { fighter
     const hit = 0;
     const block = fighter.state === 'block' || fighter.state === 'crouchBlock' ? 1 : 0;
     const crouch = fighter.state === 'crouch' || fighter.state === 'crouchBlock' ? 1 : 0;
-    const knockdown = fighter.state === 'knockdown' ? 1 : 0;
+    const tornadoReaction = hasTornadoReactionVisual(fighter);
+    const knockdown = fighter.state === 'knockdown' || tornadoReaction ? 1 : 0;
     const getup = fighter.state === 'getup' ? 1 - getGetupRenderProgress(fighter) : 0;
-    const juggle = fighter.state === 'juggle' ? 1 : 0;
+    const juggle = fighter.state === 'juggle' && !tornadoReaction ? 1 : 0;
     wrapper.current.rotation.x = THREE.MathUtils.lerp(wrapper.current.rotation.x, knockdown * -0.85 + getup * -0.85 + juggle * -0.42 + block * -0.18 + crouch * -0.28 + hit * 0.18, 1 - Math.pow(0.001, delta));
     wrapper.current.rotation.z = THREE.MathUtils.lerp(wrapper.current.rotation.z, attack * 0.22 * fighter.facing - hit * 0.12 * fighter.facing + juggle * Math.sin(Date.now() * 0.0038 + fighter.slot) * 0.22, 1 - Math.pow(0.001, delta));
     wrapper.current.position.y = THREE.MathUtils.lerp(wrapper.current.position.y, crouch ? -0.22 : block ? -0.06 : 0, 1 - Math.pow(0.001, delta));

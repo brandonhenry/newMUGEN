@@ -1249,6 +1249,7 @@ export type FighterRuntime = {
   juggleSequenceDamage: number;
   juggleTornadoCount: number;
   juggleGravityScale: number;
+  tornadoReactionFrames: number;
   throwOpponentSlot: 1 | 2 | null;
   throwCaptorSlot: 1 | 2 | null;
   throwAnchorMove: MoveDefinition | null;

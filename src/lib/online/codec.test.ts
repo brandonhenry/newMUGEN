@@ -43,6 +43,7 @@ describe('online codec', () => {
     match.fighters[0].juggleDamage = 31;
     match.fighters[0].juggleSequenceDamage = 9;
     match.fighters[0].juggleTornadoCount = 2;
+    match.fighters[0].tornadoReactionFrames = 18;
     match.fighters[0].throwOpponentSlot = 2;
     match.fighters[0].throwAnchorMove = match.fighters[0].character.moves[0];
     match.fighters[0].throwHoldFrames = 45;
@@ -136,6 +137,7 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].juggleDamage).toBe(31);
     expect(hydrated.fighters[0].juggleSequenceDamage).toBe(9);
     expect(hydrated.fighters[0].juggleTornadoCount).toBe(2);
+    expect(hydrated.fighters[0].tornadoReactionFrames).toBe(18);
     expect(hydrated.fighters[0].throwOpponentSlot).toBe(2);
     expect(hydrated.fighters[0].throwAnchorMove?.input).toBe('jab');
     expect(hydrated.fighters[0].throwHoldFrames).toBe(45);

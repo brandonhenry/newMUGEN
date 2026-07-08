@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 17;
+export const ONLINE_PROTOCOL_VERSION = 18;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -92,6 +92,7 @@ export type CompactFighterSnapshot = {
   juggleSequenceDamage: number;
   juggleTornadoCount: number;
   juggleGravityScale: number;
+  tornadoReactionFrames?: number;
   throwOpponentSlot: 1 | 2 | null;
   throwCaptorSlot: 1 | 2 | null;
   throwAnchorMove: MoveDefinition | null;
@@ -322,6 +323,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     juggleSequenceDamage: fighter.juggleSequenceDamage,
     juggleTornadoCount: fighter.juggleTornadoCount,
     juggleGravityScale: fighter.juggleGravityScale,
+    tornadoReactionFrames: fighter.tornadoReactionFrames,
     throwOpponentSlot: fighter.throwOpponentSlot,
     throwCaptorSlot: fighter.throwCaptorSlot,
     throwAnchorMove: fighter.throwAnchorMove,
@@ -418,6 +420,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     juggleSequenceDamage: snapshot.juggleSequenceDamage ?? base.juggleSequenceDamage,
     juggleTornadoCount: snapshot.juggleTornadoCount ?? base.juggleTornadoCount,
     juggleGravityScale: snapshot.juggleGravityScale ?? base.juggleGravityScale,
+    tornadoReactionFrames: snapshot.tornadoReactionFrames ?? base.tornadoReactionFrames,
     throwOpponentSlot: snapshot.throwOpponentSlot ?? null,
     throwCaptorSlot: snapshot.throwCaptorSlot ?? null,
     throwAnchorMove: snapshot.throwAnchorMove ?? null,

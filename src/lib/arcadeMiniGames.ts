@@ -542,6 +542,7 @@ function createMiniGameFighter(character: CharacterDefinition, position: { x: nu
     juggleSequenceDamage: 0,
     juggleTornadoCount: 0,
     juggleGravityScale: 0.52,
+    tornadoReactionFrames: 0,
     throwOpponentSlot: null,
     throwCaptorSlot: null,
     throwAnchorMove: null,
