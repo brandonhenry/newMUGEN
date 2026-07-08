@@ -129,6 +129,7 @@ describe('training trial catalog', () => {
       expect(trials.length, character.id).toBeGreaterThanOrEqual(8);
       expect(trials.filter((trial) => trial.category === 'movement' || trial.category === 'defense').length, character.id).toBeGreaterThanOrEqual(5);
       expect(trials.some((trial) => trial.id.endsWith('movement:back-hop')), character.id).toBe(true);
+      expect(trials.some((trial) => trial.id.endsWith('ki:transform')), character.id).toBe(true);
       expect(trials.some((trial) => trial.category === 'offense'), character.id).toBe(true);
       expect(trainingTrialCategoryLabels.offense).toBe('Offense');
       for (const trial of trials) {
@@ -474,7 +475,7 @@ describe('training trial catalog', () => {
           expect(trial.steps[0].command, `${character.id}:${trial.id}`).toMatch(/^(FC|WS)\+/);
         }
         if (trial.category === 'ki') {
-          if (trial.id.endsWith('ki:perfect-block') || trial.id.endsWith('ki:charge')) continue;
+          if (trial.id.endsWith('ki:perfect-block') || trial.id.endsWith('ki:charge') || trial.id.endsWith('ki:transform')) continue;
           const step = trial.steps[0];
           const route = routeForStep(routes, step);
           const hasProjectile = routeProjectileInstances(character, route).length > 0;
@@ -503,6 +504,9 @@ describe('training trial catalog', () => {
       actions: ['charge'],
       requireState: 'chargeKi'
     });
+    expect(byId('ki:transform')?.steps[0]).toMatchObject({
+      actions: ['jab', 'heavy', 'kick', 'special']
+    });
     expect(byId('punish:whiff')?.steps[0].expectImpactKinds).toEqual(['whiffPunish']);
     expect(byId('defense:block-punish')?.steps.map((step) => step.kind)).toEqual(['state', 'impact']);
     expect(byId('defense:block-punish')?.steps[1].expectImpactKinds).toEqual(['punish']);
@@ -511,6 +515,89 @@ describe('training trial catalog', () => {
       requireAirborneDefender: true
     });
     expect(byId('punish:counter-hit')?.steps[0].expectImpactKinds).toEqual(['counterHit']);
+  });
+
+  it('starts transform-capable characters ready and requires a real transform', () => {
+    const roster = readRosterCharacters();
+    const base = roster.find((candidate) => hasAttackAnimation(candidate));
+    const formSource = roster.find((candidate) => candidate.id !== base?.id && hasAttackAnimation(candidate)) ?? base;
+    expect(base).toBeTruthy();
+    expect(formSource).toBeTruthy();
+    if (!base || !formSource) return;
+
+    const transformBase: CharacterDefinition = {
+      ...base,
+      id: 'trial-transform-base',
+      displayName: 'Trial Transform Base',
+      hasTransform: true,
+      transformCharacterId: 'trial-transform-form'
+    };
+    const transformForm: CharacterDefinition = {
+      ...formSource,
+      id: 'trial-transform-form',
+      displayName: 'Trial Transform Form',
+      hasTransform: false,
+      transformCharacterId: undefined
+    };
+    const trial = generateBasicTrainingTrials(transformBase, [transformBase, transformForm]).find((item) => item.id.endsWith('ki:transform'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    expect(trial.category).toBe('ki');
+    expect(trial.title).toBe('Transform');
+    expect(trial.setup).toMatchObject({
+      p1Ki: 100,
+      p1TransformOvercharge: 100,
+      p1TransformReadyTimer: 3
+    });
+    expect(trial.steps[0]).toMatchObject({
+      notation: ['1+2+3+4'],
+      actions: ['jab', 'heavy', 'kick', 'special'],
+      requireState: 'transform'
+    });
+    expect(trial.lesson.toLowerCase()).toContain('overcharge');
+    expect(trial.lesson.toLowerCase()).toContain('second transform bar');
+    expect(trial.lesson).toContain('1+2+3+4');
+
+    const previewInput = makePreviewInput(trial.previewScript, trial.previewScript[0].frame);
+    expect(previewInput.jab).toBe(true);
+    expect(previewInput.heavy).toBe(true);
+    expect(previewInput.kick).toBe(true);
+    expect(previewInput.special).toBe(true);
+  });
+
+  it('keeps transform lessons informational for characters without a valid form', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('ki:transform'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    expect(trial.setup.p1Ki).toBeUndefined();
+    expect(trial.setup.p1TransformOvercharge).toBeUndefined();
+    expect(trial.setup.p1TransformReadyTimer).toBeUndefined();
+    expect(trial.steps[0]).toMatchObject({
+      actions: ['jab', 'heavy', 'kick', 'special'],
+      requireState: undefined
+    });
+    expect(trial.lesson.toLowerCase()).toContain('some characters can transform');
+    expect(trial.lesson.toLowerCase()).toContain('second transform bar');
+
+    const input = emptyInputFrame();
+    input.jab = true;
+    input.heavy = true;
+    input.kick = true;
+    input.special = true;
+    let progress = makeTrainingTrialProgress(trial)!;
+    for (let frame = 0; frame < 13; frame += 1) {
+      progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch());
+    }
+    progress = advanceTrainingTrialWithInput(progress, trial, input, mockMatch('idle'));
+    expect(progress.completed).toBe(true);
+    expect(progress.succeeded).toBe(true);
   });
 
   it('adds representative projectile, blast, ki, and clash basics from character metadata', () => {

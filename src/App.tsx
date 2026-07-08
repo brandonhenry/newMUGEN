@@ -23013,6 +23013,8 @@ function FightScreen({
         facingYaw: Math.PI / 2,
         commandHistory: [],
         ki: setup.p1Ki ?? fresh.fighters[0].ki,
+        transformOvercharge: setup.p1TransformOvercharge ?? fresh.fighters[0].transformOvercharge,
+        transformReadyTimer: setup.p1TransformReadyTimer ?? fresh.fighters[0].transformReadyTimer,
         state: p1State,
         velocityY: p1StartsGrounded ? 0 : fresh.fighters[0].velocityY,
         actionFramesRemaining: p1StartsKnockedDown ? 0 : fresh.fighters[0].actionFramesRemaining,

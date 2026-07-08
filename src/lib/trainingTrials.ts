@@ -57,6 +57,8 @@ export type TrainingTrialSetup = {
   p2State?: FighterRuntime['state'];
   p1Ki?: number;
   p2Ki?: number;
+  p1TransformOvercharge?: number;
+  p1TransformReadyTimer?: number;
   corner?: 'left' | 'right';
 };
 
@@ -384,6 +386,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   if (tornado) trials.push(makeRouteStarterTrial(character, dummy, 'tornado', 'tornado:extender', 'Tornado Extender', tornado, 'Tornado keeps a juggle alive once the route is airborne.', 'When they fall, spin them back into the fight.', 'Use the tornado extender.', { setup: { p2Position: { x: 0.45, z: 0 }, dummyScript: 'idle' }, expectImpact: { tornado: true, juggled: true } }));
   if (crouch) trials.push(makeRouteStarterTrial(character, dummy, 'crouch', 'crouch:route', 'FC / WS Route', crouch, 'Crouch routes teach stance-specific followups.', 'Low stance. Different blade.', 'Use the crouch route.'));
   trials.push(makeSimpleTrial(character, dummy, 'ki', 'ki:charge', 'Ki Charge', ['O'], ['charge'], 'Hold charge to build ki. Get used to checking your resource before spending it.', 'Power is only useful when you know you have it.', 'Ki charge started.', { requireState: 'chargeKi' }));
+  trials.push(makeTransformTrial(character, dummy, roster));
   trials.push(makeImpactOnlyTrial(character, dummy, 'ki', 'ki:perfect-block', 'Ki Perfect Block', ['B'], ['block'], 'Time your guard against ki attacks. A close block earns Perfect timing here.', 'Meet power with timing, not panic.', 'Ki attack blocked.', { dummyScript: 'kiAttack', setup: { p2Ki: 100, p1Position: { x: -0.55, z: 0 }, p2Position: { x: 0.55, z: 0 } }, expectImpactKinds: ['block'], expectImpactAttackerSlot: 2, expectImpactDefenderSlot: 1, requireImpactKiBurst: true, targetFrame: 20, windowBefore: 8, windowAfter: 12, missAfterFrame: 80 }));
   if (ki) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:route', 'Ki Route', ki, 'Ki routes spend charge for a stronger route.', 'Spend power only when the cut matters.', 'Use the ki route.', { setup: { p1Ki: 100, dummyScript: 'idle' } }));
   if (projectile) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:projectile', 'Projectile Check', projectile, 'Projectile routes let you threaten space without standing directly next to the opponent. Fire the shot, then watch whether they block, sidestep, or get clipped.', 'Power at range still needs aim.', 'Projectile connected.', { setup: { p1Ki: routeUsesKi(projectile) ? 100 : undefined, dummyScript: 'idle', p1Position: { x: -0.95, z: 0 }, p2Position: { x: 0.85, z: 0 } }, expectImpactKinds: ['hit', 'counterHit'], missAfterFrame: 150 }));
@@ -1154,6 +1157,8 @@ function makeSetup(dummy: CharacterDefinition | undefined, dummyScript: Training
     p2State: override.p2State,
     p1Ki: override.p1Ki,
     p2Ki: override.p2Ki,
+    p1TransformOvercharge: override.p1TransformOvercharge,
+    p1TransformReadyTimer: override.p1TransformReadyTimer,
     corner: override.corner
   };
 }
@@ -1330,6 +1335,40 @@ function pickClashDummy(character: CharacterDefinition, roster: CharacterDefinit
 
 function hasKiBurstRoute(character: CharacterDefinition) {
   return resolveMoveRoutes(character).some((route) => route.move.kiBurst);
+}
+
+function hasValidTransformTarget(character: CharacterDefinition, roster: CharacterDefinition[]) {
+  if (!character.hasTransform || !character.transformCharacterId || character.transformCharacterId === character.id) return false;
+  return roster.some((candidate) => candidate.id === character.transformCharacterId);
+}
+
+function makeTransformTrial(character: CharacterDefinition, dummy: CharacterDefinition | undefined, roster: CharacterDefinition[]) {
+  const actions: ActionName[] = ['jab', 'heavy', 'kick', 'special'];
+  const canTransform = hasValidTransformTarget(character, roster);
+  return makeSimpleTrial(
+    character,
+    dummy,
+    'ki',
+    'ki:transform',
+    'Transform',
+    ['1+2+3+4'],
+    actions,
+    canTransform
+      ? 'Transformations use ki plus the second transform bar. Fill ki, overcharge the second bar, then press 1+2+3+4 while the ready window is active to change forms.'
+      : 'Some characters can transform after filling ki and overcharging the second transform bar. When a character has a form available, press 1+2+3+4 during the ready window to change forms.',
+    canTransform ? 'When the second bar is ready, commit to the form.' : 'Know the sign. Some fighters carry another form.',
+    canTransform ? 'Transformation started.' : 'Transform lesson complete.',
+    canTransform
+      ? {
+          requireState: 'transform',
+          setup: {
+            p1Ki: 100,
+            p1TransformOvercharge: 100,
+            p1TransformReadyTimer: 3
+          }
+        }
+      : {}
+  );
 }
 
 function pickKiAttackInput(character: CharacterDefinition | undefined): MoveInput {
