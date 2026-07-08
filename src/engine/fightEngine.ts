@@ -546,7 +546,9 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     maxHp,
     tookDamageThisRound: false,
     ki: 0,
+    displayKi: 0,
     transformOvercharge: 0,
+    displayTransformOvercharge: 0,
     transformReadyTimer: 0,
     transformStartupFrames: 0,
     transformTargetId: null,
@@ -1189,6 +1191,7 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
   const damage = getScaledComboHitDamage(move, comboHits);
   if (!moveUsesKi(move)) {
     attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(damage * 0.35)), 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(attacker);
   }
   attacker.comboHits = comboHits;
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
@@ -1526,18 +1529,38 @@ function updateTransformRuntime(fighter: FighterRuntime, dt: number) {
     fighter.transformReadyTimer = 0;
     fighter.transformOvercharge = 0;
   }
+  if (fighter.state !== 'chargeKi') syncDisplayedKi(fighter);
 }
 
 function resetTransformCharge(fighter: FighterRuntime) {
   fighter.ki = 0;
   fighter.transformOvercharge = 0;
   fighter.transformReadyTimer = 0;
+  syncDisplayedKi(fighter);
 }
 
 function clearTransformOverchargeIfKiBelowFull(fighter: FighterRuntime) {
   if (fighter.ki >= KI_MAX) return;
   fighter.transformOvercharge = 0;
   fighter.transformReadyTimer = 0;
+  syncDisplayedKi(fighter);
+}
+
+function syncDisplayedKi(fighter: FighterRuntime) {
+  fighter.displayKi = fighter.ki;
+  fighter.displayTransformOvercharge = fighter.transformOvercharge;
+}
+
+function syncDisplayedKiIfNotCharging(fighter: FighterRuntime) {
+  if (fighter.state === 'chargeKi' && fighter.chargePhase !== 'recovery') return;
+  syncDisplayedKi(fighter);
+}
+
+function resolveKiChargeRate(character: CharacterDefinition) {
+  const explicitRate = character.stats.kiChargeRate;
+  if (Number.isFinite(explicitRate) && explicitRate !== undefined) return clamp(explicitRate, 1, KI_MAX);
+  const height = character.modelScale?.height ?? character.scale ?? 1;
+  return KI_CHARGE_PER_SECOND * clamp(1 - (height - 1) * 0.35, 0.85, 1.2);
 }
 
 function startKiCharge(fighter: FighterRuntime) {
@@ -1599,7 +1622,7 @@ function handleKiChargeStep(fighter: FighterRuntime, input: InputFrame, dt: numb
   fighter.chargeCommitted = activeElapsed >= move.activeFrames;
   fighter.actionFramesRemaining = 0;
   fighter.actionTimer = 0;
-  addKiCharge(fighter, KI_CHARGE_PER_SECOND * dt, canOverchargeTransform);
+  addKiCharge(fighter, resolveKiChargeRate(fighter.character) * dt, canOverchargeTransform);
 }
 
 function addKiCharge(fighter: FighterRuntime, amount: number, canOverchargeTransform: boolean) {
@@ -1617,6 +1640,7 @@ function addKiCharge(fighter: FighterRuntime, amount: number, canOverchargeTrans
 }
 
 function beginKiChargeRecovery(fighter: FighterRuntime, move: MoveDefinition) {
+  syncDisplayedKi(fighter);
   fighter.chargePhase = 'recovery';
   fighter.chargeFrame = 0;
   fighter.actionFramesRemaining = move.recoveryFrames;
@@ -1626,6 +1650,7 @@ function beginKiChargeRecovery(fighter: FighterRuntime, move: MoveDefinition) {
 }
 
 function clearKiChargeState(fighter: FighterRuntime) {
+  syncDisplayedKi(fighter);
   fighter.currentMove = null;
   fighter.state = 'idle';
   resetKiChargeRuntime(fighter);
@@ -2052,6 +2077,7 @@ function startComboAttack(
   if (spendsKi) {
     fighter.ki = clamp(fighter.ki - kiCost, 0, KI_MAX);
     clearTransformOverchargeIfKiBelowFull(fighter);
+    syncDisplayedKi(fighter);
   }
   applyMoveHealing(fighter, resolvedMove);
   applyMoveJumpStart(fighter, resolvedMove);
@@ -3653,8 +3679,12 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const attackerRemaining = Math.max(1, projectile.lifetimeFrames - projectile.ageFrames);
   if (blocked) {
     attacker.hitConfirmed = false;
-    if (!moveUsesKi(move)) attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
+    if (!moveUsesKi(move)) {
+      attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
+      syncDisplayedKiIfNotCharging(attacker);
+    }
     defender.ki = clamp(defender.ki + KI_DEFENDER_BLOCK_GAIN, 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(defender);
     applyFighterDamage(defender, move.blockDamage);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + getEffectiveOnBlockFrames(move));
     defender.stunFramesRemaining = 0;
@@ -3668,7 +3698,10 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   }
 
   attacker.hitConfirmed = true;
-  if (!moveUsesKi(move)) attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(hitDamage * 0.35)), 0, KI_MAX);
+  if (!moveUsesKi(move)) {
+    attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(hitDamage * 0.35)), 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(attacker);
+  }
   attacker.comboHits = comboHits;
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
   attacker.comboDamage = Math.max(0, attacker.comboDamage + hitDamage);
@@ -3859,6 +3892,7 @@ function applyClashWin(match: MatchSnapshot, winnerSlot: 1 | 2) {
   winner.comboTimer = COMBO_WINDOW;
   if (!moveUsesKi(winnerMove)) {
     winner.ki = clamp(winner.ki + Math.round(damage * 0.25), 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(winner);
   }
 
   const stunFrames = Math.max(CLASH_LOSER_HITSTUN_FRAMES, (winnerMove?.onHitFrames ?? 0) + CLASH_LOSER_HITSTUN_FRAMES);
@@ -3999,8 +4033,10 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     attacker.hitConfirmed = false;
     if (!moveUsesKi(move)) {
       attacker.ki = clamp(attacker.ki + KI_BLOCK_GAIN + Math.max(0, move.blockDamage), 0, KI_MAX);
+      syncDisplayedKiIfNotCharging(attacker);
     }
     defender.ki = clamp(defender.ki + KI_DEFENDER_BLOCK_GAIN, 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(defender);
     applyFighterDamage(defender, move.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(move);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
@@ -4026,6 +4062,7 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   attacker.hitConfirmed = true;
   if (!moveUsesKi(move)) {
     attacker.ki = clamp(attacker.ki + KI_HIT_GAIN + Math.max(0, Math.round(hitDamage * 0.35)) + Math.max(0, attacker.comboStep - 1) * 2, 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(attacker);
   }
   attacker.comboHits = comboHits;
   attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
@@ -4164,8 +4201,10 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   if (blocked) {
     if (!moveUsesKi(sourceMove)) {
       attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_BLOCK_GAIN * 0.5)), 0, KI_MAX);
+      syncDisplayedKiIfNotCharging(attacker);
     }
     defender.ki = clamp(defender.ki + Math.max(1, Math.round(KI_DEFENDER_BLOCK_GAIN * 0.6)), 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(defender);
     applyFighterDamage(defender, weakMove.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(weakMove);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
@@ -4182,6 +4221,7 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
   attacker.hitConfirmed = true;
   if (!moveUsesKi(sourceMove)) {
     attacker.ki = clamp(attacker.ki + Math.max(1, Math.round(KI_HIT_GAIN * 0.35 + hitDamage * 0.12)), 0, KI_MAX);
+    syncDisplayedKiIfNotCharging(attacker);
   }
   attacker.comboHits = comboHits;
   attacker.comboDamage = Math.max(0, attacker.comboDamage + hitDamage);

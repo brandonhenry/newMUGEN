@@ -454,6 +454,7 @@ export type CharacterDefinition = {
     dashDistance?: number;
     jumpForce: number;
     gravity: number;
+    kiChargeRate?: number;
   };
   animations: Record<string, string>;
   moves: MoveDefinition[];
@@ -1167,7 +1168,9 @@ export type FighterRuntime = {
   maxHp: number;
   tookDamageThisRound: boolean;
   ki: number;
+  displayKi: number;
   transformOvercharge: number;
+  displayTransformOvercharge: number;
   transformReadyTimer: number;
   transformStartupFrames: number;
   transformTargetId: string | null;

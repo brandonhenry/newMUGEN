@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 16;
+export const ONLINE_PROTOCOL_VERSION = 17;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -32,7 +32,9 @@ export type CompactFighterSnapshot = {
   maxHp: number;
   tookDamageThisRound: boolean;
   ki: number;
+  displayKi?: number;
   transformOvercharge: number;
+  displayTransformOvercharge?: number;
   transformReadyTimer: number;
   transformStartupFrames: number;
   transformTargetId: string | null;
@@ -260,7 +262,9 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     maxHp: fighter.maxHp,
     tookDamageThisRound: fighter.tookDamageThisRound,
     ki: fighter.ki,
+    displayKi: fighter.displayKi,
     transformOvercharge: fighter.transformOvercharge,
+    displayTransformOvercharge: fighter.displayTransformOvercharge,
     transformReadyTimer: fighter.transformReadyTimer,
     transformStartupFrames: fighter.transformStartupFrames,
     transformTargetId: fighter.transformTargetId,
@@ -354,7 +358,9 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     maxHp: snapshot.maxHp ?? base.maxHp,
     tookDamageThisRound: snapshot.tookDamageThisRound ?? base.tookDamageThisRound,
     ki: snapshot.ki,
+    displayKi: snapshot.displayKi ?? snapshot.ki,
     transformOvercharge: snapshot.transformOvercharge ?? base.transformOvercharge,
+    displayTransformOvercharge: snapshot.displayTransformOvercharge ?? snapshot.transformOvercharge ?? base.displayTransformOvercharge,
     transformReadyTimer: snapshot.transformReadyTimer ?? base.transformReadyTimer,
     transformStartupFrames: snapshot.transformStartupFrames ?? base.transformStartupFrames,
     transformTargetId: snapshot.transformTargetId ?? null,

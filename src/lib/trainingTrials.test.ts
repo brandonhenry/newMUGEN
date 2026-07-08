@@ -502,8 +502,17 @@ describe('training trial catalog', () => {
     });
     expect(byId('ki:charge')?.steps[0]).toMatchObject({
       actions: ['charge'],
-      requireState: 'chargeKi'
+      requireState: 'chargeKi',
+      requireKiAtLeast: 8
     });
+    expect(byId('ki:charge')?.steps[1]).toMatchObject({
+      actions: [],
+      requireState: 'idle',
+      requireDisplayedKiAtLeast: 8
+    });
+    expect(byId('ki:charge')?.lesson.toLowerCase()).toContain('does not update in real time');
+    expect(byId('ki:charge')?.lesson.toLowerCase()).toContain('release');
+    expect(byId('ki:charge')?.lesson.toLowerCase()).toContain('overcharge');
     expect(byId('ki:transform')?.steps[0]).toMatchObject({
       actions: ['jab', 'heavy', 'kick', 'special']
     });

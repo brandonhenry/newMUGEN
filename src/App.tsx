@@ -23233,7 +23233,9 @@ function FightScreen({
         facingYaw: Math.PI / 2,
         commandHistory: [],
         ki: setup.p1Ki ?? fresh.fighters[0].ki,
+        displayKi: setup.p1Ki ?? fresh.fighters[0].displayKi,
         transformOvercharge: setup.p1TransformOvercharge ?? fresh.fighters[0].transformOvercharge,
+        displayTransformOvercharge: setup.p1TransformOvercharge ?? fresh.fighters[0].displayTransformOvercharge,
         transformReadyTimer: setup.p1TransformReadyTimer ?? fresh.fighters[0].transformReadyTimer,
         state: p1State,
         velocityY: p1StartsGrounded ? 0 : fresh.fighters[0].velocityY,
@@ -23257,6 +23259,7 @@ function FightScreen({
         facingYaw: -Math.PI / 2,
         commandHistory: [],
         ki: setup.p2Ki ?? fresh.fighters[1].ki,
+        displayKi: setup.p2Ki ?? fresh.fighters[1].displayKi,
         state: p2State,
         velocityY: p2StartsGrounded ? 0 : fresh.fighters[1].velocityY,
         actionFramesRemaining: p2StartsKnockedDown ? 0 : fresh.fighters[1].actionFramesRemaining,
@@ -25529,8 +25532,8 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
 function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; onlineWins?: number }) {
   const isInfiniteHealth = fighter.maxHp >= 999_999;
   const percent = isInfiniteHealth ? 100 : Math.max(0, Math.min(100, (fighter.hp / Math.max(1, fighter.maxHp)) * 100));
-  const kiPercent = Math.max(0, Math.min(100, fighter.ki));
-  const transformPercent = Math.max(0, Math.min(100, fighter.transformOvercharge));
+  const kiPercent = Math.max(0, Math.min(100, fighter.displayKi));
+  const transformPercent = Math.max(0, Math.min(100, fighter.displayTransformOvercharge));
   const transformReady = fighter.transformReadyTimer > 0 && transformPercent > 0;
   const isDanger = percent <= 25;
   const portraitPath = getHudPortraitPath(fighter.character);

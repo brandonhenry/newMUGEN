@@ -25,6 +25,9 @@ describe('online codec', () => {
     const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { aiSeed: 9090, playIntro: true });
     match.fighters[0].hp = 42;
     match.fighters[0].ki = 78;
+    match.fighters[0].displayKi = 31;
+    match.fighters[0].transformOvercharge = 44;
+    match.fighters[0].displayTransformOvercharge = 12;
     match.fighters[0].position.x = 1.25;
     match.fighters[0].controlSideSign = -1;
     match.fighters[0].state = 'juggle';
@@ -116,6 +119,9 @@ describe('online codec', () => {
     expect(hydrated.roundFinisher?.cameraZoomScale).toBe(0.78);
     expect(hydrated.fighters[0].hp).toBe(42);
     expect(hydrated.fighters[0].ki).toBe(78);
+    expect(hydrated.fighters[0].displayKi).toBe(31);
+    expect(hydrated.fighters[0].transformOvercharge).toBe(44);
+    expect(hydrated.fighters[0].displayTransformOvercharge).toBe(12);
     expect(hydrated.fighters[0].position.x).toBe(1.25);
     expect(hydrated.fighters[0].controlSideSign).toBe(-1);
     expect(hydrated.fighters[0].moveInstanceId).toBe(12);

@@ -490,6 +490,8 @@ export function checksumMatch(match: MatchSnapshot) {
       id: fighter.character.id,
       hp: roundNumber(fighter.hp),
       ki: roundNumber(fighter.ki),
+      displayKi: roundNumber(fighter.displayKi),
+      displayTransformOvercharge: roundNumber(fighter.displayTransformOvercharge),
       x: roundNumber(fighter.position.x),
       y: roundNumber(fighter.position.y),
       z: roundNumber(fighter.position.z),

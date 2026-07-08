@@ -35,6 +35,8 @@ export type TrainingTrialStep = {
   requireState?: FighterRuntime['state'];
   requireDummyState?: FighterRuntime['state'];
   requireGetupAction?: FighterRuntime['getupAction'];
+  requireKiAtLeast?: number;
+  requireDisplayedKiAtLeast?: number;
   expectImpact?: ComboTrialStep['expect'];
   expectImpactKinds?: ImpactSparkEvent['kind'][];
   expectImpactAttackerSlot?: 1 | 2;
@@ -385,7 +387,7 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
   if (launcher) trials.push(makeRouteStarterTrial(character, dummy, 'launcher', 'launcher:starter', 'Launch Starter', launcher, 'Launchers start longer air routes.', 'Lift them first. The combo starts in the air.', 'Launch the dummy.', { expectImpact: { launched: true } }));
   if (tornado) trials.push(makeRouteStarterTrial(character, dummy, 'tornado', 'tornado:extender', 'Tornado Extender', tornado, 'Tornado keeps a juggle alive once the route is airborne.', 'When they fall, spin them back into the fight.', 'Use the tornado extender.', { setup: { p2Position: { x: 0.45, z: 0 }, dummyScript: 'idle' }, expectImpact: { tornado: true, juggled: true } }));
   if (crouch) trials.push(makeRouteStarterTrial(character, dummy, 'crouch', 'crouch:route', 'FC / WS Route', crouch, 'Crouch routes teach stance-specific followups.', 'Low stance. Different blade.', 'Use the crouch route.'));
-  trials.push(makeSimpleTrial(character, dummy, 'ki', 'ki:charge', 'Ki Charge', ['O'], ['charge'], 'Hold charge to build ki. Get used to checking your resource before spending it.', 'Power is only useful when you know you have it.', 'Ki charge started.', { requireState: 'chargeKi' }));
+  trials.push(makeKiChargeTrial(character, dummy));
   trials.push(makeTransformTrial(character, dummy, roster));
   trials.push(makeImpactOnlyTrial(character, dummy, 'ki', 'ki:perfect-block', 'Ki Perfect Block', ['B'], ['block'], 'Time your guard against ki attacks. A close block earns Perfect timing here.', 'Meet power with timing, not panic.', 'Ki attack blocked.', { dummyScript: 'kiAttack', setup: { p2Ki: 100, p1Position: { x: -0.55, z: 0 }, p2Position: { x: 0.55, z: 0 } }, expectImpactKinds: ['block'], expectImpactAttackerSlot: 2, expectImpactDefenderSlot: 1, requireImpactKiBurst: true, targetFrame: 20, windowBefore: 8, windowAfter: 12, missAfterFrame: 80 }));
   if (ki) trials.push(makeRouteStarterTrial(character, dummy, 'ki', 'ki:route', 'Ki Route', ki, 'Ki routes spend charge for a stronger route.', 'Spend power only when the cut matters.', 'Use the ki route.', { setup: { p1Ki: 100, dummyScript: 'idle' } }));
@@ -756,6 +758,58 @@ function makeSimpleTrial(
     zoroLine,
     successText,
     previewScript: makePreviewScript([{ actions, targetFrame: 10 } as TrainingTrialStep])
+  };
+}
+
+function makeKiChargeTrial(character: CharacterDefinition, dummy: CharacterDefinition | undefined): TrainingTrialDefinition {
+  const setup = makeSetup(dummy, 'idle');
+  const lesson = 'Hold charge to build hidden ki, then release to update the HUD. Ki does not update in real time by design, so be careful when charging for a specific move; if your timing is loose, you can hold past full ki into overcharge before the bar catches up.';
+  const steps: TrainingTrialStep[] = [
+    {
+      id: 'ki:charge:hold',
+      notation: ['O'],
+      label: 'Hold Charge',
+      actions: ['charge'],
+      kind: 'state',
+      targetFrame: 40,
+      windowBefore: 12,
+      windowAfter: 80,
+      requireState: 'chargeKi',
+      requireKiAtLeast: 8,
+      reason: 'Hold until real ki has built, even though the HUD has not moved yet.'
+    },
+    {
+      id: 'ki:charge:release',
+      notation: ['release O'],
+      label: 'Release Charge',
+      actions: [],
+      kind: 'state',
+      targetFrame: 18,
+      windowBefore: 4,
+      windowAfter: 48,
+      requireState: 'idle',
+      requireDisplayedKiAtLeast: 8,
+      reason: 'Release charge and let the HUD catch up to the ki you actually gained.'
+    }
+  ];
+  return {
+    id: `basic:${character.id}:ki:charge`,
+    title: 'Ki Charge Timing',
+    characterId: character.id,
+    category: 'ki',
+    mode: 'basics',
+    difficulty: 2,
+    stageId: setup.stageId,
+    dummyCharacterId: dummy?.id,
+    setup,
+    steps,
+    lesson,
+    zoroLine: 'Feel the power before the bar confirms it.',
+    successText: 'Ki charge timing learned.',
+    previewScript: [
+      { frame: 14, duration: 58, actions: ['charge'] },
+      { frame: 84, duration: 12, actions: [] }
+    ]
   };
 }
 
@@ -1292,13 +1346,15 @@ function matchesStateStep(step: TrainingTrialStep, match: MatchSnapshot) {
   if (step.requireState && player.state !== step.requireState) return false;
   if (step.requireDummyState && dummy.state !== step.requireDummyState) return false;
   if (step.requireGetupAction && player.getupAction !== step.requireGetupAction) return false;
-  if (!step.requireState && !step.requireDummyState && !step.requireGetupAction) return false;
+  if (step.requireKiAtLeast !== undefined && player.ki < step.requireKiAtLeast) return false;
+  if (step.requireDisplayedKiAtLeast !== undefined && player.displayKi < step.requireDisplayedKiAtLeast) return false;
+  if (!step.requireState && !step.requireDummyState && !step.requireGetupAction && step.requireKiAtLeast === undefined && step.requireDisplayedKiAtLeast === undefined) return false;
   return true;
 }
 
 function matchesInputStateStep(step: TrainingTrialStep, input: InputFrame, match: MatchSnapshot) {
   const needsActions = step.actions.length > 0;
-  const needsState = Boolean(step.requireState || step.requireDummyState || step.requireGetupAction);
+  const needsState = Boolean(step.requireState || step.requireDummyState || step.requireGetupAction || step.requireKiAtLeast !== undefined || step.requireDisplayedKiAtLeast !== undefined);
   const actionsMatch = !needsActions || step.actions.every((action) => trainingActionMatches(action, input, match));
   const stateMatches = !needsState || matchesStateStep(step, match);
   return actionsMatch && stateMatches && (needsActions || needsState);

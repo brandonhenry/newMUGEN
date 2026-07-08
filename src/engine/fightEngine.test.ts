@@ -6713,8 +6713,83 @@ describe('fight engine', () => {
 
     expect(match.fighters[0].ki).toBeGreaterThan(15);
     expect(match.fighters[0].ki).toBeLessThan(28);
+    expect(match.fighters[0].displayKi).toBe(0);
     expect(match.fighters[0].state).toBe('chargeKi');
     expect(match.fighters[0].chargePhase).toBe('hold');
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].displayKi).toBeCloseTo(match.fighters[0].ki, 4);
+    expect(match.fighters[0].chargePhase).toBe('recovery');
+  });
+
+  it('keeps transform overcharge hidden until ki charge is released', () => {
+    const base = normalizeCharacter({
+      ...starterCharacters[0],
+      id: 'hidden-overcharge-base',
+      hasTransform: true,
+      transformCharacterId: 'hidden-overcharge-form'
+    });
+    const form = normalizeCharacter({
+      ...starterCharacters[1],
+      id: 'hidden-overcharge-form',
+      hasTransform: false,
+      transformCharacterId: undefined
+    });
+    let match = createMatch(base, form, stages[0], 'local2p', undefined, { roster: [base, form] });
+    match.phase = 'fighting';
+    match.countdown = 0;
+    const charge = emptyInputFrame();
+    charge.charge = true;
+
+    for (let i = 0; i < 270; i += 1) {
+      match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].ki).toBe(100);
+    expect(match.fighters[0].transformOvercharge).toBeGreaterThan(0);
+    expect(match.fighters[0].displayKi).toBe(0);
+    expect(match.fighters[0].displayTransformOvercharge).toBe(0);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].displayKi).toBe(100);
+    expect(match.fighters[0].displayTransformOvercharge).toBeCloseTo(match.fighters[0].transformOvercharge, 4);
+  });
+
+  it('derives faster ki charge for shorter characters and allows explicit charge rates', () => {
+    const shortCharacter = normalizeCharacter({
+      ...starterCharacters[0],
+      id: 'short-ki-charge',
+      modelScale: { height: 0.75 }
+    });
+    const tallCharacter = normalizeCharacter({
+      ...starterCharacters[0],
+      id: 'tall-ki-charge',
+      modelScale: { height: 1.35 }
+    });
+    const fastCharacter = normalizeCharacter({
+      ...tallCharacter,
+      id: 'explicit-fast-ki-charge',
+      stats: {
+        ...tallCharacter.stats,
+        kiChargeRate: 44
+      }
+    });
+    const sampleCharge = (character: CharacterDefinition) => {
+      let match = createMatch(character, starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      const charge = emptyInputFrame();
+      charge.charge = true;
+      for (let i = 0; i < 90; i += 1) {
+        match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
+      }
+      return match.fighters[0].ki;
+    };
+
+    expect(sampleCharge(shortCharacter)).toBeGreaterThan(sampleCharge(tallCharacter));
+    expect(sampleCharge(fastCharacter)).toBeGreaterThan(sampleCharge(shortCharacter));
   });
 
   it('spawns Naruto shadow clone after charging past half ki', () => {
@@ -7231,6 +7306,8 @@ describe('fight engine', () => {
 
     expect(match.fighters[0].state).toBe('attack');
     expect(match.fighters[0].currentMove?.kiBurst).toBe(true);
+    expect(match.fighters[0].ki).toBeLessThan(35);
+    expect(match.fighters[0].displayKi).toBe(match.fighters[0].ki);
     expect(match.fighters[0].chargePhase).toBe('none');
   });
 
