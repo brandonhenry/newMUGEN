@@ -11765,6 +11765,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('camera', 'zoom_bias', previous.camera.zoomBias, next.camera.zoomBias);
   add('display', 'hud_scale', previous.display.hudScale, next.display.hudScale);
   add('display', 'impact_sparks_enabled', previous.display.impactSparks.enabled, next.display.impactSparks.enabled);
+  add('display', 'impact_sparks_cinematic', previous.display.impactSparks.cinematic, next.display.impactSparks.cinematic);
   add('display', 'impact_sparks_shape', previous.display.impactSparks.shape, next.display.impactSparks.shape);
   add('display', 'impact_sparks_size', previous.display.impactSparks.size, next.display.impactSparks.size);
   add('display', 'impact_sparks_intensity', previous.display.impactSparks.intensity, next.display.impactSparks.intensity);
@@ -12268,6 +12269,7 @@ function SettingsScreen({
           <SettingsSection index={0} title="HUD" active={activeSectionIndex === 0}>
             <SettingSlider label="HUD Scale" value={settings.display.hudScale} min={0.78} max={1.25} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, hudScale: value } }))} />
             <SettingToggle label="Impact Sparks" checked={settings.display.impactSparks.enabled} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, enabled: checked } } }))} />
+            <SettingToggle label="Cinematic Impact FX" checked={settings.display.impactSparks.cinematic} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, cinematic: checked } } }))} />
             <SettingRow label="Spark Shape" value={settings.display.impactSparks.shape.toUpperCase()}>
               <div className="mini-segmented">
                 {(['burst', 'ring', 'shards'] as const).map((value) => (
@@ -23269,6 +23271,12 @@ function FightScreen({
         reducedMotion={settings.display.reducedMotion}
         onAssetLoadingChange={setAssetLoadingState}
       />
+      {!onlineAssetGateActive && (
+        <>
+          <ImpactScreenFlashLayer events={match.impactEvents} enabled={settings.display.impactSparks.enabled && settings.display.impactSparks.cinematic} reducedMotion={settings.display.reducedMotion} />
+          <ImpactCalloutLayer events={match.impactEvents} enabled={settings.display.impactSparks.enabled && settings.display.impactSparks.cinematic} reducedMotion={settings.display.reducedMotion} />
+        </>
+      )}
       {!onlineAssetGateActive && <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />}
       {!onlineAssetGateActive && <CombatPopupLayer popups={combatPopups} />}
       {!onlineAssetGateActive && <ClashOverlay match={match} />}
@@ -25122,6 +25130,52 @@ function FightHud({ match, hudScale, onlineWins }: { match: MatchSnapshot; hudSc
 function formatFightTimer(match: MatchSnapshot, rounded = false) {
   if (match.mode === 'training' || match.mode === 'trainingOnline' || match.roundTime <= 0) return '∞';
   return rounded ? String(Math.ceil(match.timer)) : match.timer.toFixed(2);
+}
+
+function ImpactScreenFlashLayer({ events, enabled, reducedMotion }: { events: ImpactSparkEvent[]; enabled: boolean; reducedMotion: boolean }) {
+  if (!enabled || events.length === 0) return null;
+  return (
+    <div className={`impact-screen-flash-layer${reducedMotion ? ' reduced-motion' : ''}`} aria-hidden="true">
+      {events.slice(-4).map((event) => (
+        <div key={`impact-flash-${event.id}`} className={`impact-screen-flash ${resolveImpactFeedbackTone(event)}`} />
+      ))}
+    </div>
+  );
+}
+
+function ImpactCalloutLayer({ events, enabled, reducedMotion }: { events: ImpactSparkEvent[]; enabled: boolean; reducedMotion: boolean }) {
+  if (!enabled || events.length === 0) return null;
+  const callouts = events.slice(-5).map((event) => {
+    const label = resolveImpactCalloutLabel(event);
+    return label ? { event, label } : null;
+  }).filter((entry): entry is { event: ImpactSparkEvent; label: string } => Boolean(entry));
+  if (callouts.length === 0) return null;
+  return (
+    <div className={`impact-callout-layer${reducedMotion ? ' reduced-motion' : ''}`} aria-hidden="true">
+      {callouts.map(({ event, label }) => (
+        <div key={`impact-callout-${event.id}`} className={`impact-callout ${resolveImpactFeedbackTone(event)}`}>
+          {label}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function resolveImpactCalloutLabel(event: ImpactSparkEvent) {
+  if (/guard\s*break/i.test(event.moveLabel)) return 'GUARD BREAK';
+  if (event.kind === 'counterHit') return 'COUNTER';
+  if (event.kind === 'whiffPunish') return 'WHIFF PUNISH';
+  if (event.kind === 'punish') return 'PUNISH';
+  if (event.kind === 'clash') return 'CLASH';
+  return '';
+}
+
+function resolveImpactFeedbackTone(event: ImpactSparkEvent) {
+  if (/guard\s*break/i.test(event.moveLabel) || event.kind === 'clash' || event.kiBurst) return 'blue';
+  if (event.kind === 'block') return 'guard';
+  if (event.kind === 'counterHit') return 'red';
+  if (event.kind === 'punish' || event.kind === 'whiffPunish') return 'purple';
+  return 'gold';
 }
 
 function CombatPopupLayer({ popups }: { popups: ActiveCombatPopup[] }) {

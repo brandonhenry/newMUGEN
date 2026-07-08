@@ -8533,6 +8533,108 @@ button {
   z-index: 9;
 }
 
+.impact-screen-flash-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.impact-screen-flash {
+  position: absolute;
+  inset: -8%;
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: impactScreenFlash 420ms cubic-bezier(0.16, 0.84, 0.28, 1) forwards;
+  will-change: opacity;
+}
+
+.impact-screen-flash.gold {
+  background: radial-gradient(circle at 56% 48%, rgba(255, 255, 255, 0.46), rgba(255, 196, 64, 0.16) 18%, rgba(255, 92, 40, 0.06) 32%, transparent 54%);
+}
+
+.impact-screen-flash.guard,
+.impact-screen-flash.blue {
+  background: radial-gradient(circle at 56% 48%, rgba(240, 255, 255, 0.42), rgba(65, 211, 255, 0.17) 20%, rgba(86, 117, 255, 0.07) 34%, transparent 56%);
+}
+
+.impact-screen-flash.red {
+  background: radial-gradient(circle at 56% 48%, rgba(255, 255, 255, 0.48), rgba(255, 44, 86, 0.17) 20%, rgba(255, 106, 39, 0.07) 35%, transparent 56%);
+}
+
+.impact-screen-flash.purple {
+  background: radial-gradient(circle at 56% 48%, rgba(255, 255, 255, 0.42), rgba(220, 86, 255, 0.16) 20%, rgba(255, 64, 148, 0.07) 35%, transparent 56%);
+}
+
+.impact-screen-flash-layer.reduced-motion .impact-screen-flash {
+  animation-duration: 260ms;
+}
+
+.impact-callout-layer {
+  position: absolute;
+  top: clamp(112px, 17vh, 188px);
+  left: 50%;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  width: min(760px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.impact-callout {
+  grid-area: 1 / 1;
+  max-width: 100%;
+  color: #fff2a8;
+  font-size: clamp(32px, 7vw, 88px);
+  font-weight: 1000;
+  font-style: italic;
+  line-height: 0.9;
+  text-align: center;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.66),
+    0 0 16px rgba(255, 255, 255, 0.72),
+    0 0 34px rgba(255, 205, 70, 0.72),
+    0 0 72px rgba(255, 66, 34, 0.42);
+  text-transform: uppercase;
+  animation: impactCalloutPop 860ms cubic-bezier(0.12, 0.9, 0.18, 1) forwards;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.56));
+  will-change: transform, opacity, filter;
+}
+
+.impact-callout.blue,
+.impact-callout.guard {
+  color: #dffcff;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.66),
+    0 0 16px rgba(255, 255, 255, 0.7),
+    0 0 34px rgba(89, 221, 255, 0.72),
+    0 0 74px rgba(71, 112, 255, 0.44);
+}
+
+.impact-callout.red {
+  color: #fff0a6;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.66),
+    0 0 16px rgba(255, 255, 255, 0.72),
+    0 0 34px rgba(255, 58, 91, 0.78),
+    0 0 74px rgba(255, 120, 36, 0.46);
+}
+
+.impact-callout.purple {
+  color: #ffd9ff;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.66),
+    0 0 16px rgba(255, 255, 255, 0.7),
+    0 0 34px rgba(220, 86, 255, 0.76),
+    0 0 74px rgba(255, 64, 148, 0.44);
+}
+
+.impact-callout-layer.reduced-motion .impact-callout {
+  animation-duration: 520ms;
+}
+
 .combat-popup-column {
   display: grid;
   gap: 10px;
@@ -8815,6 +8917,45 @@ button {
   100% {
     opacity: 0;
     transform: translateY(28px) scale(0.96);
+  }
+}
+
+@keyframes impactScreenFlash {
+  0% {
+    opacity: 0;
+  }
+
+  9% {
+    opacity: 0.52;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes impactCalloutPop {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.74) rotate(-2deg);
+    filter: blur(5px);
+  }
+
+  13% {
+    opacity: 1;
+    transform: translateY(0) scale(1.06) rotate(0.6deg);
+    filter: blur(0);
+  }
+
+  64% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.96);
+    filter: blur(1px);
   }
 }
 
@@ -11832,6 +11973,15 @@ button {
     grid-template-columns: minmax(128px, 1fr) minmax(128px, 1fr);
   }
 
+  .impact-callout-layer {
+    top: clamp(96px, 16vh, 136px);
+    width: calc(100vw - 24px);
+  }
+
+  .impact-callout {
+    font-size: clamp(28px, 9vw, 54px);
+  }
+
   .combat-popup-card {
     min-width: min(220px, 46vw);
     padding: 10px 12px;
@@ -11888,6 +12038,15 @@ button {
     left: 10px;
     right: 10px;
     grid-template-columns: minmax(0, min(34vw, 220px)) minmax(0, min(34vw, 220px));
+  }
+
+  .impact-callout-layer {
+    top: clamp(72px, 16vh, 102px);
+    width: min(460px, 58vw);
+  }
+
+  .impact-callout {
+    font-size: clamp(24px, 6vw, 46px);
   }
 
   .combat-popup-column {

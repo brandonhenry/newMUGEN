@@ -101,6 +101,7 @@ export const defaultGameSettings: GameSettings = {
     debugOverlay: true,
     impactSparks: {
       enabled: true,
+      cinematic: true,
       shape: 'burst',
       hitColor: '#ffb33f',
       blockColor: '#9eeeff',
@@ -202,6 +203,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       debugOverlay: booleanOr(display.debugOverlay, defaults.display.debugOverlay),
       impactSparks: {
         enabled: booleanOr(impactSparks.enabled, defaults.display.impactSparks.enabled),
+        cinematic: booleanOr(impactSparks.cinematic, defaults.display.impactSparks.cinematic),
         shape: impactSparks.shape === 'ring' || impactSparks.shape === 'shards' ? impactSparks.shape : defaults.display.impactSparks.shape,
         hitColor: sanitizeHexColor(impactSparks.hitColor, defaults.display.impactSparks.hitColor),
         blockColor: sanitizeHexColor(impactSparks.blockColor, defaults.display.impactSparks.blockColor),

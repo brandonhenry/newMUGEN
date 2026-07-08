@@ -1059,6 +1059,7 @@ export type GameSettings = {
     debugOverlay: boolean;
     impactSparks: {
       enabled: boolean;
+      cinematic: boolean;
       shape: ImpactSparkShape;
       hitColor: string;
       blockColor: string;

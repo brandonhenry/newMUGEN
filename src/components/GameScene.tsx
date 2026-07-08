@@ -36,6 +36,7 @@ import type {
   StageLayerDefinition,
   StageModelDefinition,
   StagePropDefinition,
+  StageVisualStyle,
   Vec3Tuple
 } from '../types';
 import { emptyInputFrame } from '../types';
@@ -592,6 +593,7 @@ function inspectModelObjectTree(root: THREE.Object3D) {
 
 const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
   enabled: true,
+  cinematic: true,
   shape: 'burst',
   hitColor: '#ffb33f',
   blockColor: '#9eeeff',
@@ -679,7 +681,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <GameEnvironment />
         {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
         <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
-        <CameraRig match={match} settings={cameraSettings} />
+        <CameraRig match={match} settings={cameraSettings} reducedMotion={reducedMotion} impactFeedbackEnabled={sparkSettings.enabled && sparkSettings.cinematic} />
         <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
         <StageCameraOcclusionFader />
         <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
@@ -1619,14 +1621,22 @@ function ImpactSpark({
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Group>(null);
+  const shardRef = useRef<THREE.Group>(null);
+  const lightRef = useRef<THREE.PointLight>(null);
   const ageRef = useRef(0);
   const isBlock = event.kind === 'block';
   const isLauncher = Boolean(event.launched || event.juggled || event.tornado);
   const isClash = event.kind === 'clash';
   const colors = useMemo(() => resolveImpactSparkColors(event, settings), [event, settings]);
   const profile = useMemo(() => resolveImpactSparkProfile(event), [event]);
+  const seed = event.id * 17 + event.attackerSlot * 101 + event.defenderSlot * 211;
+  const cinematic = settings.cinematic;
   const duration = reducedMotion ? profile.reducedDuration : profile.duration;
   const showRings = settings.shape === 'burst' || settings.shape === 'ring' || isBlock || isLauncher || isClash;
+  const showShards = cinematic && settings.shape === 'shards';
+  const showSlashes = cinematic && settings.shape === 'shards';
+  const showParticles = cinematic && (settings.shape !== 'ring' || isBlock || isLauncher || isClash);
+  const showAfterimage = cinematic && settings.shape === 'burst' && profile.ghost && !reducedMotion;
 
   useFrame(({ camera }, delta) => {
     ageRef.current += delta;
@@ -1636,8 +1646,9 @@ function ImpactSpark({
     root.visible = progress < 1;
     root.lookAt(camera.position);
     const expansion = 1 + progress * (reducedMotion ? 0.42 : profile.expansion);
-    const baseScale = settings.size * profile.scale;
+    const baseScale = settings.size * profile.scale * 0.4;
     root.scale.setScalar(baseScale * expansion);
+    const sparkEase = Math.sin(progress * Math.PI);
     root.traverse((child) => {
       const mesh = child as THREE.Mesh;
       const materials = Array.isArray(mesh.material) ? mesh.material : mesh.material ? [mesh.material] : [];
@@ -1650,11 +1661,22 @@ function ImpactSpark({
       });
     });
     if (ringRef.current) ringRef.current.rotation.z += delta * profile.spin;
+    if (shardRef.current) shardRef.current.rotation.z -= delta * profile.spin * 0.24;
+    if (lightRef.current) {
+      lightRef.current.intensity = profile.lightIntensity * settings.intensity * Math.pow(1 - progress, 1.65) * (reducedMotion ? 0.42 : 1);
+      lightRef.current.distance = 2.4 + profile.scale * 3.2 + sparkEase * 1.2;
+    }
   });
 
   return (
     <group ref={groupRef} position={event.position}>
+      {cinematic && <pointLight ref={lightRef} color={colors.light} intensity={0} distance={4.4} />}
+      {isBlock && <ImpactBlockShield event={event} colors={colors} profile={profile} />}
+      {showAfterimage && <ImpactAfterimage event={event} colors={colors} profile={profile} />}
       {showRings && <ImpactEnergyRings refGroup={ringRef} event={event} colors={colors} profile={profile} ringOnly={settings.shape === 'ring'} />}
+      {showSlashes && !reducedMotion && <ImpactSlashStreaks event={event} colors={colors} profile={profile} seed={seed + 37} />}
+      {showParticles && <ImpactSphereParticles event={event} colors={colors} profile={profile} seed={seed + 53} reducedMotion={reducedMotion} />}
+      {showShards && <ImpactShardBurst refGroup={shardRef} event={event} colors={colors} profile={profile} seed={seed + 71} reducedMotion={reducedMotion} />}
       <ImpactCore colors={colors} profile={profile} />
     </group>
   );
@@ -1663,6 +1685,8 @@ function ImpactSpark({
 type ImpactSparkColors = {
   base: string;
   edge: string;
+  core: string;
+  light: string;
 };
 
 type ImpactSparkProfile = {
@@ -1674,18 +1698,28 @@ type ImpactSparkProfile = {
   ringX: number;
   ringY: number;
   coreScale: number;
+  discScale: number;
+  shardCount: number;
+  particleCount: number;
+  slashCount: number;
+  lightIntensity: number;
+  ghost: boolean;
 };
 
 function ImpactCore({ colors, profile }: { colors: ImpactSparkColors; profile: ImpactSparkProfile }) {
   return (
     <group renderOrder={34}>
+      <mesh scale={[profile.discScale * 1.15, profile.discScale * 0.84, 1]}>
+        <circleGeometry args={[0.42, 64]} />
+        <meshBasicMaterial color={colors.core} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
       <mesh scale={[profile.coreScale * 1.45, profile.coreScale * 1.05, 1]}>
         <torusGeometry args={[0.64, 0.055, 8, 36]} />
-        <meshBasicMaterial color={colors.base} transparent opacity={0.34} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={colors.base} transparent opacity={0.46} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
       <mesh scale={[profile.coreScale * 2.1, profile.coreScale * 1.45, 1]}>
         <torusGeometry args={[0.66, 0.025, 8, 44]} />
-        <meshBasicMaterial color={colors.edge} transparent opacity={0.16} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={colors.edge} transparent opacity={0.22} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
     </group>
   );
@@ -1710,15 +1744,180 @@ function ImpactEnergyRings({
   return (
     <group ref={refGroup} renderOrder={30} rotation={[isLauncher ? -0.12 : isBlock ? 0.08 : 0, 0, isBlock ? 0.18 : 0]}>
       <mesh scale={[profile.ringX, profile.ringY, 1]}>
-        <torusGeometry args={[isClash ? 0.36 : isLauncher ? 0.34 : isBlock ? 0.28 : 0.3, isBlock ? 0.018 : ringOnly ? 0.026 : 0.034, 8, 64]} />
+        <torusGeometry args={[isClash ? 0.72 : isLauncher ? 0.64 : isBlock ? 0.5 : 0.58, isBlock ? 0.028 : ringOnly ? 0.04 : 0.052, 8, 72]} />
         <meshBasicMaterial color={colors.base} transparent opacity={ringOnly ? 0.72 : isLauncher ? 0.46 : 0.58} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
       {!ringOnly && (
         <mesh scale={[profile.ringX * 1.25, profile.ringY * 1.18, 1]}>
-          <torusGeometry args={[isLauncher ? 0.36 : 0.32, 0.012, 8, 64]} />
+          <torusGeometry args={[isLauncher ? 0.74 : isBlock ? 0.62 : 0.68, 0.018, 8, 72]} />
           <meshBasicMaterial color={colors.edge} transparent opacity={isBlock ? 0.24 : isLauncher ? 0.22 : 0.32} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
         </mesh>
       )}
+      {!ringOnly && (
+        <mesh scale={[profile.ringX * 1.72, profile.ringY * 1.45, 1]}>
+          <torusGeometry args={[isClash ? 0.82 : isBlock ? 0.66 : 0.76, 0.012, 8, 84]} />
+          <meshBasicMaterial color={colors.core} transparent opacity={isBlock ? 0.12 : 0.18} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        </mesh>
+      )}
+    </group>
+  );
+}
+
+function ImpactBlockShield({
+  event,
+  colors,
+  profile
+}: {
+  event: ImpactSparkEvent;
+  colors: ImpactSparkColors;
+  profile: ImpactSparkProfile;
+}) {
+  const side = impactDirectionSign(event);
+  return (
+    <group position={[side * 0.08, 0, 0]} renderOrder={29}>
+      <mesh scale={[0.42 * profile.ringX, 1.02 * profile.ringY, 1.02 * profile.ringY]}>
+        <sphereGeometry args={[0.78, 56, 22]} />
+        <meshBasicMaterial color={colors.base} transparent opacity={0.28} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+      </mesh>
+      <mesh scale={[0.5 * profile.ringX, 1.18 * profile.ringY, 1.18 * profile.ringY]}>
+        <sphereGeometry args={[0.78, 56, 22]} />
+        <meshBasicMaterial color={colors.edge} transparent opacity={0.13} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} wireframe />
+      </mesh>
+    </group>
+  );
+}
+
+function ImpactSlashStreaks({
+  event,
+  colors,
+  profile,
+  seed
+}: {
+  event: ImpactSparkEvent;
+  colors: ImpactSparkColors;
+  profile: ImpactSparkProfile;
+  seed: number;
+}) {
+  const count = profile.slashCount;
+  const side = impactDirectionSign(event);
+  return (
+    <group renderOrder={38}>
+      {makeSparkDirections(seed, count).map((direction, index) => {
+        const tint = index % 3 === 0 ? colors.core : index % 2 === 0 ? colors.edge : colors.base;
+        return (
+          <mesh
+            key={`slash-${index}`}
+            position={[side * (0.02 + seededUnit(seed + 3, index) * 0.09), direction[1] * 0.06, direction[0] * 0.02]}
+            rotation={[0, 0, direction[3] + seededUnit(seed + 9, index) * Math.PI]}
+            scale={[0.54 + direction[4] * 0.18, 0.28 + seededUnit(seed + 19, index) * 0.18, 1]}
+          >
+            <torusGeometry args={[0.5, 0.018, 8, 32, Math.PI * (0.5 + seededUnit(seed + 29, index) * 0.45)]} />
+            <meshBasicMaterial color={tint} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+function ImpactSphereParticles({
+  event,
+  colors,
+  profile,
+  seed,
+  reducedMotion
+}: {
+  event: ImpactSparkEvent;
+  colors: ImpactSparkColors;
+  profile: ImpactSparkProfile;
+  seed: number;
+  reducedMotion: boolean;
+}) {
+  const side = impactDirectionSign(event);
+  const count = reducedMotion ? Math.min(18, Math.ceil(profile.particleCount * 0.28)) : profile.particleCount;
+  return (
+    <group renderOrder={37}>
+      {makeSparkDirections(seed, count).map((direction, index) => {
+        const forward = event.kind === 'block' ? -side * Math.abs(direction[0]) : side * Math.abs(direction[0]);
+        const x = forward * (0.16 + seededUnit(seed + 5, index) * 0.28);
+        const y = direction[1] * (0.24 + seededUnit(seed + 13, index) * 0.18);
+        const z = (seededUnit(seed + 17, index) - 0.5) * 0.24;
+        const size = 0.34 + direction[4] * (event.kind === 'block' ? 0.42 : 0.62);
+        const tint = index % 5 === 0 ? colors.core : index % 2 === 0 ? colors.edge : colors.base;
+        return (
+          <mesh key={`particle-${index}`} position={[x, y, z]} scale={size}>
+            <sphereGeometry args={[0.045, 8, 6]} />
+            <meshBasicMaterial color={tint} transparent opacity={event.kind === 'block' ? 0.72 : 0.82} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+function ImpactShardBurst({
+  refGroup,
+  event,
+  colors,
+  profile,
+  seed,
+  reducedMotion
+}: {
+  refGroup: RefObject<THREE.Group>;
+  event: ImpactSparkEvent;
+  colors: ImpactSparkColors;
+  profile: ImpactSparkProfile;
+  seed: number;
+  reducedMotion: boolean;
+}) {
+  const side = impactDirectionSign(event);
+  const count = reducedMotion ? Math.min(14, Math.ceil(profile.shardCount * 0.34)) : profile.shardCount;
+  return (
+    <group ref={refGroup} renderOrder={36}>
+      {makeSparkDirections(seed, count).map((direction, index) => {
+        const blockBias = event.kind === 'block' ? -side * (0.08 + Math.abs(direction[0]) * 0.18) : side * direction[0] * 0.16;
+        const x = blockBias + direction[0] * 0.08;
+        const y = direction[1] * (event.kind === 'block' ? 0.22 : 0.18);
+        const tint = index % 4 === 0 ? colors.core : index % 3 === 0 ? colors.edge : colors.base;
+        return (
+          <mesh
+            key={`shard-${index}`}
+            position={[x, y, direction[2]]}
+            rotation={[0, 0, direction[3]]}
+            scale={[0.24 + direction[4] * 0.22, 0.022 + seededUnit(seed + 43, index) * 0.026, 0.022]}
+          >
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color={tint} transparent opacity={event.kind === 'block' ? 0.46 : 0.58} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+function ImpactAfterimage({
+  event,
+  colors,
+  profile
+}: {
+  event: ImpactSparkEvent;
+  colors: ImpactSparkColors;
+  profile: ImpactSparkProfile;
+}) {
+  const side = impactDirectionSign(event);
+  return (
+    <group renderOrder={27}>
+      {[0, 1].map((index) => (
+        <mesh
+          key={`afterimage-${index}`}
+          position={[side * (0.24 + index * 0.12), 0.06 - index * 0.03, -0.04 * index]}
+          scale={[0.18 + index * 0.05, 0.56 + profile.scale * 0.12, 1]}
+          rotation={[0, 0, side * (-0.1 - index * 0.06)]}
+        >
+          <circleGeometry args={[0.52, 36]} />
+          <meshBasicMaterial color={index === 0 ? colors.edge : colors.base} transparent opacity={0.14 - index * 0.04} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+        </mesh>
+      ))}
     </group>
   );
 }
@@ -1727,30 +1926,40 @@ function resolveImpactSparkColors(event: ImpactSparkEvent, settings: GameSetting
   if (event.kind === 'block') {
     return {
       base: settings.blockColor,
-      edge: '#dff8ff'
+      edge: '#dff8ff',
+      core: '#ffffff',
+      light: settings.blockColor
     };
   }
   if (event.kind === 'clash' || event.kiBurst) {
     return {
       base: '#7fdfff',
-      edge: settings.hitColor
+      edge: settings.hitColor,
+      core: '#ffffff',
+      light: '#9ff2ff'
     };
   }
   if (event.kind === 'counterHit') {
     return {
       base: '#ffe96a',
-      edge: settings.hitColor
+      edge: '#ff3159',
+      core: '#ffffff',
+      light: '#ff3159'
     };
   }
   if (event.kind === 'punish' || event.kind === 'whiffPunish') {
     return {
       base: settings.hitColor,
-      edge: '#ff5f45'
+      edge: '#ff5f45',
+      core: '#fff5d6',
+      light: '#ff7a45'
     };
   }
   return {
     base: settings.hitColor,
-    edge: '#ffd875'
+    edge: '#ffd875',
+    core: '#ffffff',
+    light: settings.hitColor
   };
 }
 
@@ -1764,13 +1973,23 @@ function resolveImpactSparkProfile(event: ImpactSparkEvent): ImpactSparkProfile 
   return {
     duration: isClash ? 0.64 : isLauncher ? 0.5 : isBlock ? 0.38 : 0.44,
     reducedDuration: isLauncher ? 0.28 : 0.24,
-    scale: isClash ? 1.3 : isLauncher ? 1.04 : isCounterHit ? 1.18 : isPunish ? 1.1 : isBlock ? 0.62 : 0.92,
-    expansion: isBlock ? 0.58 : isLauncher ? 0.9 : isPowerHit ? 1.32 : 1.02,
+    scale: isClash ? 1.48 : isLauncher ? 1.22 : isCounterHit ? 1.32 : isPunish ? 1.22 : isBlock ? 0.92 : 1.04,
+    expansion: isBlock ? 0.84 : isLauncher ? 1.1 : isPowerHit ? 1.46 : 1.16,
     spin: isBlock ? 2.3 : isLauncher ? 5.4 : isPowerHit ? 7.1 : 5.6,
-    ringX: isBlock ? 0.68 : isLauncher ? 0.72 : 0.92,
-    ringY: isBlock ? 1.24 : isLauncher ? 1.2 : isPowerHit ? 1.08 : 0.96,
-    coreScale: isClash ? 0.18 : isCounterHit ? 0.16 : isPunish ? 0.14 : isLauncher ? 0.12 : isBlock ? 0.1 : 0.12
+    ringX: isBlock ? 0.82 : isLauncher ? 0.88 : 1.02,
+    ringY: isBlock ? 1.38 : isLauncher ? 1.24 : isPowerHit ? 1.12 : 1.02,
+    coreScale: isClash ? 0.26 : isCounterHit ? 0.23 : isPunish ? 0.2 : isLauncher ? 0.19 : isBlock ? 0.17 : 0.18,
+    discScale: isClash ? 0.68 : isCounterHit ? 0.6 : isPunish ? 0.54 : isLauncher ? 0.52 : isBlock ? 0.42 : 0.48,
+    shardCount: isClash ? 64 : isCounterHit ? 56 : isPunish ? 46 : isLauncher ? 42 : isBlock ? 38 : 28,
+    particleCount: isClash ? 88 : isCounterHit ? 78 : isPunish ? 66 : isLauncher ? 58 : isBlock ? 62 : 42,
+    slashCount: isClash ? 13 : isCounterHit ? 11 : isPunish ? 10 : isLauncher ? 9 : isBlock ? 5 : 7,
+    lightIntensity: isClash ? 9.2 : isCounterHit ? 7.8 : isPunish ? 6.4 : isLauncher ? 6 : isBlock ? 4.8 : 5.2,
+    ghost: isCounterHit || isPunish || isLauncher || isClash
   };
+}
+
+function impactDirectionSign(event: ImpactSparkEvent) {
+  return event.attackerSlot <= event.defenderSlot ? 1 : -1;
 }
 
 function makeSparkDirections(seed: number, count: number) {
@@ -3877,10 +4096,19 @@ function applyStageCameraFade(entry: StageCameraColliderEntry) {
   });
 }
 
-function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSettings['camera'] }) {
+type ImpactCameraPulse = {
+  age: number;
+  duration: number;
+  shake: number;
+  zoom: number;
+  phase: number;
+};
+
+function CameraRig({ match, settings, reducedMotion = false, impactFeedbackEnabled = true }: { match: MatchSnapshot; settings: GameSettings['camera']; reducedMotion?: boolean; impactFeedbackEnabled?: boolean }) {
   const { camera, size } = useThree();
   const cameraCollisionRegistry = useContext(StageCameraCollisionContext);
   const modelStageCamera = isModelStage(match.stage);
+  const visualStyle = useMemo(() => resolveStageVisualStyle(match.stage), [match.stage]);
   const target = useMemo(() => new THREE.Vector3(), []);
   const focus = useMemo(() => new THREE.Vector3(), []);
   const lookFocus = useMemo(() => new THREE.Vector3(), []);
@@ -3897,6 +4125,8 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
   const initializedRef = useRef(false);
   const cameraDistanceRef = useRef(6.4);
   const cameraHeightRef = useRef(2.8);
+  const lastImpactCameraEventIdRef = useRef(0);
+  const impactCameraPulseRef = useRef<ImpactCameraPulse>({ age: 1, duration: 1, shake: 0, zoom: 0, phase: 0 });
   useEffect(() => {
     return () => {
       if (!cameraCollisionRegistry) return;
@@ -3908,6 +4138,15 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     camera.far = modelStageCamera ? 1400 : 300;
     camera.updateProjectionMatrix();
     const [p1, p2] = match.fighters;
+    const latestImpact = match.impactEvents[match.impactEvents.length - 1];
+    if (reducedMotion || !impactFeedbackEnabled) {
+      impactCameraPulseRef.current.age = impactCameraPulseRef.current.duration;
+    } else if (latestImpact && latestImpact.id !== lastImpactCameraEventIdRef.current) {
+      lastImpactCameraEventIdRef.current = latestImpact.id;
+      impactCameraPulseRef.current = resolveImpactCameraPulse(latestImpact, visualStyle);
+    }
+    const impactCameraPulse = impactCameraPulseRef.current;
+    impactCameraPulse.age = Math.min(impactCameraPulse.duration, impactCameraPulse.age + delta);
     if (match.roundFinisher) {
       const [impactX, impactY, impactZ] = match.roundFinisher.impactPosition;
       const p1x = finiteOr(p1.position.x, impactX - 0.65);
@@ -3984,6 +4223,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 6.2 * smoothing));
       const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_FIGHT_CAMERA_DISTANCE);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
+      applySubtleImpactCameraPulse(camera, side, impactCameraPulse);
       camera.lookAt(lookFocus);
       updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, visibilityPoints);
       return;
@@ -4033,6 +4273,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       camera.position.lerp(collisionAdjustedDesired, 1 - Math.pow(0.0000001, delta * Math.max(0.8, settings.smoothing * 1.7)));
       const currentCollided = resolveCameraModelCollision(target, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_CLASH_CAMERA_DISTANCE);
       if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, target, rawSide, MIN_CLASH_CAMERA_DISTANCE);
+      applySubtleImpactCameraPulse(camera, rawSide, impactCameraPulse);
       camera.lookAt(target);
       updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, visibilityPoints);
       return;
@@ -4145,10 +4386,37 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     camera.position.lerp(collisionAdjustedDesired, cameraDamp(delta, 3.1 * smoothing * sidestepCameraBoost));
     const currentCollided = resolveCameraModelCollision(lookFocus, camera.position, cameraCollisionRegistry?.colliders, camera.position, MIN_FIGHT_CAMERA_DISTANCE);
     if (!collided && !currentCollided) enforceCameraHorizontalDistance(camera, lookFocus, side, MIN_FIGHT_CAMERA_DISTANCE);
+    applySubtleImpactCameraPulse(camera, side, impactCameraPulse);
     camera.lookAt(lookFocus);
     updateCameraStageOccluders(cameraCollisionRegistry, match.stage, camera.position, visibilityPoints);
   });
   return null;
+}
+
+function resolveImpactCameraPulse(event: ImpactSparkEvent, visualStyle: StageVisualStyle): ImpactCameraPulse {
+  const isPower = event.kind === 'counterHit' || event.kind === 'punish' || event.kind === 'whiffPunish' || event.kind === 'clash' || event.launched || event.juggled || event.tornado || event.kiBurst;
+  const styleShake = THREE.MathUtils.clamp(visualStyle.camera.impactShake, 0, 0.2);
+  const styleZoom = THREE.MathUtils.clamp(event.kind === 'clash' ? visualStyle.camera.clashZoom : visualStyle.camera.impactZoom, 0, 0.12);
+  const hitScale = event.kind === 'block' ? 0.42 : isPower ? 0.78 : 0.52;
+  return {
+    age: 0,
+    duration: event.kind === 'clash' ? 0.24 : 0.18,
+    shake: THREE.MathUtils.clamp(styleShake * hitScale * 0.16, 0, isPower ? 0.025 : 0.016),
+    zoom: THREE.MathUtils.clamp(styleZoom * hitScale * 0.22, 0, isPower ? 0.018 : 0.01),
+    phase: event.id * 1.618
+  };
+}
+
+function applySubtleImpactCameraPulse(camera: THREE.Camera, side: THREE.Vector3, pulse: ImpactCameraPulse) {
+  if (pulse.shake <= 0 || pulse.age >= pulse.duration) return;
+  const progress = THREE.MathUtils.clamp(pulse.age / Math.max(0.001, pulse.duration), 0, 1);
+  const fade = Math.pow(1 - progress, 1.7);
+  const wave = Math.sin(progress * Math.PI * 2.4 + pulse.phase);
+  const verticalWave = Math.cos(progress * Math.PI * 2.1 + pulse.phase * 0.7);
+  camera.position.addScaledVector(side, -pulse.zoom * fade);
+  camera.position.x += side.z * wave * pulse.shake * fade;
+  camera.position.z -= side.x * wave * pulse.shake * fade;
+  camera.position.y += verticalWave * pulse.shake * 0.34 * fade;
 }
 
 function Arena({

@@ -1309,7 +1309,7 @@ describe('character manifests', () => {
         keyboardCombos: [{ '1+2': ['KeyL'], 'f+1': ['KeyBad'] }],
         gamepadCombos: [{ '1+2': [7, 11, 17] }]
       },
-      display: { touchControls: 'on', impactSparks: { shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } },
+      display: { touchControls: 'on', impactSparks: { cinematic: false, shape: 'ring', hitColor: '#12ABef', size: 9, intensity: -2 } },
       audio: { bgmTrackIndex: 300, hitSfx: 5 }
     });
 
@@ -1323,6 +1323,7 @@ describe('character manifests', () => {
     expect(settings.controls.keyboardCombos[0]['1+3']).toBeUndefined();
     expect(settings.controls.gamepadCombos[0]['1+2']).toEqual([7, 11]);
     expect(settings.display.touchControls).toBe('on');
+    expect(settings.display.impactSparks.cinematic).toBe(false);
     expect(settings.display.impactSparks.shape).toBe('ring');
     expect(settings.display.impactSparks.hitColor).toBe('#12ABef');
     expect(settings.display.impactSparks.blockColor).toBe(defaultGameSettings.display.impactSparks.blockColor);
