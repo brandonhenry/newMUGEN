@@ -1069,7 +1069,8 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   }
   if (sidestep !== 0) {
     const sidestepScale = fighter.sidestepTimer > 0 ? SIDESTEP_TAP_SCALE : SIDEWALK_SCALE;
-    orbitAroundOpponent(fighter, opponent, -sidestep * fighter.character.stats.sidestepSpeed * sidestepScale * laneSpeedScale * dt);
+    const orbitSideSign = getHorizontalControlSideSign(fighter, opponent, match.stage);
+    orbitAroundOpponent(fighter, opponent, -sidestep * orbitSideSign * fighter.character.stats.sidestepSpeed * sidestepScale * laneSpeedScale * dt);
   }
 
   applyGravity(fighter, dt);
