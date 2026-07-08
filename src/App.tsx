@@ -22938,18 +22938,22 @@ function FightScreen({
   const prepareTrainingTrialMatch = useCallback((fresh: MatchSnapshot, trial: TrainingTrialDefinition | null) => {
     if (!trial) return fresh;
     const setup = trial.setup;
-    const p1StartsKnockedDown = setup.p1State === 'knockdown';
-    const p2StartsKnockedDown = setup.p2State === 'knockdown';
+    const p1State = setup.p1State ?? fresh.fighters[0].state;
+    const p2State = setup.p2State ?? fresh.fighters[1].state;
+    const p1StartsKnockedDown = p1State === 'knockdown';
+    const p2StartsKnockedDown = p2State === 'knockdown';
+    const p1StartsGrounded = p1State !== 'jump';
+    const p2StartsGrounded = p2State !== 'jump';
     const fighters: MatchSnapshot['fighters'] = [
       {
         ...fresh.fighters[0],
-        position: { ...fresh.fighters[0].position, x: setup.p1Position?.x ?? -0.45, y: p1StartsKnockedDown ? 0 : fresh.fighters[0].position.y, z: setup.p1Position?.z ?? 0 },
+        position: { ...fresh.fighters[0].position, x: setup.p1Position?.x ?? -0.45, y: p1StartsGrounded ? 0 : Math.max(0.18, fresh.fighters[0].position.y), z: setup.p1Position?.z ?? 0 },
         facing: 1,
         facingYaw: Math.PI / 2,
         commandHistory: [],
         ki: setup.p1Ki ?? fresh.fighters[0].ki,
-        state: setup.p1State ?? fresh.fighters[0].state,
-        velocityY: p1StartsKnockedDown ? 0 : fresh.fighters[0].velocityY,
+        state: p1State,
+        velocityY: p1StartsGrounded ? 0 : fresh.fighters[0].velocityY,
         actionFramesRemaining: p1StartsKnockedDown ? 0 : fresh.fighters[0].actionFramesRemaining,
         actionTimer: p1StartsKnockedDown ? 0 : fresh.fighters[0].actionTimer,
         stunFramesRemaining: p1StartsKnockedDown ? 0 : fresh.fighters[0].stunFramesRemaining,
@@ -22965,13 +22969,13 @@ function FightScreen({
       },
       {
         ...fresh.fighters[1],
-        position: { ...fresh.fighters[1].position, x: setup.p2Position?.x ?? 0.45, y: p2StartsKnockedDown ? 0 : fresh.fighters[1].position.y, z: setup.p2Position?.z ?? 0 },
+        position: { ...fresh.fighters[1].position, x: setup.p2Position?.x ?? 0.45, y: p2StartsGrounded ? 0 : Math.max(0.18, fresh.fighters[1].position.y), z: setup.p2Position?.z ?? 0 },
         facing: -1,
         facingYaw: -Math.PI / 2,
         commandHistory: [],
         ki: setup.p2Ki ?? fresh.fighters[1].ki,
-        state: setup.p2State ?? fresh.fighters[1].state,
-        velocityY: p2StartsKnockedDown ? 0 : fresh.fighters[1].velocityY,
+        state: p2State,
+        velocityY: p2StartsGrounded ? 0 : fresh.fighters[1].velocityY,
         actionFramesRemaining: p2StartsKnockedDown ? 0 : fresh.fighters[1].actionFramesRemaining,
         actionTimer: p2StartsKnockedDown ? 0 : fresh.fighters[1].actionTimer,
         stunFramesRemaining: p2StartsKnockedDown ? 0 : fresh.fighters[1].stunFramesRemaining,
@@ -25021,6 +25025,8 @@ function FightDebug({
       <span data-testid="p2-height">{p2.position.y.toFixed(3)}</span>
       <span data-testid="p1-state">{p1.state}</span>
       <span data-testid="p2-state">{p2.state}</span>
+      <span data-testid="p1-dash-forward-frames">{p1.dashForwardFrames.toFixed(0)}</span>
+      <span data-testid="p1-back-hop-frames">{p1.backHopTotalFrames.toFixed(0)}</span>
       <span data-testid="p1-move">{p1.currentMove?.command ?? p1.currentMove?.input ?? 'none'}</span>
       <span data-testid="p2-move">{p2.currentMove?.command ?? p2.currentMove?.input ?? 'none'}</span>
       <span data-testid="last-impact-kind">{lastImpact?.kind ?? 'none'}</span>

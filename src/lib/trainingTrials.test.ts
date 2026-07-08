@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
-import type { CharacterDefinition, FighterRuntime, ImpactSparkEvent, MatchSnapshot } from '../types';
+import type { CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrameWithMetadata, MatchSnapshot } from '../types';
 import { emptyInputFrame } from '../types';
 import { resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { resolveMoveRoutes } from './comboRoutes';
@@ -41,8 +41,8 @@ function hasAttackAnimation(character: CharacterDefinition) {
 function mockMatch(playerState: FighterRuntime['state'] = 'idle', dummyState: FighterRuntime['state'] = 'idle') {
   return {
     fighters: [
-      { state: playerState } as FighterRuntime,
-      { state: dummyState } as FighterRuntime
+      { state: playerState, position: { x: -0.45, y: 0, z: 0 } } as FighterRuntime,
+      { state: dummyState, position: { x: 0.45, y: 0, z: 0 } } as FighterRuntime
     ]
   } as MatchSnapshot;
 }
@@ -201,6 +201,109 @@ describe('training trial catalog', () => {
     rightProgress = advanceTrainingTrialWithInput(rightProgress, trial, rightInput, mockMatch('walk'));
     expect(rightProgress.completed).toBe(true);
     expect(rightProgress.statuses[0]).toBe('perfect');
+  });
+
+  it('accepts physical forward-forward metadata for dash trials', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('movement:dash'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    let progress = makeTrainingTrialProgress(trial)!;
+    for (let frame = 0; frame < 13; frame += 1) {
+      progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch());
+    }
+
+    const input = emptyInputFrame() as InputFrameWithMetadata;
+    input.right = true;
+    input.__horizontalDashDirection = 'right';
+    progress = advanceTrainingTrialWithInput(progress, trial, input, mockMatch('walk'));
+
+    expect(progress.completed).toBe(true);
+    expect(progress.succeeded).toBe(true);
+  });
+
+  it('accepts physical back-back metadata for back hop trials', () => {
+    const roster = readRosterCharacters();
+    const character = roster.find((candidate) => candidate.id === 'naruto') ?? roster.find((candidate) => hasAttackAnimation(candidate));
+    expect(character).toBeTruthy();
+    if (!character) return;
+
+    const trial = generateBasicTrainingTrials(character, roster).find((item) => item.id.endsWith('movement:back-hop'));
+    expect(trial).toBeTruthy();
+    if (!trial) return;
+
+    let progress = makeTrainingTrialProgress(trial)!;
+    for (let frame = 0; frame < 13; frame += 1) {
+      progress = advanceTrainingTrialWithInput(progress, trial, emptyInputFrame(), mockMatch());
+    }
+
+    const input = emptyInputFrame() as InputFrameWithMetadata;
+    input.left = true;
+    input.__horizontalDashDirection = 'left';
+    progress = advanceTrainingTrialWithInput(progress, trial, input, mockMatch('jump'));
+
+    expect(progress.completed).toBe(true);
+    expect(progress.succeeded).toBe(true);
+  });
+
+  it('accepts physical dash metadata for every dash-gated state trial step', () => {
+    const roster = readRosterCharacters();
+    const routable = roster.filter((character) => !character.unplayable && hasAttackAnimation(character));
+    const checked: string[] = [];
+
+    for (const character of routable) {
+      const trials = [
+        ...generateBasicTrainingTrials(character, roster),
+        ...generateComboTrainingTrials(character)
+      ];
+
+      for (const trial of trials) {
+        trial.steps.forEach((step, stepIndex) => {
+          if (step.kind === 'impact') return;
+          const needsForwardDash = step.actions.includes('dashForward');
+          const needsBackDash = step.actions.includes('dashBack');
+          if (!needsForwardDash && !needsBackDash) return;
+
+          let progress = makeTrainingTrialProgress(trial)!;
+          progress = {
+            ...progress,
+            stepIndex,
+            stepFrame: (step.targetFrame ?? 12) - 1,
+            statuses: progress.statuses.map((status, index) => index < stepIndex ? 'confirmed' : index === stepIndex ? 'current' : status),
+            ratings: progress.ratings.map((rating, index) => index < stepIndex ? 'Confirmed' : rating)
+          };
+
+          const input = emptyInputFrame() as InputFrameWithMetadata;
+          for (const action of step.actions) {
+            if (action !== 'dashForward' && action !== 'dashBack') input[action] = true;
+          }
+          if (needsForwardDash) {
+            input.right = true;
+            input.__horizontalDashDirection = 'right';
+          } else {
+            input.left = true;
+            input.__horizontalDashDirection = 'left';
+          }
+
+          const next = advanceTrainingTrialWithInput(
+            progress,
+            trial,
+            input,
+            mockMatch(step.requireState ?? 'walk', step.requireDummyState ?? 'idle')
+          );
+
+          checked.push(`${trial.id}:${step.id}`);
+          expect(next.stepIndex > stepIndex || next.completed, `${trial.id}:${step.id}`).toBe(true);
+        });
+      }
+    }
+
+    expect(checked.length).toBeGreaterThan(0);
   });
 
   it('labels jump-in basics with the dedicated jump binding instead of up', () => {

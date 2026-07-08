@@ -394,6 +394,22 @@ async function keyUp(page: import('@playwright/test').Page, code: string) {
   await setKey(page, code, false);
 }
 
+async function doubleTapKey(page: import('@playwright/test').Page, code: string, gapMs = 90) {
+  await keyDown(page, code);
+  await page.waitForTimeout(70);
+  await keyUp(page, code);
+  await page.waitForTimeout(gapMs);
+  await keyDown(page, code);
+}
+
+async function doubleTapPhysicalKey(page: import('@playwright/test').Page, key: string, gapMs = 90) {
+  await page.keyboard.down(key);
+  await page.waitForTimeout(70);
+  await page.keyboard.up(key);
+  await page.waitForTimeout(gapMs);
+  await page.keyboard.down(key);
+}
+
 function keysForCounterHitTrialName(name: string) {
   const keyByButton: Record<string, string> = {
     '1': 'KeyU',
@@ -779,6 +795,32 @@ test('start basics loads the chamber then opens the trial picker', async ({ page
   await page.getByRole('button', { name: 'Try', exact: true }).click();
   await expect(page.locator('.training-trial-hud')).toContainText('Dash In');
   await expect(page.getByTestId('match-mode')).toHaveText('training');
+  await doubleTapPhysicalKey(page, 'd');
+  await expect.poll(async () => Number(await page.getByTestId('p1-dash-forward-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
+  await expect(page.getByTestId('training-great-message')).toContainText('GREAT', { timeout: 3000 });
+  await page.keyboard.up('d');
+});
+
+test('basic training back-hop trial accepts native back-back and starts the real back hop', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Keyboard training-trial route is covered by the desktop project');
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Training' }).click({ force: true });
+  await expect(page.locator('.training-select-screen')).toBeVisible();
+  await page.getByRole('button', { name: 'Next training mode' }).click();
+  await page.getByRole('button', { name: 'Start Basics' }).click();
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('Ready', { timeout: 12000 });
+  await activateAnyInputScreen(page, '[data-testid="asset-warmup-screen"]');
+
+  await expect(page.locator('.training-trial-picker')).toBeVisible({ timeout: 12000 });
+  await page.getByRole('button', { name: /Back Hop/ }).click();
+  await expect(page.getByTestId('training-trial-detail')).toContainText('Back Hop');
+  await page.getByRole('button', { name: 'Try', exact: true }).click();
+  await expect(page.locator('.training-trial-hud')).toContainText('Back Hop');
+
+  await doubleTapPhysicalKey(page, 'a');
+  await expect.poll(async () => Number(await page.getByTestId('p1-back-hop-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
+  await expect(page.getByTestId('training-great-message')).toContainText('GREAT', { timeout: 3000 });
+  await page.keyboard.up('a');
 });
 
 test('defaults character and stage select to random slots', async ({ page }) => {
@@ -1323,6 +1365,33 @@ test('moves player one forward and back with keyboard', async ({ page }) => {
   await keyUp(page, 'KeyA');
   const afterBack = xFromPosition(await page.getByTestId('p1-position').innerText());
   expect(afterBack).toBeLessThan(afterForward - 0.12);
+});
+
+test('keyboard forward-forward and back-back trigger sprint and back hop in training', async ({ page }) => {
+  await startTraining(page);
+  await setFightPositions(page, { p1: { x: -1.45, y: 0, z: 0 }, p2: { x: 1.45, y: 0, z: 0 } });
+  await expect(page.getByTestId('match-mode')).toHaveText('training');
+  await expect(page.getByTestId('p1-state')).toHaveText('idle', { timeout: 3000 });
+
+  const beforeDash = xFromPosition(await page.getByTestId('p1-position').innerText());
+  await doubleTapPhysicalKey(page, 'd');
+  await expect.poll(async () => Number(await page.getByTestId('p1-dash-forward-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 2000 }).toBeGreaterThan(beforeDash + 0.45);
+  await page.keyboard.up('d');
+  await expect.poll(async () => Number(await page.getByTestId('p1-dash-forward-frames').innerText()), { timeout: 3000 }).toBe(0);
+
+  const beforeBackHop = xFromPosition(await page.getByTestId('p1-position').innerText());
+  const p2X = xFromPosition(await page.getByTestId('p2-position').innerText());
+  const spacingBeforeBackHop = Math.abs(p2X - beforeBackHop);
+  await doubleTapPhysicalKey(page, 'a');
+  await expect.poll(async () => Number(await page.getByTestId('p1-back-hop-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
+  await expect(page.getByTestId('p1-state')).toHaveText('jump');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 1500 }).toBeGreaterThan(0.05);
+  await expect.poll(async () => {
+    const p1X = xFromPosition(await page.getByTestId('p1-position').innerText());
+    return Math.abs(p2X - p1X);
+  }, { timeout: 2000 }).toBeGreaterThan(spacingBeforeBackHop + 0.05);
+  await page.keyboard.up('a');
 });
 
 test('lets player one close distance, hit, and continue without pausing', async ({ page }) => {

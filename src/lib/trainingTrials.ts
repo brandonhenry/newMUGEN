@@ -1,4 +1,4 @@
-import type { ActionName, CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrame, MatchSnapshot, MoveInput } from '../types';
+import type { ActionName, CharacterDefinition, FighterRuntime, ImpactSparkEvent, InputFrame, InputFrameWithMetadata, MatchSnapshot, MoveInput } from '../types';
 import { emptyInputFrame } from '../types';
 import { BEGINNER_AUTO_COMBO_INPUTS, resolveBeginnerAutoComboPlan } from './beginnerAutoCombos';
 import { commandRouteFamily, commandToActions as commandRouteToActions } from './commandRoutes';
@@ -1235,9 +1235,26 @@ function matchesStateStep(step: TrainingTrialStep, match: MatchSnapshot) {
 function matchesInputStateStep(step: TrainingTrialStep, input: InputFrame, match: MatchSnapshot) {
   const needsActions = step.actions.length > 0;
   const needsState = Boolean(step.requireState || step.requireDummyState || step.requireGetupAction);
-  const actionsMatch = !needsActions || step.actions.every((action) => input[action]);
+  const actionsMatch = !needsActions || step.actions.every((action) => trainingActionMatches(action, input, match));
   const stateMatches = !needsState || matchesStateStep(step, match);
   return actionsMatch && stateMatches && (needsActions || needsState);
+}
+
+function trainingActionMatches(action: ActionName, input: InputFrame, match: MatchSnapshot) {
+  if (input[action]) return true;
+  if (action !== 'dashForward' && action !== 'dashBack') return false;
+  const physicalDashDirection = (input as InputFrameWithMetadata).__horizontalDashDirection;
+  if (!physicalDashDirection) return false;
+  const activePhysicalDirection = input.left === input.right ? null : input.left ? 'left' : 'right';
+  if (activePhysicalDirection !== physicalDashDirection) return false;
+  const player = match.fighters[0];
+  const dummy = match.fighters[1];
+  const sideDelta = Math.abs(dummy.position.x - player.position.x) >= Math.abs(dummy.position.z - player.position.z)
+    ? dummy.position.x - player.position.x
+    : dummy.position.z - player.position.z;
+  const forwardDirection = sideDelta >= 0 ? 'right' : 'left';
+  const isForwardDash = physicalDashDirection === forwardDirection;
+  return action === 'dashForward' ? isForwardDash : !isForwardDash;
 }
 
 function pickDummy(character: CharacterDefinition, roster: CharacterDefinition[]) {
