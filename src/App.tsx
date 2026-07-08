@@ -21031,46 +21031,6 @@ function FightScreen({
   }, [activeTrainingTrial, captureFightAnalytics, mode, previewPlayback, trainingTrialProgress?.completed, trainingTrialProgress?.succeeded]);
 
   useEffect(() => {
-    if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
-    if (trainingTrialOutcome?.trialId === activeTrainingTrial.id) return;
-    if (dismissedTrainingTrialOutcomeRef.current === activeTrainingTrial.id) return;
-
-    // On failure (missed/timeout), auto-reset after a brief pause so the player can retry
-    if (!trainingTrialProgress.succeeded) {
-      const failTimer = window.setTimeout(() => {
-        if (activeTrainingTrialRef.current?.id === activeTrainingTrial.id) {
-          restartTrainingTrial(activeTrainingTrial, false);
-        }
-      }, 1500);
-      return () => window.clearTimeout(failTimer);
-    }
-
-    // On success, add a delay so the player can see the result before the overlay appears
-    const trialId = activeTrainingTrial.id;
-    const successTimer = window.setTimeout(() => {
-      if (activeTrainingTrialRef.current?.id !== trialId) return;
-      if (dismissedTrainingTrialOutcomeRef.current === trialId) return;
-      const finalRating = [...trainingTrialProgress.ratings].reverse().find((rating) => rating !== 'Ready') ?? 'Confirmed';
-      const fighter = matchRef.current.fighters[0];
-      setTrainingTrialOutcome({
-        trialId,
-        title: activeTrainingTrial.title,
-        category: trainingTrialCategoryLabels[activeTrainingTrial.category],
-        difficulty: activeTrainingTrial.difficulty,
-        successText: activeTrainingTrial.successText,
-        feedback: trainingTrialProgress.lastFeedback || activeTrainingTrial.successText,
-        rating: finalRating,
-        attempts: Math.max(1, trainingTrialProgress.attempts),
-        comboHits: Math.max(0, fighter.comboHits),
-        comboDamage: Math.max(0, Math.round(fighter.comboDamage))
-      });
-      setPauseMenuView('menu');
-      setPaused(true);
-    }, 3500);
-    return () => window.clearTimeout(successTimer);
-  }, [activeTrainingTrial, mode, previewPlayback, restartTrainingTrial, trainingTrialOutcome?.trialId, trainingTrialProgress]);
-
-  useEffect(() => {
     latestAudioSettingsRef.current = settings.audio;
   }, [settings.audio]);
 
@@ -22961,6 +22921,46 @@ function FightScreen({
     previewPlaybackRef.current = playback;
     setPreviewPlayback(playback);
   }, [activeTrainingTrial, makeTrialMatch, prepareTrainingTrialMatch, resetTrackedMatchAnalytics]);
+
+  useEffect(() => {
+    if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || previewPlayback) return;
+    if (trainingTrialOutcome?.trialId === activeTrainingTrial.id) return;
+    if (dismissedTrainingTrialOutcomeRef.current === activeTrainingTrial.id) return;
+
+    // On failure (missed/timeout), auto-reset after a brief pause so the player can retry
+    if (!trainingTrialProgress.succeeded) {
+      const failTimer = window.setTimeout(() => {
+        if (activeTrainingTrialRef.current?.id === activeTrainingTrial.id) {
+          restartTrainingTrial(activeTrainingTrial, false);
+        }
+      }, 1500);
+      return () => window.clearTimeout(failTimer);
+    }
+
+    // On success, add a delay so the player can see the result before the overlay appears
+    const trialId = activeTrainingTrial.id;
+    const successTimer = window.setTimeout(() => {
+      if (activeTrainingTrialRef.current?.id !== trialId) return;
+      if (dismissedTrainingTrialOutcomeRef.current === trialId) return;
+      const finalRating = [...trainingTrialProgress.ratings].reverse().find((rating) => rating !== 'Ready') ?? 'Confirmed';
+      const fighter = matchRef.current.fighters[0];
+      setTrainingTrialOutcome({
+        trialId,
+        title: activeTrainingTrial.title,
+        category: trainingTrialCategoryLabels[activeTrainingTrial.category],
+        difficulty: activeTrainingTrial.difficulty,
+        successText: activeTrainingTrial.successText,
+        feedback: trainingTrialProgress.lastFeedback || activeTrainingTrial.successText,
+        rating: finalRating,
+        attempts: Math.max(1, trainingTrialProgress.attempts),
+        comboHits: Math.max(0, fighter.comboHits),
+        comboDamage: Math.max(0, Math.round(fighter.comboDamage))
+      });
+      setPauseMenuView('menu');
+      setPaused(true);
+    }, 3500);
+    return () => window.clearTimeout(successTimer);
+  }, [activeTrainingTrial, mode, previewPlayback, restartTrainingTrial, trainingTrialOutcome?.trialId, trainingTrialProgress]);
 
   const selectTrainingTrial = useCallback((trial: TrainingTrialDefinition) => {
     setTrainingTrialOutcome(null);
