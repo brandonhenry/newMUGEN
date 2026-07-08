@@ -394,14 +394,6 @@ async function keyUp(page: import('@playwright/test').Page, code: string) {
   await setKey(page, code, false);
 }
 
-async function doubleTapKey(page: import('@playwright/test').Page, code: string, gapMs = 90) {
-  await keyDown(page, code);
-  await page.waitForTimeout(70);
-  await keyUp(page, code);
-  await page.waitForTimeout(gapMs);
-  await keyDown(page, code);
-}
-
 async function doubleTapPhysicalKey(page: import('@playwright/test').Page, key: string, gapMs = 90) {
   await page.keyboard.down(key);
   await page.waitForTimeout(70);
@@ -795,6 +787,7 @@ test('start basics loads the chamber then opens the trial picker', async ({ page
   await page.getByRole('button', { name: 'Try', exact: true }).click();
   await expect(page.locator('.training-trial-hud')).toContainText('Dash In');
   await expect(page.getByTestId('match-mode')).toHaveText('training');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 1500 }).toBe(0);
   await doubleTapPhysicalKey(page, 'd');
   await expect.poll(async () => Number(await page.getByTestId('p1-dash-forward-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
   await expect(page.getByTestId('training-great-message')).toContainText('GREAT', { timeout: 3000 });
@@ -816,6 +809,7 @@ test('basic training back-hop trial accepts native back-back and starts the real
   await expect(page.getByTestId('training-trial-detail')).toContainText('Back Hop');
   await page.getByRole('button', { name: 'Try', exact: true }).click();
   await expect(page.locator('.training-trial-hud')).toContainText('Back Hop');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 1500 }).toBe(0);
 
   await doubleTapPhysicalKey(page, 'a');
   await expect.poll(async () => Number(await page.getByTestId('p1-back-hop-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
@@ -1365,6 +1359,46 @@ test('moves player one forward and back with keyboard', async ({ page }) => {
   await keyUp(page, 'KeyA');
   const afterBack = xFromPosition(await page.getByTestId('p1-position').innerText());
   expect(afterBack).toBeLessThan(afterForward - 0.12);
+});
+
+test('native keyboard core actions reach the engine in real fights', async ({ page }) => {
+  await startFight(page, true);
+  await setFightPositions(page, { p1: { x: -1.35, y: 0, z: 0 }, p2: { x: 1.35, y: 0, z: 0 } });
+  await expect(page.getByTestId('match-mode')).toHaveText('local2p');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 3000 }).toBe(0);
+
+  const beforeDash = xFromPosition(await page.getByTestId('p1-position').innerText());
+  await doubleTapPhysicalKey(page, 'd');
+  await expect.poll(async () => Number(await page.getByTestId('p1-dash-forward-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
+  await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 2000 }).toBeGreaterThan(beforeDash + 0.45);
+  await page.keyboard.up('d');
+  await expect.poll(async () => Number(await page.getByTestId('p1-dash-forward-frames').innerText()), { timeout: 3000 }).toBe(0);
+
+  await doubleTapPhysicalKey(page, 'a');
+  await expect.poll(async () => Number(await page.getByTestId('p1-back-hop-frames').innerText()), { timeout: 1500 }).toBeGreaterThan(0);
+  await page.keyboard.up('a');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 5000 }).toBeLessThan(0.04);
+
+  await page.keyboard.down(' ');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 2000 }).toBeGreaterThan(0.12);
+  await page.keyboard.up(' ');
+  await expect.poll(async () => Number(await page.getByTestId('p1-height').innerText()), { timeout: 5000 }).toBeLessThan(0.04);
+
+  await page.keyboard.down('s');
+  await expect(page.getByTestId('p1-state')).toHaveText('crouch', { timeout: 1500 });
+  await page.keyboard.up('s');
+  await expect(page.getByTestId('p1-state')).not.toHaveText('crouch', { timeout: 3000 });
+
+  await setFightPositions(page, { p1: { x: -0.55, y: 0, z: 0 }, p2: { x: 0.55, y: 0, z: 0 } });
+  for (const key of ['u', 'i', 'j', 'k']) {
+    await expect(page.getByTestId('p1-move'), key).toHaveText('none', { timeout: 5000 });
+    await page.keyboard.down(key);
+    await expect(page.getByTestId('p1-state'), key).toHaveText('attack', { timeout: 1500 });
+    await expect(page.getByTestId('p1-move'), key).not.toHaveText('none');
+    await page.keyboard.up(key);
+    await expect(page.getByTestId('p1-state'), key).not.toHaveText('attack', { timeout: 5000 });
+    await expect(page.getByTestId('p1-move'), key).toHaveText('none', { timeout: 5000 });
+  }
 });
 
 test('keyboard forward-forward and back-back trigger sprint and back hop in training', async ({ page }) => {
