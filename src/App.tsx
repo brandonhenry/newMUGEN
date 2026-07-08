@@ -229,6 +229,20 @@ import {
 } from './lib/tournament';
 
 type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+
+function isFullBleedScreen(screen: Screen) {
+  return (
+    screen === 'assetWarmup' ||
+    screen === 'versus' ||
+    screen === 'arcadeTransition' ||
+    screen === 'miniGame' ||
+    screen === 'miniGameResult' ||
+    screen === 'arcadeGameOver' ||
+    screen === 'unlockReveal' ||
+    screen === 'tournamentBracket'
+  );
+}
+
 type FightPauseMenuView = 'menu' | 'movelist' | 'trainingTrials';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
 type AssetWarmupMatchOptions = NonNullable<Parameters<typeof createMatch>[5]>;
@@ -3837,9 +3851,11 @@ export default function App() {
     });
   }, []);
 
+  const fullBleedScreen = isFullBleedScreen(screen);
+
   useEffect(() => {
-    if (settings.display.reducedMotion || (screen === 'menu' && resolveEffectiveMenuMotionMode(settings.performance) === 'snappy')) return;
     anime.remove('.screen-panel > *');
+    if (settings.display.reducedMotion || fullBleedScreen || (screen === 'menu' && resolveEffectiveMenuMotionMode(settings.performance) === 'snappy')) return;
     anime({
       targets: '.screen-panel > *',
       translateY: [12, 0],
@@ -3848,7 +3864,7 @@ export default function App() {
       duration: 460,
       easing: 'easeOutCubic'
     });
-  }, [screen, settings.display.reducedMotion, settings.performance]);
+  }, [fullBleedScreen, screen, settings.display.reducedMotion, settings.performance]);
 
   const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
@@ -4081,7 +4097,7 @@ export default function App() {
         selectedTrackIndex={activeBgmTrackIndex}
         onTrackIndexChange={activeBgmSource?.lockToTrack ? undefined : updateBgmTrackIndex}
       />
-      <section className="screen-panel">
+      <section className={`screen-panel ${fullBleedScreen ? 'is-full-bleed' : ''}`}>
         {screen === 'title' && <TitleScreen onStart={startFromTitle} />}
         {screen === 'menu' && (
           <MenuScreen

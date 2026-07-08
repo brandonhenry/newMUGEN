@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 
 const STARTER_GUIDE_DISMISSED_KEY = 'kore.starterGuide.dismissed.v1';
 
@@ -229,6 +229,49 @@ async function expectDocumentLocked(page: Page) {
     };
   });
   expect(metrics.scrollHeight).toBeLessThanOrEqual(metrics.clientHeight + 2);
+}
+
+async function expectLoadingInterstitialFitsSteamDeck(interstitial: Locator) {
+  const result = await interstitial.evaluate((screen) => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const copy = screen.querySelector<HTMLElement>('.arcade-transition-copy');
+    const heading = screen.querySelector<HTMLElement>('.arcade-transition-copy h1');
+    const stats = screen.querySelector<HTMLElement>('.arcade-transition-stats');
+    const footer = screen.querySelector<HTMLElement>('.arcade-transition-footer');
+    if (!copy || !heading || !stats || !footer) return { ok: false, reason: 'missing-elements' };
+    const copyRect = copy.getBoundingClientRect();
+    const headingRect = heading.getBoundingClientRect();
+    const statsRect = stats.getBoundingClientRect();
+    const footerRect = footer.getBoundingClientRect();
+    const screenRect = screen.getBoundingClientRect();
+    const footerGap = footerRect.top - copyRect.bottom;
+    return {
+      ok:
+        copyRect.left >= 12 &&
+        copyRect.top >= 12 &&
+        copyRect.top <= 48 &&
+        copyRect.right <= viewportWidth - 12 &&
+        copyRect.bottom <= viewportHeight - 52 &&
+        headingRect.left >= copyRect.left - 1 &&
+        headingRect.right <= copyRect.right + 1 &&
+        statsRect.left >= copyRect.left - 1 &&
+        statsRect.right <= copyRect.right + 1 &&
+        footerRect.right <= viewportWidth - 12 &&
+        footerRect.bottom <= viewportHeight - 10 &&
+        footerGap >= 8,
+      viewportWidth,
+      viewportHeight,
+      screen: { left: screenRect.left, right: screenRect.right, top: screenRect.top, bottom: screenRect.bottom, height: screenRect.height },
+      copy: { left: copyRect.left, right: copyRect.right, top: copyRect.top, bottom: copyRect.bottom },
+      heading: { left: headingRect.left, right: headingRect.right },
+      stats: { left: statsRect.left, right: statsRect.right },
+      footer: { right: footerRect.right, bottom: footerRect.bottom, top: footerRect.top },
+      footerStyle: { bottom: getComputedStyle(footer).bottom, position: getComputedStyle(footer).position },
+      footerGap
+    };
+  });
+  expect(result, JSON.stringify(result)).toMatchObject({ ok: true });
 }
 
 async function readSelectScrollMetrics(page: Page) {
@@ -782,16 +825,43 @@ test('same-stage rematch starts a fresh fight session', async ({ page }) => {
 });
 
 test('shows asset warmup before entering training', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Training' }).click({ force: true });
   await expect(page.locator('.training-select-screen')).toBeVisible();
   await page.getByRole('button', { name: 'Start Training' }).click();
   await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
+  await expectLoadingInterstitialFitsSteamDeck(page.getByTestId('asset-warmup-screen'));
   await expect(page.getByTestId('asset-warmup-screen')).toContainText('Training Chamber Loading');
   await expect(page.getByTestId('asset-warmup-screen')).toContainText('The Chamber');
   await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
   await expect(page.getByTestId('match-timer')).toHaveText('∞');
   await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
+});
+
+test('arcade loading interstitials fit Steam Deck viewport', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Steam Deck-sized loading layout is covered by the desktop project');
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  const warmup = page.getByTestId('asset-warmup-screen');
+  await expect(warmup).toBeVisible({ timeout: 3000 });
+  await expectLoadingInterstitialFitsSteamDeck(warmup);
+
+  const versusSplash = page.locator('.fight-versus-screen');
+  await expect(versusSplash).toBeVisible({ timeout: 8000 });
+  await activateAnyInputScreen(page, '.fight-versus-screen');
+  await expect(warmup).toBeVisible({ timeout: 3000 });
+  await expectLoadingInterstitialFitsSteamDeck(warmup);
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 12000 });
+
+  await forceMatchOver(page);
+  const routeLoading = page.getByLabel('Arcade route loading');
+  await expect(routeLoading).toBeVisible({ timeout: 5000 });
+  await expectLoadingInterstitialFitsSteamDeck(routeLoading);
 });
 
 test('start basics loads the chamber then opens the trial picker', async ({ page }, testInfo) => {

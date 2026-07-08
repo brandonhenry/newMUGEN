@@ -78,6 +78,16 @@ button {
   padding: clamp(10px, 1.65vw, 28px);
 }
 
+.screen-panel.is-full-bleed {
+  padding: 0;
+}
+
+.screen-panel:has(> .arcade-transition-screen),
+.screen-panel:has(> .fight-versus-screen),
+.screen-panel:has(> .mini-game-result-screen) {
+  padding: 0;
+}
+
 .boot-shell {
   display: grid;
   place-items: center;
@@ -4442,11 +4452,13 @@ button {
 }
 
 .fight-versus-screen {
-  position: relative;
+  position: fixed;
+  inset: 0;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: clamp(18px, 3vh, 38px);
-  min-height: calc(100vh - clamp(32px, 4vw, 64px));
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: clamp(18px, 3vw, 48px);
   overflow: hidden;
   color: #fffdf1;
@@ -9446,8 +9458,10 @@ button {
 }
 
 .arcade-transition-screen {
-  position: relative;
-  min-height: 100%;
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background: #101114;
   outline: 0;
@@ -9707,6 +9721,10 @@ button {
   text-transform: uppercase;
 }
 
+.arcade-transition-footer span {
+  min-width: 0;
+}
+
 .arcade-transition-footer svg {
   color: var(--arcade-accent);
   transform: translateX(0);
@@ -9775,6 +9793,153 @@ button {
   }
 }
 
+@media (max-height: 820px) and (orientation: landscape) {
+  .arcade-transition-route-line {
+    bottom: clamp(82px, 13vh, 112px);
+  }
+
+  .arcade-transition-copy {
+    left: clamp(18px, 3vw, 40px);
+    top: clamp(18px, 4vh, 32px);
+    gap: clamp(8px, 1.35vh, 12px);
+    width: min(66vw, 680px);
+    max-height: calc(100dvh - 86px);
+  }
+
+  .stage-warmup-screen .arcade-transition-copy,
+  .online-asset-warmup-screen .arcade-transition-copy {
+    width: min(72vw, 700px);
+  }
+
+  .arcade-transition-kicker {
+    gap: 8px;
+  }
+
+  .arcade-transition-kicker span,
+  .arcade-transition-kicker b {
+    min-height: 30px;
+    padding-inline: 12px;
+    font-size: clamp(10px, 1.1vw, 13px);
+    line-height: 1.1;
+  }
+
+  .arcade-transition-copy h1 {
+    font-size: clamp(40px, 7vw, 76px);
+    line-height: 0.92;
+  }
+
+  .arcade-transition-subtitle {
+    margin-top: -4px;
+    font-size: clamp(13px, 1.6vw, 20px);
+    line-height: 1.1;
+  }
+
+  .arcade-transition-copy p {
+    max-width: 560px;
+    font-size: clamp(13px, 1.45vw, 18px);
+    line-height: 1.3;
+  }
+
+  .arcade-transition-stats {
+    gap: 6px;
+    width: min(66vw, 540px);
+  }
+
+  .stage-warmup-stats {
+    width: min(72vw, 560px);
+  }
+
+  .arcade-transition-stats span {
+    min-height: 50px;
+    padding: 6px;
+  }
+
+  .arcade-transition-stats strong {
+    overflow: hidden;
+    max-width: 100%;
+    font-size: clamp(17px, 2vw, 24px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .arcade-transition-next {
+    gap: 8px;
+    width: min(66vw, 540px);
+    min-height: 50px;
+    padding: 8px 12px;
+  }
+
+  .arcade-transition-next strong {
+    font-size: clamp(15px, 1.6vw, 20px);
+  }
+
+  .arcade-transition-runner {
+    right: clamp(12px, 3vw, 36px);
+    bottom: clamp(52px, 9vh, 78px);
+    width: min(26vw, 300px);
+    height: min(36vh, 300px);
+  }
+
+  .arcade-transition-footer {
+    right: 18px;
+    bottom: 14px;
+    max-width: calc(100vw - 36px);
+    min-height: 36px;
+    padding-inline: 12px;
+    font-size: 11px;
+  }
+
+  .arcade-transition-footer span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mini-game-result-copy {
+    width: min(92vw, 840px);
+    max-height: calc(100dvh - 36px);
+  }
+
+  .mini-game-result-copy > span {
+    min-height: 30px;
+    padding-inline: 14px;
+    font-size: clamp(11px, 1.15vw, 14px);
+  }
+
+  .mini-game-result-copy h1 {
+    margin-top: 10px;
+    font-size: clamp(52px, 11vw, 108px);
+    line-height: 0.84;
+  }
+
+  .mini-game-result-copy p {
+    margin-top: 10px;
+    font-size: clamp(14px, 1.8vw, 20px);
+  }
+
+  .mini-game-result-stats {
+    gap: 2px 10px;
+    margin-top: 16px;
+  }
+
+  .mini-game-result-stats strong {
+    font-size: clamp(18px, 3vw, 30px);
+  }
+
+  .mini-game-result-copy small {
+    margin-top: 14px;
+  }
+
+  .mini-game-result-arcade-award,
+  .arcade-game-over-details {
+    margin-top: 14px;
+  }
+
+  .arcade-game-over-actions {
+    margin-top: 18px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .arcade-transition-runner {
     animation: none;
@@ -9782,8 +9947,10 @@ button {
 }
 
 .mini-game-result-screen {
-  position: relative;
-  min-height: 100%;
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(12, 16, 24, 0.36), rgba(6, 8, 14, 0.92)),
