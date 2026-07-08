@@ -10306,7 +10306,7 @@ button {
 .combo-trial-list h3,
 .combo-trial-detail h3 {
   margin: 0;
-  font-size: clamp(18px, 2vw, 26px);
+  font-size: clamp(30px, 3vw, 42px);
   line-height: 1.02;
   text-wrap: balance;
 }
@@ -10320,14 +10320,14 @@ button {
 .combo-trial-list p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 18px;
   line-height: 1.35;
 }
 
 .combo-trial-list section > strong,
 .combo-trial-detail header > span {
   color: #ffe373;
-  font-size: 11px;
+  font-size: 18px;
   font-weight: 950;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -10335,13 +10335,13 @@ button {
 
 .combo-trial-list button {
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
-  gap: 10px;
-  min-height: 48px;
+  gap: 14px;
+  min-height: 74px;
   border: 0;
   border-radius: 6px;
-  padding: 8px 10px;
+  padding: 12px 16px;
   color: rgba(255, 255, 255, 0.84);
   background: linear-gradient(90deg, rgba(8, 18, 31, 0.86), rgba(12, 23, 38, 0.7));
   font-weight: 850;
@@ -10385,7 +10385,7 @@ button {
 
 .training-trial-list-header span {
   color: #9cd8ff;
-  font-size: 12px;
+  font-size: 20px;
   font-weight: 950;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -10401,13 +10401,19 @@ button {
 .training-mode-switch button {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  min-height: 40px;
+  min-height: 64px;
   background: rgba(255, 255, 255, 0.07);
+}
+
+.training-mode-switch button > span {
+  font-size: 26px;
+  font-weight: 1000;
+  line-height: 1.05;
 }
 
 .training-mode-switch button small {
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 18px;
   font-weight: 850;
   text-transform: uppercase;
 }
@@ -10415,12 +10421,12 @@ button {
 .trial-complete-mark {
   display: inline-grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.08);
-  font-size: 11px;
+  font-size: 19px;
   font-weight: 1000;
 }
 
@@ -10437,7 +10443,7 @@ button {
 
 .trial-list-copy strong {
   overflow: hidden;
-  font-size: 15px;
+  font-size: clamp(24px, 2.1vw, 32px);
   line-height: 1.05;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -10445,7 +10451,7 @@ button {
 
 .trial-list-copy small {
   color: rgba(255, 255, 255, 0.58);
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 950;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -10500,7 +10506,7 @@ button {
 
 .training-trial-info-panel > span {
   color: #ffe373;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 1000;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -10509,7 +10515,7 @@ button {
 .training-trial-info-panel p {
   margin: 0;
   color: rgba(255, 255, 255, 0.76);
-  font-size: 14px;
+  font-size: 21px;
   font-weight: 760;
   line-height: 1.42;
   text-wrap: pretty;
@@ -10517,11 +10523,11 @@ button {
 
 .zoro-trainer-callout {
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr);
+  grid-template-columns: 84px minmax(0, 1fr);
   align-items: center;
-  gap: 10px;
+  gap: 18px;
   border-radius: 8px;
-  padding: 9px;
+  padding: 14px 16px;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.34), rgba(18, 32, 50, 0.48));
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08) inset,
@@ -10532,8 +10538,8 @@ button {
 .trainer-portrait {
   display: grid;
   place-items: center;
-  width: 54px;
-  height: 54px;
+  width: 84px;
+  height: 84px;
   border-radius: 6px;
   object-fit: cover;
   color: #07110b;
@@ -10548,7 +10554,7 @@ button {
 }
 
 .trainer-portrait-fallback {
-  font-size: 24px;
+  font-size: 34px;
   font-weight: 1000;
   line-height: 1;
 }
@@ -10556,14 +10562,14 @@ button {
 .zoro-trainer-callout p {
   margin: 0;
   color: rgba(255, 255, 255, 0.88);
-  font-size: 13px;
+  font-size: 24px;
   line-height: 1.35;
 }
 
 .zoro-trainer-callout strong {
   display: block;
   color: #ffe373;
-  font-size: 11px;
+  font-size: 18px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -10583,12 +10589,33 @@ button {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
-  min-height: 42px;
+  gap: 16px;
+  min-height: 72px;
   border-radius: 0;
-  padding: 8px 10px;
+  padding: 12px 16px;
   background: rgba(20, 28, 44, 0.54);
   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.055) inset;
+}
+
+.combo-trial-step > div > strong {
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.combo-trial-step small {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.training-trial-command-table .notation-group {
+  gap: 7px;
+}
+
+.training-trial-command-table .notation-token {
+  min-width: 46px;
+  height: 46px;
+  border-radius: 7px;
+  font-size: 24px;
 }
 
 .combo-trial-step.correct {
@@ -10614,12 +10641,12 @@ button {
 }
 
 .trial-feedback-pill {
-  min-width: 76px;
+  min-width: 112px;
   border-radius: 6px;
-  padding: 5px 7px;
+  padding: 8px 10px;
   color: rgba(255, 255, 255, 0.86);
   background: rgba(255, 255, 255, 0.08);
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
   text-align: center;
@@ -10638,13 +10665,13 @@ button {
   min-height: 48px;
   padding: 7px 9px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.045));
-  font-size: 15px;
+  font-size: 22px;
   font-weight: 1000;
 }
 
 .combo-trial-stats small {
   color: rgba(255, 255, 255, 0.56);
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -11059,6 +11086,49 @@ button {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .training-mode-switch button > span {
+    font-size: 22px;
+  }
+
+  .training-mode-switch button small {
+    font-size: 15px;
+  }
+
+  .trial-list-copy strong {
+    font-size: 23px;
+  }
+
+  .trial-list-copy small {
+    font-size: 15px;
+  }
+
+  .zoro-trainer-callout {
+    grid-template-columns: 66px minmax(0, 1fr);
+  }
+
+  .zoro-trainer-callout .trainer-portrait {
+    width: 66px;
+    height: 66px;
+  }
+
+  .zoro-trainer-callout p {
+    font-size: 19px;
+  }
+
+  .combo-trial-step > div > strong {
+    font-size: 22px;
+  }
+
+  .combo-trial-step small {
+    font-size: 17px;
+  }
+
+  .training-trial-command-table .notation-token {
+    min-width: 38px;
+    height: 38px;
+    font-size: 20px;
+  }
+
   .combo-trial-actions {
     grid-template-columns: 1fr;
   }
@@ -11120,7 +11190,68 @@ button {
   }
 
   .combo-trial-list button {
-    min-height: 42px;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    min-height: 60px;
+    padding: 9px 12px;
+  }
+
+  .trial-complete-mark {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .trial-list-copy strong {
+    font-size: 21px;
+  }
+
+  .trial-list-copy small {
+    font-size: 14px;
+  }
+
+  .zoro-trainer-callout {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 14px;
+    padding: 10px 12px;
+  }
+
+  .zoro-trainer-callout .trainer-portrait {
+    width: 64px;
+    height: 64px;
+  }
+
+  .zoro-trainer-callout p {
+    font-size: 18px;
+  }
+
+  .zoro-trainer-callout strong {
+    font-size: 14px;
+  }
+
+  .combo-trial-step {
+    gap: 12px;
+    min-height: 58px;
+    padding: 9px 12px;
+  }
+
+  .combo-trial-step > div > strong {
+    font-size: 21px;
+  }
+
+  .combo-trial-step small {
+    font-size: 16px;
+  }
+
+  .training-trial-command-table .notation-token {
+    min-width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .trial-feedback-pill {
+    min-width: 92px;
+    font-size: 15px;
   }
 
   .training-success-overlay {
