@@ -48,6 +48,7 @@ import {
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AdminDashboard } from './AdminDashboard';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmActiveFighterVoxels, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
@@ -208,6 +209,7 @@ import {
 import {
   advanceTournamentBracket,
   claimTournamentPrize,
+  createCustomLocalTournamentBracket,
   createInfiniteTournamentBracket,
   createLocalTournamentBracket,
   enterTournament,
@@ -215,7 +217,9 @@ import {
   fetchTournamentList,
   fetchTournamentStatus,
   getAssignedTournamentMatch,
+  getLocalTournamentPlayerEntryIds,
   getNextReadyTournamentMatch,
+  getNextPlayableLocalTournamentMatch,
   getTournamentEntry,
   getTournamentOpponentEntry,
   joinTournamentMatchRoom,
@@ -338,7 +342,12 @@ function onlineMatchGateMode(match: MatchSnapshot): OnlineAssetGate['mode'] {
 }
 
 type RandomCharacterSlots = Record<1 | 2, boolean>;
-type TournamentSelectMode = 'free' | 'online' | 'paid' | 'infinite';
+type TournamentSelectMode = 'free' | 'custom' | 'online' | 'paid' | 'infinite';
+type LocalTournamentStartConfig = {
+  p1CharacterId: string;
+  p2CharacterId?: string;
+  playerCount: 1 | 2;
+};
 type CharacterMetadataPatch = Partial<Pick<CharacterDefinition, 'locked' | 'unplayable' | 'variant' | 'variantOf' | 'hasTransform' | 'transformCharacterId' | 'faceCardPath' | 'stats'>>;
 type ArcadeMiniGameLaunch = {
   kind: MiniGameKind;
@@ -947,7 +956,13 @@ function getLocalSelectionActorTypes(mode: MatchMode): Partial<Record<1 | 2, Fig
   return { 1: 'human', 2: 'cpu' };
 }
 
-function getFightActorTypes(mode: MatchMode, onlineRole: OnlineRole | null): Partial<Record<1 | 2, FightAnalyticsActorType>> {
+function getFightActorTypes(mode: MatchMode, onlineRole: OnlineRole | null, cpuSlots?: Array<1 | 2>): Partial<Record<1 | 2, FightAnalyticsActorType>> {
+  if (cpuSlots?.length) {
+    return {
+      1: cpuSlots.includes(1) ? 'cpu' : 'human',
+      2: cpuSlots.includes(2) ? 'cpu' : 'human'
+    };
+  }
   if (mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'trainingOnline' || mode === 'tournamentOnline') {
     if (onlineRole === 'guest') return { 1: 'remote_human', 2: 'human' };
     return { 1: 'human', 2: 'remote_human' };
@@ -2809,6 +2824,10 @@ function LocalBgmPlayer({
 }
 
 export default function App() {
+  if (typeof window !== 'undefined' && window.location.pathname === '/admin') {
+    return <AdminDashboard />;
+  }
+
   const [screen, setScreen] = useState<Screen>('boot');
   const [versusReturnScreen, setVersusReturnScreen] = useState<'stage' | 'privateRooms'>('stage');
   const [assetWarmupIntent, setAssetWarmupIntent] = useState<AssetWarmupIntent | null>(null);
@@ -2832,7 +2851,10 @@ export default function App() {
   const [mode, setMode] = useState<MatchMode>('ai');
   const [selectedTrainingMode, setSelectedTrainingMode] = useState<TrainingTrialMode>('free');
   const [selectedTournamentMode, setSelectedTournamentMode] = useState<TournamentSelectMode>('free');
+  const [selectedLocalTournamentPlayerCount, setSelectedLocalTournamentPlayerCount] = useState<1 | 2>(1);
   const [localTournamentBracket, setLocalTournamentBracket] = useState<TournamentBracket | null>(null);
+  const [localTournamentCpuSlots, setLocalTournamentCpuSlots] = useState<Array<1 | 2>>([]);
+  const [localTournamentSlotEntryIds, setLocalTournamentSlotEntryIds] = useState<Partial<Record<1 | 2, string>>>({});
   const [onlineTournamentStatus, setOnlineTournamentStatus] = useState<TournamentStatusResult | null>(null);
   const [activeTournamentMatchId, setActiveTournamentMatchId] = useState('');
   const [tournamentStatusText, setTournamentStatusText] = useState('');
@@ -3034,36 +3056,84 @@ export default function App() {
     return nextStage;
   }, [playableStageRoster, randomStageSelected, stageId]);
 
-  const startLocalTournament = useCallback((characterId: string) => {
-    const selected = roster.find((character) => character.id === characterId) ?? roster[0];
-    if (!selected) return;
+  const setupLocalTournamentMatch = useCallback((bracket: TournamentBracket, match: TournamentMatch) => {
+    const entryA = getTournamentEntry(bracket, match.entryAId);
+    const entryB = getTournamentEntry(bracket, match.entryBId);
+    if (!entryA || !entryB) return false;
+    const hasP1 = entryA.id === 'local-player-1' || entryB.id === 'local-player-1';
+    const hasP2 = entryA.id === 'local-player-2' || entryB.id === 'local-player-2';
+    const slot1Entry = hasP1
+      ? entryA.id === 'local-player-1' ? entryA : entryB
+      : hasP2
+        ? entryA.id === 'local-player-2' ? entryB : entryA
+        : entryA;
+    const slot2Entry = slot1Entry.id === entryA.id ? entryB : entryA;
+    const slot1Character = roster.find((character) => character.id === slot1Entry.characterId);
+    const slot2Character = roster.find((character) => character.id === slot2Entry.characterId);
+    const fightStage = resolveRandomStageSelection();
+    if (!slot1Character || !slot2Character || !fightStage) return false;
+    const cpuSlots: Array<1 | 2> = [];
+    if (slot1Entry.isCpu) cpuSlots.push(1);
+    if (slot2Entry.isCpu) cpuSlots.push(2);
+    setStageId(fightStage.id);
+    setP1Id(slot1Character.id);
+    setP2Id(slot2Character.id);
+    setLocalTournamentCpuSlots(cpuSlots);
+    setLocalTournamentSlotEntryIds({ 1: slot1Entry.id, 2: slot2Entry.id });
+    setActiveTournamentMatchId(match.id);
+    setTournamentStatusText(`${getTournamentRoundLabel(match.round, getTournamentTotalRounds(bracket))} match ready`);
+    setMode('tournamentLocal');
+    setScreen('tournamentBracket');
+    return true;
+  }, [resolveRandomStageSelection, roster]);
+
+  const startLocalTournament = useCallback((config: LocalTournamentStartConfig) => {
+    const selectedP1 = roster.find((character) => character.id === config.p1CharacterId) ?? roster[0];
+    const selectedP2 = config.playerCount === 2
+      ? roster.find((character) => character.id === config.p2CharacterId) ?? roster.find((character) => character.id !== selectedP1?.id) ?? roster[1] ?? roster[0]
+      : undefined;
+    if (!selectedP1) return;
+    const localPlayers = [
+      { entryId: 'local-player-1', displayName: 'P1', character: { id: selectedP1.id, displayName: selectedP1.displayName } },
+      ...(selectedP2 ? [{ entryId: 'local-player-2', displayName: 'P2', character: { id: selectedP2.id, displayName: selectedP2.displayName } }] : [])
+    ];
     const bracket = simulateCpuTournamentMatches(createLocalTournamentBracket(
-      { id: selected.id, displayName: selected.displayName },
+      localPlayers,
       roster
         .filter((character) => isCharacterUnlocked(character, effectiveUnlockedCharacterIds))
         .map((character) => ({ id: character.id, displayName: character.displayName }))
     ));
-    const match = getAssignedTournamentMatch(bracket, 'local-player');
-    const opponent = getTournamentOpponentEntry(bracket, match, 'local-player');
-    if (!match || !opponent) return;
-    const opponentCharacter = roster.find((character) => character.id === opponent.characterId);
-    const fightStage = resolveRandomStageSelection();
-    if (!opponentCharacter || !fightStage) return;
-    setP1Id(selected.id);
-    setP2Id(opponentCharacter.id);
+    const match = getNextPlayableLocalTournamentMatch(bracket);
+    if (!match) return;
     setLocalTournamentBracket(bracket);
     setOnlineTournamentStatus(null);
-    setActiveTournamentMatchId(match.id);
-    setTournamentStatusText('Quarterfinal match ready');
-    setMode('tournamentLocal');
-    setScreen('tournamentBracket');
+    if (!setupLocalTournamentMatch(bracket, match)) return;
     captureAppAnalytics('tournament_entry_succeeded', {
       tournament_mode: 'free',
-      character_id: selected.id,
-      opponent_character_id: opponentCharacter.id,
-      stage_id: fightStage.id
+      character_id: selectedP1.id,
+      p2_character_id: selectedP2?.id ?? null,
+      local_player_count: localPlayers.length,
+      match_id: match.id
     });
-  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, resolveRandomStageSelection, roster]);
+  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, roster, setupLocalTournamentMatch]);
+
+  const startCustomLocalTournament = useCallback(() => {
+    const fighters = roster
+      .filter((character) => isCharacterPlayable(character))
+      .map((character) => ({ id: character.id, displayName: character.displayName }));
+    const bracket = createCustomLocalTournamentBracket(fighters);
+    const match = getNextPlayableLocalTournamentMatch(bracket);
+    if (!match) return;
+    setLocalTournamentBracket(bracket);
+    setOnlineTournamentStatus(null);
+    if (!setupLocalTournamentMatch(bracket, match)) return;
+    captureAppAnalytics('tournament_entry_succeeded', {
+      tournament_mode: 'custom',
+      tournament_id: bracket.id,
+      character_count: fighters.length,
+      match_id: match.id
+    });
+  }, [captureAppAnalytics, roster, setupLocalTournamentMatch]);
 
   const startInfiniteTournamentMatch = useCallback((bracket: TournamentBracket) => {
     const match = getNextReadyTournamentMatch(bracket);
@@ -3085,6 +3155,8 @@ export default function App() {
     setP2Id(characterB.id);
     setLocalTournamentBracket(bracket);
     setOnlineTournamentStatus(null);
+    setLocalTournamentCpuSlots([]);
+    setLocalTournamentSlotEntryIds({});
     setActiveTournamentMatchId(match.id);
     setTournamentStatusText(`${getTournamentRoundLabel(match.round, getTournamentTotalRounds(bracket))}: ${entryA.displayName} vs ${entryB.displayName}`);
     setMode('tournamentInfinite');
@@ -3304,6 +3376,8 @@ export default function App() {
     if (!opponentCharacter || !fightStage) return;
     setP2Id(opponentCharacter.id);
     setStageId(fightStage.id);
+    setLocalTournamentCpuSlots([]);
+    setLocalTournamentSlotEntryIds({});
     setActiveTournamentMatchId(match.id);
     setMode('tournamentOnline');
     setScreen('tournamentBracket');
@@ -3344,44 +3418,38 @@ export default function App() {
     }
     if (mode === 'tournamentLocal' && localTournamentBracket) {
       const match = localTournamentBracket.matches.find((candidate) => candidate.id === activeTournamentMatchId);
-      if (!match) return;
-      const winnerEntryId = result.winnerSlot === 1
-        ? 'local-player'
-        : match.entryAId === 'local-player'
-          ? match.entryBId
-          : match.entryAId;
+      if (!match?.entryAId || !match.entryBId) return;
+      const winnerEntryId = localTournamentSlotEntryIds[result.winnerSlot] ?? (result.winnerSlot === 1 ? match.entryAId : match.entryBId);
       if (!winnerEntryId) return;
       const advanced = simulateCpuTournamentMatches(advanceTournamentBracket(localTournamentBracket, activeTournamentMatchId, winnerEntryId));
       setLocalTournamentBracket(advanced);
-      if (advanced.status === 'completed' || winnerEntryId !== 'local-player') {
-        setTournamentStatusText(winnerEntryId === 'local-player' ? 'Tournament won' : 'Eliminated');
+      const winnerEntry = getTournamentEntry(advanced, winnerEntryId);
+      const nextMatch = getNextPlayableLocalTournamentMatch(advanced);
+      const localTournamentMode = localTournamentBracket.id.startsWith('custom-') ? 'custom' : 'free';
+      if (advanced.status === 'completed' || !nextMatch) {
+        const localWinner = Boolean(winnerEntry?.isLocalPlayer && advanced.status === 'completed');
+        setTournamentStatusText(localWinner ? `${winnerEntry?.displayName ?? 'Local player'} won the tournament` : localTournamentMode === 'custom' ? 'Custom tournament complete' : 'Local players eliminated');
+        setLocalTournamentCpuSlots([]);
+        setLocalTournamentSlotEntryIds({});
         setScreen('tournamentLobby');
         captureAppAnalytics('tournament_completed', {
-          tournament_mode: 'free',
-          result: winnerEntryId === 'local-player' ? 'won' : 'eliminated',
+          tournament_mode: localTournamentMode,
+          result: localWinner ? 'won' : 'eliminated',
           match_id: activeTournamentMatchId
         });
-        if (winnerEntryId === 'local-player') {
+        if (localWinner) {
           capturePositiveMilestone('tournament_won', {
-            tournament_mode: 'free',
+            tournament_mode: localTournamentMode,
             match_id: activeTournamentMatchId,
             winner_entry_id: winnerEntryId
           });
         }
         return;
       }
-      const nextMatch = getAssignedTournamentMatch(advanced, 'local-player');
-      const opponent = getTournamentOpponentEntry(advanced, nextMatch, 'local-player');
-      const opponentCharacter = opponent ? roster.find((character) => character.id === opponent.characterId) : null;
-      if (!nextMatch || !opponentCharacter) {
-        setTournamentStatusText('Waiting for bracket');
+      if (!setupLocalTournamentMatch(advanced, nextMatch)) {
+        setTournamentStatusText('Local bracket waiting for match');
         setScreen('tournamentLobby');
-        return;
       }
-      setP2Id(opponentCharacter.id);
-      setActiveTournamentMatchId(nextMatch.id);
-      setTournamentStatusText(nextMatch.round === 2 ? 'Semifinal match ready' : 'Final match ready');
-      setScreen('tournamentBracket');
       return;
     }
     if (mode === 'tournamentOnline' && onlineTournamentStatus && onlineProfile) {
@@ -3437,7 +3505,7 @@ export default function App() {
         });
       });
     }
-  }, [activeTournamentMatchId, captureAppAnalytics, capturePositiveMilestone, localTournamentBracket, makeInfiniteTournamentBracket, mode, onlineProfile, onlineTournamentStatus, roster, startInfiniteTournamentMatch]);
+  }, [activeTournamentMatchId, captureAppAnalytics, capturePositiveMilestone, localTournamentBracket, localTournamentSlotEntryIds, makeInfiniteTournamentBracket, mode, onlineProfile, onlineTournamentStatus, setupLocalTournamentMatch, startInfiniteTournamentMatch]);
 
   useEffect(() => {
     const onError = (event: ErrorEvent) => {
@@ -3948,6 +4016,8 @@ export default function App() {
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const selectedStageAssetStatus = useMemo(() => getStageAssetStatus(selectedStage.id), [selectedStage.id, stageAssetRevision]);
   const effectiveCpuDifficulty = getEffectiveCpuDifficulty(mode, cpuDifficulty);
+  const activeLocalTournamentIntroEntryId = getLocalTournamentPlayerEntryIds(localTournamentBracket)
+    .find((entryId) => entryId === localTournamentSlotEntryIds[1] || entryId === localTournamentSlotEntryIds[2]);
   const unlockRevealCharacter = roster.find((character) => character.id === pendingUnlockCharacterId) ?? null;
   const unlockRevealStage =
     stageRoster.find((stage) => stage.id === 'the-chamber') ??
@@ -4271,21 +4341,32 @@ export default function App() {
           <TournamentSelect
             roster={roster}
             p1Id={p1Id}
+            p2Id={p2Id}
             unlockedCharacterIds={effectiveUnlockedCharacterIds}
             tournamentMode={selectedTournamentMode}
+            localPlayerCount={selectedLocalTournamentPlayerCount}
             isDevHost={isDevHost}
             knownPaidTournamentStatus={onlineTournamentStatus?.bracket.kind === 'paidOnline' ? onlineTournamentStatus : null}
             setP1Id={setP1Id}
+            setP2Id={setP2Id}
             setTournamentMode={setSelectedTournamentMode}
+            setLocalPlayerCount={setSelectedLocalTournamentPlayerCount}
             onBack={() => setScreen('menu')}
-            onStart={(characterId, tournamentMode) => {
+            onStart={(startConfig, tournamentMode) => {
+              const characterId = startConfig.p1CharacterId;
               captureAppAnalytics('game_start_clicked', { source: 'tournament_select', selected_mode: tournamentMode });
               captureAppAnalytics('tournament_entry_started', {
                 tournament_mode: tournamentMode,
-                character_id: characterId
+                character_id: characterId,
+                p2_character_id: startConfig.p2CharacterId ?? null,
+                local_player_count: startConfig.playerCount
               });
               if (tournamentMode === 'free') {
-                startLocalTournament(characterId);
+                startLocalTournament(startConfig);
+                return;
+              }
+              if (tournamentMode === 'custom') {
+                startCustomLocalTournament();
                 return;
               }
               if (tournamentMode === 'infinite') {
@@ -4355,7 +4436,7 @@ export default function App() {
           <TournamentBracketIntroScreen
             bracket={mode === 'tournamentOnline' ? onlineTournamentStatus?.bracket ?? null : localTournamentBracket}
             matchId={activeTournamentMatchId}
-            localEntryId={mode === 'tournamentOnline' ? onlineTournamentStatus?.entry?.id : mode === 'tournamentInfinite' ? undefined : 'local-player'}
+            localEntryId={mode === 'tournamentOnline' ? onlineTournamentStatus?.entry?.id : mode === 'tournamentInfinite' ? undefined : activeLocalTournamentIntroEntryId}
             roster={roster}
             onBack={() => setScreen('tournamentLobby')}
             onReady={() => {
@@ -4882,7 +4963,7 @@ export default function App() {
         )}
         {screen === 'fight' && (
           <FightScreen
-            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${effectiveCpuDifficulty}-${selectedTrainingMode}-${activeTournamentMatchId}`}
+            key={`${p1.id}-${p2.id}-${selectedStage.id}-${mode}-${effectiveCpuDifficulty}-${selectedTrainingMode}-${activeTournamentMatchId}-${localTournamentCpuSlots.join('.')}`}
             p1={p1}
             p2={p2}
             stage={selectedStage}
@@ -4890,6 +4971,7 @@ export default function App() {
             stages={playableStageRoster}
             mode={mode}
             cpuDifficulty={effectiveCpuDifficulty}
+            cpuSlots={mode === 'tournamentLocal' ? localTournamentCpuSlots : undefined}
             settings={settings}
             inputPromptMode={inputPromptMode}
             onInputPromptModeChange={setInputPromptMode}
@@ -7865,38 +7947,51 @@ function TrainingSelect({
 function TournamentSelect({
   roster,
   p1Id,
+  p2Id,
   unlockedCharacterIds,
   tournamentMode,
+  localPlayerCount,
   isDevHost,
   knownPaidTournamentStatus,
   setP1Id,
+  setP2Id,
   setTournamentMode,
+  setLocalPlayerCount,
   onBack,
   onStart,
   onAnalytics
 }: {
   roster: CharacterDefinition[];
   p1Id: string;
+  p2Id: string;
   unlockedCharacterIds: Set<string>;
   tournamentMode: TournamentSelectMode;
+  localPlayerCount: 1 | 2;
   isDevHost: boolean;
   knownPaidTournamentStatus: TournamentStatusResult | null;
   setP1Id: (id: string) => void;
+  setP2Id: (id: string) => void;
   setTournamentMode: (mode: TournamentSelectMode) => void;
+  setLocalPlayerCount: (count: 1 | 2) => void;
   onBack: () => void;
-  onStart: (characterId: string, mode: TournamentSelectMode) => void;
+  onStart: (config: LocalTournamentStartConfig, mode: TournamentSelectMode) => void;
   onAnalytics: AnalyticsCapture;
 }) {
   const [hoveredBaseId, setHoveredBaseId] = useState('');
   const [rosterPage, setRosterPage] = useState(0);
+  const [selectTarget, setSelectTarget] = useState<1 | 2>(1);
   const [summaries, setSummaries] = useState<TournamentSummary[]>([]);
   const [summaryStatus, setSummaryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const pageGamepadStateRef = useRef({ previous: false, next: false });
   const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
+  const p2Character = roster.find((character) => character.id === p2Id) ?? roster.find((character) => character.id !== p1Character?.id) ?? roster[1] ?? roster[0];
+  const customTournamentMode = tournamentMode === 'custom';
   const baseRoster = useMemo(() => (
-    sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
-  ), [roster, unlockedCharacterIds]);
+    customTournamentMode
+      ? roster.filter((character) => !isCharacterVariant(character) && isCharacterPlayable(character))
+      : sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
+  ), [customTournamentMode, roster, unlockedCharacterIds]);
   const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const pagedBaseRoster = baseRoster.slice(
@@ -7906,9 +8001,15 @@ function TournamentSelect({
   const freeOnlineSummary = summaries.find((summary) => summary.kind === 'freeOnline');
   const paidSummary = summaries.find((summary) => summary.kind === 'paidOnline');
   const paidEnabled = isPaidTournamentUiEnabled(paidSummary);
-  const canStart = Boolean(p1Character && isCharacterUnlocked(p1Character, unlockedCharacterIds));
+  const canStart = Boolean(
+    customTournamentMode
+      ? roster.filter((character) => isCharacterPlayable(character)).length >= 2
+      : p1Character &&
+    isCharacterUnlocked(p1Character, unlockedCharacterIds) &&
+    (tournamentMode !== 'free' || localPlayerCount === 1 || (p2Character && isCharacterUnlocked(p2Character, unlockedCharacterIds)))
+  );
   const hasKnownPaidEntry = Boolean(knownPaidTournamentStatus?.entry);
-  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'paid' ? hasKnownPaidEntry ? 'View Tournament' : 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
+  const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'custom' ? 'Start Custom' : tournamentMode === 'paid' ? hasKnownPaidEntry ? 'View Tournament' : 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
   const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
 
   useEffect(() => {
@@ -7936,11 +8037,15 @@ function TournamentSelect({
 
   const assignCharacter = (id: string) => {
     const character = roster.find((item) => item.id === id);
-    if (!character || !isCharacterUnlocked(character, unlockedCharacterIds)) return;
-    setP1Id(id);
+    if (!character || (!customTournamentMode && !isCharacterUnlocked(character, unlockedCharacterIds))) return;
+    if (selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1) {
+      setP1Id(id);
+    } else {
+      setP2Id(id);
+    }
     onAnalytics('character_target_changed', {
       source: 'tournament_select',
-      slot: 1,
+      slot: selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1 ? 1 : 2,
       character_id: id
     });
   };
@@ -7951,7 +8056,7 @@ function TournamentSelect({
   };
 
   const cycleTournamentMode = useCallback((direction: -1 | 1) => {
-    const modes: TournamentSelectMode[] = ['free', 'online', 'paid', ...(isDevHost ? ['infinite' as const] : [])];
+    const modes: TournamentSelectMode[] = ['free', 'custom', 'online', 'paid', ...(isDevHost ? ['infinite' as const] : [])];
     const nextMode = cycleModeValue(modes, tournamentMode, direction);
     if (nextMode === tournamentMode) return;
     setTournamentMode(nextMode);
@@ -7963,22 +8068,24 @@ function TournamentSelect({
   }, [totalRosterPages]);
 
   const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
-    const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+    const family = getVariantFamily(roster, baseId, customTournamentMode ? undefined : unlockedCharacterIds);
     if (family.length <= 1) return;
-    const currentIndex = Math.max(0, family.findIndex((character) => character.id === p1Id));
+    const currentId = selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1 ? p1Id : p2Id;
+    const currentIndex = Math.max(0, family.findIndex((character) => character.id === currentId));
     const next = family[(currentIndex + direction + family.length) % family.length];
     if (next) assignCharacter(next.id);
-  }, [p1Id, roster, unlockedCharacterIds]);
+  }, [customTournamentMode, localPlayerCount, p1Id, p2Id, roster, selectTarget, tournamentMode, unlockedCharacterIds]);
 
   useEffect(() => {
     setRosterPage((page) => Math.min(page, totalRosterPages - 1));
   }, [totalRosterPages]);
 
   useEffect(() => {
-    const selectedBaseId = getCharacterBaseId(p1Character);
+    const selected = selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1 ? p1Character : p2Character;
+    const selectedBaseId = getCharacterBaseId(selected);
     const selectedIndex = Math.max(0, baseRoster.findIndex((character) => character.id === selectedBaseId));
     setRosterPage(Math.min(totalRosterPages - 1, Math.floor(selectedIndex / CHARACTER_SELECT_PAGE_SIZE)));
-  }, [baseRoster, p1Character, totalRosterPages]);
+  }, [baseRoster, localPlayerCount, p1Character, p2Character, selectTarget, totalRosterPages, tournamentMode]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -7997,14 +8104,15 @@ function TournamentSelect({
         return;
       }
       if (key !== 'o' && key !== 'p') return;
-      const baseId = hoveredBaseId || getCharacterBaseId(p1Character);
+      const selected = selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1 ? p1Character : p2Character;
+      const baseId = hoveredBaseId || getCharacterBaseId(selected);
       if (!baseId) return;
       event.preventDefault();
       cycleVariantForBase(baseId, key === 'o' ? -1 : 1);
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [cycleRosterPage, cycleVariantForBase, hoveredBaseId, p1Character]);
+  }, [cycleRosterPage, cycleVariantForBase, hoveredBaseId, localPlayerCount, p1Character, p2Character, selectTarget, tournamentMode]);
 
   useEffect(() => {
     let frame = 0;
@@ -8048,10 +8156,11 @@ function TournamentSelect({
     <div className="select-screen versus-select-screen tournament-select-screen">
       <button
         type="button"
-        className="versus-hero versus-hero-left is-picking"
+        className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''}`}
         style={{ '--fighter-color': p1Character.colors.primary } as CSSProperties}
+        onClick={() => setSelectTarget(1)}
       >
-        <span className="versus-player-kicker">Tournament Entry</span>
+        <span className="versus-player-kicker">P1 Entry</span>
         <AnimatedCharacterSprite character={p1Character} />
         <span className="versus-hero-name">{p1Character.displayName}</span>
       </button>
@@ -8075,8 +8184,17 @@ function TournamentSelect({
               onClick={() => selectTournamentMode('free')}
             >
               <strong>FREE</strong>
-              <span>Local 1P vs CPU</span>
+              <span>{localPlayerCount === 2 ? 'Local 1-2P + CPU' : 'Local 1P vs CPU'}</span>
               <small>8-player bracket</small>
+            </button>
+            <button
+              type="button"
+              className={`tournament-entry-option ${tournamentMode === 'custom' ? 'is-selected' : ''}`}
+              onClick={() => selectTournamentMode('custom')}
+            >
+              <strong>CUSTOM</strong>
+              <span>P1 vs P2 every match</span>
+              <small>Full roster trial</small>
             </button>
             <button
               type="button"
@@ -8112,6 +8230,43 @@ function TournamentSelect({
 
           {summaryStatus === 'error' && <div className="tournament-status-strip">Online tournament list unavailable</div>}
 
+          {tournamentMode === 'free' && (
+            <>
+              <div className="versus-target-tabs" aria-label="Local tournament players">
+                <button
+                  className={localPlayerCount === 1 ? 'active' : ''}
+                  onClick={() => {
+                    setLocalPlayerCount(1);
+                    setSelectTarget(1);
+                    onAnalytics('tournament_mode_selected', { tournament_mode: tournamentMode, local_player_count: 1 });
+                  }}
+                >
+                  1 Player
+                </button>
+                <button
+                  className={localPlayerCount === 2 ? 'active' : ''}
+                  onClick={() => {
+                    setLocalPlayerCount(2);
+                    setSelectTarget(2);
+                    onAnalytics('tournament_mode_selected', { tournament_mode: tournamentMode, local_player_count: 2 });
+                  }}
+                >
+                  2 Players
+                </button>
+              </div>
+              {localPlayerCount === 2 && (
+                <div className="versus-target-tabs" aria-label="Choose local tournament selection target">
+                  <button className={selectTarget === 1 ? 'active' : ''} onClick={() => setSelectTarget(1)}>
+                    P1
+                  </button>
+                  <button className={selectTarget === 2 ? 'active' : ''} onClick={() => setSelectTarget(2)}>
+                    P2
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
           <div className="versus-roster-pager" aria-label="Character roster pages">
             <button
               type="button"
@@ -8139,18 +8294,20 @@ function TournamentSelect({
           <div className="versus-roster-grid">
             {pagedBaseRoster.map((character) => {
               const baseId = character.id;
-              const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
-              const selectedTargetMember = getCharacterBaseId(p1Character) === baseId ? p1Character : null;
+              const family = getVariantFamily(roster, baseId, customTournamentMode ? undefined : unlockedCharacterIds);
+              const targetCharacter = selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1 ? p1Character : p2Character;
+              const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
               const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
               const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
               const isP1 = getCharacterBaseId(p1Character) === baseId;
-              const isLocked = family.length === 0;
+              const isP2 = tournamentMode === 'free' && localPlayerCount === 2 && getCharacterBaseId(p2Character) === baseId;
+              const isLocked = !customTournamentMode && family.length === 0;
               const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
               return (
                 <button
                   key={character.id}
                   type="button"
-                  className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                  className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
                   style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
                   onClick={() => assignCharacter(assignId)}
                   onMouseEnter={() => setHoveredBaseId(baseId)}
@@ -8162,7 +8319,7 @@ function TournamentSelect({
                   {isLocked && <em className="character-lock-badge">Locked</em>}
                   {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
                   <span>{displayedCharacter.displayName}</span>
-                  <small>{isP1 ? 'Entry' : ''}</small>
+                  <small>{isP1 ? 'P1' : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? 'P2' : ''}</small>
                 </button>
               );
             })}
@@ -8174,17 +8331,35 @@ function TournamentSelect({
             onAnalytics('navigation_clicked', { destination: 'menu', source: 'tournament_select_back' });
             onBack();
           }}
-          onNext={() => onStart(p1Character.id, tournamentMode)}
+          onNext={() => onStart({
+            p1CharacterId: p1Character.id,
+            p2CharacterId: tournamentMode === 'free' && localPlayerCount === 2 ? p2Character?.id : undefined,
+            playerCount: tournamentMode === 'free' ? localPlayerCount : 1
+          }, tournamentMode)}
           nextLabel={nextLabel}
           nextDisabled={nextDisabled}
         />
       </section>
 
-      <section className="versus-hero versus-hero-right tournament-preview-hero" aria-label="Tournament preview">
-        <span className="versus-player-kicker">Bracket</span>
-        <TournamentPreviewBracket />
-        <span className="versus-hero-name">{tournamentMode === 'free' ? 'FREE' : tournamentMode === 'paid' ? 'PAID' : tournamentMode === 'infinite' ? 'INFINITE' : 'ONLINE'}</span>
-      </section>
+      {tournamentMode === 'free' && localPlayerCount === 2 && p2Character ? (
+        <button
+          type="button"
+          className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''}`}
+          style={{ '--fighter-color': p2Character.colors.primary } as CSSProperties}
+          onClick={() => setSelectTarget(2)}
+          aria-label={`Select ${p2Character.displayName}`}
+        >
+          <span className="versus-player-kicker">P2 Entry</span>
+          <AnimatedCharacterSprite character={p2Character} />
+          <span className="versus-hero-name">{p2Character.displayName}</span>
+        </button>
+      ) : (
+        <section className="versus-hero versus-hero-right tournament-preview-hero" aria-label="Tournament preview">
+          <span className="versus-player-kicker">Bracket</span>
+          <TournamentPreviewBracket />
+          <span className="versus-hero-name">{tournamentMode === 'free' ? 'FREE' : tournamentMode === 'custom' ? 'CUSTOM' : tournamentMode === 'paid' ? 'PAID' : tournamentMode === 'infinite' ? 'INFINITE' : 'ONLINE'}</span>
+        </section>
+      )}
       <div className="versus-floor-glow" aria-hidden="true" />
     </div>
   );
@@ -8201,6 +8376,7 @@ function TournamentModeCarousel({
 }) {
   const options: Array<{ mode: TournamentSelectMode; label: string; icon: ReactNode }> = [
     { mode: 'free', label: 'Free', icon: <Trophy size={18} /> },
+    { mode: 'custom', label: 'Custom', icon: <Users size={18} /> },
     { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
     { mode: 'paid', label: 'Prizepool', icon: <Trophy size={18} /> },
     ...(isDevHost ? [{ mode: 'infinite' as const, label: 'Infinite', icon: <Swords size={18} /> }] : [])
@@ -20822,6 +20998,7 @@ function FightScreen({
   stages,
   mode,
   cpuDifficulty,
+  cpuSlots,
   settings,
   inputPromptMode,
   onInputPromptModeChange,
@@ -20855,6 +21032,7 @@ function FightScreen({
   stages: StageDefinition[];
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
+  cpuSlots?: Array<1 | 2>;
   settings: GameSettings;
   inputPromptMode: InputPromptMode;
   onInputPromptModeChange: (mode: InputPromptMode) => void;
@@ -20916,9 +21094,10 @@ function FightScreen({
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
       controlScheme: settings.game.controlScheme,
       playIntro: mode !== 'training' && !isTrainingOnline,
-      roster
+      roster,
+      cpuSlots
     }),
-    [isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [cpuSlots, isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const initialTrialStage = useMemo(() => {
     const trial = activeTrainingTrials.find((t) => t.id === activeTrainingTrialId) ?? activeTrainingTrials[0] ?? null;
@@ -21483,11 +21662,11 @@ function FightScreen({
       captureFightAnalytics,
       undefined,
       {
-        actorTypesBySlot: getFightActorTypes(mode, onlineRoleRef.current),
+        actorTypesBySlot: getFightActorTypes(mode, onlineRoleRef.current, cpuSlots),
         captureComboRoutesForActorTypes: ['human']
       }
     );
-  }, [captureFightAnalytics, isOnline, match, mode, onlineState]);
+  }, [captureFightAnalytics, cpuSlots, isOnline, match, mode, onlineState]);
 
   useEffect(() => {
     onlineRoleRef.current = onlineRole;

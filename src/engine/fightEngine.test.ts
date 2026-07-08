@@ -98,6 +98,30 @@ function makePhysicalHorizontalDashInput(direction: 'left' | 'right', moveInput:
   return input;
 }
 
+describe('match cpu slot overrides', () => {
+  it('lets local tournament choose which fighter slots are CPU controlled', () => {
+    const p1 = normalizeCharacter(starterCharacters[0]);
+    const p2 = normalizeCharacter(starterCharacters[1]);
+    const stage = stages[0];
+    const p1Jab = makeInput('jab');
+    const p2Jab = makeInput('jab');
+
+    const humanVsHuman = stepMatch(createMatch(p1, p2, stage, 'local2p'), p1Jab, p2Jab, 1 / 60);
+    const p1Cpu = stepMatch(createMatch(p1, p2, stage, 'tournamentLocal', 3, { cpuSlots: [1] }), p1Jab, p2Jab, 1 / 60);
+    const p2Cpu = stepMatch(createMatch(p1, p2, stage, 'tournamentLocal', 3, { cpuSlots: [2] }), p1Jab, p2Jab, 1 / 60);
+
+    expect(humanVsHuman.cpuSlots).toBeUndefined();
+    expect(p1Cpu.cpuSlots).toEqual([1]);
+    expect(p2Cpu.cpuSlots).toEqual([2]);
+    expect(humanVsHuman.fighters[0].state).toBe('attack');
+    expect(humanVsHuman.fighters[1].state).toBe('attack');
+    expect(p1Cpu.fighters[0].state).not.toBe('attack');
+    expect(p1Cpu.fighters[1].state).toBe('attack');
+    expect(p2Cpu.fighters[0].state).toBe('attack');
+    expect(p2Cpu.fighters[1].state).not.toBe('attack');
+  });
+});
+
 function makeHorizontalDashCommandCharacter(command: string, label: string): CharacterDefinition {
   const base = starterCharacters[0];
   const animationKey = `cmd:${command}`;

@@ -2,6 +2,8 @@ import posthog from 'posthog-js';
 import type { Properties } from 'posthog-js';
 
 export const DEFAULT_POSTHOG_HOST = 'https://us.i.posthog.com';
+export const DEFAULT_POSTHOG_APP_HOST = 'https://us.posthog.com';
+export const ADMIN_ANALYTICS_CONFIG_STORAGE_KEY = 'kore:admin-posthog-config:v1';
 
 export type AnalyticsEventName =
   | 'game_load_started'
@@ -89,10 +91,75 @@ type AnalyticsEnvironment = {
 
 let analyticsInitialized = false;
 
-function readAnalyticsEnvironment(): AnalyticsEnvironment {
+export type AdminAnalyticsConfig = {
+  projectToken: string;
+  captureHost: string;
+  endpointToken: string;
+  endpointPaths: Record<string, string>;
+};
+
+export function defaultAdminAnalyticsConfig(): AdminAnalyticsConfig {
   return {
-    key: import.meta.env.VITE_POSTHOG_KEY,
-    host: import.meta.env.VITE_POSTHOG_HOST
+    projectToken: '',
+    captureHost: DEFAULT_POSTHOG_HOST,
+    endpointToken: '',
+    endpointPaths: {}
+  };
+}
+
+function readStoredAdminAnalyticsConfig(): AdminAnalyticsConfig | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(ADMIN_ANALYTICS_CONFIG_STORAGE_KEY);
+    if (!raw) return null;
+    return sanitizeAdminAnalyticsConfig(JSON.parse(raw) as Partial<AdminAnalyticsConfig>);
+  } catch {
+    return null;
+  }
+}
+
+export function sanitizeAdminAnalyticsConfig(config: Partial<AdminAnalyticsConfig> = {}): AdminAnalyticsConfig {
+  const fallback = defaultAdminAnalyticsConfig();
+  const captureHost = typeof config.captureHost === 'string' && config.captureHost.trim() ? config.captureHost.trim() : fallback.captureHost;
+  const rawEndpointPaths = config.endpointPaths && typeof config.endpointPaths === 'object' ? config.endpointPaths : {};
+  const endpointPaths = Object.fromEntries(
+    Object.entries(rawEndpointPaths)
+      .filter((entry): entry is [string, string] => typeof entry[1] === 'string')
+      .map(([key, value]) => [key, value.trim()])
+      .filter(([, value]) => value.length > 0)
+  );
+  return {
+    projectToken: typeof config.projectToken === 'string' ? config.projectToken.trim() : '',
+    captureHost,
+    endpointToken: typeof config.endpointToken === 'string' ? config.endpointToken.trim() : '',
+    endpointPaths
+  };
+}
+
+export function readAdminAnalyticsConfig(): AdminAnalyticsConfig {
+  return readStoredAdminAnalyticsConfig() ?? defaultAdminAnalyticsConfig();
+}
+
+export function writeAdminAnalyticsConfig(config: Partial<AdminAnalyticsConfig>) {
+  const sanitized = sanitizeAdminAnalyticsConfig(config);
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem(ADMIN_ANALYTICS_CONFIG_STORAGE_KEY, JSON.stringify(sanitized));
+  }
+  return sanitized;
+}
+
+export function clearAdminAnalyticsConfig() {
+  if (typeof window !== 'undefined') {
+    window.localStorage.removeItem(ADMIN_ANALYTICS_CONFIG_STORAGE_KEY);
+  }
+  return defaultAdminAnalyticsConfig();
+}
+
+function readAnalyticsEnvironment(): AnalyticsEnvironment {
+  const adminConfig = readStoredAdminAnalyticsConfig();
+  return {
+    key: import.meta.env.VITE_POSTHOG_KEY || adminConfig?.projectToken,
+    host: import.meta.env.VITE_POSTHOG_HOST || adminConfig?.captureHost
   };
 }
 
@@ -114,6 +181,10 @@ export function initializeAnalytics(environment: AnalyticsEnvironment = readAnal
     analyticsInitialized = true;
   }
   return posthog;
+}
+
+export function isAnalyticsInitialized() {
+  return analyticsInitialized;
 }
 
 export function getPostHogDeviceId() {

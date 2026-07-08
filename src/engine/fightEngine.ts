@@ -210,6 +210,7 @@ export function createMatch(
     stage,
     mode,
     cpuDifficulty,
+    cpuSlots: options.cpuSlots ? [...new Set(options.cpuSlots)].filter((slot): slot is 1 | 2 => slot === 1 || slot === 2) : undefined,
     aiSeed,
     roundAiSeed: makeRoundAiSeed(aiSeed, 1),
     roundTime,
@@ -295,19 +296,22 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     return next;
   }
 
-  const cpuControlsBothFighters = next.mode === 'cpu' || next.mode === 'cpuArcade' || next.mode === 'tournamentInfinite';
-  const cpuControlsP2 = next.mode === 'ai' || next.mode === 'versusCpu' || cpuControlsBothFighters;
-  const rawInput1 = cpuControlsBothFighters ? makeRecoveringAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, true, next.aiSeed, next.roundAiSeed) : p1Input;
+  const configuredCpuSlots = new Set(next.cpuSlots ?? []);
+  const modeCpuControlsBothFighters = next.mode === 'cpu' || next.mode === 'cpuArcade' || next.mode === 'tournamentInfinite';
+  const cpuControlsP1 = modeCpuControlsBothFighters || configuredCpuSlots.has(1);
+  const cpuControlsP2 = next.mode === 'ai' || next.mode === 'versusCpu' || modeCpuControlsBothFighters || configuredCpuSlots.has(2);
+  const cpuDuel = cpuControlsP1 && cpuControlsP2;
+  const rawInput1 = cpuControlsP1 ? makeRecoveringAiInput(next, next.fighters[0], next.fighters[1], next.timer, next.cpuDifficulty, cpuDuel, next.aiSeed, next.roundAiSeed) : p1Input;
   const rawInput2 =
     next.mode === 'training'
       ? next.trainingDummyInput ?? makeTrainingDummyInput(next.fighters[1])
       : cpuControlsP2
-        ? makeRecoveringAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, cpuControlsBothFighters, next.aiSeed, next.roundAiSeed)
+        ? makeRecoveringAiInput(next, next.fighters[1], next.fighters[0], next.timer, next.cpuDifficulty, cpuDuel, next.aiSeed, next.roundAiSeed)
         : p2Input;
-  const input1 = withControlledWakeupInput(next.fighters[0], next.fighters[1], rawInput1, cpuControlsBothFighters);
+  const input1 = withControlledWakeupInput(next.fighters[0], next.fighters[1], rawInput1, cpuControlsP1);
   const input2 = withControlledWakeupInput(next.fighters[1], next.fighters[0], rawInput2, next.mode === 'training' || cpuControlsP2);
   if (isClashActive(next.clashState)) {
-    const clashInput1 = cpuControlsBothFighters ? makeAiClashInput(next, 1) : input1;
+    const clashInput1 = cpuControlsP1 ? makeAiClashInput(next, 1) : input1;
     const clashInput2 = cpuControlsP2 ? makeAiClashInput(next, 2) : input2;
     handleClashStep(next, clashInput1, clashInput2, dt);
     constrainFightersToStageBounds(next);
@@ -7396,6 +7400,7 @@ function applyGravity(fighter: FighterRuntime, dt: number, gravityScale = 1) {
 export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
   return {
     ...match,
+    cpuSlots: match.cpuSlots ? [...match.cpuSlots] : undefined,
     roster: [...match.roster],
     stage: { ...match.stage },
     trainingDummyInput: match.trainingDummyInput ? cloneInputFrame(match.trainingDummyInput) : null,

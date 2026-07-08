@@ -266,6 +266,11 @@ type DevLeaderboardSubmitPayload = {
   loser?: Partial<DevLeaderboardEntry>;
 };
 
+type DevPostHogEndpointPayload = {
+  endpointUrl?: string;
+  endpointToken?: string;
+};
+
 const DEV_ONLINE_ROOM_TTL_MS = 12_000;
 const DEV_LEADERBOARD_POINTS_PER_WIN = 100;
 
@@ -321,6 +326,23 @@ function koreDevManifestWriter() {
           sendJson(response, 200, devSubmitLeaderboardResult(leaderboard, payload));
         } catch (error) {
           sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/__kore/dev/posthog-endpoint', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          const payload = JSON.parse(await readRequestBody(request)) as DevPostHogEndpointPayload;
+          const result = await devPostHogEndpoint(payload);
+          sendJson(response, 200, result);
+        } catch (error) {
+          const statusCode = error && typeof error === 'object' && typeof (error as { statusCode?: unknown }).statusCode === 'number'
+            ? (error as { statusCode: number }).statusCode
+            : 500;
+          sendJson(response, statusCode, { error: error instanceof Error ? error.message : 'PostHog endpoint failed' });
         }
       });
 
@@ -2270,6 +2292,58 @@ function sortDevLeaderboard(entries: DevLeaderboardEntry[]) {
   return [...entries].sort((a, b) => {
     return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName);
   });
+}
+
+async function devPostHogEndpoint(payload: DevPostHogEndpointPayload) {
+  const endpointUrl = sanitizePostHogEndpointUrl(payload.endpointUrl);
+  const endpointToken = typeof payload.endpointToken === 'string' ? payload.endpointToken.trim() : '';
+  if (!endpointUrl) {
+    throw Object.assign(new Error('Missing or invalid PostHog endpoint URL.'), { statusCode: 400 });
+  }
+
+  const headers: Record<string, string> = {
+    Accept: 'application/json'
+  };
+  if (endpointToken) headers.Authorization = `Bearer ${endpointToken}`;
+
+  const postHogResponse = await fetch(endpointUrl, {
+    method: 'GET',
+    headers
+  });
+  const text = await postHogResponse.text();
+  let parsed: unknown = null;
+  try {
+    parsed = text ? JSON.parse(text) : null;
+  } catch {
+    parsed = { error: text };
+  }
+  if (!postHogResponse.ok) {
+    const errorMessage = parsed && typeof parsed === 'object' && typeof (parsed as { detail?: unknown }).detail === 'string'
+      ? (parsed as { detail: string }).detail
+      : parsed && typeof parsed === 'object' && typeof (parsed as { error?: unknown }).error === 'string'
+        ? (parsed as { error: string }).error
+        : parsed && typeof parsed === 'object' && typeof (parsed as { message?: unknown }).message === 'string'
+          ? (parsed as { message: string }).message
+          : `PostHog endpoint returned ${postHogResponse.status}`;
+    throw Object.assign(new Error(errorMessage), { statusCode: postHogResponse.status });
+  }
+  return { payload: parsed };
+}
+
+function sanitizePostHogEndpointUrl(value: unknown) {
+  if (typeof value !== 'string') return '';
+  try {
+    const url = new URL(value.trim());
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') return '';
+    const host = url.hostname.toLowerCase();
+    const isPostHogHost = host === 'posthog.com' || host.endsWith('.posthog.com');
+    const isLocalHost = host === 'localhost' || host === '127.0.0.1' || host === '::1';
+    if (!isPostHogHost && !isLocalHost) return '';
+    url.hash = '';
+    return url.toString();
+  } catch {
+    return '';
+  }
 }
 
 function sendJson(response: ServerResponse, statusCode: number, payload: unknown) {

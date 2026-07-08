@@ -18,6 +18,7 @@ async function loadAnalytics() {
 afterEach(() => {
   vi.unstubAllEnvs();
   vi.clearAllMocks();
+  window.localStorage.clear();
 });
 
 describe('analytics', () => {
@@ -129,6 +130,52 @@ describe('analytics', () => {
       screen: 'boot',
       error_name: 'Error',
       error_message: 'Roster failed'
+    });
+  });
+
+  it('stores, sanitizes, and clears local admin PostHog config', async () => {
+    const analytics = await loadAnalytics();
+
+    const saved = analytics.writeAdminAnalyticsConfig({
+      projectToken: ' ph_project ',
+      captureHost: '',
+      endpointToken: ' endpoint_secret ',
+      endpointPaths: {
+        summary: ' /api/projects/492693/endpoints/kore_admin_summary ',
+        trends: ''
+      }
+    });
+
+    expect(saved).toEqual({
+      projectToken: 'ph_project',
+      captureHost: analytics.DEFAULT_POSTHOG_HOST,
+      endpointToken: 'endpoint_secret',
+      endpointPaths: {
+        summary: '/api/projects/492693/endpoints/kore_admin_summary'
+      }
+    });
+    expect(analytics.readAdminAnalyticsConfig()).toEqual(saved);
+    expect(analytics.clearAdminAnalyticsConfig()).toEqual({
+      projectToken: '',
+      captureHost: analytics.DEFAULT_POSTHOG_HOST,
+      endpointToken: '',
+      endpointPaths: {}
+    });
+  });
+
+  it('initializes from saved admin project token when env key is missing', async () => {
+    const analytics = await loadAnalytics();
+    analytics.writeAdminAnalyticsConfig({
+      projectToken: 'ph_saved',
+      captureHost: 'https://capture.example.test'
+    });
+
+    analytics.captureAnalyticsEvent('game_loaded', { app_version: 'test' });
+
+    expect(posthogMock.init).toHaveBeenCalledWith('ph_saved', {
+      api_host: 'https://capture.example.test',
+      capture_pageview: true,
+      autocapture: false
     });
   });
 });

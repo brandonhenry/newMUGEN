@@ -36,6 +36,586 @@ body {
   overflow-y: hidden;
 }
 
+.admin-shell {
+  min-height: 100vh;
+  height: 100vh;
+  overflow: auto;
+  padding: clamp(14px, 2vw, 28px);
+  color: #f7f7f2;
+  background:
+    linear-gradient(135deg, rgba(16, 17, 20, 0.98), rgba(18, 22, 22, 0.98)),
+    #101114;
+  -webkit-font-smoothing: antialiased;
+}
+
+.admin-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 16px;
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 56px);
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.admin-kicker,
+.admin-header-actions span,
+.admin-config label span,
+.admin-kpi span,
+.admin-kpi small,
+.admin-section-heading span,
+.admin-target-row span,
+.admin-status {
+  color: var(--text-muted);
+}
+
+.admin-kicker {
+  display: block;
+  margin-bottom: 5px;
+  color: #2ee6ff;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.admin-header-actions,
+.admin-config-actions,
+.admin-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-header-actions {
+  justify-content: end;
+  text-align: right;
+}
+
+.admin-header-actions strong,
+.admin-kpi strong,
+.admin-table td,
+.admin-target-row span {
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-config {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(130px, 1fr)) auto;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.admin-config label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.admin-config label span {
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.admin-config input {
+  width: 100%;
+  min-height: 40px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: #f7f7f2;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  outline: none;
+}
+
+.admin-config input:focus {
+  box-shadow:
+    0 0 0 2px rgba(46, 230, 255, 0.5) inset,
+    0 0 22px rgba(46, 230, 255, 0.16);
+}
+
+.admin-config-actions {
+  justify-content: end;
+}
+
+.admin-config-actions .primary-button,
+.admin-config-actions .secondary-button,
+.admin-header-actions .primary-button,
+.admin-tabs button {
+  min-height: 40px;
+}
+
+.admin-status {
+  min-height: 22px;
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.admin-status.success {
+  color: #7dffbc;
+}
+
+.admin-status.error {
+  color: #ff8b8b;
+}
+
+.admin-endpoint-setup {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 16px 36px rgba(0, 0, 0, 0.18);
+}
+
+.admin-endpoint-list {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-endpoint-row {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.42fr) minmax(240px, 1fr) auto minmax(118px, auto);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.admin-endpoint-row > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.admin-endpoint-row strong {
+  font-size: 13px;
+}
+
+.admin-endpoint-row small,
+.admin-endpoint-row span,
+.admin-endpoint-row em {
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.admin-endpoint-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-endpoint-row input {
+  width: 100%;
+  min-height: 40px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: #f7f7f2;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  outline: none;
+}
+
+.admin-endpoint-row input:focus {
+  box-shadow:
+    0 0 0 2px rgba(46, 230, 255, 0.5) inset,
+    0 0 22px rgba(46, 230, 255, 0.16);
+}
+
+.admin-endpoint-row em {
+  justify-self: end;
+  font-style: normal;
+  font-weight: 850;
+  text-align: right;
+}
+
+.admin-endpoint-row em.ready {
+  color: #7dffbc;
+}
+
+.admin-endpoint-row em.error {
+  color: #ff8b8b;
+}
+
+.admin-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(112px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.admin-kpi {
+  display: grid;
+  gap: 6px;
+  min-height: 116px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.admin-kpi-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: #061016;
+  background: #2ee6ff;
+}
+
+.admin-kpi span {
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.admin-kpi strong {
+  font-size: clamp(22px, 2.2vw, 34px);
+  line-height: 1;
+}
+
+.admin-kpi small {
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.admin-growth-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.admin-chart {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.admin-chart header,
+.admin-chart footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-chart h2 {
+  margin: 0;
+  font-size: 14px;
+  text-wrap: balance;
+}
+
+.admin-chart header span,
+.admin-chart footer span,
+.admin-chart-empty {
+  color: var(--text-muted);
+}
+
+.admin-chart strong,
+.admin-chart footer span {
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-chart strong {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.admin-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 132px;
+  overflow: visible;
+}
+
+.admin-chart-gridline {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1;
+}
+
+.admin-chart-line,
+.admin-chart-line-glow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.admin-chart-line {
+  stroke-width: 3;
+}
+
+.admin-chart-line-glow {
+  stroke-width: 8;
+  opacity: 0.18;
+}
+
+.admin-chart .positive {
+  color: #7dffbc;
+}
+
+.admin-chart .negative {
+  color: #ff8b8b;
+}
+
+.admin-chart-empty {
+  display: grid;
+  place-items: center;
+  min-height: 132px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.admin-main-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.38fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.admin-targets,
+.admin-tables {
+  min-width: 0;
+}
+
+.admin-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.admin-section-heading h2 {
+  margin: 0;
+  font-size: 18px;
+  text-wrap: balance;
+}
+
+.admin-target-list {
+  display: grid;
+  gap: 7px;
+}
+
+.admin-target-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(74px, auto) minmax(74px, auto);
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.admin-target-row strong {
+  min-width: 0;
+  font-size: 13px;
+}
+
+.admin-target-row span {
+  font-size: 12px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.admin-tabs {
+  margin-bottom: 10px;
+}
+
+.admin-tabs button {
+  border: 0;
+  border-radius: 6px;
+  padding: 0 12px;
+  color: #f7f7f2;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition-property: transform, background-color, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.admin-tabs button:active {
+  transform: scale(0.96);
+}
+
+.admin-tabs button.active {
+  color: #061016;
+  background: #2ee6ff;
+  box-shadow: 0 0 22px rgba(46, 230, 255, 0.22);
+}
+
+.admin-table-wrap {
+  max-height: min(56vh, 640px);
+  overflow: auto;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: rgba(247, 247, 242, 0.78);
+  background: rgba(18, 19, 23, 0.96);
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.admin-table td {
+  max-width: 340px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.admin-empty,
+.admin-guard-panel {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 24px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.055);
+  text-align: center;
+}
+
+.admin-empty-error {
+  color: #ff8b8b;
+}
+
+.admin-guard {
+  display: grid;
+  place-items: center;
+}
+
+.admin-guard-panel {
+  width: min(520px, calc(100vw - 32px));
+}
+
+.admin-guard-panel h1,
+.admin-guard-panel p {
+  margin: 0;
+}
+
+@media (max-width: 1280px) {
+  .admin-config {
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
+
+  .admin-config-actions {
+    grid-column: 1 / -1;
+    justify-content: start;
+  }
+
+  .admin-kpi-grid {
+    grid-template-columns: repeat(3, minmax(130px, 1fr));
+  }
+
+  .admin-growth-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+
+  .admin-endpoint-row {
+    grid-template-columns: minmax(220px, 0.46fr) minmax(220px, 1fr);
+  }
+
+  .admin-endpoint-row .secondary-button,
+  .admin-endpoint-row em {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 860px) {
+  .admin-shell {
+    padding: 12px;
+  }
+
+  .admin-header,
+  .admin-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header {
+    display: grid;
+    align-items: start;
+  }
+
+  .admin-header-actions {
+    justify-content: start;
+    text-align: left;
+  }
+
+  .admin-config,
+  .admin-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-kpi-grid {
+    grid-template-columns: repeat(2, minmax(130px, 1fr));
+  }
+
+  .admin-growth-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-endpoint-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 button {
   font: inherit;
   transition-property: translate;

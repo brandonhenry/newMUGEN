@@ -1434,7 +1434,34 @@ test('starts a free local tournament with bracket intro', async ({ page }) => {
   await expect(page.locator('.tournament-bracket-intro')).toBeVisible({ timeout: 5000 });
   await expect(page.getByText('Winner Advances')).toBeVisible();
   await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-mode')).toHaveText('tournamentLocal', { timeout: 30000 });
+});
+
+test('starts a two-player free local tournament setup', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: '2 Players' }).click();
+  const rosterScroll = page.getByTestId('select-roster-scroll');
+  await expect(rosterScroll.getByRole('button', { name: 'P1', exact: true })).toBeVisible();
+  await expect(rosterScroll.getByRole('button', { name: 'P2', exact: true })).toBeVisible();
+  await expect(page.getByText('Local 1-2P + CPU')).toBeVisible();
+  await page.getByRole('button', { name: 'Start Free' }).click();
+  await expect(page.locator('.tournament-bracket-intro')).toBeVisible({ timeout: 5000 });
+  await expect(page.locator('.tournament-bracket-board')).toContainText('P2');
+  await page.keyboard.press('Enter');
   await expect(page.getByTestId('match-mode')).toHaveText('tournamentLocal', { timeout: 12000 });
+});
+
+test('starts a custom local tournament with P1 versus P2 every match', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: /^CUSTOM/i }).click();
+  await expect(page.getByText('P1 vs P2 every match')).toBeVisible();
+  await page.getByRole('button', { name: 'Start Custom' }).click();
+  await expect(page.locator('.tournament-bracket-intro')).toBeVisible({ timeout: 5000 });
+  await expect(page.locator('.tournament-bracket-board')).not.toContainText('CPU');
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('match-mode')).toHaveText('tournamentLocal', { timeout: 30000 });
 });
 
 test('enters a free online tournament lobby', async ({ page }) => {

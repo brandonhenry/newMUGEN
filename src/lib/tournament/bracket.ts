@@ -6,25 +6,40 @@ export type TournamentCharacterSeed = {
   displayName: string;
 };
 
+export type TournamentLocalPlayerSeed = {
+  entryId: string;
+  displayName: string;
+  character: TournamentCharacterSeed;
+};
+
 const LOCAL_TOURNAMENT_CAPACITY = 8;
 
 export function createLocalTournamentBracket(
-  player: TournamentCharacterSeed,
+  player: TournamentCharacterSeed | TournamentLocalPlayerSeed[],
   opponents: TournamentCharacterSeed[],
   now = Date.now()
 ): TournamentBracket {
+  const localPlayers = (Array.isArray(player)
+    ? player
+    : [{ entryId: 'local-player-1', displayName: 'P1', character: player }]
+  ).slice(0, 2);
+  const seedText = localPlayers.map((localPlayer) => localPlayer.character.id).join(':') || opponents[0]?.id || 'local';
   const opponentPool = deterministicShuffle(
-    opponents.filter((opponent) => opponent.id !== player.id),
-    player.id
-  ).slice(0, LOCAL_TOURNAMENT_CAPACITY - 1);
-  const fallbackOpponents = opponentPool.length > 0 ? opponentPool : [player];
-  const filledOpponents = Array.from({ length: LOCAL_TOURNAMENT_CAPACITY - 1 }, (_, index) => {
-    return fallbackOpponents[index % fallbackOpponents.length] ?? player;
+    opponents.filter((opponent) => !localPlayers.some((localPlayer) => localPlayer.character.id === opponent.id)),
+    seedText
+  ).slice(0, LOCAL_TOURNAMENT_CAPACITY - localPlayers.length);
+  const fallbackOpponents = opponentPool.length > 0
+    ? opponentPool
+    : localPlayers.map((localPlayer) => localPlayer.character);
+  const filledOpponents = Array.from({ length: LOCAL_TOURNAMENT_CAPACITY - localPlayers.length }, (_, index) => {
+    return fallbackOpponents[index % fallbackOpponents.length] ?? localPlayers[0]?.character ?? opponents[0];
   });
   const entries: TournamentEntry[] = [
-    makeEntry('local-player', 'YOU', player.id, 1, false, true, now),
+    ...localPlayers.map((localPlayer, index) =>
+      makeEntry(localPlayer.entryId, localPlayer.displayName, localPlayer.character.id, index + 1, false, true, now)
+    ),
     ...filledOpponents.map((opponent, index) =>
-      makeEntry(`cpu-${index + 1}`, opponent.displayName, opponent.id, index + 2, true, false, now)
+      makeEntry(`cpu-${index + 1}`, opponent.displayName, opponent.id, localPlayers.length + index + 1, true, false, now)
     )
   ];
   const matches = makeEightPlayerMatches(entries);
@@ -42,6 +57,36 @@ export function createLocalTournamentBracket(
     createdAt: now,
     updatedAt: now,
     reward: makeDefaultReward('freeLocal')
+  };
+}
+
+export function createCustomLocalTournamentBracket(
+  fighters: TournamentCharacterSeed[],
+  now = Date.now()
+): TournamentBracket {
+  const fallback = fighters[0] ?? { id: 'astra', displayName: 'Astra' };
+  const pool = deterministicShuffle(fighters.length > 0 ? fighters : [fallback], `custom-${now}`);
+  const filledFighters = Array.from({ length: LOCAL_TOURNAMENT_CAPACITY }, (_, index) => {
+    return pool[index % pool.length] ?? fallback;
+  });
+  const entries: TournamentEntry[] = filledFighters.map((fighter, index) =>
+    makeEntry(`custom-${index + 1}`, fighter.displayName, fighter.id, index + 1, false, true, now)
+  );
+  const matches = makeEightPlayerMatches(entries);
+
+  return {
+    id: `custom-${now}`,
+    kind: 'freeLocal',
+    status: 'roundActive',
+    entries,
+    matches,
+    currentRound: 1,
+    capacity: LOCAL_TOURNAMENT_CAPACITY,
+    minEntries: LOCAL_TOURNAMENT_CAPACITY,
+    paidEnabled: false,
+    createdAt: now,
+    updatedAt: now,
+    reward: { ...makeDefaultReward('freeLocal'), label: 'Custom character tournament crown' }
   };
 }
 
@@ -110,6 +155,23 @@ export function getAssignedTournamentMatch(bracket: TournamentBracket | null, en
   );
 }
 
+export function getLocalTournamentPlayerEntryIds(bracket: TournamentBracket | null | undefined) {
+  return bracket?.entries.filter((entry) => entry.isLocalPlayer).map((entry) => entry.id) ?? [];
+}
+
+export function getNextPlayableLocalTournamentMatch(bracket: TournamentBracket | null | undefined) {
+  const localEntryIds = new Set(getLocalTournamentPlayerEntryIds(bracket));
+  if (!bracket || localEntryIds.size === 0) return undefined;
+  return bracket.matches
+    .filter((match) => (
+      match.status === 'ready' &&
+      match.entryAId &&
+      match.entryBId &&
+      (localEntryIds.has(match.entryAId) || localEntryIds.has(match.entryBId))
+    ))
+    .sort((left, right) => left.round - right.round || left.index - right.index)[0];
+}
+
 export function getTournamentOpponentEntry(bracket: TournamentBracket | null, match: TournamentMatch | undefined, entryId: string | undefined) {
   if (!bracket || !match || !entryId) return undefined;
   const opponentId = match.entryAId === entryId ? match.entryBId : match.entryAId;
@@ -131,7 +193,8 @@ export function advanceTournamentBracket(
   const final = completed.find((match) => match.round === 3 && match.status === 'completed');
   const status = final ? 'completed' : 'roundActive';
   const currentRound = final ? 3 : Math.min(3, Math.max(1, ...completed.filter((match) => match.status === 'ready').map((match) => match.round)));
-  const reward = final?.winnerEntryId === 'local-player' || bracket.kind === 'freeOnline'
+  const finalWinner = getTournamentEntry({ ...bracket, matches: completed }, final?.winnerEntryId);
+  const reward = finalWinner?.isLocalPlayer || bracket.kind === 'freeOnline'
     ? { ...(bracket.reward ?? makeDefaultReward(bracket.kind)), state: final ? 'earned' as const : bracket.reward?.state ?? 'locked' as const }
     : bracket.reward;
 
@@ -145,14 +208,15 @@ export function advanceTournamentBracket(
   };
 }
 
-export function simulateCpuTournamentMatches(bracket: TournamentBracket, protectedEntryId = 'local-player', now = Date.now()) {
+export function simulateCpuTournamentMatches(bracket: TournamentBracket, protectedEntryIds: string | string[] = getLocalTournamentPlayerEntryIds(bracket), now = Date.now()) {
+  const protectedIds = new Set(Array.isArray(protectedEntryIds) ? protectedEntryIds : [protectedEntryIds]);
   let next = bracket;
   let changed = true;
   while (changed && next.status !== 'completed') {
     changed = false;
     const cpuReady = next.matches.find((match) => {
       if (match.status !== 'ready' || !match.entryAId || !match.entryBId) return false;
-      if (match.entryAId === protectedEntryId || match.entryBId === protectedEntryId) return false;
+      if (protectedIds.has(match.entryAId) || protectedIds.has(match.entryBId)) return false;
       return true;
     });
     if (cpuReady?.entryAId && cpuReady.entryBId) {

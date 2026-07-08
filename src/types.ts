@@ -1159,6 +1159,7 @@ export type MatchOptions = {
   playIntro?: boolean;
   aiSeed?: number;
   roster?: CharacterDefinition[];
+  cpuSlots?: Array<1 | 2>;
 };
 
 export type FighterRuntime = {
@@ -1274,6 +1275,7 @@ export type MatchSnapshot = {
   stage: StageDefinition;
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
+  cpuSlots?: Array<1 | 2>;
   aiSeed: number;
   roundAiSeed: number;
   roundTime: number;
