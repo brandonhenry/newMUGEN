@@ -3214,8 +3214,166 @@
       }
     }
   },
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "robot-cannon-projectile",
+      "name": "Robot Cannon Bolt",
+      "frames": [
+        "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-000.png",
+        "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-001.png",
+        "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-000.png",
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-001.png",
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/dr-mashirito/projectiles/robot-cannon-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#9eeeff"
+    },
+    {
+      "id": "thrown-bolt-projectile",
+      "name": "Thrown Bolt",
+      "frames": [
+        "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+        ],
+        "recovery": [
+          "/characters/dr-mashirito/projectiles/thrown-bolt-projectile/frames/frame-000.png"
+        ]
+      },
+      "fps": 12,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.34,
+        0.34,
+        0.34
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#9eeeff"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-robot-cannon",
+        "projectileId": "robot-cannon-projectile",
+        "label": "Caramel Man Cannon Robot Cannon Bolt",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 11,
+        "forwardVelocity": 11,
+        "homingStrength": 2.4,
+        "homingTurnRate": 3.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.52,
+            0.46,
+            0.76
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "cmd-3-4-thrown-bolt",
+        "projectileId": "thrown-bolt-projectile",
+        "label": "Bolt Scatter Smash Thrown Bolt",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 94,
+        "recoveryFrames": 8,
+        "lifetimeFrames": 112,
+        "speed": 8.5,
+        "forwardVelocity": 8.5,
+        "verticalVelocity": 4.5,
+        "gravity": 18,
+        "homingStrength": 1.2,
+        "homingTurnRate": 1.8,
+        "homingEndFrame": 38,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.34,
+            0.32,
+            0.46
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
+  },
   "voice": {
     "hit": [
       "/characters/dr-mashirito/sounds/voices/hit-01.ogg"

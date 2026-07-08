@@ -3024,6 +3024,210 @@
       "/characters/majin-buu/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "ki-energy-projectile",
+      "name": "Ki Shot",
+      "frames": [
+        "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-000.png",
+        "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-001.png",
+        "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-000.png",
+          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-001.png",
+          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/majin-buu/projectiles/ki-energy-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.46,
+        0.46,
+        0.46
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ff8ce8"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-ki-energy",
+        "projectileId": "ki-energy-projectile",
+        "label": "Buu Burst Roll Ki Shot",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.48,
+            0.68
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-ki-energy",
+        "projectileId": "ki-energy-projectile",
+        "label": "Majin Aura Tornado Ki Shot",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.48,
+            0.68
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:qcf+1": [
+      {
+        "id": "cmd-qcf-1-ki-energy",
+        "projectileId": "ki-energy-projectile",
+        "label": "Majin Rush Jab Ki Shot",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.48,
+            0.68
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+4": [
+      {
+        "id": "cmd-o-4-ki-energy",
+        "projectileId": "ki-energy-projectile",
+        "label": "Overdrive Tornado Kick Ki Shot",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 96,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 108,
+        "speed": 10,
+        "forwardVelocity": 10,
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 54,
+        "nearMissRadius": 0.58,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.48,
+            0.68
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
+  }
 }

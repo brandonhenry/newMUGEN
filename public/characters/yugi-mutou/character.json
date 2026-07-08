@@ -2814,8 +2814,384 @@
       }
     }
   },
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "card-magic-projectile",
+      "name": "Card Spell",
+      "frames": [
+        "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png",
+        "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-001.png",
+        "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-000.png",
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-001.png",
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/yugi-mutou/projectiles/card-magic-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 14,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.42,
+        0.42,
+        0.42
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#8fd3ff"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:f+1": [
+      {
+        "id": "cmd-f-1-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Forward Card Check Card Spell",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:FC+1": [
+      {
+        "id": "cmd-fc-1-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Crouch Card Jab Card Spell",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:1+2": [
+      {
+        "id": "cmd-1-2-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Card Guard Strike Card Spell",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:2+3": [
+      {
+        "id": "cmd-2-3-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Low Card Feint Card Spell",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "cmd-3-4-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Trap Card Crush Card Spell",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Millennium Aura Drive Card Spell",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:qcf+1": [
+      {
+        "id": "cmd-qcf-1-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Quick Spell Flick Card Spell",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+1": [
+      {
+        "id": "cmd-o-1-card-magic",
+        "projectileId": "card-magic-projectile",
+        "label": "Overdrive Card Flick Card Spell",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 70,
+        "recoveryFrames": 12,
+        "lifetimeFrames": 94,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.72,
+        "targetMode": "targetLocation",
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.7,
+            0.48,
+            0.7
+          ]
+        },
+        "homingMode": "none",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
+  },
   "voice": {
     "hit": [
       "/characters/yugi-mutou/sounds/voices/hit-01.wav"

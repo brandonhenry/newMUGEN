@@ -11094,8 +11094,335 @@
     "width": 0.89,
     "height": 1.08
   },
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "chakra-or-tool-projectile",
+      "name": "Chakra Shot",
+      "frames": [
+        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png",
+        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-001.png",
+        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png",
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-001.png",
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.42,
+        0.42,
+        0.42
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#b8f4ff"
+    }
+  ],
+  "moveProjectiles": {
+    "kickright": [
+      {
+        "id": "kickright-chakra-or-tool",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Rasenshuriken Arc Chakra Shot",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 50,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-chakra-or-tool",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Rasenshuriken Tornado Chakra Shot",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 50,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:1+4": [
+      {
+        "id": "cmd-1-4-chakra-or-tool",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Rasenshuriken Smash Chakra Shot",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 50,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "neutral:heavy-kick-special": [
+      {
+        "id": "neutral-heavy-kick-special-chakra-or-tool",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Wind Release: Giant Rasengan Chakra Shot",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 50,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:SS+4": [
+      {
+        "id": "cmd-ss-4-chakra-or-tool",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Sidestep Rasenshuriken Chakra Shot",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 50,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+4": [
+      {
+        "id": "cmd-o-4-chakra-or-tool",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Overdrive Rasenshuriken Tornado Chakra Shot",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 50,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:FC+3+4": [
+      {
+        "id": "cmd-fc-3-4-chakra-or-tool",
+        "projectileId": "chakra-or-tool-projectile",
+        "label": "Crouch Rasenshuriken Chakra Shot",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 88,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 100,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingStrength": 3.2,
+        "homingTurnRate": 3.8,
+        "homingEndFrame": 50,
+        "nearMissRadius": 0.56,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.38,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
+  },
   "voice": {
     "hit": [
       "/characters/kiro/sounds/voices/hit-01.wav"

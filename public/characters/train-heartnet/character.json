@@ -2886,6 +2886,415 @@
       }
     }
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "firearm-bullet-projectile",
+      "name": "Bullet",
+      "frames": [
+        "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png",
+        "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-001.png",
+        "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-000.png",
+          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-001.png",
+          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/train-heartnet/projectiles/firearm-bullet-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.32,
+        0.32,
+        0.32
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffe06e"
+    }
+  ],
+  "moveProjectiles": {
+    "jableft": [
+      {
+        "id": "jableft-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Quick Hades Shot Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "jabright": [
+      {
+        "id": "jabright-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Hades Body Shot Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:f+1": [
+      {
+        "id": "cmd-f-1-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Forward Hades Shot Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:1+2": [
+      {
+        "id": "cmd-1-2-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Sweeper Slide Shot Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:1+3": [
+      {
+        "id": "cmd-1-3-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Hades Launcher Shot Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:d+1": [
+      {
+        "id": "cmd-d-1-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Ducking Hades Shot Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:qcf+1": [
+      {
+        "id": "cmd-qcf-1-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Hades Quick Shot Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:WS+2": [
+      {
+        "id": "cmd-ws-2-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Rising Hades Shot Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+1": [
+      {
+        "id": "cmd-o-1-firearm-bullet",
+        "projectileId": "firearm-bullet-projectile",
+        "label": "Overdrive Hades Shot Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
+  }
 }

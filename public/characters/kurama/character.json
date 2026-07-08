@@ -18,7 +18,46 @@
   ],
   "spriteFrameCount": 220,
   "voxelProfile": "hd-image-source",
-  "projectiles": [],
+  "projectiles": [
+    {
+      "id": "finger-gun-bullet-projectile",
+      "name": "Finger-Gun Bullet",
+      "frames": [
+        "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+        "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+        "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-000.png",
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-001.png",
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/kurama/projectiles/finger-gun-bullet-projectile/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.32,
+        0.32,
+        0.32
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffe06e"
+    }
+  ],
   "animationFrames": {
     "idle": [
       "/characters/kurama/frames/frame-000.png",
@@ -602,7 +641,705 @@
     "secondary": "#db1a7f",
     "accent": "#df47dd"
   },
-  "moveProjectiles": {},
+  "moveProjectiles": {
+    "jableft": [
+      {
+        "id": "jableft-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Quick Rose Jab Finger-Gun Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "jabright": [
+      {
+        "id": "jabright-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Rose Whip Slash Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "kickleft": [
+      {
+        "id": "kickleft-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Kurama Left Kick Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:f+1": [
+      {
+        "id": "cmd-f-1-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Forward Rose Jab Finger-Gun Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:d/f+2": [
+      {
+        "id": "cmd-d-f-2-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Diagonal Whip Launcher Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:FC+1": [
+      {
+        "id": "cmd-fc-1-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Crouching Rose Lash Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:FC+2": [
+      {
+        "id": "cmd-fc-2-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Crouch Whip Launcher Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:1+2": [
+      {
+        "id": "cmd-1-2-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Demon Rose Step Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:1+3": [
+      {
+        "id": "cmd-1-3-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Rose Whip Launcher Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:2+3": [
+      {
+        "id": "cmd-2-3-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Low Rose Feint Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "cmd-3-4-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Demon Rose Crush Finger-Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Rose Aura Drive Finger-Gun Bullet",
+        "spawnFrame": 4,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:f+2": [
+      {
+        "id": "cmd-f-2-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Forward Rose Slash Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:d+1": [
+      {
+        "id": "cmd-d-1-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Ducking Rose Jab Finger-Gun Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:qcf+1": [
+      {
+        "id": "cmd-qcf-1-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Rose Rush Jab Finger-Gun Bullet",
+        "spawnFrame": 1,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:WS+2": [
+      {
+        "id": "cmd-ws-2-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "While-Rising Rose Slash Finger-Gun Bullet",
+        "spawnFrame": 2,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ],
+    "cmd:O+1": [
+      {
+        "id": "cmd-o-1-finger-gun-bullet",
+        "projectileId": "finger-gun-bullet-projectile",
+        "label": "Overdrive Rose Jab Finger-Gun Bullet",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          1.08,
+          0.94
+        ],
+        "startupFrames": 0,
+        "activeFrames": 72,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 82,
+        "speed": 14,
+        "forwardVelocity": 14,
+        "homingStrength": 1.8,
+        "homingTurnRate": 2.4,
+        "homingEndFrame": 34,
+        "nearMissRadius": 0.46,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.3,
+            0.62
+          ]
+        },
+        "homingMode": "limited",
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true
+      }
+    ]
+  },
   "moveOverrides": {
     "jableft": {
       "startupFrames": 9,
