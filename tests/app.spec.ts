@@ -1554,6 +1554,7 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
       (window as typeof window & { __koreE2ECompleteTrainingTrial?: () => void }).__koreE2ECompleteTrainingTrial?.();
     });
   }
+  await expect(page.getByTestId('training-great-message')).toContainText('GREAT');
   await expect(page.getByTestId('training-success-overlay')).toContainText('SUCCESS');
   await expect(page.getByRole('button', { name: /Next Trial|Review Next/ })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Retry' })).toBeVisible();

@@ -526,6 +526,7 @@ const ROUND_ANNOUNCER_SFX = [
   '/sounds/announcer/rounds/round-4.wav',
   '/sounds/announcer/rounds/round-5.wav'
 ] as const;
+const TRAINING_GREAT_SFX = '/sounds/announcer/great.wav';
 const KI_CHARGE_SFX = '/sounds/ki/charge.wav';
 const KI_MAX_CHARGE_SFX = '/sounds/ki/max-charge.wav';
 const KI_MAX_VALUE = 100;
@@ -535,7 +536,8 @@ const CRITICAL_GAME_SFX_URLS = [...new Set([
   KORE_INNER_MENU_SELECT_SOUND_URL,
   HIT_SFX.punch1,
   HIT_SFX.heavy2,
-  ROUND_ANNOUNCER_SFX[0]
+  ROUND_ANNOUNCER_SFX[0],
+  TRAINING_GREAT_SFX
 ])];
 const SFX_POOL_SIZE = 2;
 const sfxPools = new Map<string, { audios: HTMLAudioElement[]; cursor: number }>();
@@ -13367,6 +13369,12 @@ function playRoundAnnouncerSfx(round: number, audioSettings: GameSettings['audio
   return true;
 }
 
+function playTrainingGreatSfx(audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return false;
+  playPooledSfx(TRAINING_GREAT_SFX, clamp(audioSettings.master * audioSettings.sfx * 0.9, 0, 1), 1);
+  return true;
+}
+
 function getKiChargeSfxVolume(audioSettings: GameSettings['audio']) {
   if (audioSettings.muted || audioSettings.master <= 0 || audioSettings.sfx <= 0) return 0;
   return clamp(audioSettings.master * audioSettings.sfx * 0.16, 0, 0.24);
@@ -20680,6 +20688,7 @@ function FightScreen({
   const [completedTrainingTrialIds, setCompletedTrainingTrialIds] = useState<Set<string>>(() => readTrainingTrialCompletion(p1.id));
   const [previewPlayback, setPreviewPlayback] = useState<{ trialId: string; frame: number } | null>(null);
   const [trainingTrialOutcome, setTrainingTrialOutcome] = useState<TrainingTrialOutcome | null>(null);
+  const [trainingTrialCallout, setTrainingTrialCallout] = useState<string | null>(null);
   const activeTrainingTrialRef = useRef<TrainingTrialDefinition | null>(activeTrainingTrial);
   const trainingTrialProgressRef = useRef<TrainingTrialProgress | null>(trainingTrialProgress);
   const previewPlaybackRef = useRef<{ trialId: string; frame: number } | null>(previewPlayback);
@@ -20980,6 +20989,7 @@ function FightScreen({
       };
       trainingTrialProgressRef.current = nextProgress;
       setTrainingTrialProgress(nextProgress);
+      setTrainingTrialCallout('GREAT');
       setCompletedTrainingTrialIds((completed) => {
         if (completed.has(trial.id)) return completed;
         const updated = new Set(completed);
@@ -21324,6 +21334,7 @@ function FightScreen({
         const next = current ? advanceTrainingTrialWithImpact(current, activeTrainingTrial, event) : current;
         trainingTrialProgressRef.current = next;
         if (next?.completed && next.succeeded) {
+          setTrainingTrialCallout('GREAT');
           setCompletedTrainingTrialIds((completed) => {
             if (completed.has(activeTrainingTrial.id)) return completed;
             const updated = new Set(completed);
@@ -21353,6 +21364,11 @@ function FightScreen({
       playedRoundAnnouncerKeyRef.current = announcerKey;
     }
   }, [gameplayAudioEnabled, match.message, match.phase, match.round, settings.audio]);
+
+  useEffect(() => {
+    if (!gameplayAudioEnabled || mode !== 'training' || trainingTrialCallout !== 'GREAT') return;
+    playTrainingGreatSfx(settings.audio);
+  }, [gameplayAudioEnabled, mode, settings.audio, trainingTrialCallout]);
 
   useEffect(() => {
     if (!gameplayAudioEnabled) {
@@ -22796,6 +22812,7 @@ function FightScreen({
                   setTrainingTrialProgress(nextProgress);
                 }
                 if (!currentPreview && nextProgress.completed && nextProgress.succeeded) {
+                  setTrainingTrialCallout('GREAT');
                   setCompletedTrainingTrialIds((completed) => {
                     if (completed.has(currentTrial.id)) return completed;
                     const updated = new Set(completed);
@@ -22988,6 +23005,7 @@ function FightScreen({
   const restartTrainingTrial = useCallback((trial = activeTrainingTrialRef.current ?? activeTrainingTrial, preview = false) => {
     if (!trial) return;
     setTrainingTrialOutcome(null);
+    setTrainingTrialCallout(null);
     dismissedTrainingTrialOutcomeRef.current = null;
     const fresh = prepareTrainingTrialMatch(makeTrialMatch(trial), trial);
     installFreshMatch(fresh);
@@ -23038,6 +23056,7 @@ function FightScreen({
         comboHits: Math.max(0, fighter.comboHits),
         comboDamage: Math.max(0, Math.round(fighter.comboDamage))
       });
+      setTrainingTrialCallout(null);
       setPauseMenuView('menu');
       setPaused(true);
     }, 3500);
@@ -23046,6 +23065,7 @@ function FightScreen({
 
   const selectTrainingTrial = useCallback((trial: TrainingTrialDefinition) => {
     setTrainingTrialOutcome(null);
+    setTrainingTrialCallout(null);
     dismissedTrainingTrialOutcomeRef.current = null;
     captureFightAnalytics('training_trial_selected', {
       trial_id: trial.id,
@@ -23251,6 +23271,11 @@ function FightScreen({
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
         >
           {match.message}
+        </div>
+      )}
+      {trainingTrialCallout && mode === 'training' && !onlineAssetGateActive && !trainingTrialOutcome && (
+        <div className="match-message fight-message training-great-message" data-testid="training-great-message">
+          {trainingTrialCallout}
         </div>
       )}
       {isOnline && !onlineAssetGateActive && onlineState !== 'connected' && onlineState !== 'idle' && onlineState !== 'disconnected' && onlineState !== 'error' && (
