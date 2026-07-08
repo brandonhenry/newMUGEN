@@ -43,6 +43,7 @@ import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
+import { cameraScreenRightStageAlignment, shouldFlipCameraSideForControls, stableFightCameraSide } from '../lib/fightCamera';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
@@ -3463,11 +3464,6 @@ function finiteOr(value: number, fallback: number) {
   return Number.isFinite(value) ? value : fallback;
 }
 
-function stableFightCameraSide(dx: number, dz: number) {
-  const lineLength = Math.hypot(dx, dz) || 1;
-  return [-dz / lineLength, dx / lineLength] as const;
-}
-
 let lastFightCameraInputDebugAt = 0;
 
 function logFightCameraInputDebug(payload: Record<string, unknown>) {
@@ -3740,7 +3736,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
       rawSide.set(cameraX, 0, cameraZ).normalize();
       if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
-      if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
+      if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
 
       const perspective = camera as THREE.PerspectiveCamera;
       const aspect = size.width / Math.max(1, size.height);
@@ -3820,6 +3816,7 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
       const [computedCameraX, computedCameraZ] = stableFightCameraSide(dx, dz);
       rawSide.set(computedCameraX, 0, computedCameraZ).normalize();
       if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
+      if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
       const cameraX = rawSide.x;
       const cameraZ = rawSide.z;
       const cameraDistance = THREE.MathUtils.clamp(
@@ -3869,13 +3866,14 @@ function CameraRig({ match, settings }: { match: MatchSnapshot; settings: GameSe
     const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
     rawSide.set(cameraX, 0, cameraZ).normalize();
     if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
-    if (side.dot(rawSide) < 0) rawSide.multiplyScalar(-1);
+    if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
     logFightCameraInputDebug({
       mode: 'normal',
       rawSideX: Number(rawSide.x.toFixed(3)),
       rawSideZ: Number(rawSide.z.toFixed(3)),
       smoothedSideX: Number(side.x.toFixed(3)),
       smoothedSideZ: Number(side.z.toFixed(3)),
+      screenRightStageAlignment: Number(cameraScreenRightStageAlignment(rawSide, match.stage).toFixed(3)),
       p1: {
         x: Number(p1x.toFixed(3)),
         z: Number(p1z.toFixed(3)),
