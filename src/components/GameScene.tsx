@@ -1600,7 +1600,17 @@ function ImpactSparkLayer({
   settings: GameSettings['display']['impactSparks'];
   reducedMotion: boolean;
 }) {
-  if (!settings.enabled) return null;
+  if (!settings.enabled) {
+    const blockEvents = events.filter((event) => event.kind === 'block').slice(-4);
+    if (blockEvents.length === 0) return null;
+    return (
+      <group>
+        {blockEvents.map((event) => (
+          <ImpactSpark key={event.id} event={event} settings={settings} reducedMotion={reducedMotion} shieldOnly />
+        ))}
+      </group>
+    );
+  }
   return (
     <group>
       {events.slice(-8).map((event) => (
@@ -1613,11 +1623,13 @@ function ImpactSparkLayer({
 function ImpactSpark({
   event,
   settings,
-  reducedMotion
+  reducedMotion,
+  shieldOnly = false
 }: {
   event: ImpactSparkEvent;
   settings: GameSettings['display']['impactSparks'];
   reducedMotion: boolean;
+  shieldOnly?: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Group>(null);
@@ -1630,9 +1642,9 @@ function ImpactSpark({
   const colors = useMemo(() => resolveImpactSparkColors(event, settings), [event, settings]);
   const profile = useMemo(() => resolveImpactSparkProfile(event), [event]);
   const seed = event.id * 17 + event.attackerSlot * 101 + event.defenderSlot * 211;
-  const cinematic = settings.cinematic;
+  const cinematic = settings.cinematic && !shieldOnly;
   const duration = reducedMotion ? profile.reducedDuration : profile.duration;
-  const showRings = settings.shape === 'burst' || settings.shape === 'ring' || isBlock || isLauncher || isClash;
+  const showRings = !shieldOnly && (settings.shape === 'burst' || settings.shape === 'ring' || isBlock || isLauncher || isClash);
   const showShards = cinematic && settings.shape === 'shards';
   const showSlashes = cinematic && settings.shape === 'shards';
   const showParticles = cinematic && (settings.shape !== 'ring' || isBlock || isLauncher || isClash);
@@ -1677,7 +1689,7 @@ function ImpactSpark({
       {showSlashes && !reducedMotion && <ImpactSlashStreaks event={event} colors={colors} profile={profile} seed={seed + 37} />}
       {showParticles && <ImpactSphereParticles event={event} colors={colors} profile={profile} seed={seed + 53} reducedMotion={reducedMotion} />}
       {showShards && <ImpactShardBurst refGroup={shardRef} event={event} colors={colors} profile={profile} seed={seed + 71} reducedMotion={reducedMotion} />}
-      <ImpactCore colors={colors} profile={profile} />
+      {!shieldOnly && <ImpactCore colors={colors} profile={profile} />}
     </group>
   );
 }
