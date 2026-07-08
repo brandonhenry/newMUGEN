@@ -24243,8 +24243,8 @@ function TrainingTrialPanel({
   })).filter((group) => group.trials.length > 0);
   const modeLabels: Partial<Record<TrainingTrialMode, string>> = {
     free: 'Free Training',
-    basics: 'Basics',
-    combos: 'Combos'
+    basics: 'Basic Trials',
+    combos: 'Combo Trials'
   };
   const modeCounts: Partial<Record<TrainingTrialMode, number | null>> = {
     free: null,

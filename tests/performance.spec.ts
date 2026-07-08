@@ -125,7 +125,7 @@ async function startBasicTrainingTrial(page: Page) {
   await page.waitForTimeout(4_200);
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Training Mode' }).click();
-  await page.getByRole('button', { name: /Basics/ }).click();
+  await page.getByRole('button', { name: /Basic Trials/ }).click();
   await page.getByRole('button', { name: /Walk In/ }).click();
   await page.getByRole('button', { name: 'Try', exact: true }).click();
   await expect(page.locator('.training-trial-hud')).toBeVisible({ timeout: 5_000 });

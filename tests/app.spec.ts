@@ -356,6 +356,42 @@ async function expectSuccessPanelFitsViewport(page: Page) {
   expect(result).toMatchObject({ ok: true });
 }
 
+async function expectTrainingModeTabsHaveReadableSpacing(page: Page) {
+  const result = await page.locator('.training-mode-switch').evaluate((switcher) => {
+    const buttons = [...switcher.querySelectorAll<HTMLButtonElement>('button')];
+    return buttons.map((button) => {
+      const label = button.querySelector<HTMLElement>(':scope > span');
+      const count = button.querySelector<HTMLElement>(':scope > small');
+      const labelRange = label ? document.createRange() : null;
+      if (labelRange && label?.firstChild) labelRange.selectNodeContents(label);
+      const labelLines = labelRange ? [...labelRange.getClientRects()].map((rect) => ({
+        top: rect.top,
+        bottom: rect.bottom
+      })) : [];
+      labelRange?.detach();
+      const labelRect = label?.getBoundingClientRect();
+      const countRect = count?.getBoundingClientRect();
+      const lineOverlap = labelLines.some((rect, index) => (
+        index > 0 && rect.top < labelLines[index - 1].bottom - 1
+      ));
+      return {
+        text: button.innerText,
+        lineOverlap,
+        countGap: labelRect && countRect ? countRect.top - labelRect.bottom : null
+      };
+    });
+  });
+  expect(result).toEqual(expect.arrayContaining([
+    expect.objectContaining({ text: expect.stringContaining('Free Training'), lineOverlap: false }),
+    expect.objectContaining({ text: expect.stringContaining('Basic Trials'), lineOverlap: false }),
+    expect.objectContaining({ text: expect.stringContaining('Combo Trials'), lineOverlap: false })
+  ]));
+  for (const tab of result) {
+    expect(tab.lineOverlap, tab.text).toBe(false);
+    if (tab.countGap !== null) expect(tab.countGap, tab.text).toBeGreaterThanOrEqual(4);
+  }
+}
+
 function keyValue(code: string) {
   if (code.startsWith('Key')) return code.slice(3).toLowerCase();
   return code;
@@ -764,7 +800,7 @@ test('start basics loads the chamber then opens the trial picker', async ({ page
   await page.getByRole('button', { name: 'Training' }).click({ force: true });
   await expect(page.locator('.training-select-screen')).toBeVisible();
   await page.getByRole('button', { name: 'Next training mode' }).click();
-  await expect(page.getByRole('group', { name: 'Training mode' })).toContainText('Basics');
+  await expect(page.getByRole('group', { name: 'Training mode' })).toContainText('Basic Trials');
   await page.getByRole('button', { name: 'Start Basics' }).click();
 
   await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
@@ -1642,7 +1678,7 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
   await page.getByRole('button', { name: 'Training Mode' }).click();
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible();
 
-  await page.getByRole('button', { name: /Basics/ }).click();
+  await page.getByRole('button', { name: /Basic Trials/ }).click();
   await expect(page.getByRole('button', { name: /Walk In/ })).toBeVisible();
   await page.getByRole('button', { name: /Walk In/ }).click();
   await expect(page.locator('.zoro-trainer-callout')).toBeVisible();
@@ -1675,8 +1711,8 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Training Mode' }).click();
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
-  await page.getByRole('button', { name: /Combos/ }).click();
-  await expect(page.locator('.combo-trial-list')).toContainText('Combos');
+  await page.getByRole('button', { name: /Combo Trials/ }).click();
+  await expect(page.locator('.combo-trial-list')).toContainText('Combo Trials');
   const groundedLauncherTrial = page.getByRole('button', { name: /Grounded Launcher/i }).first();
   await expect(groundedLauncherTrial).toBeVisible();
   await groundedLauncherTrial.click();
@@ -1693,7 +1729,9 @@ test('training trial next flow stays responsive and success overlay fits Steam D
   await startTraining(page);
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Training Mode' }).click();
-  await page.getByRole('button', { name: /Basics/ }).click();
+  await expectTrainingModeTabsHaveReadableSpacing(page);
+  await page.getByRole('button', { name: /Basic Trials/ }).click();
+  await expectTrainingModeTabsHaveReadableSpacing(page);
   await page.getByRole('button', { name: /Walk In/ }).click();
   await page.getByRole('button', { name: 'Try', exact: true }).click();
   await expect(page.locator('.training-trial-hud')).toBeVisible();
@@ -1728,7 +1766,7 @@ test('opens training combo trials and shows counter-hit progress', async ({ page
   await startTraining(page);
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Training Mode' }).click();
-  await page.getByRole('button', { name: /Combos/ }).click();
+  await page.getByRole('button', { name: /Combo Trials/ }).click();
   const counterHitTrial = page.getByRole('button', { name: /Counter Hit/i }).first();
   test.skip(await counterHitTrial.count() === 0, 'Selected training character has no counter-hit combo route');
   await expect(counterHitTrial).toBeVisible();

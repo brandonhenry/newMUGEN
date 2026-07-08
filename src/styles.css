@@ -10549,33 +10549,39 @@ button {
   font-size: 20px;
   font-weight: 950;
   letter-spacing: 0.08em;
+  line-height: 1.18;
   text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .training-mode-switch {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 6px;
+  gap: 8px;
   margin: 10px 0 14px;
 }
 
 .training-mode-switch button {
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  min-height: 64px;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  gap: 6px;
+  min-height: 74px;
   background: rgba(255, 255, 255, 0.07);
 }
 
 .training-mode-switch button > span {
+  min-width: 0;
   font-size: 26px;
   font-weight: 1000;
-  line-height: 1.05;
+  line-height: 1.14;
+  text-wrap: balance;
 }
 
 .training-mode-switch button small {
   color: var(--text-muted);
   font-size: 18px;
   font-weight: 850;
+  line-height: 1.15;
   text-transform: uppercase;
 }
 
@@ -11376,6 +11382,27 @@ button {
     gap: 12px;
     min-height: 60px;
     padding: 9px 12px;
+  }
+
+  .training-mode-switch {
+    gap: 8px;
+  }
+
+  .training-mode-switch button {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+    min-height: 70px;
+    padding-block: 10px;
+  }
+
+  .training-mode-switch button > span {
+    font-size: 23px;
+    line-height: 1.16;
+  }
+
+  .training-mode-switch button small {
+    font-size: 15px;
+    line-height: 1.18;
   }
 
   .trial-complete-mark {
