@@ -216,16 +216,12 @@
       "/characters/vegeta-super-saiyan/frames/frame-078.png"
     ],
     "cmd:O+2": [
-      "/characters/vegeta-super-saiyan/frames/frame-153.png",
-      "/characters/vegeta-super-saiyan/frames/frame-154.png",
-      "/characters/vegeta-super-saiyan/frames/frame-155.png",
-      "/characters/vegeta-super-saiyan/frames/frame-156.png",
-      "/characters/vegeta-super-saiyan/frames/frame-157.png",
-      "/characters/vegeta-super-saiyan/frames/frame-158.png",
-      "/characters/vegeta-super-saiyan/frames/frame-159.png",
-      "/characters/vegeta-super-saiyan/frames/frame-160.png",
-      "/characters/vegeta-super-saiyan/frames/frame-161.png",
-      "/characters/vegeta-super-saiyan/frames/frame-162.png"
+      "/characters/vegeta-super-saiyan/frames/frame-144.png",
+      "/characters/vegeta-super-saiyan/frames/frame-145.png",
+      "/characters/vegeta-super-saiyan/frames/frame-146.png",
+      "/characters/vegeta-super-saiyan/frames/frame-147.png",
+      "/characters/vegeta-super-saiyan/frames/frame-148.png",
+      "/characters/vegeta-super-saiyan/frames/frame-149.png"
     ],
     "cmd:1+4": [
       "/characters/vegeta-super-saiyan/frames/frame-073.png",
@@ -310,10 +306,10 @@
       "/characters/vegeta-super-saiyan/frames/frame-078.png"
     ],
     "cmd:O+1": [
-      "/characters/vegeta-super-saiyan/frames/frame-065.png",
-      "/characters/vegeta-super-saiyan/frames/frame-066.png",
-      "/characters/vegeta-super-saiyan/frames/frame-067.png",
-      "/characters/vegeta-super-saiyan/frames/frame-068.png"
+      "/characters/vegeta-super-saiyan/frames/frame-120.png",
+      "/characters/vegeta-super-saiyan/frames/frame-121.png",
+      "/characters/vegeta-super-saiyan/frames/frame-122.png",
+      "/characters/vegeta-super-saiyan/frames/frame-123.png"
     ],
     "cmd:O+4": [
       "/characters/vegeta-super-saiyan/frames/frame-073.png",
@@ -361,7 +357,7 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8,
+    "cmd:O+2": 12,
     "cmd:1+4": 9,
     "cmd:f+2": 10,
     "cmd:f+3": 9,
@@ -997,24 +993,47 @@
       "startupFrames": 30,
       "activeFrames": 8,
       "recoveryFrames": 38,
-      "damage": 16,
-      "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 19,
+      "damage": 21,
+      "blockDamage": 4,
+      "onBlockFrames": -12,
+      "onHitFrames": 42,
+      "onCounterHitFrames": 54,
       "whiffRecoveryFrames": 47,
-      "range": 2.1,
+      "range": 8.5,
       "forwardForce": 3.66,
       "forwardForceStartFrame": 38,
       "forwardForceEndFrame": 45,
-      "label": "Final Flash Drive",
+      "label": "Final Flash",
       "hitLevel": "special",
-      "tracking": "medium",
-      "knockdown": true,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "tracking": "none",
+      "knockdown": false,
+      "onComboHitFrames": 34,
+      "onJuggleHitFrames": 38,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 10,
+      "description": "Charge golden ki and release a launching full-screen Final Flash.",
+      "pushback": 0.82,
+      "blockPushback": 0.68,
+      "usesKi": true,
+      "kiCost": 38,
+      "kiBurst": true,
+      "holdable": true,
+      "launchHeight": 2.05,
+      "launchVelocity": 6.2,
+      "juggleRefloatVelocity": 5.6,
+      "juggleGravityScale": 0.86,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "size": [
+          0.18,
+          0.18,
+          0.18
+        ]
+      }
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -1865,23 +1884,48 @@
       "startupFrames": 20,
       "activeFrames": 4,
       "recoveryFrames": 27,
-      "onBlockFrames": 1,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
+      "onBlockFrames": -7,
+      "onHitFrames": 28,
+      "onCounterHitFrames": 36,
       "whiffRecoveryFrames": 32,
       "forwardForce": 2.24,
       "forwardForceStartFrame": 13,
       "forwardForceEndFrame": 25,
-      "label": "Overdrive Super Saiyan Jab",
-      "hitLevel": "high",
-      "tracking": "medium",
+      "label": "Super Ki Blast",
+      "hitLevel": "special",
+      "tracking": "none",
       "cancelable": false,
-      "damage": 16,
-      "blockDamage": 1,
-      "onComboHitFrames": 14,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7
+      "damage": 10,
+      "blockDamage": 2,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 7,
+      "description": "Fire a quick short-range DBZ-style ki blast instead of holding a charge.",
+      "range": 3.2,
+      "pushback": 0.52,
+      "blockPushback": 0.42,
+      "usesKi": true,
+      "kiCost": 12,
+      "kiBurst": true,
+      "holdable": false,
+      "launchHeight": 1.05,
+      "launchVelocity": 4.8,
+      "juggleRefloatVelocity": 4.4,
+      "juggleGravityScale": 0.96,
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.08,
+          0.62
+        ],
+        "size": [
+          0.16,
+          0.16,
+          0.16
+        ]
+      }
     },
     "cmd:O+4": {
       "startupFrames": 23,
@@ -3140,6 +3184,172 @@
       "/characters/vegeta-super-saiyan/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "final-flash-blast",
+      "name": "Final Flash",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffe36b",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#ffe36b",
+        "outerColor": "#5eb8ff",
+        "impactColor": "#fff8c9",
+        "radius": 0.5,
+        "growFrames": 8,
+        "fadeFrames": 18,
+        "shake": 0.22
+      }
+    },
+    {
+      "id": "super-saiyan-ki-blast",
+      "name": "Super Saiyan Ki Blast",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffe36b",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#ffe36b",
+        "outerColor": "#5eb8ff",
+        "impactColor": "#fff8c9",
+        "radius": 0.22,
+        "growFrames": 4,
+        "fadeFrames": 10,
+        "shake": 0.08
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "final-flash-blast-release",
+        "projectileId": "final-flash-blast",
+        "kind": "blast",
+        "label": "Final Flash",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.14,
+          0.76
+        ],
+        "startupFrames": 0,
+        "activeFrames": 46,
+        "recoveryFrames": 22,
+        "lifetimeFrames": 78,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.76,
+            0.84,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": true,
+        "chargeFramesMax": 120,
+        "minDamageScale": 1,
+        "maxDamageScale": 1.55
+      }
+    ],
+    "cmd:O+1": [
+      {
+        "id": "super-saiyan-ki-blast-shot",
+        "projectileId": "super-saiyan-ki-blast",
+        "kind": "blast",
+        "label": "Super Ki Blast",
+        "spawnFrame": 20,
+        "spawnOffset": [
+          0,
+          1.1,
+          0.68
+        ],
+        "startupFrames": 0,
+        "activeFrames": 18,
+        "recoveryFrames": 10,
+        "lifetimeFrames": 34,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 2.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.32,
+            0.42,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 0.9,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }

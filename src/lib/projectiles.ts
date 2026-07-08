@@ -2,9 +2,11 @@ import type {
   BoxSpec,
   CharacterProjectileDefinition,
   EffectBlendMode,
+  BlastVisualDefinition,
   MoveProjectileInstance,
   ProjectileAnimationFrames,
   ProjectileHomingMode,
+  ProjectileKind,
   ProjectileTargetMode,
   ProceduralEffectKind,
   Vec3Tuple,
@@ -13,6 +15,7 @@ import type {
 import { sanitizeSoundCues } from './effects';
 
 const blends = new Set<EffectBlendMode>(['normal', 'additive', 'screen']);
+const projectileKinds = new Set<ProjectileKind>(['projectile', 'blast']);
 const homingModes = new Set<ProjectileHomingMode>(['none', 'limited']);
 const targetModes = new Set<ProjectileTargetMode>(['forward', 'targetLocation']);
 const proceduralKinds = new Set<ProceduralEffectKind>(['lightning', 'wind', 'ring', 'glow', 'trail', 'shards']);
@@ -21,6 +24,7 @@ export function defaultCharacterProjectile(id = 'projectile'): CharacterProjecti
   return {
     id,
     name: 'Projectile',
+    kind: 'projectile',
     frames: [],
     animationFrames: {},
     fps: 18,
@@ -61,6 +65,7 @@ export function sanitizeProjectile(projectile: Record<string, unknown>): Charact
   return {
     id,
     name: typeof projectile.name === 'string' && projectile.name.trim() ? projectile.name.trim() : id,
+    kind: projectileKinds.has(projectile.kind as ProjectileKind) ? projectile.kind as ProjectileKind : 'projectile',
     spriteSheetPath: typeof projectile.spriteSheetPath === 'string' ? projectile.spriteSheetPath : undefined,
     sourcePath: typeof projectile.sourcePath === 'string' ? projectile.sourcePath : undefined,
     frames,
@@ -74,6 +79,7 @@ export function sanitizeProjectile(projectile: Record<string, unknown>): Charact
     defaultScale: readVec3(projectile.defaultScale, [0.55, 0.55, 0.55]).map((value) => Math.max(0.01, value)) as Vec3Tuple,
     defaultRotation: readVec3(projectile.defaultRotation, [0, 0, 0]),
     color: typeof projectile.color === 'string' ? projectile.color : undefined,
+    blastVisual: sanitizeBlastVisual(projectile.blastVisual),
     soundCues: sanitizeSoundCues(projectile.soundCues),
     proceduralLayers: sanitizeProceduralLayers(projectile.proceduralLayers)
   };
@@ -84,9 +90,14 @@ export function sanitizeMoveProjectileInstance(instance: unknown): MoveProjectil
   const startupFrames = clampFrame(source.startupFrames, 0, 180, 0);
   const activeFrames = clampFrame(source.activeFrames, 1, 600, 90);
   const recoveryFrames = clampFrame(source.recoveryFrames, 0, 180, 8);
+  const kind = projectileKinds.has(source.kind as ProjectileKind) ? source.kind as ProjectileKind : undefined;
+  const releaseGated = source.releaseGated === undefined ? kind === 'blast' : source.releaseGated === true;
+  const minDamageScale = clampNumber(source.minDamageScale, 0, 5, 1);
+  const maxDamageScale = clampNumber(source.maxDamageScale, minDamageScale, 8, Math.max(minDamageScale, 1.55));
   return {
     id: safeId(source.id, `projectile-${Date.now()}`),
     projectileId: safeId(source.projectileId, ''),
+    kind,
     label: typeof source.label === 'string' ? source.label : undefined,
     spawnFrame: source.spawnFrame === undefined ? undefined : clampFrame(source.spawnFrame, 0, 600, 0),
     spawnOffset: readVec3(source.spawnOffset, [0, 1.1, 0.75]),
@@ -101,6 +112,7 @@ export function sanitizeMoveProjectileInstance(instance: unknown): MoveProjectil
     repeatStartFrame: source.repeatStartFrame === undefined ? undefined : clampFrame(source.repeatStartFrame, 0, 720, startupFrames),
     repeatEveryFrames: source.repeatEveryFrames === undefined ? undefined : clampFrame(source.repeatEveryFrames, 1, 180, 12),
     repeatLimit: source.repeatLimit === undefined ? undefined : clampFrame(source.repeatLimit, 1, 60, 1),
+    blastRange: source.blastRange === undefined ? undefined : clampNumber(source.blastRange, 0.4, 40, 8),
     homingMode: homingModes.has(source.homingMode as ProjectileHomingMode) ? source.homingMode as ProjectileHomingMode : 'limited',
     homingStrength: clampNumber(source.homingStrength, 0, 20, 4.2),
     homingTurnRate: clampNumber(source.homingTurnRate, 0, 18, 5.5),
@@ -115,7 +127,11 @@ export function sanitizeMoveProjectileInstance(instance: unknown): MoveProjectil
     mirrorWithFacing: source.mirrorWithFacing !== false,
     pierce: source.pierce === true,
     clash: source.clash === true,
-    kiBurst: source.kiBurst === true
+    kiBurst: source.kiBurst === true,
+    releaseGated,
+    chargeFramesMax: source.chargeFramesMax === undefined ? (releaseGated ? 120 : undefined) : clampFrame(source.chargeFramesMax, 1, 720, 120),
+    minDamageScale,
+    maxDamageScale
   };
 }
 
@@ -141,6 +157,21 @@ function sanitizeProceduralLayers(value: unknown) {
       size: clampNumber(layer.size, 0.01, 10, 1),
       count: layer.count === undefined ? undefined : clampFrame(layer.count, 1, 80, 12)
     }));
+}
+
+function sanitizeBlastVisual(value: unknown): BlastVisualDefinition | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  return {
+    coreColor: typeof source.coreColor === 'string' ? source.coreColor : undefined,
+    glowColor: typeof source.glowColor === 'string' ? source.glowColor : undefined,
+    outerColor: typeof source.outerColor === 'string' ? source.outerColor : undefined,
+    impactColor: typeof source.impactColor === 'string' ? source.impactColor : undefined,
+    radius: optionalNumber(source.radius, 0.05, 3),
+    growFrames: optionalInteger(source.growFrames, 1, 120),
+    fadeFrames: optionalInteger(source.fadeFrames, 1, 180),
+    shake: optionalNumber(source.shake, 0, 1)
+  };
 }
 
 function sanitizeVoxelFidelity(value: unknown): VoxelFidelitySettings | undefined {

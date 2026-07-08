@@ -170,16 +170,14 @@
       "/characters/allen-walker/frames/frame-320.png"
     ],
     "cmd:qcf+4": [
-      "/characters/allen-walker/frames/frame-080.png",
-      "/characters/allen-walker/frames/frame-081.png",
-      "/characters/allen-walker/frames/frame-082.png",
-      "/characters/allen-walker/frames/frame-083.png",
-      "/characters/allen-walker/frames/frame-084.png",
-      "/characters/allen-walker/frames/frame-085.png",
-      "/characters/allen-walker/frames/frame-086.png",
-      "/characters/allen-walker/frames/frame-087.png",
-      "/characters/allen-walker/frames/frame-088.png",
-      "/characters/allen-walker/frames/frame-089.png"
+      "/characters/allen-walker/frames/frame-344.png",
+      "/characters/allen-walker/frames/frame-345.png",
+      "/characters/allen-walker/frames/frame-346.png",
+      "/characters/allen-walker/frames/frame-347.png",
+      "/characters/allen-walker/frames/frame-348.png",
+      "/characters/allen-walker/frames/frame-349.png",
+      "/characters/allen-walker/frames/frame-350.png",
+      "/characters/allen-walker/frames/frame-351.png"
     ],
     "cmd:WS+4": [
       "/characters/allen-walker/frames/frame-301.png",
@@ -271,16 +269,10 @@
       "/characters/allen-walker/frames/frame-149.png"
     ],
     "cmd:O+2": [
-      "/characters/allen-walker/frames/frame-281.png",
-      "/characters/allen-walker/frames/frame-282.png",
-      "/characters/allen-walker/frames/frame-283.png",
-      "/characters/allen-walker/frames/frame-284.png",
-      "/characters/allen-walker/frames/frame-285.png",
-      "/characters/allen-walker/frames/frame-286.png",
-      "/characters/allen-walker/frames/frame-287.png",
-      "/characters/allen-walker/frames/frame-288.png",
-      "/characters/allen-walker/frames/frame-289.png",
-      "/characters/allen-walker/frames/frame-290.png"
+      "/characters/allen-walker/frames/frame-094.png",
+      "/characters/allen-walker/frames/frame-095.png",
+      "/characters/allen-walker/frames/frame-095.png",
+      "/characters/allen-walker/frames/frame-095.png"
     ],
     "cmd:d+1": [
       "/characters/allen-walker/frames/frame-074.png",
@@ -333,7 +325,7 @@
     "lose": 4,
     "cmd:f+1": 10,
     "cmd:d/f+2": 9,
-    "cmd:qcf+4": 9,
+    "cmd:qcf+4": 12,
     "cmd:WS+4": 9,
     "cmd:FC+2": 8,
     "cmd:1+2": 8,
@@ -725,26 +717,50 @@
       "startupFrames": 30,
       "activeFrames": 8,
       "recoveryFrames": 38,
-      "damage": 14,
-      "blockDamage": 1,
-      "onBlockFrames": -15,
-      "onHitFrames": 12,
-      "onCounterHitFrames": 18,
+      "damage": 18,
+      "blockDamage": 3,
+      "onBlockFrames": -12,
+      "onHitFrames": 40,
+      "onCounterHitFrames": 52,
       "whiffRecoveryFrames": 48,
-      "range": 2.05,
+      "range": 8.5,
       "forwardForce": 4,
       "forwardForceStartFrame": 61,
       "forwardForceEndFrame": 76,
       "moveJumpForce": 9.4,
       "moveJumpGravity": 24,
-      "label": "Crown Clown Burst",
-      "hitLevel": "mid",
-      "knockdown": true,
+      "label": "Crown Clown Ray",
+      "hitLevel": "special",
+      "knockdown": false,
       "jumpBeforeMove": true,
-      "onComboHitFrames": 5,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "onComboHitFrames": 32,
+      "onJuggleHitFrames": 36,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 10,
+      "description": "Charge Crown Clown forward, then release a second launching Innocence beam.",
+      "pushback": 0.8,
+      "blockPushback": 0.66,
+      "tracking": "none",
+      "usesKi": true,
+      "kiCost": 30,
+      "kiBurst": true,
+      "holdable": true,
+      "launchHeight": 1.75,
+      "launchVelocity": 6,
+      "juggleRefloatVelocity": 5.4,
+      "juggleGravityScale": 0.88,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "size": [
+          0.18,
+          0.18,
+          0.18
+        ]
+      }
     },
     "cmd:WS+4": {
       "startupFrames": 15,
@@ -924,24 +940,47 @@
       "startupFrames": 30,
       "activeFrames": 8,
       "recoveryFrames": 38,
-      "damage": 16,
-      "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 19,
+      "damage": 19,
+      "blockDamage": 3,
+      "onBlockFrames": -12,
+      "onHitFrames": 42,
+      "onCounterHitFrames": 54,
       "whiffRecoveryFrames": 45,
-      "range": 2.1,
+      "range": 8.5,
       "forwardForce": 2.49,
       "forwardForceStartFrame": 61,
       "forwardForceEndFrame": 68,
-      "label": "Innocence Aura Drive",
+      "label": "Innocence Laser",
       "hitLevel": "special",
-      "knockdown": true,
+      "knockdown": false,
       "usesKi": true,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "onComboHitFrames": 34,
+      "onJuggleHitFrames": 38,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 10,
+      "description": "Release Innocence from Crown Clown in a launching full-screen exorcist beam.",
+      "pushback": 0.82,
+      "blockPushback": 0.68,
+      "tracking": "none",
+      "kiCost": 32,
+      "kiBurst": true,
+      "holdable": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "size": [
+          0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "launchHeight": 1.85,
+      "launchVelocity": 6.2,
+      "juggleRefloatVelocity": 5.6,
+      "juggleGravityScale": 0.86
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -2723,6 +2762,172 @@
       "/characters/allen-walker/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "innocence-laser-blast",
+      "name": "Innocence Laser",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#f7f8ff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#d8e3ff",
+        "outerColor": "#9b5cff",
+        "impactColor": "#ffffff",
+        "radius": 0.38,
+        "growFrames": 8,
+        "fadeFrames": 18,
+        "shake": 0.22
+      }
+    },
+    {
+      "id": "crown-clown-ray-blast",
+      "name": "Crown Clown Ray",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#f7f8ff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#e6ecff",
+        "outerColor": "#b78cff",
+        "impactColor": "#ffffff",
+        "radius": 0.34,
+        "growFrames": 7,
+        "fadeFrames": 16,
+        "shake": 0.18
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "innocence-laser-blast-release",
+        "projectileId": "innocence-laser-blast",
+        "kind": "blast",
+        "label": "Innocence Laser",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.18,
+          0.76
+        ],
+        "startupFrames": 0,
+        "activeFrames": 46,
+        "recoveryFrames": 22,
+        "lifetimeFrames": 78,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.56,
+            0.76,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": true,
+        "chargeFramesMax": 120,
+        "minDamageScale": 1,
+        "maxDamageScale": 1.55
+      }
+    ],
+    "cmd:qcf+4": [
+      {
+        "id": "crown-clown-ray-blast-release",
+        "projectileId": "crown-clown-ray-blast",
+        "kind": "blast",
+        "label": "Crown Clown Ray",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.18,
+          0.76
+        ],
+        "startupFrames": 0,
+        "activeFrames": 42,
+        "recoveryFrames": 20,
+        "lifetimeFrames": 72,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.7,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.18,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": true,
+        "chargeFramesMax": 100,
+        "minDamageScale": 1,
+        "maxDamageScale": 1.42
+      }
+    ]
+  }
 }

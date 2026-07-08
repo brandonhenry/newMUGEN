@@ -30,6 +30,7 @@ import type {
   MoveEffectInstance,
   MoveDefinition,
   MoveInput,
+  MoveProjectileInstance,
   ProjectileRuntime,
   StageDefinition,
   StageLayerDefinition,
@@ -1833,21 +1834,206 @@ function EffectLayer({
 function ProjectileLayer({ match, stage, renderTick }: { match: MatchSnapshot; stage: StageDefinition; renderTick?: number }) {
   void renderTick;
   const projectiles = match.projectiles ?? [];
-  if (projectiles.length === 0) return null;
+  const chargeBindings = getActiveBlastChargeBindings(match);
+  if (projectiles.length === 0 && chargeBindings.length === 0) return null;
   return (
     <group>
+      {chargeBindings.map((binding) => (
+        <BlastChargeVisual
+          key={`blast-charge-${binding.fighter.slot}-${binding.fighter.moveInstanceId}-${binding.instance.id}`}
+          binding={binding}
+        />
+      ))}
       {projectiles.map((projectile) => {
         const owner = match.fighters[projectile.ownerSlot - 1];
         const definition = owner.character.projectiles?.find((candidate) => candidate.id === projectile.projectileId);
-        return definition ? (
+        if (!definition) return null;
+        return projectile.kind === 'blast' || definition.kind === 'blast' ? (
+          <BlastProjectileVisual
+            key={`${projectile.id}-${projectile.projectileId}`}
+            projectile={projectile}
+            definition={definition}
+          />
+        ) : (
           <ProjectileVisual
             key={`${projectile.id}-${projectile.projectileId}`}
             projectile={projectile}
             definition={definition}
             stage={stage}
           />
-        ) : null;
+        );
       })}
+    </group>
+  );
+}
+
+type ActiveBlastChargeBinding = {
+  fighter: FighterRuntime;
+  instance: MoveProjectileInstance;
+  definition: CharacterProjectileDefinition;
+  spawnFrame: number;
+};
+
+function getActiveBlastChargeBindings(match: MatchSnapshot): ActiveBlastChargeBinding[] {
+  return match.fighters.flatMap((fighter) => {
+    const move = fighter.currentMove;
+    if (!move || fighter.state !== 'attack' || !move.holdable || fighter.moveFrame < 0) return [];
+    return getMoveProjectileInstances(fighter, move)
+      .filter((instance) => instance.releaseGated && fighter.moveFrame >= getMoveProjectileSpawnFrame(instance, move))
+      .flatMap((instance) => {
+        const definition = fighter.character.projectiles?.find((candidate) => candidate.id === instance.projectileId);
+        const kind = instance.kind ?? definition?.kind ?? 'projectile';
+        const alreadyFired = match.projectiles.some((projectile) => (
+          projectile.ownerSlot === fighter.slot &&
+          projectile.moveInstanceId === fighter.moveInstanceId &&
+          projectile.instanceId === instance.id
+        ));
+        return definition && kind === 'blast' && !alreadyFired
+          ? [{ fighter, instance, definition, spawnFrame: getMoveProjectileSpawnFrame(instance, move) }]
+          : [];
+      });
+  });
+}
+
+function getMoveProjectileInstances(fighter: FighterRuntime, move: MoveDefinition) {
+  return getProjectileMoveKeysForVisual(fighter, move)
+    .flatMap((moveKey) => fighter.character.moveProjectiles?.[moveKey] ?? [])
+    .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index);
+}
+
+function getProjectileMoveKeysForVisual(fighter: FighterRuntime, move: MoveDefinition) {
+  const baseInputKeys: Record<string, string> = {
+    jab: 'jableft',
+    heavy: 'jabright',
+    kick: 'kickleft',
+    special: 'kickright',
+    '1': 'jableft',
+    '2': 'jabright',
+    '3': 'kickleft',
+    '4': 'kickright'
+  };
+  const commandKeys = move.command
+    ? [move.command, move.command.startsWith('cmd:') ? move.command.slice(4) : `cmd:${move.command}`]
+    : [];
+  const candidates = [
+    move.animationKey,
+    ...commandKeys,
+    move.comboKey,
+    move.id,
+    baseInputKeys[move.input],
+    move.input
+  ].filter((key): key is string => Boolean(key));
+  return [...new Set(candidates)].filter((key) => fighter.character.moveProjectiles?.[key]?.length);
+}
+
+function getMoveProjectileSpawnFrame(instance: MoveProjectileInstance, move: MoveDefinition) {
+  return Math.max(0, Math.round(instance.spawnFrame ?? move.startupFrames));
+}
+
+function BlastChargeVisual({ binding }: { binding: ActiveBlastChargeBinding }) {
+  const camera = useThree((state) => state.camera);
+  const groupRef = useRef<THREE.Group>(null);
+  const move = binding.fighter.currentMove;
+  const visual = binding.definition.blastVisual;
+  const chargeFrames = Math.max(0, binding.fighter.moveFrame - binding.spawnFrame);
+  const chargeProgress = THREE.MathUtils.clamp(chargeFrames / Math.max(1, binding.instance.chargeFramesMax ?? 120), 0, 1);
+  const radius = (visual?.radius ?? 0.34) * (0.72 + chargeProgress * 0.65);
+  const pulse = 1 + Math.sin((binding.fighter.moveFrame + binding.fighter.slot * 17) * 0.22) * (0.08 + chargeProgress * 0.08);
+  const color = visual?.glowColor ?? binding.definition.color ?? '#62d8ff';
+  const coreColor = visual?.coreColor ?? '#ffffff';
+  const position = resolveEffectWorldPosition(binding.fighter, {
+    position: [0, 0, 0],
+    rotation: [0, 0, 0],
+    scale: [1, 1, 1],
+    opacity: 1,
+    color
+  }, 'hands');
+  useFrame(() => {
+    if (groupRef.current) groupRef.current.lookAt(camera.position);
+  });
+  if (!move) return null;
+  return (
+    <group ref={groupRef} position={position} renderOrder={42}>
+      <mesh scale={[radius * pulse, radius * pulse, radius * pulse]}>
+        <sphereGeometry args={[1, 28, 16]} />
+        <meshBasicMaterial color={color} transparent opacity={0.28 + chargeProgress * 0.18} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+      <mesh scale={[radius * 0.42 * pulse, radius * 0.42 * pulse, radius * 0.42 * pulse]}>
+        <sphereGeometry args={[1, 24, 12]} />
+        <meshBasicMaterial color={coreColor} transparent opacity={0.78} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+      <mesh rotation={[0, 0, binding.fighter.moveFrame * 0.08]} scale={[radius * 1.45, radius * 1.45, radius * 1.45]}>
+        <ringGeometry args={[0.78, 0.9, 64]} />
+        <meshBasicMaterial color={color} transparent opacity={0.38 + chargeProgress * 0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
+      </mesh>
+      <pointLight color={color} intensity={1.1 + chargeProgress * 2.4} distance={3.6 + chargeProgress * 2.4} />
+    </group>
+  );
+}
+
+function BlastProjectileVisual({
+  projectile,
+  definition
+}: {
+  projectile: ProjectileRuntime;
+  definition: CharacterProjectileDefinition;
+}) {
+  const visual = definition.blastVisual;
+  const length = Math.max(0.1, projectile.hitbox.size[2]);
+  const growFrames = Math.max(1, visual?.growFrames ?? 8);
+  const fadeFrames = Math.max(1, visual?.fadeFrames ?? Math.max(1, projectile.recoveryFrames));
+  const grow = THREE.MathUtils.clamp(projectile.ageFrames / growFrames, 0.08, 1);
+  const remainingFrames = Math.max(0, projectile.lifetimeFrames - projectile.ageFrames);
+  const fade = projectile.phase === 'recovery' ? THREE.MathUtils.clamp(remainingFrames / fadeFrames, 0, 1) : 1;
+  const chargeBoost = THREE.MathUtils.clamp(projectile.chargeDamageScale ?? 1, 1, 1.8);
+  const radius = (visual?.radius ?? Math.max(0.16, projectile.hitbox.size[0] * 0.45)) * (0.9 + (chargeBoost - 1) * 0.28);
+  const currentLength = length * grow;
+  const centerX = projectile.position.x + projectile.facing * currentLength / 2;
+  const endX = projectile.position.x + projectile.facing * currentLength;
+  const pulse = 0.9 + 0.1 * Math.sin((projectile.ageFrames + projectile.trailSeed) * 0.55);
+  const coreColor = visual?.coreColor ?? '#ffffff';
+  const glowColor = visual?.glowColor ?? definition.color ?? '#62d8ff';
+  const outerColor = visual?.outerColor ?? glowColor;
+  const impactColor = visual?.impactColor ?? coreColor;
+  const opacity = fade * (0.82 + Math.min(0.18, (chargeBoost - 1) * 0.18));
+  return (
+    <group renderOrder={46}>
+      <group position={[centerX, projectile.position.y, projectile.position.z]} rotation={[0, 0, Math.PI / 2]}>
+        <mesh scale={[pulse, 1, pulse]}>
+          <cylinderGeometry args={[radius * 0.28, radius * 0.28, currentLength, 36, 1, true]} />
+          <meshBasicMaterial color={coreColor} transparent opacity={opacity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        </mesh>
+        <mesh scale={[pulse, 1, pulse]}>
+          <cylinderGeometry args={[radius * 0.66, radius * 0.66, currentLength, 36, 1, true]} />
+          <meshBasicMaterial color={glowColor} transparent opacity={fade * 0.34} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
+        </mesh>
+        <mesh scale={[pulse, 1, pulse]}>
+          <cylinderGeometry args={[radius, radius, currentLength, 36, 1, true]} />
+          <meshBasicMaterial color={outerColor} transparent opacity={fade * 0.16} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
+        </mesh>
+      </group>
+      {[0, 1, 2, 3].map((index) => (
+        <mesh
+          key={index}
+          position={[centerX, projectile.position.y, projectile.position.z]}
+          rotation={[index * Math.PI / 4, 0, 0]}
+          scale={[projectile.facing, 1, 1]}
+        >
+          <planeGeometry args={[currentLength, radius * (1.2 + index * 0.14)]} />
+          <meshBasicMaterial color={glowColor} transparent opacity={fade * (0.07 + index * 0.01)} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
+        </mesh>
+      ))}
+      <group position={[endX, projectile.position.y, projectile.position.z]} rotation={[0, Math.PI / 2, 0]}>
+        <mesh scale={[radius * 1.2, radius * 1.2, radius * 1.2]}>
+          <sphereGeometry args={[1, 28, 16]} />
+          <meshBasicMaterial color={impactColor} transparent opacity={fade * 0.36} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        </mesh>
+        <mesh scale={[radius * (1.4 + projectile.ageFrames * 0.012), radius * (1.4 + projectile.ageFrames * 0.012), radius * (1.4 + projectile.ageFrames * 0.012)]}>
+          <ringGeometry args={[0.82, 1, 72]} />
+          <meshBasicMaterial color={glowColor} transparent opacity={fade * 0.42} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
+        </mesh>
+      </group>
+      <pointLight color={glowColor} intensity={fade * (visual?.shake ?? 0.18) * 7} distance={5.5} position={[projectile.position.x, projectile.position.y, projectile.position.z]} />
     </group>
   );
 }

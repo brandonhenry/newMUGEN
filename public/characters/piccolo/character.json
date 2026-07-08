@@ -194,19 +194,12 @@
       "/characters/piccolo/frames/frame-115.png"
     ],
     "cmd:1+3": [
-      "/characters/piccolo/frames/frame-138.png",
-      "/characters/piccolo/frames/frame-139.png",
-      "/characters/piccolo/frames/frame-140.png",
-      "/characters/piccolo/frames/frame-141.png",
-      "/characters/piccolo/frames/frame-142.png",
-      "/characters/piccolo/frames/frame-143.png",
-      "/characters/piccolo/frames/frame-144.png",
-      "/characters/piccolo/frames/frame-145.png",
-      "/characters/piccolo/frames/frame-146.png",
-      "/characters/piccolo/frames/frame-147.png",
-      "/characters/piccolo/frames/frame-148.png",
-      "/characters/piccolo/frames/frame-149.png",
-      "/characters/piccolo/frames/frame-150.png"
+      "/characters/piccolo/frames/frame-132.png",
+      "/characters/piccolo/frames/frame-133.png",
+      "/characters/piccolo/frames/frame-134.png",
+      "/characters/piccolo/frames/frame-135.png",
+      "/characters/piccolo/frames/frame-136.png",
+      "/characters/piccolo/frames/frame-137.png"
     ],
     "cmd:2+3": [
       "/characters/piccolo/frames/frame-085.png",
@@ -318,7 +311,7 @@
     "cmd:WS+4": 9,
     "cmd:FC+2": 8,
     "cmd:1+2": 8,
-    "cmd:1+3": 8,
+    "cmd:1+3": 12,
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
@@ -836,28 +829,49 @@
       "startupFrames": 30,
       "activeFrames": 8,
       "recoveryFrames": 38,
-      "damage": 16,
-      "blockDamage": 1,
-      "onBlockFrames": -10,
-      "onHitFrames": 11,
-      "onCounterHitFrames": 16,
+      "damage": 22,
+      "blockDamage": 4,
+      "onBlockFrames": -12,
+      "onHitFrames": 42,
+      "onCounterHitFrames": 54,
       "whiffRecoveryFrames": 13,
-      "range": 1.65,
+      "range": 8.5,
       "forwardForce": 1.31,
       "forwardForceStartFrame": 47,
       "forwardForceEndFrame": 52,
-      "launchHeight": 0,
+      "launchHeight": 2.15,
       "kiCost": 35,
       "healAmount": 8,
-      "label": "Demon Cross Rush",
-      "hitLevel": "mid",
-      "tracking": "medium",
+      "label": "Special Beam Cannon",
+      "hitLevel": "special",
+      "tracking": "none",
       "usesKi": true,
       "healsHp": true,
-      "onComboHitFrames": 9,
-      "onJuggleHitFrames": 5,
-      "comboRepeatPenaltyFrames": 4,
-      "juggleRepeatPenaltyFrames": 7
+      "onComboHitFrames": 34,
+      "onJuggleHitFrames": 38,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 10,
+      "description": "Charge piercing Namekian energy at the fingers, then release a narrow launching spiral beam.",
+      "pushback": 0.82,
+      "blockPushback": 0.68,
+      "kiBurst": true,
+      "holdable": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "size": [
+          0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "launchVelocity": 6.2,
+      "juggleRefloatVelocity": 5.6,
+      "juggleGravityScale": 0.86,
+      "knockdown": false
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -3103,6 +3117,39 @@
         0
       ],
       "color": "#72ff66"
+    },
+    {
+      "id": "special-beam-cannon-blast",
+      "name": "Special Beam Cannon",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#a6ff4d",
+      "blastVisual": {
+        "coreColor": "#fff7a8",
+        "glowColor": "#96ff38",
+        "outerColor": "#f2c94c",
+        "impactColor": "#fff7a8",
+        "radius": 0.34,
+        "growFrames": 8,
+        "fadeFrames": 18,
+        "shake": 0.22
+      }
     }
   ],
   "moveProjectiles": {
@@ -3190,25 +3237,27 @@
     ],
     "cmd:1+3": [
       {
-        "id": "cmd-1-3-ki-energy",
-        "projectileId": "ki-energy-projectile",
-        "label": "Demon Cross Rush Ki Shot",
-        "spawnFrame": 4,
+        "id": "special-beam-cannon-blast-release",
+        "projectileId": "special-beam-cannon-blast",
+        "kind": "blast",
+        "label": "Special Beam Cannon",
+        "spawnFrame": 30,
         "spawnOffset": [
           0,
-          1.08,
-          0.94
+          1.2,
+          0.76
         ],
         "startupFrames": 0,
-        "activeFrames": 96,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 108,
-        "speed": 10,
-        "forwardVelocity": 10,
-        "homingStrength": 4.2,
-        "homingTurnRate": 4.6,
-        "homingEndFrame": 54,
-        "nearMissRadius": 0.58,
+        "activeFrames": 46,
+        "recoveryFrames": 22,
+        "lifetimeFrames": 78,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
         "hitbox": {
           "offset": [
             0,
@@ -3216,17 +3265,23 @@
             0
           ],
           "size": [
-            0.48,
-            0.48,
-            0.68
+            0.46,
+            0.66,
+            1
           ]
         },
-        "homingMode": "limited",
         "damageScale": 1,
         "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": true,
+        "chargeFramesMax": 120,
+        "minDamageScale": 1,
+        "maxDamageScale": 1.55
       }
     ],
     "cmd:3+4": [

@@ -842,7 +842,11 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     const previousMoveFrame = fighter.moveFrame;
     fighter.moveFrame += frameDelta;
     applyAttackForwardForce(fighter, opponent, previousMoveFrame, fighter.moveFrame);
-    spawnMoveProjectiles(match, fighter, opponent, previousMoveFrame, fighter.moveFrame);
+    spawnMoveProjectiles(match, fighter, opponent, previousMoveFrame, fighter.moveFrame, input);
+    if (spawnReleaseGatedMoveProjectiles(match, fighter, opponent, input)) {
+      fighter.moveFrame = Math.max(fighter.moveFrame, (fighter.currentMove?.startupFrames ?? 0) + (fighter.currentMove?.activeFrames ?? 0));
+      fighter.actionFramesRemaining = Math.min(fighter.actionFramesRemaining, fighter.currentMove?.recoveryFrames ?? fighter.actionFramesRemaining);
+    }
     fighter.actionFramesRemaining = Math.max(0, fighter.actionFramesRemaining - frameDelta);
     if (shouldHoldCurrentAttack(fighter, input)) {
       fighter.actionFramesRemaining = Math.max(fighter.actionFramesRemaining, 2);
@@ -1997,6 +2001,8 @@ function shouldHoldCurrentAttack(fighter: FighterRuntime, input: InputFrame) {
   const move = fighter.currentMove;
   if (fighter.state !== 'attack' || !move?.holdable) return false;
   if (!input[move.input]) return false;
+  const releaseGatedSpawnFrame = getReleaseGatedHoldStartFrame(fighter, move);
+  if (releaseGatedSpawnFrame !== null) return fighter.moveFrame >= releaseGatedSpawnFrame;
   return fighter.moveFrame >= Math.max(1, totalMoveFrames(move) - 2);
 }
 
@@ -3237,7 +3243,7 @@ function resolveHits(match: MatchSnapshot, frameDelta = 1) {
   resolveProjectileHits(match, frameDelta);
 }
 
-function spawnMoveProjectiles(match: MatchSnapshot, attacker: FighterRuntime, opponent: FighterRuntime, previousMoveFrame: number, currentMoveFrame: number) {
+function spawnMoveProjectiles(match: MatchSnapshot, attacker: FighterRuntime, opponent: FighterRuntime, previousMoveFrame: number, currentMoveFrame: number, input?: InputFrame) {
   const move = attacker.currentMove;
   if (!move || attacker.state !== 'attack') return;
   const instances = getProjectileMoveKeys(attacker, move)
@@ -3245,6 +3251,7 @@ function spawnMoveProjectiles(match: MatchSnapshot, attacker: FighterRuntime, op
     .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index);
   for (const instance of instances) {
     for (const spawn of getProjectileSpawnEvents(instance, move, previousMoveFrame, currentMoveFrame)) {
+      if (shouldDelayReleaseGatedProjectile(instance, move, input, currentMoveFrame)) continue;
       const runtimeInstanceId = spawn.repeatIndex === 0 && !instance.repeatEveryFrames ? instance.id : `${instance.id}@${spawn.repeatIndex}`;
       const duplicate = match.projectiles.some((projectile) => (
         projectile.ownerSlot === attacker.slot &&
@@ -3252,13 +3259,52 @@ function spawnMoveProjectiles(match: MatchSnapshot, attacker: FighterRuntime, op
         projectile.instanceId === runtimeInstanceId
       ));
       if (duplicate) continue;
-      match.projectiles = [...match.projectiles, createProjectileRuntime(match, attacker, opponent, move, instance, runtimeInstanceId)];
+      match.projectiles = [...match.projectiles, createProjectileRuntime(match, attacker, opponent, move, instance, runtimeInstanceId, 0)];
     }
   }
 }
 
+function spawnReleaseGatedMoveProjectiles(match: MatchSnapshot, attacker: FighterRuntime, opponent: FighterRuntime, input: InputFrame) {
+  const move = attacker.currentMove;
+  if (!move || attacker.state !== 'attack' || input[move.input]) return false;
+  const instances = getUniqueMoveProjectileInstances(attacker, move)
+    .filter((instance) => instance.releaseGated && attacker.moveFrame >= getProjectileSpawnFrame(instance, move));
+  let spawned = false;
+  for (const instance of instances) {
+    const duplicate = match.projectiles.some((projectile) => (
+      projectile.ownerSlot === attacker.slot &&
+      projectile.moveInstanceId === attacker.moveInstanceId &&
+      projectile.instanceId === instance.id
+    ));
+    if (duplicate) continue;
+    const chargeFrames = Math.max(0, Math.round(attacker.moveFrame - getProjectileSpawnFrame(instance, move)));
+    match.projectiles = [...match.projectiles, createProjectileRuntime(match, attacker, opponent, move, instance, instance.id, chargeFrames)];
+    spawned = true;
+  }
+  return spawned;
+}
+
+function getUniqueMoveProjectileInstances(attacker: FighterRuntime, move: MoveDefinition) {
+  return getProjectileMoveKeys(attacker, move)
+    .flatMap((moveKey) => attacker.character.moveProjectiles?.[moveKey] ?? [])
+    .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index);
+}
+
+function shouldDelayReleaseGatedProjectile(instance: MoveProjectileInstance, move: MoveDefinition, input: InputFrame | undefined, currentMoveFrame: number) {
+  if (!instance.releaseGated || !input?.[move.input]) return false;
+  return currentMoveFrame >= getProjectileSpawnFrame(instance, move);
+}
+
+function getReleaseGatedHoldStartFrame(attacker: FighterRuntime, move: MoveDefinition) {
+  const frames = getUniqueMoveProjectileInstances(attacker, move)
+    .filter((instance) => instance.releaseGated)
+    .map((instance) => getProjectileSpawnFrame(instance, move));
+  if (frames.length === 0) return null;
+  return Math.max(1, Math.min(...frames));
+}
+
 function getProjectileSpawnEvents(instance: MoveProjectileInstance, move: MoveDefinition, previousMoveFrame: number, currentMoveFrame: number) {
-  const spawnFrame = Math.max(0, Math.round(instance.spawnFrame ?? move.startupFrames));
+  const spawnFrame = getProjectileSpawnFrame(instance, move);
   const repeatEvery = instance.repeatEveryFrames ? Math.max(1, Math.round(instance.repeatEveryFrames)) : 0;
   if (!repeatEvery) {
     return previousMoveFrame < spawnFrame && currentMoveFrame >= spawnFrame
@@ -3279,35 +3325,46 @@ function getProjectileSpawnEvents(instance: MoveProjectileInstance, move: MoveDe
   return events;
 }
 
+function getProjectileSpawnFrame(instance: MoveProjectileInstance, move: MoveDefinition) {
+  return Math.max(0, Math.round(instance.spawnFrame ?? move.startupFrames));
+}
+
 function createProjectileRuntime(
   match: MatchSnapshot,
   attacker: FighterRuntime,
   opponent: FighterRuntime,
   move: MoveDefinition,
   instance: MoveProjectileInstance,
-  runtimeInstanceId = instance.id
+  runtimeInstanceId = instance.id,
+  chargeFrames = 0
 ): ProjectileRuntime {
   const facing = attacker.facing || getOpponentSideSign(attacker, opponent, match.stage);
   const attackerPosition = getFighterCombatPosition(attacker);
   const scale = getCharacterCombatScale(attacker.character);
   const targetPosition = getFighterCombatPosition(opponent);
+  const definition = attacker.character.projectiles?.find((candidate) => candidate.id === instance.projectileId);
+  const kind = instance.kind ?? definition?.kind ?? 'projectile';
   const targetMode = instance.targetMode ?? 'forward';
   const spawnX = targetMode === 'targetLocation' ? targetPosition.x : attackerPosition.x + facing * instance.spawnOffset[2] * scale.width;
   const spawnY = (targetMode === 'targetLocation' ? targetPosition.y : attackerPosition.y) + instance.spawnOffset[1] * scale.height + PROJECTILE_SPAWN_VERTICAL_ALIGNMENT_OFFSET;
   const spawnZ = (targetMode === 'targetLocation' ? targetPosition.z : attackerPosition.z) + instance.spawnOffset[0] * scale.width + PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET;
   const forward = unitFromTo({ x: attackerPosition.x, z: attackerPosition.z }, { x: opponent.position.x, z: opponent.position.z }, facing);
+  const blastLength = kind === 'blast' ? instance.blastRange ?? getBlastLengthToStageEdge(match, spawnX, facing) : 0;
+  const runtimeHitbox = kind === 'blast' ? makeBlastRuntimeHitbox(instance.hitbox, blastLength) : instance.hitbox;
+  const chargeDamageScale = getProjectileChargeDamageScale(instance, chargeFrames);
   const velocity = {
-    x: targetMode === 'targetLocation' ? 0 : forward.x * instance.forwardVelocity,
-    y: targetMode === 'targetLocation' ? 0 : instance.verticalVelocity ?? 0,
-    z: targetMode === 'targetLocation' ? 0 : forward.z * instance.forwardVelocity
+    x: kind === 'blast' || targetMode === 'targetLocation' ? 0 : forward.x * instance.forwardVelocity,
+    y: kind === 'blast' || targetMode === 'targetLocation' ? 0 : instance.verticalVelocity ?? 0,
+    z: kind === 'blast' || targetMode === 'targetLocation' ? 0 : forward.z * instance.forwardVelocity
   };
   return {
     id: nextHitEventId(match),
     ownerSlot: attacker.slot,
     projectileId: instance.projectileId,
+    kind,
     instanceId: runtimeInstanceId,
     moveInstanceId: attacker.moveInstanceId,
-    move: { ...move, label: instance.label ?? move.label, kiBurst: Boolean(move.kiBurst || instance.kiBurst), hitbox: instance.hitbox },
+    move: { ...move, label: instance.label ?? move.label, kiBurst: Boolean(move.kiBurst || instance.kiBurst), hitbox: runtimeHitbox },
     position: { x: spawnX, y: spawnY, z: spawnZ },
     previousPosition: { x: spawnX, y: spawnY, z: spawnZ },
     velocity,
@@ -3326,18 +3383,42 @@ function createProjectileRuntime(
     nearMissRadius: instance.nearMissRadius,
     targetMode,
     targetPoint: targetMode === 'targetLocation' ? { x: spawnX, y: spawnY, z: spawnZ } : undefined,
-    hitbox: instance.hitbox,
-    damageScale: instance.damageScale,
-    blockDamageScale: instance.blockDamageScale,
+    hitbox: runtimeHitbox,
+    damageScale: instance.damageScale * chargeDamageScale,
+    blockDamageScale: instance.blockDamageScale * chargeDamageScale,
     pushbackScale: instance.pushbackScale,
     blockPushbackScale: instance.blockPushbackScale,
     mirrorWithFacing: instance.mirrorWithFacing,
-    pierce: Boolean(instance.pierce),
+    pierce: kind === 'blast' || Boolean(instance.pierce),
     clash: Boolean(instance.clash || instance.kiBurst || move.kiBurst),
     hitConnected: false,
     expired: false,
-    trailSeed: match.lastHitId + attacker.slot * 101
+    trailSeed: match.lastHitId + attacker.slot * 101,
+    chargeFrames,
+    chargeDamageScale
   };
+}
+
+function getBlastLengthToStageEdge(match: MatchSnapshot, spawnX: number, facing: 1 | -1) {
+  const bounds = resolveStageMovementBounds(match.stage, 0);
+  const edgeX = bounds.centerX + facing * (bounds.halfWidth + 2.5);
+  return Math.max(2.4, Math.abs(edgeX - spawnX));
+}
+
+function makeBlastRuntimeHitbox(hitbox: MoveProjectileInstance['hitbox'], length: number): MoveProjectileInstance['hitbox'] {
+  return {
+    offset: [hitbox.offset[0], hitbox.offset[1], length / 2],
+    size: [hitbox.size[0], hitbox.size[1], length]
+  };
+}
+
+function getProjectileChargeDamageScale(instance: MoveProjectileInstance, chargeFrames: number) {
+  if (!instance.releaseGated) return 1;
+  const maxFrames = Math.max(1, instance.chargeFramesMax ?? 120);
+  const progress = clamp(chargeFrames / maxFrames, 0, 1);
+  const minScale = instance.minDamageScale ?? 1;
+  const maxScale = Math.max(minScale, instance.maxDamageScale ?? minScale);
+  return lerp(minScale, maxScale, progress);
 }
 
 function updateProjectiles(match: MatchSnapshot, frameDelta: number) {
@@ -3493,7 +3574,8 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     blockDamage: Math.max(0, Math.round(sourceMove.blockDamage * projectile.blockDamageScale)),
     pushback: sourceMove.pushback * projectile.pushbackScale,
     blockPushback: sourceMove.blockPushback * projectile.blockPushbackScale,
-    launchHeight: 0,
+    launchHeight: projectile.kind === 'blast' ? Math.max(0, sourceMove.launchHeight ?? 0) : 0,
+    launchVelocity: projectile.kind === 'blast' ? sourceMove.launchVelocity : undefined,
     tornado: tornadoExtendsJuggle,
     throwCapture: false,
     knockdown: false,
@@ -3554,7 +3636,9 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     kiBurst: Boolean(move.kiBurst)
   });
   const frameData = contextualComboFrameData(move, { context: wasAirborne ? 'juggle' : defender.state === 'hit' ? 'combo' : 'neutral', counterHit: counterHit && Boolean(move.counterHit), comboHits: attacker.comboHits, repeatCount: 1 });
-  const stunFrames = getProjectileHitstunFrames(frameData.effectiveAdvantage, counterHit);
+  const stunFrames = projectile.kind === 'blast'
+    ? Math.max(getProjectileHitstunFrames(frameData.effectiveAdvantage, counterHit), move.onHitFrames, 34)
+    : getProjectileHitstunFrames(frameData.effectiveAdvantage, counterHit);
   const entersJuggle = launchHeight > 0 || wasJuggled;
   const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + hitDamage;
   const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, 1, tornadoExtendsJuggle, hitDamage);

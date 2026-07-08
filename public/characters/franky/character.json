@@ -271,13 +271,11 @@
       "/characters/franky/frames/frame-138.png"
     ],
     "cmd:O+2": [
-      "/characters/franky/frames/frame-163.png",
-      "/characters/franky/frames/frame-164.png",
-      "/characters/franky/frames/frame-165.png",
-      "/characters/franky/frames/frame-166.png",
-      "/characters/franky/frames/frame-167.png",
-      "/characters/franky/frames/frame-168.png",
-      "/characters/franky/frames/frame-169.png"
+      "/characters/franky/frames/frame-204.png",
+      "/characters/franky/frames/frame-205.png",
+      "/characters/franky/frames/frame-206.png",
+      "/characters/franky/frames/frame-207.png",
+      "/characters/franky/frames/frame-208.png"
     ],
     "cmd:1+4": [
       "/characters/franky/frames/frame-096.png",
@@ -369,7 +367,7 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 8,
-    "cmd:O+2": 8,
+    "cmd:O+2": 10,
     "cmd:f+2": 10,
     "cmd:d+1": 10,
     "cmd:qcf+1": 10,
@@ -965,23 +963,47 @@
       "startupFrames": 25,
       "activeFrames": 6,
       "recoveryFrames": 32,
-      "damage": 16,
-      "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 19,
+      "damage": 18,
+      "blockDamage": 3,
+      "onBlockFrames": -12,
+      "onHitFrames": 42,
+      "onCounterHitFrames": 54,
       "whiffRecoveryFrames": 40,
-      "range": 2.1,
+      "range": 8.5,
       "forwardForce": 3.26,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 35,
-      "label": "Franky Arm Drive",
+      "label": "Franky Radical Laser",
       "hitLevel": "special",
-      "knockdown": true,
-      "onComboHitFrames": 8,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "knockdown": false,
+      "onComboHitFrames": 34,
+      "onJuggleHitFrames": 38,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 10,
+      "description": "Aim Franky's weapon arms, charge, then fire a launching full-screen mechanical laser.",
+      "pushback": 0.82,
+      "blockPushback": 0.68,
+      "tracking": "none",
+      "usesKi": true,
+      "kiCost": 30,
+      "kiBurst": true,
+      "holdable": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "size": [
+          0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "launchHeight": 1.75,
+      "launchVelocity": 6.2,
+      "juggleRefloatVelocity": 5.6,
+      "juggleGravityScale": 0.86
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -3085,6 +3107,39 @@
         0
       ],
       "color": "#9eeeff"
+    },
+    {
+      "id": "franky-radical-laser-blast",
+      "name": "Franky Radical Laser",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#40f4ff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#40f4ff",
+        "outerColor": "#ffdd57",
+        "impactColor": "#ffffff",
+        "radius": 0.4,
+        "growFrames": 8,
+        "fadeFrames": 18,
+        "shake": 0.22
+      }
     }
   ],
   "moveProjectiles": {
@@ -3172,25 +3227,27 @@
     ],
     "cmd:O+2": [
       {
-        "id": "cmd-o-2-mechanical-blaster",
-        "projectileId": "mechanical-blaster-projectile",
-        "label": "Franky Arm Drive Blaster Bolt",
-        "spawnFrame": 3,
+        "id": "franky-radical-laser-blast-release",
+        "projectileId": "franky-radical-laser-blast",
+        "kind": "blast",
+        "label": "Franky Radical Laser",
+        "spawnFrame": 25,
         "spawnOffset": [
           0,
           1.08,
-          0.94
+          0.9
         ],
         "startupFrames": 0,
-        "activeFrames": 96,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 108,
-        "speed": 10.5,
-        "forwardVelocity": 10.5,
-        "homingStrength": 2.6,
-        "homingTurnRate": 3.8,
-        "homingEndFrame": 54,
-        "nearMissRadius": 0.58,
+        "activeFrames": 46,
+        "recoveryFrames": 22,
+        "lifetimeFrames": 78,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
         "hitbox": {
           "offset": [
             0,
@@ -3198,17 +3255,23 @@
             0
           ],
           "size": [
-            0.5,
-            0.44,
-            0.72
+            0.62,
+            0.7,
+            1
           ]
         },
-        "homingMode": "limited",
         "damageScale": 1,
         "blockDamageScale": 1,
-        "pushbackScale": 1,
-        "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": true,
+        "chargeFramesMax": 120,
+        "minDamageScale": 1,
+        "maxDamageScale": 1.55
       }
     ],
     "cmd:qcf+1": [

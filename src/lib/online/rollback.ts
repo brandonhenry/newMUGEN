@@ -458,6 +458,7 @@ export function checksumMatch(match: MatchSnapshot) {
       id: projectile.id,
       ownerSlot: projectile.ownerSlot,
       projectileId: projectile.projectileId,
+      kind: projectile.kind,
       phase: projectile.phase,
       ageFrames: roundNumber(projectile.ageFrames),
       x: roundNumber(projectile.position.x),
@@ -471,6 +472,8 @@ export function checksumMatch(match: MatchSnapshot) {
       targetX: projectile.targetPoint ? roundNumber(projectile.targetPoint.x) : undefined,
       targetY: projectile.targetPoint ? roundNumber(projectile.targetPoint.y) : undefined,
       targetZ: projectile.targetPoint ? roundNumber(projectile.targetPoint.z) : undefined,
+      chargeFrames: projectile.chargeFrames === undefined ? undefined : roundNumber(projectile.chargeFrames),
+      chargeDamageScale: projectile.chargeDamageScale === undefined ? undefined : roundNumber(projectile.chargeDamageScale),
       hitConnected: projectile.hitConnected,
       expired: projectile.expired
     })),

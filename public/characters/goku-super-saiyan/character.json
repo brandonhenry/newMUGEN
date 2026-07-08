@@ -241,12 +241,7 @@
       "/characters/goku-super-saiyan/frames/frame-172.png",
       "/characters/goku-super-saiyan/frames/frame-173.png",
       "/characters/goku-super-saiyan/frames/frame-174.png",
-      "/characters/goku-super-saiyan/frames/frame-175.png",
-      "/characters/goku-super-saiyan/frames/frame-176.png",
-      "/characters/goku-super-saiyan/frames/frame-177.png",
-      "/characters/goku-super-saiyan/frames/frame-178.png",
-      "/characters/goku-super-saiyan/frames/frame-179.png",
-      "/characters/goku-super-saiyan/frames/frame-180.png"
+      "/characters/goku-super-saiyan/frames/frame-175.png"
     ],
     "cmd:1+4": [
       "/characters/goku-super-saiyan/frames/frame-096.png",
@@ -409,7 +404,7 @@
     "cmd:2+3": 8,
     "cmd:2+4": 8,
     "cmd:3+4": 6.5,
-    "cmd:O+2": 8,
+    "cmd:O+2": 10,
     "cmd:1+4": 9,
     "cmd:f+2": 10,
     "cmd:f+3": 9,
@@ -1027,23 +1022,47 @@
       "startupFrames": 30,
       "activeFrames": 8,
       "recoveryFrames": 38,
-      "damage": 16,
-      "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 19,
+      "damage": 20,
+      "blockDamage": 4,
+      "onBlockFrames": -12,
+      "onHitFrames": 42,
+      "onCounterHitFrames": 54,
       "whiffRecoveryFrames": 46,
-      "range": 2.1,
+      "range": 8.5,
       "forwardForce": 3.12,
       "forwardForceStartFrame": 46,
       "forwardForceEndFrame": 53,
-      "label": "Super Saiyan Aura Drive",
+      "label": "Super Kamehameha",
       "hitLevel": "special",
-      "knockdown": true,
-      "onComboHitFrames": 6,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "knockdown": false,
+      "onComboHitFrames": 34,
+      "onJuggleHitFrames": 38,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 10,
+      "description": "Charge Super Saiyan ki at the palms, then release a launching full-screen Kamehameha.",
+      "pushback": 0.82,
+      "blockPushback": 0.68,
+      "tracking": "none",
+      "usesKi": true,
+      "kiCost": 35,
+      "kiBurst": true,
+      "holdable": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "size": [
+          0.18,
+          0.18,
+          0.18
+        ]
+      },
+      "launchHeight": 1.95,
+      "launchVelocity": 6.2,
+      "juggleRefloatVelocity": 5.6,
+      "juggleGravityScale": 0.86
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -3409,6 +3428,90 @@
       "/characters/goku-super-saiyan/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "super-kamehameha-blast",
+      "name": "Super Kamehameha Wave",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#7de8ff",
+      "blastVisual": {
+        "coreColor": "#fff7c7",
+        "glowColor": "#68e8ff",
+        "outerColor": "#f7d34a",
+        "impactColor": "#fff7c7",
+        "radius": 0.48,
+        "growFrames": 8,
+        "fadeFrames": 18,
+        "shake": 0.22
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "super-kamehameha-blast-release",
+        "projectileId": "super-kamehameha-blast",
+        "kind": "blast",
+        "label": "Super Kamehameha",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.14,
+          0.74
+        ],
+        "startupFrames": 0,
+        "activeFrames": 46,
+        "recoveryFrames": 22,
+        "lifetimeFrames": 78,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.72,
+            0.82,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": true,
+        "chargeFramesMax": 120,
+        "minDamageScale": 1,
+        "maxDamageScale": 1.55
+      }
+    ]
+  }
 }

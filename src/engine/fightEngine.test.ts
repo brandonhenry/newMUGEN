@@ -7809,6 +7809,180 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).not.toBe('attack');
   });
 
+  it('holds release-gated blast attacks indefinitely and fires once on release', () => {
+    const shooter = makeProjectileCharacter('release-gated-blast-test', {
+      holdable: true,
+      startupFrames: 2,
+      activeFrames: 3,
+      recoveryFrames: 8,
+      damage: 10,
+      blockDamage: 2
+    }, {
+      kind: 'blast',
+      releaseGated: true,
+      chargeFramesMax: 120,
+      minDamageScale: 1,
+      maxDamageScale: 1.55,
+      spawnFrame: 2,
+      startupFrames: 0,
+      activeFrames: 42,
+      recoveryFrames: 20,
+      lifetimeFrames: 72,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      pierce: true,
+      hitbox: { offset: [0, 0, 0], size: [0.5, 0.7, 1] }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].position.z = 3;
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 180, makeInput('jab'));
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.projectiles).toHaveLength(0);
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.projectiles).toHaveLength(1);
+    expect(match.projectiles[0]).toMatchObject({
+      kind: 'blast',
+      hitConnected: false,
+      chargeDamageScale: 1.55
+    });
+    expect(match.fighters[0].actionFramesRemaining).toBeLessThanOrEqual(shooter.moves[0].recoveryFrames);
+
+    match = stepFrames(match, 12);
+    expect(match.projectiles).toHaveLength(1);
+  });
+
+  it('lets tapped release-gated blasts fire after startup without charge scaling', () => {
+    const shooter = makeProjectileCharacter('tap-blast-test', {
+      holdable: true,
+      startupFrames: 2,
+      activeFrames: 3,
+      recoveryFrames: 8
+    }, {
+      kind: 'blast',
+      releaseGated: true,
+      chargeFramesMax: 120,
+      minDamageScale: 1,
+      maxDamageScale: 1.55,
+      spawnFrame: 2,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      pierce: true,
+      hitbox: { offset: [0, 0, 0], size: [0.5, 0.7, 1] }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].position.z = 3;
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 3);
+
+    expect(match.projectiles).toHaveLength(1);
+    expect(match.projectiles[0].kind).toBe('blast');
+    expect(match.projectiles[0].chargeDamageScale).toBe(1);
+  });
+
+  it('supports short non-held blast shots with launcher properties', () => {
+    const shooter = makeProjectileCharacter('short-blast-test', {
+      startupFrames: 2,
+      activeFrames: 4,
+      recoveryFrames: 12,
+      damage: 10,
+      blockDamage: 2,
+      launchHeight: 1.05,
+      launchVelocity: 4.5,
+      onHitFrames: 28
+    }, {
+      kind: 'blast',
+      releaseGated: false,
+      blastRange: 2.8,
+      spawnFrame: 2,
+      startupFrames: 0,
+      activeFrames: 8,
+      recoveryFrames: 10,
+      lifetimeFrames: 18,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      hitbox: { offset: [0, 0, 0], size: [0.42, 0.42, 1] }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 4, makeInput('jab'));
+
+    expect(match.projectiles).toHaveLength(1);
+    expect(match.projectiles[0]).toMatchObject({
+      kind: 'blast',
+      chargeDamageScale: 1,
+      hitConnected: true
+    });
+    expect(match.projectiles[0].hitbox.size[2]).toBeCloseTo(2.8);
+    expect(match.fighters[1].state).toBe('juggle');
+    expect(match.fighters[1].position.y).toBeGreaterThan(0);
+  });
+
+  it('scales release-gated blast damage with charge and lets lane movement dodge', () => {
+    const shooter = makeProjectileCharacter('blast-damage-scaling-test', {
+      holdable: true,
+      startupFrames: 2,
+      activeFrames: 3,
+      recoveryFrames: 8,
+      damage: 20,
+      blockDamage: 4,
+      onHitFrames: 42,
+      launchHeight: 1.8,
+      launchVelocity: 6
+    }, {
+      kind: 'blast',
+      releaseGated: true,
+      chargeFramesMax: 60,
+      minDamageScale: 1,
+      maxDamageScale: 1.5,
+      spawnFrame: 2,
+      startupFrames: 0,
+      activeFrames: 42,
+      recoveryFrames: 20,
+      lifetimeFrames: 72,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      pierce: true,
+      hitbox: { offset: [0, 0, 0], size: [0.48, 0.72, 1] }
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let tapped = createMatch(shooter, defender, stages[0], 'training');
+    tapped = stepMatch(tapped, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    tapped = stepFrames(tapped, 4);
+    const tappedHp = tapped.fighters[1].hp;
+
+    let charged = createMatch(shooter, defender, stages[0], 'training');
+    charged = stepMatch(charged, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    charged = stepFrames(charged, 90, makeInput('jab'));
+    charged = stepMatch(charged, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    charged = stepFrames(charged, 4);
+
+    expect(charged.fighters[1].hp).toBeLessThan(tappedHp);
+    expect(charged.fighters[1].state).toBe('juggle');
+    expect(charged.fighters[1].position.y).toBeGreaterThan(0);
+    expect(charged.projectiles[0]?.hitConnected).toBe(true);
+    expect(charged.projectiles[0]?.expired).toBe(false);
+
+    let dodged = createMatch(shooter, defender, stages[0], 'training');
+    dodged = stepMatch(dodged, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    dodged = stepFrames(dodged, 90, makeInput('jab'));
+    dodged.fighters[1].position.z = 4;
+    dodged = stepMatch(dodged, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    dodged = stepFrames(dodged, 20);
+
+    expect(dodged.fighters[1].hp).toBe(dodged.fighters[1].maxHp);
+    expect(dodged.projectiles.length).toBeGreaterThan(0);
+  });
+
   it('lets active projectiles hit once and emit normal combat feedback', () => {
     const shooter = makeProjectileCharacter('projectile-hit-test');
     const defender = normalizeCharacter(starterCharacters[1]);
@@ -8025,17 +8199,29 @@ describe('fight engine', () => {
   });
 
   it('compacts and hydrates active projectiles for online snapshots', () => {
-    const shooter = makeProjectileCharacter('projectile-codec-test');
+    const shooter = makeProjectileCharacter('projectile-codec-test', {}, {
+      kind: 'blast',
+      releaseGated: true,
+      chargeFramesMax: 120,
+      minDamageScale: 1,
+      maxDamageScale: 1.55,
+      homingMode: 'none',
+      forwardVelocity: 0,
+      pierce: true
+    });
     const defender = normalizeCharacter(starterCharacters[1]);
     let match = createMatch(shooter, defender, stages[0], 'online');
     match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
-    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 12, makeInput('jab'));
     match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     expect(match.projectiles).toHaveLength(1);
     const hydrated = hydrateMatchSnapshot(createMatch(shooter, defender, stages[0], 'online'), compactMatchSnapshot(match, 12));
     expect(hydrated.projectiles).toHaveLength(1);
     expect(hydrated.projectiles[0].position).toEqual(match.projectiles[0].position);
     expect(hydrated.projectiles[0].move.label).toBe('Test Shot');
+    expect(hydrated.projectiles[0].kind).toBe('blast');
+    expect(hydrated.projectiles[0].chargeFrames).toBe(match.projectiles[0].chargeFrames);
+    expect(hydrated.projectiles[0].chargeDamageScale).toBe(match.projectiles[0].chargeDamageScale);
   });
 
   it('emits counter hit events and uses counter-hit advantage only for eligible moves', () => {

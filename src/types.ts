@@ -313,10 +313,23 @@ export type MoveEffectInstance = {
 export type ProjectileAnimationPhase = 'startup' | 'active' | 'recovery';
 
 export type ProjectileAnimationFrames = Partial<Record<ProjectileAnimationPhase, string[]>>;
+export type ProjectileKind = 'projectile' | 'blast';
+
+export type BlastVisualDefinition = {
+  coreColor?: string;
+  glowColor?: string;
+  outerColor?: string;
+  impactColor?: string;
+  radius?: number;
+  growFrames?: number;
+  fadeFrames?: number;
+  shake?: number;
+};
 
 export type CharacterProjectileDefinition = {
   id: string;
   name: string;
+  kind?: ProjectileKind;
   spriteSheetPath?: string;
   sourcePath?: string;
   frames?: string[];
@@ -330,6 +343,7 @@ export type CharacterProjectileDefinition = {
   defaultScale: Vec3Tuple;
   defaultRotation: Vec3Tuple;
   color?: string;
+  blastVisual?: BlastVisualDefinition;
   soundCues?: EffectSoundCue[];
   proceduralLayers?: ProceduralEffectLayer[];
 };
@@ -340,6 +354,7 @@ export type ProjectileTargetMode = 'forward' | 'targetLocation';
 export type MoveProjectileInstance = {
   id: string;
   projectileId: string;
+  kind?: ProjectileKind;
   label?: string;
   spawnFrame?: number;
   spawnOffset: Vec3Tuple;
@@ -354,6 +369,7 @@ export type MoveProjectileInstance = {
   repeatStartFrame?: number;
   repeatEveryFrames?: number;
   repeatLimit?: number;
+  blastRange?: number;
   homingMode: ProjectileHomingMode;
   homingStrength: number;
   homingTurnRate: number;
@@ -369,6 +385,10 @@ export type MoveProjectileInstance = {
   pierce?: boolean;
   clash?: boolean;
   kiBurst?: boolean;
+  releaseGated?: boolean;
+  chargeFramesMax?: number;
+  minDamageScale?: number;
+  maxDamageScale?: number;
 };
 
 export type VoxelFidelitySettings = {
@@ -1091,6 +1111,7 @@ export type ProjectileRuntime = {
   id: number;
   ownerSlot: 1 | 2;
   projectileId: string;
+  kind: ProjectileKind;
   instanceId: string;
   moveInstanceId: number;
   move: MoveDefinition;
@@ -1123,6 +1144,8 @@ export type ProjectileRuntime = {
   hitConnected: boolean;
   expired: boolean;
   trailSeed: number;
+  chargeFrames?: number;
+  chargeDamageScale?: number;
 };
 
 export type MatchOptions = {

@@ -211,16 +211,10 @@
       "/characters/vegeta/frames/frame-127.png"
     ],
     "cmd:O+2": [
-      "/characters/vegeta/frames/frame-100.png",
-      "/characters/vegeta/frames/frame-101.png",
-      "/characters/vegeta/frames/frame-102.png",
-      "/characters/vegeta/frames/frame-103.png",
-      "/characters/vegeta/frames/frame-104.png",
-      "/characters/vegeta/frames/frame-105.png",
-      "/characters/vegeta/frames/frame-106.png",
-      "/characters/vegeta/frames/frame-107.png",
-      "/characters/vegeta/frames/frame-108.png",
-      "/characters/vegeta/frames/frame-109.png"
+      "/characters/vegeta/frames/frame-120.png",
+      "/characters/vegeta/frames/frame-121.png",
+      "/characters/vegeta/frames/frame-122.png",
+      "/characters/vegeta/frames/frame-123.png"
     ],
     "cmd:1+4": [
       "/characters/vegeta/frames/frame-073.png",
@@ -990,24 +984,47 @@
       "startupFrames": 30,
       "activeFrames": 8,
       "recoveryFrames": 38,
-      "damage": 16,
-      "blockDamage": 1,
-      "onBlockFrames": -8,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 19,
+      "damage": 19,
+      "blockDamage": 3,
+      "onBlockFrames": -12,
+      "onHitFrames": 42,
+      "onCounterHitFrames": 54,
       "whiffRecoveryFrames": 45,
-      "range": 2.1,
+      "range": 8.5,
       "forwardForce": 2.68,
       "forwardForceStartFrame": 61,
       "forwardForceEndFrame": 68,
-      "label": "Galick Aura Drive",
+      "label": "Galick Gun",
       "hitLevel": "special",
-      "tracking": "medium",
-      "knockdown": true,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 10
+      "tracking": "none",
+      "knockdown": false,
+      "onComboHitFrames": 34,
+      "onJuggleHitFrames": 38,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 10,
+      "description": "Charge purple Saiyan energy at the palm, then release a launching full-screen Galick Gun.",
+      "pushback": 0.82,
+      "blockPushback": 0.68,
+      "usesKi": true,
+      "kiCost": 34,
+      "kiBurst": true,
+      "holdable": true,
+      "launchHeight": 1.9,
+      "launchVelocity": 6.2,
+      "juggleRefloatVelocity": 5.6,
+      "juggleGravityScale": 0.86,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "size": [
+          0.18,
+          0.18,
+          0.18
+        ]
+      }
     },
     "neutral:jab-jab": {
       "startupFrames": 15,
@@ -3123,6 +3140,90 @@
       "/characters/vegeta/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "galick-gun-blast",
+      "name": "Galick Gun",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#b56cff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#b56cff",
+        "outerColor": "#5d2cff",
+        "impactColor": "#f3e8ff",
+        "radius": 0.44,
+        "growFrames": 8,
+        "fadeFrames": 18,
+        "shake": 0.22
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "galick-gun-blast-release",
+        "projectileId": "galick-gun-blast",
+        "kind": "blast",
+        "label": "Galick Gun",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.12,
+          0.74
+        ],
+        "startupFrames": 0,
+        "activeFrames": 46,
+        "recoveryFrames": 22,
+        "lifetimeFrames": 78,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.66,
+            0.78,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": true,
+        "chargeFramesMax": 120,
+        "minDamageScale": 1,
+        "maxDamageScale": 1.55
+      }
+    ]
+  }
 }
