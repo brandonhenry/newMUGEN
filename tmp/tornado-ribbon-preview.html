@@ -105,6 +105,16 @@ const ring = new THREE.Mesh(new THREE.RingGeometry(0.32, 0.36, 48), mat(0xdffcff
 ring.rotation.x = -Math.PI / 2;
 ring.position.y = 0.13;
 ribbonAxis.add(ring);
+const impactRings = new THREE.Group();
+ribbonAxis.add(impactRings);
+for (let i = 0; i < 3; i += 1) {
+  const r = new THREE.Mesh(new THREE.RingGeometry(0.32 + i * 0.09, 0.35 + i * 0.1, 80), mat(i === 1 ? 0xffffff : 0x8be8ff, 0.68 - i * 0.1));
+  r.rotation.x = -Math.PI / 2;
+  r.position.y = 0.3 + i * 0.44;
+  r.userData.delay = i * 0.09;
+  r.userData.baseOpacity = 0.68 - i * 0.1;
+  impactRings.add(r);
+}
 const particleGroup = new THREE.Group();
 ribbonAxis.add(particleGroup);
 for (let i = 0; i < 34; i += 1) {
@@ -148,6 +158,12 @@ function animate(now) {
     child.position.x += Math.sin(now * 0.003 + child.userData.phase) * 0.0008;
     child.position.z += Math.cos(now * 0.003 + child.userData.phase) * 0.0008;
     child.material.opacity = (0.32 + (index % 5) * 0.07) * Math.max(0.28, fade);
+  });
+  impactRings.children.forEach((child) => {
+    const ringProgress = Math.max(0, Math.min(1, (cycle / 0.55 - child.userData.delay) / 0.58));
+    const ringScale = 1 + Math.sin(ringProgress * Math.PI) * 0.36 + ringProgress * 0.28;
+    child.scale.set(ringScale, ringScale, 1);
+    child.material.opacity = child.userData.baseOpacity * Math.max(0, 1 - ringProgress) * Math.max(0.34, fade);
   });
   controls.update();
   renderer.render(scene, camera);

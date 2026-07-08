@@ -1698,6 +1698,17 @@ function TornadoRibbonEffect({
     }),
     [event.id, height, radius, reducedMotion]
   );
+  const impactRings = useMemo(
+    () => Array.from({ length: reducedMotion ? 1 : 3 }, (_, index) => ({
+      y: height * (0.18 + index * 0.26),
+      baseRadius: radius * (1.25 + index * 0.34),
+      tube: 0.026 + index * 0.006,
+      opacity: 0.68 - index * 0.1,
+      delay: index * 0.09,
+      color: index === 1 ? '#ffffff' : '#8be8ff'
+    })),
+    [height, radius, reducedMotion]
+  );
 
   useFrame((_, delta) => {
     ageRef.current += delta;
@@ -1737,10 +1748,21 @@ function TornadoRibbonEffect({
             <meshBasicMaterial color={ribbon.color} transparent opacity={ribbon.opacity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
           </mesh>
         ))}
+        {impactRings.map((ring, index) => {
+          const ringProgress = THREE.MathUtils.clamp((ageRef.current / duration - ring.delay) / 0.58, 0, 1);
+          const ringScale = 1 + Math.sin(ringProgress * Math.PI) * 0.36 + ringProgress * 0.28;
+          const ringOpacity = ring.opacity * Math.max(0, 1 - ringProgress);
+          return (
+            <mesh key={`tornado-ring-${event.id}-${index}`} position={[0, ring.y, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[ringScale, ringScale, 1]}>
+              <ringGeometry args={[ring.baseRadius, ring.baseRadius + ring.tube, 80]} />
+              <meshBasicMaterial color={ring.color} transparent opacity={ringOpacity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+            </mesh>
+          );
+        })}
         {!reducedMotion && (
           <mesh position={[0, height * 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <ringGeometry args={[radius * 1.45, radius * 1.62, 48]} />
-            <meshBasicMaterial color="#dffcff" transparent opacity={0.3} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+            <meshBasicMaterial color="#dffcff" transparent opacity={0.26} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
           </mesh>
         )}
         {particles.map((particle, index) => (
