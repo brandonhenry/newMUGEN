@@ -211,6 +211,8 @@ async function startTraining(page: import('@playwright/test').Page) {
   await expect(page.getByRole('group', { name: 'Training mode' })).toContainText('Training');
   await page.getByRole('button', { name: 'Start Training' }).click();
   await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
+  await expect(page.getByTestId('asset-warmup-screen')).toContainText('Ready', { timeout: 12000 });
+  await activateAnyInputScreen(page, '[data-testid="asset-warmup-screen"]');
   await expect(page.getByTestId('match-mode')).toHaveText('training', { timeout: 12000 });
   await page.waitForTimeout(4200);
   const fightScreen = page.locator('.fight-screen');
@@ -686,7 +688,7 @@ test('starts a playable match from the menu', async ({ page }) => {
 });
 
 test('same-stage rematch starts a fresh fight session', async ({ page }) => {
-  await startFight(page, true);
+  await startTraining(page);
   const firstSession = await fightSessionId(page);
   await forceMatchOver(page, 1);
   await expect(page.getByRole('button', { name: 'Rematch' })).toBeVisible();

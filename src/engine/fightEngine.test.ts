@@ -4090,12 +4090,12 @@ describe('fight engine', () => {
     laneUp.sidewalkUp = true;
     const laneZBefore = match.fighters[0].position.z;
     const laneUpResult = stepMatch(match, laneUp, emptyInputFrame(), 10 / 60);
-    expect(laneUpResult.fighters[0].position.z).toBeLessThan(laneZBefore - 0.35);
+    expect(laneUpResult.fighters[0].position.z).toBeGreaterThan(laneZBefore + 0.35);
 
     const laneDown = emptyInputFrame();
     laneDown.sidewalkDown = true;
     const laneDownResult = stepMatch(match, laneDown, emptyInputFrame(), 10 / 60);
-    expect(laneDownResult.fighters[0].position.z).toBeGreaterThan(laneZBefore + 0.35);
+    expect(laneDownResult.fighters[0].position.z).toBeLessThan(laneZBefore - 0.35);
   });
 
   it('syncs both player control sides from their current stage-side positions', () => {
@@ -4401,7 +4401,7 @@ describe('fight engine', () => {
     expect(getFighterAnimationFrameSource(makeFighter({ backflip: ['legacy-backflip.png'], idle: ['idle.png'] }))?.key).toBe('backflip');
   });
 
-  it('keeps double-tap up and down sidesteps relative to the current control side', () => {
+  it('flips double-tap up and down sidesteps when fighters switch sides', () => {
     let sameSide = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     sameSide.phase = 'fighting';
     sameSide.countdown = 0;
@@ -4422,13 +4422,13 @@ describe('fight engine', () => {
     const crossedZ = crossed.fighters[0].position.z;
 
     const crossedUp = stepMatch(crossed, { ...emptyInputFrame(), sidestepUp: true }, emptyInputFrame(), 1 / 60);
-    expect(crossedUp.fighters[0].position.z).toBeLessThan(crossedZ);
+    expect(crossedUp.fighters[0].position.z).toBeGreaterThan(crossedZ);
 
     const crossedDown = stepMatch(crossed, { ...emptyInputFrame(), sidestepDown: true }, emptyInputFrame(), 1 / 60);
-    expect(crossedDown.fighters[0].position.z).toBeGreaterThan(crossedZ);
+    expect(crossedDown.fighters[0].position.z).toBeLessThan(crossedZ);
   });
 
-  it('keeps up and down sidesteps control-side relative on rotated stages', () => {
+  it('flips up and down sidesteps on rotated stages when fighters switch sides', () => {
     const rotatedStage: StageDefinition = {
       ...stages[0],
       fightPlane: { center: [4, 0, -2], width: 14, depth: 8, y: 0, rotationY: Math.PI / 2 },
@@ -4449,10 +4449,10 @@ describe('fight engine', () => {
 
     const laneBefore = boundsLocalPosition(rotatedStage, match.fighters[0].position).z;
     const crossedUp = stepMatch(match, { ...emptyInputFrame(), sidestepUp: true }, emptyInputFrame(), 1 / 60);
-    expect(boundsLocalPosition(rotatedStage, crossedUp.fighters[0].position).z).toBeLessThan(laneBefore);
+    expect(boundsLocalPosition(rotatedStage, crossedUp.fighters[0].position).z).toBeGreaterThan(laneBefore);
 
     const crossedDown = stepMatch(match, { ...emptyInputFrame(), sidestepDown: true }, emptyInputFrame(), 1 / 60);
-    expect(boundsLocalPosition(rotatedStage, crossedDown.fighters[0].position).z).toBeGreaterThan(laneBefore);
+    expect(boundsLocalPosition(rotatedStage, crossedDown.fighters[0].position).z).toBeLessThan(laneBefore);
   });
 
   it('uses the facing tangent for sidesteps without treating lane movement as a side swap', () => {
@@ -4746,6 +4746,30 @@ describe('fight engine', () => {
     expect(liveBack.fighters[0].position.x).toBeLessThan(match.fighters[0].position.x);
   });
 
+  it('does not let a stale sidestep side lock stop lane controls from flipping', () => {
+    const sameSide = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    sameSide.phase = 'fighting';
+    sameSide.countdown = 0;
+    sameSide.fighters[0].position.x = -1.3;
+    sameSide.fighters[1].position.x = 1.3;
+    sameSide.fighters[0].controlSideSign = -1;
+    sameSide.fighters[0].laneOrbitControlLocked = true;
+    sameSide.fighters[0].sidestepDirection = -1;
+    const sameSideUp = stepMatch(sameSide, { ...emptyInputFrame(), sidestepUp: true }, emptyInputFrame(), 1 / 60);
+    expect(sameSideUp.fighters[0].position.z).toBeLessThan(sameSide.fighters[0].position.z);
+
+    const crossed = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    crossed.phase = 'fighting';
+    crossed.countdown = 0;
+    crossed.fighters[0].position.x = 1.3;
+    crossed.fighters[1].position.x = -1.3;
+    crossed.fighters[0].controlSideSign = 1;
+    crossed.fighters[0].laneOrbitControlLocked = true;
+    crossed.fighters[0].sidestepDirection = -1;
+    const crossedUp = stepMatch(crossed, { ...emptyInputFrame(), sidestepUp: true }, emptyInputFrame(), 1 / 60);
+    expect(crossedUp.fighters[0].position.z).toBeGreaterThan(crossed.fighters[0].position.z);
+  });
+
   it('treats simultaneous left and right as neutral movement', () => {
     const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -4968,7 +4992,7 @@ describe('fight engine', () => {
     expect(flippedDirectionSteps).toBe(0);
   });
 
-  it('keeps up/down orbit direction control-side relative at the old arena edge', () => {
+  it('flips up/down orbit direction at the old arena edge', () => {
     let downMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     downMatch.phase = 'fighting';
     downMatch.countdown = 0;
@@ -4980,7 +5004,7 @@ describe('fight engine', () => {
     down.sidewalkDown = true;
     const downZBefore = downMatch.fighters[0].position.z;
     downMatch = stepMatch(downMatch, down, emptyInputFrame(), 12 / 60);
-    expect(downMatch.fighters[0].position.z).toBeGreaterThan(downZBefore);
+    expect(downMatch.fighters[0].position.z).toBeLessThan(downZBefore);
 
     let upMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     upMatch.phase = 'fighting';
@@ -4993,7 +5017,7 @@ describe('fight engine', () => {
     up.sidewalkUp = true;
     const upZBefore = upMatch.fighters[0].position.z;
     upMatch = stepMatch(upMatch, up, emptyInputFrame(), 12 / 60);
-    expect(upMatch.fighters[0].position.z).toBeLessThan(upZBefore);
+    expect(upMatch.fighters[0].position.z).toBeGreaterThan(upZBefore);
   });
 
   it('keeps repeated down-down taps moving down lane after crossing sides', () => {
