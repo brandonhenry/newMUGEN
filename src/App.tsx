@@ -2880,6 +2880,12 @@ export default function App() {
       ...properties
     });
   }, [cpuDifficulty, mode, p1Id, p2Id, screen, stageId]);
+  const capturePositiveMilestone = useCallback((milestoneType: string, properties: AnalyticsProperties = {}) => {
+    captureAppAnalytics('positive_milestone_reached', {
+      milestone_type: milestoneType,
+      ...properties
+    });
+  }, [captureAppAnalytics]);
   const captureCharacterPickedAnalytics = useCallback((
     source: string,
     selections: { p1CharacterId: string; p2CharacterId: string; p1Random?: boolean; p2Random?: boolean; stageId?: string }
@@ -3236,8 +3242,13 @@ export default function App() {
       status: result.payout.status,
       amount_sats: result.payout.amountSats ?? null
     });
+    capturePositiveMilestone('tournament_prize_claimed', {
+      tournament_id: result.bracket.id,
+      status: result.payout.status,
+      amount_sats: result.payout.amountSats ?? null
+    });
     return 'Prize sent';
-  }, [captureAppAnalytics, onlineProfile, onlineTournamentStatus]);
+  }, [captureAppAnalytics, capturePositiveMilestone, onlineProfile, onlineTournamentStatus]);
 
   const refreshOnlineTournament = useCallback(async () => {
     const current = onlineTournamentStatus;
@@ -3316,6 +3327,11 @@ export default function App() {
           tournament_id: advanced.id,
           winner_entry_id: winnerEntryId
         });
+        capturePositiveMilestone('tournament_won', {
+          tournament_mode: 'infinite',
+          tournament_id: advanced.id,
+          winner_entry_id: winnerEntryId
+        });
         window.clearTimeout(infiniteTournamentRestartTimerRef.current);
         infiniteTournamentRestartTimerRef.current = window.setTimeout(() => {
           const nextBracket = makeInfiniteTournamentBracket();
@@ -3345,6 +3361,13 @@ export default function App() {
           result: winnerEntryId === 'local-player' ? 'won' : 'eliminated',
           match_id: activeTournamentMatchId
         });
+        if (winnerEntryId === 'local-player') {
+          capturePositiveMilestone('tournament_won', {
+            tournament_mode: 'free',
+            match_id: activeTournamentMatchId,
+            winner_entry_id: winnerEntryId
+          });
+        }
         return;
       }
       const nextMatch = getAssignedTournamentMatch(advanced, 'local-player');
@@ -3387,11 +3410,21 @@ export default function App() {
           match_id: activeTournamentMatchId
         });
         if (status.bracket.status === 'completed') {
+          const finalRound = getTournamentTotalRounds(status.bracket);
+          const finalWinnerEntryId = status.bracket.matches.find((candidate) => candidate.round === finalRound && candidate.winnerEntryId)?.winnerEntryId;
           captureAppAnalytics('tournament_completed', {
             tournament_mode: status.bracket.kind,
             result: 'completed',
             tournament_id: status.bracket.id
           });
+          if (finalWinnerEntryId === status.entry?.id) {
+            capturePositiveMilestone('tournament_won', {
+              tournament_mode: status.bracket.kind,
+              tournament_id: status.bracket.id,
+              match_id: activeTournamentMatchId,
+              winner_entry_id: finalWinnerEntryId
+            });
+          }
         }
       }).catch((error) => {
         console.error('Failed to report tournament match', error);
@@ -3404,7 +3437,7 @@ export default function App() {
         });
       });
     }
-  }, [activeTournamentMatchId, captureAppAnalytics, localTournamentBracket, makeInfiniteTournamentBracket, mode, onlineProfile, onlineTournamentStatus, roster, startInfiniteTournamentMatch]);
+  }, [activeTournamentMatchId, captureAppAnalytics, capturePositiveMilestone, localTournamentBracket, makeInfiniteTournamentBracket, mode, onlineProfile, onlineTournamentStatus, roster, startInfiniteTournamentMatch]);
 
   useEffect(() => {
     const onError = (event: ErrorEvent) => {
@@ -4014,8 +4047,18 @@ export default function App() {
 	    setArcadeTransition(null);
 	  }, []);
 	  const finishArcadeRun = useCallback((run: ArcadeRunState) => {
-	    const best = Math.max(readLocalArcadeRunHighScore(onlineProfile), run.score);
+	    const previousBest = readLocalArcadeRunHighScore(onlineProfile);
+	    const best = Math.max(previousBest, run.score);
 	    setArcadeRunBestScore(best);
+	    if (run.score > previousBest) {
+	      capturePositiveMilestone('arcade_run_high_score', {
+	        score: Math.round(run.score),
+	        previous_high_score: previousBest,
+	        arcade_wins: run.wins,
+	        arcade_level: run.level,
+	        unlocks_count: run.unlockedThisRun.length
+	      });
+	    }
 	    void submitArcadeRunScore(onlineProfile, run.score)
 	      .then((result) => {
 	        const submittedBest = result.entries.find((entry) => entry.playerId === (onlineProfile?.playerId ?? 'local-player'))?.score ?? best;
@@ -4024,7 +4067,7 @@ export default function App() {
 	      .catch((error) => {
 	        console.error('Failed to submit arcade run score', error);
 	      });
-	  }, [onlineProfile]);
+	  }, [capturePositiveMilestone, onlineProfile]);
 	  const makeArcadeMiniGameLaunch = useCallback((level = arcadeRun.level): ArcadeMiniGameLaunch | null => {
 	    if (!shouldStartArcadeMiniGame()) return null;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
@@ -4681,7 +4724,16 @@ export default function App() {
               }}
               onComplete={(result) => {
                 const resultWithAward = { ...result, arcadeScoreAward: result.score };
-                setArcadeRun((current) => applyArcadeMiniGameResult(current, resultWithAward));
+                const nextArcadeRun = applyArcadeMiniGameResult(arcadeRun, resultWithAward);
+                if (nextArcadeRun.level > arcadeRun.level) {
+                  capturePositiveMilestone('arcade_level_reached', {
+                    arcade_level: nextArcadeRun.level,
+                    previous_arcade_level: arcadeRun.level,
+                    arcade_score: nextArcadeRun.score,
+                    source: 'minigame'
+                  });
+                }
+                setArcadeRun(nextArcadeRun);
                 setLastMiniGameResult(resultWithAward);
                 setScreen('miniGameResult');
               }}
@@ -4706,7 +4758,16 @@ export default function App() {
               }}
               onComplete={(result) => {
                 const resultWithAward = { ...result, arcadeScoreAward: result.score };
-                setArcadeRun((current) => applyArcadeMiniGameResult(current, resultWithAward));
+                const nextArcadeRun = applyArcadeMiniGameResult(arcadeRun, resultWithAward);
+                if (nextArcadeRun.level > arcadeRun.level) {
+                  capturePositiveMilestone('arcade_level_reached', {
+                    arcade_level: nextArcadeRun.level,
+                    previous_arcade_level: arcadeRun.level,
+                    arcade_score: nextArcadeRun.score,
+                    source: 'minigame'
+                  });
+                }
+                setArcadeRun(nextArcadeRun);
                 setLastMiniGameResult(resultWithAward);
                 setScreen('miniGameResult');
               }}
@@ -4872,6 +4933,34 @@ export default function App() {
               nextArcadeRun = winnerSlot === 1
                 ? applyArcadeFightWin(nextArcadeRun, playerHealth, playerMaxHealth)
                 : applyArcadeLifeLoss(nextArcadeRun);
+              if (winnerSlot === 1) {
+                capturePositiveMilestone('arcade_fight_won', {
+                  defeated_character_id: defeatedCharacterId,
+                  opponent_character_id: defeatedCharacterId,
+                  arcade_score: nextArcadeRun.score,
+                  arcade_level: nextArcadeRun.level,
+                  arcade_wins: nextArcadeRun.wins,
+                  award: nextArcadeRun.lastAward
+                });
+                if (shouldRevealUnlock) {
+                  capturePositiveMilestone('character_unlocked', {
+                    character_id: defeatedCharacterId,
+                    character_name: defeatedCharacter?.displayName ?? defeatedCharacterId,
+                    source: 'arcade_win',
+                    arcade_score: nextArcadeRun.score,
+                    arcade_level: nextArcadeRun.level,
+                    arcade_wins: nextArcadeRun.wins
+                  });
+                }
+                if (nextArcadeRun.level > previousArcadeRun.level) {
+                  capturePositiveMilestone('arcade_level_reached', {
+                    arcade_level: nextArcadeRun.level,
+                    previous_arcade_level: previousArcadeRun.level,
+                    arcade_score: nextArcadeRun.score,
+                    source: 'arcade_fight_win'
+                  });
+                }
+              }
               setArcadeRun(nextArcadeRun);
               if (nextArcadeRun.status === 'game-over') {
                 finishArcadeRun(nextArcadeRun);
@@ -20912,6 +21001,7 @@ function FightScreen({
   const pauseViewAnalyticsRef = useRef('');
   const moveListTabAnalyticsRef = useRef('');
   const completedTrainingTrialAnalyticsRef = useRef<Set<string>>(new Set());
+  const firstTimeTrainingTrialCompletionRef = useRef<Set<string>>(new Set());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [assetLoadingState, setAssetLoadingState] = useState<AssetLoadingState>({
     active: true,
@@ -20934,6 +21024,12 @@ function FightScreen({
       ...properties
     });
   }, [cpuDifficulty, mode, p1.id, p2.id, stage.id]);
+  const captureFightPositiveMilestone = useCallback((milestoneType: string, properties: AnalyticsProperties = {}) => {
+    captureFightAnalytics('positive_milestone_reached', {
+      milestone_type: milestoneType,
+      ...properties
+    });
+  }, [captureFightAnalytics]);
 
   const resetTrackedMatchAnalytics = useCallback((freshMatch?: MatchSnapshot) => {
     resetFightAnalyticsState(fightAnalyticsStateRef.current);
@@ -21110,6 +21206,7 @@ function FightScreen({
       setTrainingTrialCallout('GREAT');
       setCompletedTrainingTrialIds((completed) => {
         if (completed.has(trial.id)) return completed;
+        firstTimeTrainingTrialCompletionRef.current.add(trial.id);
         const updated = new Set(completed);
         updated.add(trial.id);
         writeTrainingTrialCompletion(p1.id, updated);
@@ -21254,13 +21351,23 @@ function FightScreen({
     if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress?.completed || !trainingTrialProgress.succeeded || previewPlayback) return;
     if (completedTrainingTrialAnalyticsRef.current.has(activeTrainingTrial.id)) return;
     completedTrainingTrialAnalyticsRef.current.add(activeTrainingTrial.id);
+    const firstTimeCompletion = firstTimeTrainingTrialCompletionRef.current.has(activeTrainingTrial.id);
+    firstTimeTrainingTrialCompletionRef.current.delete(activeTrainingTrial.id);
     captureFightAnalytics('training_trial_completed', {
       trial_id: activeTrainingTrial.id,
       training_submode: activeTrainingTrial.mode,
       trial_category: activeTrainingTrial.category,
       trial_difficulty: activeTrainingTrial.difficulty
     });
-  }, [activeTrainingTrial, captureFightAnalytics, mode, previewPlayback, trainingTrialProgress?.completed, trainingTrialProgress?.succeeded]);
+    captureFightPositiveMilestone('training_trial_completed', {
+      trial_id: activeTrainingTrial.id,
+      training_submode: activeTrainingTrial.mode,
+      trial_category: activeTrainingTrial.category,
+      trial_difficulty: activeTrainingTrial.difficulty,
+      character_id: p1.id,
+      first_time_completion: firstTimeCompletion
+    });
+  }, [activeTrainingTrial, captureFightAnalytics, captureFightPositiveMilestone, mode, p1.id, previewPlayback, trainingTrialProgress?.completed, trainingTrialProgress?.succeeded]);
 
   useEffect(() => {
     latestAudioSettingsRef.current = settings.audio;
@@ -21460,6 +21567,7 @@ function FightScreen({
           setTrainingTrialCallout('GREAT');
           setCompletedTrainingTrialIds((completed) => {
             if (completed.has(activeTrainingTrial.id)) return completed;
+            firstTimeTrainingTrialCompletionRef.current.add(activeTrainingTrial.id);
             const updated = new Set(completed);
             updated.add(activeTrainingTrial.id);
             writeTrainingTrialCompletion(p1.id, updated);
@@ -22220,6 +22328,19 @@ function FightScreen({
     const rematchLimitReached = rankedRematchLimitReached();
     const bot = onlineBotOpponentRef.current;
     const isPlacementMatch = onlinePlacementMatchRef.current;
+    const localIndex = onlineRoleRef.current === 'guest' ? 1 : 0;
+    const opponentIndex = localIndex === 0 ? 1 : 0;
+    const localDidWin = candidate.winnerSlot === localIndex + 1;
+    if ((mode === 'online' || mode === 'private' || mode === 'trainingOnline') && localDidWin) {
+      captureFightPositiveMilestone('online_match_won', {
+        opponent_character_id: candidate.fighters[opponentIndex].baseCharacter.id,
+        opponent_kind: bot ? 'bot' : 'human',
+        local_character_id: candidate.fighters[localIndex].baseCharacter.id,
+        rounds_won: candidate.fighters[localIndex].roundsWon,
+        opponent_rounds_won: candidate.fighters[opponentIndex].roundsWon,
+        online_role: onlineRoleRef.current
+      });
+    }
     setOnlineStatusText(isPlacementMatch ? 'PLACEMENT RESULT' : rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
     if (bot && !isPlacementMatch && (mode === 'online' || mode === 'ranked')) {
       recordOnlineBotMatchOutcome(bot, {
@@ -22324,6 +22445,24 @@ function FightScreen({
               promoted: localResult.promoted,
               demoted: localResult.demoted
             });
+            if (localResult.didWin) {
+              captureFightPositiveMilestone('ranked_match_won', {
+                kp_delta: localResult.kpDelta,
+                promoted: localResult.promoted,
+                demoted: localResult.demoted,
+                rank_id: localResult.afterRank.id,
+                before_rank_id: localResult.beforeRank.id,
+                after_rank_id: localResult.afterRank.id
+              });
+            }
+            if (localResult.promoted) {
+              captureFightPositiveMilestone('rank_promotion', {
+                kp_delta: localResult.kpDelta,
+                rank_id: localResult.afterRank.id,
+                before_rank_id: localResult.beforeRank.id,
+                after_rank_id: localResult.afterRank.id
+              });
+            }
           }
           onlineSessionRef.current?.send({ type: 'rankedResult', result });
         }).catch((error) => {
@@ -22333,7 +22472,7 @@ function FightScreen({
       }
     }
     publishOnlineSnapshot(true, 'result');
-  }, [captureFightAnalytics, clearBotRematchTimers, markOnlineDisconnected, mode, onRankedProfileChange, publishOnlineSnapshot, rankedRematchLimitReached, startOnlineRematch]);
+  }, [captureFightAnalytics, captureFightPositiveMilestone, clearBotRematchTimers, markOnlineDisconnected, mode, onRankedProfileChange, publishOnlineSnapshot, rankedRematchLimitReached, startOnlineRematch]);
 
   const handleOnlineMessage = useCallback((message: OnlineMessage) => {
     if (message.type === 'hello') {
@@ -22485,6 +22624,24 @@ function FightScreen({
           promoted: localResult.promoted,
           demoted: localResult.demoted
         });
+        if (localResult.didWin) {
+          captureFightPositiveMilestone('ranked_match_won', {
+            kp_delta: localResult.kpDelta,
+            promoted: localResult.promoted,
+            demoted: localResult.demoted,
+            rank_id: localResult.afterRank.id,
+            before_rank_id: localResult.beforeRank.id,
+            after_rank_id: localResult.afterRank.id
+          });
+        }
+        if (localResult.promoted) {
+          captureFightPositiveMilestone('rank_promotion', {
+            kp_delta: localResult.kpDelta,
+            rank_id: localResult.afterRank.id,
+            before_rank_id: localResult.beforeRank.id,
+            after_rank_id: localResult.afterRank.id
+          });
+        }
       }
       return;
     }
@@ -22503,7 +22660,7 @@ function FightScreen({
         }
       ].slice(-8));
     }
-  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, beginOnlineAssetWarmup, captureFightAnalytics, clearOnlineAssetGate, incrementOnlineRematchCount, installFreshMatch, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
+  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, beginOnlineAssetWarmup, captureFightAnalytics, captureFightPositiveMilestone, clearOnlineAssetGate, incrementOnlineRematchCount, installFreshMatch, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -22938,6 +23095,7 @@ function FightScreen({
                   setTrainingTrialCallout('GREAT');
                   setCompletedTrainingTrialIds((completed) => {
                     if (completed.has(currentTrial.id)) return completed;
+                    firstTimeTrainingTrialCompletionRef.current.add(currentTrial.id);
                     const updated = new Set(completed);
                     updated.add(currentTrial.id);
                     writeTrainingTrialCompletion(p1.id, updated);
@@ -24639,6 +24797,18 @@ function BreakTargetMiniGameScreen({
             target_count: result.totalTargets,
             time_remaining: Number(result.timeRemaining.toFixed(2))
           });
+          if (result.score > previousHighScore) {
+            onAnalytics('positive_milestone_reached', {
+              milestone_type: 'minigame_high_score',
+              game_id: result.gameId,
+              stage_id: result.stageId,
+              score: Math.round(result.score),
+              high_score: highScore,
+              new_high_score: true,
+              targets_destroyed: result.targetsDestroyed,
+              target_count: result.totalTargets
+            });
+          }
           onComplete({ ...result, highScore, newHighScore: result.score > previousHighScore });
           return;
         }
@@ -24804,6 +24974,18 @@ function EnemyRushMiniGameScreen({
             enemy_count: result.totalEnemies,
             completed_reason: result.completedReason
           });
+          if (result.score > previousHighScore) {
+            onAnalytics('positive_milestone_reached', {
+              milestone_type: 'minigame_high_score',
+              game_id: result.gameId,
+              stage_id: result.stageId,
+              score: Math.round(result.score),
+              high_score: highScore,
+              new_high_score: true,
+              enemies_defeated: result.enemiesDefeated,
+              enemy_count: result.totalEnemies
+            });
+          }
           onComplete({ ...result, highScore, newHighScore: result.score > previousHighScore });
           return;
         }

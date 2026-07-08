@@ -26,6 +26,7 @@ export type AnalyticsEventName =
   | 'round_ended'
   | 'match_completed'
   | 'combo_route_completed'
+  | 'positive_milestone_reached'
   | 'rematch_clicked'
   | 'fullscreen_clicked'
   | 'pause_toggled'

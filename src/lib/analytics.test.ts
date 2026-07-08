@@ -88,6 +88,12 @@ describe('analytics', () => {
       combo_hits: 2,
       omitted: undefined
     });
+    analytics.captureAnalyticsEvent('positive_milestone_reached', {
+      milestone_type: 'training_trial_completed',
+      trial_id: 'combo:naruto-route',
+      first_time_completion: true,
+      omitted: undefined
+    });
 
     expect(posthogMock.capture).toHaveBeenCalledWith('character_picked', {
       character_id: 'naruto',
@@ -99,6 +105,11 @@ describe('analytics', () => {
       character_id: 'naruto',
       route_key: 'jab:1>kick:2',
       combo_hits: 2
+    });
+    expect(posthogMock.capture).toHaveBeenCalledWith('positive_milestone_reached', {
+      milestone_type: 'training_trial_completed',
+      trial_id: 'combo:naruto-route',
+      first_time_completion: true
     });
   });
 
