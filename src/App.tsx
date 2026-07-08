@@ -20510,10 +20510,12 @@ function FightAssetLoadingOverlay({ state }: { state: AssetLoadingState }) {
 
 function OnlineAssetWarmupOverlay({
   gate,
+  displayMode,
   privateRoomName,
   privateRoomPassword
 }: {
   gate: OnlineAssetGate;
+  displayMode: MatchMode;
   privateRoomName?: string;
   privateRoomPassword?: string;
 }) {
@@ -20546,6 +20548,7 @@ function OnlineAssetWarmupOverlay({
           <b>{gate.localReady && gate.remoteReady ? 'Ready' : 'Syncing Assets'}</b>
         </div>
         <h1>{gate.match.stage.name}</h1>
+        <div className="arcade-transition-subtitle">{modeLabel(displayMode)}</div>
         <p>Preparing both fighters and the arena on both systems before the match starts.</p>
         <div className="arcade-transition-stats stage-warmup-stats">
           <span>
@@ -23163,7 +23166,7 @@ function FightScreen({
       {settings.display.debugOverlay && !onlineAssetGateActive && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && !onlineAssetGateActive && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {showLateAssetFallback && !onlineAssetGateActive && (assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
-      {onlineAssetGate && <OnlineAssetWarmupOverlay gate={onlineAssetGate} privateRoomName={privateRoomName} privateRoomPassword={privateRoomPassword} />}
+      {onlineAssetGate && <OnlineAssetWarmupOverlay gate={onlineAssetGate} displayMode={mode} privateRoomName={privateRoomName} privateRoomPassword={privateRoomPassword} />}
       {match.message && !onlineAssetGateActive && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
@@ -24775,6 +24778,7 @@ function AssetWarmupScreen({
           <b>{ready && minimumElapsed ? 'Ready' : statusText}</b>
         </div>
         <h1>{intent.stage.name}</h1>
+        <div className="arcade-transition-subtitle">{modeLabel(intent.mode)}</div>
         <p>{assetStatus.phase === 'error' ? 'The arena model did not finish cleanly, so K.O.R.E will use the stage fallback.' : 'Preparing the fighters and arena before the match starts.'}</p>
         <div className="arcade-transition-stats stage-warmup-stats">
           <span>

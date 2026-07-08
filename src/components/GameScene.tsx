@@ -597,6 +597,58 @@ const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
   intensity: 1
 };
 
+const LOCAL_HDRI_ENVIRONMENT_PATH = '/hdri/';
+const LOCAL_HDRI_ENVIRONMENT_FILE = 'potsdamer_platz_1k.hdr';
+
+function EnvironmentFallback() {
+  return (
+    <>
+      <ambientLight intensity={0.85} />
+      <directionalLight position={[8, 12, 6]} intensity={1.25} castShadow />
+      <hemisphereLight args={['#ffffff', '#1b1b2b', 0.45]} />
+    </>
+  );
+}
+
+type GameEnvironmentErrorBoundaryProps = {
+  fallback: ReactNode;
+  children: ReactNode;
+};
+
+type GameEnvironmentErrorBoundaryState = {
+  error: Error | null;
+};
+
+class GameEnvironmentErrorBoundary extends Component<GameEnvironmentErrorBoundaryProps, GameEnvironmentErrorBoundaryState> {
+  state: GameEnvironmentErrorBoundaryState = { error: null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.warn('[KORE environment] Local HDRI environment failed; using light fallback.', {
+      error: error.message,
+      componentStack: info.componentStack?.slice(0, 1000)
+    });
+  }
+
+  render() {
+    if (this.state.error) return this.props.fallback;
+    return this.props.children;
+  }
+}
+
+function GameEnvironment({ background = false }: { background?: boolean }) {
+  return (
+    <GameEnvironmentErrorBoundary fallback={<EnvironmentFallback />}>
+      <Suspense fallback={<EnvironmentFallback />}>
+        <Environment path={LOCAL_HDRI_ENVIRONMENT_PATH} files={LOCAL_HDRI_ENVIRONMENT_FILE} background={background} />
+      </Suspense>
+    </GameEnvironmentErrorBoundary>
+  );
+}
+
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
 export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false, onAssetLoadingChange }: GameSceneProps) {
@@ -622,9 +674,7 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
       <AssetLoadingReporter onAssetLoadingChange={onAssetLoadingChange} />
       {import.meta.env.DEV && <KoreHealthReporter match={match} />}
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
-        <Suspense fallback={null}>
-          <Environment preset="city" />
-        </Suspense>
+        <GameEnvironment />
         {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
         <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
         <CameraRig match={match} settings={cameraSettings} />
@@ -864,9 +914,7 @@ export function MoveDemoCanvas({
   return (
     <Canvas shadows dpr={[1, 1.25]} camera={{ position: [0, 2.35, 5.4], fov: 44 }} data-testid={testId} aria-label={label}>
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
-        <Suspense fallback={null}>
-          <Environment preset="city" />
-        </Suspense>
+        <GameEnvironment />
         {!isModelStage(stage) && <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
         <StageVisualStyleRig stage={stage} fighters={previewMatch.fighters} preview />
         <MoveDemoCamera match={previewMatch} />
@@ -966,9 +1014,7 @@ export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: A
   return (
     <Canvas shadows dpr={[1, 1.75]} camera={{ position: [snapshot.player.position.x, 3.3, snapshot.player.position.z + 6.8], fov: 46 }} data-testid="mini-game-canvas">
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
-        <Suspense fallback={null}>
-          <Environment preset="city" />
-        </Suspense>
+        <GameEnvironment />
         {!isModelStage(snapshot.stage) && <DefaultSkybox imagePath={snapshot.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
         <StageVisualStyleRig stage={snapshot.stage} fighters={[snapshot.player, snapshot.player] as [FighterRuntime, FighterRuntime]} />
         <MiniGameCameraRig snapshot={snapshot} />
@@ -2767,9 +2813,7 @@ export function CharacterPreviewCanvas({
       aria-label="3D character model viewer"
     >
       <color attach="background" args={['#111418']} />
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-      </Suspense>
+      <GameEnvironment />
       <ambientLight intensity={1.05} />
       <directionalLight castShadow position={[2.8, 4.6, 3.4]} intensity={2.65} color="#f7f7f2" shadow-mapSize={[1024, 1024]} />
       <pointLight position={[0, 2.4, 3.2]} color="#ffffff" intensity={5} distance={6} />
@@ -2844,9 +2888,7 @@ export function UnlockRevealCanvas({
     >
       <color attach="background" args={[stage.world?.backgroundColor ?? '#f8fbff']} />
       <fog attach="fog" args={[stage.world?.backgroundColor ?? '#f8fbff', 32, 130]} />
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-      </Suspense>
+      <GameEnvironment />
       <DefaultSkybox imagePath={stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />
       <ambientLight intensity={0.72} />
       <directionalLight castShadow position={[3.8, 7.2, 4.6]} intensity={2.1} color={stage.light} shadow-mapSize={[1024, 1024]} />

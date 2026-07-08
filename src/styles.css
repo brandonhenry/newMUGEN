@@ -9408,6 +9408,21 @@ button {
   text-wrap: balance;
 }
 
+.arcade-transition-subtitle {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: calc(clamp(14px, 2vh, 22px) * -0.65);
+  color: color-mix(in srgb, var(--arcade-accent) 74%, #ffffff);
+  font-size: clamp(15px, 2.2vw, 28px);
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.82),
+    0 0 18px color-mix(in srgb, var(--arcade-accent) 42%, transparent);
+}
+
 .arcade-transition-copy p {
   max-width: 650px;
   margin: 0;
