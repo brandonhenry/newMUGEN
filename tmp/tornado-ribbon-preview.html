@@ -121,10 +121,18 @@ for (let i = 0; i < 34; i += 1) {
   const angle = i * 2.399;
   const pr = 0.11 + ((i * 37) % 100) / 100 * 0.42;
   const p = new THREE.Mesh(new THREE.SphereGeometry(1, 8, 6), mat(i % 3 === 0 ? 0xffffff : i % 2 === 0 ? 0xeaffff : 0x7edcff, 0.36 + ((i * 19) % 100) / 100 * 0.36));
-  p.position.set(Math.cos(angle) * pr, 0.08 + ((i * 53) % 100) / 100 * 1.55, Math.sin(angle) * pr);
+  const startPos = new THREE.Vector3(Math.cos(angle) * pr, 0.08 + ((i * 53) % 100) / 100 * 1.55, Math.sin(angle) * pr);
+  p.position.copy(startPos);
   p.scale.setScalar(0.014 + ((i * 29) % 100) / 100 * 0.024);
-  p.userData.rise = 0.25 + ((i * 11) % 100) / 100 * 0.5;
+  const outward = 0.45 + ((i * 41) % 100) / 100 * 1.25;
+  const hitForward = -0.26 - ((i * 17) % 100) / 100 * 0.85;
+  const swirl = i % 2 === 0 ? 0.22 : -0.22;
+  p.userData.start = startPos;
+  p.userData.velocity = new THREE.Vector3(Math.cos(angle) * outward + hitForward, 0.8 + ((i * 11) % 100) / 100 * 1.65, Math.sin(angle) * outward + swirl);
+  p.userData.drag = 0.72 + ((i * 23) % 100) / 100 * 0.18;
   p.userData.phase = angle;
+  p.userData.baseScale = p.scale.x;
+  p.userData.baseOpacity = p.material.opacity;
   particleGroup.add(p);
 }
 
@@ -136,7 +144,9 @@ function animate(now) {
   const t = (now - start) / 1000;
   const cycle = (t % 1.35) / 1.35;
   const lift = Math.sin(cycle * Math.PI) * 1.1 + cycle * 0.35;
-  const cue = cycle < 0.55;
+  const cueWindow = 0.82;
+  const cueProgress = Math.min(1, cycle / cueWindow);
+  const cue = cycle < cueWindow;
   victim.position.set(Math.sin(cycle * Math.PI) * 0.18, lift, 0);
   victim.rotation.x = cue ? -0.85 : -1.16;
   victim.rotation.y += 0.03;
@@ -147,20 +157,23 @@ function animate(now) {
   ribbons.visible = cue;
   ribbonAxis.position.y = -0.85;
   ribbonAxis.rotation.y += 0.04;
-  const fade = cue ? Math.pow(1 - cycle / 0.55, 1.25) : 0;
+  const fade = cue ? Math.pow(1 - cueProgress, 1.25) : 0;
   ribbonAxis.children.forEach((child, index) => {
     child.rotation.y += (child.userData.spin || 0) * 0.012;
     if (child.material) child.material.opacity = (index % 2 === 0 ? 0.62 : 0.42) * Math.max(0.28, fade);
   });
   particleGroup.children.forEach((child, index) => {
-    child.position.y += child.userData.rise * 0.006;
-    if (child.position.y > 1.7) child.position.y = 0.08;
-    child.position.x += Math.sin(now * 0.003 + child.userData.phase) * 0.0008;
-    child.position.z += Math.cos(now * 0.003 + child.userData.phase) * 0.0008;
-    child.material.opacity = (0.32 + (index % 5) * 0.07) * Math.max(0.28, fade);
+    const travel = Math.sin(cueProgress * Math.PI * 0.72);
+    const localSwirl = Math.sin(t * 12 + child.userData.phase) * 0.05 * (1 - cueProgress);
+    child.position.copy(child.userData.start).addScaledVector(child.userData.velocity, travel * child.userData.drag);
+    child.position.x += localSwirl;
+    child.position.z -= localSwirl * 0.65;
+    child.position.y -= Math.pow(cueProgress, 2) * 0.24;
+    child.scale.setScalar(child.userData.baseScale * (1 + cueProgress * 0.72));
+    child.material.opacity = child.userData.baseOpacity * Math.max(0, 1 - cueProgress * 0.82);
   });
   impactRings.children.forEach((child) => {
-    const ringProgress = Math.max(0, Math.min(1, (cycle / 0.55 - child.userData.delay) / 0.58));
+    const ringProgress = Math.max(0, Math.min(1, (cueProgress - child.userData.delay) / 0.58));
     const ringScale = 1 + Math.sin(ringProgress * Math.PI) * 0.36 + ringProgress * 0.28;
     child.scale.set(ringScale, ringScale, 1);
     child.material.opacity = child.userData.baseOpacity * Math.max(0, 1 - ringProgress) * Math.max(0.34, fade);

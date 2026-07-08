@@ -1,6 +1,6 @@
 import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
-import { Component, Suspense, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode, type RefObject } from 'react';
+import { Component, Suspense, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ErrorInfo, type MutableRefObject, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
@@ -1687,16 +1687,25 @@ function TornadoRibbonEffect({
     () => Array.from({ length: reducedMotion ? 8 : 34 }, (_, index) => {
       const angle = index * 2.399 + seededUnit(event.id + 47, index) * 0.8;
       const particleRadius = radius * (0.38 + seededUnit(event.id + 59, index) * 1.55);
+      const hitDirection = impactDirectionSign(event);
+      const outward = 0.45 + seededUnit(event.id + 103, index) * 1.25;
+      const lift = 0.8 + seededUnit(event.id + 109, index) * 1.65;
+      const forward = hitDirection * (0.26 + seededUnit(event.id + 113, index) * 0.85);
+      const swirl = seededUnit(event.id + 127, index) > 0.5 ? 1 : -1;
       return {
         x: Math.cos(angle) * particleRadius,
         z: Math.sin(angle) * particleRadius,
         y: height * (0.04 + seededUnit(event.id + 71, index) * 0.94),
         phase: angle,
         scale: 0.014 + seededUnit(event.id + 83, index) * 0.024,
-        opacity: 0.36 + seededUnit(event.id + 97, index) * 0.36
+        opacity: 0.36 + seededUnit(event.id + 97, index) * 0.36,
+        vx: Math.cos(angle) * outward + forward,
+        vy: lift,
+        vz: Math.sin(angle) * outward + swirl * 0.22,
+        drag: 0.72 + seededUnit(event.id + 131, index) * 0.18
       };
     }),
-    [event.id, height, radius, reducedMotion]
+    [event, height, radius, reducedMotion]
   );
   const impactRings = useMemo(
     () => Array.from({ length: reducedMotion ? 1 : 3 }, (_, index) => ({
@@ -1766,13 +1775,59 @@ function TornadoRibbonEffect({
           </mesh>
         )}
         {particles.map((particle, index) => (
-          <mesh key={`tornado-particle-${event.id}-${index}`} position={[particle.x, particle.y, particle.z]} scale={particle.scale}>
-            <sphereGeometry args={[1, 8, 6]} />
-            <meshBasicMaterial color={index % 3 === 0 ? '#ffffff' : index % 2 === 0 ? '#eaffff' : '#7edcff'} transparent opacity={particle.opacity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
-          </mesh>
+          <TornadoRibbonParticle key={`tornado-particle-${event.id}-${index}`} particle={particle} index={index} ageRef={ageRef} duration={duration} />
         ))}
       </group>
     </group>
+  );
+}
+
+type TornadoRibbonParticleSpec = {
+  x: number;
+  y: number;
+  z: number;
+  phase: number;
+  scale: number;
+  opacity: number;
+  vx: number;
+  vy: number;
+  vz: number;
+  drag: number;
+};
+
+function TornadoRibbonParticle({
+  particle,
+  index,
+  ageRef,
+  duration
+}: {
+  particle: TornadoRibbonParticleSpec;
+  index: number;
+  ageRef: MutableRefObject<number>;
+  duration: number;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  useFrame(() => {
+    const mesh = meshRef.current;
+    if (!mesh) return;
+    const age = Math.max(0, ageRef.current);
+    const progress = THREE.MathUtils.clamp(age / duration, 0, 1);
+    const travel = Math.sin(progress * Math.PI * 0.72);
+    const swirl = Math.sin(age * 12 + particle.phase) * 0.05 * (1 - progress);
+    mesh.position.set(
+      particle.x + particle.vx * travel * particle.drag + swirl,
+      particle.y + particle.vy * travel - progress * progress * 0.24,
+      particle.z + particle.vz * travel - swirl * 0.65
+    );
+    mesh.scale.setScalar(particle.scale * (1 + progress * 0.72));
+    const material = mesh.material as THREE.MeshBasicMaterial;
+    material.opacity = particle.opacity * Math.max(0, 1 - progress * 0.82);
+  });
+  return (
+    <mesh ref={meshRef} position={[particle.x, particle.y, particle.z]} scale={particle.scale}>
+      <sphereGeometry args={[1, 8, 6]} />
+      <meshBasicMaterial color={index % 3 === 0 ? '#ffffff' : index % 2 === 0 ? '#eaffff' : '#7edcff'} transparent opacity={particle.opacity} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+    </mesh>
   );
 }
 
