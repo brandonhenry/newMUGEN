@@ -5,13 +5,17 @@ import { useAnyInputActivation } from './useAnyInputActivation';
 function Harness({
   enabled = true,
   ready = true,
+  autoAccept = false,
+  autoAcceptDelayMs,
   onAccept
 }: {
   enabled?: boolean;
   ready?: boolean;
+  autoAccept?: boolean;
+  autoAcceptDelayMs?: number;
   onAccept: () => void;
 }) {
-  useAnyInputActivation({ enabled, ready, onAccept });
+  useAnyInputActivation({ enabled, ready, autoAccept, autoAcceptDelayMs, onAccept });
   return <div />;
 }
 
@@ -75,6 +79,18 @@ describe('useAnyInputActivation', () => {
     expect(onAccept).not.toHaveBeenCalled();
 
     setGamepadButton(pad, 0, true);
+    await waitFor(() => expect(onAccept).toHaveBeenCalledTimes(1));
+  });
+
+  it('auto-accepts once after ready when requested', async () => {
+    const onAccept = vi.fn();
+    const { rerender } = render(<Harness ready={false} autoAccept autoAcceptDelayMs={1} onAccept={onAccept} />);
+
+    await waitForAnimationFrames(3);
+    expect(onAccept).not.toHaveBeenCalled();
+
+    rerender(<Harness ready autoAccept autoAcceptDelayMs={1} onAccept={onAccept} />);
+
     await waitFor(() => expect(onAccept).toHaveBeenCalledTimes(1));
   });
 });

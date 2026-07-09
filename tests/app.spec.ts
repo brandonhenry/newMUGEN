@@ -895,6 +895,14 @@ test('shows right-side button history in training only', async ({ page }) => {
   const history = page.getByTestId('training-button-history');
   await expect(history).toBeVisible();
   await expect(history).toContainText('Neutral');
+  await expect.poll(async () => {
+    return page.evaluate(() => {
+      const hud = document.querySelector<HTMLElement>('.fight-hud');
+      const history = document.querySelector<HTMLElement>('.training-button-history');
+      if (!hud || !history) return false;
+      return history.getBoundingClientRect().top >= hud.getBoundingClientRect().bottom + 4;
+    });
+  }, { timeout: 3000 }).toBe(true);
 
   await keyDown(page, 'KeyD');
   await expect(page.getByTestId('frame-input')).toHaveText('p1:right', { timeout: 3000 });

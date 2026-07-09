@@ -9190,6 +9190,15 @@ button {
   clip-path: inset(50%);
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .fight-hud {
   position: absolute;
   top: 14px;
@@ -9207,7 +9216,7 @@ button {
 
 .training-button-history {
   position: absolute;
-  top: max(128px, calc(env(safe-area-inset-top) + 118px));
+  top: max(204px, calc(env(safe-area-inset-top) + 188px));
   right: max(16px, env(safe-area-inset-right));
   bottom: max(18px, env(safe-area-inset-bottom));
   z-index: 13;
@@ -9333,7 +9342,7 @@ button {
 
 @media (max-height: 720px) {
   .training-button-history {
-    top: max(104px, calc(env(safe-area-inset-top) + 92px));
+    top: max(236px, calc(env(safe-area-inset-top) + 220px));
     bottom: max(14px, env(safe-area-inset-bottom));
   }
 
@@ -13235,9 +13244,9 @@ button {
   }
 
   .training-button-history {
-    top: max(92px, calc(env(safe-area-inset-top) + 86px));
+    top: max(138px, calc(env(safe-area-inset-top) + 128px));
     right: max(8px, env(safe-area-inset-right));
-    bottom: max(86px, env(safe-area-inset-bottom));
+    bottom: max(92px, env(safe-area-inset-bottom));
     width: min(132px, 34vw);
     gap: 6px;
     padding: 7px;

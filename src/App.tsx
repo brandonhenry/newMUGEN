@@ -1009,6 +1009,11 @@ function isArcadeMatchMode(mode: MatchMode) {
   return mode === 'ai' || mode === 'cpuArcade';
 }
 
+function isCpuLedLocalMode(mode: MatchMode, cpuSlots: Array<1 | 2> = []) {
+  if (mode === 'cpu' || mode === 'cpuArcade' || mode === 'tournamentInfinite') return true;
+  return mode === 'tournamentLocal' && cpuSlots.includes(1) && cpuSlots.includes(2);
+}
+
 function getLocalSelectionActorTypes(mode: MatchMode): Partial<Record<1 | 2, FightAnalyticsActorType>> {
   if (mode === 'local2p') return { 1: 'human', 2: 'human' };
   if (mode === 'training') return { 1: 'human', 2: 'dummy' };
@@ -4742,6 +4747,7 @@ export default function App() {
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const selectedStageAssetStatus = useMemo(() => getStageAssetStatus(selectedStage.id), [selectedStage.id, stageAssetRevision]);
   const effectiveCpuDifficulty = getEffectiveCpuDifficulty(mode, cpuDifficulty);
+  const cpuAutoAccept = isDevHost && isCpuLedLocalMode(mode, localTournamentCpuSlots);
   const activeLocalTournamentIntroEntryId = getLocalTournamentPlayerEntryIds(localTournamentBracket)
     .find((entryId) => entryId === localTournamentSlotEntryIds[1] || entryId === localTournamentSlotEntryIds[2]);
   const unlockRevealCharacter = roster.find((character) => character.id === pendingUnlockCharacterId) ?? null;
@@ -5108,7 +5114,7 @@ export default function App() {
         onTrackIndexChange={activeBgmSource?.lockToTrack ? undefined : updateBgmTrackIndex}
       />
       <section className={`screen-panel ${fullBleedScreen ? 'is-full-bleed' : ''}`}>
-        {screen === 'title' && <TitleScreen onStart={startFromTitle} />}
+        {screen === 'title' && <TitleScreen onStart={startFromTitle} cpuAutoAccept={cpuAutoAccept} />}
         {screen === 'menu' && (
           <MenuScreen
             roster={roster}
@@ -5312,6 +5318,7 @@ export default function App() {
             matchId={activeTournamentMatchId}
             localEntryId={mode === 'tournamentOnline' ? onlineTournamentStatus?.entry?.id : mode === 'tournamentInfinite' ? undefined : activeLocalTournamentIntroEntryId}
             roster={roster}
+            cpuAutoAccept={cpuAutoAccept}
             onBack={() => setScreen('tournamentLobby')}
             onReady={() => {
               captureAppAnalytics('tournament_match_started', {
@@ -5640,6 +5647,7 @@ export default function App() {
             stage={selectedStage}
             mode={mode}
             privateRoomIntent={privateRoomIntent}
+            cpuAutoAccept={cpuAutoAccept}
             onBack={() => setScreen(versusReturnScreen)}
             onReady={() => continueWhenAssetsReady(selectedStage, 'fight', () => setScreen('fight'), 'versus', { roster })}
           />
@@ -5648,6 +5656,7 @@ export default function App() {
           <UnlockRevealScreen
             character={unlockRevealCharacter}
             stage={unlockRevealStage}
+            cpuAutoAccept={cpuAutoAccept}
             onContinue={continueAfterArcadeUnlock}
           />
         )}
@@ -5734,6 +5743,7 @@ export default function App() {
         {screen === 'miniGameResult' && lastMiniGameResult && (
           <MiniGameResultScreen
             result={lastMiniGameResult}
+            cpuAutoAccept={cpuAutoAccept}
             onContinue={() => {
               captureAppAnalytics('minigame_result_continued', {
                 game_id: lastMiniGameResult.gameId,
@@ -6534,10 +6544,10 @@ function handleLocalAnyInputKeyDown(event: ReactKeyboardEvent<HTMLElement>, acce
   accept(event.nativeEvent);
 }
 
-function TitleScreen({ onStart }: { onStart: () => void }) {
+function TitleScreen({ onStart, cpuAutoAccept = false }: { onStart: () => void; cpuAutoAccept?: boolean }) {
   const titleRef = useRef<HTMLDivElement>(null);
   const [supportWarning, setSupportWarning] = useState<SupportWarning | null>(null);
-  const acceptTitleInput = useAnyInputActivation({ onAccept: onStart });
+  const acceptTitleInput = useAnyInputActivation({ autoAccept: cpuAutoAccept, onAccept: onStart });
 
   useEffect(() => {
     titleRef.current?.focus();
@@ -6566,10 +6576,12 @@ function TitleScreen({ onStart }: { onStart: () => void }) {
 function UnlockRevealScreen({
   character,
   stage,
+  cpuAutoAccept = false,
   onContinue
 }: {
   character: CharacterDefinition;
   stage: StageDefinition;
+  cpuAutoAccept?: boolean;
   onContinue: () => void;
 }) {
   const [ready, setReady] = useState(false);
@@ -6582,7 +6594,7 @@ function UnlockRevealScreen({
     onContinue();
   }, [onContinue, ready]);
 
-  const acceptUnlockInput = useAnyInputActivation({ enabled: ready, ready, onAccept: continueIfReady });
+  const acceptUnlockInput = useAnyInputActivation({ enabled: ready, ready, autoAccept: cpuAutoAccept, onAccept: continueIfReady });
 
   useEffect(() => {
     setReady(false);
@@ -10571,6 +10583,7 @@ function TournamentBracketIntroScreen({
   matchId,
   localEntryId,
   roster,
+  cpuAutoAccept = false,
   onBack,
   onReady
 }: {
@@ -10578,6 +10591,7 @@ function TournamentBracketIntroScreen({
   matchId: string;
   localEntryId?: string;
   roster: CharacterDefinition[];
+  cpuAutoAccept?: boolean;
   onBack: () => void;
   onReady: () => void;
 }) {
@@ -10594,7 +10608,7 @@ function TournamentBracketIntroScreen({
     onReady();
   }, [onReady]);
 
-  const acceptTournamentIntroInput = useAnyInputActivation({ onAccept: advance, onBack });
+  const acceptTournamentIntroInput = useAnyInputActivation({ autoAccept: cpuAutoAccept, onAccept: advance, onBack });
 
   useEffect(() => {
     screenRef.current?.focus();
@@ -11829,6 +11843,7 @@ function VersusSplashScreen({
   stage,
   mode,
   privateRoomIntent,
+  cpuAutoAccept = false,
   onBack,
   onReady
 }: {
@@ -11837,6 +11852,7 @@ function VersusSplashScreen({
   stage: StageDefinition;
   mode: MatchMode;
   privateRoomIntent?: PrivateRoomIntent | null;
+  cpuAutoAccept?: boolean;
   onBack: () => void;
   onReady: () => void;
 }) {
@@ -11848,7 +11864,7 @@ function VersusSplashScreen({
     onReady();
   }, [onReady]);
   const skipEnabled = canSkipVersusSplash(mode);
-  const acceptVersusInput = useAnyInputActivation({ enabled: skipEnabled, onAccept: advance, onBack });
+  const acceptVersusInput = useAnyInputActivation({ enabled: skipEnabled, autoAccept: cpuAutoAccept, onAccept: advance, onBack });
 
   useEffect(() => {
     screenRef.current?.focus();
@@ -23232,7 +23248,8 @@ function FightScreen({
     }
     const tokens = getTrainingButtonHistoryTokens(input);
     const [latest] = trainingButtonHistoryRef.current;
-    const next = latest?.signature === signature && trainingButtonHistoryActiveSignatureRef.current === signature
+    const extendsLatest = latest?.signature === signature && trainingButtonHistoryActiveSignatureRef.current === signature;
+    const next = extendsLatest
       ? [{ ...latest, frames: latest.frames + 1 }, ...trainingButtonHistoryRef.current.slice(1)]
       : [{
           id: trainingButtonHistorySequenceRef.current++,
@@ -23242,7 +23259,7 @@ function FightScreen({
         }, ...trainingButtonHistoryRef.current].slice(0, TRAINING_BUTTON_HISTORY_LIMIT);
     trainingButtonHistoryActiveSignatureRef.current = signature;
     trainingButtonHistoryRef.current = next;
-    setTrainingButtonHistory(next);
+    if (!extendsLatest || next[0]?.frames % 4 === 0) setTrainingButtonHistory(next);
   }, []);
 
   const resetTransientFightRuntime = useCallback((freshMatch: MatchSnapshot) => {
@@ -26941,6 +26958,7 @@ function TrainingTrialPanel({
 
   return (
     <div className="combo-trial-panel training-trial-picker">
+      <h2 className="visually-hidden">Training Mode</h2>
       <aside className="combo-trial-list training-trial-challenge-list" aria-label="Training trials">
         <header className="training-trial-list-header">
           <h3>{character.displayName}</h3>
@@ -27591,7 +27609,15 @@ function EnemyRushHud({ snapshot }: { snapshot: EnemyRushMiniGameSnapshot }) {
   );
 }
 
-function MiniGameResultScreen({ result, onContinue }: { result: MiniGameResult; onContinue: () => void }) {
+function MiniGameResultScreen({
+  result,
+  cpuAutoAccept = false,
+  onContinue
+}: {
+  result: MiniGameResult;
+  cpuAutoAccept?: boolean;
+  onContinue: () => void;
+}) {
   const [displayScore, setDisplayScore] = useState(0);
   const [ready, setReady] = useState(false);
   const screenRef = useRef<HTMLDivElement>(null);
@@ -27601,7 +27627,7 @@ function MiniGameResultScreen({ result, onContinue }: { result: MiniGameResult; 
     continuedRef.current = true;
     onContinue();
   }, [onContinue, ready]);
-  const acceptInput = useAnyInputActivation({ enabled: ready, ready, onAccept: continueIfReady });
+  const acceptInput = useAnyInputActivation({ enabled: ready, ready, autoAccept: cpuAutoAccept, onAccept: continueIfReady });
 
   useEffect(() => {
     let frame = 0;

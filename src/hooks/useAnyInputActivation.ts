@@ -4,6 +4,8 @@ import { hasActiveGamepadInput } from '../lib/gamepads';
 type AnyInputActivationOptions = {
   enabled?: boolean;
   ready?: boolean;
+  autoAccept?: boolean;
+  autoAcceptDelayMs?: number;
   onAccept: () => void;
   onBack?: () => void;
 };
@@ -11,6 +13,8 @@ type AnyInputActivationOptions = {
 export function useAnyInputActivation({
   enabled = true,
   ready = true,
+  autoAccept = false,
+  autoAcceptDelayMs = 180,
   onAccept,
   onBack
 }: AnyInputActivationOptions) {
@@ -98,6 +102,12 @@ export function useAnyInputActivation({
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
   }, [accept, enabled, ready]);
+
+  useEffect(() => {
+    if (!enabled || !ready || !autoAccept) return undefined;
+    const timer = window.setTimeout(() => accept(), autoAcceptDelayMs);
+    return () => window.clearTimeout(timer);
+  }, [accept, autoAccept, autoAcceptDelayMs, enabled, ready]);
 
   return accept;
 }
