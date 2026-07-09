@@ -274,6 +274,7 @@ type E2EWindow = Window & {
   __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void;
   __koreE2ESeedOnlineTournament?: (status: TournamentStatusResult) => void;
   __koreE2ESeedPaidRecoveryPrompt?: (profile: OnlinePlayerProfile, message?: string) => void;
+  __koreE2EOpenAuditScreen?: (screen: Exclude<Screen, 'boot' | 'tournament' | 'tournamentLobby' | 'tournamentBracket'>) => void;
 };
 type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -3700,6 +3701,72 @@ export default function App() {
   useEffect(() => {
     if (!import.meta.env.DEV || typeof window === 'undefined') return undefined;
     const testWindow = window as E2EWindow;
+    testWindow.__koreE2EOpenAuditScreen = (targetScreen) => {
+      const firstCharacter = roster[0];
+      const secondCharacter = roster.find((character) => character.id !== firstCharacter?.id) ?? roster[1] ?? firstCharacter;
+      const auditStage = playableStageRoster.find((item) => item.id === 'the-chamber') ?? playableStageRoster[0] ?? stages[0];
+      if (!firstCharacter || !secondCharacter || !auditStage) throw new Error('KORE audit screen hook needs loaded roster and stage data');
+      const auditRun = {
+        ...createArcadeRunState(Date.now() - 5000),
+        score: 2400,
+        livesRemaining: 1,
+        wins: 3,
+        level: 2,
+        lastAward: 500
+      };
+      const auditMiniGame: ArcadeMiniGameLaunch = {
+        kind: BREAK_TARGET_GAME_ID,
+        stage: auditStage,
+        seed: 4242,
+        durationSeconds: 45,
+        arcadeLevel: 2
+      };
+      const auditMiniGameResult: MiniGameResult = {
+        kind: BREAK_TARGET_GAME_ID,
+        gameId: BREAK_TARGET_GAME_ID,
+        stageId: auditStage.id,
+        stageName: auditStage.name,
+        score: 1850,
+        previousHighScore: 1200,
+        highScore: 1850,
+        newHighScore: true,
+        cleared: true,
+        arcadeScoreAward: 1850,
+        targetsDestroyed: 12,
+        totalTargets: 12,
+        timeRemaining: 11.4,
+        allClear: true,
+        completedReason: 'all-clear'
+      };
+      setP1Id(firstCharacter.id);
+      setP2Id(secondCharacter.id);
+      setStageId(auditStage.id);
+      setMode(targetScreen === 'training' ? 'training' : targetScreen === 'privateRooms' ? 'online' : targetScreen === 'fight' ? 'local2p' : 'ai');
+      setOnlineProfile((current) => current ?? { playerId: 'audit-player', displayName: 'AUDIT PLAYER' });
+      setActiveArcadeMiniGame(targetScreen === 'miniGame' ? auditMiniGame : null);
+      setLastMiniGameResult(targetScreen === 'miniGameResult' ? auditMiniGameResult : null);
+      setArcadeRun(targetScreen === 'arcadeGameOver' ? { ...auditRun, status: 'game-over', livesRemaining: 0 } : auditRun);
+      setArcadeTransition(targetScreen === 'arcadeTransition' ? {
+        id: 'audit-transition',
+        kind: 'victory',
+        destination: 'versus',
+        run: auditRun,
+        award: 500,
+        defeatedCharacterName: secondCharacter.displayName,
+        nextOpponent: secondCharacter,
+        nextStage: auditStage
+      } : null);
+      setPendingUnlockCharacterId(targetScreen === 'unlockReveal' ? secondCharacter.id : '');
+      setAssetWarmupIntent(targetScreen === 'assetWarmup' ? {
+        stage: auditStage,
+        previousScreen: 'stage',
+        destination: 'fight',
+        mode: 'ai',
+        p1: firstCharacter,
+        p2: secondCharacter
+      } : null);
+      setScreen(targetScreen);
+    };
     testWindow.__koreE2ESeedOnlineTournament = (status) => {
       const entry = status.entry;
       const match = status.assignedMatch;
@@ -3734,6 +3801,7 @@ export default function App() {
       setScreen('tournamentLobby');
     };
     return () => {
+      if (testWindow.__koreE2EOpenAuditScreen) delete testWindow.__koreE2EOpenAuditScreen;
       if (testWindow.__koreE2ESeedOnlineTournament) delete testWindow.__koreE2ESeedOnlineTournament;
       if (testWindow.__koreE2ESeedPaidRecoveryPrompt) delete testWindow.__koreE2ESeedPaidRecoveryPrompt;
     };
