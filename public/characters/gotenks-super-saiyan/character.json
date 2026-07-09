@@ -72,8 +72,22 @@
       "/characters/gotenks-super-saiyan/frames/frame-067.png",
       "/characters/gotenks-super-saiyan/frames/frame-068.png"
     ],
-    "kickleft": [],
-    "kickright": [],
+    "kickleft": [
+      "/characters/gotenks-super-saiyan/frames/frame-191.png",
+      "/characters/gotenks-super-saiyan/frames/frame-192.png",
+      "/characters/gotenks-super-saiyan/frames/frame-193.png",
+      "/characters/gotenks-super-saiyan/frames/frame-194.png",
+      "/characters/gotenks-super-saiyan/frames/frame-195.png"
+    ],
+    "kickright": [
+      "/characters/gotenks-super-saiyan/frames/frame-184.png",
+      "/characters/gotenks-super-saiyan/frames/frame-185.png",
+      "/characters/gotenks-super-saiyan/frames/frame-186.png",
+      "/characters/gotenks-super-saiyan/frames/frame-187.png",
+      "/characters/gotenks-super-saiyan/frames/frame-188.png",
+      "/characters/gotenks-super-saiyan/frames/frame-189.png",
+      "/characters/gotenks-super-saiyan/frames/frame-190.png"
+    ],
     "hitLight": [
       "/characters/gotenks-super-saiyan/frames/frame-018.png"
     ],
@@ -114,7 +128,16 @@
       "/characters/gotenks-super-saiyan/frames/frame-067.png",
       "/characters/gotenks-super-saiyan/frames/frame-068.png"
     ],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/gotenks-super-saiyan/frames/frame-196.png",
+      "/characters/gotenks-super-saiyan/frames/frame-197.png",
+      "/characters/gotenks-super-saiyan/frames/frame-198.png",
+      "/characters/gotenks-super-saiyan/frames/frame-199.png",
+      "/characters/gotenks-super-saiyan/frames/frame-200.png",
+      "/characters/gotenks-super-saiyan/frames/frame-201.png",
+      "/characters/gotenks-super-saiyan/frames/frame-202.png",
+      "/characters/gotenks-super-saiyan/frames/frame-203.png"
+    ],
     "cmd:WS+4": [
       "/characters/gotenks-super-saiyan/frames/frame-150.png",
       "/characters/gotenks-super-saiyan/frames/frame-151.png",
@@ -237,7 +260,7 @@
     "chargeKi": 6,
     "jableft": 10,
     "jabright": 10,
-    "kickleft": 9,
+    "kickleft": 8,
     "kickright": 9,
     "hitLight": 8,
     "hitHeavy": 8,
@@ -354,7 +377,7 @@
     },
     {
       "id": "kick",
-      "label": "Gotenks (Super Saiyan) Left Kick",
+      "label": "Super Aura Drive",
       "input": "kick",
       "startupFrames": 16,
       "activeFrames": 3,
@@ -437,7 +460,7 @@
     },
     {
       "id": "special",
-      "label": "Gotenks (Super Saiyan) Right Kick",
+      "label": "Super Fusion Kick",
       "input": "special",
       "startupFrames": 18,
       "activeFrames": 3,
@@ -551,46 +574,48 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
-      "damage": 9,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
+      "damage": 16,
       "blockDamage": 1,
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "whiffRecoveryFrames": 7,
-      "range": 1.62,
-      "forwardForce": 0.66,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 14,
-      "label": "Gotenks (Super Saiyan) Left Kick",
-      "hitLevel": "low",
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 19,
+      "whiffRecoveryFrames": 41,
+      "range": 2.1,
+      "forwardForce": 3.61,
+      "forwardForceStartFrame": 44,
+      "forwardForceEndFrame": 54,
+      "label": "Super Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 4,
+      "comboRepeatPenaltyFrames": 6,
+      "juggleRepeatPenaltyFrames": 10
     },
     "kickright": {
-      "startupFrames": 19,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 24,
-      "damage": 9,
+      "recoveryFrames": 19,
+      "damage": 12,
       "blockDamage": 1,
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "whiffRecoveryFrames": 7,
-      "range": 1.7,
-      "forwardForce": 0.94,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 15,
-      "label": "Gotenks (Super Saiyan) Right Kick",
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 27,
+      "range": 1.62,
+      "forwardForce": 2.37,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 20,
+      "label": "Super Fusion Kick",
       "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "cancelable": false,
+      "onComboHitFrames": 20,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 3,
+      "juggleRepeatPenaltyFrames": 6
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -641,24 +666,25 @@
       "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 29,
+      "startupFrames": 27,
+      "activeFrames": 7,
+      "recoveryFrames": 34,
       "damage": 14,
       "blockDamage": 1,
-      "onBlockFrames": -11,
-      "onHitFrames": 17,
-      "onCounterHitFrames": 24,
-      "whiffRecoveryFrames": 38,
+      "onBlockFrames": -15,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 18,
+      "whiffRecoveryFrames": 43,
       "range": 2.05,
-      "forwardForce": 3.38,
-      "forwardForceStartFrame": 10,
-      "forwardForceEndFrame": 18,
-      "label": "Gotenks (Super Saiyan) Burst",
+      "forwardForce": 3.52,
+      "forwardForceStartFrame": 51,
+      "forwardForceEndFrame": 59,
+      "label": "Galactic Super Burst",
       "hitLevel": "mid",
       "knockdown": true,
-      "onComboHitFrames": 13,
-      "onJuggleHitFrames": 8,
+      "cancelable": false,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 4,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 10
     },
@@ -2351,6 +2377,112 @@
       "139": {
         "width": 1.65,
         "height": 0.89,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "184": {
+        "width": 0.51,
+        "height": 1.33,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 0.78,
+        "height": 1.26,
+        "offsetX": 0
+      },
+      "186": {
+        "width": 0.53,
+        "height": 1.31,
+        "offsetX": 0
+      },
+      "187": {
+        "width": 1.08,
+        "height": 1.13,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 0.8,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "189": {
+        "width": 0.69,
+        "height": 1.31,
+        "offsetX": 0
+      },
+      "190": {
+        "width": 0.78,
+        "height": 1.28,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "191": {
+        "width": 0.91,
+        "height": 1.28,
+        "offsetX": 0
+      },
+      "192": {
+        "width": 1,
+        "height": 1.23,
+        "offsetX": 0
+      },
+      "193": {
+        "width": 0.91,
+        "height": 1.23,
+        "offsetX": 0
+      },
+      "194": {
+        "width": 0.78,
+        "height": 1.13,
+        "offsetX": 0
+      },
+      "195": {
+        "width": 1.17,
+        "height": 1.13,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "196": {
+        "width": 0.66,
+        "height": 1.23,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 0.84,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "198": {
+        "width": 1.06,
+        "height": 1.23,
+        "offsetX": 0
+      },
+      "199": {
+        "width": 0.66,
+        "height": 1.13,
+        "offsetX": 0
+      },
+      "200": {
+        "width": 0.66,
+        "height": 1.21,
+        "offsetX": 0
+      },
+      "201": {
+        "width": 0.53,
+        "height": 1.08,
+        "offsetX": 0
+      },
+      "202": {
+        "width": 1,
+        "height": 1.15,
+        "offsetX": 0
+      },
+      "203": {
+        "width": 1.11,
+        "height": 1.15,
         "offsetX": 0
       }
     }

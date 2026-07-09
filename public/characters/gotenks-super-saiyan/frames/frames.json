@@ -1,13 +1,20 @@
 {
   "source": "Gotenks (Super Saiyan).png",
-  "count": 184,
+  "count": 204,
   "sheets": [
     {
       "id": "main",
       "name": "Main Sheet",
       "path": "/characters/gotenks-super-saiyan/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 183
+      "frameCount": 203
+    },
+    {
+      "id": "moved-from-base",
+      "name": "Moved From Base Gotenks",
+      "path": "/characters/gotenks/animation-sheet.png",
+      "frameStart": 184,
+      "frameCount": 20
     }
   ],
   "frames": [
@@ -2965,6 +2972,326 @@
       "generatedTransform": {
         "widthScale": 0.96
       }
+    },
+    {
+      "index": 184,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-184.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        665,
+        1333,
+        690,
+        1387
+      ],
+      "width": 25,
+      "height": 54,
+      "row": 16
+    },
+    {
+      "index": 185,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-185.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        744,
+        1336,
+        781,
+        1387
+      ],
+      "width": 37,
+      "height": 51,
+      "row": 16
+    },
+    {
+      "index": 186,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-186.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        5,
+        1397,
+        31,
+        1450
+      ],
+      "width": 26,
+      "height": 53,
+      "row": 17
+    },
+    {
+      "index": 187,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-187.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        91,
+        1404,
+        141,
+        1450
+      ],
+      "width": 50,
+      "height": 46,
+      "row": 17
+    },
+    {
+      "index": 188,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-188.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        169,
+        1402,
+        207,
+        1450
+      ],
+      "width": 38,
+      "height": 48,
+      "row": 17
+    },
+    {
+      "index": 189,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-189.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        251,
+        1397,
+        284,
+        1450
+      ],
+      "width": 33,
+      "height": 53,
+      "row": 17
+    },
+    {
+      "index": 190,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-190.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        338,
+        1398,
+        375,
+        1450
+      ],
+      "width": 37,
+      "height": 52,
+      "row": 17
+    },
+    {
+      "index": 191,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-191.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        414,
+        1398,
+        457,
+        1450
+      ],
+      "width": 43,
+      "height": 52,
+      "row": 17
+    },
+    {
+      "index": 192,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-192.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        492,
+        1400,
+        539,
+        1450
+      ],
+      "width": 47,
+      "height": 50,
+      "row": 17
+    },
+    {
+      "index": 193,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-193.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        578,
+        1400,
+        621,
+        1450
+      ],
+      "width": 43,
+      "height": 50,
+      "row": 17
+    },
+    {
+      "index": 194,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-194.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        669,
+        1405,
+        706,
+        1451
+      ],
+      "width": 37,
+      "height": 46,
+      "row": 17
+    },
+    {
+      "index": 195,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-195.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        751,
+        1405,
+        806,
+        1451
+      ],
+      "width": 55,
+      "height": 46,
+      "row": 17
+    },
+    {
+      "index": 196,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-196.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        7,
+        1592,
+        39,
+        1642
+      ],
+      "width": 32,
+      "height": 50,
+      "row": 20
+    },
+    {
+      "index": 197,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-197.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        86,
+        1595,
+        126,
+        1638
+      ],
+      "width": 40,
+      "height": 43,
+      "row": 20
+    },
+    {
+      "index": 198,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-198.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        166,
+        1588,
+        215,
+        1637
+      ],
+      "width": 49,
+      "height": 49,
+      "row": 20
+    },
+    {
+      "index": 199,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-199.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        251,
+        1588,
+        283,
+        1634
+      ],
+      "width": 32,
+      "height": 46,
+      "row": 20
+    },
+    {
+      "index": 200,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-200.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        335,
+        1589,
+        367,
+        1638
+      ],
+      "width": 32,
+      "height": 49,
+      "row": 20
+    },
+    {
+      "index": 201,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-201.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        421,
+        1599,
+        447,
+        1643
+      ],
+      "width": 26,
+      "height": 44,
+      "row": 20
+    },
+    {
+      "index": 202,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-202.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        502,
+        1596,
+        549,
+        1643
+      ],
+      "width": 47,
+      "height": 47,
+      "row": 20
+    },
+    {
+      "index": 203,
+      "path": "/characters/gotenks-super-saiyan/frames/frame-203.png",
+      "sheetId": "moved-from-base",
+      "sheetPath": "/characters/gotenks/animation-sheet.png",
+      "sourceName": "Gotenks.png",
+      "box": [
+        584,
+        1596,
+        636,
+        1643
+      ],
+      "width": 52,
+      "height": 47,
+      "row": 20
     }
   ]
 }
