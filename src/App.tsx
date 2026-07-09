@@ -265,6 +265,7 @@ type E2EWindow = Window & {
   __koreE2ESetFightPositions?: (positions: { p1?: E2EFightPosition; p2?: E2EFightPosition }) => void;
   __koreE2ECompleteTrainingTrial?: () => void;
   __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void;
+  __koreE2ESeedOnlineTournament?: (status: TournamentStatusResult) => void;
 };
 type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -412,6 +413,7 @@ const ONLINE_PROFILE_STORAGE_KEY = 'kore.online.profile';
 const LOCAL_LEADERBOARD_STORAGE_KEY = 'kore.online.localLeaderboard';
 const CHARACTER_VIEWER_VIEW_MODE_STORAGE_KEY = 'kore.characterViewer.viewMode.v1';
 const STARTER_GUIDE_DISMISSED_KEY = 'kore.starterGuide.dismissed.v1';
+const FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY = 'kore.tournament.freeOnlineEntry.v1';
 const MEMORY_CARD_FORMAT = 'kore.memorycard';
 const MEMORY_CARD_VERSION = 1;
 const MEMORY_CARD_SAVE_KEYS = [
@@ -1392,6 +1394,39 @@ function readUnlockedCharacterIds() {
 function writeUnlockedCharacterIds(ids: Set<string>) {
   if (typeof window === 'undefined') return;
   window.localStorage.setItem(UNLOCKED_CHARACTERS_KEY, JSON.stringify([...ids].sort()));
+}
+
+function readSavedFreeOnlineTournamentId(playerId: string | undefined) {
+  if (typeof window === 'undefined' || !playerId) return '';
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY) ?? '{}') as Record<string, string>;
+    return typeof parsed[playerId] === 'string' ? parsed[playerId] : '';
+  } catch {
+    return '';
+  }
+}
+
+function writeSavedFreeOnlineTournamentId(playerId: string | undefined, tournamentId: string | undefined) {
+  if (typeof window === 'undefined' || !playerId || !tournamentId) return;
+  let parsed: Record<string, string> = {};
+  try {
+    parsed = JSON.parse(window.localStorage.getItem(FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY) ?? '{}') as Record<string, string>;
+  } catch {
+    parsed = {};
+  }
+  window.localStorage.setItem(FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY, JSON.stringify({ ...parsed, [playerId]: tournamentId }));
+}
+
+function clearSavedFreeOnlineTournamentId(playerId: string | undefined) {
+  if (typeof window === 'undefined' || !playerId) return;
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY) ?? '{}') as Record<string, string>;
+    if (!(playerId in parsed)) return;
+    const { [playerId]: _removed, ...next } = parsed;
+    window.localStorage.setItem(FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    window.localStorage.removeItem(FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY);
+  }
 }
 
 function getStarterGuideDismissed() {
@@ -2856,6 +2891,7 @@ export default function App() {
   const [localTournamentCpuSlots, setLocalTournamentCpuSlots] = useState<Array<1 | 2>>([]);
   const [localTournamentSlotEntryIds, setLocalTournamentSlotEntryIds] = useState<Partial<Record<1 | 2, string>>>({});
   const [onlineTournamentStatus, setOnlineTournamentStatus] = useState<TournamentStatusResult | null>(null);
+  const [e2eSimulateOnlineTournament, setE2eSimulateOnlineTournament] = useState(false);
   const [activeTournamentMatchId, setActiveTournamentMatchId] = useState('');
   const [tournamentStatusText, setTournamentStatusText] = useState('');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
@@ -3107,6 +3143,7 @@ export default function App() {
     if (!match) return;
     setLocalTournamentBracket(bracket);
     setOnlineTournamentStatus(null);
+    setE2eSimulateOnlineTournament(false);
     if (!setupLocalTournamentMatch(bracket, match)) return;
     captureAppAnalytics('tournament_entry_succeeded', {
       tournament_mode: 'free',
@@ -3126,6 +3163,7 @@ export default function App() {
     if (!match) return;
     setLocalTournamentBracket(bracket);
     setOnlineTournamentStatus(null);
+    setE2eSimulateOnlineTournament(false);
     if (!setupLocalTournamentMatch(bracket, match)) return;
     captureAppAnalytics('tournament_entry_succeeded', {
       tournament_mode: 'custom',
@@ -3145,6 +3183,7 @@ export default function App() {
     if (!match || !entryA || !entryB || !characterA || !characterB || !fightStage) {
       setLocalTournamentBracket(bracket);
       setOnlineTournamentStatus(null);
+      setE2eSimulateOnlineTournament(false);
       setActiveTournamentMatchId('');
       setTournamentStatusText('Infinite bracket waiting for match');
       setMode('tournamentInfinite');
@@ -3233,7 +3272,32 @@ export default function App() {
       }
       setTournamentStatusText('Creating Cash App checkout');
     }
+    let savedFreeTournamentId = !paid ? readSavedFreeOnlineTournamentId(profile.playerId) : '';
+    if (!paid && savedFreeTournamentId) {
+      const existingStatus = await fetchTournamentStatus(savedFreeTournamentId, profile.playerId).catch(() => null);
+      if (existingStatus?.entry && existingStatus.bracket.kind === 'freeOnline') {
+        writeSavedFreeOnlineTournamentId(profile.playerId, existingStatus.bracket.id);
+        setP1Id(existingStatus.entry.characterId || characterId);
+        setOnlineTournamentStatus(existingStatus);
+        setE2eSimulateOnlineTournament(false);
+        setLocalTournamentBracket(null);
+        setActiveTournamentMatchId(existingStatus.assignedMatch?.id ?? '');
+        setTournamentStatusText(existingStatus.statusText || 'Tournament entry found');
+        setScreen('tournamentLobby');
+        captureAppAnalytics('tournament_entry_succeeded', {
+          tournament_mode: tournamentMode,
+          tournament_id: existingStatus.bracket.id,
+          entry_id: existingStatus.entry.id,
+          character_id: existingStatus.entry.characterId,
+          reused_entry: true
+        });
+        return;
+      }
+      clearSavedFreeOnlineTournamentId(profile.playerId);
+      savedFreeTournamentId = '';
+    }
     const result = await enterTournament({
+      tournamentId: savedFreeTournamentId || undefined,
       kind: paid ? 'paidOnline' : 'freeOnline',
       playerId: profile.playerId,
       posthogDeviceId,
@@ -3274,7 +3338,9 @@ export default function App() {
           : 'Tournament ready'
     };
     setP1Id(characterId);
+    if (!paid) writeSavedFreeOnlineTournamentId(profile.playerId, status.bracket.id);
     setOnlineTournamentStatus(status);
+    setE2eSimulateOnlineTournament(false);
     setLocalTournamentBracket(null);
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
     setTournamentStatusText(status.statusText);
@@ -3292,7 +3358,7 @@ export default function App() {
     const current = onlineTournamentStatus;
     const profile = onlineProfile;
     if (!current || !profile) throw new Error('Tournament entry unavailable');
-    const posthogDeviceId = getPostHogDeviceId();
+    const posthogDeviceId = getPostHogDeviceId() || (import.meta.env.DEV && e2eSimulateOnlineTournament ? 'e2e-device' : '');
     if (current.bracket.kind === 'paidOnline' && !posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
     setTournamentStatusText('Submitting prize invoice');
     const result = await claimTournamentPrize({
@@ -3320,7 +3386,7 @@ export default function App() {
       amount_sats: result.payout.amountSats ?? null
     });
     return 'Prize sent';
-  }, [captureAppAnalytics, capturePositiveMilestone, onlineProfile, onlineTournamentStatus]);
+  }, [captureAppAnalytics, capturePositiveMilestone, e2eSimulateOnlineTournament, onlineProfile, onlineTournamentStatus]);
 
   const refreshOnlineTournament = useCallback(async () => {
     const current = onlineTournamentStatus;
@@ -3382,6 +3448,37 @@ export default function App() {
     setMode('tournamentOnline');
     setScreen('tournamentBracket');
   }, [onlineProfile, onlineTournamentStatus, playableStageRoster, resolveRandomStageSelection, roster]);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV || typeof window === 'undefined') return undefined;
+    const testWindow = window as E2EWindow;
+    testWindow.__koreE2ESeedOnlineTournament = (status) => {
+      const entry = status.entry;
+      const match = status.assignedMatch;
+      if (!entry || !match) throw new Error('E2E online tournament status requires an entry and assigned match');
+      const opponent = getTournamentOpponentEntry(status.bracket, match, entry.id);
+      const localCharacter = roster.find((character) => character.id === entry.characterId) ?? roster[0];
+      const opponentCharacter = roster.find((character) => character.id === opponent?.characterId) ?? roster.find((character) => character.id !== localCharacter?.id) ?? roster[1] ?? roster[0];
+      const fightStage = match.stageId ? playableStageRoster.find((item) => item.id === match.stageId) : playableStageRoster[0];
+      if (!localCharacter || !opponentCharacter || !fightStage) throw new Error('E2E online tournament seed could not resolve fighters or stage');
+      setOnlineProfile({ playerId: entry.playerId, displayName: entry.displayName });
+      setP1Id(localCharacter.id);
+      setP2Id(opponentCharacter.id);
+      setStageId(fightStage.id);
+      setOnlineTournamentStatus(status);
+      setLocalTournamentBracket(null);
+      setLocalTournamentCpuSlots([]);
+      setLocalTournamentSlotEntryIds({});
+      setE2eSimulateOnlineTournament(true);
+      setActiveTournamentMatchId(match.id);
+      setTournamentStatusText(status.statusText);
+      setMode('tournamentOnline');
+      setScreen('tournamentLobby');
+    };
+    return () => {
+      if (testWindow.__koreE2ESeedOnlineTournament) delete testWindow.__koreE2ESeedOnlineTournament;
+    };
+  }, [playableStageRoster, roster]);
 
   const handleTournamentMatchComplete = useCallback((result: { winnerSlot: 1 | 2 }) => {
     if (!activeTournamentMatchId) return;
@@ -3465,7 +3562,9 @@ export default function App() {
         tournamentId: onlineTournamentStatus.bracket.id,
         matchId: activeTournamentMatchId,
         reporterPlayerId: onlineProfile.playerId,
-        posthogDeviceId: onlineTournamentStatus.bracket.kind === 'paidOnline' ? getPostHogDeviceId() : undefined,
+        posthogDeviceId: onlineTournamentStatus.bracket.kind === 'paidOnline'
+          ? getPostHogDeviceId() || (import.meta.env.DEV && e2eSimulateOnlineTournament ? 'e2e-device' : '')
+          : undefined,
         roomId: onlineTournamentStatus.matchRoom?.roomId ?? match.roomId,
         winnerEntryId
       }).then((status) => {
@@ -3505,7 +3604,7 @@ export default function App() {
         });
       });
     }
-  }, [activeTournamentMatchId, captureAppAnalytics, capturePositiveMilestone, localTournamentBracket, localTournamentSlotEntryIds, makeInfiniteTournamentBracket, mode, onlineProfile, onlineTournamentStatus, setupLocalTournamentMatch, startInfiniteTournamentMatch]);
+  }, [activeTournamentMatchId, captureAppAnalytics, capturePositiveMilestone, e2eSimulateOnlineTournament, localTournamentBracket, localTournamentSlotEntryIds, makeInfiniteTournamentBracket, mode, onlineProfile, onlineTournamentStatus, setupLocalTournamentMatch, startInfiniteTournamentMatch]);
 
   useEffect(() => {
     const onError = (event: ErrorEvent) => {
@@ -4984,6 +5083,7 @@ export default function App() {
             rankedProfile={rankedProfile}
             tournamentBotOpponent={mode === 'tournamentOnline' ? makeTournamentBotOpponent(onlineTournamentStatus) : null}
             onlineTournamentStatus={mode === 'tournamentOnline' ? onlineTournamentStatus : null}
+            e2eSimulateOnlineTournament={mode === 'tournamentOnline' ? e2eSimulateOnlineTournament : false}
             posthogDeviceId={mode === 'tournamentOnline' ? getPostHogDeviceId() : undefined}
             onOnlineTournamentStatusChange={setOnlineTournamentStatus}
             onTournamentRoomFailure={(message) => {
@@ -21033,6 +21133,7 @@ function FightScreen({
   rankedProfile,
   tournamentBotOpponent,
   onlineTournamentStatus,
+  e2eSimulateOnlineTournament = false,
   posthogDeviceId,
   onOnlineTournamentStatusChange,
   onTournamentRoomFailure,
@@ -21067,6 +21168,7 @@ function FightScreen({
   rankedProfile: RankedProfile | null;
   tournamentBotOpponent?: OnlineBotOpponent | null;
   onlineTournamentStatus?: TournamentStatusResult | null;
+  e2eSimulateOnlineTournament?: boolean;
   posthogDeviceId?: string;
   onOnlineTournamentStatusChange?: (status: TournamentStatusResult) => void;
   onTournamentRoomFailure?: (message: string) => void;
@@ -21193,6 +21295,7 @@ function FightScreen({
   const [rankedPromotionAccepted, setRankedPromotionAccepted] = useState(false);
   const [tournamentFriendAdded, setTournamentFriendAdded] = useState(false);
   const [tournamentAdvanceRequested, setTournamentAdvanceRequested] = useState(false);
+  const e2eTournamentMatchInstalledRef = useRef('');
   const onlineAttackTrackerRef = useRef([
     { attacking: false, hitConnected: false },
     { attacking: false, hitConnected: false }
@@ -22874,6 +22977,32 @@ function FightScreen({
 
   useEffect(() => {
     if (!isOnline) return undefined;
+    if (mode === 'tournamentOnline' && e2eSimulateOnlineTournament && onlineTournamentStatus?.assignedMatch && onlineTournamentStatus.entry) {
+      const installKey = `${onlineTournamentStatus.bracket.id}:${onlineTournamentStatus.assignedMatch.id}`;
+      if (e2eTournamentMatchInstalledRef.current !== installKey) {
+        const result = tournamentRoomToOnlineResult(onlineTournamentStatus, 'e2e-local-peer');
+        if (result) {
+          e2eTournamentMatchInstalledRef.current = installKey;
+          onlineRoomRef.current = result;
+          onlineRoleRef.current = result.role;
+          onlineRemoteProfileRef.current = {
+            playerId: result.role === 'host' ? result.guestPeerId ?? 'e2e-opponent' : result.hostPeerId,
+            displayName: getTournamentOpponentEntry(onlineTournamentStatus.bracket, onlineTournamentStatus.assignedMatch, onlineTournamentStatus.entry.id)?.displayName ?? 'Opponent'
+          };
+          onlineRollbackRef.current = null;
+          onlineWinnerRecordedRef.current = false;
+          matchHistoryRecordedRef.current = '';
+          installFreshMatch(makeOnlineMatch(result.hostCharacterId ?? p1.id, result.guestCharacterId ?? p2.id, result.stageId ?? stage.id));
+          setOnlineRole(result.role);
+          onlineStateRef.current = 'connected';
+          setOnlineState('connected');
+          setOnlineStatusText('CONNECTED');
+        } else {
+          onTournamentRoomFailure?.('Tournament match room unavailable');
+        }
+      }
+      return undefined;
+    }
     let cancelled = false;
     let matchmakingTimer = 0;
     onlineClosingRef.current = false;
@@ -23135,7 +23264,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, handleOnlineMessage, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, onOnlineTournamentStatusChange, onTournamentRoomFailure, onlineProfile?.playerId, onlineTournamentStatus, p1.displayName, p1.id, posthogDeviceId, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent, tournamentRoomToOnlineResult]);
+  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, e2eSimulateOnlineTournament, handleOnlineMessage, installFreshMatch, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, onOnlineTournamentStatusChange, onTournamentRoomFailure, onlineProfile?.playerId, onlineTournamentStatus, p1.displayName, p1.id, p2.id, posthogDeviceId, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent, tournamentRoomToOnlineResult]);
 
   useEffect(() => {
     if (!isOnline) return undefined;

@@ -6,6 +6,7 @@ import {
   getOrCreateFreeTournament,
   getTournamentStore,
   json,
+  readTournament,
   writeTournament
 } from './_tournament-store.mjs';
 import {
@@ -37,11 +38,18 @@ export async function handler(event) {
     }
 
     const store = getTournamentStore(event);
-    const current = await getOrCreateFreeTournament(store);
+    const current = await resolveFreeTournamentForEntry(store, playerId, cleanId(body.tournamentId));
     const result = enterFreeTournament(current, { playerId, displayName, characterId }, Date.now());
     await writeTournament(store, result.bracket);
     return json(200, result);
   } catch (error) {
     return errorJson(error);
   }
+}
+
+export async function resolveFreeTournamentForEntry(store, playerId, requestedTournamentId) {
+  const requested = requestedTournamentId ? await readTournament(store, requestedTournamentId) : null;
+  const requestedHasPlayer = requested?.entries?.some((entry) => entry.playerId === playerId || entry.id === playerId);
+  if (requested?.status === 'open' || requestedHasPlayer) return requested;
+  return getOrCreateFreeTournament(store);
 }

@@ -9,6 +9,10 @@ import {
   writeTournament
 // @ts-expect-error Netlify functions are plain ESM modules exercised directly here.
 } from '../netlify/functions/_tournament-store.mjs';
+import {
+  resolveFreeTournamentForEntry
+// @ts-expect-error Netlify functions are plain ESM modules exercised directly here.
+} from '../netlify/functions/tournament-enter.mjs';
 
 describe('free online tournament queue', () => {
   it('starts a full free bracket and rolls new entrants into the next forming tournament', async () => {
@@ -37,6 +41,30 @@ describe('free online tournament queue', () => {
       liveTournamentCount: 1,
       formingTournamentCount: 1
     });
+  });
+
+  it('restores a saved free entry after its bracket fills instead of rolling the player forward', async () => {
+    const store = makeMemoryStore();
+    const fullBracket = await createFullFreeBracket(store);
+    const next = await getOrCreateFreeTournament(store, 2000);
+
+    expect(fullBracket.status).toBe('roundActive');
+    expect(next.id).not.toBe(fullBracket.id);
+    expect(next.status).toBe('open');
+
+    const restored = await resolveFreeTournamentForEntry(store, 'player-1', fullBracket.id);
+    const result = enterFreeTournament(restored, {
+      playerId: 'player-1',
+      displayName: 'P1 Reloaded',
+      characterId: 'fighter-reloaded'
+    }, 2100);
+
+    expect(result.bracket.id).toBe(fullBracket.id);
+    expect(result.entry).toMatchObject({
+      playerId: 'player-1',
+      characterId: 'fighter-1'
+    });
+    expect(result.bracket.status).toBe('roundActive');
   });
 
   it('attaches timed rooms to free ready matches and assigns host and guest by arrival', async () => {
