@@ -67,6 +67,29 @@ describe('free online tournament queue', () => {
     expect(result.bracket.status).toBe('roundActive');
   });
 
+  it('restores an active free entry even when the client lost its saved tournament id', async () => {
+    const store = makeMemoryStore();
+    const fullBracket = await createFullFreeBracket(store);
+    const next = await getOrCreateFreeTournament(store, 2000);
+
+    expect(fullBracket.status).toBe('roundActive');
+    expect(next.status).toBe('open');
+
+    const restored = await resolveFreeTournamentForEntry(store, 'player-2', '');
+    const result = enterFreeTournament(restored, {
+      playerId: 'player-2',
+      displayName: 'P2 Reloaded',
+      characterId: 'fighter-reloaded'
+    }, 2200);
+
+    expect(result.bracket.id).toBe(fullBracket.id);
+    expect(result.entry).toMatchObject({
+      playerId: 'player-2',
+      characterId: 'fighter-2'
+    });
+    expect(next.entries).toHaveLength(0);
+  });
+
   it('attaches timed rooms to free ready matches and assigns host and guest by arrival', async () => {
     const store = makeMemoryStore();
     const bracket = await createFullFreeBracket(store);

@@ -56,6 +56,35 @@ export async function handler(event) {
 export async function resolveFreeTournamentForEntry(store, playerId, requestedTournamentId) {
   const requested = requestedTournamentId ? await readTournament(store, requestedTournamentId) : null;
   const requestedHasPlayer = requested?.entries?.some((entry) => entry.playerId === playerId || entry.id === playerId);
-  if (requested?.status === 'open' || requestedHasPlayer) return requested;
+  if (requestedHasPlayer) return requested;
+  const existing = await findActiveFreeTournamentForPlayer(store, playerId);
+  if (existing) return existing;
+  if (requested?.status === 'open') return requested;
   return getOrCreateFreeTournament(store);
+}
+
+export async function findActiveFreeTournamentForPlayer(store, playerId) {
+  const cleanPlayerId = cleanId(playerId);
+  if (!cleanPlayerId) return null;
+  const listed = await store.list({ prefix: 'tournaments/' }).catch(() => ({ blobs: [] }));
+  const ids = [...new Set(
+    (listed.blobs || [])
+      .map((blob) => String(blob.key || '').replace(/^tournaments\//, ''))
+      .filter((id) => id && id !== 'free-online-active.json')
+  )];
+  const brackets = await Promise.all(ids.map((id) => readTournament(store, id).catch(() => null)));
+  return brackets
+    .filter((bracket) =>
+      bracket?.kind === 'freeOnline' &&
+      bracket.status !== 'completed' &&
+      bracket.status !== 'cancelled' &&
+      bracket.entries?.some((entry) => entry.playerId === cleanPlayerId || entry.id === cleanPlayerId)
+    )
+    .sort((a, b) => freeTournamentReusePriority(b) - freeTournamentReusePriority(a) || Number(b.updatedAt || 0) - Number(a.updatedAt || 0))[0] ?? null;
+}
+
+function freeTournamentReusePriority(bracket) {
+  if (bracket.status === 'roundActive' || bracket.status === 'bracketGenerated' || bracket.status === 'locked') return 3;
+  if (bracket.status === 'open') return 2;
+  return 1;
 }
