@@ -1718,9 +1718,9 @@ function TornadoRibbonEffect({
   const lightRef = useRef<THREE.PointLight>(null);
   const ageRef = useRef(0);
   const spinRef = useRef(0);
-  const characterScale = getCharacterGlobalScale(defender.character);
-  const height = THREE.MathUtils.clamp(1.55 * characterScale.height, 0.95, 2.35);
-  const radius = THREE.MathUtils.clamp(0.23 * characterScale.width, 0.16, 0.38);
+  const profile = getTornadoRibbonProfile(defender);
+  const height = profile.height;
+  const radius = profile.radius;
   const ribbonCount = reducedMotion ? 3 : 7;
   const duration = reducedMotion ? 0.38 : 0.72;
   const ribbons = useMemo(
@@ -1788,7 +1788,7 @@ function TornadoRibbonEffect({
     if (!root) return;
     root.visible = progress < 1;
     root.rotation.set(-0.85, defender.facingYaw, defender.facing * 0.08);
-    const bodyCenter = new THREE.Vector3(0, height * 0.52, 0).applyEuler(root.rotation);
+    const bodyCenter = new THREE.Vector3(0, profile.centerY, 0).applyEuler(root.rotation);
     root.position.set(defender.position.x + bodyCenter.x, defender.position.y + bodyCenter.y, defender.position.z + bodyCenter.z);
     spinRef.current += delta * (reducedMotion ? 1.15 : 2.35);
     if (ribbonAxisRef.current) ribbonAxisRef.current.rotation.y = spinRef.current;
@@ -1841,6 +1841,35 @@ function TornadoRibbonEffect({
       </group>
     </group>
   );
+}
+
+export function getTornadoRibbonProfile(defender: FighterRuntime) {
+  const characterScale = getCharacterGlobalScale(defender.character);
+  const animationScale = getActiveImageVoxelAnimationScale(defender);
+  const imageVoxel = defender.character.voxelProfile === 'image-source' || defender.character.voxelProfile === 'hd-image-source';
+  const tornadoReaction = hasTornadoReactionVisual(defender);
+  const visualWidth = characterScale.width * animationScale.width;
+  const visualHeight = characterScale.height * animationScale.height;
+  const crossSectionRadius = visualWidth * (imageVoxel ? 0.36 : 0.23);
+  const proneRadius = tornadoReaction ? visualHeight * 0.34 : 0;
+  const radius = THREE.MathUtils.clamp(
+    Math.max(crossSectionRadius, proneRadius),
+    0.16,
+    imageVoxel ? 1.15 : 0.52
+  );
+  const height = THREE.MathUtils.clamp(
+    1.55 * visualHeight * (tornadoReaction && imageVoxel ? 1.08 : 1),
+    0.95,
+    imageVoxel ? 3.15 : 2.35
+  );
+  return {
+    height,
+    radius,
+    centerY: height * (tornadoReaction ? 0.46 : 0.52),
+    visualWidth,
+    visualHeight,
+    source: imageVoxel ? 'image-voxel' : 'character-scale'
+  };
 }
 
 type TornadoRibbonParticleSpec = {
@@ -6295,6 +6324,14 @@ function getCharacterAnimationScale(character: CharacterDefinition, animationKey
     height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.1, 10),
     offsetX: THREE.MathUtils.clamp(Number(size?.offsetX) || 0, -6, 6)
   };
+}
+
+function getActiveImageVoxelAnimationScale(fighter: FighterRuntime) {
+  if (fighter.character.voxelProfile !== 'image-source' && fighter.character.voxelProfile !== 'hd-image-source') {
+    return { width: 1, height: 1, offsetX: 0 };
+  }
+  const frameSelection = getImageVoxelFrameSelection(fighter, getFighterRenderProgress(fighter), 0);
+  return getCharacterAnimationScale(fighter.character, frameSelection.animationKey, frameSelection.frameSource);
 }
 
 function getFighterRenderOffsetX(fighter: FighterRuntime, progress: number, elapsedTime: number) {
