@@ -9831,7 +9831,9 @@ function TournamentSelect({
     : paidEnabled
       ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries`
       : 'Paid beta unavailable';
-  const paidActivityLabel = paidEnabled ? formatTournamentActivityLabel(paidSummary, paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning') : paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning';
+  const paidActivityLabel = paidEnabled
+    ? formatTournamentActivityLabel(paidSummary, paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning', { showForming: false })
+    : paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning';
   const canStart = Boolean(
     customTournamentMode
       ? roster.filter((character) => isCharacterPlayable(character)).length >= 2
@@ -10043,7 +10045,7 @@ function TournamentSelect({
             >
               <strong>Prizepool</strong>
               <span>{paidEntryLabel}</span>
-              <small>{paidActivityLabel}</small>
+              {paidActivityLabel && <small>{paidActivityLabel}</small>}
             </button>
             {isDevHost && (
               <button
@@ -10913,12 +10915,12 @@ function isPaidTournamentUiEnabled(summary?: TournamentSummary) {
   return import.meta.env.VITE_TOURNAMENT_PAID_ENABLED === 'true' && Boolean(summary?.paidEnabled);
 }
 
-function formatTournamentActivityLabel(summary: TournamentSummary | undefined, fallback: string) {
+function formatTournamentActivityLabel(summary: TournamentSummary | undefined, fallback: string, options: { showForming?: boolean } = {}) {
   if (!summary) return fallback;
   const live = Math.max(0, Math.round(summary.liveTournamentCount ?? 0));
   const forming = Math.max(0, Math.round(summary.formingTournamentCount ?? (summary.status === 'open' ? 1 : 0)));
   if (live > 0) return `${live} live`;
-  if (forming > 0) return `${forming} forming tournament${forming === 1 ? '' : 's'}`;
+  if (forming > 0) return options.showForming === false ? '' : `${forming} forming tournament${forming === 1 ? '' : 's'}`;
   return fallback;
 }
 
