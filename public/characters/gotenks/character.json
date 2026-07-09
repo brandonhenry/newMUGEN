@@ -70,18 +70,6 @@
       "/characters/gotenks/frames/frame-067.png",
       "/characters/gotenks/frames/frame-068.png"
     ],
-    "kickleft": [
-      "/characters/gotenks/frames/frame-180.png",
-      "/characters/gotenks/frames/frame-181.png",
-      "/characters/gotenks/frames/frame-182.png",
-      "/characters/gotenks/frames/frame-183.png",
-      "/characters/gotenks/frames/frame-184.png",
-      "/characters/gotenks/frames/frame-185.png",
-      "/characters/gotenks/frames/frame-186.png",
-      "/characters/gotenks/frames/frame-187.png",
-      "/characters/gotenks/frames/frame-188.png",
-      "/characters/gotenks/frames/frame-189.png"
-    ],
     "kickright": [
       "/characters/gotenks/frames/frame-168.png",
       "/characters/gotenks/frames/frame-169.png",
@@ -403,48 +391,6 @@
       "description": "Fast high jab with a tiny active window for close checks."
     },
     {
-      "id": "kick",
-      "label": "Low Fusion Roll",
-      "input": "kick",
-      "startupFrames": 30,
-      "activeFrames": 4,
-      "recoveryFrames": 36,
-      "damage": 10,
-      "blockDamage": 0,
-      "hitLevel": "low",
-      "onBlockFrames": -5,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 7,
-      "range": 1.62,
-      "pushback": 0.96,
-      "blockPushback": 0.44,
-      "tracking": "medium",
-      "knockdown": false,
-      "hitbox": {
-        "offset": [
-          0,
-          0.86,
-          0.7896000000000001
-        ],
-        "size": [
-          0.72,
-          0.42,
-          0.7096
-        ]
-      },
-      "counterHit": false,
-      "cancelable": false,
-      "forwardForce": 0.55,
-      "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 34,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8,
-      "description": "Fast low rolling kick with long active coverage and heavier recovery."
-    },
-    {
       "id": "heavy",
       "label": "Fusion Body Check",
       "input": "heavy",
@@ -597,27 +543,6 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": false,
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 9,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
-    },
-    "kickleft": {
-      "startupFrames": 30,
-      "activeFrames": 4,
-      "recoveryFrames": 36,
-      "damage": 9,
-      "blockDamage": 1,
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "whiffRecoveryFrames": 7,
-      "range": 1.62,
-      "forwardForce": 0.55,
-      "forwardForceStartFrame": 21,
-      "forwardForceEndFrame": 34,
-      "label": "Low Fusion Roll",
-      "hitLevel": "low",
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 9,
       "comboRepeatPenaltyFrames": 5,
