@@ -60,6 +60,14 @@ describe('arcade run scoring', () => {
     expect(run.miniGameTotals['enemy-rush']).toBe(700);
   });
 
+  it('fighter rush death tracks separate score and costs one life', () => {
+    const run = applyArcadeMiniGameResult(createArcadeRunState(), miniGameResult('fighter-rush', 900, 'player-death'));
+    expect(run.score).toBe(900);
+    expect(run.livesRemaining).toBe(2);
+    expect(run.miniGameTotals['fighter-rush']).toBe(900);
+    expect(run.miniGameTotals['enemy-rush']).toBe(0);
+  });
+
   it('stores local best arcade run scores', () => {
     const store: Record<string, string> = {};
     vi.stubGlobal('window', {
@@ -78,7 +86,7 @@ describe('arcade run scoring', () => {
   });
 });
 
-function miniGameResult(gameId: 'break-target' | 'enemy-rush', score: number, completedReason: MiniGameResult['completedReason']): MiniGameResult {
+function miniGameResult(gameId: MiniGameResult['gameId'], score: number, completedReason: MiniGameResult['completedReason']): MiniGameResult {
   return {
     kind: gameId,
     gameId,

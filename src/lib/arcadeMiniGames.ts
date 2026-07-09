@@ -20,8 +20,9 @@ import type {
 import { emptyInputFrame } from '../types';
 import { getCharacterCombatScale } from './characterScale';
 
-export const BREAK_TARGET_GAME_ID: MiniGameKind = 'break-target';
-export const ENEMY_RUSH_GAME_ID: MiniGameKind = 'enemy-rush';
+export const BREAK_TARGET_GAME_ID = 'break-target' satisfies MiniGameKind;
+export const ENEMY_RUSH_GAME_ID = 'enemy-rush' satisfies MiniGameKind;
+export const FIGHTER_RUSH_GAME_ID = 'fighter-rush' satisfies MiniGameKind;
 export const BREAK_TARGET_HIGH_SCORE_STORAGE_KEY = 'kore.arcadeMiniGameHighScores.v1';
 export const BREAK_TARGET_ROUND_TIME = 45;
 export const ARCADE_MINI_GAME_CHANCE = 0.35;
@@ -55,6 +56,7 @@ const ENEMY_RUSH_LANE_COUNT = 5;
 const ENEMY_RUSH_MIDDLE_LANE: EnemyRushLaneIndex = 2;
 const ENEMY_RUSH_LANE_CHANGE_DURATION = 0.16;
 const ENEMY_RUSH_LANE_ATTACK_GRACE = 0.48;
+const FIGHTER_RUSH_MAX_ENEMY_COUNT = 16;
 
 type ResolvedMiniGameStageBounds = {
   shape: 'box' | 'ellipse';
@@ -129,7 +131,15 @@ export function pickArcadeMiniGameKind(arcadeLevel = 1, random = Math.random()):
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const forced = params.get('forceMiniGameKind');
-    if (forced === BREAK_TARGET_GAME_ID || forced === ENEMY_RUSH_GAME_ID) return forced;
+    if (forced === BREAK_TARGET_GAME_ID || forced === ENEMY_RUSH_GAME_ID || forced === FIGHTER_RUSH_GAME_ID) return forced;
+  }
+  const safeLevel = Math.max(1, Math.round(arcadeLevel));
+  if (safeLevel >= 2) {
+    const fighterRushChance = Math.min(0.4, 0.16 + (safeLevel - 2) * 0.06);
+    if (random < fighterRushChance) return FIGHTER_RUSH_GAME_ID;
+    const adjustedRandom = (random - fighterRushChance) / Math.max(0.001, 1 - fighterRushChance);
+    const enemyRushChance = Math.min(0.72, 0.28 + Math.max(0, safeLevel - 1) * 0.11);
+    return adjustedRandom < enemyRushChance ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
   }
   const enemyRushChance = Math.min(0.72, 0.28 + Math.max(0, arcadeLevel - 1) * 0.11);
   return random < enemyRushChance ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
@@ -287,6 +297,22 @@ export function createEnemyRushMiniGame(
   };
 }
 
+export function createFighterRushMiniGame(
+  character: CharacterDefinition,
+  stage: StageDefinition,
+  seed = Date.now(),
+  level = 1,
+  rosterPool: CharacterDefinition[] = []
+): EnemyRushMiniGameSnapshot {
+  const snapshot = createEnemyRushMiniGame(character, stage, seed, level);
+  return {
+    ...snapshot,
+    kind: FIGHTER_RUSH_GAME_ID,
+    gameId: FIGHTER_RUSH_GAME_ID,
+    enemies: generateFighterRushEnemies(stage, seed, level, rosterPool, character, snapshot.player.position)
+  };
+}
+
 export function generateEnemyRushEnemies(
   stage: StageDefinition,
   seed = 1,
@@ -343,6 +369,79 @@ export function generateEnemyRushEnemies(
   return enemies;
 }
 
+export function generateFighterRushEnemies(
+  stage: StageDefinition,
+  seed = 1,
+  level = 1,
+  rosterPool: CharacterDefinition[] = [],
+  playerCharacter?: CharacterDefinition,
+  playerPosition: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 }
+): EnemyRushRuntime[] {
+  const safeLevel = Math.max(1, Math.round(level));
+  const random = seededRandom(seed);
+  const bounds = resolveMiniGameStageBounds(stage, 0.8);
+  const lanes = resolveEnemyRushLaneLayout(stage);
+  const playablePool = uniqueCharactersById(rosterPool.filter((candidate) => !candidate.unplayable));
+  const preferredPool = playablePool.filter((candidate) => candidate.id !== playerCharacter?.id);
+  const pool = preferredPool.length > 0 ? preferredPool : playablePool.length > 0 ? playablePool : playerCharacter ? [playerCharacter] : [];
+  const count = Math.min(FIGHTER_RUSH_MAX_ENEMY_COUNT, 4 + safeLevel * 2);
+  const enemies: EnemyRushRuntime[] = [];
+  if (pool.length === 0) return enemies;
+  let attempts = 0;
+  while (enemies.length < count && attempts < count * 44) {
+    attempts += 1;
+    const rosterCharacter = pool[Math.floor(random() * pool.length)] ?? pool[0];
+    const playerLocal = worldToMiniGameBoundsLocal(playerPosition, bounds);
+    const laneIndex = clampEnemyRushLaneIndex(Math.floor(random() * ENEMY_RUSH_LANE_COUNT));
+    const local = { x: 0, z: lanes.laneLocalZ[laneIndex] };
+    const laneWidth = Math.min(3.8, bounds.halfWidth * 0.46);
+    local.x = clamp(playerLocal.x + (random() * 2 - 1) * laneWidth, -bounds.halfWidth, bounds.halfWidth);
+    const world = stageBoundsLocalToWorld(local, bounds);
+    const distanceFromPlayer = Math.hypot(world.x - playerPosition.x, world.z - playerPosition.z);
+    if (distanceFromPlayer < ENEMY_RUSH_MIN_SPAWN_DISTANCE) continue;
+    const radius = 0.42;
+    if (enemies.some((enemy) => Math.hypot(enemy.position.x - world.x, enemy.position.z - world.z) < radius + enemy.radius + 0.62)) continue;
+    const levelBonus = Math.max(0, safeLevel - 1);
+    const hp = Math.min(18, Math.round(8 + levelBonus * 1.45 + random() * 4));
+    const damage = Math.min(7, Math.round(3 + levelBonus * 0.42 + random() * 2));
+    enemies.push({
+      id: `fighter-${enemies.length + 1}-${rosterCharacter.id}`,
+      kind: 'samurai',
+      rosterCharacter,
+      name: rosterCharacter.displayName,
+      level: safeLevel,
+      hp,
+      maxHp: hp,
+      damage,
+      speed: Math.max(0.95, Math.min(1.42, rosterCharacter.stats.speed * 0.22 + Math.min(0.2, levelBonus * 0.025))),
+      points: Math.round(150 + safeLevel * 42 + (enemies.length % Math.max(1, pool.length)) * 12),
+      radius,
+      height: 1.35,
+      position: { x: world.x, y: 0, z: world.z },
+      laneIndex,
+      laneTransition: null,
+      facing: world.x >= playerPosition.x ? -1 : 1,
+      attackCooldown: 0.65 + random() * 0.85,
+      hitFlash: 0,
+      defeated: false,
+      elite: false,
+      behavior: enemies.length % 4 === 1 ? 'ambusher' : 'chaser',
+      awareness: 5.2 + Math.min(2.4, levelBonus * 0.35),
+      attackRange: 0.86 + Math.min(0.28, levelBonus * 0.035)
+    });
+  }
+  return enemies;
+}
+
+function uniqueCharactersById(characters: CharacterDefinition[]) {
+  const seen = new Set<string>();
+  return characters.filter((character) => {
+    if (!character.id || seen.has(character.id)) return false;
+    seen.add(character.id);
+    return true;
+  });
+}
+
 export function stepEnemyRushMiniGame(
   snapshot: EnemyRushMiniGameSnapshot,
   input: InputFrame,
@@ -388,8 +487,8 @@ export function makeEnemyRushMiniGameResult(snapshot: EnemyRushMiniGameSnapshot,
   const score = Math.max(0, Math.round(snapshot.score));
   const highScore = Math.max(previousHighScore, score);
   return {
-    kind: ENEMY_RUSH_GAME_ID,
-    gameId: ENEMY_RUSH_GAME_ID,
+    kind: snapshot.gameId,
+    gameId: snapshot.gameId,
     stageId: snapshot.stage.id,
     stageName: snapshot.stage.name,
     score,

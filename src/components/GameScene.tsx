@@ -1127,7 +1127,11 @@ function EnemyRushLayer({ snapshot, reducedMotion }: { snapshot: EnemyRushMiniGa
   return (
     <group>
       {snapshot.enemies.map((enemy) => (
-        <EnemyRushVoxelEnemy key={enemy.id} enemy={enemy} playerFacing={snapshot.player.facing} locked={snapshot.lockedEnemyId === enemy.id} />
+        enemy.rosterCharacter ? (
+          <EnemyRushRosterFighter key={enemy.id} enemy={enemy} player={snapshot.player} stage={snapshot.stage} locked={snapshot.lockedEnemyId === enemy.id} />
+        ) : (
+          <EnemyRushVoxelEnemy key={enemy.id} enemy={enemy} playerFacing={snapshot.player.facing} locked={snapshot.lockedEnemyId === enemy.id} />
+        )
       ))}
       {snapshot.coins.map((coin) => (
         <EnemyRushCoin key={coin.id} coin={coin} />
@@ -1141,6 +1145,58 @@ function EnemyRushLayer({ snapshot, reducedMotion }: { snapshot: EnemyRushMiniGa
     </group>
   );
 }
+
+function EnemyRushRosterFighter({
+  enemy,
+  player,
+  stage,
+  locked
+}: {
+  enemy: EnemyRushRuntime;
+  player: FighterRuntime;
+  stage: StageDefinition;
+  locked: boolean;
+}) {
+  const fighter = useMemo<FighterRuntime | null>(() => {
+    if (!enemy.rosterCharacter) return null;
+    const moving = Math.abs(enemy.position.x - player.position.x) > enemy.radius + ENEMY_RUSH_RENDER_PLAYER_RADIUS;
+    return {
+      ...player,
+      slot: 2,
+      character: enemy.rosterCharacter,
+      baseCharacter: enemy.rosterCharacter,
+      hp: enemy.hp,
+      maxHp: enemy.maxHp,
+      position: { ...enemy.position },
+      facing: enemy.facing,
+      facingYaw: enemy.facing > 0 ? Math.PI / 2 : -Math.PI / 2,
+      state: enemy.hitFlash > 0 ? 'hit' : moving ? 'walk' : 'idle',
+      walkDirection: moving ? 1 : 0,
+      sidestepDirection: 0,
+      currentMove: null,
+      actionTimer: 0,
+      actionFramesRemaining: 0,
+      moveFrame: 0,
+      hitFlash: enemy.hitFlash,
+      blockFlash: 0,
+      visualHitstop: enemy.hitFlash > 0 ? { framesRemaining: 2, animationKey: 'hitLight', progress: 0 } : { framesRemaining: 0, animationKey: null, progress: 0 }
+    };
+  }, [enemy, player]);
+  if (!fighter || enemy.defeated) return null;
+  return (
+    <group>
+      {locked && (
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[enemy.position.x, 0.035, enemy.position.z]}>
+          <torusGeometry args={[enemy.radius * 1.28, 0.035, 8, 36]} />
+          <meshStandardMaterial color="#8ef9ff" emissive="#35dfff" emissiveIntensity={1.4} roughness={0.28} />
+        </mesh>
+      )}
+      <FighterRig fighter={fighter} timeScale={1} stage={stage} visualScale={0.72} renderStyle={{ castShadow: true, receiveShadow: true }} />
+    </group>
+  );
+}
+
+const ENEMY_RUSH_RENDER_PLAYER_RADIUS = 0.42;
 
 function EnemyRushVoxelEnemy({ enemy, playerFacing, locked }: { enemy: EnemyRushRuntime; playerFacing: 1 | -1; locked: boolean }) {
   const [voxels, setVoxels] = useState<ImageVoxel[]>([]);

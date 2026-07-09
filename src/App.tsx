@@ -181,8 +181,10 @@ import {
 import {
   BREAK_TARGET_GAME_ID,
   ENEMY_RUSH_GAME_ID,
+  FIGHTER_RUSH_GAME_ID,
   createBreakTargetMiniGame,
   createEnemyRushMiniGame,
+  createFighterRushMiniGame,
   makeEnemyRushMiniGameResult,
   makeBreakTargetMiniGameResult,
   pickArcadeMiniGameKind,
@@ -3057,6 +3059,10 @@ export default function App() {
     () => (isDevHost ? new Set(roster.map((character) => character.id)) : unlockedCharacterIds),
     [isDevHost, roster, unlockedCharacterIds]
   );
+  const unlockedMiniGameRoster = useMemo(
+    () => roster.filter((character) => isCharacterPlayable(character) && isCharacterUnlocked(character, effectiveUnlockedCharacterIds)),
+    [effectiveUnlockedCharacterIds, roster]
+  );
   const captureAppAnalytics = useCallback((name: AnalyticsEventName, properties: AnalyticsProperties = {}) => {
     captureAnalyticsEvent(name, {
       app_version: KORE_APP_VERSION,
@@ -5065,7 +5071,8 @@ export default function App() {
 	    debugMiniGameStartedRef.current = true;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
 	    const debugDuration = Number(params.get('debugMiniGameTimer'));
-	    const debugKind = params.get('forceMiniGameKind') === ENEMY_RUSH_GAME_ID ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
+	    const forcedMiniGameKind = params.get('forceMiniGameKind');
+	    const debugKind = forcedMiniGameKind === ENEMY_RUSH_GAME_ID || forcedMiniGameKind === FIGHTER_RUSH_GAME_ID ? forcedMiniGameKind : BREAK_TARGET_GAME_ID;
 	    setMode('ai');
 	    setActiveArcadeMiniGame({
 	      kind: debugKind,
@@ -5653,11 +5660,12 @@ export default function App() {
           />
         )}
         {screen === 'miniGame' && activeArcadeMiniGame && (
-          activeArcadeMiniGame.kind === ENEMY_RUSH_GAME_ID ? (
+          activeArcadeMiniGame.kind === ENEMY_RUSH_GAME_ID || activeArcadeMiniGame.kind === FIGHTER_RUSH_GAME_ID ? (
             <EnemyRushMiniGameScreen
               key={`${p1.id}-${activeArcadeMiniGame.kind}-${activeArcadeMiniGame.stage.id}-${activeArcadeMiniGame.seed}`}
               character={p1}
               launch={activeArcadeMiniGame}
+              rosterPool={unlockedMiniGameRoster}
               settings={settings}
               arcadeRun={arcadeRun}
               readInputsForStep={readInputsForStep}
@@ -6819,8 +6827,13 @@ function getArcadeTransitionCopy(intent: ArcadeTransitionIntent) {
 }
 
 function getArcadeMiniGameTitle(kind?: MiniGameKind) {
+  if (kind === FIGHTER_RUSH_GAME_ID) return 'Fighter Rush';
   if (kind === ENEMY_RUSH_GAME_ID) return 'Enemy Rush';
   return 'Break The Target';
+}
+
+function isRushMiniGameResult(kind?: MiniGameKind) {
+  return kind === ENEMY_RUSH_GAME_ID || kind === FIGHTER_RUSH_GAME_ID;
 }
 
 function preloadArcadeTransitionImages(intent: ArcadeTransitionIntent, player: CharacterDefinition) {
@@ -27276,9 +27289,22 @@ function applyEnemyRushAttackAliases(input: InputFrame, aliases: EnemyRushAttack
   return next;
 }
 
+function createEnemyRushSnapshot(
+  character: CharacterDefinition,
+  launch: ArcadeMiniGameLaunch,
+  arcadeLevel: number,
+  rosterPool: CharacterDefinition[] = []
+) {
+  const level = launch.arcadeLevel ?? arcadeLevel;
+  return launch.kind === FIGHTER_RUSH_GAME_ID
+    ? createFighterRushMiniGame(character, launch.stage, launch.seed, level, rosterPool)
+    : createEnemyRushMiniGame(character, launch.stage, launch.seed, level);
+}
+
 function EnemyRushMiniGameScreen({
   character,
   launch,
+  rosterPool,
   settings,
   arcadeRun,
   readInputsForStep,
@@ -27290,6 +27316,7 @@ function EnemyRushMiniGameScreen({
 }: {
   character: CharacterDefinition;
   launch: ArcadeMiniGameLaunch;
+  rosterPool?: CharacterDefinition[];
   settings: GameSettings;
   arcadeRun: ArcadeRunState;
   readInputsForStep: () => [InputFrame, InputFrame];
@@ -27299,7 +27326,7 @@ function EnemyRushMiniGameScreen({
   onComplete: (result: MiniGameResult) => void;
   onAnalytics: AnalyticsCapture;
 }) {
-  const [snapshot, setSnapshot] = useState<EnemyRushMiniGameSnapshot>(() => createEnemyRushMiniGame(character, launch.stage, launch.seed, launch.arcadeLevel ?? arcadeRun.level));
+  const [snapshot, setSnapshot] = useState<EnemyRushMiniGameSnapshot>(() => createEnemyRushSnapshot(character, launch, arcadeRun.level, rosterPool));
   const [paused, setPaused] = useState(false);
   const screenRef = useRef<HTMLDivElement>(null);
   const snapshotRef = useRef(snapshot);
@@ -27338,7 +27365,7 @@ function EnemyRushMiniGameScreen({
   }, []);
 
   useEffect(() => {
-    const fresh = createEnemyRushMiniGame(character, launch.stage, launch.seed, launch.arcadeLevel ?? arcadeRun.level);
+    const fresh = createEnemyRushSnapshot(character, launch, arcadeRun.level, rosterPool);
     attackAliasKeysRef.current = createEnemyRushAttackAliasState();
     snapshotRef.current = fresh;
     setSnapshot(fresh);
@@ -27356,7 +27383,7 @@ function EnemyRushMiniGameScreen({
     });
     const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
     return () => window.cancelAnimationFrame(focusFrame);
-  }, [arcadeRun.level, character, launch.arcadeLevel, launch.stage, launch.seed, onAnalytics]);
+  }, [arcadeRun.level, character, launch, onAnalytics, rosterPool]);
 
   useEffect(() => {
     pausedRef.current = paused;
@@ -27468,7 +27495,7 @@ function EnemyRushMiniGameScreen({
       {paused && (
         <div className="pause-overlay">
           <div className="pause-panel">
-            <h2>Enemy Rush Paused</h2>
+            <h2>{getArcadeMiniGameTitle(snapshot.gameId)} Paused</h2>
             <div className="pause-menu-actions">
               <button className="primary-button" onClick={() => {
                 onAnalytics('minigame_paused', {
@@ -27499,7 +27526,7 @@ function EnemyRushHud({ snapshot }: { snapshot: EnemyRushMiniGameSnapshot }) {
   return (
     <aside className="enemy-rush-hud" aria-label="Enemy Rush status">
       <div className="enemy-rush-hud-title">
-        <span>Enemy Rush</span>
+        <span>{getArcadeMiniGameTitle(snapshot.gameId)}</span>
         <strong>Lv {snapshot.level}</strong>
       </div>
       <div className="enemy-rush-hud-meter" aria-label={`HP ${Math.ceil(snapshot.player.hp)} of ${snapshot.player.maxHp}`}>
@@ -27554,14 +27581,14 @@ function MiniGameResultScreen({ result, onContinue }: { result: MiniGameResult; 
     >
       <div className="mini-game-result-vignette" />
       <section className="mini-game-result-copy" aria-live="polite">
-        <span>{result.gameId === ENEMY_RUSH_GAME_ID ? 'Enemy Rush' : 'Break The Target'}</span>
+        <span>{getArcadeMiniGameTitle(result.gameId)}</span>
         <h1>{displayScore}</h1>
         <p>{result.stageName}</p>
         <div className="mini-game-result-stats">
           <strong>{result.targetsDestroyed}/{result.totalTargets}</strong>
-          <span>{result.gameId === ENEMY_RUSH_GAME_ID ? 'Enemies' : 'Targets'}</span>
-          <strong>{result.gameId === ENEMY_RUSH_GAME_ID ? (result.coinsCollected ?? 0) : Math.ceil(result.timeRemaining)}</strong>
-          <span>{result.gameId === ENEMY_RUSH_GAME_ID ? 'Coins' : 'Seconds'}</span>
+          <span>{isRushMiniGameResult(result.gameId) ? 'Enemies' : 'Targets'}</span>
+          <strong>{isRushMiniGameResult(result.gameId) ? (result.coinsCollected ?? 0) : Math.ceil(result.timeRemaining)}</strong>
+          <span>{isRushMiniGameResult(result.gameId) ? 'Coins' : 'Seconds'}</span>
           <strong>{result.highScore}</strong>
           <span>{result.newHighScore ? 'New Best' : 'Best'}</span>
         </div>
@@ -27766,6 +27793,7 @@ function ArcadeGameOverScreen({
           <span>{run.unlockedThisRun.length} unlocks</span>
           <span>{run.miniGameTotals['break-target']} target pts</span>
           <span>{run.miniGameTotals['enemy-rush']} rush pts</span>
+          <span>{run.miniGameTotals['fighter-rush']} fighter rush pts</span>
         </div>
         <div className="overlay-actions pause-menu-actions arcade-game-over-actions">
           <button className="primary-button" onClick={onStartOver}>

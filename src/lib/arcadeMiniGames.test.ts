@@ -1,13 +1,16 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { stages } from '../data/stages';
 import { starterCharacters } from '../data/characters';
-import { emptyInputFrame, type StageDefinition } from '../types';
+import { emptyInputFrame, type MiniGameHighScoreKey, type StageDefinition } from '../types';
 import {
   BREAK_TARGET_GAME_ID,
   BREAK_TARGET_HIGH_SCORE_STORAGE_KEY,
   createEnemyRushMiniGame,
   createBreakTargetMiniGame,
+  createFighterRushMiniGame,
+  FIGHTER_RUSH_GAME_ID,
   generateEnemyRushEnemies,
+  generateFighterRushEnemies,
   generateBreakTargets,
   makeEnemyRushMiniGameResult,
   makeBreakTargetMiniGameResult,
@@ -15,6 +18,7 @@ import {
   readMiniGameHighScore,
   resolveEnemyRushLaneLayout,
   resolveMiniGameStageBounds,
+  pickArcadeMiniGameKind,
   shouldStartArcadeMiniGame,
   stepEnemyRushMiniGame,
   stepBreakTargetMiniGame,
@@ -142,7 +146,7 @@ describe('arcade mini games', () => {
         }
       }
     });
-    const key = { gameId: BREAK_TARGET_GAME_ID, stageId: 'the-chamber' };
+    const key: MiniGameHighScoreKey = { gameId: BREAK_TARGET_GAME_ID, stageId: 'the-chamber' };
     expect(writeMiniGameHighScore(key, 100)).toBe(100);
     expect(writeMiniGameHighScore(key, 80)).toBe(100);
     expect(readMiniGameHighScore(key)).toBe(100);
@@ -155,6 +159,17 @@ describe('arcade mini games', () => {
       localStorage: { getItem: () => null }
     });
     expect(shouldStartArcadeMiniGame(0.99)).toBe(true);
+  });
+
+  it('supports forced fighter rush and level-gates random fighter rush picks', () => {
+    vi.stubGlobal('window', {
+      location: { search: `?forceMiniGameKind=${FIGHTER_RUSH_GAME_ID}` },
+      localStorage: { getItem: () => null }
+    });
+    expect(pickArcadeMiniGameKind(1, 0.99)).toBe(FIGHTER_RUSH_GAME_ID);
+    vi.unstubAllGlobals();
+    expect(pickArcadeMiniGameKind(1, 0)).not.toBe(FIGHTER_RUSH_GAME_ID);
+    expect(pickArcadeMiniGameKind(2, 0)).toBe(FIGHTER_RUSH_GAME_ID);
   });
 
   it('generates enemy rush spawns deterministically inside stage bounds with spacing', () => {
@@ -387,6 +402,45 @@ describe('arcade mini games', () => {
     expect(high.some((enemy) => enemy.elite || enemy.projectileKind)).toBe(true);
     expect(Math.max(...high.map((enemy) => enemy.maxHp))).toBeGreaterThan(Math.max(...low.map((enemy) => enemy.maxHp)));
   });
+
+  it('fighter rush generates deterministic weak roster fighters', () => {
+    const rosterPool = starterCharacters.slice(0, 4);
+    const first = generateFighterRushEnemies(stage, 1404, 3, rosterPool, character);
+    const second = generateFighterRushEnemies(stage, 1404, 3, rosterPool, character);
+    expect(second.map(summarizeFighterRushEnemy)).toEqual(first.map(summarizeFighterRushEnemy));
+    expect(first.length).toBe(10);
+    expect(first.every((enemy) => enemy.rosterCharacter && enemy.rosterCharacter.id !== character.id)).toBe(true);
+    expect(Math.max(...first.map((enemy) => enemy.maxHp))).toBeLessThanOrEqual(18);
+    expect(Math.max(...first.map((enemy) => enemy.damage))).toBeLessThanOrEqual(7);
+    expect(Math.max(...first.map((enemy) => enemy.maxHp))).toBeLessThan(Math.max(...generateEnemyRushEnemies(stage, 1404, 3).map((enemy) => enemy.maxHp)));
+  });
+
+  it('fighter rush keeps enemies on valid lanes inside bounds and caps count', () => {
+    const low = generateFighterRushEnemies(stage, 1505, 1, starterCharacters, character);
+    const high = generateFighterRushEnemies(stage, 1505, 9, starterCharacters, character);
+    const bounds = resolveMiniGameStageBounds(stage, 0.8);
+    expect(low.length).toBeLessThan(high.length);
+    expect(high.length).toBe(16);
+    for (const enemy of high) {
+      const local = worldToMiniGameBoundsLocal(enemy.position, bounds);
+      expect(Math.abs(local.x)).toBeLessThanOrEqual(bounds.halfWidth + 0.001);
+      expect(Math.abs(local.z)).toBeLessThanOrEqual(bounds.halfDepth + 0.001);
+      expect([0, 1, 2, 3, 4]).toContain(enemy.laneIndex);
+    }
+  });
+
+  it('fighter rush snapshot scores under a separate game id', () => {
+    const snapshot = createFighterRushMiniGame(character, stage, 1606, 2, starterCharacters);
+    expect(snapshot.kind).toBe(FIGHTER_RUSH_GAME_ID);
+    expect(snapshot.gameId).toBe(FIGHTER_RUSH_GAME_ID);
+    snapshot.enemies.forEach((enemy) => {
+      enemy.defeated = true;
+    });
+    const next = stepEnemyRushMiniGame(snapshot, emptyInputFrame(), 1 / 60);
+    const result = makeEnemyRushMiniGameResult(next);
+    expect(result.gameId).toBe(FIGHTER_RUSH_GAME_ID);
+    expect(result.cleared).toBe(true);
+  });
 });
 
 function summarizeTarget(target: ReturnType<typeof generateBreakTargets>[number]) {
@@ -402,6 +456,17 @@ function summarizeEnemy(enemy: ReturnType<typeof generateEnemyRushEnemies>[numbe
   return {
     kind: enemy.kind,
     hp: enemy.hp,
+    x: Number(enemy.position.x.toFixed(3)),
+    z: Number(enemy.position.z.toFixed(3))
+  };
+}
+
+function summarizeFighterRushEnemy(enemy: ReturnType<typeof generateFighterRushEnemies>[number]) {
+  return {
+    characterId: enemy.rosterCharacter?.id,
+    hp: enemy.hp,
+    damage: enemy.damage,
+    laneIndex: enemy.laneIndex,
     x: Number(enemy.position.x.toFixed(3)),
     z: Number(enemy.position.z.toFixed(3))
   };

@@ -848,7 +848,7 @@ export type InputFrameMetadata = {
 
 export type InputFrameWithMetadata = InputFrame & InputFrameMetadata;
 
-export type MiniGameKind = 'break-target' | 'enemy-rush';
+export type MiniGameKind = 'break-target' | 'enemy-rush' | 'fighter-rush';
 export type BreakTargetTier = 10 | 20 | 30;
 
 export type MiniGameHighScoreKey = {
@@ -918,6 +918,7 @@ export type EnemyRushLaneTransition = {
 export type EnemyRushRuntime = {
   id: string;
   kind: EnemyRushEnemyKind;
+  rosterCharacter?: CharacterDefinition;
   name: string;
   level: number;
   hp: number;
@@ -963,7 +964,7 @@ export type EnemyRushProjectileRuntime = {
 };
 
 export type EnemyRushMiniGameSnapshot = {
-  kind: 'enemy-rush';
+  kind: 'enemy-rush' | 'fighter-rush';
   gameId: MiniGameKind;
   stage: StageDefinition;
   player: FighterRuntime;

@@ -28,7 +28,8 @@ export function createArcadeRunState(now = Date.now()): ArcadeRunState {
     unlockedThisRun: [],
     miniGameTotals: {
       'break-target': 0,
-      'enemy-rush': 0
+      'enemy-rush': 0,
+      'fighter-rush': 0
     }
   };
 }
@@ -60,7 +61,7 @@ export function applyArcadeMiniGameResult(run: ArcadeRunState, result: MiniGameR
       [result.gameId]: (run.miniGameTotals[result.gameId] ?? 0) + Math.max(0, Math.round(result.score))
     }
   });
-  if (result.gameId === 'enemy-rush' && result.completedReason === 'player-death') return applyArcadeLifeLoss(next);
+  if ((result.gameId === 'enemy-rush' || result.gameId === 'fighter-rush') && result.completedReason === 'player-death') return applyArcadeLifeLoss(next);
   return next;
 }
 
