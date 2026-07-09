@@ -18,6 +18,7 @@ KIRO_BG = (128, 128, 255, 255)
 MATCH_SIZE = 40
 MATCH_THRESHOLD = 0.70
 MAX_REFERENCE_FRAME = 100
+REPLACE_ALL_BODY_COMPONENTS = True
 
 
 def strip_source_background(im: Image.Image) -> Image.Image:
@@ -262,6 +263,25 @@ def best_match(component: dict, candidates: list[dict]) -> tuple[dict | None, fl
     return best, best_score
 
 
+def nearest_size_match(component: dict, candidates: list[dict]) -> tuple[dict | None, float]:
+    best = None
+    best_score = 0.0
+    bw = component["w"]
+    bh = component["h"]
+    area = component["size"]
+    for cand in candidates:
+        ratio_penalty = min(bw / cand["w"], cand["w"] / bw, bh / cand["h"], cand["h"] / bh)
+        area_penalty = min(area / cand["area"], cand["area"] / area)
+        aspect_a = bw / max(1, bh)
+        aspect_b = cand["w"] / max(1, cand["h"])
+        aspect_penalty = min(aspect_a / aspect_b, aspect_b / aspect_a)
+        score = ratio_penalty * 0.45 + area_penalty * 0.25 + aspect_penalty * 0.30
+        if score > best_score:
+            best = cand
+            best_score = score
+    return best, best_score
+
+
 def clear_component(canvas: Image.Image, component: dict, padding: int = 1):
     px = canvas.load()
     width, height = canvas.size
@@ -301,9 +321,15 @@ def make_sheet():
     source_components = candidate_source_components(source_alpha)
     report = []
     matched = 0
+    forced = 0
     for comp in source_components:
         cand, score = best_match(comp, candidates)
-        if cand and score >= MATCH_THRESHOLD:
+        match_type = "shape"
+        if (not cand or score < MATCH_THRESHOLD) and REPLACE_ALL_BODY_COMPONENTS:
+            cand, score = nearest_size_match(comp, candidates)
+            match_type = "size"
+            forced += 1 if cand else 0
+        if cand and (score >= MATCH_THRESHOLD or REPLACE_ALL_BODY_COMPONENTS):
             clear_component(output, comp)
             stamp_match(output, comp, cand)
             matched += 1
@@ -313,6 +339,7 @@ def make_sheet():
                     "source_size": comp["size"],
                     "kiro_frame": cand["id"],
                     "score": round(score, 4),
+                    "matchType": match_type,
                 }
             )
 
@@ -335,6 +362,8 @@ def make_sheet():
                 "candidateFrames": len(candidates),
                 "sourceComponentsConsidered": len(source_components),
                 "matchedComponents": matched,
+                "forcedSizeMatches": forced,
+                "replaceAllBodyComponents": REPLACE_ALL_BODY_COMPONENTS,
                 "matchThreshold": MATCH_THRESHOLD,
                 "matches": report,
             },
@@ -342,6 +371,7 @@ def make_sheet():
         )
     )
     print(f"matched {matched}/{len(source_components)} body-sized source components")
+    print(f"forced size matches {forced}")
     print(transparent_path)
     print(preview_path)
 

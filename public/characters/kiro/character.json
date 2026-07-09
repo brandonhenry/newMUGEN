@@ -603,6 +603,31 @@
       "/characters/kiro/frames/frame-114.png",
       "/characters/kiro/frames/frame-115.png",
       "/characters/kiro/frames/frame-116.png"
+    ],
+    "cmd:O+3": [
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-000.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-001.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-002.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-003.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-004.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-005.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-006.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-007.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-008.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-009.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-010.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-011.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-012.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-013.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-014.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-015.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-016.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-017.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-018.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-019.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-020.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-021.png",
+      "/characters/kiro/generated-moves/uzumaki-ki-charge/frames/uzumaki-ki-charge-022.png"
     ]
   },
   "animationFps": 5,
@@ -648,7 +673,8 @@
     "cmd:SS+4": 11,
     "cmd:O+1": 6,
     "cmd:O+4": 11,
-    "cmd:FC+4": 9
+    "cmd:FC+4": 9,
+    "cmd:O+3": 12
   },
   "moveOverrides": {
     "cmd:f+1": {
@@ -1619,6 +1645,52 @@
       "forwardForce": 1.2,
       "forwardForceStartFrame": 6,
       "forwardForceEndFrame": 10
+    },
+    "cmd:O+3": {
+      "startupFrames": 34,
+      "activeFrames": 8,
+      "recoveryFrames": 34,
+      "damage": 18,
+      "blockDamage": 3,
+      "onBlockFrames": -12,
+      "onHitFrames": 28,
+      "onCounterHitFrames": 38,
+      "whiffRecoveryFrames": 44,
+      "range": 3.15,
+      "pushback": 1.15,
+      "blockPushback": 0.9,
+      "forwardForce": 1.55,
+      "forwardForceStartFrame": 18,
+      "forwardForceEndFrame": 45,
+      "label": "Uzumaki Chakra Tempest",
+      "description": "Spend ki to charge a swirling Uzumaki chakra storm from the new Kiro-style sheet.",
+      "hitLevel": "special",
+      "tracking": "medium",
+      "knockdown": true,
+      "usesKi": true,
+      "kiCost": 32,
+      "kiBurst": true,
+      "cancelable": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.05,
+          0.86
+        ],
+        "size": [
+          1.18,
+          1.0,
+          0.9
+        ]
+      },
+      "launchHeight": 1.25,
+      "launchVelocity": 4.8,
+      "juggleRefloatVelocity": 4.1,
+      "juggleGravityScale": 0.9,
+      "onComboHitFrames": 22,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 8,
+      "juggleRepeatPenaltyFrames": 12
     }
   },
   "spriteFrameEdits": {
