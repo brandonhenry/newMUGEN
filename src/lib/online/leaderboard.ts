@@ -1,6 +1,10 @@
 export type OnlinePlayerProfile = {
   playerId: string;
   displayName: string;
+  email?: string;
+  tournamentEmailReminders?: boolean;
+  emailUpdatedAt?: number;
+  tournamentEmailReminderOptedAt?: number;
 };
 
 export type LeaderboardEntry = {
@@ -36,16 +40,45 @@ export function readOnlineProfile(): OnlinePlayerProfile | null {
     const parsed = JSON.parse(window.localStorage.getItem(ONLINE_PROFILE_KEY) ?? 'null') as Partial<OnlinePlayerProfile> | null;
     const playerId = sanitizePlayerId(parsed?.playerId);
     const displayName = sanitizeDisplayName(parsed?.displayName);
-    return playerId && displayName ? { playerId, displayName } : null;
+    const email = sanitizeEmail(parsed?.email);
+    const tournamentEmailReminders = Boolean(email && parsed?.tournamentEmailReminders);
+    const emailUpdatedAt = sanitizeTimestamp(parsed?.emailUpdatedAt);
+    const tournamentEmailReminderOptedAt = sanitizeTimestamp(parsed?.tournamentEmailReminderOptedAt);
+    return playerId && displayName
+      ? {
+        playerId,
+        displayName,
+        ...(email ? { email } : {}),
+        ...(tournamentEmailReminders ? { tournamentEmailReminders: true } : {}),
+        ...(emailUpdatedAt ? { emailUpdatedAt } : {}),
+        ...(tournamentEmailReminderOptedAt ? { tournamentEmailReminderOptedAt } : {})
+      }
+      : null;
   } catch {
     return null;
   }
 }
 
 export function writeOnlineProfile(profile: Partial<OnlinePlayerProfile>): OnlinePlayerProfile {
-  const playerId = sanitizePlayerId(profile.playerId) || crypto.randomUUID();
-  const displayName = sanitizeDisplayName(profile.displayName) || 'PLAYER';
-  const next = { playerId, displayName };
+  const current = readOnlineProfile();
+  const playerId = sanitizePlayerId(profile.playerId) || current?.playerId || crypto.randomUUID();
+  const displayName = sanitizeDisplayName(profile.displayName) || current?.displayName || 'PLAYER';
+  const email = profile.email === undefined ? sanitizeEmail(current?.email) : sanitizeEmail(profile.email);
+  const tournamentEmailReminders = profile.tournamentEmailReminders === undefined
+    ? Boolean(email && current?.tournamentEmailReminders)
+    : Boolean(email && profile.tournamentEmailReminders);
+  const emailUpdatedAt = profile.emailUpdatedAt === undefined ? current?.emailUpdatedAt : profile.emailUpdatedAt;
+  const tournamentEmailReminderOptedAt = profile.tournamentEmailReminderOptedAt === undefined
+    ? current?.tournamentEmailReminderOptedAt
+    : profile.tournamentEmailReminderOptedAt;
+  const next = {
+    playerId,
+    displayName,
+    ...(email ? { email } : {}),
+    ...(tournamentEmailReminders ? { tournamentEmailReminders: true } : {}),
+    ...(email ? { emailUpdatedAt: sanitizeTimestamp(emailUpdatedAt) || Date.now() } : {}),
+    ...(tournamentEmailReminders ? { tournamentEmailReminderOptedAt: sanitizeTimestamp(tournamentEmailReminderOptedAt) || Date.now() } : {})
+  };
   window.localStorage.setItem(ONLINE_PROFILE_KEY, JSON.stringify(next));
   return next;
 }
@@ -58,6 +91,19 @@ export function sanitizeDisplayName(value: unknown) {
 export function sanitizePlayerId(value: unknown) {
   if (typeof value !== 'string') return '';
   return value.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 96);
+}
+
+export function sanitizeEmail(value: unknown) {
+  if (typeof value !== 'string') return '';
+  const email = value.trim().toLowerCase().replace(/\s+/g, '').slice(0, 254);
+  if (!/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/.test(email)) return '';
+  if (email.includes('..')) return '';
+  return email;
+}
+
+function sanitizeTimestamp(value: unknown) {
+  const timestamp = Math.round(Number(value));
+  return Number.isFinite(timestamp) && timestamp > 0 ? timestamp : 0;
 }
 
 export async function fetchLeaderboard(): Promise<LeaderboardResult> {

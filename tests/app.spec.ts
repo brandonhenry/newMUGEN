@@ -156,6 +156,15 @@ async function installMockGamepad(page: Page, idleFirst = false) {
   }, idleFirst);
 }
 
+async function installOnlineProfile(page: Page, profile: { playerId: string; displayName: string; email?: string; tournamentEmailReminders?: boolean }) {
+  await page.addInitScript((nextProfile) => {
+    window.localStorage.setItem('kore.online.profile', JSON.stringify(nextProfile));
+  }, profile);
+  await page.evaluate((nextProfile) => {
+    window.localStorage.setItem('kore.online.profile', JSON.stringify(nextProfile));
+  }, profile).catch(() => undefined);
+}
+
 async function setMockGamepadPressed(page: Page, pressed: boolean) {
   await page.evaluate((nextPressed) => {
     (window as unknown as { __koreMockGamepadPressed?: boolean }).__koreMockGamepadPressed = nextPressed;
@@ -1471,6 +1480,85 @@ test('enters a free online tournament lobby', async ({ page }) => {
   await page.getByRole('button', { name: 'Enter Online' }).click();
   await expect(page.locator('.tournament-lobby-screen')).toBeVisible({ timeout: 5000 });
   await expect(page.getByText(/entered|Choose a tournament|Tournament unavailable/i)).toBeVisible();
+});
+
+test('prompts for tournament reminder email after free online entry and saves it', async ({ page }) => {
+  let subscribeCount = 0;
+  await page.route('**/.netlify/functions/tournament-email-subscribe', async (route) => {
+    subscribeCount += 1;
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({ ok: true, email: 'player@example.com', emailSent: false })
+    });
+  });
+  await installOnlineProfile(page, { playerId: 'player-email-1', displayName: 'EMAIL1' });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await page.getByRole('button', { name: 'Enter Online' }).click();
+
+  const dialog = page.locator('.email-reminder-dialog');
+  await expect(page.locator('.tournament-lobby-screen')).toBeVisible({ timeout: 5000 });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText('@')).toBeVisible();
+  const confirm = page.getByRole('button', { name: 'Yes, remind me' });
+  await expect(confirm).toBeDisabled();
+  await page.getByRole('textbox', { name: 'Email local part' }).type('player@');
+  await expect(page.getByRole('textbox', { name: 'Email local part' })).toHaveValue('player');
+  await expect(page.getByRole('textbox', { name: 'Email domain' })).toBeFocused();
+  await expect(confirm).toBeDisabled();
+  await page.getByRole('textbox', { name: 'Email domain' }).fill('example.com');
+  await expect(confirm).toBeEnabled();
+  await confirm.click();
+
+  await expect(dialog).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.online.profile') ?? '{}'))).toMatchObject({
+    email: 'player@example.com',
+    tournamentEmailReminders: true
+  });
+  expect(subscribeCount).toBe(1);
+});
+
+test('skipping tournament reminder email does not save and existing email suppresses prompt', async ({ page }) => {
+  await installOnlineProfile(page, { playerId: 'player-email-2', displayName: 'EMAIL2' });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await page.getByRole('button', { name: 'Enter Online' }).click();
+  await expect(page.locator('.email-reminder-dialog')).toBeVisible({ timeout: 5000 });
+  await page.getByRole('button', { name: 'Skip' }).click();
+  await expect(page.locator('.email-reminder-dialog')).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem('kore.online.profile') ?? '{}').email ?? '')).toBe('');
+
+  await installOnlineProfile(page, {
+    playerId: 'player-email-3',
+    displayName: 'EMAIL3',
+    email: 'saved@example.com',
+    tournamentEmailReminders: true
+  });
+  await page.reload();
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await page.getByRole('button', { name: 'Enter Online' }).click();
+  await expect(page.locator('.tournament-lobby-screen')).toBeVisible({ timeout: 5000 });
+  await expect(page.locator('.email-reminder-dialog')).toHaveCount(0);
+});
+
+test('controller editing can enter a dot in tournament reminder email domain', async ({ page }) => {
+  await installMockGamepad(page);
+  await installOnlineProfile(page, { playerId: 'player-email-4', displayName: 'EMAIL4' });
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Tournament' }).click();
+  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await page.getByRole('button', { name: 'Enter Online' }).click();
+  await expect(page.locator('.email-reminder-dialog')).toBeVisible({ timeout: 5000 });
+
+  const domain = page.getByRole('textbox', { name: 'Email domain' });
+  await domain.focus();
+  await tapMockGamepadButton(page, 12);
+  await expect(domain).toHaveValue('.');
+  await expect(page.locator('.email-reminder-dialog')).toHaveClass(/is-controller-editing/);
 });
 
 test('moves player one forward and back with keyboard', async ({ page }) => {

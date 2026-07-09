@@ -24,6 +24,7 @@ import {
   readTournamentMatchRoom,
   upsertTournamentMatchRoom
 } from './_tournament-rooms.mjs';
+import { getTournamentEmailStore, notifyTournamentReady } from './_tournament-email.mjs';
 
 export const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 const TOURNAMENT_STORE_NAME = 'kore-paid-tournaments';
@@ -43,7 +44,8 @@ export function getPaidTournamentStores(event) {
     checking: getBlobStore(CHECKING_STORE_NAME, event),
     payouts: getBlobStore(PAYOUT_STORE_NAME, event),
     rooms: getBlobStore(ROOM_STORE_NAME, event),
-    ledger: getBlobStore(LEDGER_STORE_NAME, event)
+    ledger: getBlobStore(LEDGER_STORE_NAME, event),
+    email: getTournamentEmailStore(event)
   };
 }
 
@@ -256,6 +258,11 @@ export async function confirmPaidEntryByCheckingId(stores, checkingId, now = Dat
   }
   await writeEntry(stores, bracket.id, entry);
   await writePaidTournament(stores, bracket);
+  if (stores.email && bracket.status !== 'open') {
+    await notifyTournamentReady(stores.email, bracket, now).catch((error) => {
+      console.warn('Paid tournament ready email notification failed', error);
+    });
+  }
   return { bracket, entry, paid: true };
 }
 

@@ -1,6 +1,8 @@
 import type {
   TournamentEnterRequest,
   TournamentEnterResult,
+  TournamentEmailSubscribeRequest,
+  TournamentEmailSubscribeResult,
   TournamentBracket,
   TournamentClaimPrizeRequest,
   TournamentClaimPrizeResult,
@@ -45,6 +47,13 @@ export async function reportTournamentMatch(request: TournamentReportRequest): P
 
 export async function claimTournamentPrize(request: TournamentClaimPrizeRequest): Promise<TournamentClaimPrizeResult> {
   return postJson<TournamentClaimPrizeResult>('/.netlify/functions/tournament-claim-prize', request);
+}
+
+export async function subscribeTournamentEmail(request: TournamentEmailSubscribeRequest): Promise<TournamentEmailSubscribeResult> {
+  return postJson<TournamentEmailSubscribeResult>('/.netlify/functions/tournament-email-subscribe', request).catch((error) => {
+    if (isLocalFallbackAllowed()) return { ok: true, email: request.email, emailSent: false };
+    throw error;
+  });
 }
 
 export async function joinTournamentMatchRoom(request: TournamentRoomJoinRequest): Promise<TournamentStatusResult> {

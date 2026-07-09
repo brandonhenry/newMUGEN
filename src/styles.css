@@ -13039,6 +13039,15 @@ button {
   gap: 10px;
 }
 
+.tournament-email-settings-entry {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+.tournament-email-settings-card strong,
+.tournament-email-settings-entry input {
+  text-transform: none;
+}
+
 .arcade-name-entry input {
   min-width: 0;
   height: clamp(58px, 7vw, 82px);
@@ -13174,6 +13183,14 @@ button {
     0 0 48px rgba(45, 227, 255, 0.1) inset;
 }
 
+.email-reminder-dialog {
+  width: min(640px, 100%);
+}
+
+.email-reminder-dialog h2 {
+  font-size: clamp(1.7rem, 5.4vw, 3.45rem);
+}
+
 .username-gate-dialog header {
   display: grid;
   gap: 6px;
@@ -13226,6 +13243,29 @@ button {
   outline: none;
 }
 
+.email-reminder-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.35fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.email-reminder-fields strong {
+  display: grid;
+  place-items: center;
+  min-width: 38px;
+  height: clamp(58px, 8vw, 74px);
+  color: #ffe071;
+  font-size: clamp(1.6rem, 5vw, 2.7rem);
+  font-weight: 950;
+}
+
+.email-reminder-entry input {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: clamp(1.1rem, 3.2vw, 1.8rem);
+}
+
 .username-gate-entry input:focus {
   border-color: #2de3ff;
   box-shadow: 0 0 0 4px rgba(45, 227, 255, 0.14);
@@ -13248,6 +13288,15 @@ button {
 
 .username-gate-controller-editor .arcade-name-controller-slots span.is-active {
   color: #071018;
+}
+
+.email-reminder-controller-slots {
+  grid-template-columns: repeat(31, minmax(0, 1fr));
+}
+
+.email-reminder-controller-slots span.is-fixed {
+  color: #ffe071;
+  background: rgba(255, 216, 99, 0.14);
 }
 
 .username-gate-controller-editor small {

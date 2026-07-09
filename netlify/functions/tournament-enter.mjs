@@ -14,6 +14,7 @@ import {
   enterPaidTournament,
   getPaidTournamentStores
 } from './_paid-tournament-store.mjs';
+import { getTournamentEmailStore, notifyTournamentReady } from './_tournament-email.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
@@ -41,6 +42,11 @@ export async function handler(event) {
     const current = await resolveFreeTournamentForEntry(store, playerId, cleanId(body.tournamentId));
     const result = enterFreeTournament(current, { playerId, displayName, characterId }, Date.now());
     await writeTournament(store, result.bracket);
+    if (result.bracket.status !== 'open') {
+      await notifyTournamentReady(getTournamentEmailStore(event), result.bracket, Date.now()).catch((error) => {
+        console.warn('Tournament ready email notification failed', error);
+      });
+    }
     return json(200, result);
   } catch (error) {
     return errorJson(error);

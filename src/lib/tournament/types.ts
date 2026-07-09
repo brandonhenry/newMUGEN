@@ -196,6 +196,21 @@ export type TournamentClaimPrizeRequest = {
   bolt11: string;
 };
 
+export type TournamentEmailSubscribeRequest = {
+  playerId: string;
+  displayName: string;
+  email: string;
+  tournamentId: string;
+  entryId: string;
+  kind: TournamentKind;
+};
+
+export type TournamentEmailSubscribeResult = {
+  ok: boolean;
+  email: string;
+  emailSent: boolean;
+};
+
 export type TournamentRoomJoinRequest = {
   tournamentId: string;
   matchId: string;

@@ -75,7 +75,7 @@ import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonCombo
 import { ONLINE_PROTOCOL_VERSION, compactMatchSnapshot, decodeInputFrame, encodeInputFrame, hydrateMatchSnapshot } from './lib/online/codec';
 import { botCpuDifficulty, type OnlineBotOpponent } from './lib/online/bots';
 import { recordOnlineBotMatchOutcome } from './lib/online/botMemory';
-import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
+import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, sanitizeEmail, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
 import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
@@ -225,6 +225,7 @@ import {
   joinTournamentMatchRoom,
   reportTournamentMatch,
   simulateCpuTournamentMatches,
+  subscribeTournamentEmail,
   type TournamentBracket,
   type TournamentEntry,
   type TournamentMatch,
@@ -379,6 +380,11 @@ type UsernameGateRequest = {
   body?: string;
   onConfirm: (profile: OnlinePlayerProfile) => void;
   onBack: () => void;
+};
+type EmailReminderPromptRequest = {
+  profile: OnlinePlayerProfile;
+  status: TournamentStatusResult;
+  source: string;
 };
 
 type CharacterAnimationOverride = {
@@ -2899,6 +2905,7 @@ export default function App() {
   const [inputPromptMode, setInputPromptMode] = useState<InputPromptMode>('keyboardShortcut');
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [usernameGate, setUsernameGate] = useState<UsernameGateRequest | null>(null);
+  const [emailReminderPrompt, setEmailReminderPrompt] = useState<EmailReminderPromptRequest | null>(null);
   const [rankedProfile, setRankedProfile] = useState<RankedProfile | null>(null);
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
@@ -3002,6 +3009,49 @@ export default function App() {
     setUsernameGate(null);
     request.onConfirm(saved);
   }, [onlineProfile?.playerId, saveOnlineProfile, usernameGate]);
+
+  const maybePromptForTournamentEmail = useCallback((profile: OnlinePlayerProfile, status: TournamentStatusResult, source: string) => {
+    if (!status.entry || !['freeOnline', 'paidOnline'].includes(status.bracket.kind)) return;
+    if (sanitizeEmail(profile.email) && profile.tournamentEmailReminders) return;
+    setEmailReminderPrompt({ profile, status, source });
+  }, []);
+
+  const skipTournamentEmailReminder = useCallback(() => {
+    setEmailReminderPrompt(null);
+    captureAppAnalytics('navigation_clicked', { source: 'tournament_email_reminder', destination: 'skip' });
+  }, [captureAppAnalytics]);
+
+  const confirmTournamentEmailReminder = useCallback(async (email: string) => {
+    const request = emailReminderPrompt;
+    const clean = sanitizeEmail(email);
+    if (!request || !clean || !request.status.entry) return;
+    const now = Date.now();
+    const saved = saveOnlineProfile({
+      playerId: request.profile.playerId,
+      displayName: request.profile.displayName,
+      email: clean,
+      tournamentEmailReminders: true,
+      emailUpdatedAt: now,
+      tournamentEmailReminderOptedAt: now
+    }, request.source);
+    await subscribeTournamentEmail({
+      playerId: saved.playerId,
+      displayName: saved.displayName,
+      email: clean,
+      tournamentId: request.status.bracket.id,
+      entryId: request.status.entry.id,
+      kind: request.status.bracket.kind
+    }).catch((error) => {
+      console.warn('Tournament reminder email subscription failed', error);
+      captureAnalyticsError(error, { source: request.source, action: 'tournament_email_subscribe' });
+    });
+    setEmailReminderPrompt(null);
+    captureAppAnalytics('online_profile_saved', {
+      source: request.source,
+      player_id: saved.playerId,
+      tournament_email_reminders: true
+    });
+  }, [captureAppAnalytics, emailReminderPrompt, saveOnlineProfile]);
 
   const openMatchHistoryFromTraining = useCallback(() => {
     const openHistory = () => {
@@ -3268,6 +3318,7 @@ export default function App() {
           character_id: existingStatus.entry.characterId,
           reused_entry: true
         });
+        maybePromptForTournamentEmail(profile, existingStatus, 'paid_tournament_entry');
         return;
       }
       setTournamentStatusText('Creating Cash App checkout');
@@ -3291,6 +3342,7 @@ export default function App() {
           character_id: existingStatus.entry.characterId,
           reused_entry: true
         });
+        maybePromptForTournamentEmail(profile, existingStatus, 'free_tournament_entry');
         return;
       }
       clearSavedFreeOnlineTournamentId(profile.playerId);
@@ -3352,7 +3404,8 @@ export default function App() {
       character_id: characterId,
       payment_state: result.entry.paymentState
     });
-  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, onlineProfile, rankedProfile?.kp, rankedProfile?.kr, roster]);
+    maybePromptForTournamentEmail(profile, status, paid ? 'paid_tournament_entry' : 'free_tournament_entry');
+  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, maybePromptForTournamentEmail, onlineProfile, rankedProfile?.kp, rankedProfile?.kr, roster]);
 
   const claimPaidTournamentPrize = useCallback(async (bolt11: string) => {
     const current = onlineTournamentStatus;
@@ -5199,6 +5252,13 @@ export default function App() {
           onBack={closeUsernameGate}
         />
       )}
+      {emailReminderPrompt && (
+        <TournamentEmailReminderModal
+          profile={emailReminderPrompt.profile}
+          onConfirm={confirmTournamentEmailReminder}
+          onSkip={skipTournamentEmailReminder}
+        />
+      )}
       {starterGuideOpen && (
         <StarterGuideDialog
           settings={settings}
@@ -5218,6 +5278,10 @@ const SETTINGS_TAB_CYCLE_EVENT = 'kore:settings-tab-cycle';
 const MAIN_MENU_SCREENSAVER_IDLE_MS = 15000;
 const ARCADE_NAME_MAX_LENGTH = 12;
 const ARCADE_NAME_CONTROLLER_CHARACTERS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'.split('');
+const EMAIL_LOCAL_MAX_LENGTH = 64;
+const EMAIL_DOMAIN_MAX_LENGTH = 190;
+const EMAIL_LOCAL_CONTROLLER_CHARACTERS = ' .abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+'.split('');
+const EMAIL_DOMAIN_CONTROLLER_CHARACTERS = ' .abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'.split('');
 
 const keyboardMenuNavigation: Record<string, MenuNavigationDirection | 'confirm' | 'back'> = {
   KeyW: 'up',
@@ -7513,6 +7577,77 @@ function ArcadeNameCard({
   );
 }
 
+function TournamentEmailSettingsCard({
+  profile,
+  onProfileChange
+}: {
+  profile: OnlinePlayerProfile | null;
+  onProfileChange: (profile: Partial<OnlinePlayerProfile>) => void;
+}) {
+  const [draft, setDraft] = useState(sanitizeEmail(profile?.email));
+  const cleanEmail = sanitizeEmail(draft);
+
+  useEffect(() => {
+    setDraft(sanitizeEmail(profile?.email));
+  }, [profile?.email]);
+
+  const save = useCallback(() => {
+    if (!profile || !cleanEmail) return;
+    const now = Date.now();
+    onProfileChange({
+      playerId: profile.playerId,
+      displayName: profile.displayName,
+      email: cleanEmail,
+      tournamentEmailReminders: true,
+      emailUpdatedAt: now,
+      tournamentEmailReminderOptedAt: now
+    });
+  }, [cleanEmail, onProfileChange, profile]);
+
+  const clear = useCallback(() => {
+    if (!profile) return;
+    setDraft('');
+    onProfileChange({
+      playerId: profile.playerId,
+      displayName: profile.displayName,
+      email: '',
+      tournamentEmailReminders: false
+    });
+  }, [onProfileChange, profile]);
+
+  return (
+    <div className="arcade-name-card tournament-email-settings-card">
+      <div>
+        <span>Tournament Reminders</span>
+        <strong>{cleanEmail || 'NO EMAIL'}</strong>
+      </div>
+      <label className="arcade-name-entry tournament-email-settings-entry">
+        <input
+          value={draft}
+          placeholder="player@example.com"
+          aria-label="Tournament reminder email"
+          inputMode="email"
+          autoComplete="email"
+          onChange={(event) => setDraft(event.target.value.replace(/\s+/g, '').slice(0, 254))}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              save();
+            }
+          }}
+          disabled={!profile}
+        />
+        <button type="button" onClick={save} disabled={!profile || !cleanEmail}>
+          Save
+        </button>
+        <button type="button" className="secondary-button" onClick={clear} disabled={!profile || !sanitizeEmail(profile.email)}>
+          Clear
+        </button>
+      </label>
+    </div>
+  );
+}
+
 function UsernamePromptModal({
   profile,
   title = 'Player Name',
@@ -7738,6 +7873,314 @@ function UsernamePromptModal({
       </section>
     </div>
   );
+}
+
+function TournamentEmailReminderModal({
+  profile,
+  onConfirm,
+  onSkip
+}: {
+  profile: OnlinePlayerProfile;
+  onConfirm: (email: string) => Promise<void>;
+  onSkip: () => void;
+}) {
+  const savedEmail = sanitizeEmail(profile.email);
+  const [savedLocal = '', savedDomain = ''] = savedEmail.split('@');
+  const [localPart, setLocalPart] = useState(savedLocal);
+  const [domainPart, setDomainPart] = useState(savedDomain);
+  const [activeField, setActiveField] = useState<'local' | 'domain'>('local');
+  const [controllerEditing, setControllerEditing] = useState(false);
+  const [controllerCursor, setControllerCursor] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const localInputRef = useRef<HTMLInputElement>(null);
+  const domainInputRef = useRef<HTMLInputElement>(null);
+  const skipButtonRef = useRef<HTMLButtonElement>(null);
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+  const controllerEditingRef = useRef(false);
+  const controllerPadStateRef = useRef({
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    confirm: false,
+    back: false,
+    select: false,
+    help: false,
+    helpNext: false
+  });
+  const controllerLastMoveAtRef = useRef(0);
+  const email = sanitizeEmail(`${localPart}@${domainPart}`);
+  const canConfirm = Boolean(email) && !saving;
+
+  useEffect(() => {
+    controllerEditingRef.current = controllerEditing;
+  }, [controllerEditing]);
+
+  useEffect(() => {
+    localInputRef.current?.focus();
+  }, []);
+
+  const applyEmailDraft = useCallback((value: string, sourceField: 'local' | 'domain') => {
+    if (value.includes('@')) {
+      const [rawLocal, ...rawDomainParts] = value.split('@');
+      const rawDomain = rawDomainParts.join('');
+      const nextLocal = sanitizeEmailPart(rawLocal || localPart, EMAIL_LOCAL_MAX_LENGTH, true);
+      const nextDomain = sanitizeEmailPart(rawDomain || (sourceField === 'domain' ? value.replace(/^@+/, '') : domainPart), EMAIL_DOMAIN_MAX_LENGTH, false);
+      setLocalPart(nextLocal);
+      setDomainPart(nextDomain);
+      window.requestAnimationFrame(() => {
+        domainInputRef.current?.focus({ preventScroll: true });
+        const cursor = nextDomain.length;
+        domainInputRef.current?.setSelectionRange(cursor, cursor);
+        setActiveField('domain');
+        setControllerCursor(Math.max(0, Math.min(EMAIL_DOMAIN_MAX_LENGTH - 1, cursor)));
+      });
+      return;
+    }
+    if (sourceField === 'local') {
+      setLocalPart(sanitizeEmailPart(value, EMAIL_LOCAL_MAX_LENGTH, true));
+      return;
+    }
+    setDomainPart(sanitizeEmailPart(value, EMAIL_DOMAIN_MAX_LENGTH, false));
+  }, [domainPart, localPart]);
+
+  const updateLocalPart = useCallback((value: string) => {
+    applyEmailDraft(value, 'local');
+  }, [applyEmailDraft]);
+
+  const updateDomainPart = useCallback((value: string) => {
+    applyEmailDraft(value, 'domain');
+  }, [applyEmailDraft]);
+
+  const confirm = useCallback(async () => {
+    if (!email || saving) return;
+    setSaving(true);
+    try {
+      await onConfirm(email);
+    } finally {
+      setSaving(false);
+    }
+  }, [email, onConfirm, saving]);
+
+  const focusField = useCallback((field: 'local' | 'domain') => {
+    const input = field === 'local' ? localInputRef.current : domainInputRef.current;
+    setActiveField(field);
+    input?.focus({ preventScroll: true });
+    const max = field === 'local' ? EMAIL_LOCAL_MAX_LENGTH - 1 : EMAIL_DOMAIN_MAX_LENGTH - 1;
+    setControllerCursor((cursor) => Math.max(0, Math.min(max, cursor)));
+  }, []);
+
+  const moveControllerCursor = useCallback((direction: -1 | 1) => {
+    const max = activeField === 'local' ? Math.max(0, EMAIL_LOCAL_MAX_LENGTH - 1) : Math.max(0, EMAIL_DOMAIN_MAX_LENGTH - 1);
+    setControllerCursor((cursor) => {
+      const next = cursor + direction;
+      if (activeField === 'local' && next >= EMAIL_LOCAL_MAX_LENGTH) {
+        window.requestAnimationFrame(() => focusField('domain'));
+        return 0;
+      }
+      if (activeField === 'domain' && next < 0) {
+        window.requestAnimationFrame(() => focusField('local'));
+        return Math.max(0, localPart.length - 1);
+      }
+      const clamped = Math.max(0, Math.min(max, next));
+      const input = activeField === 'local' ? localInputRef.current : domainInputRef.current;
+      window.requestAnimationFrame(() => input?.setSelectionRange(clamped, clamped));
+      return clamped;
+    });
+  }, [activeField, focusField, localPart.length]);
+
+  const cycleControllerCharacter = useCallback((direction: -1 | 1) => {
+    const characters = activeField === 'local' ? EMAIL_LOCAL_CONTROLLER_CHARACTERS : EMAIL_DOMAIN_CONTROLLER_CHARACTERS;
+    const maxLength = activeField === 'local' ? EMAIL_LOCAL_MAX_LENGTH : EMAIL_DOMAIN_MAX_LENGTH;
+    const setter = activeField === 'local' ? updateLocalPart : updateDomainPart;
+    const currentValue = activeField === 'local' ? localPart : domainPart;
+    const cursor = Math.max(0, Math.min(maxLength - 1, controllerCursor));
+    const nextCharacters = currentValue.padEnd(cursor + 1, ' ').slice(0, maxLength).split('');
+    const currentCharacter = nextCharacters[cursor] ?? ' ';
+    const currentIndex = Math.max(0, characters.indexOf(currentCharacter));
+    nextCharacters[cursor] = characters[(currentIndex + direction + characters.length) % characters.length] ?? ' ';
+    setter(nextCharacters.join(''));
+    const input = activeField === 'local' ? localInputRef.current : domainInputRef.current;
+    window.requestAnimationFrame(() => input?.setSelectionRange(cursor, cursor));
+  }, [activeField, controllerCursor, domainPart, localPart, updateDomainPart, updateLocalPart]);
+
+  const moveModalFocus = useCallback((direction: -1 | 1) => {
+    const controls: Array<'local' | 'domain' | 'skip' | 'confirm'> = canConfirm ? ['local', 'domain', 'skip', 'confirm'] : ['local', 'domain', 'skip'];
+    const active = document.activeElement;
+    const currentControl =
+      active === localInputRef.current ? 'local' :
+      active === domainInputRef.current ? 'domain' :
+      active === skipButtonRef.current ? 'skip' :
+      active === confirmButtonRef.current ? 'confirm' :
+      activeField;
+    const index = Math.max(0, controls.indexOf(currentControl));
+    const next = controls[(index + direction + controls.length) % controls.length] ?? 'local';
+    if (next === 'local' || next === 'domain') focusField(next);
+    else {
+      setControllerEditing(false);
+      (next === 'skip' ? skipButtonRef.current : confirmButtonRef.current)?.focus({ preventScroll: true });
+    }
+  }, [activeField, canConfirm, focusField]);
+
+  useEffect(() => {
+    let frame = 0;
+    const repeatDelayMs = 170;
+    const resetPadState = () => {
+      controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, help: false, helpNext: false };
+    };
+    const tick = () => {
+      const pad = getPrimaryGamepad();
+      if (!pad) {
+        resetPadState();
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+      const now = performance.now();
+      const current = readMenuGamepadState(pad, false);
+      const previous = controllerPadStateRef.current;
+      const edge = {
+        up: current.up && !previous.up,
+        down: current.down && !previous.down,
+        left: current.left && !previous.left,
+        right: current.right && !previous.right,
+        confirm: current.confirm && !previous.confirm,
+        back: current.back && !previous.back
+      };
+      const repeatedMove = now - controllerLastMoveAtRef.current > repeatDelayMs;
+      const heldHorizontal = current.left ? 'left' : current.right ? 'right' : null;
+      const heldVertical = current.up ? 'up' : current.down ? 'down' : null;
+      const inputActive = document.activeElement === localInputRef.current || document.activeElement === domainInputRef.current;
+      if (edge.back) {
+        onSkip();
+      } else if (inputActive) {
+        if (!controllerEditingRef.current) setControllerEditing(true);
+        if (edge.confirm) {
+          void confirm();
+        } else if (edge.left || edge.right || (heldHorizontal && repeatedMove)) {
+          moveControllerCursor(edge.left || heldHorizontal === 'left' ? -1 : 1);
+          controllerLastMoveAtRef.current = now;
+        } else if (edge.up || edge.down || (heldVertical && repeatedMove)) {
+          cycleControllerCharacter(edge.up || heldVertical === 'up' ? 1 : -1);
+          controllerLastMoveAtRef.current = now;
+        }
+      } else if (edge.confirm && document.activeElement === skipButtonRef.current) {
+        onSkip();
+      } else if (edge.confirm && document.activeElement === confirmButtonRef.current) {
+        void confirm();
+      } else if (edge.up || edge.down || edge.left || edge.right || (heldHorizontal && repeatedMove) || (heldVertical && repeatedMove)) {
+        const direction = edge.up || edge.left || heldHorizontal === 'left' || heldVertical === 'up' ? -1 : 1;
+        moveModalFocus(direction);
+        controllerLastMoveAtRef.current = now;
+      }
+      controllerPadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [confirm, cycleControllerCharacter, moveControllerCursor, moveModalFocus, onSkip]);
+
+  const localCharacters = Array.from({ length: Math.max(6, Math.min(EMAIL_LOCAL_MAX_LENGTH, 12)) }, (_, index) => localPart[index] ?? ' ');
+  const domainCharacters = Array.from({ length: Math.max(10, Math.min(EMAIL_DOMAIN_MAX_LENGTH, 18)) }, (_, index) => domainPart[index] ?? ' ');
+  const cursorIndex = activeField === 'domain' ? controllerCursor + localCharacters.length + 1 : controllerCursor;
+
+  return (
+    <div className="username-gate-overlay" role="presentation">
+      <section className={`username-gate-dialog email-reminder-dialog ${controllerEditing ? 'is-controller-editing' : ''}`} role="dialog" aria-modal="true" aria-labelledby="email-reminder-title">
+        <header>
+          <span>Online Profile</span>
+          <h2 id="email-reminder-title">Do you want to be reminded for tournament entries?</h2>
+          <p>We will email you when your KORE tournament entry or bracket needs attention.</p>
+        </header>
+        <label className="username-gate-entry email-reminder-entry">
+          <span>Email</span>
+          <div className="email-reminder-fields">
+            <input
+              ref={localInputRef}
+              value={localPart}
+              maxLength={EMAIL_LOCAL_MAX_LENGTH}
+              placeholder="player"
+              aria-label="Email local part"
+              inputMode="email"
+              autoComplete="email"
+              data-kore-suppress-fight-gamepad="true"
+              onChange={(event) => updateLocalPart(event.target.value)}
+              onFocus={() => {
+                setActiveField('local');
+                if (getPrimaryGamepad()) setControllerEditing(true);
+              }}
+              onSelect={(event) => setControllerCursor(Math.max(0, Math.min(EMAIL_LOCAL_MAX_LENGTH - 1, event.currentTarget.selectionStart ?? 0)))}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+                  void confirm();
+                }
+                if (event.key === '@') {
+                  event.preventDefault();
+                  focusField('domain');
+                }
+                if (event.key === 'Escape') {
+                  event.preventDefault();
+                  onSkip();
+                }
+              }}
+            />
+            <strong aria-hidden="true">@</strong>
+            <input
+              ref={domainInputRef}
+              value={domainPart}
+              maxLength={EMAIL_DOMAIN_MAX_LENGTH}
+              placeholder="example.com"
+              aria-label="Email domain"
+              inputMode="email"
+              autoComplete="email"
+              data-kore-suppress-fight-gamepad="true"
+              onChange={(event) => updateDomainPart(event.target.value)}
+              onFocus={() => {
+                setActiveField('domain');
+                if (getPrimaryGamepad()) setControllerEditing(true);
+              }}
+              onSelect={(event) => setControllerCursor(Math.max(0, Math.min(EMAIL_DOMAIN_MAX_LENGTH - 1, event.currentTarget.selectionStart ?? 0)))}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+                  void confirm();
+                }
+                if (event.key === 'Escape') {
+                  event.preventDefault();
+                  onSkip();
+                }
+              }}
+            />
+          </div>
+        </label>
+        {controllerEditing && (
+          <div className="username-gate-controller-editor arcade-name-controller-editor" aria-hidden="true">
+            <div className="arcade-name-controller-slots email-reminder-controller-slots">
+              {[...localCharacters, '@', ...domainCharacters].map((character, index) => (
+                <span key={index} className={index === cursorIndex ? 'is-active' : character === '@' ? 'is-fixed' : ''}>
+                  {character === ' ' ? '\u00a0' : character}
+                </span>
+              ))}
+            </div>
+            <small>D-pad edit / A confirm / B cancel</small>
+          </div>
+        )}
+        <div className="username-gate-actions">
+          <button ref={skipButtonRef} type="button" className="secondary-button" onClick={onSkip}>
+            Skip
+          </button>
+          <button ref={confirmButtonRef} type="button" className="primary-button" onClick={() => void confirm()} disabled={!canConfirm}>
+            {saving ? 'Saving' : 'Yes, remind me'}
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function sanitizeEmailPart(value: string, maxLength: number, allowPlus: boolean) {
+  const pattern = allowPlus ? /[^a-zA-Z0-9._+-]/g : /[^a-zA-Z0-9.-]/g;
+  return value.replace(/\s+/g, '').replace(pattern, '').slice(0, maxLength);
 }
 
 function TrainingSelect({
@@ -12550,6 +12993,10 @@ function SettingsScreen({
               <span className="setting-readout">{onlineProfile?.displayName ?? 'Not set'}</span>
             </SettingRow>
             <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} />
+            <SettingRow label="Reminder Email" value={sanitizeEmail(onlineProfile?.email) || 'Not set'}>
+              <span className="setting-readout">{sanitizeEmail(onlineProfile?.email) || 'Not set'}</span>
+            </SettingRow>
+            <TournamentEmailSettingsCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} />
           </SettingsSection>
           <SettingsSection index={2} title="Training" active={activeSectionIndex === 2}>
             <SettingToggle label="Training Infinite Health" checked={settings.game.trainingInfiniteHealth} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, trainingInfiniteHealth: checked } }))} />
