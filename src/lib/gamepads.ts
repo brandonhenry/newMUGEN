@@ -13,6 +13,7 @@ export type MenuGamepadState = {
   next: boolean;
   help: boolean;
   helpNext: boolean;
+  friendList: boolean;
 };
 
 export type PageGamepadState = {
@@ -36,6 +37,7 @@ export const MENU_PREVIOUS_GAMEPAD_BUTTON = 4;
 export const MENU_NEXT_GAMEPAD_BUTTON = 5;
 export const MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON = 6;
 export const MENU_NEXT_GAMEPAD_ALIAS_BUTTON = 7;
+export const MENU_FRIEND_LIST_GAMEPAD_BUTTON = MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON;
 export const MENU_PREVIOUS_MODE_GAMEPAD_BUTTON = MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON;
 export const MENU_NEXT_MODE_GAMEPAD_BUTTON = MENU_NEXT_GAMEPAD_ALIAS_BUTTON;
 export const MENU_HELP_GAMEPAD_BUTTON = MENU_PREVIOUS_GAMEPAD_BUTTON;
@@ -110,7 +112,7 @@ export function describeGamepadSelection(pad: Gamepad, deadzone = FIGHT_GAMEPAD_
 export function readMenuGamepadState(pad: Gamepad, selectActsAsBack: boolean): MenuGamepadState {
   const directions = readGamepadDirections(pad, MENU_GAMEPAD_DEADZONE);
   const selectPressed = isGamepadButtonPressed(pad, MENU_GAMEPAD_SELECT_BUTTON);
-  const previousPressed = isGamepadButtonPressed(pad, MENU_PREVIOUS_GAMEPAD_BUTTON) || isGamepadButtonPressed(pad, MENU_PREVIOUS_GAMEPAD_ALIAS_BUTTON);
+  const previousPressed = isGamepadButtonPressed(pad, MENU_PREVIOUS_GAMEPAD_BUTTON);
   const nextPressed = isGamepadButtonPressed(pad, MENU_NEXT_GAMEPAD_BUTTON) || isGamepadButtonPressed(pad, MENU_NEXT_GAMEPAD_ALIAS_BUTTON);
   return {
     up: directions.up,
@@ -123,7 +125,8 @@ export function readMenuGamepadState(pad: Gamepad, selectActsAsBack: boolean): M
     previous: previousPressed,
     next: nextPressed,
     help: previousPressed,
-    helpNext: nextPressed
+    helpNext: nextPressed,
+    friendList: isGamepadButtonPressed(pad, MENU_FRIEND_LIST_GAMEPAD_BUTTON)
   };
 }
 

@@ -1295,6 +1295,39 @@ button {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
+.menu-friend-list-hint {
+  position: fixed;
+  left: calc(env(safe-area-inset-left, 0px) + clamp(14px, 3vw, 34px));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 2.4vh, 28px));
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 7px 11px;
+  color: rgba(247, 247, 242, 0.84);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  background: rgba(2, 6, 21, 0.58);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 12px 30px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(8px);
+}
+
+.menu-friend-list-hint span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  min-height: 24px;
+  padding: 0 7px;
+  border-radius: 6px;
+  color: #ffffff;
+  background: rgba(46, 230, 255, 0.18);
+  box-shadow: 0 0 0 1px rgba(46, 230, 255, 0.28) inset;
+}
+
 .menu-screen,
 .select-screen,
 .stage-screen,
@@ -4027,6 +4060,7 @@ button {
   align-items: center;
   gap: clamp(12px, 2vw, 28px);
   width: min(100%, 1220px);
+  min-width: 0;
   margin: 0 auto;
 }
 
@@ -4034,7 +4068,9 @@ button {
   display: grid;
   justify-items: center;
   gap: 8px;
+  min-width: 0;
   min-height: clamp(260px, 42vh, 430px);
+  overflow: hidden;
   border-radius: 8px;
   padding: clamp(16px, 2vw, 26px);
   background:
@@ -4070,13 +4106,19 @@ button {
 }
 
 .tournament-intro-card strong {
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
   color: #f7d45a;
-  font-size: clamp(30px, 4.5vw, 64px);
+  font-size: clamp(26px, 3.8vw, 52px);
   font-weight: 950;
   line-height: 0.92;
   text-align: center;
   text-shadow: 0 4px 0 rgba(0, 0, 0, 0.58);
   text-wrap: balance;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .tournament-intro-lines {
@@ -4108,6 +4150,147 @@ button {
 
 .tournament-intro-bracket {
   align-self: end;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 900px), (max-height: 860px) {
+  .tournament-bracket-intro {
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    gap: clamp(8px, 1.8vh, 14px);
+    padding: clamp(10px, 2vw, 18px);
+  }
+
+  .tournament-bracket-intro .fight-versus-stage strong {
+    max-width: 100%;
+    font-size: clamp(24px, 5vw, 44px);
+    letter-spacing: 0.04em;
+  }
+
+  .tournament-intro-grid {
+    align-self: start;
+    grid-template-columns: minmax(0, 1fr) clamp(50px, 8vw, 82px) minmax(0, 1fr);
+    gap: clamp(6px, 1.5vw, 12px);
+  }
+
+  .tournament-intro-card {
+    gap: 5px;
+    min-height: clamp(128px, 24vh, 220px);
+    padding: clamp(8px, 1.4vw, 12px);
+  }
+
+  .tournament-intro-card img {
+    width: clamp(62px, 12vw, 130px);
+    height: clamp(76px, 18vh, 160px);
+  }
+
+  .tournament-intro-card span,
+  .tournament-intro-card small {
+    font-size: clamp(9px, 1.5vw, 11px);
+    letter-spacing: 0.1em;
+  }
+
+  .tournament-intro-card strong {
+    font-size: clamp(18px, 3.6vw, 34px);
+  }
+
+  .tournament-intro-lines {
+    gap: 7px;
+  }
+
+  .tournament-intro-lines span {
+    height: clamp(30px, 8vh, 74px);
+  }
+
+  .tournament-intro-lines strong {
+    width: clamp(50px, 8vw, 76px);
+    font-size: clamp(22px, 4vw, 38px);
+  }
+
+  .tournament-intro-bracket .tournament-bracket-board.is-compact {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(var(--tournament-rounds, 3), minmax(116px, 1fr));
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  .tournament-intro-bracket .tournament-match-card {
+    min-height: 78px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 860px) {
+  .tournament-bracket-intro {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .tournament-intro-grid {
+    align-self: center;
+  }
+
+  .tournament-intro-bracket {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .tournament-bracket-intro .fight-versus-stage strong {
+    font-size: clamp(24px, 8vw, 32px);
+    letter-spacing: 0.02em;
+  }
+
+  .tournament-bracket-intro .fight-versus-stage span,
+  .tournament-bracket-intro .fight-versus-stage small {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  .tournament-intro-grid {
+    grid-template-columns: minmax(0, 1fr) 46px minmax(0, 1fr);
+  }
+
+  .tournament-intro-card {
+    min-height: 118px;
+  }
+
+  .tournament-intro-card img {
+    width: clamp(54px, 18vw, 74px);
+    height: clamp(62px, 18vh, 88px);
+  }
+
+  .tournament-intro-card strong {
+    font-size: clamp(17px, 6vw, 23px);
+  }
+
+  .tournament-intro-card small {
+    display: none;
+  }
+
+  .tournament-intro-lines span {
+    display: none;
+  }
+
+  .tournament-intro-lines strong {
+    width: 44px;
+    font-size: 20px;
+  }
+
+  .tournament-intro-bracket .tournament-bracket-board.is-compact {
+    grid-template-columns: repeat(var(--tournament-rounds, 3), minmax(104px, 1fr));
+    gap: 7px;
+  }
+
+  .tournament-intro-bracket .tournament-match-card {
+    min-height: 70px;
+    padding: 6px;
+  }
+
+  .tournament-intro-bracket .tournament-entrant-row {
+    min-height: 25px;
+    padding: 3px 6px;
+  }
 }
 
 @keyframes tournament-preview-pop {
@@ -13787,6 +13970,231 @@ button {
   box-shadow: inset 4px 0 0 #2de3ff;
 }
 
+.friend-list-screen {
+  align-items: start;
+}
+
+.friend-list-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.7fr) minmax(360px, 1.3fr);
+  gap: clamp(14px, 2vw, 24px);
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.friend-list-roster,
+.friend-detail-board {
+  align-self: start;
+}
+
+.friend-list-card {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 14px;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.74);
+  background: rgba(12, 18, 30, 0.78);
+  font: inherit;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.friend-list-card:hover,
+.friend-list-card:focus-visible,
+.friend-list-card.is-selected {
+  color: #fff8d2;
+  background:
+    linear-gradient(90deg, rgba(45, 227, 255, 0.24), rgba(255, 224, 113, 0.1)),
+    rgba(17, 26, 42, 0.9);
+  outline: none;
+  box-shadow: inset 4px 0 0 #2de3ff;
+}
+
+.friend-presence-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+}
+
+.friend-presence-dot.is-online {
+  background: #6cff9f;
+  box-shadow: 0 0 0 3px rgba(108, 255, 159, 0.14), 0 0 16px rgba(108, 255, 159, 0.36);
+}
+
+.friend-list-card span:not(.friend-presence-dot) {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.friend-list-card strong,
+.friend-detail-header h2 {
+  overflow: hidden;
+  color: #f7f7f2;
+  font-weight: 950;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friend-list-card small,
+.friend-list-card em,
+.friend-detail-header p {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.friend-detail-board {
+  display: grid;
+  gap: clamp(14px, 2vw, 20px);
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.friend-detail-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.friend-detail-header h2 {
+  margin: 6px 0 0;
+  font-size: clamp(2rem, 5vw, 4.6rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.friend-presence-pill {
+  display: inline-flex;
+  width: fit-content;
+  padding: 5px 9px;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.friend-presence-pill.is-online {
+  color: #071018;
+  background: #6cff9f;
+}
+
+.friend-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.friend-stat-grid span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.friend-stat-grid strong {
+  overflow: hidden;
+  color: #ffe071;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-weight: 950;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friend-stat-grid small,
+.friend-chat-error {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.friend-invite-list {
+  display: grid;
+  gap: 8px;
+}
+
+.friend-invite-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  background: rgba(45, 227, 255, 0.08);
+  box-shadow: inset 4px 0 0 #2de3ff;
+}
+
+.friend-list-screen .online-training-chat {
+  position: static;
+  width: 100%;
+  max-width: none;
+}
+
+.friend-list-screen .online-training-chat-log {
+  max-height: 220px;
+}
+
+.friend-notification-stack {
+  position: fixed;
+  z-index: 120;
+  right: calc(env(safe-area-inset-right, 0px) + 18px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  display: grid;
+  gap: 10px;
+  width: min(420px, calc(100vw - 36px));
+  pointer-events: none;
+}
+
+.friend-notification {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  color: #f7f7f2;
+  background:
+    linear-gradient(120deg, rgba(45, 227, 255, 0.16), transparent 42%),
+    rgba(7, 11, 18, 0.94);
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  pointer-events: auto;
+}
+
+.friend-notification strong,
+.friend-notification span {
+  display: block;
+}
+
+.friend-notification strong {
+  font-size: 0.95rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.friend-notification span {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.friend-notification-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .match-history-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -13942,6 +14350,27 @@ button {
   .match-history-opponent img {
     width: 50px;
     height: 50px;
+  }
+
+  .friend-list-layout,
+  .friend-detail-header,
+  .friend-invite-row,
+  .friend-notification {
+    grid-template-columns: 1fr;
+  }
+
+  .friend-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .friend-notification-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .menu-friend-list-hint {
+    left: calc(env(safe-area-inset-left, 0px) + 10px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
   }
 }
 

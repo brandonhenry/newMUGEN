@@ -634,6 +634,21 @@ test('starter guide opens from gamepad L1 on main menu', async ({ page }) => {
   await expect(page.getByTestId('starter-guide-dialog')).toBeVisible({ timeout: 2_000 });
 });
 
+test('main menu advertises and opens friend list from gamepad L2', async ({ page }) => {
+  await installMockGamepad(page);
+  await forceMenuLagHealthy(page);
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.online.profile', JSON.stringify({ playerId: 'friend-list-player', displayName: 'FRIEND' }));
+  });
+  await startFromSplash(page);
+
+  await expect(page.locator('.menu-friend-list-hint')).toContainText('Friend List');
+  await tapMockGamepadButton(page, 6);
+
+  await expect(page.getByRole('heading', { name: 'Friend List' })).toBeVisible({ timeout: 2_000 });
+  await expect(page.getByText('No friends yet')).toBeVisible();
+});
+
 test('starter guide pages with gamepad L1 and R1 while open', async ({ page }) => {
   await installMockGamepad(page);
   await forceMenuLagHealthy(page);

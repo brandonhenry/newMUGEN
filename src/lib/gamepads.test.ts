@@ -120,7 +120,7 @@ describe('gamepad helpers', () => {
     const pad = makeGamepad({ buttons: { 6: true, 7: true } });
 
     expect(readPageGamepadState(pad)).toEqual({ previous: true, next: true });
-    expect(readMenuGamepadState(pad, false)).toMatchObject({ previous: true, next: true });
+    expect(readMenuGamepadState(pad, false)).toMatchObject({ previous: false, next: true, friendList: true });
   });
 
   it('can reserve triggers for menu mode changes instead of page navigation', () => {

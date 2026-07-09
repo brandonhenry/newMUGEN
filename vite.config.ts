@@ -271,12 +271,48 @@ type DevPostHogEndpointPayload = {
   endpointToken?: string;
 };
 
+type DevFriendPresence = {
+  playerId: string;
+  displayName: string;
+  peerId?: string;
+  characterId?: string;
+  lastSeenAt: number;
+  online: boolean;
+};
+
+type DevFriendInvite = {
+  inviteId: string;
+  fromPlayerId: string;
+  fromDisplayName: string;
+  toPlayerId: string;
+  roomId: string;
+  roomName: string;
+  password: string;
+  status: 'pending' | 'accepted' | 'declined' | 'expired';
+  createdAt: number;
+  respondedAt?: number;
+};
+
+type DevFriendChatMessage = {
+  id: string;
+  fromPlayerId: string;
+  fromDisplayName: string;
+  toPlayerId: string;
+  text: string;
+  sentAt: number;
+};
+
 const DEV_ONLINE_ROOM_TTL_MS = 12_000;
 const DEV_LEADERBOARD_POINTS_PER_WIN = 100;
+const DEV_FRIEND_PRESENCE_ONLINE_MS = 45_000;
+const DEV_FRIEND_NOTIFICATION_TTL_MS = 60_000;
 
 function koreDevManifestWriter() {
   const onlineRooms = new Map<string, DevOnlineRoom>();
   const leaderboard = new Map<string, DevLeaderboardEntry>();
+  const friendPresence = new Map<string, DevFriendPresence>();
+  const friendInvites = new Map<string, DevFriendInvite>();
+  const friendChat: DevFriendChatMessage[] = [];
 
   return {
     name: 'kore-dev-manifest-writer',
@@ -324,6 +360,90 @@ function koreDevManifestWriter() {
         try {
           const payload = JSON.parse(await readRequestBody(request)) as DevLeaderboardSubmitPayload;
           sendJson(response, 200, devSubmitLeaderboardResult(leaderboard, payload));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/friend-presence-heartbeat', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devFriendPresenceHeartbeat(friendPresence, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/friend-presence-list', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devFriendPresenceList(friendPresence, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/friend-invite-send', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devFriendInviteSend(friendInvites, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/friend-inbox', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devFriendInbox(friendInvites, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/friend-invite-respond', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devFriendInviteRespond(friendInvites, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/friend-chat-send', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devFriendChatSend(friendChat, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/friend-chat-list', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devFriendChatList(friendChat, JSON.parse(await readRequestBody(request))));
         } catch (error) {
           sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
         }
@@ -2265,6 +2385,177 @@ function pruneDevOnlineRooms(rooms: Map<string, DevOnlineRoom>) {
 
 function safeOnlineString(value: unknown) {
   return typeof value === 'string' ? value.slice(0, 160) : '';
+}
+
+function devFriendPresenceHeartbeat(presence: Map<string, DevFriendPresence>, payload: Record<string, unknown>) {
+  const playerId = safeFriendPlayerId(payload.playerId);
+  const displayName = safeFriendDisplayName(payload.displayName);
+  const peerId = safeFriendToken(payload.peerId);
+  const characterId = safeFriendToken(payload.characterId, 96);
+  if (!playerId || !displayName || !peerId) throw new Error('Missing presence fields');
+  const now = Date.now();
+  const next = devNormalizeFriendPresence({ playerId, displayName, peerId, characterId, lastSeenAt: now }, now);
+  presence.set(playerId, next);
+  return next;
+}
+
+function devFriendPresenceList(presence: Map<string, DevFriendPresence>, payload: Record<string, unknown>) {
+  const now = Date.now();
+  const friendIds = Array.isArray(payload.friendIds) ? payload.friendIds.map(safeFriendPlayerId).filter(Boolean) : [];
+  return {
+    friends: friendIds
+      .map((id) => presence.get(id))
+      .filter((item): item is DevFriendPresence => Boolean(item))
+      .map((item) => devNormalizeFriendPresence(item, now))
+  };
+}
+
+function devFriendInviteSend(invites: Map<string, DevFriendInvite>, payload: Record<string, unknown>) {
+  const invite = devNormalizeFriendInvite({
+    inviteId: randomUUID(),
+    fromPlayerId: safeFriendPlayerId(payload.fromPlayerId),
+    fromDisplayName: safeFriendDisplayName(payload.fromDisplayName),
+    toPlayerId: safeFriendPlayerId(payload.toPlayerId),
+    roomId: safeFriendToken(payload.roomId),
+    roomName: safeFriendRoomName(payload.roomName),
+    password: safeFriendPassword(payload.password),
+    status: 'pending',
+    createdAt: Date.now()
+  });
+  if (!invite.fromPlayerId || !invite.fromDisplayName || !invite.toPlayerId || !invite.roomId || !invite.password) throw new Error('Missing invite fields');
+  invites.set(invite.inviteId, invite);
+  return invite;
+}
+
+function devFriendInbox(invites: Map<string, DevFriendInvite>, payload: Record<string, unknown>) {
+  const playerId = safeFriendPlayerId(payload.playerId);
+  if (!playerId) throw new Error('Missing player id');
+  const now = Date.now();
+  const normalized = [...invites.values()].map((invite) => {
+    const next = devNormalizeFriendInvite(invite, now);
+    invites.set(next.inviteId, next);
+    return next;
+  });
+  return {
+    invites: normalized
+      .filter((invite) => invite.toPlayerId === playerId && invite.status === 'pending')
+      .sort((a, b) => b.createdAt - a.createdAt)
+  };
+}
+
+function devFriendInviteRespond(invites: Map<string, DevFriendInvite>, payload: Record<string, unknown>) {
+  const playerId = safeFriendPlayerId(payload.playerId);
+  const inviteId = safeFriendToken(payload.inviteId);
+  const response = payload.response === 'accepted' ? 'accepted' : payload.response === 'declined' ? 'declined' : '';
+  if (!playerId || !inviteId || !response) throw new Error('Missing invite response fields');
+  const invite = invites.get(inviteId);
+  if (!invite || invite.toPlayerId !== playerId) throw new Error('Invite not found');
+  const updated = devNormalizeFriendInvite({ ...invite, status: response, respondedAt: Date.now() });
+  invites.set(inviteId, updated);
+  return updated;
+}
+
+function devFriendChatSend(messages: DevFriendChatMessage[], payload: Record<string, unknown>) {
+  const message = devNormalizeFriendChatMessage({
+    id: randomUUID(),
+    fromPlayerId: safeFriendPlayerId(payload.fromPlayerId),
+    fromDisplayName: safeFriendDisplayName(payload.fromDisplayName),
+    toPlayerId: safeFriendPlayerId(payload.toPlayerId),
+    text: safeFriendChatText(payload.text),
+    sentAt: Date.now()
+  });
+  if (!message) throw new Error('Missing chat fields');
+  messages.push(message);
+  while (messages.length > 300) messages.shift();
+  return message;
+}
+
+function devFriendChatList(messages: DevFriendChatMessage[], payload: Record<string, unknown>) {
+  const playerId = safeFriendPlayerId(payload.playerId);
+  const friendId = safeFriendPlayerId(payload.friendId);
+  const since = Math.max(0, Math.round(Number(payload.since) || 0));
+  if (!playerId || !friendId) throw new Error('Missing chat list fields');
+  return {
+    messages: messages
+      .filter((message) => (
+        ((message.fromPlayerId === playerId && message.toPlayerId === friendId) ||
+          (message.fromPlayerId === friendId && message.toPlayerId === playerId)) &&
+        message.sentAt > since
+      ))
+      .sort((a, b) => a.sentAt - b.sentAt)
+      .slice(-100)
+  };
+}
+
+function devNormalizeFriendPresence(value: Partial<DevFriendPresence>, now = Date.now()): DevFriendPresence {
+  const lastSeenAt = Math.max(0, Math.round(Number(value.lastSeenAt) || 0));
+  return {
+    playerId: safeFriendPlayerId(value.playerId),
+    displayName: safeFriendDisplayName(value.displayName) || 'PLAYER',
+    peerId: safeFriendToken(value.peerId) || undefined,
+    characterId: safeFriendToken(value.characterId, 96) || undefined,
+    lastSeenAt,
+    online: now - lastSeenAt <= DEV_FRIEND_PRESENCE_ONLINE_MS
+  };
+}
+
+function devNormalizeFriendInvite(value: Partial<DevFriendInvite>, now = Date.now()): DevFriendInvite {
+  const createdAt = Math.max(0, Math.round(Number(value.createdAt) || 0));
+  const expired = now - createdAt > DEV_FRIEND_NOTIFICATION_TTL_MS;
+  return {
+    inviteId: safeFriendToken(value.inviteId),
+    fromPlayerId: safeFriendPlayerId(value.fromPlayerId),
+    fromDisplayName: safeFriendDisplayName(value.fromDisplayName) || 'FRIEND',
+    toPlayerId: safeFriendPlayerId(value.toPlayerId),
+    roomId: safeFriendToken(value.roomId),
+    roomName: safeFriendRoomName(value.roomName),
+    password: safeFriendPassword(value.password),
+    status: value.status === 'accepted' || value.status === 'declined' ? value.status : expired ? 'expired' : 'pending',
+    createdAt,
+    respondedAt: value.respondedAt ? Math.max(0, Math.round(Number(value.respondedAt) || 0)) : undefined
+  };
+}
+
+function devNormalizeFriendChatMessage(value: Partial<DevFriendChatMessage>): DevFriendChatMessage | null {
+  const id = safeFriendToken(value.id);
+  const fromPlayerId = safeFriendPlayerId(value.fromPlayerId);
+  const toPlayerId = safeFriendPlayerId(value.toPlayerId);
+  const text = safeFriendChatText(value.text);
+  if (!id || !fromPlayerId || !toPlayerId || !text) return null;
+  return {
+    id,
+    fromPlayerId,
+    fromDisplayName: safeFriendDisplayName(value.fromDisplayName) || 'FRIEND',
+    toPlayerId,
+    text,
+    sentAt: Math.max(0, Math.round(Number(value.sentAt) || 0))
+  };
+}
+
+function safeFriendPlayerId(value: unknown) {
+  return typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 96) : '';
+}
+
+function safeFriendToken(value: unknown, maxLength = 120) {
+  return typeof value === 'string' ? value.replace(/[^a-zA-Z0-9:_-]/g, '').slice(0, maxLength) : '';
+}
+
+function safeFriendDisplayName(value: unknown) {
+  return typeof value === 'string' ? value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 12) : '';
+}
+
+function safeFriendRoomName(value: unknown) {
+  return typeof value === 'string'
+    ? value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 18) || 'PRIVATE ROOM'
+    : 'PRIVATE ROOM';
+}
+
+function safeFriendPassword(value: unknown) {
+  return typeof value === 'string' ? value.toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 16) : '';
+}
+
+function safeFriendChatText(value: unknown) {
+  return typeof value === 'string' ? value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160) : '';
 }
 
 function devSubmitLeaderboardResult(entries: Map<string, DevLeaderboardEntry>, payload: DevLeaderboardSubmitPayload) {

@@ -52,6 +52,7 @@ import { AdminDashboard } from './AdminDashboard';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmActiveFighterVoxels, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
+import { starterCharacters } from './data/characters';
 import { stages } from './data/stages';
 import { KORE_CURSOR_OPTIONS, getKoreCursorOption, isKoreCursorId, type KoreCursorOption, type KoreCursorScale, type KoreCursorStyle } from './data/cursors';
 import { cloneMatchSnapshot, createMatch, stepMatch } from './engine/fightEngine';
@@ -77,6 +78,7 @@ import { botCpuDifficulty, type OnlineBotOpponent } from './lib/online/bots';
 import { recordOnlineBotMatchOutcome } from './lib/online/botMemory';
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, sanitizeEmail, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
+import { fetchFriendChat, fetchFriendInbox, fetchFriendPresence, heartbeatFriendPresence, respondToFriendInvite, sendFriendChat, sendFriendInvite, FRIEND_NOTIFICATION_TTL_MS, FRIEND_PRESENCE_HEARTBEAT_MS, FRIEND_PRESENCE_POLL_MS, type FriendChatMessage, type FriendInvite, type FriendPresence } from './lib/online/friends';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
 import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
@@ -235,7 +237,7 @@ import {
   type TournamentSummary
 } from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type Screen = 'boot' | 'title' | 'menu' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 
 function isFullBleedScreen(screen: Screen) {
   return (
@@ -388,6 +390,17 @@ type EmailReminderPromptRequest = {
   profile: OnlinePlayerProfile;
   status: TournamentStatusResult;
   source: string;
+};
+type FriendNotification = {
+  id: string;
+  kind: 'presence' | 'invite' | 'chat';
+  friendId: string;
+  title: string;
+  body: string;
+  createdAt: number;
+  expiresAt: number;
+  invite?: FriendInvite;
+  chat?: FriendChatMessage;
 };
 
 type CharacterAnimationOverride = {
@@ -2907,6 +2920,9 @@ export default function App() {
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
   const [inputPromptMode, setInputPromptMode] = useState<InputPromptMode>('keyboardShortcut');
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
+  const [friendPresence, setFriendPresence] = useState<Record<string, FriendPresence>>({});
+  const [friendInbox, setFriendInbox] = useState<FriendInvite[]>([]);
+  const [friendNotifications, setFriendNotifications] = useState<FriendNotification[]>([]);
   const [usernameGate, setUsernameGate] = useState<UsernameGateRequest | null>(null);
   const [emailReminderPrompt, setEmailReminderPrompt] = useState<EmailReminderPromptRequest | null>(null);
   const [rankedProfile, setRankedProfile] = useState<RankedProfile | null>(null);
@@ -2928,6 +2944,11 @@ export default function App() {
   const assetReadyContinuationRef = useRef<(() => void) | null>(null);
   const menuHoverLastPlayedAtRef = useRef(0);
   const infiniteTournamentRestartTimerRef = useRef(0);
+  const friendPresencePeerIdRef = useRef('');
+  const friendPresenceOnlineRef = useRef<Record<string, boolean>>({});
+  const seenFriendInviteIdsRef = useRef<Set<string>>(new Set());
+  const seenFriendChatIdsRef = useRef<Set<string>>(new Set());
+  const friendChatNotificationSinceRef = useRef(Date.now());
   const starterGuideAutoRequestedRef = useRef(false);
   const [starterGuideOpen, setStarterGuideOpen] = useState(false);
   const { readInputsForStep, peekInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
@@ -3072,6 +3093,45 @@ export default function App() {
     }
     openHistory();
   }, [captureAppAnalytics, onlineProfile, promptForUsername]);
+
+  const openFriendList = useCallback((source: string) => {
+    const openFriends = () => {
+      captureAppAnalytics('navigation_clicked', { source, destination: 'friends' });
+      setScreen('friends');
+    };
+    if (!onlineProfile) {
+      promptForUsername({
+        source: 'friend_list',
+        body: 'Choose your player name before opening the friend list.',
+        onConfirm: openFriends,
+        onBack: () => setScreen('menu')
+      });
+      return;
+    }
+    openFriends();
+  }, [captureAppAnalytics, onlineProfile, promptForUsername]);
+
+  const dismissFriendNotification = useCallback((id: string) => {
+    setFriendNotifications((current) => current.filter((notification) => notification.id !== id));
+  }, []);
+
+  const pushFriendNotification = useCallback((notification: Omit<FriendNotification, 'createdAt' | 'expiresAt'> & { createdAt?: number; expiresAt?: number }) => {
+    const createdAt = notification.createdAt ?? Date.now();
+    const expiresAt = notification.expiresAt ?? createdAt + FRIEND_NOTIFICATION_TTL_MS;
+    setFriendNotifications((current) => [
+      { ...notification, createdAt, expiresAt },
+      ...current.filter((item) => item.id !== notification.id)
+    ].slice(0, 4));
+  }, []);
+
+  const declineFriendInvite = useCallback((invite: FriendInvite) => {
+    if (!onlineProfile) return;
+    void respondToFriendInvite(onlineProfile, invite.inviteId, 'declined').catch((error) => {
+      console.warn('Failed to decline friend invite', error);
+    });
+    setFriendInbox((current) => current.filter((item) => item.inviteId !== invite.inviteId));
+    dismissFriendNotification(`invite:${invite.inviteId}`);
+  }, [dismissFriendNotification, onlineProfile]);
 
   const openStarterGuide = useCallback((source: string) => {
     setStarterGuideOpen(true);
@@ -4205,8 +4265,9 @@ export default function App() {
     });
   }, [fullBleedScreen, screen, settings.display.reducedMotion, settings.performance]);
 
-  const p1 = roster.find((character) => character.id === p1Id) ?? roster[0];
-  const p2 = roster.find((character) => character.id === p2Id) ?? roster[1] ?? roster[0];
+  const startupRosterFallback = roster.length > 0 ? roster : starterCharacters;
+  const p1 = roster.find((character) => character.id === p1Id) ?? startupRosterFallback[0];
+  const p2 = roster.find((character) => character.id === p2Id) ?? startupRosterFallback[1] ?? startupRosterFallback[0];
   const selectedStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
   const selectedStageAssetStatus = useMemo(() => getStageAssetStatus(selectedStage.id), [selectedStage.id, stageAssetRevision]);
   const effectiveCpuDifficulty = getEffectiveCpuDifficulty(mode, cpuDifficulty);
@@ -4271,6 +4332,132 @@ export default function App() {
     setAssetWarmupIntent(null);
     setScreen(previousScreen);
   }, [assetWarmupIntent?.previousScreen]);
+
+  const startFriendInvite = useCallback((friend: FriendEntry) => {
+    const password = generatePrivateRoomPassword();
+    setPendingPrivateInviteFriend(friend);
+    setMode('private');
+    setPrivateRoomIntent({ kind: 'host', roomName: cleanPrivateRoomName(`${p1.displayName} VS ${friend.displayName}`), password });
+    setVersusReturnScreen('privateRooms');
+    captureAppAnalytics('game_start_clicked', { source: 'friend_list_invite', selected_mode: 'private', friend_id: friend.playerId });
+    continueWhenAssetsReady(selectedStage, 'versus', () => setScreen('versus'), 'friends');
+  }, [captureAppAnalytics, continueWhenAssetsReady, p1.displayName, selectedStage]);
+
+  const joinFriendInvite = useCallback((invite: FriendInvite) => {
+    if (!onlineProfile) return;
+    void respondToFriendInvite(onlineProfile, invite.inviteId, 'accepted').catch((error) => {
+      console.warn('Failed to accept friend invite', error);
+    });
+    dismissFriendNotification(`invite:${invite.inviteId}`);
+    setMode('private');
+    setPrivateRoomIntent({ kind: 'guest', roomId: invite.roomId, password: invite.password });
+    setPendingPrivateInviteFriend(null);
+    setVersusReturnScreen('privateRooms');
+    captureAppAnalytics('game_start_clicked', { source: 'friend_invite_join', selected_mode: 'private', friend_id: invite.fromPlayerId });
+    continueWhenAssetsReady(selectedStage, 'versus', () => setScreen('versus'), 'friends');
+  }, [captureAppAnalytics, continueWhenAssetsReady, dismissFriendNotification, onlineProfile, selectedStage]);
+
+  useEffect(() => {
+    if (!onlineProfile) {
+      setFriendPresence({});
+      setFriendInbox([]);
+      setFriendNotifications([]);
+      friendPresenceOnlineRef.current = {};
+      return undefined;
+    }
+    if (!friendPresencePeerIdRef.current) friendPresencePeerIdRef.current = getLocalFriendPresencePeerId();
+    let cancelled = false;
+
+    const heartbeat = () => {
+      void heartbeatFriendPresence(onlineProfile, friendPresencePeerIdRef.current, p1.id).catch((error) => {
+        console.warn('Friend presence heartbeat failed', error);
+      });
+    };
+
+    const poll = async () => {
+      const friends = readFriends(onlineProfile);
+      const friendIds = friends.map((friend) => friend.playerId);
+      const [presenceResult, inboxResult] = await Promise.all([
+        fetchFriendPresence(onlineProfile, friendIds),
+        fetchFriendInbox(onlineProfile)
+      ]);
+      if (cancelled) return;
+      const presenceById = Object.fromEntries(presenceResult.friends.map((presence) => [presence.playerId, presence]));
+      setFriendPresence(presenceById);
+      const previousOnline = friendPresenceOnlineRef.current;
+      presenceResult.friends.forEach((presence) => {
+        const hadPrevious = Object.prototype.hasOwnProperty.call(previousOnline, presence.playerId);
+        if (hadPrevious && previousOnline[presence.playerId] !== presence.online) {
+          pushFriendNotification({
+            id: `presence:${presence.playerId}:${presence.online ? 'online' : 'offline'}:${presence.lastSeenAt}`,
+            kind: 'presence',
+            friendId: presence.playerId,
+            title: presence.online ? `${presence.displayName} is online` : `${presence.displayName} went offline`,
+            body: presence.online ? 'Ready for a private match.' : 'They left KORE.'
+          });
+        }
+      });
+      friendPresenceOnlineRef.current = { ...previousOnline, ...Object.fromEntries(presenceResult.friends.map((presence) => [presence.playerId, presence.online])) };
+
+      setFriendInbox(inboxResult.invites);
+      inboxResult.invites.forEach((invite) => {
+        if (seenFriendInviteIdsRef.current.has(invite.inviteId)) return;
+        seenFriendInviteIdsRef.current.add(invite.inviteId);
+        pushFriendNotification({
+          id: `invite:${invite.inviteId}`,
+          kind: 'invite',
+          friendId: invite.fromPlayerId,
+          title: `${invite.fromDisplayName} invited you`,
+          body: invite.roomName,
+          invite,
+          createdAt: invite.createdAt,
+          expiresAt: invite.createdAt + FRIEND_NOTIFICATION_TTL_MS
+        });
+      });
+
+      await Promise.all(friends.map(async (friend) => {
+        const chat = await fetchFriendChat(onlineProfile, friend.playerId, friendChatNotificationSinceRef.current).catch(() => ({ messages: [] }));
+        if (cancelled) return;
+        chat.messages.forEach((message) => {
+          if (message.fromPlayerId === onlineProfile.playerId || seenFriendChatIdsRef.current.has(message.id)) return;
+          seenFriendChatIdsRef.current.add(message.id);
+          pushFriendNotification({
+            id: `chat:${message.id}`,
+            kind: 'chat',
+            friendId: message.fromPlayerId,
+            title: `${message.fromDisplayName} says`,
+            body: message.text,
+            chat: message,
+            createdAt: message.sentAt,
+            expiresAt: message.sentAt + FRIEND_NOTIFICATION_TTL_MS
+          });
+        });
+      }));
+      friendChatNotificationSinceRef.current = Date.now();
+    };
+
+    heartbeat();
+    void poll().catch((error) => console.warn('Friend polling failed', error));
+    const heartbeatTimer = window.setInterval(heartbeat, FRIEND_PRESENCE_HEARTBEAT_MS);
+    const pollTimer = window.setInterval(() => {
+      void poll().catch((error) => console.warn('Friend polling failed', error));
+    }, FRIEND_PRESENCE_POLL_MS);
+    return () => {
+      cancelled = true;
+      window.clearInterval(heartbeatTimer);
+      window.clearInterval(pollTimer);
+    };
+  }, [onlineProfile, p1.id, pushFriendNotification]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      const now = Date.now();
+      setFriendNotifications((current) => current.filter((notification) => notification.expiresAt > now));
+      setFriendInbox((current) => current.filter((invite) => invite.createdAt + FRIEND_NOTIFICATION_TTL_MS > now));
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   const activeBgmSource = useMemo(() => {
     if (!musicStarted || screen === 'boot') return null;
     if (screen === 'fight' && mode === 'cpu') return settings.audio.menuMusic ? fixedBgmSource('cpu-attract:local-bgm', KORE_MENU_BGM_TRACK) : null;
@@ -4287,7 +4474,7 @@ export default function App() {
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
-  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'), setInputPromptMode);
+  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'), () => openFriendList('gamepad_l2'), setInputPromptMode);
   useStarterGuideKeyboardShortcut(screen, () => {
     setInputPromptMode('keyboardShortcut');
     openStarterGuide('keyboard_f1');
@@ -4529,6 +4716,20 @@ export default function App() {
               captureAppAnalytics('menu_item_selected', { item: 'exit_to_title' });
               setScreen('title');
             }}
+          />
+        )}
+        {screen === 'friends' && (
+          <FriendListScreen
+            profile={onlineProfile}
+            roster={roster}
+            stages={playableStageRoster}
+            presence={friendPresence}
+            inbox={friendInbox}
+            onInviteFriend={startFriendInvite}
+            onJoinInvite={joinFriendInvite}
+            onDeclineInvite={declineFriendInvite}
+            onBack={() => setScreen('menu')}
+            onAnalytics={captureAppAnalytics}
           />
         )}
         {screen === 'tournament' && (
@@ -5190,6 +5391,16 @@ export default function App() {
             }}
             onRankedProfileChange={setRankedProfile}
             privateRoomIntent={privateRoomIntent}
+            pendingPrivateInviteFriend={pendingPrivateInviteFriend}
+            onFriendInviteSent={(invite, friend) => {
+              pushFriendNotification({
+                id: `invite-sent:${invite.inviteId}`,
+                kind: 'invite',
+                friendId: friend.playerId,
+                title: `Invited ${friend.displayName}`,
+                body: invite.roomName
+              });
+            }}
             arcadeRun={arcadeRun}
             onPausedChange={setFightPaused}
             onMenu={() => setScreen('menu')}
@@ -5288,6 +5499,14 @@ export default function App() {
           />
         )}
       </section>
+      {screen !== 'fight' && friendNotifications.length > 0 && (
+        <FriendNotificationStack
+          notifications={friendNotifications}
+          onJoinInvite={joinFriendInvite}
+          onDeclineInvite={declineFriendInvite}
+          onDismiss={dismissFriendNotification}
+        />
+      )}
       {usernameGate && (
         <UsernamePromptModal
           profile={onlineProfile}
@@ -5380,9 +5599,10 @@ const menuFocusableSelector = [
   '[tabindex]:not([tabindex="-1"])'
 ].join(',');
 
-function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onInputPromptModeChange: (mode: InputPromptMode) => void) {
+function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMenuFriends: () => void, onInputPromptModeChange: (mode: InputPromptMode) => void) {
   const screenRef = useRef(screen);
   const onMainMenuHelpRef = useRef(onMainMenuHelp);
+  const onMainMenuFriendsRef = useRef(onMainMenuFriends);
   const onInputPromptModeChangeRef = useRef(onInputPromptModeChange);
   const previousPadStateRef = useRef({
     up: false,
@@ -5395,7 +5615,8 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onInputPr
     previous: false,
     next: false,
     help: false,
-    helpNext: false
+    helpNext: false,
+    friendList: false
   });
 
   useEffect(() => {
@@ -5405,6 +5626,10 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onInputPr
   useEffect(() => {
     onMainMenuHelpRef.current = onMainMenuHelp;
   }, [onMainMenuHelp]);
+
+  useEffect(() => {
+    onMainMenuFriendsRef.current = onMainMenuFriends;
+  }, [onMainMenuFriends]);
 
   useEffect(() => {
     onInputPromptModeChangeRef.current = onInputPromptModeChange;
@@ -5460,7 +5685,8 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onInputPr
           previous: current.previous && !previous.previous,
           next: current.next && !previous.next,
           help: current.help && !previous.help,
-          helpNext: current.helpNext && !previous.helpNext
+          helpNext: current.helpNext && !previous.helpNext,
+          friendList: current.friendList && !previous.friendList
         };
         const repeatedMove = now - lastMoveAt > repeatDelayMs;
         const heldDirection = current.up ? 'up' : current.down ? 'down' : current.left ? 'left' : current.right ? 'right' : null;
@@ -5471,11 +5697,13 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onInputPr
             frame = window.requestAnimationFrame(tick);
             return;
           }
-          if (edge.up || edge.down || edge.left || edge.right || edge.confirm || edge.back || edge.select || edge.previous || edge.next || heldDirection) {
+          if (edge.up || edge.down || edge.left || edge.right || edge.confirm || edge.back || edge.select || edge.previous || edge.next || edge.friendList || heldDirection) {
             onInputPromptModeChangeRef.current('gamepad');
           }
           if (document.querySelector('.starter-guide-overlay') && (edge.help || edge.helpNext)) {
             activateStarterGuideStep(edge.helpNext ? 1 : -1);
+          } else if (screenRef.current === 'menu' && edge.friendList) {
+            onMainMenuFriendsRef.current();
           } else if (screenRef.current === 'menu' && edge.previous) {
             onMainMenuHelpRef.current();
           } else if (screenRef.current === 'settings' && (edge.previous || edge.next)) {
@@ -5499,7 +5727,7 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onInputPr
         }
         previousPadStateRef.current = current;
       } else {
-        previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, previous: false, next: false, help: false, helpNext: false };
+        previousPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, previous: false, next: false, help: false, helpNext: false, friendList: false };
       }
       frame = window.requestAnimationFrame(tick);
     };
@@ -6684,6 +6912,11 @@ function MenuScreen({
           <span>/</span>
           <span>Select</span>
         </div>
+        <div className="menu-friend-list-hint" aria-hidden="true">
+          <Gamepad2 size={16} />
+          <span>L2</span>
+          <strong>Friend List</strong>
+        </div>
       </section>}
       {menuLagReport && (
         <MenuLagRecommendationDialog
@@ -7210,6 +7443,253 @@ function MatchHistoryScreen({
   );
 }
 
+export function FriendListScreen({
+  profile,
+  roster,
+  stages,
+  presence,
+  inbox,
+  onInviteFriend,
+  onJoinInvite,
+  onDeclineInvite,
+  onBack,
+  onAnalytics
+}: {
+  profile: OnlinePlayerProfile | null;
+  roster: CharacterDefinition[];
+  stages: StageDefinition[];
+  presence: Record<string, FriendPresence>;
+  inbox: FriendInvite[];
+  onInviteFriend: (friend: FriendEntry) => void;
+  onJoinInvite: (invite: FriendInvite) => void;
+  onDeclineInvite: (invite: FriendInvite) => void;
+  onBack: () => void;
+  onAnalytics: AnalyticsCapture;
+}) {
+  const friends = useMemo(() => readFriends(profile), [profile]);
+  const history = useMemo(() => readMatchHistory(profile), [profile]);
+  const [selectedFriendId, setSelectedFriendId] = useState('');
+  const selectedFriend = friends.find((friend) => friend.playerId === selectedFriendId) ?? friends[0] ?? null;
+  const [chatMessages, setChatMessages] = useState<FriendChatMessage[]>([]);
+  const [chatStatus, setChatStatus] = useState<'idle' | 'loading' | 'error'>('idle');
+
+  useEffect(() => {
+    if (!selectedFriendId && friends[0]) setSelectedFriendId(friends[0].playerId);
+  }, [friends, selectedFriendId]);
+
+  useEffect(() => {
+    if (!profile || !selectedFriend) {
+      setChatMessages([]);
+      return undefined;
+    }
+    let cancelled = false;
+    const load = async () => {
+      setChatStatus('loading');
+      try {
+        const result = await fetchFriendChat(profile, selectedFriend.playerId, 0);
+        if (!cancelled) {
+          setChatMessages(result.messages);
+          setChatStatus('idle');
+        }
+      } catch (error) {
+        console.warn('Failed to load friend chat', error);
+        if (!cancelled) setChatStatus('error');
+      }
+    };
+    void load();
+    const timer = window.setInterval(() => void load(), FRIEND_PRESENCE_POLL_MS);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [profile, selectedFriend]);
+
+  const characterName = (id: string) => roster.find((character) => character.id === id)?.displayName ?? id;
+  const stageName = (id: string) => stages.find((stage) => stage.id === id)?.name ?? id;
+  const selectedStats = selectedFriend ? summarizeFriendStats(history, selectedFriend.playerId) : null;
+  const selectedPresence = selectedFriend ? presence[selectedFriend.playerId] : undefined;
+  const selectedInvites = selectedFriend ? inbox.filter((invite) => invite.fromPlayerId === selectedFriend.playerId) : [];
+
+  const sendChat = async (text: string) => {
+    if (!profile || !selectedFriend) return;
+    const message = await sendFriendChat(profile, selectedFriend.playerId, text);
+    setChatMessages((current) => [...current, message]);
+    onAnalytics('navigation_clicked', { source: 'friend_list', destination: 'friend_chat_send' });
+  };
+
+  const chatEntries: OnlineTrainingChatEntry[] = chatMessages.map((message) => ({
+    id: message.id,
+    text: message.text,
+    sentAt: message.sentAt,
+    senderName: message.fromDisplayName,
+    local: message.fromPlayerId === profile?.playerId
+  }));
+
+  return (
+    <div className="leaderboard-screen friend-list-screen">
+      <header className="leaderboard-header">
+        <div>
+          <p className="eyebrow">KORE Social</p>
+          <h1>Friend List</h1>
+        </div>
+      </header>
+
+      <div className="leaderboard-actions">
+        <button className="secondary-button" onClick={onBack}>
+          <Home size={18} />
+          Back
+        </button>
+      </div>
+
+      {!profile && <div className="leaderboard-empty">Choose an online name before opening the friend list.</div>}
+      {profile && friends.length === 0 && <div className="leaderboard-empty">No friends yet. Add recent opponents from Match History.</div>}
+
+      {profile && friends.length > 0 && (
+        <div className="friend-list-layout">
+          <section className="leaderboard-board friend-list-roster" aria-label="Friends">
+            {friends.map((friend) => {
+              const friendPresence = presence[friend.playerId];
+              const stats = summarizeFriendStats(history, friend.playerId);
+              return (
+                <button
+                  key={friend.playerId}
+                  type="button"
+                  className={`friend-list-card ${selectedFriend?.playerId === friend.playerId ? 'is-selected' : ''}`}
+                  onClick={() => setSelectedFriendId(friend.playerId)}
+                >
+                  <span className={`friend-presence-dot ${friendPresence?.online ? 'is-online' : 'is-offline'}`} />
+                  <span>
+                    <strong>{friend.displayName}</strong>
+                    <small>{friendPresence?.online ? 'Online' : friendPresence?.lastSeenAt ? `Last seen ${formatRelativeFriendTime(friendPresence.lastSeenAt)}` : 'Offline'}</small>
+                  </span>
+                  <em>{stats.matches} matches</em>
+                </button>
+              );
+            })}
+          </section>
+
+          {selectedFriend && (
+            <section className="leaderboard-board friend-detail-board" aria-label={`${selectedFriend.displayName} friend details`}>
+              <header className="friend-detail-header">
+                <div>
+                  <span className={`friend-presence-pill ${selectedPresence?.online ? 'is-online' : 'is-offline'}`}>
+                    {selectedPresence?.online ? 'Online' : 'Offline'}
+                  </span>
+                  <h2>{selectedFriend.displayName}</h2>
+                  <p>{selectedFriend.lastCharacterId ? characterName(selectedFriend.lastCharacterId) : 'KORE friend'}</p>
+                </div>
+                <button className="primary-button" disabled={!selectedPresence?.online} onClick={() => onInviteFriend(selectedFriend)}>
+                  <Wifi size={18} />
+                  Invite
+                </button>
+              </header>
+
+              {selectedStats && (
+                <div className="friend-stat-grid">
+                  <span><strong>{selectedStats.matches}</strong><small>Matches</small></span>
+                  <span><strong>{selectedStats.wins}-{selectedStats.losses}-{selectedStats.draws}</strong><small>W/L/D</small></span>
+                  <span><strong>{selectedStats.lastCharacterId ? characterName(selectedStats.lastCharacterId) : 'None'}</strong><small>Last Character</small></span>
+                  <span><strong>{selectedStats.lastStageId ? stageName(selectedStats.lastStageId) : 'None'}</strong><small>Last Stage</small></span>
+                </div>
+              )}
+
+              {selectedInvites.length > 0 && (
+                <div className="friend-invite-list" aria-label="Pending invites">
+                  {selectedInvites.map((invite) => (
+                    <article key={invite.inviteId} className="friend-invite-row">
+                      <div>
+                        <strong>{invite.roomName}</strong>
+                        <small>Private invite expires {formatRelativeFriendTime(invite.createdAt + FRIEND_NOTIFICATION_TTL_MS)}</small>
+                      </div>
+                      <button className="primary-button" onClick={() => onJoinInvite(invite)}>Join</button>
+                      <button className="secondary-button" onClick={() => onDeclineInvite(invite)}>Decline</button>
+                    </article>
+                  ))}
+                </div>
+              )}
+
+              <OnlineTrainingChat
+                messages={chatEntries}
+                localName={profile.displayName}
+                remoteName={selectedFriend.displayName}
+                onSend={sendChat}
+              />
+              {chatStatus === 'error' && <p className="friend-chat-error">Chat unavailable</p>}
+            </section>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FriendNotificationStack({
+  notifications,
+  onJoinInvite,
+  onDeclineInvite,
+  onDismiss
+}: {
+  notifications: FriendNotification[];
+  onJoinInvite: (invite: FriendInvite) => void;
+  onDeclineInvite: (invite: FriendInvite) => void;
+  onDismiss: (id: string) => void;
+}) {
+  const now = Date.now();
+  return (
+    <section className="friend-notification-stack" aria-label="Friend notifications">
+      {notifications.map((notification) => {
+        const expired = notification.expiresAt <= now;
+        return (
+          <article key={notification.id} className={`friend-notification is-${notification.kind}`}>
+            <div>
+              <strong>{notification.title}</strong>
+              <span>{notification.body}</span>
+            </div>
+            {notification.invite ? (
+              <div className="friend-notification-actions">
+                <button className="primary-button" disabled={expired} onClick={() => onJoinInvite(notification.invite!)}>
+                  Join
+                </button>
+                <button className="secondary-button" disabled={expired} onClick={() => onDeclineInvite(notification.invite!)}>
+                  Decline
+                </button>
+              </div>
+            ) : (
+              <button className="secondary-button" onClick={() => onDismiss(notification.id)}>
+                <XCircle size={16} />
+              </button>
+            )}
+          </article>
+        );
+      })}
+    </section>
+  );
+}
+
+function summarizeFriendStats(history: MatchHistoryEntry[], playerId: string) {
+  const entries = history.filter((entry) => entry.opponent.playerId === playerId);
+  return {
+    matches: entries.length,
+    wins: entries.filter((entry) => entry.result === 'win').length,
+    losses: entries.filter((entry) => entry.result === 'loss').length,
+    draws: entries.filter((entry) => entry.result === 'draw').length,
+    lastPlayedAt: entries[0]?.createdAt,
+    lastCharacterId: entries[0]?.opponent.characterId,
+    lastStageId: entries[0]?.stageId
+  };
+}
+
+function formatRelativeFriendTime(value: number) {
+  const deltaMs = value - Date.now();
+  const absMs = Math.abs(deltaMs);
+  const minutes = Math.max(1, Math.round(absMs / 60_000));
+  if (deltaMs > 0) return `in ${minutes}m`;
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' }).format(new Date(value));
+}
+
 function PrivateRoomsScreen({
   p1,
   stage,
@@ -7413,6 +7893,16 @@ function PrivateRoomsScreen({
 
 function cleanPrivateRoomName(value: string) {
   return value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').slice(0, 18);
+}
+
+function getLocalFriendPresencePeerId() {
+  const key = 'kore.online.friendPresencePeerId.v1';
+  if (typeof window === 'undefined') return crypto.randomUUID();
+  const existing = window.localStorage.getItem(key);
+  if (existing) return existing;
+  const next = crypto.randomUUID();
+  window.localStorage.setItem(key, next);
+  return next;
 }
 
 async function copyPrivateRoomInvite(roomName: string, password: string, friend: FriendEntry) {
@@ -21733,6 +22223,8 @@ function FightScreen({
   onTournamentRoomFailure,
   onRankedProfileChange,
   privateRoomIntent,
+  pendingPrivateInviteFriend,
+  onFriendInviteSent,
   arcadeRun,
   initialTrainingMode = 'free',
   initialPauseMenuView,
@@ -21768,6 +22260,8 @@ function FightScreen({
   onTournamentRoomFailure?: (message: string) => void;
   onRankedProfileChange: (profile: RankedProfile) => void;
   privateRoomIntent: PrivateRoomIntent | null;
+  pendingPrivateInviteFriend?: FriendEntry | null;
+  onFriendInviteSent?: (invite: FriendInvite, friend: FriendEntry) => void;
   arcadeRun?: ArcadeRunState;
   initialTrainingMode?: TrainingTrialMode;
   initialPauseMenuView?: FightPauseMenuView;
@@ -21858,6 +22352,7 @@ function FightScreen({
   const [onlineWins, setOnlineWins] = useState<OnlineWins>([0, 0]);
   const onlineSessionRef = useRef<OnlinePeerSession | null>(null);
   const onlineRoomRef = useRef<OnlineMatchResult | null>(null);
+  const privateFriendInviteSentRoomRef = useRef('');
   const onlineRoleRef = useRef<OnlineRole | null>(null);
   const onlineStateRef = useRef<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const onlineRollbackRef = useRef<RollbackSession | null>(null);
@@ -23777,6 +24272,21 @@ function FightScreen({
               setOnlineRole('host');
               setPrivateRoomPassword(privateResult.password ?? intent.password);
               setPrivateRoomName(privateResult.roomName);
+              if (pendingPrivateInviteFriend && onlineProfile && privateFriendInviteSentRoomRef.current !== privateResult.roomId) {
+                privateFriendInviteSentRoomRef.current = privateResult.roomId;
+                void sendFriendInvite(
+                  onlineProfile,
+                  pendingPrivateInviteFriend.playerId,
+                  privateResult.roomName,
+                  privateResult.password ?? intent.password,
+                  privateResult.roomId
+                ).then((invite) => {
+                  onFriendInviteSent?.(invite, pendingPrivateInviteFriend);
+                }).catch((error) => {
+                  privateFriendInviteSentRoomRef.current = '';
+                  console.warn('Failed to send friend invite', error);
+                });
+              }
               onlineStateRef.current = 'searching';
               setOnlineState('searching');
               setOnlineStatusText(privateResult.status === 'matched' ? 'MATCH FOUND' : 'PRIVATE ROOM WAITING');
@@ -23858,7 +24368,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, e2eSimulateOnlineTournament, handleOnlineMessage, installFreshMatch, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, onOnlineTournamentStatusChange, onTournamentRoomFailure, onlineProfile?.playerId, onlineTournamentStatus, p1.displayName, p1.id, p2.id, posthogDeviceId, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent, tournamentRoomToOnlineResult]);
+  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, e2eSimulateOnlineTournament, handleOnlineMessage, installFreshMatch, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, onFriendInviteSent, onOnlineTournamentStatusChange, onTournamentRoomFailure, onlineProfile, onlineProfile?.playerId, onlineTournamentStatus, p1.displayName, p1.id, p2.id, pendingPrivateInviteFriend, posthogDeviceId, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent, tournamentRoomToOnlineResult]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
