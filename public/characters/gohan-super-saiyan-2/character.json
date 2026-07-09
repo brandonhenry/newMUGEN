@@ -218,14 +218,7 @@
     "cmd:O+2": [
       "/characters/gohan-super-saiyan-2/frames/frame-110.png",
       "/characters/gohan-super-saiyan-2/frames/frame-111.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-112.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-113.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-114.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-115.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-116.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-117.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-118.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-119.png"
+      "/characters/gohan-super-saiyan-2/frames/frame-112.png"
     ],
     "cmd:1+4": [
       "/characters/gohan-super-saiyan-2/frames/frame-092.png",
@@ -942,24 +935,26 @@
       "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
-      "startupFrames": 30,
-      "activeFrames": 8,
-      "recoveryFrames": 38,
-      "damage": 16,
-      "blockDamage": 1,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 26,
+      "damage": 12,
+      "blockDamage": 2,
       "onBlockFrames": -8,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 19,
-      "whiffRecoveryFrames": 46,
-      "range": 2.1,
-      "forwardForce": 2.95,
-      "forwardForceStartFrame": 46,
-      "forwardForceEndFrame": 53,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 23,
+      "whiffRecoveryFrames": 12,
+      "range": 3.1,
+      "forwardForce": 0.65,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 13,
       "label": "Ascended Aura Drive",
       "hitLevel": "special",
       "knockdown": true,
-      "onComboHitFrames": 7,
-      "onJuggleHitFrames": 4,
+      "usesKi": true,
+      "kiBurst": true,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 6,
       "juggleRepeatPenaltyFrames": 10
     },
@@ -2944,41 +2939,6 @@
         "width": 1.42,
         "height": 0.93,
         "offsetX": 0
-      },
-      "113": {
-        "width": 1.35,
-        "height": 0.81,
-        "offsetX": 0
-      },
-      "114": {
-        "width": 1.35,
-        "height": 0.8,
-        "offsetX": 0
-      },
-      "115": {
-        "width": 1.39,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "116": {
-        "width": 1.85,
-        "height": 0.59,
-        "offsetX": 0
-      },
-      "117": {
-        "width": 1.85,
-        "height": 0.57,
-        "offsetX": 0
-      },
-      "118": {
-        "width": 1.08,
-        "height": 1.02,
-        "offsetX": 0
-      },
-      "119": {
-        "width": 1.39,
-        "height": 0.89,
-        "offsetX": 0
       }
     }
   },
@@ -3020,6 +2980,39 @@
         0
       ],
       "color": "#ffe06e"
+    },
+    {
+      "id": "ascended-ki-blast",
+      "name": "Ascended Ki Blast",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffe36b",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#ffe36b",
+        "outerColor": "#5eb8ff",
+        "impactColor": "#fff8c9",
+        "radius": 0.22,
+        "growFrames": 4,
+        "fadeFrames": 10,
+        "shake": 0.08
+      }
     },
     {
       "id": "super-masenko-blast",
@@ -3271,25 +3264,28 @@
     ],
     "cmd:O+2": [
       {
-        "id": "cmd-o-2-ki-energy",
-        "projectileId": "ki-energy-projectile",
-        "label": "Ascended Aura Drive Ki Shot",
-        "spawnFrame": 4,
+        "id": "ascended-aura-drive-ki-blast",
+        "projectileId": "ascended-ki-blast",
+        "kind": "blast",
+        "label": "Ascended Aura Drive",
+        "spawnFrame": 20,
         "spawnOffset": [
           0,
-          1.08,
-          0.94
+          1.1,
+          0.68
         ],
         "startupFrames": 0,
-        "activeFrames": 96,
-        "recoveryFrames": 6,
-        "lifetimeFrames": 108,
-        "speed": 10,
-        "forwardVelocity": 10,
-        "homingStrength": 4.2,
-        "homingTurnRate": 4.6,
-        "homingEndFrame": 54,
-        "nearMissRadius": 0.58,
+        "activeFrames": 18,
+        "recoveryFrames": 10,
+        "lifetimeFrames": 34,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 2.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
         "hitbox": {
           "offset": [
             0,
@@ -3297,17 +3293,22 @@
             0
           ],
           "size": [
-            0.48,
-            0.48,
-            0.68
+            0.32,
+            0.42,
+            1
           ]
         },
-        "homingMode": "limited",
         "damageScale": 1,
         "blockDamageScale": 1,
-        "pushbackScale": 1,
+        "pushbackScale": 0.9,
         "blockPushbackScale": 1,
-        "mirrorWithFacing": true
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
       }
     ],
     "cmd:qcf+1": [
