@@ -686,6 +686,8 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <StageCameraOcclusionFader />
         <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
         <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+        <MovementFootSmokeLayer fighter={match.fighters[0]} />
+        <MovementFootSmokeLayer fighter={match.fighters[1]} />
         <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
         <TransformEffectLayer fighter={match.fighters[0]} />
         <TransformEffectLayer fighter={match.fighters[1]} />
@@ -1495,10 +1497,123 @@ const SHADOW_CLONE_SMOKE_COLUMNS = 4;
 const SHADOW_CLONE_SMOKE_ROWS = 3;
 const SHADOW_CLONE_SMOKE_TOTAL_FRAMES = SHADOW_CLONE_SMOKE_COLUMNS * SHADOW_CLONE_SMOKE_ROWS;
 const SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES = 24;
+const DASH_FORWARD_SMOKE_RUNTIME_FRAMES = 24;
+const BACK_HOP_SMOKE_RUNTIME_FRAMES = 24;
+type MovementFootSmokeSpec = {
+  offsetX: number;
+  offsetZ: number;
+  delayFrames: number;
+  scale: number;
+  rotation: number;
+  opacity: number;
+};
+const MOVEMENT_FOOT_SMOKE_SPECS = [
+  { offsetX: -0.18, offsetZ: -0.08, delayFrames: 0, scale: 0.7, rotation: -0.18, opacity: 1 },
+  { offsetX: 0.12, offsetZ: 0.1, delayFrames: 2, scale: 0.54, rotation: 0.2, opacity: 0.78 },
+  { offsetX: -0.02, offsetZ: 0.18, delayFrames: 4, scale: 0.42, rotation: -0.06, opacity: 0.62 }
+] as const satisfies readonly MovementFootSmokeSpec[];
 const PROJECTILE_VISUAL_FRONT_BIAS = 0.12;
 const PROJECTILE_REVEAL_FRAMES = 10;
 const PROJECTILE_REVEAL_MIN_SCALE = 0.16;
 const PROJECTILE_REVEAL_FORWARD_OFFSET = 0.42;
+
+type MovementFootSmokeKind = 'backHop' | 'sprint';
+
+function MovementFootSmokeLayer({ fighter }: { fighter: FighterRuntime }) {
+  const backHopActive = fighter.backHopTotalFrames > 0;
+  const sprintActive = !backHopActive && fighter.dashForwardFrames > 0;
+  if (!backHopActive && !sprintActive) return null;
+
+  const kind: MovementFootSmokeKind = backHopActive ? 'backHop' : 'sprint';
+  const duration = kind === 'backHop' ? BACK_HOP_SMOKE_RUNTIME_FRAMES : DASH_FORWARD_SMOKE_RUNTIME_FRAMES;
+  const age = kind === 'backHop'
+    ? Math.max(0, fighter.backHopTotalFrames - fighter.backHopFrames)
+    : Math.max(0, 18 - fighter.dashForwardFrames);
+  if (age > duration) return null;
+
+  const direction: 1 | -1 = kind === 'backHop' ? fighter.facing : fighter.facing === 1 ? -1 : 1;
+  const spread = kind === 'backHop' ? 1.1 : 0.82;
+  return (
+    <group position={[fighter.position.x, 0.08, fighter.position.z]} renderOrder={11}>
+      {MOVEMENT_FOOT_SMOKE_SPECS
+        .filter((spec) => age >= spec.delayFrames)
+        .map((spec, index) => (
+          <MovementFootSmokeQuad
+            key={`${fighter.slot}-${kind}-foot-smoke-${index}`}
+            age={age - spec.delayFrames}
+            duration={Math.max(1, duration - spec.delayFrames)}
+            direction={direction}
+            kind={kind}
+            spec={{ ...spec, offsetX: spec.offsetX * spread, offsetZ: spec.offsetZ * spread }}
+          />
+        ))}
+    </group>
+  );
+}
+
+function MovementFootSmokeQuad({
+  age,
+  duration,
+  direction,
+  kind,
+  spec
+}: {
+  age: number;
+  duration: number;
+  direction: 1 | -1;
+  kind: MovementFootSmokeKind;
+  spec: MovementFootSmokeSpec;
+}) {
+  const sourceTexture = useLoader(THREE.TextureLoader, SHADOW_CLONE_SMOKE_PATH);
+  const texture = useMemo(() => sourceTexture.clone(), [sourceTexture]);
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const progress = THREE.MathUtils.clamp(age / Math.max(1, duration), 0, 1);
+  const frameIndex = Math.max(0, Math.min(SHADOW_CLONE_SMOKE_TOTAL_FRAMES - 1, Math.floor(progress * SHADOW_CLONE_SMOKE_TOTAL_FRAMES)));
+  const puffStrength = kind === 'backHop' ? 0.95 : 0.78;
+  const opacity = spec.opacity * puffStrength * Math.max(0.16, Math.max(0, 1 - progress) ** 1.15);
+  const scale = spec.scale * (kind === 'backHop' ? 1.36 : 1.08) * (0.84 + progress * 0.72);
+  const rise = 0.06 + progress * (kind === 'backHop' ? 0.22 : 0.16);
+  const drift = progress * (kind === 'backHop' ? 0.16 : 0.11) * direction;
+
+  useEffect(() => {
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1 / SHADOW_CLONE_SMOKE_COLUMNS, 1 / SHADOW_CLONE_SMOKE_ROWS);
+  }, [texture]);
+
+  useEffect(() => {
+    const column = frameIndex % SHADOW_CLONE_SMOKE_COLUMNS;
+    const row = Math.floor(frameIndex / SHADOW_CLONE_SMOKE_COLUMNS);
+    texture.offset.set(column / SHADOW_CLONE_SMOKE_COLUMNS, 1 - (row + 1) / SHADOW_CLONE_SMOKE_ROWS);
+    texture.needsUpdate = true;
+    if (materialRef.current) materialRef.current.opacity = opacity;
+  }, [frameIndex, opacity, texture]);
+
+  return (
+    <mesh
+      position={[spec.offsetX * direction + drift, 0.22 + rise, spec.offsetZ]}
+      rotation={[0, direction * 0.18, spec.rotation * direction]}
+      scale={[scale, scale, 1]}
+      renderOrder={11}
+    >
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial
+        ref={materialRef}
+        map={texture}
+        color="#6f665d"
+        transparent
+        opacity={opacity}
+        depthTest={false}
+        depthWrite={false}
+        toneMapped={false}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
 
 function TransformEffectLayer({ fighter }: { fighter: FighterRuntime }) {
   const active = fighter.state === 'transform' || fighter.transformSmokeFrames > 0;
