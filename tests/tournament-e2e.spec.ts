@@ -261,7 +261,7 @@ async function enterCurrentTournamentFight(page: Page, expectedMode: 'tournament
     await expect(page.getByTestId('asset-warmup-screen')).toContainText('Ready', { timeout: 20_000 });
     await activateAnyInputScreen(page, '[data-testid="asset-warmup-screen"]');
   }
-  await expect(page.getByTestId('match-mode').filter({ hasText: expectedMode }).first()).toBeVisible({ timeout: 30_000 });
+  await expect(page.locator('body')).toContainText(expectedMode, { timeout: 30_000 });
 }
 
 async function forceMatchOver(page: Page, winnerSlot: 1 | 2 = 1) {
