@@ -857,13 +857,32 @@ describe('training trial catalog', () => {
     if (!character) return;
 
     const trials = generateComboTrainingTrials(character);
+    const routeTrials = trials.filter((trial) => trial.sourceComboRoute);
     expect(trials.length).toBeGreaterThan(0);
     expect(trials.every((trial) => trial.mode === 'combos' && trial.category === 'combo')).toBe(true);
-    expect(trials.some((trial) => trial.steps.length > 3)).toBe(true);
-    expect(trials.every((trial) => trial.steps.every((step) => step.routeKey && step.animationKey))).toBe(true);
-    expect(trials.every((trial) => (trial.sourceComboRoute?.estimatedDamage ?? 0) > 0)).toBe(true);
-    expect(trials.every((trial) => trial.sourceComboRoute?.structure.includes('starter'))).toBe(true);
-    expect(trials.every((trial) => trial.lesson.includes('damage'))).toBe(true);
+    expect(routeTrials.some((trial) => trial.steps.length > 3)).toBe(true);
+    expect(routeTrials.every((trial) => trial.steps.every((step) => step.routeKey && step.animationKey))).toBe(true);
+    expect(routeTrials.every((trial) => (trial.sourceComboRoute?.estimatedDamage ?? 0) > 0)).toBe(true);
+    expect(routeTrials.every((trial) => trial.sourceComboRoute?.structure.includes('starter'))).toBe(true);
+    expect(routeTrials.every((trial) => trial.lesson.includes('damage'))).toBe(true);
+  });
+
+  it('adds a recoverable health combo lesson for every combo-capable character', () => {
+    const roster = readRosterCharacters();
+    const comboCapable = roster.filter((candidate) => generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute));
+    expect(comboCapable.length).toBeGreaterThan(0);
+
+    for (const character of comboCapable) {
+      const trials = generateComboTrainingTrials(character);
+      const trial = trials.find((item) => item.id.endsWith('system:recoverable-health'));
+      expect(trial, character.id).toBeTruthy();
+      if (!trial) continue;
+      expect(trials[0].id, character.id).toBe(trial.id);
+      expect(trial.setup.p1Hp, character.id).toBeGreaterThan(0);
+      expect(trial.setup.p1Hp, character.id).toBeLessThan(character.stats.health);
+      expect(trial.setup.p1RecoverableHp, character.id).toBeGreaterThan(0);
+      expect([trial.title, trial.lesson, trial.successText, ...trial.steps.map((step) => `${step.label} ${step.reason ?? ''}`)].join(' ').toLowerCase()).toMatch(/recoverable|white|grey/);
+    }
   });
 
   it('surfaces reviewed move labels in training and combo trial steps', () => {
@@ -1086,10 +1105,10 @@ describe('training trial catalog', () => {
   });
 
   it('builds combo route preview scripts in ordered step timing', () => {
-    const character = readRosterCharacters().find((candidate) => generateComboTrainingTrials(candidate)[0]?.sourceComboRoute);
+    const character = readRosterCharacters().find((candidate) => generateComboTrainingTrials(candidate).some((trial) => trial.sourceComboRoute));
     expect(character).toBeTruthy();
     if (!character) return;
-    const route = generateComboTrainingTrials(character)[0]?.sourceComboRoute;
+    const route = generateComboTrainingTrials(character).find((trial) => trial.sourceComboRoute)?.sourceComboRoute;
     expect(route).toBeTruthy();
     if (!route) return;
 

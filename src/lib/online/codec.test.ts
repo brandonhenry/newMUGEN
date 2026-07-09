@@ -24,6 +24,10 @@ describe('online codec', () => {
   it('hydrates render-critical match state from a compact snapshot', () => {
     const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { aiSeed: 9090, playIntro: true });
     match.fighters[0].hp = 42;
+    match.fighters[0].recoverableHp = 11;
+    match.fighters[0].displayRecoverableHp = 7;
+    match.fighters[0].recoverableRecoveryDelayFrames = 33;
+    match.fighters[0].recoverableFlashFrames = 12;
     match.fighters[0].ki = 78;
     match.fighters[0].displayKi = 31;
     match.fighters[0].transformOvercharge = 44;
@@ -119,6 +123,10 @@ describe('online codec', () => {
     expect(hydrated.roundFinisher?.elapsed).toBe(0.24);
     expect(hydrated.roundFinisher?.cameraZoomScale).toBe(0.78);
     expect(hydrated.fighters[0].hp).toBe(42);
+    expect(hydrated.fighters[0].recoverableHp).toBe(11);
+    expect(hydrated.fighters[0].displayRecoverableHp).toBe(7);
+    expect(hydrated.fighters[0].recoverableRecoveryDelayFrames).toBe(33);
+    expect(hydrated.fighters[0].recoverableFlashFrames).toBe(12);
     expect(hydrated.fighters[0].ki).toBe(78);
     expect(hydrated.fighters[0].displayKi).toBe(31);
     expect(hydrated.fighters[0].transformOvercharge).toBe(44);

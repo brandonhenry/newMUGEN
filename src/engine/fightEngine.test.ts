@@ -604,6 +604,37 @@ function startActiveThrowHit(match: ReturnType<typeof createMatch>, attackerInde
   attacker.hitConfirmed = false;
 }
 
+function startActiveTestHit(match: ReturnType<typeof createMatch>, overrides: Partial<MoveDefinition> = {}, attackerIndex: 0 | 1 = 0) {
+  const attacker = match.fighters[attackerIndex];
+  const defender = match.fighters[attackerIndex === 0 ? 1 : 0];
+  const baseMove = attacker.character.moves.find((move) => move.input === 'jab') ?? attacker.character.moves[0];
+  attacker.position.x = attackerIndex === 0 ? -0.45 : 0.45;
+  defender.position.x = attackerIndex === 0 ? 0.45 : -0.45;
+  attacker.position.z = 0;
+  defender.position.z = 0;
+  attacker.facing = attackerIndex === 0 ? 1 : -1;
+  defender.facing = attackerIndex === 0 ? -1 : 1;
+  attacker.facingYaw = attacker.facing === 1 ? Math.PI / 2 : -Math.PI / 2;
+  defender.facingYaw = defender.facing === 1 ? Math.PI / 2 : -Math.PI / 2;
+  attacker.state = 'attack';
+  attacker.currentMove = {
+    ...baseMove,
+    startupFrames: 0,
+    activeFrames: 3,
+    recoveryFrames: 12,
+    damage: 10,
+    blockDamage: 4,
+    range: 2.5,
+    hitbox: { offset: [0, 1, 0.7], size: [1.2, 1.2, 1.4] },
+    ...overrides
+  };
+  attacker.actionFramesRemaining = 12;
+  attacker.actionTimer = 12 / 60;
+  attacker.moveFrame = 0;
+  attacker.hitConnected = false;
+  attacker.hitConfirmed = false;
+}
+
 function stepWithMash(match: ReturnType<typeof createMatch>, defenderSlot: 1 | 2, button: MoveInput = 'jab') {
   const press = { ...emptyInputFrame(), [button]: true };
   const release = emptyInputFrame();
@@ -7842,6 +7873,108 @@ describe('fight engine', () => {
     whiff = stepMatch(whiff, emptyInputFrame(), emptyInputFrame(), 1 / 60);
 
     expect(whiff.impactEvents).toHaveLength(0);
+  });
+
+  it('turns part of immediate hit damage into recoverable health', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const defenderMaxHp = match.fighters[1].maxHp;
+    startActiveTestHit(match, { damage: 10, blockDamage: 2 });
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].hp).toBe(defenderMaxHp - 10);
+    expect(match.fighters[1].recoverableHp).toBe(3);
+    expect(match.fighters[1].recoverableRecoveryDelayFrames).toBeGreaterThan(0);
+    expect(match.fighters[1].recoverableFlashFrames).toBeGreaterThan(0);
+  });
+
+  it('makes blocked chip mostly recoverable', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const defenderMaxHp = match.fighters[1].maxHp;
+    startActiveTestHit(match, { damage: 20, blockDamage: 10, hitLevel: 'high' });
+    const blockInput = { ...emptyInputFrame(), block: true };
+
+    match = stepMatch(match, emptyInputFrame(), blockInput, 1 / 60);
+
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'block', damage: 10 });
+    expect(match.fighters[1].hp).toBe(defenderMaxHp - 10);
+    expect(match.fighters[1].recoverableHp).toBe(9);
+  });
+
+  it('erases recoverable health once when a new clean combo starts', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.fighters[1].hp = 80;
+    match.fighters[1].recoverableHp = 20;
+    match.fighters[1].displayRecoverableHp = 20;
+    startActiveTestHit(match, { damage: 10, blockDamage: 2 });
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', comboHits: 1 });
+    expect(match.fighters[1].hp).toBe(70);
+    expect(match.fighters[1].recoverableHp).toBe(14);
+  });
+
+  it('does not repeatedly erase recoverable health on juggle followups', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.fighters[0].comboHits = 1;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].position.y = 0.8;
+    match.fighters[1].hp = 70;
+    match.fighters[1].recoverableHp = 20;
+    match.fighters[1].displayRecoverableHp = 20;
+    startActiveTestHit(match, { damage: 10, blockDamage: 2 });
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.impactEvents[0]).toMatchObject({ kind: 'hit', comboHits: 2, juggled: true });
+    expect(match.fighters[1].recoverableHp).toBeGreaterThanOrEqual(20);
+  });
+
+  it('recovers health from hit, block, and passive recovery within caps', () => {
+    let hitMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    hitMatch.fighters[0].hp = 70;
+    hitMatch.fighters[0].recoverableHp = 10;
+    hitMatch.fighters[0].displayRecoverableHp = 10;
+    startActiveTestHit(hitMatch, { damage: 10, blockDamage: 2 });
+    hitMatch = stepMatch(hitMatch, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(hitMatch.fighters[0].hp).toBe(72);
+    expect(hitMatch.fighters[0].recoverableHp).toBe(8);
+
+    let blockMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    blockMatch.fighters[0].hp = 70;
+    blockMatch.fighters[0].recoverableHp = 10;
+    blockMatch.fighters[0].displayRecoverableHp = 10;
+    startActiveTestHit(blockMatch, { damage: 10, blockDamage: 0, hitLevel: 'high' });
+    blockMatch = stepMatch(blockMatch, emptyInputFrame(), { ...emptyInputFrame(), block: true }, 1 / 60);
+    expect(blockMatch.fighters[0].hp).toBe(71);
+    expect(blockMatch.fighters[0].recoverableHp).toBe(9);
+
+    let passiveMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    passiveMatch.fighters[0].hp = 70;
+    passiveMatch.fighters[0].recoverableHp = 10;
+    passiveMatch.fighters[0].displayRecoverableHp = 10;
+    passiveMatch.fighters[0].recoverableRecoveryDelayFrames = 0;
+    passiveMatch = stepFrames(passiveMatch, 30);
+    expect(passiveMatch.fighters[0].hp).toBe(71);
+    expect(passiveMatch.fighters[0].recoverableHp).toBe(9);
+  });
+
+  it('clears recoverable health on round reset', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.fighters[1].hp = 1;
+    match.fighters[1].recoverableHp = 12;
+    match.fighters[1].displayRecoverableHp = 12;
+    startActiveTestHit(match, { damage: 10, blockDamage: 0 });
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 60);
+    match = stepFrames(match, 150);
+
+    expect(match.round).toBe(2);
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+    expect(match.fighters[1].recoverableHp).toBe(0);
+    expect(match.fighters[1].displayRecoverableHp).toBe(0);
   });
 
   it('spawns projectile moves on authored spawn frames and keeps them moving after attacker recovery', () => {

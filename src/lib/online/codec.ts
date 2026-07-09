@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 18;
+export const ONLINE_PROTOCOL_VERSION = 19;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -31,6 +31,10 @@ export type CompactFighterSnapshot = {
   hp: number;
   maxHp: number;
   tookDamageThisRound: boolean;
+  recoverableHp?: number;
+  displayRecoverableHp?: number;
+  recoverableRecoveryDelayFrames?: number;
+  recoverableFlashFrames?: number;
   ki: number;
   displayKi?: number;
   transformOvercharge: number;
@@ -262,6 +266,10 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     hp: fighter.hp,
     maxHp: fighter.maxHp,
     tookDamageThisRound: fighter.tookDamageThisRound,
+    recoverableHp: fighter.recoverableHp,
+    displayRecoverableHp: fighter.displayRecoverableHp,
+    recoverableRecoveryDelayFrames: fighter.recoverableRecoveryDelayFrames,
+    recoverableFlashFrames: fighter.recoverableFlashFrames,
     ki: fighter.ki,
     displayKi: fighter.displayKi,
     transformOvercharge: fighter.transformOvercharge,
@@ -359,6 +367,10 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     hp: snapshot.hp,
     maxHp: snapshot.maxHp ?? base.maxHp,
     tookDamageThisRound: snapshot.tookDamageThisRound ?? base.tookDamageThisRound,
+    recoverableHp: snapshot.recoverableHp ?? base.recoverableHp ?? 0,
+    displayRecoverableHp: snapshot.displayRecoverableHp ?? snapshot.recoverableHp ?? base.displayRecoverableHp ?? 0,
+    recoverableRecoveryDelayFrames: snapshot.recoverableRecoveryDelayFrames ?? base.recoverableRecoveryDelayFrames ?? 0,
+    recoverableFlashFrames: snapshot.recoverableFlashFrames ?? base.recoverableFlashFrames ?? 0,
     ki: snapshot.ki,
     displayKi: snapshot.displayKi ?? snapshot.ki,
     transformOvercharge: snapshot.transformOvercharge ?? base.transformOvercharge,

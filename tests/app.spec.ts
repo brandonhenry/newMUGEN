@@ -886,7 +886,32 @@ test('starts a playable match from the menu', async ({ page }) => {
   await startFight(page);
   await expect(page.getByTestId('fight-canvas')).toBeVisible();
   await expect(page.locator('.fight-hud')).toBeVisible();
+  await expect(page.getByTestId('training-button-history')).toHaveCount(0);
   await expect(page.getByTestId('fight-asset-loading-overlay')).toBeHidden();
+});
+
+test('shows right-side button history in training only', async ({ page }) => {
+  await startTraining(page);
+  const history = page.getByTestId('training-button-history');
+  await expect(history).toBeVisible();
+  await expect(history).toContainText('Neutral');
+
+  await keyDown(page, 'KeyD');
+  await expect(page.getByTestId('frame-input')).toHaveText('p1:right', { timeout: 3000 });
+  await page.waitForTimeout(240);
+  await expect(page.getByTestId('training-button-history-row-0')).toContainText('→');
+  await expect(page.locator('[data-testid^="training-button-history-row-"]')).toHaveCount(1);
+  const heldText = await page.getByTestId('training-button-history-row-0').innerText();
+  const heldFrames = Number(heldText.match(/(\d+)f/)?.[1] ?? '0');
+  expect(heldFrames).toBeGreaterThan(1);
+
+  await keyUp(page, 'KeyD');
+  await expectNoHeldFightInput(page);
+  await keyDown(page, 'KeyU');
+  await expect(page.getByTestId('frame-input')).toHaveText('p1:jab', { timeout: 3000 });
+  await expect(page.getByTestId('training-button-history-row-0')).toContainText('1');
+  await expect(page.getByTestId('training-button-history-row-1')).toContainText('→');
+  await keyUp(page, 'KeyU');
 });
 
 test('same-stage rematch starts a fresh fight session', async ({ page }) => {

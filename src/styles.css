@@ -9205,6 +9205,148 @@ button {
   z-index: 12;
 }
 
+.training-button-history {
+  position: absolute;
+  top: max(128px, calc(env(safe-area-inset-top) + 118px));
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 13;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: clamp(164px, 15vw, 228px);
+  gap: 8px;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 10px;
+  pointer-events: none;
+  color: #f7fbff;
+  background:
+    linear-gradient(180deg, rgba(9, 16, 25, 0.78), rgba(5, 8, 14, 0.56)),
+    rgba(4, 8, 14, 0.5);
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  backdrop-filter: blur(12px);
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+}
+
+.training-button-history header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 20px;
+}
+
+.training-button-history header span {
+  color: #ffe373;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.training-button-history-list {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.training-button-history-row,
+.training-button-history-empty {
+  display: grid;
+  align-items: center;
+  min-height: 32px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07) inset;
+}
+
+.training-button-history-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 5px 7px;
+  opacity: 0.72;
+  transition-property: opacity, background-color, box-shadow;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.training-button-history-row.latest {
+  opacity: 1;
+  background:
+    linear-gradient(135deg, rgba(255, 227, 115, 0.2), rgba(106, 202, 255, 0.12)),
+    rgba(0, 0, 0, 0.32);
+  box-shadow:
+    0 0 0 1px rgba(255, 227, 115, 0.22) inset,
+    0 8px 22px rgba(0, 0, 0, 0.22);
+}
+
+.training-button-history-tokens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.training-button-history-tokens span {
+  display: inline-grid;
+  min-width: 24px;
+  min-height: 22px;
+  place-items: center;
+  border-radius: 4px;
+  padding: 2px 5px;
+  color: #07110b;
+  background: #f7fbff;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.34) inset,
+    0 8px 16px rgba(0, 0, 0, 0.18);
+  font-size: 11px;
+  font-weight: 950;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.training-button-history-row.latest .training-button-history-tokens span {
+  background: #ffe373;
+}
+
+.training-button-history-row small {
+  color: rgba(247, 251, 255, 0.72);
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.training-button-history-empty {
+  justify-items: center;
+  padding: 9px;
+  color: rgba(247, 251, 255, 0.58);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-height: 720px) {
+  .training-button-history {
+    top: max(104px, calc(env(safe-area-inset-top) + 92px));
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .training-button-history-row,
+  .training-button-history-empty {
+    min-height: 27px;
+  }
+
+  .training-button-history-tokens span {
+    min-height: 19px;
+  }
+}
+
 .health {
   display: grid;
   gap: 7px;
@@ -9300,6 +9442,7 @@ button {
 }
 
 .health-track {
+  position: relative;
   display: flex;
   justify-content: flex-end;
   overflow: hidden;
@@ -9316,20 +9459,60 @@ button {
 }
 
 .health-track span {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, currentColor, #fff3a8);
-  box-shadow:
-    0 0 18px currentColor,
-    0 2px 0 rgba(255, 255, 255, 0.22) inset;
   transition-property: width;
   transition-duration: 140ms;
   transition-timing-function: linear;
 }
 
+.health-track .recoverable-health-fill {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.92) 0 5px, rgba(182, 198, 210, 0.72) 5px 9px, transparent 9px 12px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.34) 0 3px, rgba(93, 111, 128, 0.28) 3px 6px);
+  box-shadow:
+    0 0 16px rgba(235, 245, 255, 0.52),
+    0 2px 0 rgba(255, 255, 255, 0.24) inset;
+  image-rendering: pixelated;
+  opacity: 0;
+  animation: recoverable-health-flicker 540ms steps(2, end) infinite;
+}
+
+.health.has-recoverable .recoverable-health-fill {
+  opacity: 0.78;
+}
+
+.health.recoverable-flash .recoverable-health-fill {
+  opacity: 1;
+}
+
+.health-track .current-health-fill {
+  background: linear-gradient(90deg, currentColor, #fff3a8);
+  box-shadow:
+    0 0 18px currentColor,
+    0 2px 0 rgba(255, 255, 255, 0.22) inset;
+}
+
 .health.right .health-track {
   justify-content: flex-start;
+}
+
+.health.right .health-track span {
+  left: 0;
+  right: auto;
+}
+
+@keyframes recoverable-health-flicker {
+  0%, 100% {
+    filter: brightness(0.9);
+  }
+  50% {
+    filter: brightness(1.35);
+  }
 }
 
 .ki-track {
@@ -13049,6 +13232,48 @@ button {
     left: 8px;
     right: 8px;
     top: 8px;
+  }
+
+  .training-button-history {
+    top: max(92px, calc(env(safe-area-inset-top) + 86px));
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(86px, env(safe-area-inset-bottom));
+    width: min(132px, 34vw);
+    gap: 6px;
+    padding: 7px;
+  }
+
+  .training-button-history header span {
+    font-size: 9px;
+  }
+
+  .training-button-history-list {
+    gap: 5px;
+  }
+
+  .training-button-history-row,
+  .training-button-history-empty {
+    min-height: 26px;
+  }
+
+  .training-button-history-row {
+    gap: 5px;
+    padding: 4px 5px;
+  }
+
+  .training-button-history-tokens {
+    gap: 3px;
+  }
+
+  .training-button-history-tokens span {
+    min-width: 20px;
+    min-height: 19px;
+    padding: 2px 4px;
+    font-size: 10px;
+  }
+
+  .training-button-history-row small {
+    font-size: 9px;
   }
 
   .health-identity {

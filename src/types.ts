@@ -1188,6 +1188,10 @@ export type FighterRuntime = {
   hp: number;
   maxHp: number;
   tookDamageThisRound: boolean;
+  recoverableHp: number;
+  displayRecoverableHp: number;
+  recoverableRecoveryDelayFrames: number;
+  recoverableFlashFrames: number;
   ki: number;
   displayKi: number;
   transformOvercharge: number;

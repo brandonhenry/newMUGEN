@@ -15,7 +15,7 @@ export type TrainingTrialMode = 'free' | 'basics' | 'combos' | 'online';
 export type TrainingTrialCategory = 'movement' | 'offense' | 'defense' | 'punish' | 'jumpIn' | 'corner' | 'crouch' | 'ki' | 'launcher' | 'tornado' | 'oki' | 'combo';
 export type TrainingTrialStepStatus = 'pending' | 'current' | 'early' | 'perfect' | 'late' | 'missed' | 'confirmed' | 'correct';
 export type TrainingTrialTimingRating = 'Ready' | 'Perfect' | 'Too early' | 'Late' | 'Confirmed' | 'Missed';
-export type TrainingDummyScript = 'idle' | 'attack' | 'guard' | 'lowGuard' | 'getup' | 'wakeupMash' | 'counterHit' | 'kiAttack' | 'whiff' | 'jumpIn';
+export type TrainingDummyScript = 'idle' | 'attack' | 'guard' | 'lowGuard' | 'getup' | 'wakeupMash' | 'counterHit' | 'kiAttack' | 'whiff' | 'jumpIn' | 'recoverableHealth';
 
 export type TrainingTrialStepKind = 'input' | 'state' | 'impact';
 
@@ -57,6 +57,10 @@ export type TrainingTrialSetup = {
   p2Position?: { x: number; z: number };
   p1State?: FighterRuntime['state'];
   p2State?: FighterRuntime['state'];
+  p1Hp?: number;
+  p2Hp?: number;
+  p1RecoverableHp?: number;
+  p2RecoverableHp?: number;
   p1Ki?: number;
   p2Ki?: number;
   p1TransformOvercharge?: number;
@@ -463,7 +467,8 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
 }
 
 export function generateComboTrainingTrials(character: CharacterDefinition): TrainingTrialDefinition[] {
-  return generateComboTrials(character).map((route) => {
+  const systemTrial = makeRecoverableHealthTrial(character);
+  const routeTrials: TrainingTrialDefinition[] = generateComboTrials(character).map((route) => {
     const routeIntent = comboRouteIntent(route);
     const routeStepActions = route.steps.map(stepToActions);
     const steps = route.steps.map((step, index): TrainingTrialStep => ({
@@ -506,6 +511,53 @@ export function generateComboTrainingTrials(character: CharacterDefinition): Tra
       sourceComboRoute: route
     };
   });
+  return systemTrial ? [systemTrial, ...routeTrials] : routeTrials;
+}
+
+function makeRecoverableHealthTrial(character: CharacterDefinition): TrainingTrialDefinition | null {
+  const routes = resolveMoveRoutes(character).filter((route) => route.move.damage > 0 || route.move.blockDamage > 0);
+  const route = [...routes].sort((a, b) => a.move.startupFrames - b.move.startupFrames || b.move.blockDamage - a.move.blockDamage)[0];
+  if (!route) return null;
+  const recoverStep = routeToTrialStep('recover', route, {
+    expectImpactKinds: ['block'],
+    targetFrame: 18,
+    windowBefore: 8,
+    windowAfter: 14,
+    reason: 'Make the dummy block to win back part of your flashing white/grey health.'
+  });
+  const starterStep = routeToTrialStep('starter', route, {
+    expectImpactKinds: ['hit', 'counterHit'],
+    targetFrame: 32,
+    windowBefore: 12,
+    windowAfter: 28,
+    missAfterFrame: 120,
+    reason: 'After recovery begins, land a clean starter and see how fresh hits cut away recoverable health.'
+  });
+  const p1Hp = Math.max(1, Math.round(character.stats.health * 0.62));
+  const p1RecoverableHp = Math.max(6, Math.round(character.stats.health * 0.18));
+  const steps = [recoverStep, starterStep];
+  return {
+    id: `combo:${character.id}:system:recoverable-health`,
+    title: 'Recoverable Health',
+    characterId: character.id,
+    category: 'combo',
+    mode: 'combos',
+    difficulty: 1,
+    stageId: 'the-chamber',
+    setup: {
+      stageId: 'the-chamber',
+      dummyScript: 'recoverableHealth',
+      p1Position: { x: -0.45, z: 0 },
+      p2Position: { x: 0.45, z: 0 },
+      p1Hp,
+      p1RecoverableHp
+    },
+    steps,
+    lesson: 'Recoverable health is the flashing white/grey part of your life bar. Win it back with offense, defense, and time, but a fresh clean hit cuts it away.',
+    zoroLine: 'Take your breath back, then protect it.',
+    successText: 'Recoverable health lesson complete.',
+    previewScript: makePreviewScript(steps)
+  };
 }
 
 function comboRouteIntent(route: GeneratedComboRoute) {
@@ -676,6 +728,7 @@ export function makeTrialDummyInput(trial: TrainingTrialDefinition | null, match
   const attacker = match.fighters[0];
   if (dummy.state === 'knockdown' && !dummy.getupStarted) input.confirm = true;
   if (script === 'guard') input.block = true;
+  if (script === 'recoverableHealth' && attacker.hp <= (trial?.setup.p1Hp ?? attacker.hp)) input.block = true;
   if (script === 'lowGuard') {
     input.block = true;
     input.down = true;

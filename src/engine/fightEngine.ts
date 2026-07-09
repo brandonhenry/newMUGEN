@@ -169,6 +169,10 @@ const PROJECTILE_MAX_HIT_PUSHBACK = 0.78;
 const PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET = 0.28;
 const PROJECTILE_SPAWN_VERTICAL_ALIGNMENT_OFFSET = -0.16;
 const BEGINNER_DAMAGE_SCALE = 0.6;
+const RECOVERABLE_DAMAGE_DELAY_FRAMES = 120;
+const RECOVERABLE_PASSIVE_TICK_FRAMES = 30;
+const RECOVERABLE_FLASH_FRAMES = 28;
+const RECOVERABLE_DISPLAY_LERP = 0.34;
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
 const clashInputOrder: MoveInput[] = ['jab', 'heavy', 'kick', 'special'];
@@ -336,6 +340,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   }
 
   updateIdleQuietState(next, input1, input2, frameDelta);
+  updateRecoverableHealth(next, frameDelta);
 
   const infiniteTimer = isInfiniteRoundTime(next.roundTime);
   next.timer = infiniteTimer || (isTrainingInfiniteHealthMode(next) && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
@@ -550,6 +555,10 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     hp: maxHp,
     maxHp,
     tookDamageThisRound: false,
+    recoverableHp: 0,
+    displayRecoverableHp: 0,
+    recoverableRecoveryDelayFrames: 0,
+    recoverableFlashFrames: 0,
     ki: 0,
     displayKi: 0,
     transformOvercharge: 0,
@@ -1215,7 +1224,9 @@ function applyThrowHoldJabHit(match: MatchSnapshot, attacker: FighterRuntime, de
   attacker.aiRecentComboKeys = addRecentAiMemoryKey(attacker.aiRecentComboKeys, identity);
   attacker.aiRecentComboFamilies = addRecentAiMemoryKey(attacker.aiRecentComboFamilies, family);
   attacker.aiRecentComboVisualFamilies = addRecentAiMemoryKey(attacker.aiRecentComboVisualFamilies, visualFamily);
-  applyFighterDamage(defender, damage);
+  erodeRecoverableHealthForStarter(defender, { move, comboHits, throwHit: true });
+  applyFighterDamage(defender, damage, { move, comboHits, throwHit: true });
+  recoverHealthFromDamage(attacker, damage, 0.2);
   defender.hitFlash = Math.max(defender.hitFlash, 0.12);
   defender.throwShakeFrames = Math.max(defender.throwShakeFrames, THROW_SHAKE_FRAMES);
   const impactId = nextHitEventId(match);
@@ -1541,6 +1552,7 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.character = target;
   fighter.maxHp = resolveFighterMaxHealth(target, matchMaxHealth);
   fighter.hp = Math.max(1, Math.min(fighter.maxHp, Math.round(fighter.maxHp * hpPercent)));
+  clampRecoverableHealth(fighter);
   fighter.state = 'idle';
   fighter.currentMove = null;
   fighter.actionFramesRemaining = 0;
@@ -2220,6 +2232,7 @@ function applyMoveHealing(fighter: FighterRuntime, move: MoveDefinition) {
   const healAmount = Math.max(0, Math.round(move.healAmount ?? 8));
   if (healAmount <= 0) return;
   fighter.hp = Math.min(fighter.maxHp, fighter.hp + healAmount);
+  clampRecoverableHealth(fighter);
 }
 
 function buildKiBurstMove(move: MoveDefinition, kiCost = getMoveKiCost(move)): MoveDefinition {
@@ -2465,7 +2478,8 @@ function applyJuggleLoopBreakerHit(
     juggled: true,
     kiBurst: Boolean(move.kiBurst)
   });
-  applyFighterDamage(defender, damage);
+  applyFighterDamage(defender, damage, { move: breakerMove, comboHits, juggled: true, kiBurst: Boolean(move.kiBurst) });
+  recoverHealthFromDamage(attacker, damage, 0.2);
   defender.currentMove = null;
   defender.moveFrame = 0;
   defender.blockstunFramesRemaining = 0;
@@ -2511,7 +2525,8 @@ function applyShadowCloneJuggleLoopBreakerHit(
     juggled: true,
     kiBurst: Boolean(weakMove.kiBurst)
   });
-  applyFighterDamage(defender, damage);
+  applyFighterDamage(defender, damage, { move: breakerMove, comboHits, juggled: true, kiBurst: Boolean(weakMove.kiBurst) });
+  recoverHealthFromDamage(attacker, damage, 0.2);
   defender.currentMove = null;
   defender.moveFrame = 0;
   defender.blockstunFramesRemaining = 0;
@@ -3734,7 +3749,9 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     }
     defender.ki = clamp(defender.ki + KI_DEFENDER_BLOCK_GAIN, 0, KI_MAX);
     syncDisplayedKiIfNotCharging(defender);
-    applyFighterDamage(defender, move.blockDamage);
+    recoverFighterHealth(defender, move.kiBurst ? 3 : 1);
+    applyFighterDamage(defender, move.blockDamage, { move, blocked: true });
+    recoverHealthFromBlock(attacker, move.blockDamage);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + getEffectiveOnBlockFrames(move));
     defender.stunFramesRemaining = 0;
     defender.stunTimer = framesToSeconds(defender.blockstunFramesRemaining);
@@ -3772,7 +3789,9 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const juggleSequenceDamage = tornadoExtendsJuggle
     ? juggleDamageContribution
     : (wasAirborne || entersJuggle ? defender.juggleSequenceDamage : 0) + juggleDamageContribution;
-  applyFighterDamage(defender, hitDamage);
+  erodeRecoverableHealthForStarter(defender, { move, comboHits, counterHit, punish: blockPunish, whiffPunish, launcher: launchHeight > 0, juggled: wasJuggled || wasAirborne, kiBurst: Boolean(move.kiBurst) });
+  applyFighterDamage(defender, hitDamage, { move, comboHits, counterHit, punish: blockPunish, whiffPunish, launcher: launchHeight > 0, juggled: wasJuggled || wasAirborne, kiBurst: Boolean(move.kiBurst) });
+  recoverHealthFromDamage(attacker, hitDamage, 0.2);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -3925,7 +3944,9 @@ function applyClashWin(match: MatchSnapshot, winnerSlot: 1 | 2) {
   const damage = Math.max(CLASH_MIN_DAMAGE, Math.round(baseDamage * CLASH_DAMAGE_MULTIPLIER));
   clash.damage = damage;
   match.message = clashParticipantHasPerfect(clash, winnerSlot) ? 'CLASH PERFECT' : 'CLASH WIN';
-  applyFighterDamage(loser, damage);
+  erodeRecoverableHealthForStarter(loser, { move: winnerMove, comboHits: 1, clash: true, kiBurst: true, launcher: Boolean(winnerMove?.launchHeight) });
+  applyFighterDamage(loser, damage, { move: winnerMove, comboHits: 1, clash: true, kiBurst: true, launcher: Boolean(winnerMove?.launchHeight) });
+  recoverHealthFromDamage(winner, damage, 0.2);
 
   const pushX = loser.position.x - winner.position.x;
   const pushZ = loser.position.z - winner.position.z;
@@ -4091,7 +4112,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     }
     defender.ki = clamp(defender.ki + KI_DEFENDER_BLOCK_GAIN, 0, KI_MAX);
     syncDisplayedKiIfNotCharging(defender);
-    applyFighterDamage(defender, move.blockDamage);
+    recoverFighterHealth(defender, move.kiBurst ? 3 : 1);
+    applyFighterDamage(defender, move.blockDamage, { move, blocked: true });
+    recoverHealthFromBlock(attacker, move.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(move);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
     const defenderAdvantageFrames = Math.max(0, attackerRemaining - defender.blockstunFramesRemaining);
@@ -4156,7 +4179,9 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
     ? juggleDamageContribution
     : (wasAirborne || entersJuggle ? defender.juggleSequenceDamage : 0) + juggleDamageContribution;
   const forceKnockdown = move.knockdown || (!tornadoExtendsJuggle && juggleSequenceDamage >= JUGGLE_DAMAGE_LIMIT);
-  applyFighterDamage(defender, hitDamage);
+  erodeRecoverableHealthForStarter(defender, { move, comboHits, counterHit, punish: blockPunish, whiffPunish, launcher: launchHeight > 0, juggled: wasJuggled || wasAirborne, kiBurst: Boolean(move.kiBurst) });
+  applyFighterDamage(defender, hitDamage, { move, comboHits, counterHit, punish: blockPunish, whiffPunish, launcher: launchHeight > 0, juggled: wasJuggled || wasAirborne, kiBurst: Boolean(move.kiBurst) });
+  recoverHealthFromDamage(attacker, hitDamage, 0.2);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -4271,7 +4296,9 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
     }
     defender.ki = clamp(defender.ki + Math.max(1, Math.round(KI_DEFENDER_BLOCK_GAIN * 0.6)), 0, KI_MAX);
     syncDisplayedKiIfNotCharging(defender);
-    applyFighterDamage(defender, weakMove.blockDamage);
+    recoverFighterHealth(defender, sourceMove.kiBurst ? 3 : 1);
+    applyFighterDamage(defender, weakMove.blockDamage, { move: weakMove, blocked: true });
+    recoverHealthFromBlock(attacker, weakMove.blockDamage);
     const effectiveOnBlockFrames = getEffectiveOnBlockFrames(weakMove);
     defender.blockstunFramesRemaining = Math.max(1, attackerRemaining + effectiveOnBlockFrames);
     defender.stunFramesRemaining = 0;
@@ -4304,7 +4331,9 @@ function tryShadowCloneHit(match: MatchSnapshot, attacker: FighterRuntime, defen
     repeatCount: 1
   });
   const stunFrames = Math.max(8, attackerRemaining + cloneAdvantage);
-  applyFighterDamage(defender, hitDamage);
+  erodeRecoverableHealthForStarter(defender, { move: weakMove, comboHits, juggled: wasJuggled || isAirborne(defender), kiBurst: Boolean(sourceMove.kiBurst) });
+  applyFighterDamage(defender, hitDamage, { move: weakMove, comboHits, juggled: wasJuggled || isAirborne(defender), kiBurst: Boolean(sourceMove.kiBurst) });
+  recoverHealthFromDamage(attacker, hitDamage, 0.2);
   defender.blockstunFramesRemaining = 0;
   defender.blockPunishWindowFrames = 0;
   defender.currentMove = null;
@@ -5091,11 +5120,123 @@ function isCounterHit(defender: FighterRuntime) {
   return defender.moveFrame <= defender.currentMove.startupFrames + defender.currentMove.activeFrames;
 }
 
-function applyFighterDamage(fighter: FighterRuntime, damage: number) {
+type RecoverableDamageContext = {
+  move?: MoveDefinition | null;
+  blocked?: boolean;
+  comboHits?: number;
+  juggled?: boolean;
+  counterHit?: boolean;
+  punish?: boolean;
+  whiffPunish?: boolean;
+  launcher?: boolean;
+  throwHit?: boolean;
+  kiBurst?: boolean;
+  clash?: boolean;
+};
+
+function applyFighterDamage(fighter: FighterRuntime, damage: number, context: RecoverableDamageContext = {}) {
   if (damage <= 0) return;
   const previousHp = fighter.hp;
   fighter.hp = Math.max(0, fighter.hp - damage);
-  if (fighter.hp < previousHp) fighter.tookDamageThisRound = true;
+  if (fighter.hp < previousHp) {
+    fighter.tookDamageThisRound = true;
+    fighter.recoverableRecoveryDelayFrames = RECOVERABLE_DAMAGE_DELAY_FRAMES;
+    addRecoverableDamage(fighter, previousHp - fighter.hp, context);
+  }
+  if (fighter.hp <= 0) clearRecoverableHealth(fighter);
+}
+
+function addRecoverableDamage(fighter: FighterRuntime, damage: number, context: RecoverableDamageContext) {
+  if (fighter.maxHp >= INFINITE_HEALTH_VALUE || damage <= 0) return;
+  const rate = getRecoverableDamageRate(context);
+  const recoverableDamage = Math.max(0, Math.round(damage * rate));
+  if (recoverableDamage <= 0) return;
+  const cap = getRecoverableHealthCap(fighter);
+  fighter.recoverableHp = clamp(fighter.recoverableHp + recoverableDamage, 0, cap);
+  fighter.recoverableFlashFrames = RECOVERABLE_FLASH_FRAMES;
+}
+
+function getRecoverableDamageRate(context: RecoverableDamageContext) {
+  if (context.blocked) return 0.85;
+  if (context.clash || context.kiBurst || context.throwHit || context.counterHit || context.punish || context.whiffPunish) return 0.1;
+  if (context.juggled || (context.comboHits ?? 0) > 1) return 0.55;
+  if (context.launcher) return 0.25;
+  const damage = context.move?.damage ?? 0;
+  if (damage <= 8) return 0.15;
+  if (damage <= 14) return 0.25;
+  return 0.3;
+}
+
+function erodeRecoverableHealthForStarter(defender: FighterRuntime, context: RecoverableDamageContext) {
+  if ((context.comboHits ?? 0) !== 1 || defender.recoverableHp <= 0) return;
+  let rate = 0.45;
+  if (context.kiBurst || context.clash) rate = 1;
+  else if (context.launcher || context.throwHit) rate = 0.7;
+  else if (context.counterHit || context.punish || context.whiffPunish) rate = 0.6;
+  const eroded = Math.min(defender.recoverableHp, Math.ceil(defender.recoverableHp * rate));
+  defender.recoverableHp = Math.max(0, defender.recoverableHp - eroded);
+  defender.displayRecoverableHp = Math.min(defender.displayRecoverableHp, defender.recoverableHp);
+  if (eroded > 0) defender.recoverableFlashFrames = RECOVERABLE_FLASH_FRAMES;
+}
+
+function recoverHealthFromDamage(fighter: FighterRuntime, damage: number, rate: number) {
+  if (damage <= 0) return;
+  recoverFighterHealth(fighter, Math.max(1, Math.round(damage * rate)));
+}
+
+function recoverHealthFromBlock(fighter: FighterRuntime, blockDamage: number) {
+  recoverFighterHealth(fighter, Math.max(1, Math.round(Math.max(0, blockDamage) * 0.35)));
+}
+
+function recoverFighterHealth(fighter: FighterRuntime, amount: number) {
+  if (amount <= 0 || fighter.recoverableHp <= 0 || fighter.hp <= 0) return;
+  const recovered = Math.min(amount, fighter.recoverableHp, Math.max(0, fighter.maxHp - fighter.hp));
+  if (recovered <= 0) return;
+  fighter.hp = Math.min(fighter.maxHp, fighter.hp + recovered);
+  fighter.recoverableHp = Math.max(0, fighter.recoverableHp - recovered);
+  fighter.recoverableFlashFrames = RECOVERABLE_FLASH_FRAMES;
+}
+
+function updateRecoverableHealth(match: MatchSnapshot, frameDelta: number) {
+  for (const fighter of match.fighters) {
+    clampRecoverableHealth(fighter);
+    if (fighter.recoverableFlashFrames > 0) fighter.recoverableFlashFrames = Math.max(0, fighter.recoverableFlashFrames - frameDelta);
+    if (fighter.recoverableRecoveryDelayFrames > 0) {
+      fighter.recoverableRecoveryDelayFrames = Math.max(0, fighter.recoverableRecoveryDelayFrames - frameDelta);
+    } else if (canPassivelyRecoverHealth(fighter)) {
+      const beforeTick = Math.floor(fighter.recoverableRecoveryDelayFrames / -RECOVERABLE_PASSIVE_TICK_FRAMES);
+      fighter.recoverableRecoveryDelayFrames -= frameDelta;
+      const afterTick = Math.floor(fighter.recoverableRecoveryDelayFrames / -RECOVERABLE_PASSIVE_TICK_FRAMES);
+      if (afterTick > beforeTick) recoverFighterHealth(fighter, afterTick - beforeTick);
+    }
+    fighter.displayRecoverableHp = approachNumber(fighter.displayRecoverableHp, fighter.recoverableHp, Math.max(1, frameDelta) * RECOVERABLE_DISPLAY_LERP);
+  }
+}
+
+function canPassivelyRecoverHealth(fighter: FighterRuntime) {
+  if (fighter.recoverableHp <= 0 || fighter.hp <= 0 || fighter.hp >= fighter.maxHp) return false;
+  return !['hit', 'juggle', 'knockdown', 'getup', 'throwHold', 'throwHeld', 'transform', 'attack'].includes(fighter.state);
+}
+
+function approachNumber(current: number, target: number, factor: number) {
+  if (Math.abs(target - current) < 0.05) return target;
+  return current + (target - current) * clamp(factor, 0, 1);
+}
+
+function getRecoverableHealthCap(fighter: FighterRuntime) {
+  return Math.max(0, fighter.maxHp - fighter.hp);
+}
+
+function clampRecoverableHealth(fighter: FighterRuntime) {
+  fighter.recoverableHp = clamp(fighter.recoverableHp, 0, getRecoverableHealthCap(fighter));
+  fighter.displayRecoverableHp = clamp(fighter.displayRecoverableHp, 0, getRecoverableHealthCap(fighter));
+}
+
+function clearRecoverableHealth(fighter: FighterRuntime) {
+  fighter.recoverableHp = 0;
+  fighter.displayRecoverableHp = 0;
+  fighter.recoverableRecoveryDelayFrames = 0;
+  fighter.recoverableFlashFrames = 0;
 }
 
 function getRoundFinishMessage(winner: FighterRuntime, loser: FighterRuntime) {
@@ -5216,6 +5357,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   defeated.forEach((fighter) => {
     fighter.hp = fighter.maxHp;
     fighter.tookDamageThisRound = false;
+    clearRecoverableHealth(fighter);
     fighter.visualHitstop = createEmptyVisualHitstop();
   });
 }

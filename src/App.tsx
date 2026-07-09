@@ -23090,6 +23090,10 @@ function FightScreen({
   const pauseLatch = useRef(false);
   const moveListTabLatch = useRef(false);
   const frameInputRef = useRef('none');
+  const [trainingButtonHistory, setTrainingButtonHistory] = useState<TrainingButtonHistoryEntry[]>([]);
+  const trainingButtonHistoryRef = useRef<TrainingButtonHistoryEntry[]>([]);
+  const trainingButtonHistorySequenceRef = useRef(0);
+  const trainingButtonHistoryActiveSignatureRef = useRef<string | null>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   const seenCombatEventIds = useRef<Set<number>>(new Set());
   const seenImpactScoreEventIds = useRef<Set<number>>(new Set());
@@ -23213,8 +23217,37 @@ function FightScreen({
     matchStartedTrackedRef.current = false;
   }, []);
 
+  const resetTrainingButtonHistory = useCallback(() => {
+    trainingButtonHistoryRef.current = [];
+    trainingButtonHistorySequenceRef.current = 0;
+    trainingButtonHistoryActiveSignatureRef.current = null;
+    setTrainingButtonHistory([]);
+  }, []);
+
+  const recordTrainingButtonHistoryInput = useCallback((input: InputFrame) => {
+    const signature = getTrainingButtonHistorySignature(input);
+    if (!signature) {
+      trainingButtonHistoryActiveSignatureRef.current = null;
+      return;
+    }
+    const tokens = getTrainingButtonHistoryTokens(input);
+    const [latest] = trainingButtonHistoryRef.current;
+    const next = latest?.signature === signature && trainingButtonHistoryActiveSignatureRef.current === signature
+      ? [{ ...latest, frames: latest.frames + 1 }, ...trainingButtonHistoryRef.current.slice(1)]
+      : [{
+          id: trainingButtonHistorySequenceRef.current++,
+          signature,
+          tokens,
+          frames: 1
+        }, ...trainingButtonHistoryRef.current].slice(0, TRAINING_BUTTON_HISTORY_LIMIT);
+    trainingButtonHistoryActiveSignatureRef.current = signature;
+    trainingButtonHistoryRef.current = next;
+    setTrainingButtonHistory(next);
+  }, []);
+
   const resetTransientFightRuntime = useCallback((freshMatch: MatchSnapshot) => {
     resetTrackedMatchAnalytics(freshMatch);
+    resetTrainingButtonHistory();
     setCombatPopups([]);
     seenCombatEventIds.current.clear();
     seenImpactScoreEventIds.current.clear();
@@ -23257,7 +23290,7 @@ function FightScreen({
       ready: false
     });
     setShowLateAssetFallback(false);
-  }, [resetTrackedMatchAnalytics]);
+  }, [resetTrackedMatchAnalytics, resetTrainingButtonHistory]);
 
   const installFreshMatch = useCallback((freshMatch: MatchSnapshot) => {
     resetTransientFightRuntime(freshMatch);
@@ -25388,6 +25421,7 @@ function FightScreen({
             const trialInput = currentTrial && currentPreview?.trialId === currentTrial.id
               ? makePreviewInput(currentTrial.previewScript, currentPreview.frame)
               : p1Input;
+            if (mode === 'training') recordTrainingButtonHistoryInput(trialInput);
             matchRef.current = stepMatch(matchRef.current, trialInput, p2Input, fixedStep);
             if (mode === 'training' && currentTrial) {
               const currentProgress = trainingTrialProgressRef.current;
@@ -25436,7 +25470,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, installFreshMatch, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, stage, trackOnlinePerformanceFrame]);
+  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, installFreshMatch, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, recordTrainingButtonHistoryInput, stage, trackOnlinePerformanceFrame]);
 
   const requestOnlineRematch = () => {
     if (isTournamentMatchMode(mode)) {
@@ -25535,6 +25569,11 @@ function FightScreen({
       {
         ...fresh.fighters[0],
         position: { ...fresh.fighters[0].position, x: setup.p1Position?.x ?? -0.45, y: p1StartsGrounded ? 0 : Math.max(0.18, fresh.fighters[0].position.y), z: setup.p1Position?.z ?? 0 },
+        hp: setup.p1Hp ?? fresh.fighters[0].hp,
+        recoverableHp: setup.p1RecoverableHp ?? fresh.fighters[0].recoverableHp,
+        displayRecoverableHp: setup.p1RecoverableHp ?? fresh.fighters[0].displayRecoverableHp,
+        recoverableRecoveryDelayFrames: setup.p1RecoverableHp ? 0 : fresh.fighters[0].recoverableRecoveryDelayFrames,
+        recoverableFlashFrames: setup.p1RecoverableHp ? 28 : fresh.fighters[0].recoverableFlashFrames,
         facing: 1,
         facingYaw: Math.PI / 2,
         commandHistory: [],
@@ -25561,6 +25600,11 @@ function FightScreen({
       {
         ...fresh.fighters[1],
         position: { ...fresh.fighters[1].position, x: setup.p2Position?.x ?? 0.45, y: p2StartsGrounded ? 0 : Math.max(0.18, fresh.fighters[1].position.y), z: setup.p2Position?.z ?? 0 },
+        hp: setup.p2Hp ?? fresh.fighters[1].hp,
+        recoverableHp: setup.p2RecoverableHp ?? fresh.fighters[1].recoverableHp,
+        displayRecoverableHp: setup.p2RecoverableHp ?? fresh.fighters[1].displayRecoverableHp,
+        recoverableRecoveryDelayFrames: setup.p2RecoverableHp ? 0 : fresh.fighters[1].recoverableRecoveryDelayFrames,
+        recoverableFlashFrames: setup.p2RecoverableHp ? 28 : fresh.fighters[1].recoverableFlashFrames,
         facing: -1,
         facingYaw: -Math.PI / 2,
         commandHistory: [],
@@ -25856,6 +25900,12 @@ function FightScreen({
   const tournamentMatch = isTournamentMatchMode(mode);
   const rankedRematchCapReached = isRanked && onlineRematchCount >= RANKED_REMATCH_LIMIT;
   const onlineAssetGateActive = Boolean(onlineAssetGate);
+  const trainingButtonHistoryVisible =
+    mode === 'training' &&
+    !onlineAssetGateActive &&
+    !paused &&
+    !trainingTrialOutcome &&
+    !(showLateAssetFallback && (assetLoadingState.active || !assetLoadingState.ready));
   const canRematch = !tournamentMatch;
   const rematchDisabled = Boolean(isRanked && ((rankedPlayerResult?.promoted && !rankedPromotionAccepted) || rankedRematchCapReached));
   const rematchButtonLabel = rankedRematchCapReached
@@ -25897,6 +25947,7 @@ function FightScreen({
         </>
       )}
       {!onlineAssetGateActive && <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />}
+      {trainingButtonHistoryVisible && <TrainingButtonHistory entries={trainingButtonHistory} />}
       {!onlineAssetGateActive && <CombatPopupLayer popups={combatPopups} />}
       {!onlineAssetGateActive && <ClashOverlay match={match} />}
       <button
@@ -27852,6 +27903,79 @@ function FightDebug({
   );
 }
 
+type TrainingButtonHistoryEntry = {
+  id: number;
+  signature: string;
+  tokens: string[];
+  frames: number;
+};
+
+const TRAINING_BUTTON_HISTORY_LIMIT = 18;
+
+function getTrainingButtonHistoryTokens(input: InputFrame) {
+  const tokens: string[] = [];
+  const vertical = input.up ? 'up' : input.down ? 'down' : '';
+  const horizontal = input.right ? 'right' : input.left ? 'left' : '';
+  const directionToken =
+    vertical === 'up' && horizontal === 'right' ? '↗' :
+    vertical === 'up' && horizontal === 'left' ? '↖' :
+    vertical === 'down' && horizontal === 'right' ? '↘' :
+    vertical === 'down' && horizontal === 'left' ? '↙' :
+    horizontal === 'right' ? '→' :
+    horizontal === 'left' ? '←' :
+    vertical === 'up' ? '↑' :
+    vertical === 'down' ? '↓' :
+    '';
+  if (directionToken) tokens.push(directionToken);
+  if (input.dashForward) tokens.push('Dash F');
+  if (input.dashBack) tokens.push('Back Hop');
+  if (input.sidestepUp) tokens.push('SS↑');
+  if (input.sidestepDown) tokens.push('SS↓');
+  if (input.sidewalkUp) tokens.push('Walk↑');
+  if (input.sidewalkDown) tokens.push('Walk↓');
+  if (input.jump) tokens.push('Jump');
+  if (input.block) tokens.push('Block');
+  if (input.charge) tokens.push('Charge');
+  if (input.jab) tokens.push('1');
+  if (input.heavy) tokens.push('2');
+  if (input.kick) tokens.push('3');
+  if (input.special) tokens.push('4');
+  return tokens;
+}
+
+function getTrainingButtonHistorySignature(input: InputFrame) {
+  return getTrainingButtonHistoryTokens(input).join('|');
+}
+
+function TrainingButtonHistory({ entries }: { entries: TrainingButtonHistoryEntry[] }) {
+  const visibleEntries = entries.slice(0, TRAINING_BUTTON_HISTORY_LIMIT);
+  return (
+    <aside className="training-button-history" data-testid="training-button-history" aria-label="Training button history">
+      <header>
+        <span>Input History</span>
+      </header>
+      <div className="training-button-history-list">
+        {visibleEntries.length === 0 ? (
+          <div className="training-button-history-empty">Neutral</div>
+        ) : visibleEntries.map((entry, index) => (
+          <div
+            key={entry.id}
+            className={`training-button-history-row ${index === 0 ? 'latest' : ''}`}
+            data-testid={`training-button-history-row-${index}`}
+          >
+            <div className="training-button-history-tokens">
+              {entry.tokens.map((token) => (
+                <span key={`${entry.id}:${token}`}>{token}</span>
+              ))}
+            </div>
+            <small>{entry.frames}f</small>
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
 function ClashOverlay({ match }: { match: MatchSnapshot }) {
   const clash = match.clashState;
   if (!clash || clash.status === 'none') return null;
@@ -28027,13 +28151,15 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
 function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; onlineWins?: number }) {
   const isInfiniteHealth = fighter.maxHp >= 999_999;
   const percent = isInfiniteHealth ? 100 : Math.max(0, Math.min(100, (fighter.hp / Math.max(1, fighter.maxHp)) * 100));
+  const recoverablePercent = isInfiniteHealth ? 0 : Math.max(0, Math.min(100, ((fighter.hp + fighter.displayRecoverableHp) / Math.max(1, fighter.maxHp)) * 100));
   const kiPercent = Math.max(0, Math.min(100, fighter.displayKi));
   const transformPercent = Math.max(0, Math.min(100, fighter.displayTransformOvercharge));
   const transformReady = fighter.transformReadyTimer > 0 && transformPercent > 0;
   const isDanger = percent <= 25;
+  const hasRecoverable = recoverablePercent > percent + 0.1;
   const portraitPath = getHudPortraitPath(fighter.character);
   return (
-    <div className={`health ${align} ${isDanger ? 'danger' : ''}`}>
+    <div className={`health ${align} ${isDanger ? 'danger' : ''} ${hasRecoverable ? 'has-recoverable' : ''} ${fighter.recoverableFlashFrames > 0 ? 'recoverable-flash' : ''}`}>
       <div className="health-identity">
         <div className="hud-portrait" aria-hidden="true">
           {portraitPath ? <img src={portraitPath} alt="" /> : <span>{fighter.character.displayName.slice(0, 2).toUpperCase()}</span>}
@@ -28043,7 +28169,8 @@ function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fig
         </div>
       </div>
       <div className="health-track">
-        <span style={{ width: `${percent}%`, background: isDanger ? 'linear-gradient(90deg, #ff1f32, #ff5b2f 60%, #fff0a5)' : fighter.character.colors.primary }} />
+        <span className="recoverable-health-fill" style={{ width: `${recoverablePercent}%` }} />
+        <span className="current-health-fill" style={{ width: `${percent}%`, background: isDanger ? 'linear-gradient(90deg, #ff1f32, #ff5b2f 60%, #fff0a5)' : fighter.character.colors.primary }} />
       </div>
       <div className={`ki-track ${transformPercent > 0 ? 'has-transform-charge' : ''} ${transformReady ? 'transform-ready' : ''}`} aria-label={`${fighter.character.displayName} ki`}>
         <span className="ki-fill" style={{ width: `${kiPercent}%` }} />
