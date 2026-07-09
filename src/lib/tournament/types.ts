@@ -211,6 +211,26 @@ export type TournamentEmailSubscribeResult = {
   emailSent: boolean;
 };
 
+export type TournamentPaidRecoveryRequest = {
+  tournamentId: string;
+  playerId: string;
+  email?: string;
+};
+
+export type TournamentPaidRecoveryRequestResult = {
+  ok: boolean;
+  email: string;
+  emailSent: boolean;
+  expiresAt: number;
+};
+
+export type TournamentPaidRecoveryConfirmRequest = {
+  tournamentId: string;
+  playerId: string;
+  code: string;
+  posthogDeviceId: string;
+};
+
 export type TournamentRoomJoinRequest = {
   tournamentId: string;
   matchId: string;

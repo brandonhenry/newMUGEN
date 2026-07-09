@@ -209,6 +209,7 @@ import {
 import {
   advanceTournamentBracket,
   claimTournamentPrize,
+  confirmPaidTournamentRecovery,
   createCustomLocalTournamentBracket,
   createInfiniteTournamentBracket,
   createLocalTournamentBracket,
@@ -224,6 +225,7 @@ import {
   getTournamentOpponentEntry,
   joinTournamentMatchRoom,
   reportTournamentMatch,
+  requestPaidTournamentRecovery,
   simulateCpuTournamentMatches,
   subscribeTournamentEmail,
   type TournamentBracket,
@@ -267,6 +269,7 @@ type E2EWindow = Window & {
   __koreE2ECompleteTrainingTrial?: () => void;
   __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void;
   __koreE2ESeedOnlineTournament?: (status: TournamentStatusResult) => void;
+  __koreE2ESeedPaidRecoveryPrompt?: (profile: OnlinePlayerProfile, message?: string) => void;
 };
 type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -3279,7 +3282,7 @@ export default function App() {
 
   useEffect(() => {
     if (screen !== 'tournament' || !onlineProfile) return undefined;
-    const posthogDeviceId = getPostHogDeviceId();
+    const posthogDeviceId = getPostHogDeviceId() || (import.meta.env.DEV && e2eSimulateOnlineTournament ? 'e2e-device' : '');
     if (!posthogDeviceId) return undefined;
     let cancelled = false;
     void fetchTournamentStatus(PAID_LIGHTNING_TOURNAMENT_ID, onlineProfile.playerId, posthogDeviceId)
@@ -3441,6 +3444,34 @@ export default function App() {
     return 'Prize sent';
   }, [captureAppAnalytics, capturePositiveMilestone, e2eSimulateOnlineTournament, onlineProfile, onlineTournamentStatus]);
 
+  const requestPaidTournamentEntryRecovery = useCallback(async () => {
+    const profile = onlineProfile;
+    const email = sanitizeEmail(profile?.email);
+    if (!profile || !email) throw new Error('Save a reminder email before recovering a paid entry.');
+    const result = await requestPaidTournamentRecovery({
+      tournamentId: onlineTournamentStatus?.bracket.id ?? PAID_LIGHTNING_TOURNAMENT_ID,
+      playerId: profile.playerId,
+      email
+    });
+    return result.emailSent ? `Recovery code sent to ${result.email}` : `Recovery code saved for ${result.email}`;
+  }, [e2eSimulateOnlineTournament, onlineProfile, onlineTournamentStatus?.bracket.id]);
+
+  const confirmPaidTournamentEntryRecovery = useCallback(async (code: string) => {
+    const profile = onlineProfile;
+    if (!profile) throw new Error('Player profile unavailable.');
+    const posthogDeviceId = getPostHogDeviceId() || (import.meta.env.DEV && e2eSimulateOnlineTournament ? 'e2e-device' : '');
+    if (!posthogDeviceId) throw new Error('Device id unavailable. Reload and try again.');
+    const status = await confirmPaidTournamentRecovery({
+      tournamentId: onlineTournamentStatus?.bracket.id ?? PAID_LIGHTNING_TOURNAMENT_ID,
+      playerId: profile.playerId,
+      code,
+      posthogDeviceId
+    });
+    setOnlineTournamentStatus(status);
+    setTournamentStatusText(status.statusText || 'Paid tournament recovered');
+    return 'Paid tournament recovered';
+  }, [onlineProfile, onlineTournamentStatus?.bracket.id]);
+
   const refreshOnlineTournament = useCallback(async () => {
     const current = onlineTournamentStatus;
     const profile = onlineProfile;
@@ -3528,8 +3559,19 @@ export default function App() {
       setMode('tournamentOnline');
       setScreen('tournamentLobby');
     };
+    testWindow.__koreE2ESeedPaidRecoveryPrompt = (profile, message = 'Paid tournament device mismatch') => {
+      const savedProfile = writeOnlineProfile(profile);
+      setOnlineProfile(savedProfile);
+      setOnlineTournamentStatus(null);
+      setLocalTournamentBracket(null);
+      setTournamentStatusText(message);
+      setE2eSimulateOnlineTournament(true);
+      setMode('tournamentOnline');
+      setScreen('tournamentLobby');
+    };
     return () => {
       if (testWindow.__koreE2ESeedOnlineTournament) delete testWindow.__koreE2ESeedOnlineTournament;
+      if (testWindow.__koreE2ESeedPaidRecoveryPrompt) delete testWindow.__koreE2ESeedPaidRecoveryPrompt;
     };
   }, [playableStageRoster, roster]);
 
@@ -4561,6 +4603,7 @@ export default function App() {
             onlineStatus={onlineTournamentStatus}
             statusText={tournamentStatusText}
             roster={roster}
+            onlineProfile={onlineProfile}
             onBack={() => {
               clearInfiniteTournamentRestart();
               setScreen('tournament');
@@ -4582,6 +4625,8 @@ export default function App() {
               startOnlineTournamentMatch();
             }}
             onClaimPrize={(bolt11) => claimPaidTournamentPrize(bolt11)}
+            onRequestPaidRecovery={requestPaidTournamentEntryRecovery}
+            onConfirmPaidRecovery={confirmPaidTournamentEntryRecovery}
           />
         )}
         {screen === 'tournamentBracket' && (
@@ -8979,21 +9024,27 @@ function TournamentLobbyScreen({
   onlineStatus,
   statusText,
   roster,
+  onlineProfile,
   onBack,
   onMenu,
   onRefresh,
   onStartOnlineMatch,
-  onClaimPrize
+  onClaimPrize,
+  onRequestPaidRecovery,
+  onConfirmPaidRecovery
 }: {
   localBracket: TournamentBracket | null;
   onlineStatus: TournamentStatusResult | null;
   statusText: string;
   roster: CharacterDefinition[];
+  onlineProfile: OnlinePlayerProfile | null;
   onBack: () => void;
   onMenu: () => void;
   onRefresh: () => void;
   onStartOnlineMatch: () => void;
   onClaimPrize: (bolt11: string) => Promise<string>;
+  onRequestPaidRecovery: () => Promise<string>;
+  onConfirmPaidRecovery: (code: string) => Promise<string>;
 }) {
   const bracket = onlineStatus?.bracket ?? localBracket;
   const assignedMatch = onlineStatus?.assignedMatch;
@@ -9003,7 +9054,8 @@ function TournamentLobbyScreen({
   const confirmedEntries = confirmedTournamentEntryCount(bracket);
   const winner = bracket?.matches.find((match) => match.round === finalRound && match.winnerEntryId)?.winnerEntryId;
   const winnerEntry = getTournamentEntry(bracket ?? null, winner);
-  const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry);
+  const assignedRoomBlocked = assignedMatch?.roomStatus === 'review' || assignedMatch?.roomStatus === 'forfeit' || onlineStatus?.matchRoom?.status === 'review' || onlineStatus?.matchRoom?.status === 'forfeit';
+  const canStartOnlineMatch = Boolean(assignedMatch && onlineStatus?.entry && !assignedRoomBlocked);
   const paymentConfirmed = payment?.state === 'paid' || payment?.state === 'entryLocked' || onlineStatus?.entry?.paymentState === 'paid' || onlineStatus?.entry?.paymentState === 'entryLocked';
   const lightningUrl = payment?.lightningUrl ?? onlineStatus?.entry?.lightningUrl;
   const paymentRequest = payment?.paymentRequest ?? onlineStatus?.entry?.paymentRequest;
@@ -9014,6 +9066,8 @@ function TournamentLobbyScreen({
   const estimatedStartLabel = onlineStatus?.estimatedStartLabel ?? getEstimatedTournamentStartLabel(bracket);
   const startsWhenFullLabel = onlineStatus?.startsWhenFullLabel ?? (bracket ? `Tournament starts once ${bracket.minEntries} entries enter` : 'Tournament starts once enough players enter');
   const matchRoom = onlineStatus?.matchRoom;
+  const entryCharacter = tournamentEntryCharacter(roster, onlineStatus?.entry);
+  const canRecoverPaidEntry = !onlineStatus && /device mismatch|same device|different device/i.test(statusText) && Boolean(sanitizeEmail(onlineProfile?.email));
   const checkoutKey = payment?.checkingId ?? onlineStatus?.entry?.checkingId ?? '';
   const [cashAppCheckoutDismissed, setCashAppCheckoutDismissed] = useState(false);
 
@@ -9067,10 +9121,25 @@ function TournamentLobbyScreen({
             )}
             {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Confirming entry.</div>}
             {paymentConfirmed && <div className="tournament-status-strip">Success. You entered. Tournament starts once enough players enter.</div>}
+            {onlineStatus?.entry && (
+              <div className="tournament-status-strip">
+                Already entered as {onlineStatus.entry.displayName} with {entryCharacter?.displayName ?? onlineStatus.entry.characterId}. Entry details are locked for this bracket.
+              </div>
+            )}
             {matchRoom && (
               <div className="tournament-status-strip">
-                Match room {matchRoom.status}. {matchRoom.localRole ? `You are ${matchRoom.localRole}.` : 'Join during your live room slot.'}
+                {matchRoom.status === 'forfeit'
+                  ? 'Forfeit win awarded. Opponent did not arrive.'
+                  : matchRoom.status === 'review'
+                    ? 'Match needs review before the bracket can continue.'
+                    : `Match room ${matchRoom.status}. ${matchRoom.localRole ? `You are ${matchRoom.localRole}.` : 'Join during your live room slot.'}`}
               </div>
+            )}
+            {!matchRoom && assignedMatch?.roomStatus === 'review' && (
+              <div className="tournament-status-strip">Match needs review before the bracket can continue.</div>
+            )}
+            {!matchRoom && assignedMatch?.roomStatus === 'forfeit' && (
+              <div className="tournament-status-strip">Forfeit win awarded. Opponent did not arrive.</div>
             )}
             <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
             {winnerEntry && (
@@ -9086,7 +9155,16 @@ function TournamentLobbyScreen({
             )}
           </>
         ) : (
-          <div className="leaderboard-empty">No tournament entry yet.</div>
+          <>
+            <div className="leaderboard-empty">{statusText || 'No tournament entry yet.'}</div>
+            {canRecoverPaidEntry && (
+              <PaidTournamentRecoveryPanel
+                email={sanitizeEmail(onlineProfile?.email)}
+                onRequestRecovery={onRequestPaidRecovery}
+                onConfirmRecovery={onConfirmPaidRecovery}
+              />
+            )}
+          </>
         )}
       </section>
 
@@ -9160,6 +9238,75 @@ function TournamentPrizeClaim({
         Claim
       </button>
       {claimStatus && <small>{claimStatus}</small>}
+    </form>
+  );
+}
+
+function PaidTournamentRecoveryPanel({
+  email,
+  onRequestRecovery,
+  onConfirmRecovery
+}: {
+  email: string;
+  onRequestRecovery: () => Promise<string>;
+  onConfirmRecovery: (code: string) => Promise<string>;
+}) {
+  const [code, setCode] = useState('');
+  const [status, setStatus] = useState('');
+  const [requesting, setRequesting] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+  const cleanCode = code.replace(/\D/g, '').slice(0, 6);
+
+  return (
+    <form
+      className="tournament-claim-form tournament-recovery-form"
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (cleanCode.length !== 6 || confirming) return;
+        setConfirming(true);
+        setStatus('Checking recovery code');
+        void onConfirmRecovery(cleanCode)
+          .then((message) => setStatus(message))
+          .catch((error) => setStatus(error instanceof Error ? error.message : 'Recovery failed'))
+          .finally(() => setConfirming(false));
+      }}
+    >
+      <div>
+        <span>Paid Entry Recovery</span>
+        <strong>Same-device issue</strong>
+      </div>
+      <p>Send a one-time code to {email} to bind this paid entry to your current device.</p>
+      <button
+        type="button"
+        className="secondary-button"
+        disabled={requesting}
+        onClick={() => {
+          setRequesting(true);
+          setStatus('Sending recovery code');
+          void onRequestRecovery()
+            .then((message) => setStatus(message))
+            .catch((error) => setStatus(error instanceof Error ? error.message : 'Recovery code failed'))
+            .finally(() => setRequesting(false));
+        }}
+      >
+        <Send size={18} />
+        {requesting ? 'Sending' : 'Send Code'}
+      </button>
+      <label>
+        <span>Recovery code</span>
+        <input
+          value={cleanCode}
+          onChange={(event) => setCode(event.target.value.replace(/\D/g, '').slice(0, 6))}
+          placeholder="123456"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+        />
+      </label>
+      <button type="submit" className="primary-button" disabled={cleanCode.length !== 6 || confirming}>
+        <CheckCircle2 size={18} />
+        {confirming ? 'Recovering' : 'Recover Entry'}
+      </button>
+      {status && <small>{status}</small>}
     </form>
   );
 }

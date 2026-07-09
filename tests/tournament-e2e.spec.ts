@@ -122,6 +122,57 @@ test.describe('tournament end-to-end simulations', () => {
     await expect(page.getByRole('button', { name: 'Next Round' })).toBeVisible({ timeout: 10_000 });
     await expect(page.getByRole('button', { name: 'Add Friend' })).toHaveCount(0);
   });
+
+  test('blocks reviewed tournament rooms from starting a match', async ({ page }) => {
+    const seeded = makeOnlineTournamentStatus('freeOnline');
+    const reviewed: TournamentStatusResult = {
+      ...seeded,
+      assignedMatch: {
+        ...seeded.assignedMatch!,
+        roomStatus: 'review',
+        reportState: 'conflict'
+      },
+      matchRoom: {
+        ...seeded.matchRoom!,
+        status: 'review'
+      },
+      statusText: 'Result conflict needs review'
+    };
+
+    await startFromSplash(page);
+    await seedOnlineTournament(page, reviewed);
+
+    await expect(page.locator('.tournament-lobby-screen')).toContainText('Match needs review');
+    await expect(page.getByRole('button', { name: 'Start Match' })).toBeDisabled();
+  });
+
+  test('recovers a paid tournament entry by email code after device mismatch', async ({ page }) => {
+    const recovered = makeOnlineTournamentStatus('paidOnline');
+    await page.route('**/.netlify/functions/tournament-paid-recovery-request', async (route) => {
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ ok: true, email: 'e2***@example.com', emailSent: true, expiresAt: Date.now() + 600000 })
+      });
+    });
+    await page.route('**/.netlify/functions/tournament-paid-recovery-confirm', async (route) => {
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify(recovered)
+      });
+    });
+
+    await startFromSplash(page);
+    await seedPaidRecoveryPrompt(page);
+    await expect(page.locator('.tournament-recovery-form')).toContainText('Paid Entry Recovery');
+
+    await page.getByRole('button', { name: 'Send Code' }).click();
+    await expect(page.locator('.tournament-recovery-form')).toContainText('Recovery code sent');
+    await page.getByRole('textbox', { name: 'Recovery code' }).fill('123456');
+    await page.getByRole('button', { name: 'Recover Entry' }).click();
+
+    await expect(page.locator('.tournament-lobby-screen')).toContainText('Match room ready', { timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'Join Match Room' })).toBeEnabled();
+  });
 });
 
 async function startFromSplash(page: Page) {
@@ -186,6 +237,21 @@ async function seedOnlineTournament(page: Page, status: TournamentStatusResult) 
     if (!testWindow.__koreE2ESeedOnlineTournament) throw new Error('Missing KORE e2e tournament seed hook');
     testWindow.__koreE2ESeedOnlineTournament(nextStatus);
   }, status);
+}
+
+async function seedPaidRecoveryPrompt(page: Page) {
+  await page.evaluate(() => {
+    const testWindow = window as typeof window & {
+      __koreE2ESeedPaidRecoveryPrompt?: (profile: { playerId: string; displayName: string; email?: string; tournamentEmailReminders?: boolean }, message?: string) => void;
+    };
+    if (!testWindow.__koreE2ESeedPaidRecoveryPrompt) throw new Error('Missing KORE e2e recovery hook');
+    testWindow.__koreE2ESeedPaidRecoveryPrompt({
+      playerId: 'player-e2e',
+      displayName: 'E2E Player',
+      email: 'e2e@example.com',
+      tournamentEmailReminders: true
+    }, 'Paid tournament device mismatch');
+  });
 }
 
 async function attachScreenshot(page: Page, testInfo: TestInfo, name: string) {

@@ -4,7 +4,9 @@ import {
   assertTournamentEntryAssignedToMatch,
   attachTournamentRoomsToReadyMatches,
   readTournamentMatchRoom,
-  upsertTournamentMatchRoom
+  readTournamentMatchRoomRecord,
+  upsertTournamentMatchRoom,
+  writeTournamentMatchRoomRecord
 } from './_tournament-rooms.mjs';
 
 export const TOURNAMENT_STORE_NAME = 'kore-tournaments';
@@ -15,6 +17,7 @@ export const FREE_ONLINE_MIN_ENTRIES = 8;
 export const PAID_LIGHTNING_CAPACITY = 25;
 export const PAID_LIGHTNING_MIN_ENTRIES = 25;
 const FREE_ACTIVE_KEY = 'tournaments/free-online-active.json';
+const FREE_PLAYER_ENTRY_PREFIX = 'playerEntries';
 const FREE_SERIES_ID = 'free-online';
 const DEFAULT_BOT_CHARACTER_IDS = ['kiro', 'riven'];
 
@@ -33,11 +36,26 @@ export async function readTournament(store, id) {
 export async function writeTournament(store, bracket) {
   await store.setJSON(tournamentKey(bracket.id), bracket);
   if (bracket.kind === 'freeOnline' && bracket.status === 'open') await writeFreeActiveTournament(store, bracket);
+  if (bracket.kind === 'freeOnline' && bracket.status !== 'completed' && bracket.status !== 'cancelled') {
+    await Promise.all((bracket.entries || [])
+      .filter((entry) => entry?.playerId && !entry.isBot && !entry.isCpu)
+      .map((entry) => store.setJSON(freePlayerEntryKey(entry.playerId), {
+        playerId: entry.playerId,
+        tournamentId: bracket.id,
+        entryId: entry.id,
+        status: bracket.status,
+        updatedAt: bracket.updatedAt
+      }).catch(() => undefined)));
+  }
   return bracket;
 }
 
 async function writeFreeActiveTournament(store, bracket) {
   await store.setJSON(FREE_ACTIVE_KEY, { id: bracket.id, updatedAt: bracket.updatedAt });
+}
+
+export function freePlayerEntryKey(playerId) {
+  return `${FREE_PLAYER_ENTRY_PREFIX}/${cleanId(playerId)}.json`;
 }
 
 export async function getOrCreateFreeTournament(store, now = Date.now()) {
@@ -384,8 +402,13 @@ export async function getFreeTournamentRoomStatus(store, { tournamentId, matchId
   bracket = await ensureFreeTournamentRooms(store, bracket, now);
   const entry = findEntryByPlayer(bracket, playerId);
   if (!entry) throw Object.assign(new Error('Free tournament entry not found'), { statusCode: 404, code: 'entry_not_found' });
-  const match = bracket.matches.find((candidate) => candidate.id === cleanId(matchId));
+  let match = bracket.matches.find((candidate) => candidate.id === cleanId(matchId));
   assertTournamentEntryAssignedToMatch(entry, match);
+  const resolved = await resolveExpiredFreeMatchRoom(store, bracket, match, now);
+  if (resolved !== bracket) {
+    bracket = await writeTournament(store, resolved);
+    match = bracket.matches.find((candidate) => candidate.id === cleanId(matchId));
+  }
   const room = await readTournamentMatchRoom(store, bracket, match, entry, now);
   return {
     bracket,
@@ -395,6 +418,37 @@ export async function getFreeTournamentRoomStatus(store, { tournamentId, matchId
     payment: paymentSummary(entry),
     statusText: room?.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
   };
+}
+
+export async function resolveExpiredFreeAssignedRoom(store, bracket, playerId, now = Date.now()) {
+  const assignment = assignedMatch(bracket, playerId);
+  if (!assignment.entry || !assignment.match) return bracket;
+  return resolveExpiredFreeMatchRoom(store, bracket, assignment.match, now);
+}
+
+export async function resolveExpiredFreeMatchRoom(store, bracket, match, now = Date.now()) {
+  if (!match?.roomId || match.status !== 'ready' || !match.slotEndsAt || now <= match.slotEndsAt) return bracket;
+  if (match.roomStatus === 'forfeit' || match.roomStatus === 'review' || match.reportState === 'forfeit') return bracket;
+  const stored = await readTournamentMatchRoomRecord(store, bracket.id, match.id);
+  const room = stored || {
+    tournamentId: bracket.id,
+    matchId: match.id,
+    roomId: match.roomId,
+    slotStartsAt: match.slotStartsAt,
+    slotEndsAt: match.slotEndsAt,
+    status: 'closed'
+  };
+  const joinedEntryIds = [room.hostEntryId, room.guestEntryId]
+    .filter((entryId) => entryId && (entryId === match.entryAId || entryId === match.entryBId));
+  const uniqueJoined = [...new Set(joinedEntryIds)];
+  if (uniqueJoined.length === 1) {
+    const winnerEntryId = uniqueJoined[0];
+    const advanced = reportWinner(bracket, match.id, winnerEntryId, now);
+    await writeTournamentMatchRoomRecord(store, bracket.id, match.id, { ...room, status: 'forfeit', winnerEntryId, resolvedAt: now });
+    return patchTournamentMatch(advanced, match.id, { roomStatus: 'forfeit', reportState: 'forfeit' });
+  }
+  await writeTournamentMatchRoomRecord(store, bracket.id, match.id, { ...room, status: 'review', resolvedAt: now });
+  return patchTournamentMatch(bracket, match.id, { roomStatus: 'review', reportState: 'forfeit', reportedAt: now }, now);
 }
 
 async function ensureFreeTournamentRooms(store, bracket, now = Date.now()) {
@@ -428,6 +482,30 @@ function applyReportedWinner(bracket, matchId, winnerEntryId, now = Date.now()) 
     reward: final ? { ...bracket.reward, state: bracket.kind === 'paidOnline' ? 'pending' : 'earned' } : bracket.reward,
     updatedAt: now
   };
+}
+
+export function patchTournamentMatch(bracket, matchId, patch, now = Date.now()) {
+  return {
+    ...bracket,
+    matches: bracket.matches.map((match) => match.id === matchId ? { ...match, ...patch } : match),
+    updatedAt: now
+  };
+}
+
+export function resolveReviewedTournamentMatch(bracket, matchId, winnerEntryId, now = Date.now()) {
+  const match = bracket.matches.find((candidate) => candidate.id === cleanId(matchId));
+  const cleanWinnerEntryId = cleanId(winnerEntryId);
+  if (!match) throw Object.assign(new Error('Match not found'), { statusCode: 404, code: 'match_not_found' });
+  if (match.entryAId !== cleanWinnerEntryId && match.entryBId !== cleanWinnerEntryId) {
+    throw Object.assign(new Error('Winner is not assigned to this match'), { statusCode: 400, code: 'invalid_winner' });
+  }
+  const resolved = reportWinner(bracket, match.id, cleanWinnerEntryId, now);
+  return patchTournamentMatch(resolved, match.id, {
+    winnerEntryId: cleanWinnerEntryId,
+    roomStatus: 'forfeit',
+    reportState: 'agreed',
+    adminResolvedAt: now
+  }, now);
 }
 
 export function statusText(bracket, match) {

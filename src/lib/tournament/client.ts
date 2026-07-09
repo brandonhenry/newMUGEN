@@ -7,6 +7,9 @@ import type {
   TournamentClaimPrizeRequest,
   TournamentClaimPrizeResult,
   TournamentEntry,
+  TournamentPaidRecoveryConfirmRequest,
+  TournamentPaidRecoveryRequest,
+  TournamentPaidRecoveryRequestResult,
   TournamentRoomJoinRequest,
   TournamentRoomStatusRequest,
   TournamentReportRequest,
@@ -54,6 +57,14 @@ export async function subscribeTournamentEmail(request: TournamentEmailSubscribe
     if (isLocalFallbackAllowed()) return { ok: true, email: request.email, emailSent: false };
     throw error;
   });
+}
+
+export async function requestPaidTournamentRecovery(request: TournamentPaidRecoveryRequest): Promise<TournamentPaidRecoveryRequestResult> {
+  return postJson<TournamentPaidRecoveryRequestResult>('/.netlify/functions/tournament-paid-recovery-request', request);
+}
+
+export async function confirmPaidTournamentRecovery(request: TournamentPaidRecoveryConfirmRequest): Promise<TournamentStatusResult> {
+  return postJson<TournamentStatusResult>('/.netlify/functions/tournament-paid-recovery-confirm', request);
 }
 
 export async function joinTournamentMatchRoom(request: TournamentRoomJoinRequest): Promise<TournamentStatusResult> {

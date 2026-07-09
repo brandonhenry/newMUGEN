@@ -6,6 +6,7 @@ import {
   json,
   paymentSummary,
   readTournament,
+  resolveExpiredFreeAssignedRoom,
   reportWinner,
   statusText,
   writeTournament
@@ -29,9 +30,23 @@ export async function handler(event) {
       return json(200, await reportPaidTournamentWinner(getPaidTournamentStores(event), matchId, reporterPlayerId, winnerEntryId, body.posthogDeviceId, body.roomId, Date.now()));
     }
     const store = getTournamentStore(event);
-    const bracket = await readTournament(store, tournamentId);
+    let bracket = await readTournament(store, tournamentId);
     if (!bracket) return json(404, { error: 'tournament_not_found' });
+    const originalBracket = bracket;
+    const resolved = await resolveExpiredFreeAssignedRoom(store, bracket, reporterPlayerId, Date.now());
+    if (resolved !== originalBracket) {
+      bracket = await writeTournament(store, resolved);
+    }
     const currentAssignment = assignedMatch(bracket, reporterPlayerId);
+    if (resolved !== originalBracket && (!currentAssignment.match || currentAssignment.match.id !== matchId)) {
+      return json(200, {
+        bracket,
+        entry: currentAssignment.entry,
+        assignedMatch: currentAssignment.match,
+        payment: paymentSummary(currentAssignment.entry),
+        statusText: statusText(bracket, currentAssignment.match)
+      });
+    }
     if (!currentAssignment.match || currentAssignment.match.id !== matchId) {
       return json(403, { error: 'match_not_assigned', message: 'Reporter is not assigned to this match' });
     }

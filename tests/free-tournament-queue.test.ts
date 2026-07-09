@@ -121,7 +121,7 @@ describe('free online tournament queue', () => {
     expect(guest.matchRoom).toMatchObject({ localRole: 'guest', status: 'ready', hostPeerId: 'peer-host', guestPeerId: 'peer-guest' });
   });
 
-  it('closes expired free match rooms and rejects players not assigned to the match', async () => {
+  it('reviews expired free match rooms with no arrivals and rejects players not assigned to the match', async () => {
     const store = makeMemoryStore();
     const bracket = await createFullFreeBracket(store);
     const match = bracket.matches.find((candidate: any) => candidate.status === 'ready') as any;
@@ -141,7 +141,32 @@ describe('free online tournament queue', () => {
       playerId: entryA.playerId
     }, match.slotEndsAt + 1);
 
-    expect(closed.matchRoom).toMatchObject({ status: 'closed' });
+    expect(closed.matchRoom).toMatchObject({ status: 'review' });
+    expect(closed.assignedMatch).toMatchObject({ roomStatus: 'review', reportState: 'forfeit' });
+  });
+
+  it('awards a free forfeit win when exactly one player joined before room expiry', async () => {
+    const store = makeMemoryStore();
+    const bracket = await createFullFreeBracket(store);
+    const match = bracket.matches.find((candidate: any) => candidate.status === 'ready') as any;
+    const entryA = bracket.entries.find((entry: any) => entry.id === match.entryAId);
+
+    await joinFreeTournamentRoom(store, {
+      tournamentId: bracket.id,
+      matchId: match.id,
+      playerId: entryA.playerId,
+      peerId: 'peer-host'
+    }, match.slotStartsAt + 100);
+
+    const resolved = await getFreeTournamentRoomStatus(store, {
+      tournamentId: bracket.id,
+      matchId: match.id,
+      playerId: entryA.playerId
+    }, match.slotEndsAt + 1);
+
+    const completed = resolved.bracket.matches.find((candidate: any) => candidate.id === match.id);
+    expect(resolved.matchRoom).toMatchObject({ status: 'forfeit', winnerEntryId: entryA.id });
+    expect(completed).toMatchObject({ status: 'completed', winnerEntryId: entryA.id, roomStatus: 'forfeit', reportState: 'forfeit' });
   });
 });
 

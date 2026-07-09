@@ -8,7 +8,9 @@ import {
   json,
   paymentSummary,
   readTournament,
-  statusText
+  resolveExpiredFreeAssignedRoom,
+  statusText,
+  writeTournament
 } from './_tournament-store.mjs';
 import { readTournamentMatchRoom } from './_tournament-rooms.mjs';
 import {
@@ -28,10 +30,12 @@ export async function handler(event) {
       return json(200, await getPaidTournamentStatus(getPaidTournamentStores(event), playerId, params.posthogDeviceId));
     }
     const store = getTournamentStore(event);
-    const bracket = tournamentId === FREE_ONLINE_TOURNAMENT_ID
+    let bracket = tournamentId === FREE_ONLINE_TOURNAMENT_ID
       ? await resolveFreeTournamentStatusBracket(store, playerId)
       : await readTournament(store, tournamentId);
     if (!bracket) return json(404, { error: 'tournament_not_found' });
+    const resolved = playerId ? await resolveExpiredFreeAssignedRoom(store, bracket, playerId, Date.now()) : bracket;
+    if (resolved !== bracket) bracket = await writeTournament(store, resolved);
     const assignment = playerId ? assignedMatch(bracket, playerId) : { entry: undefined, match: undefined };
     const matchRoom = assignment.match && assignment.entry ? await readTournamentMatchRoom(store, bracket, assignment.match, assignment.entry) : undefined;
     return json(200, {

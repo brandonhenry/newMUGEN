@@ -1,4 +1,5 @@
 import { getBlobStore } from './_blob-store.mjs';
+import { createHash, randomInt } from 'node:crypto';
 import {
   assignedMatch,
   cleanId,
@@ -6,7 +7,9 @@ import {
   errorJson,
   generateOnlineBracket,
   json,
-  reportWinner
+  patchTournamentMatch,
+  reportWinner,
+  resolveReviewedTournamentMatch
 } from './_tournament-store.mjs';
 import {
   checkPayment,
@@ -22,9 +25,11 @@ import {
   attachTournamentRoomToMatch,
   attachTournamentRoomsToReadyMatches,
   readTournamentMatchRoom,
-  upsertTournamentMatchRoom
+  readTournamentMatchRoomRecord,
+  upsertTournamentMatchRoom,
+  writeTournamentMatchRoomRecord
 } from './_tournament-rooms.mjs';
-import { getTournamentEmailStore, notifyTournamentReady } from './_tournament-email.mjs';
+import { getTournamentEmailStore, notifyTournamentReady, readTournamentEmailSubscription, sendTournamentEmail } from './_tournament-email.mjs';
 
 export const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 const TOURNAMENT_STORE_NAME = 'kore-paid-tournaments';
@@ -33,6 +38,7 @@ const CHECKING_STORE_NAME = 'kore-paid-checking-ids';
 const PAYOUT_STORE_NAME = 'kore-paid-payouts';
 const LEDGER_STORE_NAME = 'kore-paid-ledger-events';
 const ROOM_STORE_NAME = 'kore-paid-match-rooms';
+const RECOVERY_STORE_NAME = 'kore-paid-recovery-codes';
 const ACTIVE_KEY = 'active.json';
 const PAID_SERIES_ID = 'paid-lightning';
 const PAID_TOURNAMENT_STAGE_POOL = ['the-chamber', 'the-chamber-green', 'metro-ring', 'forge-yard'];
@@ -45,7 +51,8 @@ export function getPaidTournamentStores(event) {
     payouts: getBlobStore(PAYOUT_STORE_NAME, event),
     rooms: getBlobStore(ROOM_STORE_NAME, event),
     ledger: getBlobStore(LEDGER_STORE_NAME, event),
-    email: getTournamentEmailStore(event)
+    email: getTournamentEmailStore(event),
+    recovery: getBlobStore(RECOVERY_STORE_NAME, event)
   };
 }
 
@@ -275,25 +282,31 @@ export async function getPaidTournamentStatus(stores, playerId, posthogDeviceId)
   const cleanPlayerId = cleanId(playerId);
   const deviceId = cleanDeviceId(posthogDeviceId);
   const deviceEntry = cleanPlayerId && deviceId ? await findEntryForDevice(stores, cleanPlayerId, deviceId) : null;
-  const bracket = deviceEntry
+  let bracket = deviceEntry
     ? await readPaidTournament(stores, deviceEntry.tournamentId)
     : await getOrCreatePaidTournament(stores);
   const assignment = cleanPlayerId ? assignedMatch(bracket, cleanPlayerId) : { entry: undefined, match: undefined };
   const entry = assignment.entry || deviceEntry || (cleanPlayerId ? await readEntry(stores, bracket.id, cleanPlayerId) : undefined);
   if (entry) assertEntryDevice(entry, deviceId);
-  const matchRoom = assignment.match && entry ? await readTournamentMatchRoom(stores.rooms, bracket, assignment.match, entry) : undefined;
+  const resolved = entry ? await resolveExpiredPaidAssignedRoom(stores, bracket, entry.playerId, Date.now()) : bracket;
+  if (resolved !== bracket) {
+    bracket = await writePaidTournament(stores, resolved);
+  }
+  const nextAssignment = cleanPlayerId ? assignedMatch(bracket, cleanPlayerId) : { entry: undefined, match: undefined };
+  const nextEntry = nextAssignment.entry || entry;
+  const matchRoom = nextAssignment.match && nextEntry ? await readTournamentMatchRoom(stores.rooms, bracket, nextAssignment.match, nextEntry) : undefined;
   const timing = paidTimingSummary(bracket);
   return {
     bracket,
-    entry,
-    assignedMatch: assignment.match,
+    entry: nextEntry,
+    assignedMatch: nextAssignment.match,
     matchRoom,
-    payment: paidPaymentSummary(entry),
+    payment: paidPaymentSummary(nextEntry),
     confirmedEntries: timing.confirmedEntries,
     entriesNeeded: timing.entriesNeeded,
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
-    statusText: paidStatusText(bracket, assignment.match)
+    statusText: paidStatusText(bracket, nextAssignment.match)
   };
 }
 
@@ -306,6 +319,27 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
   }
   let bracket = await readPaidTournament(stores, reporterEntry.tournamentId);
   if (!bracket) throw Object.assign(new Error('Paid tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
+  const originalBracket = bracket;
+  const resolved = await resolveExpiredPaidAssignedRoom(stores, bracket, reporterEntry.playerId, now);
+  if (resolved !== originalBracket) {
+    bracket = await writePaidTournament(stores, resolved);
+  }
+  const resolvedAssignment = assignedMatch(bracket, cleanReporterId);
+  if (resolved !== originalBracket && (!resolvedAssignment.match || resolvedAssignment.match.id !== matchId)) {
+    const timing = paidTimingSummary(bracket);
+    return {
+      bracket,
+      entry: resolvedAssignment.entry || reporterEntry,
+      assignedMatch: resolvedAssignment.match,
+      matchRoom: resolvedAssignment.match && resolvedAssignment.entry ? await readTournamentMatchRoom(stores.rooms, bracket, resolvedAssignment.match, resolvedAssignment.entry, now) : undefined,
+      payment: paidPaymentSummary(resolvedAssignment.entry || reporterEntry),
+      confirmedEntries: timing.confirmedEntries,
+      entriesNeeded: timing.entriesNeeded,
+      estimatedStartLabel: timing.estimatedStartLabel,
+      startsWhenFullLabel: timing.startsWhenFullLabel,
+      statusText: paidStatusText(bracket, resolvedAssignment.match)
+    };
+  }
   const match = bracket.matches.find((candidate) => candidate.id === matchId);
   if (!match || (match.entryAId !== reporterEntry.id && match.entryBId !== reporterEntry.id)) {
     throw Object.assign(new Error('Reporter is not assigned to this match'), { statusCode: 403, code: 'match_not_assigned' });
@@ -358,6 +392,146 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
     statusText: uniqueWinners.length > 1 ? 'Result conflict needs review' : reportedWinnerIds.length < 2 ? 'Waiting for opponent result confirmation' : paidStatusText(bracket, assignment.match)
+  };
+}
+
+export async function resolveExpiredPaidAssignedRoom(stores, bracket, playerId, now = Date.now()) {
+  const assignment = assignedMatch(bracket, playerId);
+  if (!assignment.entry || !assignment.match) return bracket;
+  return resolveExpiredPaidMatchRoom(stores, bracket, assignment.match, now);
+}
+
+export async function resolveExpiredPaidMatchRoom(stores, bracket, match, now = Date.now()) {
+  if (!match?.roomId || match.status !== 'ready' || !match.slotEndsAt || now <= match.slotEndsAt) return bracket;
+  if (match.roomStatus === 'forfeit' || match.roomStatus === 'review' || match.reportState === 'forfeit') return bracket;
+  const stored = await readTournamentMatchRoomRecord(stores.rooms, bracket.id, match.id);
+  const room = stored || {
+    tournamentId: bracket.id,
+    matchId: match.id,
+    roomId: match.roomId,
+    slotStartsAt: match.slotStartsAt,
+    slotEndsAt: match.slotEndsAt,
+    status: 'closed'
+  };
+  const joinedEntryIds = [room.hostEntryId, room.guestEntryId]
+    .filter((entryId) => entryId && (entryId === match.entryAId || entryId === match.entryBId));
+  const uniqueJoined = [...new Set(joinedEntryIds)];
+  if (uniqueJoined.length === 1) {
+    const winnerEntryId = uniqueJoined[0];
+    let advanced = attachTournamentRoomsToReadyMatches(reportWinner(bracket, match.id, winnerEntryId, now), now, PAID_TOURNAMENT_STAGE_POOL);
+    advanced = patchTournamentMatch(advanced, match.id, { roomStatus: 'forfeit', reportState: 'forfeit' }, now);
+    if (advanced.status === 'completed') {
+      advanced = await applyLockedPrizeSats(stores, advanced, now);
+    }
+    await writeTournamentMatchRoomRecord(stores.rooms, bracket.id, match.id, { ...room, status: 'forfeit', winnerEntryId, resolvedAt: now });
+    return advanced;
+  }
+  await writeTournamentMatchRoomRecord(stores.rooms, bracket.id, match.id, { ...room, status: 'review', resolvedAt: now });
+  return patchTournamentMatch(bracket, match.id, { roomStatus: 'review', reportState: 'forfeit', reportedAt: now }, now);
+}
+
+export async function resolvePaidTournamentReview(stores, tournamentId, matchId, winnerEntryId, resolver, reason, now = Date.now()) {
+  let bracket = await readPaidTournament(stores, tournamentId);
+  if (!bracket) throw Object.assign(new Error('Paid tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
+  bracket = attachTournamentRoomsToReadyMatches(resolveReviewedTournamentMatch(bracket, matchId, winnerEntryId, now), now, PAID_TOURNAMENT_STAGE_POOL);
+  if (bracket.status === 'completed') {
+    bracket = await applyLockedPrizeSats(stores, bracket, now);
+  }
+  await writePaidTournament(stores, bracket);
+  await writeLedgerEvent(stores, 'tournament_review_resolved', {
+    tournamentId: bracket.id,
+    matchId,
+    winnerEntryId,
+    resolver,
+    reason
+  }, now);
+  return { bracket };
+}
+
+export async function requestPaidTournamentRecovery(stores, { tournamentId, playerId, email }, now = Date.now()) {
+  const cleanTournamentId = cleanId(tournamentId);
+  const cleanPlayerId = cleanId(playerId);
+  if (!cleanTournamentId || !cleanPlayerId) {
+    throw Object.assign(new Error('Missing paid tournament recovery fields'), { statusCode: 400, code: 'missing_fields' });
+  }
+  const bracket = await readPaidTournament(stores, cleanTournamentId);
+  const entry = bracket ? await readEntry(stores, bracket.id, cleanPlayerId) : null;
+  if (!bracket || !entry || bracket.status === 'completed' || bracket.status === 'cancelled') {
+    throw Object.assign(new Error('Paid tournament entry not found for recovery'), { statusCode: 404, code: 'paid_entry_not_found' });
+  }
+  const subscription = await readTournamentEmailSubscription(stores.email, cleanPlayerId);
+  const requestedEmail = cleanRecoveryEmail(email);
+  if (!subscription?.email || (requestedEmail && subscription.email !== requestedEmail)) {
+    throw Object.assign(new Error('No saved reminder email for this paid entry'), { statusCode: 403, code: 'recovery_email_unavailable' });
+  }
+  const code = String(randomInt(100000, 1000000));
+  const expiresAt = now + 10 * 60 * 1000;
+  await stores.recovery.setJSON(recoveryKey(bracket.id, cleanPlayerId), {
+    tournamentId: bracket.id,
+    playerId: cleanPlayerId,
+    email: subscription.email,
+    codeHash: hashRecoveryCode(code, bracket.id, cleanPlayerId),
+    attempts: 0,
+    expiresAt,
+    createdAt: now,
+    usedAt: undefined
+  });
+  const emailSent = await sendTournamentEmail({
+    to: subscription.email,
+    subject: 'Your KORE paid tournament recovery code',
+    html: `<div style="font-family:Inter,Arial,sans-serif;line-height:1.5;color:#101114"><h1>KORE recovery code</h1><p>Your paid tournament recovery code is <strong>${code}</strong>.</p><p>This code expires in 10 minutes and can only be used once.</p></div>`
+  });
+  await writeLedgerEvent(stores, 'paid_recovery_requested', { tournamentId: bracket.id, playerId: cleanPlayerId, emailSent }, now);
+  return { ok: true, email: maskEmail(subscription.email), emailSent, expiresAt };
+}
+
+export async function confirmPaidTournamentRecovery(stores, { tournamentId, playerId, code, posthogDeviceId }, now = Date.now()) {
+  const cleanTournamentId = cleanId(tournamentId);
+  const cleanPlayerId = cleanId(playerId);
+  const deviceId = cleanDeviceId(posthogDeviceId);
+  const cleanCode = cleanRecoveryCode(code);
+  if (!cleanTournamentId || !cleanPlayerId || !deviceId || !cleanCode) {
+    throw Object.assign(new Error('Missing paid tournament recovery fields'), { statusCode: 400, code: 'missing_fields' });
+  }
+  const key = recoveryKey(cleanTournamentId, cleanPlayerId);
+  const recovery = await stores.recovery.get(key, { type: 'json' }).catch(() => null);
+  if (!recovery || recovery.usedAt || now > Number(recovery.expiresAt || 0)) {
+    throw Object.assign(new Error('Recovery code expired'), { statusCode: 410, code: 'recovery_expired' });
+  }
+  if (Number(recovery.attempts || 0) >= 5) {
+    throw Object.assign(new Error('Too many recovery attempts'), { statusCode: 429, code: 'recovery_attempts_exceeded' });
+  }
+  const expectedHash = hashRecoveryCode(cleanCode, cleanTournamentId, cleanPlayerId);
+  if (expectedHash !== recovery.codeHash) {
+    await stores.recovery.setJSON(key, { ...recovery, attempts: Number(recovery.attempts || 0) + 1, lastAttemptAt: now });
+    throw Object.assign(new Error('Invalid recovery code'), { statusCode: 403, code: 'invalid_recovery_code' });
+  }
+  let bracket = await readPaidTournament(stores, cleanTournamentId);
+  let entry = bracket ? await readEntry(stores, bracket.id, cleanPlayerId) : null;
+  if (!bracket || !entry) throw Object.assign(new Error('Paid tournament entry not found'), { statusCode: 404, code: 'paid_entry_not_found' });
+  entry = { ...entry, registeredDeviceId: deviceId, recoveredAt: now };
+  bracket = {
+    ...bracket,
+    entries: bracket.entries.map((candidate) => candidate.playerId === cleanPlayerId ? { ...candidate, registeredDeviceId: deviceId, recoveredAt: now } : candidate),
+    updatedAt: now
+  };
+  await writeEntry(stores, bracket.id, entry);
+  await writeDeviceEntryIndex(stores, entry);
+  await writePaidTournament(stores, bracket);
+  await stores.recovery.setJSON(key, { ...recovery, attempts: Number(recovery.attempts || 0) + 1, usedAt: now, recoveredDeviceId: deviceId });
+  await writeLedgerEvent(stores, 'paid_recovery_confirmed', { tournamentId: bracket.id, playerId: cleanPlayerId }, now);
+  const assignment = assignedMatch(bracket, cleanPlayerId);
+  const timing = paidTimingSummary(bracket);
+  return {
+    bracket,
+    entry: assignment.entry || entry,
+    assignedMatch: assignment.match,
+    payment: paidPaymentSummary(assignment.entry || entry),
+    confirmedEntries: timing.confirmedEntries,
+    entriesNeeded: timing.entriesNeeded,
+    estimatedStartLabel: timing.estimatedStartLabel,
+    startsWhenFullLabel: timing.startsWhenFullLabel,
+    statusText: paidStatusText(bracket, assignment.match)
   };
 }
 
@@ -429,12 +603,17 @@ export async function joinPaidTournamentRoom(stores, { tournamentId, matchId, pl
 }
 
 export async function getPaidTournamentRoomStatus(stores, { tournamentId, matchId, playerId, posthogDeviceId }, now = Date.now()) {
-  const bracket = await readPaidTournament(stores, tournamentId);
+  let bracket = await readPaidTournament(stores, tournamentId);
   if (!bracket) throw Object.assign(new Error('Paid tournament not found'), { statusCode: 404, code: 'tournament_not_found' });
   const entry = findEntryByPlayer(bracket, playerId);
   assertEntryDevice(entry, cleanDeviceId(posthogDeviceId));
-  const match = bracket.matches.find((candidate) => candidate.id === matchId);
+  let match = bracket.matches.find((candidate) => candidate.id === matchId);
   assertTournamentEntryAssignedToMatch(entry, match);
+  const resolved = await resolveExpiredPaidMatchRoom(stores, bracket, match, now);
+  if (resolved !== bracket) {
+    bracket = await writePaidTournament(stores, resolved);
+    match = bracket.matches.find((candidate) => candidate.id === matchId);
+  }
   const room = await readTournamentMatchRoom(stores.rooms, bracket, match, entry, now);
   const timing = paidTimingSummary(bracket);
   return {
@@ -651,9 +830,36 @@ function payoutKey(tournamentId, playerId) {
   return `${tournamentId}/${playerId}.json`;
 }
 
+function recoveryKey(tournamentId, playerId) {
+  return `${cleanId(tournamentId)}/${cleanId(playerId)}.json`;
+}
+
 function cleanDeviceId(value) {
   if (typeof value !== 'string') return '';
   return value.replace(/[^a-zA-Z0-9:_.-]/g, '').slice(0, 160);
+}
+
+function cleanRecoveryCode(value) {
+  return typeof value === 'string' ? value.replace(/\D/g, '').slice(0, 6) : '';
+}
+
+function cleanRecoveryEmail(value) {
+  if (typeof value !== 'string') return '';
+  const email = value.trim().toLowerCase().replace(/\s+/g, '').slice(0, 254);
+  if (!/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/.test(email)) return '';
+  if (email.includes('..')) return '';
+  return email;
+}
+
+function hashRecoveryCode(code, tournamentId, playerId) {
+  const secret = process.env.TOURNAMENT_RECOVERY_SECRET || process.env.TOURNAMENT_ADMIN_TOKEN || process.env.RESEND_API_KEY || 'kore-local-recovery';
+  return createHash('sha256').update(`${secret}:${cleanId(tournamentId)}:${cleanId(playerId)}:${cleanRecoveryCode(code)}`).digest('hex');
+}
+
+function maskEmail(email) {
+  const [local, domain] = String(email).split('@');
+  if (!local || !domain) return '';
+  return `${local.slice(0, 2)}${local.length > 2 ? '***' : '*'}@${domain}`;
 }
 
 function cleanBolt11(value) {

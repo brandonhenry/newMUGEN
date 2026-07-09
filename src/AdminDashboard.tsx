@@ -28,6 +28,16 @@ type AdminStatus = {
   message: string;
 };
 
+type TournamentReviewRow = {
+  tournamentId: string;
+  kind: string;
+  matchId: string;
+  reportState?: string;
+  roomStatus?: string;
+  entryA?: { id: string; displayName: string } | null;
+  entryB?: { id: string; displayName: string } | null;
+};
+
 const adminQueryLabels: Record<AdminQueryName, string> = {
   summary: 'Summary',
   trends: 'Growth',
@@ -177,6 +187,8 @@ export function AdminDashboard() {
   const [activeTable, setActiveTable] = useState<AdminQueryName>('trends');
   const [refreshing, setRefreshing] = useState(false);
   const [snapshotHistory, setSnapshotHistory] = useState<AdminSnapshot[]>(() => readSnapshotHistory());
+  const [tournamentReviews, setTournamentReviews] = useState<TournamentReviewRow[]>([]);
+  const [tournamentReviewsLoading, setTournamentReviewsLoading] = useState(false);
 
   const readReady = hasAnyConfiguredEndpoint(config);
   const ratios = useMemo(() => data ? summarizeDashboardRatios(data) : null, [data]);
@@ -218,6 +230,48 @@ export function AdminDashboard() {
     setSnapshotHistory([]);
     window.localStorage.removeItem(ADMIN_SNAPSHOT_HISTORY_STORAGE_KEY);
     setStatus({ kind: 'success', message: 'Cleared local admin keys.' });
+  }, []);
+
+  const refreshTournamentReviews = useCallback(async () => {
+    setTournamentReviewsLoading(true);
+    setStatus({ kind: 'idle', message: 'Refreshing tournament reviews...' });
+    try {
+      const response = await fetch('/.netlify/functions/tournament-admin-reviews');
+      const payload = await response.json().catch(() => null) as { reviews?: TournamentReviewRow[]; message?: string } | null;
+      if (!response.ok) throw new Error(payload?.message || `Tournament reviews failed (${response.status})`);
+      setTournamentReviews(Array.isArray(payload?.reviews) ? payload.reviews : []);
+      setStatus({ kind: 'success', message: 'Tournament reviews refreshed.' });
+    } catch (error) {
+      setStatus({ kind: 'error', message: error instanceof Error ? error.message : 'Tournament reviews failed.' });
+    } finally {
+      setTournamentReviewsLoading(false);
+    }
+  }, []);
+
+  const resolveTournamentReview = useCallback(async (review: TournamentReviewRow, winnerEntryId: string) => {
+    setTournamentReviewsLoading(true);
+    setStatus({ kind: 'idle', message: 'Resolving tournament review...' });
+    try {
+      const response = await fetch('/.netlify/functions/tournament-admin-resolve-match', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          tournamentId: review.tournamentId,
+          matchId: review.matchId,
+          winnerEntryId,
+          resolver: 'local-admin',
+          reason: 'local_admin_review'
+        })
+      });
+      const payload = await response.json().catch(() => null) as { message?: string } | null;
+      if (!response.ok) throw new Error(payload?.message || `Resolve failed (${response.status})`);
+      setTournamentReviews((current) => current.filter((candidate) => !(candidate.tournamentId === review.tournamentId && candidate.matchId === review.matchId)));
+      setStatus({ kind: 'success', message: 'Tournament review resolved.' });
+    } catch (error) {
+      setStatus({ kind: 'error', message: error instanceof Error ? error.message : 'Tournament review resolve failed.' });
+    } finally {
+      setTournamentReviewsLoading(false);
+    }
   }, []);
 
   const refresh = useCallback(async (singleQuery?: AdminQueryName) => {
@@ -333,6 +387,53 @@ export function AdminDashboard() {
       </section>
 
       <p className={`admin-status ${status.kind}`}>{status.message}</p>
+
+      <section className="admin-endpoint-setup" aria-label="Tournament reviews">
+        <div className="admin-section-heading">
+          <h2>Tournament Reviews</h2>
+          <button className="secondary-button" onClick={() => void refreshTournamentReviews()} disabled={tournamentReviewsLoading}>
+            <RotateCcw size={18} />
+            {tournamentReviewsLoading ? 'Refreshing' : 'Refresh Reviews'}
+          </button>
+        </div>
+        {tournamentReviews.length === 0 ? (
+          <div className="admin-empty">No tournament matches need review.</div>
+        ) : (
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Tournament</th>
+                  <th>Match</th>
+                  <th>Status</th>
+                  <th>Resolve</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tournamentReviews.map((review) => (
+                  <tr key={`${review.tournamentId}:${review.matchId}`}>
+                    <td>{review.kind} {review.tournamentId}</td>
+                    <td>{review.matchId}</td>
+                    <td>{review.reportState || review.roomStatus || 'review'}</td>
+                    <td>
+                      {review.entryA && (
+                        <button className="secondary-button compact-button" onClick={() => void resolveTournamentReview(review, review.entryA!.id)} disabled={tournamentReviewsLoading}>
+                          {review.entryA.displayName}
+                        </button>
+                      )}
+                      {review.entryB && (
+                        <button className="secondary-button compact-button" onClick={() => void resolveTournamentReview(review, review.entryB!.id)} disabled={tournamentReviewsLoading}>
+                          {review.entryB.displayName}
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
 
       <section className="admin-endpoint-setup" aria-label="PostHog endpoint setup">
         <div className="admin-section-heading">

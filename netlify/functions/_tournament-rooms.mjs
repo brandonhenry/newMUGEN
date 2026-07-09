@@ -26,7 +26,7 @@ export function attachTournamentRoomToMatch(bracket, match, now = Date.now(), st
 
 export async function readTournamentMatchRoom(roomStore, bracket, match, entry, now = Date.now()) {
   if (!match?.roomId) return undefined;
-  const stored = await roomStore.get(tournamentRoomKey(bracket.id, match.id), { type: 'json' }).catch(() => null);
+  const stored = await readTournamentMatchRoomRecord(roomStore, bracket.id, match.id);
   if (!stored) {
     return {
       tournamentId: bracket.id,
@@ -41,6 +41,15 @@ export async function readTournamentMatchRoom(roomStore, bracket, match, entry, 
   const localRole = stored.hostEntryId === entry?.id ? 'host' : stored.guestEntryId === entry?.id ? 'guest' : undefined;
   const status = now > stored.slotEndsAt && stored.status !== 'forfeit' && stored.status !== 'review' ? 'closed' : stored.status;
   return { ...stored, status, localRole };
+}
+
+export async function readTournamentMatchRoomRecord(roomStore, tournamentId, matchId) {
+  return roomStore.get(tournamentRoomKey(tournamentId, matchId), { type: 'json' }).catch(() => null);
+}
+
+export async function writeTournamentMatchRoomRecord(roomStore, tournamentId, matchId, room) {
+  await roomStore.setJSON(tournamentRoomKey(tournamentId, matchId), room);
+  return room;
 }
 
 export async function upsertTournamentMatchRoom(roomStore, bracket, match, entry, peerId, now = Date.now()) {

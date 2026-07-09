@@ -46,6 +46,14 @@ export async function saveTournamentEmailSubscription(store, request, now = Date
   return { ok: true, email, emailSent, subscription };
 }
 
+export async function readTournamentEmailSubscription(store, playerId) {
+  const cleanPlayerId = cleanId(playerId);
+  if (!cleanPlayerId) return null;
+  const subscription = await store.get(subscriptionKey(cleanPlayerId), { type: 'json' }).catch(() => null);
+  const email = cleanEmail(subscription?.email);
+  return subscription?.remindersEnabled && email ? { ...subscription, email } : null;
+}
+
 export async function notifyTournamentReady(store, bracket, now = Date.now()) {
   if (!bracket || bracket.status === 'open') return { sent: 0, skipped: 0 };
   let sent = 0;
