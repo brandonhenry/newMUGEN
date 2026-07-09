@@ -161,7 +161,9 @@
       "/characters/gohan-super-saiyan-2/frames/frame-101.png",
       "/characters/gohan-super-saiyan-2/frames/frame-102.png",
       "/characters/gohan-super-saiyan-2/frames/frame-103.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-104.png",
+      "/characters/gohan-super-saiyan-2/frames/frame-104.png"
+    ],
+    "cmd:2+4": [
       "/characters/gohan-super-saiyan-2/frames/frame-105.png",
       "/characters/gohan-super-saiyan-2/frames/frame-106.png",
       "/characters/gohan-super-saiyan-2/frames/frame-107.png",
@@ -200,22 +202,6 @@
       "/characters/gohan-super-saiyan-2/frames/frame-082.png",
       "/characters/gohan-super-saiyan-2/frames/frame-083.png",
       "/characters/gohan-super-saiyan-2/frames/frame-084.png"
-    ],
-    "cmd:2+4": [
-      "/characters/gohan-super-saiyan-2/frames/frame-033.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-034.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-035.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-036.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-037.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-038.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-039.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-040.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-041.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-042.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-043.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-044.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-045.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-046.png"
     ],
     "cmd:3+4": [
       "/characters/gohan-super-saiyan-2/frames/frame-070.png",
@@ -805,13 +791,37 @@
       "forwardForce": 1.08,
       "forwardForceStartFrame": 36,
       "forwardForceEndFrame": 39,
-      "label": "Crouch Lightning Rush",
+      "label": "Crouch Ascended Jab",
       "hitLevel": "mid",
       "cancelable": false,
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 15,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 5
+    },
+    "cmd:2+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 25,
+      "damage": 14,
+      "blockDamage": 2,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 12,
+      "range": 8.4,
+      "forwardForce": 1.55,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 14,
+      "label": "Super Masenko",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true,
+      "kiBurst": true,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:FC+2": {
       "startupFrames": 17,
@@ -908,28 +918,6 @@
       "onJuggleHitFrames": 15,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
-    },
-    "cmd:2+4": {
-      "startupFrames": 30,
-      "activeFrames": 4,
-      "recoveryFrames": 36,
-      "damage": 12,
-      "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 12,
-      "range": 1.74,
-      "forwardForce": 1.58,
-      "forwardForceStartFrame": 25,
-      "forwardForceEndFrame": 29,
-      "label": "Low Lightning Drive",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 19,
-      "onJuggleHitFrames": 10,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 25,
@@ -2860,7 +2848,9 @@
         "width": 1.58,
         "height": 0.87,
         "offsetX": 0
-      },
+      }
+    },
+    "cmd:2+4": {
       "105": {
         "width": 1.39,
         "height": 0.87,
@@ -2884,78 +2874,6 @@
       "109": {
         "width": 1.54,
         "height": 0.94,
-        "offsetX": 0
-      }
-    },
-    "cmd:2+4": {
-      "33": {
-        "width": 0.93,
-        "height": 0.94,
-        "offsetX": 0
-      },
-      "34": {
-        "width": 1,
-        "height": 1.17,
-        "offsetX": 0
-      },
-      "35": {
-        "width": 0.85,
-        "height": 1.17,
-        "offsetX": 0
-      },
-      "36": {
-        "width": 0.89,
-        "height": 1.19,
-        "offsetX": 0
-      },
-      "37": {
-        "width": 0.85,
-        "height": 1.19,
-        "offsetX": 0
-      },
-      "38": {
-        "width": 0.87,
-        "height": 0.89,
-        "offsetX": 0
-      },
-      "39": {
-        "width": 0.47,
-        "height": 0.48,
-        "offsetX": 0
-      },
-      "40": {
-        "width": 1.5,
-        "height": 0.91,
-        "offsetX": 0
-      },
-      "41": {
-        "width": 1.62,
-        "height": 0.52,
-        "offsetX": 0
-      },
-      "42": {
-        "width": 1.08,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "43": {
-        "width": 1.08,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "44": {
-        "width": 1.62,
-        "height": 0.52,
-        "offsetX": 0
-      },
-      "45": {
-        "width": 1.08,
-        "height": 0.78,
-        "offsetX": 0
-      },
-      "46": {
-        "width": 1.62,
-        "height": 0.52,
         "offsetX": 0
       }
     },
@@ -3104,6 +3022,39 @@
       "color": "#ffe06e"
     },
     {
+      "id": "super-masenko-blast",
+      "name": "Super Masenko",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffda5c",
+      "blastVisual": {
+        "coreColor": "#fff7c2",
+        "glowColor": "#ffda5c",
+        "outerColor": "#ff8a2a",
+        "impactColor": "#fff2a8",
+        "radius": 0.42,
+        "growFrames": 7,
+        "fadeFrames": 16,
+        "shake": 0.22
+      }
+    },
+    {
       "id": "super-kamehameha-blast",
       "name": "Super Kamehameha",
       "kind": "blast",
@@ -3178,6 +3129,55 @@
         "blockDamageScale": 1,
         "pushbackScale": 1.05,
         "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:2+4": [
+      {
+        "id": "super-masenko-blast-release",
+        "projectileId": "super-masenko-blast",
+        "kind": "blast",
+        "label": "Super Masenko",
+        "spawnFrame": 24,
+        "spawnOffset": [
+          0,
+          1.42,
+          0.68
+        ],
+        "startupFrames": 0,
+        "activeFrames": 38,
+        "recoveryFrames": 18,
+        "lifetimeFrames": 64,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 6.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.38,
+        "hitbox": {
+          "offset": [
+            0,
+            0.18,
+            0
+          ],
+          "size": [
+            0.54,
+            1.12,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1.15,
         "mirrorWithFacing": true,
         "pierce": true,
         "clash": true,
