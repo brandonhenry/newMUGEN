@@ -169,6 +169,7 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     juggleGravityScale: move.juggleGravityScale === undefined ? undefined : clamp(finiteOr(move.juggleGravityScale, 0.52), 0.28, 1.2),
     tornado: Boolean(move.tornado),
     throwCapture: Boolean(move.throwCapture),
+    throwSideSwap: Boolean(move.throwSideSwap),
     endsInCrouch: Boolean(move.endsInCrouch),
     holdable: Boolean(move.holdable),
     cancelable: Boolean(move.cancelable),

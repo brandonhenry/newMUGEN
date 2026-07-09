@@ -1319,6 +1319,44 @@ function startThrowCapture(attacker: FighterRuntime, defender: FighterRuntime, m
   applyThrowHoldPosition(attacker, defender);
 }
 
+function startThrowSideSwapJuggle(
+  match: MatchSnapshot,
+  attacker: FighterRuntime,
+  defender: FighterRuntime,
+  move: MoveDefinition,
+  stunFrames: number,
+  juggleDamage: number,
+  juggleSequenceDamage: number
+) {
+  clearThrowRuntime(attacker);
+  clearThrowRuntime(defender);
+  const dx = defender.position.x - attacker.position.x;
+  const dz = defender.position.z - attacker.position.z;
+  const distance = Math.hypot(dx, dz) || 1;
+  const sideOffset = Math.max(0.8, (move.range ?? 1.3) * 0.48);
+  defender.position.x = attacker.position.x - (dx / distance) * sideOffset;
+  defender.position.z = attacker.position.z - (dz / distance) * sideOffset;
+  defender.position.y = Math.max(defender.position.y, JUGGLE_MIN_START_HEIGHT);
+  defender.velocityY = Math.max(defender.velocityY, getJuggleVelocity({ ...move, launchHeight: Math.max(move.launchHeight ?? 0, 2.1) }, false, attacker.comboHits));
+  defender.state = 'juggle';
+  defender.currentMove = null;
+  defender.moveFrame = 0;
+  defender.blockstunFramesRemaining = 0;
+  defender.blockPunishWindowFrames = 0;
+  defender.stunFramesRemaining = Math.max(stunFrames, 28);
+  defender.stunTimer = framesToSeconds(defender.stunFramesRemaining);
+  defender.actionFramesRemaining = defender.stunFramesRemaining;
+  defender.actionTimer = defender.stunTimer;
+  defender.forcedCrouchFrames = 0;
+  defender.juggleDamage = juggleDamage;
+  defender.juggleSequenceDamage = juggleSequenceDamage;
+  defender.juggleTornadoCount = 0;
+  defender.juggleGravityScale = getMoveJuggleGravityScale(move);
+  defender.tornadoReactionFrames = 0;
+  constrainFighterToStageBounds(match, defender);
+  updateControlSideSigns(match);
+}
+
 function getThrowEscapeGoal(defender: FighterRuntime) {
   const hpPercent = clamp(defender.hp / Math.max(1, defender.maxHp), 0, 1);
   return Math.round(18 - hpPercent * 10);
@@ -2608,6 +2646,7 @@ function applyMoveOverrides(
     juggleRefloatVelocity: merged.juggleRefloatVelocity === undefined ? undefined : clamp(merged.juggleRefloatVelocity, 2.2, 6.4),
     juggleGravityScale: merged.juggleGravityScale === undefined ? undefined : clamp(merged.juggleGravityScale, 0.28, 1.2),
     throwCapture: Boolean(merged.throwCapture),
+    throwSideSwap: Boolean(merged.throwSideSwap),
     holdable: Boolean(merged.holdable),
     cancelable: Boolean(merged.cancelable),
     healsHp: Boolean(merged.healsHp),
@@ -3727,7 +3766,7 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
   const stunFrames = projectile.kind === 'blast'
     ? Math.max(getProjectileHitstunFrames(frameData.effectiveAdvantage, counterHit), move.onHitFrames, 34)
     : getProjectileHitstunFrames(frameData.effectiveAdvantage, counterHit);
-  const entersJuggle = launchHeight > 0 || wasJuggled;
+  const entersJuggle = launchHeight > 0 || wasJuggled || Boolean(move.throwSideSwap);
   const juggleTotalDamage = (wasAirborne || entersJuggle ? defender.juggleDamage : 0) + hitDamage;
   const juggleDamageContribution = getJuggleSequenceDamageContribution(move, attacker.comboHits, 1, tornadoExtendsJuggle, hitDamage);
   const juggleSequenceDamage = tornadoExtendsJuggle
@@ -4125,6 +4164,13 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   defender.forcedCrouchFrames = 0;
   resetKiChargeRuntime(defender);
   mirrorShadowCloneHit(defender, move, forceKnockdown, entersJuggle);
+
+  if (move.throwCapture && move.throwSideSwap && defender.hp > 0) {
+    startThrowSideSwapJuggle(match, attacker, defender, move, stunFrames, juggleTotalDamage, juggleSequenceDamage);
+    applyVisualHitstop(attacker, defender, move, 'hit');
+    if (defender.hp <= 0) beginRoundFinisher(match, attacker, defender, impactId, collision.position);
+    return;
+  }
 
   if (move.throwCapture && defender.hp > 0) {
     startThrowCapture(attacker, defender, move);

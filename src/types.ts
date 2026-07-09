@@ -134,6 +134,7 @@ export type MoveDefinition = {
   juggleGravityScale?: number;
   tornado?: boolean;
   throwCapture?: boolean;
+  throwSideSwap?: boolean;
   endsInCrouch?: boolean;
   holdable?: boolean;
   cancelable?: boolean;

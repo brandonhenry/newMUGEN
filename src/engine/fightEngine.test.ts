@@ -688,6 +688,7 @@ describe('character manifests', () => {
       ...starterCharacters[0].moves[0],
       tornado: true,
       throwCapture: true,
+      throwSideSwap: true,
       usesKi: true,
       kiCost: 35,
       forwardForce: 0.75,
@@ -703,6 +704,7 @@ describe('character manifests', () => {
 
     expect(move.tornado).toBe(true);
     expect(move.throwCapture).toBe(true);
+    expect(move.throwSideSwap).toBe(true);
     expect(move.usesKi).toBe(true);
     expect(move.kiCost).toBe(35);
     expect(move.forwardForce).toBe(0.75);
@@ -9006,6 +9008,28 @@ describe('fight engine', () => {
     expect(match.fighters[1].throwEscapeGoal).toBe(9);
     expect(match.fighters[0].visualHitstop.framesRemaining).toBe(4);
     expect(match.fighters[1].visualHitstop).toMatchObject({ framesRemaining: 4, animationKey: 'hitLight' });
+  });
+
+  it('lets side-swap throws toss the defender through the attacker into juggle while recovery continues', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveThrowHit(match, 0, makeThrowCaptureMove({
+      throwSideSwap: true,
+      launchHeight: 2.2,
+      launchVelocity: 5.95,
+      juggleRefloatVelocity: 4.35,
+      juggleGravityScale: 0.52
+    }));
+    const attackerX = match.fighters[0].position.x;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].actionFramesRemaining).toBeGreaterThan(0);
+    expect(match.fighters[1].state).toBe('juggle');
+    expect(match.fighters[1].throwCaptorSlot).toBeNull();
+    expect(match.fighters[1].position.x).toBeLessThan(attackerX);
+    expect(match.fighters[1].position.y).toBeGreaterThan(0);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(0);
   });
 
   it('does not capture on blocked or whiffed throw-capture moves', () => {
