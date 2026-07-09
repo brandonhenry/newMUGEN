@@ -1,0 +1,17 @@
+services:
+  comfyui:
+    build:
+      context: .
+    container_name: krita-comfyui
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8188:8188"
+    volumes:
+      - comfyui-models:/opt/ComfyUI/models
+      - comfyui-input:/opt/ComfyUI/input
+      - comfyui-output:/opt/ComfyUI/output
+
+volumes:
+  comfyui-models:
+  comfyui-input:
+  comfyui-output:

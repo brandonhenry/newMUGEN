@@ -225,12 +225,11 @@
       "/characters/gohan-super-saiyan/frames/frame-083.png"
     ],
     "cmd:f+3": [
-      "/characters/gohan-super-saiyan/frames/frame-125.png",
-      "/characters/gohan-super-saiyan/frames/frame-126.png",
-      "/characters/gohan-super-saiyan/frames/frame-127.png",
-      "/characters/gohan-super-saiyan/frames/frame-128.png",
-      "/characters/gohan-super-saiyan/frames/frame-129.png",
-      "/characters/gohan-super-saiyan/frames/frame-130.png"
+      "/characters/gohan-super-saiyan/frames/frame-120.png",
+      "/characters/gohan-super-saiyan/frames/frame-121.png",
+      "/characters/gohan-super-saiyan/frames/frame-122.png",
+      "/characters/gohan-super-saiyan/frames/frame-123.png",
+      "/characters/gohan-super-saiyan/frames/frame-124.png"
     ],
     "cmd:d+1": [
       "/characters/gohan-super-saiyan/frames/frame-084.png",
@@ -246,12 +245,8 @@
       "/characters/gohan-super-saiyan/frames/frame-130.png"
     ],
     "cmd:d/f+3": [
-      "/characters/gohan-super-saiyan/frames/frame-125.png",
-      "/characters/gohan-super-saiyan/frames/frame-126.png",
-      "/characters/gohan-super-saiyan/frames/frame-127.png",
-      "/characters/gohan-super-saiyan/frames/frame-128.png",
-      "/characters/gohan-super-saiyan/frames/frame-129.png",
-      "/characters/gohan-super-saiyan/frames/frame-130.png"
+      "/characters/gohan-super-saiyan/frames/frame-110.png",
+      "/characters/gohan-super-saiyan/frames/frame-111.png"
     ],
     "cmd:qcf+1": [
       "/characters/gohan-super-saiyan/frames/frame-084.png",
@@ -659,13 +654,12 @@
       "onHitFrames": 13,
       "onCounterHitFrames": 17,
       "whiffRecoveryFrames": 7,
-      "range": 1.7,
+      "range": 8.5,
       "forwardForce": 0.89,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 11,
       "label": "Kamehameha",
       "hitLevel": "special",
-      "range": 8.5,
       "usesKi": true,
       "kiBurst": true,
       "onComboHitFrames": 12,
@@ -892,13 +886,12 @@
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 12,
-      "range": 1.74,
+      "range": 8.2,
       "forwardForce": 1.55,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 14,
       "label": "Masenko",
       "hitLevel": "special",
-      "range": 8.2,
       "knockdown": true,
       "usesKi": true,
       "kiBurst": true,

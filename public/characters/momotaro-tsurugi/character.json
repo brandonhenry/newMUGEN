@@ -156,11 +156,9 @@
       "/characters/momotaro-tsurugi/frames/frame-205.png"
     ],
     "cmd:d/f+2": [
-      "/characters/momotaro-tsurugi/frames/frame-088.png",
-      "/characters/momotaro-tsurugi/frames/frame-089.png",
-      "/characters/momotaro-tsurugi/frames/frame-090.png",
-      "/characters/momotaro-tsurugi/frames/frame-091.png",
-      "/characters/momotaro-tsurugi/frames/frame-092.png"
+      "/characters/momotaro-tsurugi/frames/frame-177.png",
+      "/characters/momotaro-tsurugi/frames/frame-178.png",
+      "/characters/momotaro-tsurugi/frames/frame-179.png"
     ],
     "cmd:qcf+4": [
       "/characters/momotaro-tsurugi/frames/frame-142.png",
@@ -190,7 +188,16 @@
       "/characters/momotaro-tsurugi/frames/frame-125.png",
       "/characters/momotaro-tsurugi/frames/frame-126.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/momotaro-tsurugi/frames/frame-221.png",
+      "/characters/momotaro-tsurugi/frames/frame-222.png",
+      "/characters/momotaro-tsurugi/frames/frame-223.png",
+      "/characters/momotaro-tsurugi/frames/frame-224.png",
+      "/characters/momotaro-tsurugi/frames/frame-225.png",
+      "/characters/momotaro-tsurugi/frames/frame-226.png",
+      "/characters/momotaro-tsurugi/frames/frame-227.png",
+      "/characters/momotaro-tsurugi/frames/frame-229.png"
+    ],
     "cmd:FC+2": [
       "/characters/momotaro-tsurugi/frames/frame-088.png",
       "/characters/momotaro-tsurugi/frames/frame-089.png",
@@ -284,11 +291,7 @@
       "/characters/momotaro-tsurugi/frames/frame-087.png"
     ],
     "cmd:WS+2": [
-      "/characters/momotaro-tsurugi/frames/frame-088.png",
-      "/characters/momotaro-tsurugi/frames/frame-089.png",
-      "/characters/momotaro-tsurugi/frames/frame-090.png",
-      "/characters/momotaro-tsurugi/frames/frame-091.png",
-      "/characters/momotaro-tsurugi/frames/frame-092.png"
+      "/characters/momotaro-tsurugi/frames/frame-134.png"
     ],
     "cmd:O+1": [
       "/characters/momotaro-tsurugi/frames/frame-082.png",
@@ -342,7 +345,8 @@
     "cmd:qcf+1": 10,
     "cmd:WS+2": 10,
     "cmd:O+1": 10,
-    "crouchBlock": 5
+    "crouchBlock": 5,
+    "cmd:FC+1": 9
   },
   "animationFps": 6,
   "scale": 1.08,

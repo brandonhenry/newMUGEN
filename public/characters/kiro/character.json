@@ -401,11 +401,9 @@
       "/characters/kiro/frames/frame-031.png"
     ],
     "jableft": [
-      "/characters/kiro/frames/frame-075.png",
-      "/characters/kiro/frames/frame-076.png",
-      "/characters/kiro/frames/frame-077.png",
-      "/characters/kiro/frames/frame-078.png",
-      "/characters/kiro/frames/frame-079.png"
+      "/characters/kiro/frames/frame-095.png",
+      "/characters/kiro/frames/frame-096.png",
+      "/characters/kiro/frames/frame-097.png"
     ],
     "jabright": [
       "/characters/kiro/frames/frame-090.png",
@@ -485,8 +483,11 @@
       "/characters/kiro/frames/frame-142.png"
     ],
     "cmd:FC+4": [
-      "/characters/kiro/frames/frame-141.png",
-      "/characters/kiro/frames/frame-142.png"
+      "/characters/kiro/frames/frame-214.png",
+      "/characters/kiro/frames/frame-215.png",
+      "/characters/kiro/frames/frame-216.png",
+      "/characters/kiro/frames/frame-217.png",
+      "/characters/kiro/frames/frame-221.png"
     ],
     "backHop": [
       "/characters/kiro/frames/frame-020.png"
@@ -508,18 +509,36 @@
       "/characters/kiro/frames/frame-094.png"
     ],
     "cmd:f+3": [
-      "/characters/kiro/frames/frame-085.png",
-      "/characters/kiro/frames/frame-086.png",
-      "/characters/kiro/frames/frame-087.png",
-      "/characters/kiro/frames/frame-088.png",
-      "/characters/kiro/frames/frame-089.png"
+      "/characters/kiro/frames/frame-144.png",
+      "/characters/kiro/frames/frame-145.png",
+      "/characters/kiro/frames/frame-146.png",
+      "/characters/kiro/frames/frame-147.png",
+      "/characters/kiro/frames/frame-148.png",
+      "/characters/kiro/frames/frame-149.png",
+      "/characters/kiro/frames/frame-150.png",
+      "/characters/kiro/frames/frame-151.png",
+      "/characters/kiro/frames/frame-152.png",
+      "/characters/kiro/frames/frame-153.png",
+      "/characters/kiro/frames/frame-154.png",
+      "/characters/kiro/frames/frame-155.png",
+      "/characters/kiro/frames/frame-156.png"
     ],
     "cmd:d+3": [
-      "/characters/kiro/frames/frame-085.png",
-      "/characters/kiro/frames/frame-086.png",
-      "/characters/kiro/frames/frame-087.png",
-      "/characters/kiro/frames/frame-088.png",
-      "/characters/kiro/frames/frame-089.png"
+      "/characters/kiro/frames/frame-125.png",
+      "/characters/kiro/frames/frame-126.png",
+      "/characters/kiro/frames/frame-127.png",
+      "/characters/kiro/frames/frame-128.png",
+      "/characters/kiro/frames/frame-129.png",
+      "/characters/kiro/frames/frame-130.png",
+      "/characters/kiro/frames/frame-131.png",
+      "/characters/kiro/frames/frame-132.png",
+      "/characters/kiro/frames/frame-133.png",
+      "/characters/kiro/frames/frame-134.png",
+      "/characters/kiro/frames/frame-135.png",
+      "/characters/kiro/frames/frame-136.png",
+      "/characters/kiro/frames/frame-137.png",
+      "/characters/kiro/frames/frame-138.png",
+      "/characters/kiro/frames/frame-139.png"
     ],
     "cmd:d/f+3": [
       "/characters/kiro/frames/frame-085.png",
@@ -529,18 +548,26 @@
       "/characters/kiro/frames/frame-089.png"
     ],
     "cmd:qcf+1": [
-      "/characters/kiro/frames/frame-075.png",
-      "/characters/kiro/frames/frame-076.png",
-      "/characters/kiro/frames/frame-077.png",
-      "/characters/kiro/frames/frame-078.png",
-      "/characters/kiro/frames/frame-079.png"
+      "/characters/kiro/frames/frame-080.png",
+      "/characters/kiro/frames/frame-081.png",
+      "/characters/kiro/frames/frame-082.png",
+      "/characters/kiro/frames/frame-083.png",
+      "/characters/kiro/frames/frame-084.png"
     ],
     "cmd:qcf+3": [
-      "/characters/kiro/frames/frame-085.png",
-      "/characters/kiro/frames/frame-086.png",
-      "/characters/kiro/frames/frame-087.png",
-      "/characters/kiro/frames/frame-088.png",
-      "/characters/kiro/frames/frame-089.png"
+      "/characters/kiro/frames/frame-161.png",
+      "/characters/kiro/frames/frame-162.png",
+      "/characters/kiro/frames/frame-163.png",
+      "/characters/kiro/frames/frame-164.png",
+      "/characters/kiro/frames/frame-165.png",
+      "/characters/kiro/frames/frame-166.png",
+      "/characters/kiro/frames/frame-167.png",
+      "/characters/kiro/frames/frame-168.png",
+      "/characters/kiro/frames/frame-169.png",
+      "/characters/kiro/frames/frame-170.png",
+      "/characters/kiro/frames/frame-171.png",
+      "/characters/kiro/frames/frame-172.png",
+      "/characters/kiro/frames/frame-173.png"
     ],
     "cmd:WS+2": [
       "/characters/kiro/frames/frame-090.png",
@@ -557,10 +584,12 @@
       "/characters/kiro/frames/frame-089.png"
     ],
     "cmd:SS+4": [
-      "/characters/kiro/frames/frame-107.png",
-      "/characters/kiro/frames/frame-114.png",
-      "/characters/kiro/frames/frame-115.png",
-      "/characters/kiro/frames/frame-116.png"
+      "/characters/kiro/frames/frame-108.png",
+      "/characters/kiro/frames/frame-109.png",
+      "/characters/kiro/frames/frame-110.png",
+      "/characters/kiro/frames/frame-111.png",
+      "/characters/kiro/frames/frame-112.png",
+      "/characters/kiro/frames/frame-113.png"
     ],
     "cmd:O+1": [
       "/characters/kiro/frames/frame-075.png",
@@ -618,7 +647,8 @@
     "cmd:SS+3": 6,
     "cmd:SS+4": 11,
     "cmd:O+1": 6,
-    "cmd:O+4": 11
+    "cmd:O+4": 11,
+    "cmd:FC+4": 9
   },
   "moveOverrides": {
     "cmd:f+1": {
