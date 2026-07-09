@@ -1,8 +1,6 @@
 import {
   errorJson,
-  getTournamentStore,
-  json,
-  readTournament
+  json
 } from './_tournament-store.mjs';
 import {
   getPaidTournamentStores,
@@ -13,21 +11,11 @@ export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
   try {
     assertAdmin(event);
-    const free = await listFreeReviews(getTournamentStore(event));
     const paid = await listPaidReviews(getPaidTournamentStores(event));
-    return json(200, { reviews: [...free, ...paid] });
+    return json(200, { reviews: paid });
   } catch (error) {
     return errorJson(error);
   }
-}
-
-async function listFreeReviews(store) {
-  const listed = await store.list({ prefix: 'tournaments/' }).catch(() => ({ blobs: [] }));
-  const ids = [...new Set((listed.blobs || [])
-    .map((blob) => String(blob.key || '').replace(/^tournaments\//, ''))
-    .filter((id) => id && id !== 'free-online-active.json'))];
-  const brackets = await Promise.all(ids.map((id) => readTournament(store, id).catch(() => null)));
-  return brackets.flatMap((bracket) => bracket?.kind === 'freeOnline' ? reviewRows(bracket) : []);
 }
 
 async function listPaidReviews(stores) {

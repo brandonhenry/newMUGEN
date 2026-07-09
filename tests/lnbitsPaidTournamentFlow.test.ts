@@ -56,6 +56,9 @@ function installLnbitsFetch(paidChecks = new Set<string>()) {
   let invoiceCount = 0;
   const fetchMock = vi.fn(async (url: string, init?: RequestInit) => {
     const body = init?.body ? JSON.parse(String(init.body)) : {};
+    if (url === 'https://api.resend.com/emails') {
+      return jsonResponse({ id: 'email-admin-review' });
+    }
     if (url.endsWith('/api/v1/conversion')) {
       return jsonResponse({ result: Math.round(Number(body.amount) * 1000) });
     }
@@ -102,6 +105,8 @@ function findRecoveryCode(hash: string, tournamentId: string, playerId: string) 
 beforeEach(() => {
   vi.resetModules();
   vi.restoreAllMocks();
+  delete process.env.RESEND_API_KEY;
+  delete process.env.TOURNAMENT_ADMIN_REVIEW_EMAIL;
   setLightningEnv();
 });
 
@@ -294,6 +299,42 @@ describe('LNbits paid tournament flow', () => {
     expect(completed).toMatchObject({ status: 'completed', winnerEntryId: p1.entry.id, reportState: 'forfeit' });
   });
 
+  it('emails admin when a paid room expires with no arrivals and needs review', async () => {
+    setLightningEnv({ PAID_TOURNAMENT_MAX_PLAYERS: '2' });
+    process.env.RESEND_API_KEY = 'test-resend-key';
+    const paidChecks = new Set<string>();
+    const fetchMock = installLnbitsFetch(paidChecks);
+    const stores = makeStores();
+    const { confirmPaidEntryByCheckingId, enterPaidTournament, getPaidTournamentRoomStatus } = await import('../netlify/functions/_paid-tournament-store.mjs');
+
+    const p1 = await enterPaidTournament(stores, { playerId: 'player-1', posthogDeviceId: 'device-1', displayName: 'P1', characterId: 'kiro' }, 1000);
+    paidChecks.add(p1.entry.checkingId);
+    await confirmPaidEntryByCheckingId(stores, p1.entry.checkingId, 1100);
+    const p2 = await enterPaidTournament(stores, { playerId: 'player-2', posthogDeviceId: 'device-2', displayName: 'P2', characterId: 'riven' }, 1200);
+    paidChecks.add(p2.entry.checkingId);
+    const locked = await confirmPaidEntryByCheckingId(stores, p2.entry.checkingId, 1300);
+    const match = locked.bracket.matches.find((candidate: any) => candidate.status === 'ready') as any;
+
+    const resolved = await getPaidTournamentRoomStatus(stores, {
+      tournamentId: locked.bracket.id,
+      matchId: match.id,
+      playerId: 'player-1',
+      posthogDeviceId: 'device-1'
+    }, match.slotEndsAt + 1);
+    const reviewed = resolved.bracket.matches.find((candidate: any) => candidate.id === match.id);
+
+    expect(resolved.matchRoom).toMatchObject({ status: 'review' });
+    expect(reviewed).toMatchObject({ status: 'ready', roomStatus: 'review', reportState: 'forfeit' });
+    expect(fetchMock).toHaveBeenCalledWith('https://api.resend.com/emails', expect.objectContaining({
+      method: 'POST',
+      body: expect.stringContaining('thetekkentrainer@gmail.com')
+    }));
+    expect(await stores.email.get(`notifications/admin-review/${locked.bracket.id}/${match.id}/roomexpirednoarrivals.json`)).toMatchObject({
+      email: 'thetekkentrainer@gmail.com',
+      emailSent: true
+    });
+  });
+
   it('recovers a paid entry to a new device with a saved email code', async () => {
     installLnbitsFetch();
     const stores = makeStores();
@@ -346,8 +387,9 @@ describe('LNbits paid tournament flow', () => {
 
   it('freezes conflicting paid reports for review and lets admin resolve the match', async () => {
     setLightningEnv({ PAID_TOURNAMENT_MAX_PLAYERS: '2' });
+    process.env.RESEND_API_KEY = 'test-resend-key';
     const paidChecks = new Set<string>();
-    installLnbitsFetch(paidChecks);
+    const fetchMock = installLnbitsFetch(paidChecks);
     const stores = makeStores();
     const {
       confirmPaidEntryByCheckingId,
@@ -369,6 +411,14 @@ describe('LNbits paid tournament flow', () => {
     const conflictedMatch = conflict.bracket.matches.find((candidate: any) => candidate.id === match.id);
     expect(conflictedMatch).toMatchObject({ status: 'ready', reportState: 'conflict', roomStatus: 'review' });
     expect(conflict.bracket.status).toBe('roundActive');
+    expect(fetchMock).toHaveBeenCalledWith('https://api.resend.com/emails', expect.objectContaining({
+      method: 'POST',
+      body: expect.stringContaining('thetekkentrainer@gmail.com')
+    }));
+    expect(await stores.email.get(`notifications/admin-review/${locked.bracket.id}/${match.id}/conflictingresultreports.json`)).toMatchObject({
+      email: 'thetekkentrainer@gmail.com',
+      emailSent: true
+    });
 
     const resolved = await resolvePaidTournamentReview(stores, locked.bracket.id, match.id, p1.entry.id, 'test-admin', 'unit-test', 1600);
     const resolvedMatch = resolved.bracket.matches.find((candidate: any) => candidate.id === match.id);

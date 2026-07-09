@@ -29,7 +29,7 @@ import {
   upsertTournamentMatchRoom,
   writeTournamentMatchRoomRecord
 } from './_tournament-rooms.mjs';
-import { getTournamentEmailStore, notifyTournamentReady, readTournamentEmailSubscription, sendTournamentEmail } from './_tournament-email.mjs';
+import { getTournamentEmailStore, notifyTournamentAdminReview, notifyTournamentReady, readTournamentEmailSubscription, sendTournamentEmail } from './_tournament-email.mjs';
 
 export const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 const TOURNAMENT_STORE_NAME = 'kore-paid-tournaments';
@@ -366,6 +366,10 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
       matches: bracket.matches.map((candidate) => candidate.id === matchId ? { ...candidate, resultReports: reports, reportState: 'conflict', roomStatus: 'review', reportedAt: now } : candidate),
       updatedAt: now
     };
+    const reviewMatch = bracket.matches.find((candidate) => candidate.id === matchId);
+    await notifyTournamentAdminReview(stores.email, bracket, reviewMatch, 'conflicting_result_reports', now).catch((error) => {
+      console.warn('Paid tournament admin review email failed', error);
+    });
   } else {
     bracket = attachTournamentRoomsToReadyMatches(reportWinner(bracket, matchId, cleanWinnerEntryId, now), now, PAID_TOURNAMENT_STAGE_POOL);
     bracket = {
@@ -427,7 +431,12 @@ export async function resolveExpiredPaidMatchRoom(stores, bracket, match, now = 
     return advanced;
   }
   await writeTournamentMatchRoomRecord(stores.rooms, bracket.id, match.id, { ...room, status: 'review', resolvedAt: now });
-  return patchTournamentMatch(bracket, match.id, { roomStatus: 'review', reportState: 'forfeit', reportedAt: now }, now);
+  const reviewBracket = patchTournamentMatch(bracket, match.id, { roomStatus: 'review', reportState: 'forfeit', reportedAt: now }, now);
+  const reviewMatch = reviewBracket.matches.find((candidate) => candidate.id === match.id);
+  await notifyTournamentAdminReview(stores.email, reviewBracket, reviewMatch, 'room_expired_no_arrivals', now).catch((error) => {
+    console.warn('Paid tournament admin review email failed', error);
+  });
+  return reviewBracket;
 }
 
 export async function resolvePaidTournamentReview(stores, tournamentId, matchId, winnerEntryId, resolver, reason, now = Date.now()) {

@@ -1309,11 +1309,28 @@ button {
   font-weight: 950;
   letter-spacing: 0;
   text-transform: uppercase;
+  border: 0;
   background: rgba(2, 6, 21, 0.58);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.12) inset,
     0 12px 30px rgba(0, 0, 0, 0.32);
   backdrop-filter: blur(8px);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.menu-friend-list-hint:hover,
+.menu-friend-list-hint:focus-visible {
+  color: #ffffff;
+  background: rgba(8, 20, 42, 0.72);
+  outline: none;
+  box-shadow:
+    0 0 0 1px rgba(46, 230, 255, 0.32) inset,
+    0 14px 34px rgba(0, 0, 0, 0.38);
+}
+
+.menu-friend-list-hint:active {
+  transform: translateY(1px);
 }
 
 .menu-friend-list-hint span {
@@ -13982,6 +13999,61 @@ button {
   margin: 0 auto;
 }
 
+.friend-add-panel {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.65fr) minmax(280px, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  width: min(1180px, 100%);
+  margin: 0 auto clamp(14px, 2vw, 22px);
+  padding: clamp(14px, 2vw, 20px);
+  color: #f7f7f2;
+  background:
+    linear-gradient(120deg, rgba(255, 224, 113, 0.12), transparent 42%),
+    rgba(10, 14, 23, 0.84);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.friend-add-panel > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.friend-add-panel span,
+.player-id-card span {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.friend-add-panel strong,
+.player-id-card strong {
+  overflow: hidden;
+  color: #ffe071;
+  font-size: clamp(1rem, 2vw, 1.55rem);
+  font-weight: 950;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friend-add-panel p,
+.friend-add-panel small,
+.player-id-card small {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.friend-add-entry input {
+  text-transform: lowercase;
+}
+
 .friend-list-roster,
 .friend-detail-board {
   align-self: start;
@@ -14195,6 +14267,19 @@ button {
   gap: 8px;
 }
 
+.player-id-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: clamp(14px, 2vw, 20px);
+  border: 1px solid rgba(72, 224, 255, 0.22);
+  border-left: 5px solid #2de3ff;
+  background:
+    linear-gradient(120deg, rgba(45, 227, 255, 0.12), transparent 40%),
+    rgba(13, 16, 24, 0.82);
+}
+
 .match-history-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -14353,9 +14438,11 @@ button {
   }
 
   .friend-list-layout,
+  .friend-add-panel,
   .friend-detail-header,
   .friend-invite-row,
-  .friend-notification {
+  .friend-notification,
+  .player-id-card {
     grid-template-columns: 1fr;
   }
 

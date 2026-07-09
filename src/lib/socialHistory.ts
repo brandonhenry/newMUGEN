@@ -114,6 +114,34 @@ export function addFriend(profile: OnlinePlayerProfile | null | undefined, oppon
   return readFriends(profile);
 }
 
+export function addFriendEntry(
+  profile: OnlinePlayerProfile | null | undefined,
+  entry: { playerId: string; displayName: string; lastCharacterId?: string },
+  playedAt = Date.now()
+) {
+  const profileId = sanitizePlayerId(profile?.playerId);
+  const playerId = sanitizePlayerId(entry.playerId);
+  const displayName = sanitizeDisplayName(entry.displayName);
+  if (!profileId || !playerId || !displayName || profileId === playerId) return readFriends(profile);
+  const all = readArray<FriendEntry>(FRIENDS_STORAGE_KEY)
+    .map(normalizeFriendEntry)
+    .filter((item): item is FriendEntry => item !== null);
+  const existing = all.find((item) => item.profileId === profileId && item.playerId === playerId);
+  const nextFriend: FriendEntry = {
+    profileId,
+    playerId,
+    displayName,
+    addedAt: existing?.addedAt ?? Date.now(),
+    lastPlayedAt: Math.max(existing?.lastPlayedAt ?? 0, playedAt),
+    lastCharacterId: entry.lastCharacterId || existing?.lastCharacterId
+  };
+  writeArray(FRIENDS_STORAGE_KEY, [
+    nextFriend,
+    ...all.filter((item) => !(item.profileId === profileId && item.playerId === playerId))
+  ]);
+  return readFriends(profile);
+}
+
 export function isFriend(profile: OnlinePlayerProfile | null | undefined, playerId: string | undefined) {
   const normalized = sanitizePlayerId(playerId);
   return Boolean(normalized && readFriends(profile).some((friend) => friend.playerId === normalized));

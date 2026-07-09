@@ -69,7 +69,7 @@ import { getStageAssetStatus, isModelStage, prefetchStageModelDecoders, preloadS
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { detectGameplaySupport, getGameplaySupportChecks, type SupportCheck, type SupportWarning } from './lib/gameplaySupport';
-import { getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readModeGamepadState, readPageGamepadState } from './lib/gamepads';
+import { MENU_FRIEND_LIST_GAMEPAD_BUTTON, getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readModeGamepadState, readPageGamepadState } from './lib/gamepads';
 import { MENU_LAG_DETECTOR_VERSION, clearMenuLagPromptDismissed, getMenuLagPromptDismissed, sampleMenuLandingLag, setMenuLagPromptDismissed, type MenuLagReport } from './lib/menuLagDetector';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
@@ -79,6 +79,7 @@ import { recordOnlineBotMatchOutcome } from './lib/online/botMemory';
 import { fetchLeaderboard, readOnlineProfile, sanitizeDisplayName, sanitizeEmail, submitLeaderboardResult, writeOnlineProfile, type LeaderboardEntry, type OnlinePlayerProfile } from './lib/online/leaderboard';
 import { leaveOnlineRoom, matchmakeOnline, type OnlineMatchResult } from './lib/online/matchmaking';
 import { fetchFriendChat, fetchFriendInbox, fetchFriendPresence, heartbeatFriendPresence, respondToFriendInvite, sendFriendChat, sendFriendInvite, FRIEND_NOTIFICATION_TTL_MS, FRIEND_PRESENCE_HEARTBEAT_MS, FRIEND_PRESENCE_POLL_MS, type FriendChatMessage, type FriendInvite, type FriendPresence } from './lib/online/friends';
+import { addFriendByPlayerId, registerOnlinePlayer, sanitizePublicPlayerId } from './lib/online/playerIdentity';
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
 import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
@@ -3007,13 +3008,19 @@ export default function App() {
   const saveOnlineProfile = useCallback((profile: Partial<OnlinePlayerProfile>, source: string) => {
     const saved = writeOnlineProfile(profile);
     setOnlineProfile(saved);
+    void registerOnlinePlayer(saved, getPostHogDeviceId(), p1Id).then((identity) => {
+      if (identity.playerId !== saved.playerId || identity.displayName !== saved.displayName) {
+        const synced = writeOnlineProfile({ ...saved, playerId: identity.playerId, displayName: identity.displayName });
+        setOnlineProfile(synced);
+      }
+    }).catch((error) => console.warn('Player identity registration failed', error));
     captureAppAnalytics('online_profile_saved', {
       source,
       player_id: saved.playerId,
       had_existing_profile: Boolean(profile.playerId)
     });
     return saved;
-  }, [captureAppAnalytics]);
+  }, [captureAppAnalytics, p1Id]);
 
   const promptForUsername = useCallback((request: UsernameGateRequest) => {
     setUsernameGate(request);
@@ -4216,6 +4223,22 @@ export default function App() {
     };
   }, [onlineProfile]);
 
+  useEffect(() => {
+    if (!onlineProfile) return undefined;
+    let cancelled = false;
+    void registerOnlinePlayer(onlineProfile, getPostHogDeviceId(), p1Id)
+      .then((identity) => {
+        if (cancelled) return;
+        if (identity.playerId !== onlineProfile.playerId || identity.displayName !== onlineProfile.displayName) {
+          setOnlineProfile(writeOnlineProfile({ ...onlineProfile, playerId: identity.playerId, displayName: identity.displayName }));
+        }
+      })
+      .catch((error) => console.warn('Player identity registration failed', error));
+    return () => {
+      cancelled = true;
+    };
+  }, [onlineProfile?.displayName, onlineProfile?.playerId, p1Id]);
+
   const reloadRoster = async (preferredCharacterId?: string) => {
     const result = await loadCharacterRoster();
     setRosterResult(result);
@@ -4474,7 +4497,7 @@ export default function App() {
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
-  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'), () => openFriendList('gamepad_l2'), setInputPromptMode);
+  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'), (source: string) => openFriendList(source), setInputPromptMode);
   useStarterGuideKeyboardShortcut(screen, () => {
     setInputPromptMode('keyboardShortcut');
     openStarterGuide('keyboard_f1');
@@ -4703,6 +4726,10 @@ export default function App() {
             onSettings={() => {
               captureAppAnalytics('menu_item_selected', { item: 'settings' });
               setScreen('settings');
+            }}
+            onFriends={() => {
+              setInputPromptMode('pointer');
+              openFriendList('menu_friend_chip');
             }}
             onViewer={() => {
               captureAppAnalytics('menu_item_selected', { item: 'viewer' });
@@ -5547,6 +5574,9 @@ const EMAIL_DOMAIN_MAX_LENGTH = 190;
 const EMAIL_LOCAL_CONTROLLER_CHARACTERS = ' .abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+'.split('');
 const EMAIL_DOMAIN_CONTROLLER_CHARACTERS = ' .abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'.split('');
 
+const MAIN_MENU_FRIEND_LIST_KEY = 'KeyF';
+const MAIN_MENU_FRIEND_LIST_KEY_LABEL = 'F';
+
 const keyboardMenuNavigation: Record<string, MenuNavigationDirection | 'confirm' | 'back'> = {
   KeyW: 'up',
   KeyS: 'down',
@@ -5599,7 +5629,7 @@ const menuFocusableSelector = [
   '[tabindex]:not([tabindex="-1"])'
 ].join(',');
 
-function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMenuFriends: () => void, onInputPromptModeChange: (mode: InputPromptMode) => void) {
+function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMenuFriends: (source: string) => void, onInputPromptModeChange: (mode: InputPromptMode) => void) {
   const screenRef = useRef(screen);
   const onMainMenuHelpRef = useRef(onMainMenuHelp);
   const onMainMenuFriendsRef = useRef(onMainMenuFriends);
@@ -5643,6 +5673,7 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (handleMainMenuFriendListKeyEvent(event, screenRef.current, onMainMenuFriendsRef.current, onInputPromptModeChangeRef.current)) return;
       handleMenuNavigationKeyEvent(event, screenRef.current, onInputPromptModeChangeRef.current);
     };
 
@@ -5703,7 +5734,7 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
           if (document.querySelector('.starter-guide-overlay') && (edge.help || edge.helpNext)) {
             activateStarterGuideStep(edge.helpNext ? 1 : -1);
           } else if (screenRef.current === 'menu' && edge.friendList) {
-            onMainMenuFriendsRef.current();
+            onMainMenuFriendsRef.current('gamepad_friend_list');
           } else if (screenRef.current === 'menu' && edge.previous) {
             onMainMenuHelpRef.current();
           } else if (screenRef.current === 'settings' && (edge.previous || edge.next)) {
@@ -5735,6 +5766,25 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
   }, []);
+}
+
+function handleMainMenuFriendListKeyEvent(
+  event: KeyboardEvent,
+  screen: Screen,
+  onOpenFriends: (source: string) => void,
+  onInputPromptModeChange?: (mode: InputPromptMode) => void
+) {
+  if (screen !== 'menu') return false;
+  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.repeat) return false;
+  if (document.querySelector('.capture')) return false;
+  if (document.querySelector('.starter-guide-overlay')) return false;
+  if (isTextEntryElement(event.target)) return false;
+  if (event.code !== MAIN_MENU_FRIEND_LIST_KEY && event.key.toLowerCase() !== MAIN_MENU_FRIEND_LIST_KEY_LABEL.toLowerCase()) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  onInputPromptModeChange?.('keyboardShortcut');
+  onOpenFriends('keyboard_friend_list');
+  return true;
 }
 
 function dispatchSettingsTabCycle(direction: -1 | 1) {
@@ -6550,6 +6600,17 @@ function getForcedMenuLagReport(canvas?: HTMLCanvasElement | null): MenuLagRepor
   };
 }
 
+function getMainMenuFriendListPrompt(inputPromptMode: InputPromptMode) {
+  if (inputPromptMode === 'touch' || inputPromptMode === 'pointer') return '';
+  if (inputPromptMode === 'keyboardShortcut' || inputPromptMode === 'keyboardDirectional') return MAIN_MENU_FRIEND_LIST_KEY_LABEL;
+  const pad = getPrimaryGamepad();
+  const id = pad?.id.toLowerCase() ?? '';
+  if (/(xbox|xinput|steam virtual|steam input)/i.test(id)) return 'LT';
+  if (/(nintendo|switch|joy-con|joycon|pro controller)/i.test(id)) return 'ZL';
+  if (/(dualsense|dualshock|wireless controller|playstation)/i.test(id)) return 'L2';
+  return gamepadButtonPrompts[MENU_FRIEND_LIST_GAMEPAD_BUTTON]?.label ?? 'L2';
+}
+
 function MenuScreen({
   roster,
   stages: stageRoster,
@@ -6569,6 +6630,7 @@ function MenuScreen({
   onTournament,
   onOnline,
   onSettings,
+  onFriends,
   onViewer,
   onStages,
   onExit
@@ -6591,6 +6653,7 @@ function MenuScreen({
   onTournament: () => void;
   onOnline: () => void;
   onSettings: () => void;
+  onFriends: () => void;
   onViewer: () => void;
   onStages: () => void;
   onExit: () => void;
@@ -6611,6 +6674,7 @@ function MenuScreen({
   const effectiveMenuAttractMode = useMemo(() => resolveEffectiveMenuAttractMode(performanceSettings), [performanceSettings]);
   const effectiveMenuMotionMode = useMemo(() => resolveEffectiveMenuMotionMode(performanceSettings), [performanceSettings]);
   const recommendedPerformanceActive = effectiveMenuAttractMode === 'snappy' && effectiveMenuMotionMode === 'snappy';
+  const friendListPrompt = getMainMenuFriendListPrompt(inputPromptMode);
 
   useEffect(() => {
     menuChromeHiddenRef.current = menuChromeHidden;
@@ -6912,11 +6976,21 @@ function MenuScreen({
           <span>/</span>
           <span>Select</span>
         </div>
-        <div className="menu-friend-list-hint" aria-hidden="true">
+        <button
+          className="menu-friend-list-hint"
+          type="button"
+          aria-label="Open Friend List"
+          title="Open Friend List"
+          data-sound="off"
+          onClick={() => {
+            onMenuSelect();
+            onFriends();
+          }}
+        >
           <Gamepad2 size={16} />
-          <span>L2</span>
+          {friendListPrompt && <span>{friendListPrompt}</span>}
           <strong>Friend List</strong>
-        </div>
+        </button>
       </section>}
       {menuLagReport && (
         <MenuLagRecommendationDialog
@@ -7284,7 +7358,15 @@ function MatchHistoryScreen({
 
   const characterName = (id: string) => roster.find((character) => character.id === id)?.displayName ?? id;
   const stageName = (id: string) => stages.find((stage) => stage.id === id)?.name ?? id;
-  const addSelectedFriend = (entry: MatchHistoryEntry) => {
+  const addSelectedFriend = async (entry: MatchHistoryEntry) => {
+    if (entry.opponent.playerId) {
+      const result = await addFriendByPlayerId(profile, entry.opponent.playerId).catch(() => null);
+      if (result?.status === 'added' || result?.status === 'already') {
+        setFriends(result.friends);
+        onAnalytics('navigation_clicked', { source: 'match_history', destination: 'friend_added_by_id' });
+        return;
+      }
+    }
     const next = addFriend(profile, entry.opponent, entry.createdAt);
     setFriends(next);
     onAnalytics('navigation_clicked', { source: 'match_history', destination: 'friend_added' });
@@ -7466,9 +7548,12 @@ export function FriendListScreen({
   onBack: () => void;
   onAnalytics: AnalyticsCapture;
 }) {
-  const friends = useMemo(() => readFriends(profile), [profile]);
+  const [friendsRevision, setFriendsRevision] = useState(0);
+  const friends = useMemo(() => readFriends(profile), [profile, friendsRevision]);
   const history = useMemo(() => readMatchHistory(profile), [profile]);
   const [selectedFriendId, setSelectedFriendId] = useState('');
+  const [addPanelOpen, setAddPanelOpen] = useState(false);
+  const [addFriendMessage, setAddFriendMessage] = useState('');
   const selectedFriend = friends.find((friend) => friend.playerId === selectedFriendId) ?? friends[0] ?? null;
   const [chatMessages, setChatMessages] = useState<FriendChatMessage[]>([]);
   const [chatStatus, setChatStatus] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -7517,6 +7602,22 @@ export function FriendListScreen({
     onAnalytics('navigation_clicked', { source: 'friend_list', destination: 'friend_chat_send' });
   };
 
+  const addFriendFromPlayerId = async (playerId: string) => {
+    setAddFriendMessage('Checking player ID');
+    try {
+      const result = await addFriendByPlayerId(profile, playerId);
+      setAddFriendMessage(result.message);
+      if (result.status === 'added' && result.friend) {
+        setFriendsRevision((revision) => revision + 1);
+        setSelectedFriendId(result.friend.playerId);
+        setAddPanelOpen(false);
+        onAnalytics('navigation_clicked', { source: 'friend_list', destination: 'friend_added_by_id' });
+      }
+    } catch (error) {
+      setAddFriendMessage(error instanceof Error ? error.message : 'Player ID lookup failed');
+    }
+  };
+
   const chatEntries: OnlineTrainingChatEntry[] = chatMessages.map((message) => ({
     id: message.id,
     text: message.text,
@@ -7535,6 +7636,10 @@ export function FriendListScreen({
       </header>
 
       <div className="leaderboard-actions">
+        <button className="primary-button" onClick={() => setAddPanelOpen((open) => !open)} disabled={!profile}>
+          <UserPlus size={18} />
+          Add Friend
+        </button>
         <button className="secondary-button" onClick={onBack}>
           <Home size={18} />
           Back
@@ -7542,7 +7647,15 @@ export function FriendListScreen({
       </div>
 
       {!profile && <div className="leaderboard-empty">Choose an online name before opening the friend list.</div>}
-      {profile && friends.length === 0 && <div className="leaderboard-empty">No friends yet. Add recent opponents from Match History.</div>}
+      {profile && addPanelOpen && (
+        <FriendAddByIdPanel
+          profile={profile}
+          message={addFriendMessage}
+          onSubmit={addFriendFromPlayerId}
+          onCancel={() => setAddPanelOpen(false)}
+        />
+      )}
+      {profile && friends.length === 0 && <div className="leaderboard-empty">No friends yet. Add by Player ID or from Match History.</div>}
 
       {profile && friends.length > 0 && (
         <div className="friend-list-layout">
@@ -7662,6 +7775,160 @@ function FriendNotificationStack({
           </article>
         );
       })}
+    </section>
+  );
+}
+
+function FriendAddByIdPanel({
+  profile,
+  message,
+  onSubmit,
+  onCancel
+}: {
+  profile: OnlinePlayerProfile;
+  message: string;
+  onSubmit: (playerId: string) => void;
+  onCancel: () => void;
+}) {
+  const [draft, setDraft] = useState('');
+  const [controllerEditing, setControllerEditing] = useState(false);
+  const [controllerCursor, setControllerCursor] = useState(0);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const controllerEditingRef = useRef(false);
+  const controllerPadStateRef = useRef({
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    confirm: false,
+    back: false,
+    select: false,
+    help: false,
+    helpNext: false,
+    friendList: false
+  });
+  const controllerLastMoveAtRef = useRef(0);
+
+  useEffect(() => {
+    controllerEditingRef.current = controllerEditing;
+  }, [controllerEditing]);
+
+  const submit = useCallback(() => {
+    const playerId = sanitizePublicPlayerId(draft);
+    if (!playerId) return;
+    onSubmit(playerId);
+  }, [draft, onSubmit]);
+
+  const moveControllerCursor = useCallback((direction: -1 | 1) => {
+    setControllerCursor((cursor) => Math.max(0, Math.min(95, cursor + direction)));
+  }, []);
+
+  const cycleControllerCharacter = useCallback((direction: -1 | 1) => {
+    const characters = ' abcdefghijklmnopqrstuvwxyz0123456789-'.split('');
+    setDraft((currentDraft) => {
+      const cursor = Math.max(0, Math.min(95, controllerCursor));
+      const nextCharacters = currentDraft.padEnd(cursor + 1, ' ').slice(0, 96).split('');
+      const currentCharacter = nextCharacters[cursor] ?? ' ';
+      const currentIndex = Math.max(0, characters.indexOf(currentCharacter));
+      nextCharacters[cursor] = characters[(currentIndex + direction + characters.length) % characters.length];
+      return sanitizePublicPlayerId(nextCharacters.join(''));
+    });
+  }, [controllerCursor]);
+
+  useEffect(() => {
+    let frame = 0;
+    const repeatDelayMs = 170;
+    const tick = () => {
+      const input = inputRef.current;
+      const active = document.activeElement === input;
+      const pad = getPrimaryGamepad();
+      if (!input || !active || !pad) {
+        controllerPadStateRef.current = { up: false, down: false, left: false, right: false, confirm: false, back: false, select: false, help: false, helpNext: false, friendList: false };
+        if (!active && controllerEditingRef.current) setControllerEditing(false);
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      const now = performance.now();
+      const current = readMenuGamepadState(pad, false);
+      const previous = controllerPadStateRef.current;
+      const edge = {
+        up: current.up && !previous.up,
+        down: current.down && !previous.down,
+        left: current.left && !previous.left,
+        right: current.right && !previous.right,
+        confirm: current.confirm && !previous.confirm,
+        back: current.back && !previous.back
+      };
+      const repeatedMove = now - controllerLastMoveAtRef.current > repeatDelayMs;
+      const heldHorizontal = current.left ? 'left' : current.right ? 'right' : null;
+      const heldVertical = current.up ? 'up' : current.down ? 'down' : null;
+
+      if (!controllerEditingRef.current) setControllerEditing(true);
+      if (edge.confirm) {
+        submit();
+        input.blur();
+        setControllerEditing(false);
+      } else if (edge.back) {
+        setDraft('');
+        input.blur();
+        setControllerEditing(false);
+      } else if (edge.left || edge.right || (heldHorizontal && repeatedMove)) {
+        moveControllerCursor(edge.left || heldHorizontal === 'left' ? -1 : 1);
+        controllerLastMoveAtRef.current = now;
+      } else if (edge.up || edge.down || (heldVertical && repeatedMove)) {
+        cycleControllerCharacter(edge.up || heldVertical === 'up' ? 1 : -1);
+        controllerLastMoveAtRef.current = now;
+      }
+
+      controllerPadStateRef.current = current;
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleControllerCharacter, moveControllerCursor, submit]);
+
+  return (
+    <section className={`friend-add-panel ${controllerEditing ? 'is-controller-editing' : ''}`} aria-label="Add friend by player ID">
+      <div>
+        <span>Your Player ID</span>
+        <strong>{profile.playerId}</strong>
+      </div>
+      <label className="arcade-name-entry friend-add-entry">
+        <input
+          ref={inputRef}
+          value={draft}
+          maxLength={96}
+          placeholder="kore-player-id"
+          aria-label="Friend player ID"
+          autoComplete="off"
+          inputMode="text"
+          data-kore-suppress-fight-gamepad="true"
+          onChange={(event) => {
+            setDraft(sanitizePublicPlayerId(event.target.value));
+            setControllerCursor(Math.min(event.target.selectionStart ?? event.target.value.length, 95));
+          }}
+          onFocus={() => {
+            if (getPrimaryGamepad()) setControllerEditing(true);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              submit();
+            }
+            if (event.key === 'Escape') {
+              event.preventDefault();
+              onCancel();
+            }
+          }}
+        />
+        <button type="button" onClick={submit} disabled={!sanitizePublicPlayerId(draft)}>
+          Add
+        </button>
+      </label>
+      <button type="button" className="secondary-button" onClick={onCancel}>Cancel</button>
+      {message && <p>{message}</p>}
+      {controllerEditing && <small>D-pad edit / A add / B cancel</small>}
     </section>
   );
 }
@@ -8108,6 +8375,34 @@ function ArcadeNameCard({
           <small>D-pad edit / A enter / B cancel</small>
         </div>
       )}
+    </div>
+  );
+}
+
+function PlayerIdCard({ profile }: { profile: OnlinePlayerProfile | null }) {
+  const [copied, setCopied] = useState(false);
+  const playerId = profile?.playerId ?? '';
+  const copy = async () => {
+    if (!playerId || typeof navigator === 'undefined' || !navigator.clipboard?.writeText) return;
+    try {
+      await navigator.clipboard.writeText(playerId);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
+  };
+  return (
+    <div className="player-id-card">
+      <div>
+        <span>Player ID</span>
+        <strong>{playerId || 'Create profile'}</strong>
+        <small>{copied ? 'Copied' : 'Share this ID so friends can add you.'}</small>
+      </div>
+      <button type="button" className="secondary-button" onClick={copy} disabled={!playerId}>
+        <Copy size={16} />
+        Copy
+      </button>
     </div>
   );
 }
@@ -13630,6 +13925,7 @@ function SettingsScreen({
               <span className="setting-readout">{onlineProfile?.displayName ?? 'Not set'}</span>
             </SettingRow>
             <ArcadeNameCard profile={onlineProfile} onProfileChange={onOnlineProfileChange} />
+            <PlayerIdCard profile={onlineProfile} />
             <SettingRow label="Reminder Email" value={sanitizeEmail(onlineProfile?.email) || 'Not set'}>
               <span className="setting-readout">{sanitizeEmail(onlineProfile?.email) || 'Not set'}</span>
             </SettingRow>

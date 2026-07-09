@@ -121,11 +121,12 @@ describe('free online tournament queue', () => {
     expect(guest.matchRoom).toMatchObject({ localRole: 'guest', status: 'ready', hostPeerId: 'peer-host', guestPeerId: 'peer-guest' });
   });
 
-  it('reviews expired free match rooms with no arrivals and rejects players not assigned to the match', async () => {
+  it('auto-resolves expired free match rooms with no arrivals by seed and rejects players not assigned to the match', async () => {
     const store = makeMemoryStore();
     const bracket = await createFullFreeBracket(store);
     const match = bracket.matches.find((candidate: any) => candidate.status === 'ready') as any;
     const entryA = bracket.entries.find((entry: any) => entry.id === match.entryAId);
+    const entryB = bracket.entries.find((entry: any) => entry.id === match.entryBId);
     const outsider = bracket.entries.find((entry: any) => entry.id !== match.entryAId && entry.id !== match.entryBId);
 
     await expect(joinFreeTournamentRoom(store, {
@@ -141,8 +142,16 @@ describe('free online tournament queue', () => {
       playerId: entryA.playerId
     }, match.slotEndsAt + 1);
 
-    expect(closed.matchRoom).toMatchObject({ status: 'review' });
-    expect(closed.assignedMatch).toMatchObject({ roomStatus: 'review', reportState: 'forfeit' });
+    const expectedWinner = entryA.seed < entryB.seed ? entryA : entryB;
+    const completed = closed.bracket.matches.find((candidate: any) => candidate.id === match.id);
+    expect(closed.matchRoom).toMatchObject({ status: 'forfeit', winnerEntryId: expectedWinner.id, autoReason: 'expired_no_arrivals_seed' });
+    expect(completed).toMatchObject({
+      status: 'completed',
+      winnerEntryId: expectedWinner.id,
+      roomStatus: 'forfeit',
+      reportState: 'forfeit',
+      autoResolvedReason: 'expired_no_arrivals_seed'
+    });
   });
 
   it('awards a free forfeit win when exactly one player joined before room expiry', async () => {

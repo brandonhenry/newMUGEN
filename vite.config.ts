@@ -302,6 +302,13 @@ type DevFriendChatMessage = {
   sentAt: number;
 };
 
+type DevPlayerIdentity = {
+  playerId: string;
+  displayName: string;
+  lastSeenAt: number;
+  lastCharacterId?: string;
+};
+
 const DEV_ONLINE_ROOM_TTL_MS = 12_000;
 const DEV_LEADERBOARD_POINTS_PER_WIN = 100;
 const DEV_FRIEND_PRESENCE_ONLINE_MS = 45_000;
@@ -313,6 +320,8 @@ function koreDevManifestWriter() {
   const friendPresence = new Map<string, DevFriendPresence>();
   const friendInvites = new Map<string, DevFriendInvite>();
   const friendChat: DevFriendChatMessage[] = [];
+  const playerDirectory = new Map<string, DevPlayerIdentity>();
+  const playerDeviceMap = new Map<string, string>();
 
   return {
     name: 'kore-dev-manifest-writer',
@@ -444,6 +453,32 @@ function koreDevManifestWriter() {
         }
         try {
           sendJson(response, 200, devFriendChatList(friendChat, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/online-player-register', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          sendJson(response, 200, devOnlinePlayerRegister(playerDirectory, playerDeviceMap, JSON.parse(await readRequestBody(request))));
+        } catch (error) {
+          sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      });
+
+      server.middlewares.use('/.netlify/functions/online-player-lookup', async (request: IncomingMessage, response: ServerResponse) => {
+        if (request.method !== 'POST') {
+          sendJson(response, 405, { error: 'POST required' });
+          return;
+        }
+        try {
+          const result = devOnlinePlayerLookup(playerDirectory, JSON.parse(await readRequestBody(request)));
+          if (!result) sendJson(response, 404, { error: 'player_not_found', message: 'Player ID not found' });
+          else sendJson(response, 200, result);
         } catch (error) {
           sendJson(response, 500, { error: error instanceof Error ? error.message : 'Unknown error' });
         }
@@ -2487,6 +2522,31 @@ function devFriendChatList(messages: DevFriendChatMessage[], payload: Record<str
   };
 }
 
+function devOnlinePlayerRegister(directory: Map<string, DevPlayerIdentity>, deviceMap: Map<string, string>, payload: Record<string, unknown>) {
+  const displayName = safeFriendDisplayName(payload.displayName);
+  const posthogDeviceId = safePostHogDeviceId(payload.posthogDeviceId);
+  const requestedPlayerId = safeFriendPlayerId(payload.playerId);
+  const characterId = safeFriendToken(payload.characterId, 96);
+  if (!displayName) throw new Error('Missing display name');
+  const mappedId = posthogDeviceId ? deviceMap.get(posthogDeviceId) ?? '' : '';
+  const playerId = mappedId || requestedPlayerId || `kore-${randomUUID().replace(/-/g, '').slice(0, 12)}`;
+  const existing = directory.get(playerId);
+  const identity: DevPlayerIdentity = {
+    playerId,
+    displayName,
+    lastSeenAt: Date.now(),
+    lastCharacterId: characterId || existing?.lastCharacterId
+  };
+  directory.set(playerId, identity);
+  if (posthogDeviceId) deviceMap.set(posthogDeviceId, playerId);
+  return { ...identity, created: !existing };
+}
+
+function devOnlinePlayerLookup(directory: Map<string, DevPlayerIdentity>, payload: Record<string, unknown>) {
+  const playerId = safeFriendPlayerId(payload.playerId);
+  return playerId ? directory.get(playerId) ?? null : null;
+}
+
 function devNormalizeFriendPresence(value: Partial<DevFriendPresence>, now = Date.now()): DevFriendPresence {
   const lastSeenAt = Math.max(0, Math.round(Number(value.lastSeenAt) || 0));
   return {
@@ -2533,7 +2593,7 @@ function devNormalizeFriendChatMessage(value: Partial<DevFriendChatMessage>): De
 }
 
 function safeFriendPlayerId(value: unknown) {
-  return typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 96) : '';
+  return typeof value === 'string' ? value.toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 96) : '';
 }
 
 function safeFriendToken(value: unknown, maxLength = 120) {
@@ -2556,6 +2616,10 @@ function safeFriendPassword(value: unknown) {
 
 function safeFriendChatText(value: unknown) {
   return typeof value === 'string' ? value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160) : '';
+}
+
+function safePostHogDeviceId(value: unknown) {
+  return typeof value === 'string' ? value.trim().replace(/[^a-zA-Z0-9:_.$-]/g, '').slice(0, 160) : '';
 }
 
 function devSubmitLeaderboardResult(entries: Map<string, DevLeaderboardEntry>, payload: DevLeaderboardSubmitPayload) {

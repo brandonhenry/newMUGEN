@@ -634,7 +634,7 @@ test('starter guide opens from gamepad L1 on main menu', async ({ page }) => {
   await expect(page.getByTestId('starter-guide-dialog')).toBeVisible({ timeout: 2_000 });
 });
 
-test('main menu advertises and opens friend list from gamepad L2', async ({ page }) => {
+test('main menu advertises and opens friend list from gamepad trigger', async ({ page }) => {
   await installMockGamepad(page);
   await forceMenuLagHealthy(page);
   await page.addInitScript(() => {
@@ -647,6 +647,58 @@ test('main menu advertises and opens friend list from gamepad L2', async ({ page
 
   await expect(page.getByRole('heading', { name: 'Friend List' })).toBeVisible({ timeout: 2_000 });
   await expect(page.getByText('No friends yet')).toBeVisible();
+});
+
+test('main menu opens friend list from keyboard and visible chip', async ({ page }) => {
+  await forceMenuLagHealthy(page);
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.online.profile', JSON.stringify({ playerId: 'friend-list-player', displayName: 'FRIEND' }));
+  });
+  await startFromSplash(page);
+
+  const chip = page.getByRole('button', { name: 'Open Friend List' });
+  await expect(chip).toContainText('Friend List');
+  await expect(chip).toContainText('F');
+  await page.keyboard.press('f');
+
+  await expect(page.getByRole('heading', { name: 'Friend List' })).toBeVisible({ timeout: 2_000 });
+  await page.getByRole('button', { name: 'Back' }).click();
+  await chip.click();
+  await expect(page.getByRole('heading', { name: 'Friend List' })).toBeVisible({ timeout: 2_000 });
+});
+
+test('options shows player id and friend list can add by player id', async ({ page }) => {
+  await installMockGamepad(page);
+  await page.route('**/.netlify/functions/online-player-lookup', async (route) => {
+    const payload = route.request().postDataJSON() as { playerId?: string };
+    if (payload.playerId === 'new-friend') {
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ playerId: 'new-friend', displayName: 'NEW PAL', lastSeenAt: Date.now(), lastCharacterId: 'astra' })
+      });
+      return;
+    }
+    await route.fulfill({ status: 404, contentType: 'application/json', body: JSON.stringify({ error: 'player_not_found', message: 'Player ID not found' }) });
+  });
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kore.online.profile', JSON.stringify({ playerId: 'friend-list-player', displayName: 'FRIEND' }));
+  });
+  await startFromSplash(page);
+
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.getByRole('button', { name: 'Game', exact: true }).click();
+  await page.getByRole('button', { name: 'Player Profile' }).click();
+  await expect(page.getByText('Player ID')).toBeVisible();
+  await expect(page.getByText('friend-list-player')).toBeVisible();
+  await page.getByRole('button', { name: 'Back' }).click();
+
+  await tapMockGamepadButton(page, 6);
+  await page.getByRole('button', { name: /Add Friend/ }).click();
+  await page.getByRole('textbox', { name: 'Friend player ID' }).fill('new-friend');
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+
+  await expect(page.getByText('NEW PAL').first()).toBeVisible();
+  await expect(page.getByRole('button', { name: /Invite/ })).toBeVisible();
 });
 
 test('starter guide pages with gamepad L1 and R1 while open', async ({ page }) => {

@@ -3,6 +3,7 @@ import { getBlobStore } from './_blob-store.mjs';
 export const TOURNAMENT_EMAIL_STORE_NAME = 'kore-tournament-email-reminders';
 const RESEND_EMAIL_URL = 'https://api.resend.com/emails';
 const FROM_EMAIL = 'KORE <hello@playkore.com>';
+const DEFAULT_ADMIN_REVIEW_EMAIL = 'thetekkentrainer@gmail.com';
 
 export function getTournamentEmailStore(event) {
   return getBlobStore(TOURNAMENT_EMAIL_STORE_NAME, event);
@@ -95,6 +96,30 @@ export async function notifyTournamentReady(store, bracket, now = Date.now()) {
   return { sent, skipped };
 }
 
+export async function notifyTournamentAdminReview(store, bracket, match, reason = 'manual_review_needed', now = Date.now()) {
+  if (!store || bracket?.kind !== 'paidOnline' || !match?.id) return { emailSent: false, skipped: true };
+  const adminEmail = cleanEmail(process.env.TOURNAMENT_ADMIN_REVIEW_EMAIL || DEFAULT_ADMIN_REVIEW_EMAIL);
+  if (!adminEmail) return { emailSent: false, skipped: true };
+  const notificationKey = adminReviewNotificationKey(bracket.id, match.id, reason);
+  const existing = await store.get(notificationKey, { type: 'json' }).catch(() => null);
+  if (existing?.sentAt || existing?.attemptedAt) return { emailSent: false, skipped: true };
+  const emailSent = await sendTournamentEmail({
+    to: adminEmail,
+    subject: 'KORE prizepool tournament needs review',
+    html: adminReviewHtml(bracket, match, reason)
+  });
+  await store.setJSON(notificationKey, {
+    tournamentId: bracket.id,
+    matchId: match.id,
+    reason,
+    email: adminEmail,
+    emailSent,
+    attemptedAt: now,
+    sentAt: emailSent ? now : undefined
+  });
+  return { emailSent, skipped: false };
+}
+
 export async function sendTournamentEmail({ to, subject, html }) {
   const apiKey = cleanString(process.env.RESEND_API_KEY);
   const email = cleanEmail(to);
@@ -128,6 +153,15 @@ function readyHtml(displayName, bracket) {
   return `<div style="font-family:Inter,Arial,sans-serif;line-height:1.5;color:#101114"><h1>Your KORE tournament is ready</h1><p>${escapeHtml(displayName)}, your ${escapeHtml(label)} bracket is live.</p><p>Open KORE on the same device you used to enter, then head to Tournament to play your match. If you use a different device, you may not be able to enter your assigned room.</p></div>`;
 }
 
+function adminReviewHtml(bracket, match, reason) {
+  const entryA = (bracket.entries || []).find((entry) => entry.id === match.entryAId);
+  const entryB = (bracket.entries || []).find((entry) => entry.id === match.entryBId);
+  const reportRows = Object.entries(match.resultReports || {})
+    .map(([reporterEntryId, winnerEntryId]) => `<li>${escapeHtml(reporterEntryId)} reported ${escapeHtml(String(winnerEntryId))}</li>`)
+    .join('');
+  return `<div style="font-family:Inter,Arial,sans-serif;line-height:1.5;color:#101114"><h1>KORE prizepool review needed</h1><p>A prizepool tournament match needs admin review.</p><ul><li>Tournament: ${escapeHtml(bracket.id)}</li><li>Match: ${escapeHtml(match.id)}</li><li>Reason: ${escapeHtml(reason)}</li><li>Room: ${escapeHtml(match.roomId || 'none')}</li><li>${escapeHtml(entryA?.displayName || match.entryAId || 'Entry A')} vs ${escapeHtml(entryB?.displayName || match.entryBId || 'Entry B')}</li></ul>${reportRows ? `<p>Reports:</p><ul>${reportRows}</ul>` : ''}<p>Open the KORE admin review panel and resolve the winner before prize payout.</p></div>`;
+}
+
 function subscriptionKey(playerId) {
   return `subscriptions/${cleanId(playerId)}.json`;
 }
@@ -138,6 +172,10 @@ function emailIndexKey(email, playerId) {
 
 function readyNotificationKey(tournamentId, playerId) {
   return `notifications/ready/${cleanId(tournamentId)}/${cleanId(playerId)}.json`;
+}
+
+function adminReviewNotificationKey(tournamentId, matchId, reason) {
+  return `notifications/admin-review/${cleanId(tournamentId)}/${cleanId(matchId)}/${cleanId(reason) || 'review'}.json`;
 }
 
 function cleanId(value) {

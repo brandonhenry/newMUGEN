@@ -441,14 +441,15 @@ export async function resolveExpiredFreeMatchRoom(store, bracket, match, now = D
   const joinedEntryIds = [room.hostEntryId, room.guestEntryId]
     .filter((entryId) => entryId && (entryId === match.entryAId || entryId === match.entryBId));
   const uniqueJoined = [...new Set(joinedEntryIds)];
-  if (uniqueJoined.length === 1) {
-    const winnerEntryId = uniqueJoined[0];
-    const advanced = reportWinner(bracket, match.id, winnerEntryId, now);
-    await writeTournamentMatchRoomRecord(store, bracket.id, match.id, { ...room, status: 'forfeit', winnerEntryId, resolvedAt: now });
-    return patchTournamentMatch(advanced, match.id, { roomStatus: 'forfeit', reportState: 'forfeit' });
-  }
-  await writeTournamentMatchRoomRecord(store, bracket.id, match.id, { ...room, status: 'review', resolvedAt: now });
-  return patchTournamentMatch(bracket, match.id, { roomStatus: 'review', reportState: 'forfeit', reportedAt: now }, now);
+  const winnerEntryId = uniqueJoined.length === 1 ? uniqueJoined[0] : freeAutoForfeitWinnerEntryId(bracket, match);
+  const advanced = reportWinner(bracket, match.id, winnerEntryId, now);
+  const autoReason = uniqueJoined.length === 1
+    ? 'single_arrival'
+    : uniqueJoined.length > 1
+      ? 'expired_both_arrived_seed'
+      : 'expired_no_arrivals_seed';
+  await writeTournamentMatchRoomRecord(store, bracket.id, match.id, { ...room, status: 'forfeit', winnerEntryId, autoReason, resolvedAt: now });
+  return patchTournamentMatch(advanced, match.id, { roomStatus: 'forfeit', reportState: 'forfeit', autoResolvedReason: autoReason, reportedAt: now }, now);
 }
 
 async function ensureFreeTournamentRooms(store, bracket, now = Date.now()) {
@@ -482,6 +483,20 @@ function applyReportedWinner(bracket, matchId, winnerEntryId, now = Date.now()) 
     reward: final ? { ...bracket.reward, state: bracket.kind === 'paidOnline' ? 'pending' : 'earned' } : bracket.reward,
     updatedAt: now
   };
+}
+
+function freeAutoForfeitWinnerEntryId(bracket, match) {
+  const entryA = bracket.entries.find((entry) => entry.id === match.entryAId);
+  const entryB = bracket.entries.find((entry) => entry.id === match.entryBId);
+  if (!entryA && !entryB) {
+    throw Object.assign(new Error('Free tournament match has no assigned entries'), { statusCode: 409, code: 'match_unresolvable' });
+  }
+  if (!entryA) return entryB.id;
+  if (!entryB) return entryA.id;
+  const seedA = Number.isFinite(Number(entryA.seed)) ? Number(entryA.seed) : Number.MAX_SAFE_INTEGER;
+  const seedB = Number.isFinite(Number(entryB.seed)) ? Number(entryB.seed) : Number.MAX_SAFE_INTEGER;
+  if (seedA !== seedB) return seedA < seedB ? entryA.id : entryB.id;
+  return entryA.joinedAt <= entryB.joinedAt ? entryA.id : entryB.id;
 }
 
 export function patchTournamentMatch(bracket, matchId, patch, now = Date.now()) {

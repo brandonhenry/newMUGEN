@@ -43,6 +43,13 @@ describe('FriendListScreen', () => {
           sentAt: Date.now()
         });
       }
+      if (url.endsWith('/online-player-lookup')) {
+        const body = JSON.parse(String(init?.body ?? '{}'));
+        if (body.playerId === 'new-friend') {
+          return jsonResponse({ playerId: 'new-friend', displayName: 'NEW PAL', lastSeenAt: Date.now(), lastCharacterId: 'astra' });
+        }
+        return jsonResponse({ error: 'player_not_found', message: 'Player ID not found' }, 404);
+      }
       return jsonResponse({}, 404);
     }));
   });
@@ -81,6 +88,32 @@ describe('FriendListScreen', () => {
     fireEvent.click(screen.getByLabelText('Send online sparring chat message'));
 
     await waitFor(() => expect(screen.getByText('ggs')).toBeTruthy());
+  });
+
+  it('adds a friend by player ID from the friend list screen', async () => {
+    render(
+      <FriendListScreen
+        profile={profile}
+        roster={roster}
+        stages={stages}
+        presence={{}}
+        inbox={[]}
+        onInviteFriend={vi.fn()}
+        onJoinInvite={vi.fn()}
+        onDeclineInvite={vi.fn()}
+        onBack={vi.fn()}
+        onAnalytics={vi.fn()}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Add Friend/ }));
+    fireEvent.change(screen.getByLabelText('Friend player ID'), { target: { value: 'new-friend' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add' }));
+
+    await waitFor(() => expect(screen.getAllByText('NEW PAL').length).toBeGreaterThan(0));
+    expect(JSON.parse(window.localStorage.getItem(FRIENDS_STORAGE_KEY) ?? '[]')).toEqual(expect.arrayContaining([
+      expect.objectContaining({ playerId: 'new-friend', displayName: 'NEW PAL' })
+    ]));
   });
 });
 
