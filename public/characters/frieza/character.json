@@ -185,10 +185,7 @@
       "/characters/frieza/frames/frame-071.png",
       "/characters/frieza/frames/frame-072.png",
       "/characters/frieza/frames/frame-073.png",
-      "/characters/frieza/frames/frame-074.png",
-      "/characters/frieza/frames/frame-075.png",
-      "/characters/frieza/frames/frame-076.png",
-      "/characters/frieza/frames/frame-077.png"
+      "/characters/frieza/frames/frame-074.png"
     ],
     "cmd:FC+2": [
       "/characters/frieza/frames/frame-106.png",
@@ -225,6 +222,13 @@
       "/characters/frieza/frames/frame-163.png",
       "/characters/frieza/frames/frame-164.png",
       "/characters/frieza/frames/frame-165.png",
+      "/characters/frieza/frames/frame-165.png",
+      "/characters/frieza/frames/frame-165.png",
+      "/characters/frieza/frames/frame-165.png",
+      "/characters/frieza/frames/frame-165.png",
+      "/characters/frieza/frames/frame-165.png",
+      "/characters/frieza/frames/frame-165.png",
+      "/characters/frieza/frames/frame-165.png",
       "/characters/frieza/frames/frame-166.png",
       "/characters/frieza/frames/frame-167.png"
     ],
@@ -250,12 +254,7 @@
       "/characters/frieza/frames/frame-121.png",
       "/characters/frieza/frames/frame-122.png",
       "/characters/frieza/frames/frame-123.png",
-      "/characters/frieza/frames/frame-124.png",
-      "/characters/frieza/frames/frame-125.png",
-      "/characters/frieza/frames/frame-126.png",
-      "/characters/frieza/frames/frame-127.png",
-      "/characters/frieza/frames/frame-128.png",
-      "/characters/frieza/frames/frame-129.png"
+      "/characters/frieza/frames/frame-124.png"
     ],
     "cmd:1+4": [
       "/characters/frieza/frames/frame-131.png",
@@ -819,6 +818,10 @@
       "forwardForceEndFrame": 39,
       "label": "Crouch Tail Spiral",
       "hitLevel": "mid",
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
       "cancelable": false,
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 14,
@@ -909,9 +912,11 @@
       "moveJumpForce": 8.6,
       "moveJumpGravity": 26,
       "label": "Low Tyrant Slide",
-      "hitLevel": "low",
+      "hitLevel": "special",
       "endsInCrouch": true,
       "jumpBeforeMove": true,
+      "usesKi": true,
+      "kiBurst": true,
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 3,
@@ -3155,6 +3160,90 @@
       "/characters/frieza/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "frieza-death-beam-blast",
+      "name": "Death Beam",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#d16bff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#d16bff",
+        "outerColor": "#7b2cff",
+        "impactColor": "#f8e8ff",
+        "radius": 0.3,
+        "growFrames": 5,
+        "fadeFrames": 14,
+        "shake": 0.16
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:2+3": [
+      {
+        "id": "low-tyrant-slide-death-beam",
+        "projectileId": "frieza-death-beam-blast",
+        "kind": "blast",
+        "label": "Low Tyrant Slide Death Beam",
+        "spawnFrame": 33,
+        "spawnOffset": [
+          0,
+          0.9,
+          0.72
+        ],
+        "startupFrames": 0,
+        "activeFrames": 28,
+        "recoveryFrames": 8,
+        "lifetimeFrames": 40,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.3,
+            0.42,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 0.95,
+        "blockPushbackScale": 1.1,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }
