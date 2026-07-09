@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T02:49:47.519Z",
+  "generatedAt": "2026-07-09T02:59:47.290Z",
   "rows": [
     {
       "screen": "title",
@@ -156,6 +156,83 @@
       "issues": []
     },
     {
+      "screen": "tournament",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournament.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyLocal",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentLobbyLocal.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyFreeOnline",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentLobbyFreeOnline.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepool",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentLobbyPrizepool.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepoolCheckout",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentLobbyPrizepoolCheckout.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepoolClaim",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentLobbyPrizepoolClaim.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepoolReview",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentLobbyPrizepoolReview.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPaidRecovery",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentLobbyPaidRecovery.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentBracketLocal",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentBracketLocal.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentBracketOnline",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentBracketOnline.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentFightResult",
+      "viewport": "mobile-portrait",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-portrait-tournamentFightResult.png",
+      "issues": []
+    },
+    {
       "screen": "title",
       "viewport": "mobile-landscape",
       "status": "good",
@@ -307,6 +384,83 @@
       "viewport": "mobile-landscape",
       "status": "good",
       "screenshot": "test-results-screen-audit/mobile/mobile-landscape-assetWarmup.png",
+      "issues": []
+    },
+    {
+      "screen": "tournament",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournament.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyLocal",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentLobbyLocal.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyFreeOnline",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentLobbyFreeOnline.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepool",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentLobbyPrizepool.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepoolCheckout",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentLobbyPrizepoolCheckout.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepoolClaim",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentLobbyPrizepoolClaim.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPrizepoolReview",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentLobbyPrizepoolReview.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentLobbyPaidRecovery",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentLobbyPaidRecovery.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentBracketLocal",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentBracketLocal.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentBracketOnline",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentBracketOnline.png",
+      "issues": []
+    },
+    {
+      "screen": "tournamentFightResult",
+      "viewport": "mobile-landscape",
+      "status": "good",
+      "screenshot": "test-results-screen-audit/mobile/mobile-landscape-tournamentFightResult.png",
       "issues": []
     }
   ]

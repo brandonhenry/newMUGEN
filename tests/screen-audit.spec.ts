@@ -27,7 +27,18 @@ type AuditScreen =
   | 'miniGameResult'
   | 'arcadeGameOver'
   | 'unlockReveal'
-  | 'assetWarmup';
+  | 'assetWarmup'
+  | 'tournament'
+  | 'tournamentLobbyLocal'
+  | 'tournamentLobbyFreeOnline'
+  | 'tournamentLobbyPrizepool'
+  | 'tournamentLobbyPrizepoolCheckout'
+  | 'tournamentLobbyPrizepoolClaim'
+  | 'tournamentLobbyPrizepoolReview'
+  | 'tournamentLobbyPaidRecovery'
+  | 'tournamentBracketLocal'
+  | 'tournamentBracketOnline'
+  | 'tournamentFightResult';
 
 type AuditViewport = {
   name: string;
@@ -72,12 +83,23 @@ const auditScreens: AuditScreen[] = [
   'miniGameResult',
   'arcadeGameOver',
   'unlockReveal',
-  'assetWarmup'
+  'assetWarmup',
+  'tournament',
+  'tournamentLobbyLocal',
+  'tournamentLobbyFreeOnline',
+  'tournamentLobbyPrizepool',
+  'tournamentLobbyPrizepoolCheckout',
+  'tournamentLobbyPrizepoolClaim',
+  'tournamentLobbyPrizepoolReview',
+  'tournamentLobbyPaidRecovery',
+  'tournamentBracketLocal',
+  'tournamentBracketOnline',
+  'tournamentFightResult'
 ];
 
 test.describe('mobile and Steam Deck screen audit', () => {
-  test('captures and reviews non-tournament screens', async ({ page }, testInfo) => {
-    test.setTimeout(180_000);
+  test('captures and reviews app screens', async ({ page }, testInfo) => {
+    test.setTimeout(240_000);
     const reportDir = path.resolve(process.cwd(), 'test-results-screen-audit', testInfo.project.name);
     mkdirSync(reportDir, { recursive: true });
     const rows: AuditRow[] = [];
@@ -144,6 +166,20 @@ async function openAuditScreen(page: Page, screen: AuditScreen) {
     await expect(page.locator('.results-overlay')).toBeVisible({ timeout: 10_000 });
     return;
   }
+  if (screen === 'tournamentFightResult') {
+    await page.evaluate((targetScreen) => {
+      const testWindow = window as typeof window & { __koreE2EOpenAuditScreen?: (screen: string) => void };
+      if (!testWindow.__koreE2EOpenAuditScreen) throw new Error('Missing KORE screen audit hook');
+      testWindow.__koreE2EOpenAuditScreen(targetScreen);
+    }, screen);
+    await page.waitForFunction(() => typeof (window as typeof window & { __koreE2EForceMatchOver?: unknown }).__koreE2EForceMatchOver === 'function', null, { timeout: 10_000 });
+    await page.evaluate(() => {
+      const testWindow = window as typeof window & { __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void };
+      testWindow.__koreE2EForceMatchOver?.(1);
+    });
+    await expect(page.locator('.results-overlay')).toBeVisible({ timeout: 10_000 });
+    return;
+  }
   await page.evaluate((targetScreen) => {
     const testWindow = window as typeof window & { __koreE2EOpenAuditScreen?: (screen: string) => void };
     if (!testWindow.__koreE2EOpenAuditScreen) throw new Error('Missing KORE screen audit hook');
@@ -163,7 +199,10 @@ async function settleScreen(page: Page, screen: AuditScreen) {
 function screenSelector(screen: AuditScreen) {
   if (screen === 'fightPause') return '.pause-overlay';
   if (screen === 'fightResult') return '.results-overlay';
-  const selectors: Record<Exclude<AuditScreen, 'fightPause' | 'fightResult'>, string> = {
+  if (screen === 'tournamentFightResult') return '.results-overlay';
+  if (screen.startsWith('tournamentLobby')) return '.tournament-lobby-screen';
+  if (screen.startsWith('tournamentBracket')) return '.tournament-bracket-intro';
+  const selectors: Record<Exclude<AuditScreen, 'fightPause' | 'fightResult' | 'tournamentFightResult' | `tournamentLobby${string}` | `tournamentBracket${string}`>, string> = {
     title: '.title-screen',
     menu: '.menu-screen',
     select: '.select-screen',
@@ -183,7 +222,8 @@ function screenSelector(screen: AuditScreen) {
     miniGameResult: '.mini-game-result-screen',
     arcadeGameOver: '.arcade-game-over-screen',
     unlockReveal: '.unlock-reveal-screen',
-    assetWarmup: '[data-testid="asset-warmup-screen"]'
+    assetWarmup: '[data-testid="asset-warmup-screen"]',
+    tournament: '.tournament-select-screen'
   };
   return selectors[screen];
 }
@@ -211,7 +251,7 @@ async function collectLayoutIssues(page: Page, screen: AuditScreen): Promise<str
       '.arcade-transition-footer span'
     ].join(', ');
     const candidates = [...root.querySelectorAll<HTMLElement>(root.matches('[data-testid="asset-warmup-screen"]') ? assetWarmupSelector : candidateSelector)];
-    const scrollCarouselSelector = '.stage-thumbnail-grid, .loader-bar, .versus-roster-scroll';
+    const scrollCarouselSelector = '.stage-thumbnail-grid, .loader-bar, .versus-roster-scroll, .tournament-bracket-board';
     const intentionallyClippedSelector = [
       '.stage-preview',
       '.stage-thumbnail-preview-art',
@@ -220,11 +260,15 @@ async function collectLayoutIssues(page: Page, screen: AuditScreen): Promise<str
       '.versus-random-tile',
       '.fight-versus-stage strong',
       '.fight-versus-name strong',
+      '.tournament-stat strong',
+      '.tournament-entrant-row strong',
+      '.tournament-intro-card strong',
       '[aria-hidden="true"]'
     ].join(', ');
     for (const element of candidates) {
       const style = window.getComputedStyle(element);
       if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) continue;
+      if (element.closest('[aria-hidden="true"]')) continue;
       if (element.closest('.asset-warmup-hidden-scene')) continue;
       const rect = element.getBoundingClientRect();
       if (rect.width <= 0 || rect.height <= 0) continue;

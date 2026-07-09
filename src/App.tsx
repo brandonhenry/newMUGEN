@@ -240,6 +240,7 @@ import {
 } from './lib/tournament';
 
 type Screen = 'boot' | 'title' | 'menu' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+type E2EAuditScreen = Exclude<Screen, 'boot'> | 'tournamentLobbyLocal' | 'tournamentLobbyFreeOnline' | 'tournamentLobbyPrizepool' | 'tournamentLobbyPrizepoolCheckout' | 'tournamentLobbyPrizepoolClaim' | 'tournamentLobbyPrizepoolReview' | 'tournamentLobbyPaidRecovery' | 'tournamentBracketLocal' | 'tournamentBracketOnline' | 'tournamentFightResult';
 
 function isFullBleedScreen(screen: Screen) {
   return (
@@ -274,7 +275,7 @@ type E2EWindow = Window & {
   __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void;
   __koreE2ESeedOnlineTournament?: (status: TournamentStatusResult) => void;
   __koreE2ESeedPaidRecoveryPrompt?: (profile: OnlinePlayerProfile, message?: string) => void;
-  __koreE2EOpenAuditScreen?: (screen: Exclude<Screen, 'boot' | 'tournament' | 'tournamentLobby' | 'tournamentBracket'>) => void;
+  __koreE2EOpenAuditScreen?: (screen: E2EAuditScreen) => void;
 };
 type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -3706,6 +3707,144 @@ export default function App() {
       const secondCharacter = roster.find((character) => character.id !== firstCharacter?.id) ?? roster[1] ?? firstCharacter;
       const auditStage = playableStageRoster.find((item) => item.id === 'the-chamber') ?? playableStageRoster[0] ?? stages[0];
       if (!firstCharacter || !secondCharacter || !auditStage) throw new Error('KORE audit screen hook needs loaded roster and stage data');
+      const now = Date.now();
+      const auditFighters = roster
+        .filter((character) => isCharacterPlayable(character))
+        .slice(0, 8)
+        .map((character) => ({ id: character.id, displayName: character.displayName }));
+      const makeAuditLocalBracket = () => simulateCpuTournamentMatches(createLocalTournamentBracket(
+        [{ entryId: 'local-player-1', displayName: 'P1', character: { id: firstCharacter.id, displayName: firstCharacter.displayName } }],
+        auditFighters,
+        now - 6000
+      ));
+      const makeAuditOnlineStatus = (
+        kind: 'freeOnline' | 'paidOnline',
+        variant: 'ready' | 'checkout' | 'claim' | 'review' = 'ready'
+      ): TournamentStatusResult => {
+        const paid = kind === 'paidOnline';
+        const entry: TournamentEntry = {
+          id: 'audit-entry-local',
+          playerId: 'audit-player',
+          registeredDeviceId: paid ? 'audit-device' : undefined,
+          displayName: 'AUDIT PLAYER',
+          characterId: firstCharacter.id,
+          seed: 1,
+          paymentState: paid ? variant === 'checkout' ? 'invoicePending' : 'paid' : 'notRequired',
+          paymentProvider: paid ? 'lnbits' : undefined,
+          amountSats: paid ? 200 : undefined,
+          checkingId: paid ? 'audit-checkout' : undefined,
+          paymentRequest: paid ? 'lnbc200n1paudittournamentcheckout' : undefined,
+          lightningUrl: paid ? 'lightning:lnbc200n1paudittournamentcheckout' : undefined,
+          paidAt: paid && variant !== 'checkout' ? now - 4000 : undefined,
+          payoutState: variant === 'claim' ? 'rewardPending' : undefined,
+          payoutAmountSats: variant === 'claim' ? 1500 : undefined,
+          joinedAt: now - 7000
+        };
+        const opponent: TournamentEntry = {
+          id: 'audit-entry-rival',
+          playerId: 'audit-rival',
+          registeredDeviceId: paid ? 'audit-rival-device' : undefined,
+          displayName: paid ? 'PRIZE RIVAL' : 'BRACKET RIVAL',
+          characterId: secondCharacter.id,
+          seed: 2,
+          paymentState: paid ? 'paid' : 'notRequired',
+          paidAt: paid ? now - 4200 : undefined,
+          joinedAt: now - 6500
+        };
+        const fillerEntries: TournamentEntry[] = auditFighters.slice(2, 8).map((fighter, index) => ({
+          id: `audit-entry-${index + 3}`,
+          playerId: `audit-player-${index + 3}`,
+          displayName: fighter.displayName,
+          characterId: fighter.id,
+          seed: index + 3,
+          isBot: !paid,
+          paymentState: paid ? 'paid' : 'notRequired',
+          paidAt: paid ? now - 4500 - index : undefined,
+          joinedAt: now - 6200 - index
+        }));
+        const roomStatus = variant === 'review' ? 'review' as const : 'ready' as const;
+        const finalMatch: TournamentMatch = {
+          id: 'audit-r3m1',
+          round: 3,
+          index: 0,
+          entryAId: entry.id,
+          entryBId: opponent.id,
+          winnerEntryId: variant === 'claim' ? entry.id : undefined,
+          status: variant === 'claim' ? 'completed' : 'ready',
+          stageId: auditStage.id,
+          roomId: 'audit-room-final',
+          slotStartsAt: now - 1200,
+          slotEndsAt: now + 60 * 60 * 1000,
+          hostEntryId: entry.id,
+          guestEntryId: opponent.id,
+          roomStatus: variant === 'claim' ? 'closed' : roomStatus,
+          reportState: variant === 'claim' ? 'agreed' : variant === 'review' ? 'conflict' : 'none'
+        };
+        const bracket: TournamentBracket = {
+          id: paid ? 'audit-paid-tournament' : 'audit-free-online-tournament',
+          kind,
+          status: variant === 'claim' ? 'completed' : variant === 'checkout' ? 'open' : 'roundActive',
+          entries: [entry, opponent, ...fillerEntries],
+          matches: [finalMatch],
+          currentRound: 3,
+          capacity: paid ? 25 : 8,
+          minEntries: paid ? 25 : 8,
+          paidEnabled: paid,
+          createdAt: now - 10000,
+          updatedAt: now,
+          reward: {
+            kind: paid ? 'lightningPending' : 'profilePoints',
+            label: paid ? '$15 Lightning reward' : 'Tournament profile trophy',
+            state: variant === 'claim' ? 'pending' : paid ? 'pending' : 'locked'
+          }
+        };
+        return {
+          bracket,
+          entry,
+          assignedMatch: variant === 'claim' || variant === 'checkout' ? undefined : finalMatch,
+          matchRoom: variant === 'claim' || variant === 'checkout' ? undefined : {
+            tournamentId: bracket.id,
+            matchId: finalMatch.id,
+            roomId: finalMatch.roomId ?? 'audit-room-final',
+            slotStartsAt: finalMatch.slotStartsAt ?? now,
+            slotEndsAt: finalMatch.slotEndsAt ?? now + 60 * 60 * 1000,
+            status: roomStatus,
+            hostEntryId: entry.id,
+            guestEntryId: opponent.id,
+            hostPeerId: 'audit-local-peer',
+            guestPeerId: 'audit-rival-peer',
+            localRole: 'host'
+          },
+          payment: paid ? {
+            state: variant === 'checkout' ? 'invoicePending' : 'paid',
+            provider: 'lnbits',
+            checkingId: 'audit-checkout',
+            amountSats: 200,
+            paymentRequest: 'lnbc200n1paudittournamentcheckout',
+            lightningUrl: 'lightning:lnbc200n1paudittournamentcheckout',
+            paidAt: variant === 'checkout' ? undefined : now - 4000
+          } : undefined,
+          confirmedEntries: paid ? 25 : 8,
+          entriesNeeded: 0,
+          estimatedStartLabel: variant === 'checkout' ? 'Waiting for payment' : 'Tournament ready',
+          startsWhenFullLabel: `Tournament starts once ${paid ? 25 : 8} entries enter`,
+          resumeNotice: variant === 'review' ? 'admin_review' : undefined,
+          statusText: variant === 'claim' ? 'Prize ready' : variant === 'review' ? 'Prizepool match needs admin review.' : variant === 'checkout' ? 'Cash App checkout ready' : 'Match ready'
+        };
+      };
+      const seedTournamentAudit = () => {
+        const localBracket = makeAuditLocalBracket();
+        const localMatch = getNextPlayableLocalTournamentMatch(localBracket) ?? localBracket.matches[0];
+        setLocalTournamentBracket(localBracket);
+        setOnlineTournamentStatus(null);
+        setE2eSimulateOnlineTournament(false);
+        setLocalTournamentCpuSlots([]);
+        setLocalTournamentSlotEntryIds({ 1: localMatch?.entryAId ?? 'local-player-1', 2: localMatch?.entryBId ?? 'cpu-1' });
+        setActiveTournamentMatchId(localMatch?.id ?? '');
+        setTournamentStatusText('Tournament audit state');
+        setMode('tournamentLocal');
+        return { localBracket, localMatch };
+      };
       const auditRun = {
         ...createArcadeRunState(Date.now() - 5000),
         score: 2400,
@@ -3741,6 +3880,82 @@ export default function App() {
       setP1Id(firstCharacter.id);
       setP2Id(secondCharacter.id);
       setStageId(auditStage.id);
+      if (targetScreen === 'tournament') {
+        setSelectedTournamentMode('online');
+        setOnlineTournamentStatus(null);
+        setLocalTournamentBracket(null);
+        setScreen('tournament');
+        return;
+      }
+      if (targetScreen === 'tournamentLobbyLocal') {
+        seedTournamentAudit();
+        setScreen('tournamentLobby');
+        return;
+      }
+      if (targetScreen === 'tournamentBracketLocal') {
+        const { localMatch } = seedTournamentAudit();
+        setActiveTournamentMatchId(localMatch?.id ?? '');
+        setScreen('tournamentBracket');
+        return;
+      }
+      if (targetScreen === 'tournamentLobbyFreeOnline' || targetScreen === 'tournamentBracketOnline') {
+        const status = makeAuditOnlineStatus('freeOnline');
+        setOnlineProfile({ playerId: 'audit-player', displayName: 'AUDIT PLAYER' });
+        setOnlineTournamentStatus(status);
+        setLocalTournamentBracket(null);
+        setE2eSimulateOnlineTournament(true);
+        setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+        setTournamentStatusText(tournamentStatusDisplayText(status));
+        setMode('tournamentOnline');
+        setScreen(targetScreen === 'tournamentBracketOnline' ? 'tournamentBracket' : 'tournamentLobby');
+        return;
+      }
+      if (
+        targetScreen === 'tournamentLobbyPrizepool' ||
+        targetScreen === 'tournamentLobbyPrizepoolCheckout' ||
+        targetScreen === 'tournamentLobbyPrizepoolClaim' ||
+        targetScreen === 'tournamentLobbyPrizepoolReview'
+      ) {
+        const variant = targetScreen === 'tournamentLobbyPrizepoolCheckout'
+          ? 'checkout'
+          : targetScreen === 'tournamentLobbyPrizepoolClaim'
+            ? 'claim'
+            : targetScreen === 'tournamentLobbyPrizepoolReview'
+              ? 'review'
+              : 'ready';
+        const status = makeAuditOnlineStatus('paidOnline', variant);
+        setOnlineProfile({ playerId: 'audit-player', displayName: 'AUDIT PLAYER', email: 'audit@playkore.com', tournamentEmailReminders: true });
+        setOnlineTournamentStatus(status);
+        setLocalTournamentBracket(null);
+        setE2eSimulateOnlineTournament(true);
+        setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+        setTournamentStatusText(tournamentStatusDisplayText(status));
+        setMode('tournamentOnline');
+        setScreen('tournamentLobby');
+        return;
+      }
+      if (targetScreen === 'tournamentLobbyPaidRecovery') {
+        setOnlineProfile({ playerId: 'audit-player', displayName: 'AUDIT PLAYER', email: 'audit@playkore.com', tournamentEmailReminders: true });
+        setOnlineTournamentStatus(null);
+        setLocalTournamentBracket(null);
+        setE2eSimulateOnlineTournament(true);
+        setTournamentStatusText('Paid tournament device mismatch. Use the same device or recover entry by email.');
+        setMode('tournamentOnline');
+        setScreen('tournamentLobby');
+        return;
+      }
+      if (targetScreen === 'tournamentFightResult') {
+        const status = makeAuditOnlineStatus('freeOnline');
+        setOnlineProfile({ playerId: 'audit-player', displayName: 'AUDIT PLAYER' });
+        setOnlineTournamentStatus(status);
+        setLocalTournamentBracket(null);
+        setE2eSimulateOnlineTournament(true);
+        setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+        setTournamentStatusText(tournamentStatusDisplayText(status));
+        setMode('tournamentOnline');
+        setScreen('fight');
+        return;
+      }
       setMode(targetScreen === 'training' ? 'training' : targetScreen === 'privateRooms' ? 'online' : targetScreen === 'fight' ? 'local2p' : 'ai');
       setOnlineProfile((current) => current ?? { playerId: 'audit-player', displayName: 'AUDIT PLAYER' });
       setActiveArcadeMiniGame(targetScreen === 'miniGame' ? auditMiniGame : null);

@@ -3431,14 +3431,14 @@ button {
 
 .tournament-entry-options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(132px, 100%), 1fr));
   gap: clamp(6px, 1vh, 8px);
 }
 
 .tournament-entry-option {
   display: grid;
   align-content: center;
-  min-height: clamp(60px, 9.8vh, 86px);
+  min-height: clamp(68px, 10.5vh, 92px);
   border: 0;
   border-radius: 7px;
   padding: clamp(8px, 1.25vh, 12px) 10px;
@@ -3468,9 +3468,9 @@ button {
 
 .tournament-entry-option span,
 .tournament-entry-option small {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .tournament-entry-option span {
