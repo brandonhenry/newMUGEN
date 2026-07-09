@@ -134,10 +134,7 @@
       "/characters/anna-kyoyama/frames/frame-103.png",
       "/characters/anna-kyoyama/frames/frame-104.png",
       "/characters/anna-kyoyama/frames/frame-105.png",
-      "/characters/anna-kyoyama/frames/frame-106.png",
-      "/characters/anna-kyoyama/frames/frame-107.png",
-      "/characters/anna-kyoyama/frames/frame-108.png",
-      "/characters/anna-kyoyama/frames/frame-109.png"
+      "/characters/anna-kyoyama/frames/frame-106.png"
     ],
     "cmd:d/f+2": [
       "/characters/anna-kyoyama/frames/frame-084.png",
@@ -232,10 +229,7 @@
       "/characters/anna-kyoyama/frames/frame-143.png",
       "/characters/anna-kyoyama/frames/frame-144.png",
       "/characters/anna-kyoyama/frames/frame-145.png",
-      "/characters/anna-kyoyama/frames/frame-146.png",
-      "/characters/anna-kyoyama/frames/frame-147.png",
-      "/characters/anna-kyoyama/frames/frame-148.png",
-      "/characters/anna-kyoyama/frames/frame-149.png"
+      "/characters/anna-kyoyama/frames/frame-146.png"
     ],
     "cmd:f+2": [
       "/characters/anna-kyoyama/frames/frame-084.png",
@@ -642,7 +636,8 @@
       "forwardForceStartFrame": 32,
       "forwardForceEndFrame": 35,
       "label": "Forward Bead Rush",
-      "hitLevel": "mid",
+      "hitLevel": "throw",
+      "throwCapture": true,
       "onComboHitFrames": 14,
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 3,

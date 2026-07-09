@@ -1050,6 +1050,7 @@ function MiniGameCameraRig({ snapshot }: { snapshot: AnyMiniGameSnapshot }) {
       camera.fov = desiredFov;
       camera.updateProjectionMatrix();
     }
+    const enemyRush = snapshot.kind === 'enemy-rush';
     const focusables: Array<{ x: number; y: number; z: number }> = snapshot.kind === 'break-target'
       ? snapshot.targets.filter((target) => !target.destroyed).map((target) => target.position)
       : snapshot.enemies.filter((enemy) => !enemy.defeated).map((enemy) => ({ x: enemy.position.x, y: enemy.position.y + enemy.height * 0.5, z: enemy.position.z }));
@@ -1059,12 +1060,13 @@ function MiniGameCameraRig({ snapshot }: { snapshot: AnyMiniGameSnapshot }) {
     }
     if (focusables.length > 0) targetCenter.multiplyScalar(1 / (focusables.length + 1));
     const player = new THREE.Vector3(snapshot.player.position.x, 1.08, snapshot.player.position.z);
-    const focus = player.lerp(targetCenter, isNarrow ? 0.34 : 0.38);
+    const focus = player.lerp(targetCenter, enemyRush ? (isNarrow ? 0.28 : 0.32) : (isNarrow ? 0.34 : 0.38));
+    if (enemyRush) focus.z = THREE.MathUtils.lerp(snapshot.player.position.z, 0, isNarrow ? 0.12 : 0.22);
     smoothedTarget.current.lerp(focus, 1 - Math.pow(0.001, delta));
     const desired = new THREE.Vector3(
       smoothedTarget.current.x,
-      smoothedTarget.current.y + (isNarrow ? 3.2 : 2.35),
-      smoothedTarget.current.z + (isNarrow ? 12.2 : 6.8)
+      smoothedTarget.current.y + (enemyRush ? (isNarrow ? 3.05 : 2.55) : (isNarrow ? 3.2 : 2.35)),
+      smoothedTarget.current.z + (enemyRush ? (isNarrow ? 10.6 : 7.8) : (isNarrow ? 12.2 : 6.8))
     );
     camera.position.lerp(desired, 1 - Math.pow(0.002, delta));
     camera.lookAt(smoothedTarget.current);

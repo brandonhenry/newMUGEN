@@ -9018,6 +9018,106 @@ button {
   touch-action: none;
 }
 
+.enemy-rush-hud {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+  z-index: 14;
+  display: grid;
+  width: min(360px, calc(100vw - 32px));
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(7, 11, 18, 0.68);
+  color: #f7fbff;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  backdrop-filter: blur(12px);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.enemy-rush-hud-title,
+.enemy-rush-hud-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.enemy-rush-hud-title span {
+  color: #fff06c;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.enemy-rush-hud-title strong,
+.enemy-rush-hud-stats span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.enemy-rush-hud-title strong {
+  color: rgba(247, 251, 255, 0.88);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.enemy-rush-hud-meter {
+  position: relative;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.enemy-rush-hud-meter i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2ee6ff, #fff06c);
+  box-shadow: 0 0 18px rgba(46, 230, 255, 0.44);
+  transition-property: width;
+  transition-duration: 120ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.enemy-rush-hud-stats span {
+  color: rgba(236, 244, 255, 0.76);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .enemy-rush-hud {
+    top: max(12px, env(safe-area-inset-top));
+    left: max(12px, env(safe-area-inset-left));
+    width: min(292px, calc(100vw - 24px));
+    gap: 7px;
+    padding: 10px;
+  }
+
+  .enemy-rush-hud-title span,
+  .enemy-rush-hud-title strong {
+    font-size: 11px;
+  }
+
+  .enemy-rush-hud-stats {
+    gap: 7px;
+  }
+
+  .enemy-rush-hud-stats span {
+    font-size: 10px;
+  }
+}
+
 .fight-fullscreen-button {
   position: absolute;
   right: 18px;

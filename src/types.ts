@@ -905,6 +905,15 @@ export type EnemyRushEnemyKind =
   | 'wizzart-c'
   | 'dark-knight';
 
+export type EnemyRushLaneIndex = 0 | 1 | 2 | 3 | 4;
+
+export type EnemyRushLaneTransition = {
+  from: EnemyRushLaneIndex;
+  to: EnemyRushLaneIndex;
+  progress: number;
+  duration: number;
+};
+
 export type EnemyRushRuntime = {
   id: string;
   kind: EnemyRushEnemyKind;
@@ -918,6 +927,8 @@ export type EnemyRushRuntime = {
   radius: number;
   height: number;
   position: { x: number; y: number; z: number };
+  laneIndex: EnemyRushLaneIndex;
+  laneTransition: EnemyRushLaneTransition | null;
   facing: 1 | -1;
   attackCooldown: number;
   hitFlash: number;
@@ -933,6 +944,7 @@ export type EnemyRushCoinRuntime = {
   id: string;
   value: number;
   position: { x: number; y: number; z: number };
+  laneIndex: EnemyRushLaneIndex;
   radius: number;
   collected: boolean;
 };
@@ -944,6 +956,7 @@ export type EnemyRushProjectileRuntime = {
   damage: number;
   position: { x: number; y: number; z: number };
   velocity: { x: number; z: number };
+  laneIndex: EnemyRushLaneIndex;
   radius: number;
   age: number;
 };
@@ -956,6 +969,10 @@ export type EnemyRushMiniGameSnapshot = {
   seed: number;
   level: number;
   score: number;
+  laneIndex: EnemyRushLaneIndex;
+  laneTargetIndex: EnemyRushLaneIndex;
+  laneTransition: EnemyRushLaneTransition | null;
+  queuedLaneStep: -1 | 0 | 1;
   enemies: EnemyRushRuntime[];
   coins: EnemyRushCoinRuntime[];
   projectiles: EnemyRushProjectileRuntime[];

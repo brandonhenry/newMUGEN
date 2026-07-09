@@ -23,7 +23,18 @@ export type OnlinePeerSessionOptions = {
   onError?: (error: Error) => void;
 };
 
+export type OnlinePeerSessionFactory = (options: OnlinePeerSessionOptions) => Promise<OnlinePeerSession>;
+
+type OnlinePeerSessionTestWindow = Window & {
+  __KORE_E2E_PEER_FACTORY__?: OnlinePeerSessionFactory;
+};
+
 export async function createOnlinePeerSession(options: OnlinePeerSessionOptions): Promise<OnlinePeerSession> {
+  const testFactory = typeof window !== 'undefined'
+    ? (window as OnlinePeerSessionTestWindow).__KORE_E2E_PEER_FACTORY__
+    : undefined;
+  if (testFactory) return testFactory(options);
+
   const { default: PeerConstructor } = await import('peerjs');
   const peer = new PeerConstructor();
   let activeConnection: DataConnection | null = null;

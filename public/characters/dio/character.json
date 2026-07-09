@@ -77,11 +77,6 @@
       "/characters/dio/frames/frame-078.png"
     ],
     "jabright": [
-      "/characters/dio/frames/frame-149.png",
-      "/characters/dio/frames/frame-150.png",
-      "/characters/dio/frames/frame-151.png",
-      "/characters/dio/frames/frame-152.png",
-      "/characters/dio/frames/frame-153.png",
       "/characters/dio/frames/frame-154.png",
       "/characters/dio/frames/frame-155.png",
       "/characters/dio/frames/frame-156.png",
@@ -188,11 +183,6 @@
       "/characters/dio/frames/frame-167.png",
       "/characters/dio/frames/frame-168.png",
       "/characters/dio/frames/frame-169.png"
-    ],
-    "cmd:1+3": [
-      "/characters/dio/frames/frame-024.png",
-      "/characters/dio/frames/frame-025.png",
-      "/characters/dio/frames/frame-026.png"
     ],
     "cmd:2+3": [],
     "cmd:2+4": [
@@ -766,28 +756,6 @@
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
-    },
-    "cmd:1+3": {
-      "startupFrames": 15,
-      "activeFrames": 2,
-      "recoveryFrames": 22,
-      "damage": 12,
-      "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 13,
-      "range": 1.65,
-      "forwardForce": 1.46,
-      "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 25,
-      "launchHeight": 2.1,
-      "label": "Vampire Cross Launcher",
-      "hitLevel": "mid",
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
       "startupFrames": 16,

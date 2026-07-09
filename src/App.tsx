@@ -85,7 +85,7 @@ import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFra
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
 import { emptyRankedKrScores, fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedKrScores, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
 import type { OnlineAssetWarmupReadyMessage, OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
-import { createRollbackSession, type RollbackSession } from './lib/online/rollback';
+import { checksumMatch, createRollbackSession, type RollbackSession } from './lib/online/rollback';
 import {
   ROUNDS_TO_WIN,
   emptyInputFrame,
@@ -269,13 +269,43 @@ type AssetWarmupIntent = {
 };
 const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 type E2EFightPosition = { x?: number; y?: number; z?: number };
+type E2EOnlineDiagnostics = {
+  mode: MatchMode;
+  onlineRole: OnlineRole | null;
+  onlineState: OnlineConnectionState;
+  onlineStatusText: string;
+  roomId: string | null;
+  matchPhase: MatchSnapshot['phase'];
+  checksum: number;
+  rollbackStats: ReturnType<RollbackSession['getNetworkStats']> | null;
+  wins: [number, number];
+  resultSubmitCounts: {
+    leaderboardAttempts: number;
+    leaderboardSuccesses: number;
+    leaderboardErrors: number;
+    rankedAttempts: number;
+    rankedSuccesses: number;
+    rankedErrors: number;
+  };
+};
 type E2EWindow = Window & {
   __koreE2ESetFightPositions?: (positions: { p1?: E2EFightPosition; p2?: E2EFightPosition }) => void;
   __koreE2ECompleteTrainingTrial?: () => void;
   __koreE2EForceMatchOver?: (winnerSlot?: 1 | 2) => void;
+  __koreE2EOnlineDiagnostics?: () => E2EOnlineDiagnostics;
+  __koreE2EOnlineStartReady?: () => boolean;
+  __koreE2EStartOnlineFight?: (options: {
+    mode: Extract<MatchMode, 'online' | 'ranked' | 'private' | 'trainingOnline'>;
+    profile?: OnlinePlayerProfile;
+    privateRoomIntent?: PrivateRoomIntent;
+  }) => void;
+  __koreE2EEnemyRushSnapshot?: () => EnemyRushMiniGameSnapshot | null;
   __koreE2ESeedOnlineTournament?: (status: TournamentStatusResult) => void;
   __koreE2ESeedPaidRecoveryPrompt?: (profile: OnlinePlayerProfile, message?: string) => void;
   __koreE2EOpenAuditScreen?: (screen: E2EAuditScreen) => void;
+  __KORE_E2E_SUPPRESS_BOOT_TITLE__?: boolean;
+  __KORE_E2E_SKIP_ONLINE_VERSUS__?: boolean;
+  __KORE_E2E_SKIP_ONLINE_ASSET_GATE__?: boolean;
 };
 type CharacterViewerViewMode = 'display' | 'compact';
 const DEBUG_MODEL_STAGE_IDS = new Set(['hidden-leaf-village', 'naruto-apartment', 'naruto-apartment-fix', 'naruto-apartment-fix-2']);
@@ -3702,6 +3732,30 @@ export default function App() {
   useEffect(() => {
     if (!import.meta.env.DEV || typeof window === 'undefined') return undefined;
     const testWindow = window as E2EWindow;
+    testWindow.__koreE2EOnlineStartReady = () => roster.length >= 2 && playableStageRoster.length > 0;
+    testWindow.__koreE2EStartOnlineFight = (options) => {
+      testWindow.__KORE_E2E_SUPPRESS_BOOT_TITLE__ = true;
+      const firstCharacter = roster.find((character) => isCharacterPlayable(character)) ?? roster[0];
+      const secondCharacter = roster.find((character) => isCharacterPlayable(character) && character.id !== firstCharacter?.id) ?? roster[1] ?? firstCharacter;
+      const fightStage = playableStageRoster.find((item) => item.id === 'the-chamber') ?? playableStageRoster[0] ?? stages[0];
+      if (!firstCharacter || !secondCharacter || !fightStage) throw new Error('E2E online fight hook needs loaded roster and stage data');
+      if (options.profile) {
+        const currentProfile = readOnlineProfile();
+        const savedProfile = currentProfile?.playerId === options.profile.playerId && currentProfile.displayName === options.profile.displayName
+          ? currentProfile
+          : writeOnlineProfile(options.profile);
+        setOnlineProfile((current) => (
+          current?.playerId === savedProfile.playerId && current.displayName === savedProfile.displayName ? current : savedProfile
+        ));
+      }
+      setP1Id(firstCharacter.id);
+      setP2Id(secondCharacter.id);
+      setStageId(fightStage.id);
+      setPrivateRoomIntent(options.privateRoomIntent ?? null);
+      setPendingPrivateInviteFriend(null);
+      setMode(options.mode);
+      setScreen('fight');
+    };
     testWindow.__koreE2EOpenAuditScreen = (targetScreen) => {
       const firstCharacter = roster[0];
       const secondCharacter = roster.find((character) => character.id !== firstCharacter?.id) ?? roster[1] ?? firstCharacter;
@@ -4016,6 +4070,8 @@ export default function App() {
       setScreen('tournamentLobby');
     };
     return () => {
+      if (testWindow.__koreE2EStartOnlineFight) delete testWindow.__koreE2EStartOnlineFight;
+      if (testWindow.__koreE2EOnlineStartReady) delete testWindow.__koreE2EOnlineStartReady;
       if (testWindow.__koreE2EOpenAuditScreen) delete testWindow.__koreE2EOpenAuditScreen;
       if (testWindow.__koreE2ESeedOnlineTournament) delete testWindow.__koreE2ESeedOnlineTournament;
       if (testWindow.__koreE2ESeedPaidRecoveryPrompt) delete testWindow.__koreE2ESeedPaidRecoveryPrompt;
@@ -4203,7 +4259,10 @@ export default function App() {
         stage_count: loadedStages.stages.length,
         warning_count: Object.values(result.warnings).flat().length + Object.values(loadedStages.warnings).flat().length
       });
-      window.setTimeout(() => setScreen('title'), 650);
+      window.setTimeout(() => {
+        if (import.meta.env.DEV && typeof window !== 'undefined' && (window as E2EWindow).__KORE_E2E_SUPPRESS_BOOT_TITLE__) return;
+        setScreen('title');
+      }, 650);
     }).catch((error) => {
       console.error('Failed to load KORE roster or stages', error);
       captureAnalyticsError(error, { source: 'app_load', app_version: KORE_APP_VERSION });
@@ -6241,6 +6300,7 @@ function isMenuNavigationActive(screen: Screen) {
   if (document.querySelector('.username-gate-overlay')) return false;
   if (screen === 'title' || screen === 'versus' || screen === 'unlockReveal') return false;
   if (screen === 'fight') return Boolean(document.querySelector('.pause-overlay'));
+  if (screen === 'miniGame') return Boolean(document.querySelector('.pause-overlay'));
   if (screen === 'stageEditor') return false;
   return true;
 }
@@ -11745,6 +11805,7 @@ function usesCpuDifficulty(mode: MatchMode) {
 const VERSUS_SPLASH_DURATION_MS = 2600;
 
 function canSkipVersusSplash(mode: MatchMode) {
+  if (import.meta.env.DEV && typeof window !== 'undefined' && (window as E2EWindow).__KORE_E2E_SKIP_ONLINE_VERSUS__) return true;
   return !['online', 'ranked', 'trainingOnline', 'private', 'tournamentOnline'].includes(mode);
 }
 
@@ -23069,6 +23130,14 @@ function FightScreen({
   const onlineBotOpponentRef = useRef<OnlineBotOpponent | null>(null);
   const onlinePlacementMatchRef = useRef(false);
   const onlinePerformanceRef = useRef(emptyOnlinePerformancePair());
+  const onlineResultSubmitCountsRef = useRef({
+    leaderboardAttempts: 0,
+    leaderboardSuccesses: 0,
+    leaderboardErrors: 0,
+    rankedAttempts: 0,
+    rankedSuccesses: 0,
+    rankedErrors: 0
+  });
   const rankedProfileRef = useRef<RankedProfile | null>(rankedProfile);
   const rankedSubmitResultRef = useRef<RankedSubmitResult | null>(null);
   const [rankedPlayerResult, setRankedPlayerResult] = useState<RankedPlayerResult | null>(null);
@@ -23277,8 +23346,41 @@ function FightScreen({
         }
         fighter.facingYaw = Math.atan2(opponent.position.x - fighter.position.x, opponent.position.z - fighter.position.z);
       });
+      if (isOnline) {
+        if (!onlineRemoteProfileRef.current && onlineRoomRef.current) {
+          const remotePeerId = onlineRoleRef.current === 'guest'
+            ? onlineRoomRef.current.hostPeerId
+            : onlineRoomRef.current.guestPeerId;
+          if (remotePeerId) onlineRemoteProfileRef.current = { playerId: remotePeerId, displayName: 'E2E OPPONENT' };
+        }
+        onlineRollbackRef.current = null;
+        onlineStateRef.current = 'connected';
+        setOnlineState('connected');
+      }
       matchRef.current = next;
       setMatch(next);
+      if (mode === 'online' && onlineRoleRef.current === 'host') {
+        const localProfile = onlineLocalProfileRef.current ?? {
+          playerId: onlineSessionRef.current?.peerId ?? onlineRoomRef.current?.hostPeerId ?? 'e2e-local',
+          displayName: 'E2E LOCAL'
+        };
+        const remoteProfile = onlineRemoteProfileRef.current ?? {
+          playerId: onlineRoomRef.current?.guestPeerId ?? 'e2e-remote',
+          displayName: 'E2E REMOTE'
+        };
+        onlineResultSubmitCountsRef.current.leaderboardAttempts += 1;
+        void submitLeaderboardResult({
+          players: [
+            { profile: localProfile, points: 1 },
+            { profile: remoteProfile, points: 1 }
+          ]
+        }).then(() => {
+          onlineResultSubmitCountsRef.current.leaderboardSuccesses += 1;
+        }).catch(() => {
+          onlineResultSubmitCountsRef.current.leaderboardErrors += 1;
+        });
+      }
+      window.setTimeout(() => recordOnlineMatchWin(matchRef.current), 0);
     };
     testWindow.__koreE2ECompleteTrainingTrial = () => {
       const trial = activeTrainingTrialRef.current;
@@ -23329,12 +23431,25 @@ function FightScreen({
       matchRef.current = next;
       setMatch(next);
     };
+    testWindow.__koreE2EOnlineDiagnostics = () => ({
+      mode,
+      onlineRole: onlineRoleRef.current,
+      onlineState: onlineStateRef.current,
+      onlineStatusText: onlineStatusTextRef.current,
+      roomId: onlineRoomRef.current?.roomId ?? null,
+      matchPhase: matchRef.current.phase,
+      checksum: checksumMatch(matchRef.current),
+      rollbackStats: onlineRollbackRef.current?.getNetworkStats() ?? null,
+      wins: [...onlineWinsRef.current] as [number, number],
+      resultSubmitCounts: { ...onlineResultSubmitCountsRef.current }
+    });
     return () => {
       if (testWindow.__koreE2ESetFightPositions) delete testWindow.__koreE2ESetFightPositions;
       if (testWindow.__koreE2ECompleteTrainingTrial) delete testWindow.__koreE2ECompleteTrainingTrial;
       if (testWindow.__koreE2EForceMatchOver) delete testWindow.__koreE2EForceMatchOver;
+      if (testWindow.__koreE2EOnlineDiagnostics) delete testWindow.__koreE2EOnlineDiagnostics;
     };
-  }, [p1.id]);
+  }, [mode, p1.id]);
 
   useEffect(() => {
     setCompletedTrainingTrialIds(readTrainingTrialCompletion(p1.id));
@@ -24139,6 +24254,18 @@ function FightScreen({
   const beginOnlineAssetWarmup = useCallback((onlineMatch: MatchSnapshot, reason: OnlineAssetGate['reason']) => {
     const room = onlineRoomRef.current;
     if (!room || onlineBotOpponentRef.current) return;
+    if (import.meta.env.DEV && typeof window !== 'undefined' && (window as E2EWindow).__KORE_E2E_SKIP_ONLINE_ASSET_GATE__) {
+      installFreshMatch(onlineMatch);
+      onlinePerformanceRef.current = emptyOnlinePerformancePair();
+      onlineWinnerRecordedRef.current = false;
+      matchHistoryRecordedRef.current = '';
+      startOnlineRollback(onlineMatch, onlineRoleRef.current);
+      onlineStateRef.current = 'connected';
+      setOnlineState('connected');
+      setOnlineStatusText('CONNECTED');
+      if (onlineRoleRef.current === 'host') publishOnlineSnapshot(true, reason);
+      return;
+    }
     window.clearTimeout(onlineAssetGateTimeoutRef.current);
     const gate: OnlineAssetGate = {
       warmupId: makeOnlineAssetWarmupId(room.roomId, onlineMatch, reason, onlineWinsRef.current),
@@ -24173,7 +24300,7 @@ function FightScreen({
       pendingOnlineAssetReadyRef.current = null;
       window.setTimeout(() => applyRemoteOnlineAssetReady(pending), 0);
     }
-  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, installFreshMatch, setOnlineAssetGateState]);
+  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, installFreshMatch, publishOnlineSnapshot, setOnlineAssetGateState, startOnlineRollback]);
 
   useEffect(() => {
     if (!onlineAssetGate) return undefined;
@@ -24462,6 +24589,7 @@ function FightScreen({
         const [p1Stats, p2Stats] = onlinePerformanceRef.current;
         const p1Points = calculateOnlinePerformancePoints(p1Stats, candidate.fighters[0].roundsWon, candidate.winnerSlot === 1);
         const p2Points = calculateOnlinePerformancePoints(p2Stats, candidate.fighters[1].roundsWon, candidate.winnerSlot === 2);
+        onlineResultSubmitCountsRef.current.leaderboardAttempts += 1;
         void submitLeaderboardResult({
           players: bot
             ? [{ profile: localProfile, points: Math.max(1, Math.round(p1Points * 0.5)) }]
@@ -24470,12 +24598,14 @@ function FightScreen({
               { profile: remoteProfile, points: p2Points }
             ]
         }).then(() => {
+          onlineResultSubmitCountsRef.current.leaderboardSuccesses += 1;
           captureFightAnalytics('leaderboard_result_submitted', {
             status: 'success',
             p1_points: p1Points,
             p2_points: p2Points
           });
         }).catch((error) => {
+          onlineResultSubmitCountsRef.current.leaderboardErrors += 1;
           console.error('Failed to submit leaderboard result', error);
           captureFightAnalytics('leaderboard_result_submitted', { status: 'error' });
         });
@@ -24523,7 +24653,9 @@ function FightScreen({
             }
           ]
         };
+        onlineResultSubmitCountsRef.current.rankedAttempts += 1;
         void submitRankedMatchReport(report).then((result) => {
+          onlineResultSubmitCountsRef.current.rankedSuccesses += 1;
           captureFightAnalytics('ranked_report_submitted', { status: 'success' });
           rankedSubmitResultRef.current = result;
           const localResult = result.players.find((player) => player.playerId === localProfile.playerId) ?? null;
@@ -24559,6 +24691,7 @@ function FightScreen({
           }
           onlineSessionRef.current?.send({ type: 'rankedResult', result });
         }).catch((error) => {
+          onlineResultSubmitCountsRef.current.rankedErrors += 1;
           console.error('Failed to submit ranked result', error);
           captureFightAnalytics('ranked_report_submitted', { status: 'error' });
         });
@@ -24769,6 +24902,14 @@ function FightScreen({
             playerId: result.role === 'host' ? result.guestPeerId ?? 'e2e-opponent' : result.hostPeerId,
             displayName: getTournamentOpponentEntry(onlineTournamentStatus.bracket, onlineTournamentStatus.assignedMatch, onlineTournamentStatus.entry.id)?.displayName ?? 'Opponent'
           };
+          onlineResultSubmitCountsRef.current = {
+            leaderboardAttempts: 0,
+            leaderboardSuccesses: 0,
+            leaderboardErrors: 0,
+            rankedAttempts: 0,
+            rankedSuccesses: 0,
+            rankedErrors: 0
+          };
           onlineRollbackRef.current = null;
           onlineWinnerRecordedRef.current = false;
           matchHistoryRecordedRef.current = '';
@@ -24800,6 +24941,14 @@ function FightScreen({
     matchHistoryRecordedRef.current = '';
     onlineLatestSnapshotRef.current = -1;
     onlineSnapshotSequenceRef.current = 0;
+    onlineResultSubmitCountsRef.current = {
+      leaderboardAttempts: 0,
+      leaderboardSuccesses: 0,
+      leaderboardErrors: 0,
+      rankedAttempts: 0,
+      rankedSuccesses: 0,
+      rankedErrors: 0
+    };
     onlineBotOpponentRef.current = null;
     onlinePlacementMatchRef.current = false;
     onlinePerformanceRef.current = emptyOnlinePerformancePair();
@@ -27073,6 +27222,67 @@ function BreakTargetMiniGameScreen({
   );
 }
 
+type EnemyRushAttackAliasState = Record<MoveInput, { held: boolean; pulseFrames: number }>;
+type EnemyRushInputMetadata = InputFrame & {
+  __pressedActions?: string[];
+  __pressSequences?: Partial<Record<string, number>>;
+};
+const ENEMY_RUSH_ATTACK_ALIAS_PULSE_FRAMES = 8;
+
+const enemyRushAttackAliasByCode: Partial<Record<string, MoveInput>> = {
+  KeyJ: 'jab',
+  KeyK: 'kick',
+  KeyL: 'heavy',
+  KeyU: 'special',
+  j: 'jab',
+  k: 'kick',
+  l: 'heavy',
+  u: 'special',
+  J: 'jab',
+  K: 'kick',
+  L: 'heavy',
+  U: 'special'
+};
+
+function createEnemyRushAttackAliasState(): EnemyRushAttackAliasState {
+  return {
+    jab: { held: false, pulseFrames: 0 },
+    kick: { held: false, pulseFrames: 0 },
+    heavy: { held: false, pulseFrames: 0 },
+    special: { held: false, pulseFrames: 0 }
+  };
+}
+
+function applyEnemyRushAttackAliases(input: InputFrame, aliases: EnemyRushAttackAliasState): InputFrame {
+  const activeAliases = (['jab', 'kick', 'heavy', 'special'] as MoveInput[]).filter((action) => aliases[action].held || aliases[action].pulseFrames > 0);
+  if (activeAliases.length === 0) return input;
+  const next: EnemyRushInputMetadata = {
+    ...input,
+    jab: false,
+    kick: false,
+    heavy: false,
+    special: false
+  };
+  activeAliases.forEach((action) => {
+    next[action] = true;
+  });
+  const priorPressed = (input as EnemyRushInputMetadata).__pressedActions ?? [];
+  next.__pressedActions = [
+    ...priorPressed.filter((action) => action !== 'jab' && action !== 'kick' && action !== 'heavy' && action !== 'special'),
+    ...activeAliases
+  ];
+  const priorSequences = (input as EnemyRushInputMetadata).__pressSequences;
+  if (priorSequences) {
+    next.__pressSequences = Object.fromEntries(
+      Object.entries(priorSequences).filter(([action]) => action !== 'jab' && action !== 'kick' && action !== 'heavy' && action !== 'special')
+    );
+  }
+  activeAliases.forEach((action) => {
+    aliases[action].pulseFrames = Math.max(0, aliases[action].pulseFrames - 1);
+  });
+  return next;
+}
+
 function EnemyRushMiniGameScreen({
   character,
   launch,
@@ -27104,9 +27314,39 @@ function EnemyRushMiniGameScreen({
   const pauseLatchRef = useRef(false);
   const completedRef = useRef(false);
   const mobileControlsTrackedRef = useRef(false);
+  const attackAliasKeysRef = useRef(createEnemyRushAttackAliasState());
+
+  useEffect(() => {
+    if (!import.meta.env.DEV || typeof window === 'undefined') return undefined;
+    const testWindow = window as E2EWindow;
+    testWindow.__koreE2EEnemyRushSnapshot = () => snapshotRef.current;
+    return () => {
+      if (testWindow.__koreE2EEnemyRushSnapshot) delete testWindow.__koreE2EEnemyRushSnapshot;
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateAttackAlias = (event: KeyboardEvent, pressed: boolean) => {
+      if (isTextEntryElement(event.target)) return;
+      const action = enemyRushAttackAliasByCode[event.code] ?? enemyRushAttackAliasByCode[event.key];
+      if (!action) return;
+      const alias = attackAliasKeysRef.current[action];
+      if (pressed && !alias.held) alias.pulseFrames = ENEMY_RUSH_ATTACK_ALIAS_PULSE_FRAMES;
+      alias.held = pressed;
+    };
+    const onKeyDown = (event: KeyboardEvent) => updateAttackAlias(event, true);
+    const onKeyUp = (event: KeyboardEvent) => updateAttackAlias(event, false);
+    window.addEventListener('keydown', onKeyDown, true);
+    window.addEventListener('keyup', onKeyUp, true);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown, true);
+      window.removeEventListener('keyup', onKeyUp, true);
+    };
+  }, []);
 
   useEffect(() => {
     const fresh = createEnemyRushMiniGame(character, launch.stage, launch.seed, launch.arcadeLevel ?? arcadeRun.level);
+    attackAliasKeysRef.current = createEnemyRushAttackAliasState();
     snapshotRef.current = fresh;
     setSnapshot(fresh);
     setPaused(false);
@@ -27141,7 +27381,8 @@ function EnemyRushMiniGameScreen({
     const tick = (now: number) => {
       const delta = Math.min(0.05, (now - last) / 1000);
       last = now;
-      const [p1Input] = readInputsForStep();
+      const [rawP1Input] = readInputsForStep();
+      const p1Input = applyEnemyRushAttackAliases(rawP1Input, attackAliasKeysRef.current);
       if (p1Input.pause) {
         if (!pauseLatchRef.current) {
           pauseLatchRef.current = true;
@@ -27161,8 +27402,16 @@ function EnemyRushMiniGameScreen({
       }
       if (!pausedRef.current && !completedRef.current) {
         accumulator += delta;
+        let stepInput = p1Input;
         while (accumulator >= fixedStep) {
-          snapshotRef.current = stepEnemyRushMiniGame(snapshotRef.current, p1Input, fixedStep);
+          snapshotRef.current = stepEnemyRushMiniGame(snapshotRef.current, stepInput, fixedStep);
+          if (stepInput.sidestepUp || stepInput.sidestepDown) {
+            stepInput = {
+              ...stepInput,
+              sidestepUp: false,
+              sidestepDown: false
+            };
+          }
           accumulator -= fixedStep;
         }
         setSnapshot(snapshotRef.current);
@@ -27221,6 +27470,7 @@ function EnemyRushMiniGameScreen({
       onPointerDown={() => screenRef.current?.focus()}
     >
       <MiniGameScene snapshot={snapshot} reducedMotion={settings.display.reducedMotion} />
+      <EnemyRushHud snapshot={snapshot} />
       {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
       {paused && (
         <div className="pause-overlay">
@@ -27247,6 +27497,26 @@ function EnemyRushMiniGameScreen({
         </div>
       )}
     </div>
+  );
+}
+
+function EnemyRushHud({ snapshot }: { snapshot: EnemyRushMiniGameSnapshot }) {
+  const enemiesRemaining = snapshot.enemies.filter((enemy) => !enemy.defeated).length;
+  const hpPercent = Math.max(0, Math.min(100, (snapshot.player.hp / Math.max(1, snapshot.player.maxHp)) * 100));
+  return (
+    <aside className="enemy-rush-hud" aria-label="Enemy Rush status">
+      <div className="enemy-rush-hud-title">
+        <span>Enemy Rush</span>
+        <strong>Lv {snapshot.level}</strong>
+      </div>
+      <div className="enemy-rush-hud-meter" aria-label={`HP ${Math.ceil(snapshot.player.hp)} of ${snapshot.player.maxHp}`}>
+        <i style={{ width: `${hpPercent}%` }} />
+      </div>
+      <div className="enemy-rush-hud-stats">
+        <span>{enemiesRemaining}/{snapshot.enemies.length} enemies</span>
+        <span>{Math.round(snapshot.score)} pts</span>
+      </div>
+    </aside>
   );
 }
 

@@ -136,11 +136,6 @@
       "/characters/arale-norimaki/frames/frame-131.png"
     ],
     "cmd:qcf+4": [
-      "/characters/arale-norimaki/frames/frame-173.png",
-      "/characters/arale-norimaki/frames/frame-174.png",
-      "/characters/arale-norimaki/frames/frame-175.png",
-      "/characters/arale-norimaki/frames/frame-176.png",
-      "/characters/arale-norimaki/frames/frame-177.png",
       "/characters/arale-norimaki/frames/frame-178.png",
       "/characters/arale-norimaki/frames/frame-179.png",
       "/characters/arale-norimaki/frames/frame-180.png",
@@ -148,11 +143,6 @@
       "/characters/arale-norimaki/frames/frame-182.png"
     ],
     "cmd:WS+4": [
-      "/characters/arale-norimaki/frames/frame-161.png",
-      "/characters/arale-norimaki/frames/frame-162.png",
-      "/characters/arale-norimaki/frames/frame-163.png",
-      "/characters/arale-norimaki/frames/frame-164.png",
-      "/characters/arale-norimaki/frames/frame-165.png",
       "/characters/arale-norimaki/frames/frame-166.png",
       "/characters/arale-norimaki/frames/frame-167.png",
       "/characters/arale-norimaki/frames/frame-168.png",
@@ -182,15 +172,6 @@
       "/characters/arale-norimaki/frames/frame-106.png",
       "/characters/arale-norimaki/frames/frame-107.png"
     ],
-    "cmd:1+3": [
-      "/characters/arale-norimaki/frames/frame-113.png",
-      "/characters/arale-norimaki/frames/frame-114.png",
-      "/characters/arale-norimaki/frames/frame-115.png",
-      "/characters/arale-norimaki/frames/frame-116.png",
-      "/characters/arale-norimaki/frames/frame-117.png",
-      "/characters/arale-norimaki/frames/frame-118.png",
-      "/characters/arale-norimaki/frames/frame-119.png"
-    ],
     "cmd:2+3": [
       "/characters/arale-norimaki/frames/frame-132.png",
       "/characters/arale-norimaki/frames/frame-133.png",
@@ -200,14 +181,6 @@
       "/characters/arale-norimaki/frames/frame-137.png",
       "/characters/arale-norimaki/frames/frame-138.png",
       "/characters/arale-norimaki/frames/frame-139.png"
-    ],
-    "cmd:2+4": [
-      "/characters/arale-norimaki/frames/frame-140.png",
-      "/characters/arale-norimaki/frames/frame-141.png",
-      "/characters/arale-norimaki/frames/frame-142.png",
-      "/characters/arale-norimaki/frames/frame-143.png",
-      "/characters/arale-norimaki/frames/frame-144.png",
-      "/characters/arale-norimaki/frames/frame-145.png"
     ],
     "cmd:3+4": [
       "/characters/arale-norimaki/frames/frame-108.png",
@@ -736,7 +709,7 @@
       "forwardForceStartFrame": 17,
       "forwardForceEndFrame": 22,
       "label": "Crouch Robot Pester",
-      "hitLevel": "mid",
+      "hitLevel": "special",
       "endsInCrouch": true,
       "cancelable": false,
       "onComboHitFrames": 17,
@@ -789,29 +762,6 @@
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
     },
-    "cmd:1+3": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
-      "damage": 12,
-      "blockDamage": 1,
-      "onBlockFrames": -6,
-      "onHitFrames": 16,
-      "onCounterHitFrames": 21,
-      "whiffRecoveryFrames": 13,
-      "range": 1.65,
-      "forwardForce": 1.36,
-      "forwardForceStartFrame": 14,
-      "forwardForceEndFrame": 20,
-      "launchHeight": 2.1,
-      "label": "Robot Spin Launcher",
-      "hitLevel": "mid",
-      "jumpBeforeMove": true,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 7,
-      "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 12
-    },
     "cmd:2+3": {
       "startupFrames": 20,
       "activeFrames": 3,
@@ -833,28 +783,6 @@
       "onJuggleHitFrames": 16,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
-    },
-    "cmd:2+4": {
-      "startupFrames": 25,
-      "activeFrames": 3,
-      "recoveryFrames": 30,
-      "damage": 12,
-      "blockDamage": 1,
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 12,
-      "range": 1.74,
-      "forwardForce": 1.49,
-      "forwardForceStartFrame": 49,
-      "forwardForceEndFrame": 58,
-      "label": "Flying Robot Sweep",
-      "hitLevel": "low",
-      "knockdown": true,
-      "onComboHitFrames": 20,
-      "onJuggleHitFrames": 11,
-      "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 9
     },
     "cmd:3+4": {
       "startupFrames": 20,
@@ -2627,6 +2555,90 @@
       "/characters/arale-norimaki/sounds/voices/win-01.ogg"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "arale-mouth-beam-blast",
+      "name": "Mouth Beam",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#6eeeff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#6eeeff",
+        "outerColor": "#ffef7a",
+        "impactColor": "#ffffff",
+        "radius": 0.28,
+        "growFrames": 4,
+        "fadeFrames": 12,
+        "shake": 0.14
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:FC+1": [
+      {
+        "id": "crouch-robot-pester-mouth-beam",
+        "projectileId": "arale-mouth-beam-blast",
+        "kind": "blast",
+        "label": "Crouch Robot Pester Mouth Beam",
+        "spawnFrame": 3,
+        "spawnOffset": [
+          0,
+          0.82,
+          0.68
+        ],
+        "startupFrames": 0,
+        "activeFrames": 20,
+        "recoveryFrames": 8,
+        "lifetimeFrames": 32,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 3.2,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.32,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.28,
+            0.34,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 0.9,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }

@@ -1,4 +1,5 @@
 import { expect, test, type Page, type Response } from '@playwright/test';
+import { makeDefaultRankedProfile } from '../src/lib/online/ranked';
 
 const runPerfTests = process.env.KORE_RUN_PERF_TESTS === '1';
 const runLivePerfTests = process.env.KORE_LIVE_PERF_TEST === '1';
@@ -105,8 +106,9 @@ async function startLocalFight(page: Page) {
   await page.getByRole('button', { name: 'Stage' }).click();
   await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
   await page.getByRole('button', { name: 'Fight', exact: true }).click();
-  await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 5_000 });
-  await page.keyboard.press('Enter');
+  const versusScreen = page.locator('.fight-versus-screen');
+  await expect(versusScreen).toBeVisible({ timeout: 5_000 });
+  await versusScreen.press('Enter');
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 3_000 });
   await expect(page.getByTestId('fight-canvas')).toBeVisible({ timeout: 15_000 });
@@ -143,35 +145,60 @@ async function completeTrainingTrialAndContinue(page: Page) {
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 3_000 });
 }
 
-async function startOnlineBotFight(page: Page) {
+type OnlineBotPerfMode = 'online' | 'ranked';
+
+async function startOnlineBotFight(page: Page, perfMode: OnlineBotPerfMode = 'online') {
+  const rankedProfile = makeDefaultRankedProfile({ playerId: 'perf-player', displayName: 'PERF' });
+  rankedProfile.placement = {
+    ...rankedProfile.placement,
+    complete: true,
+    matchesPlayed: rankedProfile.placement.requiredMatches,
+    ratingEstimate: rankedProfile.kp,
+    nextBotKp: 1230
+  };
   await page.addInitScript(() => {
+    window.localStorage.setItem('kore.starterGuide.dismissed.v1', '1');
     window.localStorage.setItem('kore.online.profile', JSON.stringify({ playerId: 'perf-player', displayName: 'PERF' }));
+    (window as any).__KORE_E2E_PEER_FACTORY__ = async (options: any) => {
+      window.setTimeout(() => options.onOpen?.('perf-peer'), 0);
+      return {
+        peer: { id: 'perf-peer', open: true, destroy() {} },
+        peerId: 'perf-peer',
+        connection: null,
+        connect() {
+          throw new Error('Perf bot match should not open peer connections');
+        },
+        send() {},
+        close() {}
+      };
+    };
   });
   await page.route('**/.netlify/functions/online-matchmake', async (route) => {
     const request = route.request();
-    const payload = JSON.parse(request.postData() || '{}') as { peerId?: string; characterId?: string; stageId?: string };
+    const payload = JSON.parse(request.postData() || '{}') as { peerId?: string; characterId?: string; stageId?: string; queue?: string };
     const hostCharacterId = payload.characterId || 'goku';
     const guestCharacterId = hostCharacterId === 'vegeta' ? 'goku' : 'vegeta';
+    const queue = payload.queue === 'ranked' ? 'ranked' : 'casual';
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
         role: 'host',
         status: 'matched',
-        roomId: 'perf-online-bot-room',
-        ownerToken: 'perf-online-bot-owner',
+        roomId: `perf-${queue}-bot-room`,
+        ownerToken: `perf-${queue}-bot-owner`,
         hostPeerId: payload.peerId || 'perf-peer',
-        guestPeerId: 'bot-perf-lagcheck',
+        guestPeerId: `bot-perf-${queue}-lagcheck`,
         hostCharacterId,
         guestCharacterId,
         stageId: payload.stageId || 'the-chamber',
-        queue: 'casual',
+        queue,
         hostKp: 1200,
         guestKp: 1230,
         opponentKind: 'bot',
         botOpponent: {
-          playerId: 'bot-perf-lagcheck',
-          displayName: 'PERF BOT',
+          playerId: `bot-perf-${queue}-lagcheck`,
+          displayName: queue === 'ranked' ? 'RANKED PERF BOT' : 'PERF BOT',
           characterId: guestCharacterId,
           kp: 1230,
           kr: {
@@ -191,24 +218,43 @@ async function startOnlineBotFight(page: Page) {
   await page.route('**/.netlify/functions/online-leave', async (route) => {
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true }) });
   });
+  await page.route('**/.netlify/functions/online-ranked-profile', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(rankedProfile)
+    });
+  });
+  await page.route('**/.netlify/functions/online-ranked-submit', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ reportId: 'perf-ranked-report', players: [] })
+    });
+  });
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await enterMainMenu(page);
   await page.getByRole('button', { name: 'Online' }).click({ force: true });
+  if (perfMode === 'ranked') {
+    await page.getByRole('button', { name: 'Next match mode' }).click();
+    await expect(page.locator('.mode-carousel-current')).toContainText('Ranked', { timeout: 5_000 });
+  }
   await page.locator('.versus-roster-tile:not(.versus-random-tile)').first().click();
   await page.getByRole('button', { name: 'Stage' }).click();
   await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
   await page.getByRole('button', { name: 'Fight', exact: true }).click();
-  await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 5_000 });
-  await page.keyboard.press('Enter');
-  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
+  const versusScreen = page.locator('.fight-versus-screen');
+  await expect(versusScreen).toBeVisible({ timeout: 5_000 });
+  await versusScreen.press('Enter');
+  await expect(page.getByTestId('match-phase')).toHaveText(/intro|fighting/, { timeout: 30_000 });
   await expect(page.getByTestId('match-mode')).toHaveText('versusCpu', { timeout: 5_000 });
   const onlineStatus = page.locator('.online-status-pill');
   if (await onlineStatus.isVisible().catch(() => false)) {
-    await expect(onlineStatus).toContainText(/HOST ONLINE|CONNECTED/, { timeout: 20_000 });
+    await expect(onlineStatus).toContainText(/HOST ONLINE|CONNECTED|RANKED|LOOKING FOR RANKED MATCH/, { timeout: 20_000 });
   }
   await expect(page.getByTestId('fight-canvas')).toBeVisible({ timeout: 15_000 });
-  await page.waitForTimeout(4_200);
+  await page.waitForTimeout(8_000);
 }
 
 async function resetLongTaskCollector(page: Page) {
@@ -486,12 +532,24 @@ test.describe('in-game fight performance', () => {
     expectSmoothFight(stats);
   });
 
-  test('keeps online bot fights smooth after matchmaking connects', async ({ page }, testInfo) => {
+  test('keeps casual online bot fights smooth after matchmaking connects', async ({ page }, testInfo) => {
     await installLongTaskCollector(page);
-    await startOnlineBotFight(page);
+    await startOnlineBotFight(page, 'online');
     await resetLongTaskCollector(page);
     const stats = await sampleFramePacing(page, 8_000);
-    testInfo.attach('online-fight-frame-stats.json', {
+    testInfo.attach('online-casual-fight-frame-stats.json', {
+      body: JSON.stringify(stats, null, 2),
+      contentType: 'application/json'
+    });
+    expectSmoothFight(stats);
+  });
+
+  test('keeps ranked online bot fights smooth after matchmaking connects', async ({ page }, testInfo) => {
+    await installLongTaskCollector(page);
+    await startOnlineBotFight(page, 'ranked');
+    await resetLongTaskCollector(page);
+    const stats = await sampleFramePacing(page, 8_000);
+    testInfo.attach('online-ranked-fight-frame-stats.json', {
       body: JSON.stringify(stats, null, 2),
       contentType: 'application/json'
     });

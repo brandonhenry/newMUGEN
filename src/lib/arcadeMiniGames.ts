@@ -5,6 +5,8 @@ import type {
   BreakTargetTier,
   CharacterDefinition,
   EnemyRushEnemyKind,
+  EnemyRushLaneIndex,
+  EnemyRushLaneTransition,
   EnemyRushMiniGameSnapshot,
   EnemyRushRuntime,
   FighterRuntime,
@@ -43,11 +45,16 @@ const UNIVERSAL_HITBOX_LATERAL_PADDING = 0.14;
 const UNIVERSAL_HITBOX_VERTICAL_PADDING = 0.14;
 const TARGET_MIN_SPACING = 1.55;
 const EXPLOSION_DURATION = 0.58;
+const MINI_GAME_ATTACK_BUFFER_FRAMES = 10;
 const ENEMY_RUSH_PLAYER_RADIUS = 0.42;
 const ENEMY_RUSH_PROJECTILE_RADIUS = 0.18;
 const ENEMY_RUSH_PROJECTILE_SPEED = 4.2;
 const ENEMY_RUSH_MIN_SPAWN_DISTANCE = 2.2;
 const ENEMY_RUSH_CLEAR_BONUS_PER_LEVEL = 500;
+const ENEMY_RUSH_LANE_COUNT = 5;
+const ENEMY_RUSH_MIDDLE_LANE: EnemyRushLaneIndex = 2;
+const ENEMY_RUSH_LANE_CHANGE_DURATION = 0.16;
+const ENEMY_RUSH_LANE_ATTACK_GRACE = 0.48;
 
 type ResolvedMiniGameStageBounds = {
   shape: 'box' | 'ellipse';
@@ -65,6 +72,12 @@ type Aabb = {
   maxY: number;
   minZ: number;
   maxZ: number;
+};
+
+export type EnemyRushLaneLayout = {
+  laneZ: [number, number, number, number, number];
+  laneLocalZ: [number, number, number, number, number];
+  halfWidth: number;
 };
 
 const moveInputs: MoveInput[] = ['special', 'heavy', 'kick', 'jab'];
@@ -194,7 +207,7 @@ export function stepBreakTargetMiniGame(
   const sanitized = sanitizeMiniGameInput(input);
   tickAttack(player, frameDelta);
   const freshMove = getFreshMoveInput(player, sanitized);
-  if (freshMove && canStartMiniGameAttack(player)) startMiniGameAttack(player, freshMove);
+  handleMiniGameAttackInput(player, freshMove, frameDelta);
   if (player.state !== 'attack' || player.actionFramesRemaining <= 0) applyMiniGameMovement(next, sanitized, dt);
   applyMiniGameGravity(player, dt);
   constrainMiniGamePlayer(next);
@@ -245,15 +258,18 @@ export function createEnemyRushMiniGame(
 ): EnemyRushMiniGameSnapshot {
   const safeLevel = Math.max(1, Math.round(level));
   const bounds = resolveMiniGameStageBounds(stage, PLAYER_RADIUS);
+  const lanes = resolveEnemyRushLaneLayout(stage);
   const fallbackSpawn = stageBoundsLocalToWorld({ x: -Math.min(2.8, bounds.halfWidth * 0.45), z: 0 }, bounds);
   const spawn = stage.spawns?.p1
     ? { x: stage.spawns.p1[0], y: Math.max(0, stage.spawns.p1[1] ?? 0), z: stage.spawns.p1[2] }
     : { x: fallbackSpawn.x, y: 0, z: fallbackSpawn.z };
+  spawn.z = lanes.laneZ[ENEMY_RUSH_MIDDLE_LANE];
+  const player = createMiniGameFighter(character, spawn);
   return {
     kind: 'enemy-rush',
     gameId: ENEMY_RUSH_GAME_ID,
     stage,
-    player: createMiniGameFighter(character, spawn),
+    player,
     seed,
     level: safeLevel,
     score: 0,
@@ -262,6 +278,10 @@ export function createEnemyRushMiniGame(
     projectiles: [],
     explosions: [],
     lockedEnemyId: null,
+    laneIndex: ENEMY_RUSH_MIDDLE_LANE,
+    laneTargetIndex: ENEMY_RUSH_MIDDLE_LANE,
+    laneTransition: null,
+    queuedLaneStep: 0,
     phase: 'playing',
     completedReason: null
   };
@@ -276,6 +296,7 @@ export function generateEnemyRushEnemies(
   const safeLevel = Math.max(1, Math.round(level));
   const random = seededRandom(seed);
   const bounds = resolveMiniGameStageBounds(stage, 0.8);
+  const lanes = resolveEnemyRushLaneLayout(stage);
   const pool = ENEMY_RUSH_ENEMY_DEFINITIONS.filter((enemy) => enemy.minLevel <= safeLevel);
   const count = Math.min(18, 3 + safeLevel * 2);
   const enemies: EnemyRushRuntime[] = [];
@@ -284,7 +305,8 @@ export function generateEnemyRushEnemies(
     attempts += 1;
     const definition = pool[Math.floor(random() * pool.length)] ?? ENEMY_RUSH_ENEMY_DEFINITIONS[0];
     const playerLocal = worldToMiniGameBoundsLocal(playerPosition, bounds);
-    const local = randomLocalPoint(bounds, random);
+    const laneIndex = clampEnemyRushLaneIndex(Math.floor(random() * ENEMY_RUSH_LANE_COUNT));
+    const local = { x: 0, z: lanes.laneLocalZ[laneIndex] };
     const laneWidth = Math.min(3.4, bounds.halfWidth * 0.42);
     local.x = clamp(playerLocal.x + (random() * 2 - 1) * laneWidth, -bounds.halfWidth, bounds.halfWidth);
     const world = stageBoundsLocalToWorld(local, bounds);
@@ -305,6 +327,8 @@ export function generateEnemyRushEnemies(
       radius: definition.radius,
       height: definition.height,
       position: { x: world.x, y: 0, z: world.z },
+      laneIndex,
+      laneTransition: null,
       facing: world.x >= playerPosition.x ? -1 : 1,
       attackCooldown: 0.45 + random() * 0.9,
       hitFlash: 0,
@@ -332,10 +356,12 @@ export function stepEnemyRushMiniGame(
   updateEnemyRushLock(next, sanitized);
   tickAttack(player, frameDelta);
   const freshMove = getFreshMoveInput(player, sanitized);
-  if (freshMove && canStartMiniGameAttack(player)) startMiniGameAttack(player, freshMove);
-  if (player.state !== 'attack' || player.actionFramesRemaining <= 0) applyMiniGameMovement(next, sanitized, dt);
+  handleMiniGameAttackInput(player, freshMove, frameDelta);
+  applyEnemyRushLaneTransition(next, dt);
+  if (player.state !== 'attack' || player.actionFramesRemaining <= 0) applyEnemyRushMovement(next, sanitized, dt);
   applyMiniGameGravity(player, dt);
   constrainMiniGamePlayer(next);
+  snapEnemyRushPlayerToLane(next);
   faceEnemyRushLockTarget(next);
   resolveEnemyRushPlayerHits(next);
   stepEnemyRushEnemies(next, dt);
@@ -451,6 +477,18 @@ export function worldToMiniGameBoundsLocal(position: { x: number; z: number }, b
   return {
     x: dx * cos - dz * sin,
     z: dx * sin + dz * cos
+  };
+}
+
+export function resolveEnemyRushLaneLayout(stage: StageDefinition): EnemyRushLaneLayout {
+  const bounds = resolveMiniGameStageBounds(stage, ENEMY_RUSH_PLAYER_RADIUS);
+  const laneSpread = Math.max(2.4, Math.min(4.8, bounds.halfDepth * 0.68));
+  const laneLocalZ: [number, number, number, number, number] = [-laneSpread, -laneSpread * 0.5, 0, laneSpread * 0.5, laneSpread];
+  const laneZ = laneLocalZ.map((z) => stageBoundsLocalToWorld({ x: 0, z }, bounds).z) as [number, number, number, number, number];
+  return {
+    laneZ,
+    laneLocalZ,
+    halfWidth: bounds.halfWidth
   };
 }
 
@@ -623,6 +661,91 @@ function applyMiniGameMovement(snapshot: { player: FighterRuntime }, input: Inpu
   player.wasCrouching = crouching;
 }
 
+function applyEnemyRushMovement(snapshot: EnemyRushMiniGameSnapshot, input: InputFrame, dt: number) {
+  const player = snapshot.player;
+  const grounded = player.position.y === 0 && player.velocityY === 0;
+  const dx = input.left === input.right ? 0 : input.left ? -1 : 1;
+  const laneStep = getEnemyRushLaneStep(input);
+  const crouching = input.down && grounded;
+  if (laneStep !== 0) startEnemyRushPlayerLaneChange(snapshot, laneStep);
+  if (input.jump && !player.jumpInputHeld && grounded && !input.down) {
+    player.velocityY = player.character.stats.jumpForce;
+    player.position.y = Math.max(player.position.y, 0.18);
+  }
+  player.jumpInputHeld = input.jump;
+  if (dx !== 0) {
+    player.position.x += dx * player.character.stats.speed * (crouching ? 0.18 : 1) * dt;
+    player.facing = dx > 0 ? 1 : -1;
+    player.facingYaw = dx > 0 ? Math.PI / 2 : -Math.PI / 2;
+    player.walkDirection = 1;
+  } else {
+    player.walkDirection = 0;
+  }
+  player.sidestepDirection = snapshot.laneTransition ? (snapshot.laneTargetIndex > snapshot.laneIndex ? 1 : -1) : 0;
+  if (player.position.y > 0 || player.velocityY !== 0) player.state = 'jump';
+  else if (crouching) player.state = 'crouch';
+  else if (snapshot.laneTransition) player.state = 'sidestep';
+  else if (dx !== 0) player.state = 'walk';
+  else player.state = 'idle';
+  player.wasCrouching = crouching;
+}
+
+function getEnemyRushLaneStep(input: InputFrame): -1 | 0 | 1 {
+  const pressed = (input as InputFrame & { __pressedActions?: string[] }).__pressedActions;
+  if (pressed) {
+    if (pressed.includes('sidestepUp')) return -1;
+    if (pressed.includes('sidestepDown')) return 1;
+    return 0;
+  }
+  if (input.sidestepUp) return -1;
+  if (input.sidestepDown) return 1;
+  return 0;
+}
+
+function startEnemyRushPlayerLaneChange(snapshot: EnemyRushMiniGameSnapshot, step: -1 | 1) {
+  if (snapshot.laneTransition) {
+    snapshot.queuedLaneStep = step;
+    return;
+  }
+  const from = snapshot.laneTargetIndex;
+  const to = clampEnemyRushLaneIndex(from + step);
+  if (to === from) return;
+  snapshot.queuedLaneStep = 0;
+  snapshot.laneIndex = from;
+  snapshot.laneTargetIndex = to;
+  snapshot.laneTransition = makeEnemyRushLaneTransition(from, to);
+}
+
+function applyEnemyRushLaneTransition(snapshot: EnemyRushMiniGameSnapshot, dt: number) {
+  const lanes = resolveEnemyRushLaneLayout(snapshot.stage);
+  if (snapshot.laneTransition) {
+    const transition = {
+      ...snapshot.laneTransition,
+      progress: Math.min(snapshot.laneTransition.duration, snapshot.laneTransition.progress + dt)
+    };
+    const eased = easeOutCubic(transition.progress / transition.duration);
+    snapshot.player.position.z = lerp(lanes.laneZ[transition.from], lanes.laneZ[transition.to], eased);
+    if (transition.progress >= transition.duration) {
+      snapshot.laneIndex = transition.to;
+      snapshot.laneTargetIndex = transition.to;
+      snapshot.laneTransition = null;
+      snapshot.player.position.z = lanes.laneZ[transition.to];
+      const queuedStep = snapshot.queuedLaneStep;
+      snapshot.queuedLaneStep = 0;
+      if (queuedStep !== 0) startEnemyRushPlayerLaneChange(snapshot, queuedStep);
+    } else {
+      snapshot.laneTransition = transition;
+    }
+    return;
+  }
+  snapshot.player.position.z = lanes.laneZ[snapshot.laneIndex];
+}
+
+function snapEnemyRushPlayerToLane(snapshot: EnemyRushMiniGameSnapshot) {
+  const lanes = resolveEnemyRushLaneLayout(snapshot.stage);
+  if (!snapshot.laneTransition) snapshot.player.position.z = lanes.laneZ[snapshot.laneIndex];
+}
+
 function applyMiniGameGravity(player: FighterRuntime, dt: number) {
   if (player.position.y <= 0 && player.velocityY <= 0) {
     player.position.y = 0;
@@ -665,6 +788,28 @@ function canStartMiniGameAttack(player: FighterRuntime) {
   return player.actionFramesRemaining <= 0 && player.stunFramesRemaining <= 0;
 }
 
+function handleMiniGameAttackInput(player: FighterRuntime, freshMove: MoveInput | null, frameDelta: number) {
+  if (player.bufferedMoveFrames > 0) player.bufferedMoveFrames = Math.max(0, player.bufferedMoveFrames - frameDelta);
+  if (freshMove) {
+    if (canStartMiniGameAttack(player)) {
+      startMiniGameAttack(player, freshMove);
+      return;
+    }
+    player.bufferedMoveInput = freshMove;
+    player.bufferedMoveFrames = MINI_GAME_ATTACK_BUFFER_FRAMES;
+  }
+  if (player.bufferedMoveInput && player.bufferedMoveFrames > 0 && canStartMiniGameAttack(player)) {
+    const buffered = player.bufferedMoveInput;
+    player.bufferedMoveInput = null;
+    player.bufferedMoveFrames = 0;
+    startMiniGameAttack(player, buffered);
+  }
+  if (player.bufferedMoveFrames <= 0) {
+    player.bufferedMoveInput = null;
+    player.bufferedMoveFrames = 0;
+  }
+}
+
 function startMiniGameAttack(player: FighterRuntime, input: MoveInput) {
   const move = player.character.moves.find((candidate) => candidate.input === input) ?? player.character.moves[0];
   if (!move) return;
@@ -678,6 +823,8 @@ function startMiniGameAttack(player: FighterRuntime, input: MoveInput) {
   player.hitConnected = false;
   player.hitConfirmed = false;
   player.whiffRecoveryApplied = false;
+  player.bufferedMoveInput = null;
+  player.bufferedMoveFrames = 0;
 }
 
 function tickAttack(player: FighterRuntime, frameDelta: number) {
@@ -731,13 +878,14 @@ function resolveTargetHits(snapshot: BreakTargetMiniGameSnapshot) {
 function cloneEnemyRushMiniGame(snapshot: EnemyRushMiniGameSnapshot): EnemyRushMiniGameSnapshot {
   return {
     ...snapshot,
+    laneTransition: snapshot.laneTransition ? { ...snapshot.laneTransition } : null,
     player: {
       ...snapshot.player,
       position: { ...snapshot.player.position },
       previousAttackInputs: { ...snapshot.player.previousAttackInputs },
       visualHitstop: { ...snapshot.player.visualHitstop }
     },
-    enemies: snapshot.enemies.map((enemy) => ({ ...enemy, position: { ...enemy.position } })),
+    enemies: snapshot.enemies.map((enemy) => ({ ...enemy, position: { ...enemy.position }, laneTransition: enemy.laneTransition ? { ...enemy.laneTransition } : null })),
     coins: snapshot.coins.map((coin) => ({ ...coin, position: { ...coin.position } })),
     projectiles: snapshot.projectiles.map((projectile) => ({ ...projectile, position: { ...projectile.position }, velocity: { ...projectile.velocity } })),
     explosions: snapshot.explosions.map((explosion) => ({ ...explosion, position: { ...explosion.position } }))
@@ -798,6 +946,7 @@ function resolveEnemyRushPlayerHits(snapshot: EnemyRushMiniGameSnapshot) {
   const attackBox = moveHitboxToWorldAabb(player, move.hitbox);
   for (const enemy of snapshot.enemies) {
     if (enemy.defeated) continue;
+    if (!enemyRushLanesOverlap(snapshot, enemy)) continue;
     if (!boxesIntersect(attackBox, enemyToAabb(enemy))) continue;
     const damage = Math.max(1, Math.round(move.damage || 1));
     enemy.hp = Math.max(0, enemy.hp - damage);
@@ -812,11 +961,14 @@ function resolveEnemyRushPlayerHits(snapshot: EnemyRushMiniGameSnapshot) {
 function stepEnemyRushEnemies(snapshot: EnemyRushMiniGameSnapshot, dt: number) {
   const player = snapshot.player;
   const bounds = resolveMiniGameStageBounds(snapshot.stage, 0.6);
+  const lanes = resolveEnemyRushLaneLayout(snapshot.stage);
   for (const enemy of snapshot.enemies) {
     if (enemy.defeated) continue;
+    enemy.laneTransition = null;
+    enemy.position.z = lanes.laneZ[enemy.laneIndex];
     const dx = player.position.x - enemy.position.x;
-    const dz = player.position.z - enemy.position.z;
-    const distance = Math.max(0.001, Math.hypot(dx, dz));
+    const laneDistance = enemyRushLaneDistance(snapshot, enemy);
+    const distance = Math.max(0.001, Math.hypot(dx, laneDistance * ENEMY_RUSH_LANE_ATTACK_GRACE));
     enemy.facing = dx >= 0 ? 1 : -1;
     enemy.attackCooldown = Math.max(0, enemy.attackCooldown - dt);
     const intelligence = Math.min(1, Math.max(0, (snapshot.level - 1) / 4));
@@ -826,33 +978,31 @@ function stepEnemyRushEnemies(snapshot: EnemyRushMiniGameSnapshot, dt: number) {
     const shouldChase =
       awake &&
       enemy.behavior !== 'sentry' &&
-      (enemy.behavior !== 'caster' ? distance > attackRange * 0.72 : distance > attackRange * 1.08 || distance < attackRange * 0.52);
+      (enemy.behavior !== 'caster' ? Math.abs(dx) > attackRange * 0.72 : Math.abs(dx) > attackRange * 1.08 || Math.abs(dx) < attackRange * 0.52);
     if (shouldChase) {
-      const casterRetreat = enemy.behavior === 'caster' && distance < attackRange * 0.52 ? -1 : 1;
+      const casterRetreat = enemy.behavior === 'caster' && Math.abs(dx) < attackRange * 0.52 ? -1 : 1;
       const behaviorSpeed =
         enemy.behavior === 'bruiser' ? 0.72 :
           enemy.behavior === 'ambusher' ? 0.9 :
             enemy.behavior === 'caster' ? 0.62 :
               1;
       const chaseSpeed = enemy.speed * behaviorSpeed * (0.72 + intelligence * 0.38);
-      const laneCorrection = Math.min(0.16 + intelligence * 0.42, Math.abs(dx) / Math.max(1, distance));
-      enemy.position.x += Math.sign(dx) * chaseSpeed * laneCorrection * dt;
-      enemy.position.z += Math.sign(dz || 1) * chaseSpeed * casterRetreat * dt;
+      enemy.position.x += Math.sign(dx) * chaseSpeed * casterRetreat * dt;
+      enemy.position.z = lanes.laneZ[enemy.laneIndex];
       constrainPointToBounds(enemy.position, bounds);
     }
-    const canAttack = awake && distance <= attackRange && Math.abs(dx) <= enemy.radius + ENEMY_RUSH_PLAYER_RADIUS + 0.8 + intelligence * 0.5 && enemy.attackCooldown <= 0;
+    const aligned = enemyRushLanesOverlap(snapshot, enemy);
+    const canAttack = awake && aligned && Math.abs(dx) <= attackRange && Math.abs(dx) <= enemy.radius + ENEMY_RUSH_PLAYER_RADIUS + 0.8 + intelligence * 0.5 && enemy.attackCooldown <= 0;
     if (canAttack) {
       if (ranged && enemy.projectileKind) {
-        const aimX = dx * (0.72 + intelligence * 0.28);
-        const aimZ = dz;
-        const aimDistance = Math.max(0.001, Math.hypot(aimX, aimZ));
         snapshot.projectiles.push({
           id: `projectile-${enemy.id}-${snapshot.projectiles.length + 1}`,
           ownerId: enemy.id,
           kind: enemy.projectileKind,
           damage: Math.max(1, Math.round(enemy.damage * 0.85)),
-          position: { x: enemy.position.x, y: 0.85, z: enemy.position.z },
-          velocity: { x: (aimX / aimDistance) * ENEMY_RUSH_PROJECTILE_SPEED, z: (aimZ / aimDistance) * ENEMY_RUSH_PROJECTILE_SPEED },
+          position: { x: enemy.position.x, y: 0.85, z: lanes.laneZ[enemy.laneIndex] },
+          velocity: { x: Math.sign(dx || enemy.facing) * ENEMY_RUSH_PROJECTILE_SPEED, z: 0 },
+          laneIndex: enemy.laneIndex,
           radius: ENEMY_RUSH_PROJECTILE_RADIUS,
           age: 0
         });
@@ -880,6 +1030,7 @@ function stepEnemyRushProjectiles(snapshot: EnemyRushMiniGameSnapshot, dt: numbe
     .filter((projectile) => {
       const local = worldToMiniGameBoundsLocal(projectile.position, bounds);
       if (projectile.age > 4 || Math.abs(local.x) > bounds.halfWidth + 1 || Math.abs(local.z) > bounds.halfDepth + 1) return false;
+      if (!enemyRushProjectileOverlapsPlayerLane(snapshot, projectile)) return true;
       if (boxesIntersect(projectileToAabb(projectile), playerToAabb(snapshot.player))) {
         damageEnemyRushPlayer(snapshot, projectile.damage);
         return false;
@@ -891,6 +1042,7 @@ function stepEnemyRushProjectiles(snapshot: EnemyRushMiniGameSnapshot, dt: numbe
 function collectEnemyRushCoins(snapshot: EnemyRushMiniGameSnapshot) {
   for (const coin of snapshot.coins) {
     if (coin.collected) continue;
+    if (!enemyRushProjectileOverlapsPlayerLane(snapshot, coin)) continue;
     if (Math.hypot(snapshot.player.position.x - coin.position.x, snapshot.player.position.z - coin.position.z) > coin.radius + ENEMY_RUSH_PLAYER_RADIUS) continue;
     coin.collected = true;
     snapshot.score += coin.value;
@@ -901,9 +1053,11 @@ function defeatEnemyRushEnemy(snapshot: EnemyRushMiniGameSnapshot, enemy: EnemyR
   if (enemy.defeated) return;
   enemy.defeated = true;
   snapshot.score += enemy.points;
+  const lanes = resolveEnemyRushLaneLayout(snapshot.stage);
+  const laneZ = lanes.laneZ[enemy.laneIndex];
   snapshot.explosions.push({
     id: `enemy-explosion-${enemy.id}-${snapshot.explosions.length + 1}`,
-    position: { x: enemy.position.x, y: Math.max(0.4, enemy.height * 0.5), z: enemy.position.z },
+    position: { x: enemy.position.x, y: Math.max(0.4, enemy.height * 0.5), z: laneZ },
     age: 0,
     duration: EXPLOSION_DURATION
   });
@@ -916,7 +1070,8 @@ function defeatEnemyRushEnemy(snapshot: EnemyRushMiniGameSnapshot, enemy: EnemyR
     snapshot.coins.push({
       id: `coin-${snapshot.coins.length + 1}`,
       value: Math.round(min + coinRandom() * (max - min)),
-      position: { x: enemy.position.x, y: 0.28, z: enemy.position.z },
+      position: { x: enemy.position.x, y: 0.28, z: laneZ },
+      laneIndex: enemy.laneIndex,
       radius: 0.42,
       collected: false
     });
@@ -972,6 +1127,40 @@ function playerToAabb(player: FighterRuntime): Aabb {
 
 function projectileToAabb(projectile: { position: { x: number; y: number; z: number }; radius: number }): Aabb {
   return makeAabb(projectile.position.x, projectile.position.y, projectile.position.z, projectile.radius * 2, projectile.radius * 2, projectile.radius * 2);
+}
+
+function makeEnemyRushLaneTransition(from: EnemyRushLaneIndex, to: EnemyRushLaneIndex): EnemyRushLaneTransition {
+  return {
+    from,
+    to,
+    progress: 0,
+    duration: ENEMY_RUSH_LANE_CHANGE_DURATION
+  };
+}
+
+function enemyRushLaneDistance(snapshot: EnemyRushMiniGameSnapshot, enemy: EnemyRushRuntime) {
+  return Math.abs(snapshot.laneTargetIndex - enemy.laneIndex);
+}
+
+function enemyRushLanesOverlap(snapshot: EnemyRushMiniGameSnapshot, enemy: EnemyRushRuntime) {
+  if (enemy.laneIndex === snapshot.laneTargetIndex) return true;
+  if (!snapshot.laneTransition) return false;
+  return enemy.laneIndex === snapshot.laneTransition.from || enemy.laneIndex === snapshot.laneTransition.to;
+}
+
+function enemyRushProjectileOverlapsPlayerLane(snapshot: EnemyRushMiniGameSnapshot, projectile: { laneIndex: EnemyRushLaneIndex }) {
+  if (projectile.laneIndex === snapshot.laneTargetIndex) return true;
+  if (!snapshot.laneTransition) return false;
+  return projectile.laneIndex === snapshot.laneTransition.from || projectile.laneIndex === snapshot.laneTransition.to;
+}
+
+function clampEnemyRushLaneIndex(value: number): EnemyRushLaneIndex {
+  return Math.max(0, Math.min(ENEMY_RUSH_LANE_COUNT - 1, Math.round(value))) as EnemyRushLaneIndex;
+}
+
+function easeOutCubic(progress: number) {
+  const clamped = clamp(progress, 0, 1);
+  return 1 - Math.pow(1 - clamped, 3);
 }
 
 function constrainPointToBounds(position: { x: number; z: number }, bounds: ResolvedMiniGameStageBounds) {
@@ -1045,4 +1234,8 @@ function seededRandom(seed: number) {
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
+}
+
+function lerp(start: number, end: number, progress: number) {
+  return start + (end - start) * progress;
 }
