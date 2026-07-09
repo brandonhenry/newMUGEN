@@ -3621,6 +3621,12 @@ button {
     0 12px 24px rgba(0, 0, 0, 0.28);
 }
 
+.cashapp-qr-code svg {
+  width: 100%;
+  height: auto;
+  max-width: 218px;
+}
+
 .cashapp-qr-panel label {
   display: grid;
   gap: 5px;
@@ -3773,6 +3779,7 @@ button {
   grid-template-columns: minmax(120px, 0.7fr) minmax(220px, 1fr) auto;
   align-items: end;
   gap: 10px;
+  min-width: 0;
   border-radius: 7px;
   padding: 12px;
   background: rgba(46, 230, 255, 0.12);
@@ -3803,6 +3810,8 @@ button {
 }
 
 .tournament-claim-form input {
+  width: 100%;
+  min-width: 0;
   min-height: 40px;
   border: 1px solid rgba(247, 247, 242, 0.18);
   border-radius: 6px;
@@ -3868,6 +3877,8 @@ button {
 .tournament-lobby-board {
   display: grid;
   gap: 14px;
+  width: 100%;
+  min-width: 0;
   min-height: 0;
 }
 
@@ -13160,6 +13171,7 @@ button {
   z-index: 2000;
   display: grid;
   place-items: center;
+  overflow-y: auto;
   padding: clamp(18px, 4vw, 42px);
   background:
     radial-gradient(circle at 50% 42%, rgba(45, 227, 255, 0.18), transparent 36%),
@@ -13169,6 +13181,8 @@ button {
 
 .username-gate-dialog {
   width: min(520px, 100%);
+  max-height: calc(100dvh - clamp(36px, 8vw, 84px));
+  overflow-y: auto;
   display: grid;
   gap: 18px;
   padding: clamp(20px, 3vw, 30px);
@@ -13185,10 +13199,6 @@ button {
 
 .email-reminder-dialog {
   width: min(640px, 100%);
-}
-
-.email-reminder-dialog h2 {
-  font-size: clamp(1.7rem, 5.4vw, 3.45rem);
 }
 
 .username-gate-dialog header {
@@ -13212,6 +13222,11 @@ button {
   line-height: 0.95;
   text-transform: uppercase;
   text-shadow: 0 4px 0 rgba(0, 0, 0, 0.56);
+}
+
+.username-gate-dialog.email-reminder-dialog h2 {
+  font-size: 2.35rem;
+  line-height: 1;
 }
 
 .username-gate-dialog p {
@@ -13309,6 +13324,44 @@ button {
   gap: 10px;
 }
 
+@media (max-height: 460px) {
+  .username-gate-overlay {
+    place-items: start center;
+    padding: 12px;
+  }
+
+  .username-gate-dialog {
+    max-height: calc(100dvh - 24px);
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .email-reminder-dialog h2 {
+    font-size: 2.2rem;
+    line-height: 0.92;
+  }
+
+  .username-gate-dialog p {
+    line-height: 1.32;
+  }
+
+  .username-gate-entry input,
+  .email-reminder-fields strong {
+    height: 50px;
+  }
+
+  .username-gate-actions .primary-button,
+  .username-gate-actions .secondary-button {
+    min-height: 46px;
+  }
+}
+
+@media (max-width: 560px) {
+  .username-gate-dialog.email-reminder-dialog h2 {
+    font-size: 1.95rem;
+  }
+}
+
 .leaderboard-actions {
   display: flex;
   flex-wrap: wrap;
@@ -13323,6 +13376,67 @@ button {
 .leaderboard-actions .secondary-button {
   min-width: clamp(160px, 20vw, 240px);
   min-height: 58px;
+}
+
+@media (max-width: 560px) {
+  .tournament-lobby-screen {
+    padding-inline: clamp(12px, 4vw, 18px);
+  }
+
+  .tournament-lobby-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cashapp-checkout-popup,
+  .tournament-claim-form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .cashapp-checkout-popup {
+    padding: 12px;
+  }
+
+  .cashapp-qr-code {
+    width: min(100%, 218px);
+    padding: 12px;
+  }
+
+  .cashapp-checkout-actions .primary-button,
+  .cashapp-checkout-actions .secondary-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .tournament-claim-form {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .tournament-claim-form .primary-button,
+  .tournament-claim-form .secondary-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .tournament-recovery-form {
+    gap: 12px;
+  }
+
+  .leaderboard-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 10px;
+  }
+
+  .leaderboard-actions .primary-button,
+  .leaderboard-actions .secondary-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 56px;
+    padding-inline: 12px;
+  }
 }
 
 .leaderboard-screen {
