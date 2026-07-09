@@ -1014,7 +1014,10 @@ export function MiniGameScene({ snapshot, reducedMotion = false }: { snapshot: A
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [snapshot.stage.id]);
   useEffect(() => {
     return prewarmActiveFighterVoxels(snapshot.player.character, collectImageVoxelFrameSources(snapshot.player.character), {
-      immediateFrames: uniqueFrameSources([getImageVoxelFramePath(snapshot.player, getFighterRenderProgress(snapshot.player), 0)])
+      immediateFrames: uniqueFrameSources([
+        getImageVoxelFramePath(snapshot.player, getFighterRenderProgress(snapshot.player), 0),
+        ...getBasicAttackPriorityFrameSources(snapshot.player.character)
+      ])
     });
   }, [snapshot.player.character.id]);
   return (
@@ -6359,6 +6362,14 @@ function getPreviewCharacterFrameSources(character: CharacterDefinition, animati
   ]);
 }
 
+function getBasicAttackPriorityFrameSources(character: CharacterDefinition) {
+  const frames = character.animationFrames ?? {};
+  return (['jab', 'kick', 'heavy', 'special'] as MoveInput[]).flatMap((input) => {
+    const animationKey = getCharacterAnimationAlias(character, input);
+    return frames[animationKey]?.slice(0, 2) ?? frames[input]?.slice(0, 2) ?? [];
+  });
+}
+
 function getUnlockRevealFrameSources(character: CharacterDefinition) {
   const frames = character.animationFrames ?? {};
   const revealMoves = selectUnlockRevealMoves(character);
@@ -6491,7 +6502,7 @@ export function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (hasVisualHitstop(fighter) && fighter.visualHitstop.animationKey) return fighter.visualHitstop.animationKey;
   if (fighter.previewAnimationKey) return fighter.previewAnimationKey;
   if (isIdleFlourishActive(fighter)) return 'win';
-  if (fighter.state === 'attack') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'attack') return getMoveAnimationKey(fighter);
   if (fighter.state === 'walk') {
     if (fighter.dashForwardFrames > 0 && fighter.character.animationFrames?.sprint?.length) return 'sprint';
     if (fighter.walkDirection > 0) return 'walkForward';
@@ -6502,7 +6513,7 @@ export function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'crouchBlock') return fighter.character.animationFrames?.crouchBlock?.length ? 'crouchBlock' : fighter.character.animationFrames?.block?.length ? 'block' : 'crouch';
   if (fighter.state === 'chargeKi') return 'chargeKi';
   if (fighter.state === 'transform') return fighter.character.animationFrames?.transform?.length ? 'transform' : fighter.character.animationFrames?.chargeKi?.length ? 'chargeKi' : 'idle';
-  if (fighter.state === 'throwHold') return fighter.currentMove?.animationKey ?? fighter.currentMove?.input ?? 'jab';
+  if (fighter.state === 'throwHold') return getMoveAnimationKey(fighter);
   if (fighter.state === 'throwHeld') return 'throwHeld';
   if (fighter.state === 'hit') return 'hitLight';
   if (hasTornadoReactionVisual(fighter) && fighter.character.animationFrames?.knockdown?.length) return 'knockdown';
@@ -6510,6 +6521,20 @@ export function getImageVoxelAnimationKey(fighter: FighterRuntime) {
   if (fighter.state === 'getup') return getGetupAnimationKey(fighter);
   if (fighter.state === 'entry') return 'entry';
   return fighter.state;
+}
+
+function getMoveAnimationKey(fighter: FighterRuntime) {
+  const move = fighter.currentMove;
+  if (!move) return 'jab';
+  if (move.animationKey && (fighter.character.animationFrames?.[move.animationKey]?.length ?? 0) > 0) return move.animationKey;
+  const aliasedKey = getCharacterAnimationAlias(fighter.character, move.input);
+  if ((fighter.character.animationFrames?.[aliasedKey]?.length ?? 0) > 0) return aliasedKey;
+  if ((fighter.character.animationFrames?.[move.input]?.length ?? 0) > 0) return move.input;
+  return move.animationKey ?? move.input ?? 'jab';
+}
+
+function getCharacterAnimationAlias(character: CharacterDefinition, key: string) {
+  return character.animations?.[key] ?? key;
 }
 
 function getGetupAnimationKey(fighter: FighterRuntime) {

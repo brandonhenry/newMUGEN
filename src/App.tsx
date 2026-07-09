@@ -27230,18 +27230,18 @@ type EnemyRushInputMetadata = InputFrame & {
 const ENEMY_RUSH_ATTACK_ALIAS_PULSE_FRAMES = 8;
 
 const enemyRushAttackAliasByCode: Partial<Record<string, MoveInput>> = {
-  KeyJ: 'jab',
-  KeyK: 'kick',
-  KeyL: 'heavy',
-  KeyU: 'special',
-  j: 'jab',
-  k: 'kick',
-  l: 'heavy',
-  u: 'special',
-  J: 'jab',
-  K: 'kick',
-  L: 'heavy',
-  U: 'special'
+  KeyU: 'jab',
+  KeyI: 'heavy',
+  KeyJ: 'kick',
+  KeyK: 'special',
+  u: 'jab',
+  i: 'heavy',
+  j: 'kick',
+  k: 'special',
+  U: 'jab',
+  I: 'heavy',
+  J: 'kick',
+  K: 'special'
 };
 
 function createEnemyRushAttackAliasState(): EnemyRushAttackAliasState {
@@ -27257,26 +27257,18 @@ function applyEnemyRushAttackAliases(input: InputFrame, aliases: EnemyRushAttack
   const activeAliases = (['jab', 'kick', 'heavy', 'special'] as MoveInput[]).filter((action) => aliases[action].held || aliases[action].pulseFrames > 0);
   if (activeAliases.length === 0) return input;
   const next: EnemyRushInputMetadata = {
-    ...input,
-    jab: false,
-    kick: false,
-    heavy: false,
-    special: false
+    ...input
   };
   activeAliases.forEach((action) => {
     next[action] = true;
   });
   const priorPressed = (input as EnemyRushInputMetadata).__pressedActions ?? [];
   next.__pressedActions = [
-    ...priorPressed.filter((action) => action !== 'jab' && action !== 'kick' && action !== 'heavy' && action !== 'special'),
-    ...activeAliases
+    ...priorPressed,
+    ...activeAliases.filter((action) => !priorPressed.includes(action))
   ];
   const priorSequences = (input as EnemyRushInputMetadata).__pressSequences;
-  if (priorSequences) {
-    next.__pressSequences = Object.fromEntries(
-      Object.entries(priorSequences).filter(([action]) => action !== 'jab' && action !== 'kick' && action !== 'heavy' && action !== 'special')
-    );
-  }
+  if (priorSequences) next.__pressSequences = { ...priorSequences };
   activeAliases.forEach((action) => {
     aliases[action].pulseFrames = Math.max(0, aliases[action].pulseFrames - 1);
   });
