@@ -179,16 +179,6 @@
       "/characters/fuusuke/frames/frame-083.png",
       "/characters/fuusuke/frames/frame-084.png"
     ],
-    "cmd:FC+1": [
-      "/characters/fuusuke/frames/frame-142.png",
-      "/characters/fuusuke/frames/frame-143.png",
-      "/characters/fuusuke/frames/frame-144.png",
-      "/characters/fuusuke/frames/frame-145.png",
-      "/characters/fuusuke/frames/frame-146.png",
-      "/characters/fuusuke/frames/frame-147.png",
-      "/characters/fuusuke/frames/frame-148.png",
-      "/characters/fuusuke/frames/frame-149.png"
-    ],
     "cmd:FC+2": [
       "/characters/fuusuke/frames/frame-129.png",
       "/characters/fuusuke/frames/frame-130.png",
@@ -794,28 +784,6 @@
       "onJuggleHitFrames": 15,
       "comboRepeatPenaltyFrames": 3,
       "juggleRepeatPenaltyFrames": 6
-    },
-    "cmd:FC+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
-      "damage": 8,
-      "blockDamage": 1,
-      "onBlockFrames": 1,
-      "onHitFrames": 14,
-      "onCounterHitFrames": 18,
-      "whiffRecoveryFrames": 7,
-      "range": 1.34,
-      "forwardForce": 1.57,
-      "forwardForceStartFrame": 24,
-      "forwardForceEndFrame": 27,
-      "label": "Crouch Wind Cut",
-      "hitLevel": "mid",
-      "cancelable": false,
-      "onComboHitFrames": 17,
-      "onJuggleHitFrames": 14,
-      "comboRepeatPenaltyFrames": 3,
-      "juggleRepeatPenaltyFrames": 5
     },
     "cmd:FC+2": {
       "startupFrames": 18,

@@ -9823,13 +9823,13 @@ function TournamentSelect({
   const freeOnlineEntryLabel = summaryStatus === 'loading'
     ? 'Loading tourneys'
     : freeOnlineSummary
-      ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} forming`
+      ? `${freeOnlineSummary.entries} / ${freeOnlineSummary.minEntries} entries`
       : 'Free bracket queue';
   const freeOnlineActivityLabel = formatTournamentActivityLabel(freeOnlineSummary, 'Free entry');
   const paidEntryLabel = hasKnownPaidEntry
     ? knownPaidTournamentStatus?.statusText ?? 'Entry found'
     : paidEnabled
-      ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} forming`
+      ? `${paidSummary?.entries ?? 0} / ${paidSummary?.minEntries ?? 25} entries`
       : 'Paid beta unavailable';
   const paidActivityLabel = paidEnabled ? formatTournamentActivityLabel(paidSummary, paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning') : paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning';
   const canStart = Boolean(
@@ -10917,8 +10917,7 @@ function formatTournamentActivityLabel(summary: TournamentSummary | undefined, f
   if (!summary) return fallback;
   const live = Math.max(0, Math.round(summary.liveTournamentCount ?? 0));
   const forming = Math.max(0, Math.round(summary.formingTournamentCount ?? (summary.status === 'open' ? 1 : 0)));
-  if (live > 0 && forming > 0) return `${live} live, ${forming} forming`;
-  if (live > 0) return `${live} live tournament${live === 1 ? '' : 's'}`;
+  if (live > 0) return `${live} live`;
   if (forming > 0) return `${forming} forming tournament${forming === 1 ? '' : 's'}`;
   return fallback;
 }

@@ -87,15 +87,7 @@
       "/characters/gohan-super-saiyan/frames/frame-137.png",
       "/characters/gohan-super-saiyan/frames/frame-138.png",
       "/characters/gohan-super-saiyan/frames/frame-139.png",
-      "/characters/gohan-super-saiyan/frames/frame-140.png",
-      "/characters/gohan-super-saiyan/frames/frame-141.png",
-      "/characters/gohan-super-saiyan/frames/frame-142.png",
-      "/characters/gohan-super-saiyan/frames/frame-143.png",
-      "/characters/gohan-super-saiyan/frames/frame-144.png",
-      "/characters/gohan-super-saiyan/frames/frame-145.png",
-      "/characters/gohan-super-saiyan/frames/frame-146.png",
-      "/characters/gohan-super-saiyan/frames/frame-147.png",
-      "/characters/gohan-super-saiyan/frames/frame-148.png"
+      "/characters/gohan-super-saiyan/frames/frame-140.png"
     ],
     "hitLight": [
       "/characters/gohan-super-saiyan/frames/frame-018.png"
@@ -196,7 +188,14 @@
       "/characters/gohan-super-saiyan/frames/frame-129.png",
       "/characters/gohan-super-saiyan/frames/frame-130.png"
     ],
-    "cmd:2+4": [],
+    "cmd:2+4": [
+      "/characters/gohan-super-saiyan/frames/frame-142.png",
+      "/characters/gohan-super-saiyan/frames/frame-143.png",
+      "/characters/gohan-super-saiyan/frames/frame-144.png",
+      "/characters/gohan-super-saiyan/frames/frame-145.png",
+      "/characters/gohan-super-saiyan/frames/frame-146.png",
+      "/characters/gohan-super-saiyan/frames/frame-147.png"
+    ],
     "cmd:3+4": [
       "/characters/gohan-super-saiyan/frames/frame-112.png",
       "/characters/gohan-super-saiyan/frames/frame-113.png",
@@ -511,19 +510,19 @@
     },
     {
       "id": "special",
-      "label": "Aura Step Kick",
+      "label": "Kamehameha",
       "input": "special",
       "startupFrames": 25,
       "activeFrames": 5,
       "recoveryFrames": 34,
       "damage": 12,
       "blockDamage": 0,
-      "hitLevel": "mid",
+      "hitLevel": "special",
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
       "whiffRecoveryFrames": 7,
-      "range": 1.72,
+      "range": 8.5,
       "pushback": 0.98,
       "blockPushback": 0.44,
       "tracking": "medium",
@@ -542,6 +541,8 @@
       },
       "counterHit": false,
       "cancelable": false,
+      "usesKi": true,
+      "kiBurst": true,
       "forwardForce": 0.89,
       "forwardForceStartFrame": 14,
       "forwardForceEndFrame": 18,
@@ -549,7 +550,7 @@
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8,
-      "description": "Fast mid kick with very long active coverage as Gohan drives forward."
+      "description": "Blue-white Kamehameha beam fired from Gohan's hands after the Super Saiyan charge-up."
     }
   ],
   "hurtboxes": [
@@ -662,8 +663,11 @@
       "forwardForce": 0.89,
       "forwardForceStartFrame": 9,
       "forwardForceEndFrame": 11,
-      "label": "Aura Step Kick",
-      "hitLevel": "mid",
+      "label": "Kamehameha",
+      "hitLevel": "special",
+      "range": 8.5,
+      "usesKi": true,
+      "kiBurst": true,
       "onComboHitFrames": 12,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
@@ -892,9 +896,12 @@
       "forwardForce": 1.55,
       "forwardForceStartFrame": 11,
       "forwardForceEndFrame": 14,
-      "label": "Low Aura Drive",
-      "hitLevel": "low",
+      "label": "Masenko",
+      "hitLevel": "special",
+      "range": 8.2,
       "knockdown": true,
+      "usesKi": true,
+      "kiBurst": true,
       "onComboHitFrames": 19,
       "onJuggleHitFrames": 10,
       "comboRepeatPenaltyFrames": 5,
@@ -2919,6 +2926,171 @@
       "/characters/gohan-super-saiyan/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "kamehameha-blast",
+      "name": "Kamehameha",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#58d7ff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#58d7ff",
+        "outerColor": "#245dff",
+        "impactColor": "#e8fbff",
+        "radius": 0.42,
+        "growFrames": 8,
+        "fadeFrames": 18,
+        "shake": 0.22
+      }
+    },
+    {
+      "id": "masenko-blast",
+      "name": "Masenko",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ffcc4d",
+      "blastVisual": {
+        "coreColor": "#fff7c2",
+        "glowColor": "#ffcc4d",
+        "outerColor": "#ff7b21",
+        "impactColor": "#fff2a8",
+        "radius": 0.38,
+        "growFrames": 7,
+        "fadeFrames": 16,
+        "shake": 0.2
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "kickright": [
+      {
+        "id": "kamehameha-blast-release",
+        "projectileId": "kamehameha-blast",
+        "kind": "blast",
+        "label": "Kamehameha",
+        "spawnFrame": 33,
+        "spawnOffset": [
+          0,
+          1.12,
+          0.72
+        ],
+        "startupFrames": 0,
+        "activeFrames": 46,
+        "recoveryFrames": 22,
+        "lifetimeFrames": 78,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.66,
+            0.78,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:2+4": [
+      {
+        "id": "masenko-blast-release",
+        "projectileId": "masenko-blast",
+        "kind": "blast",
+        "label": "Masenko",
+        "spawnFrame": 24,
+        "spawnOffset": [
+          0,
+          1.42,
+          0.68
+        ],
+        "startupFrames": 0,
+        "activeFrames": 38,
+        "recoveryFrames": 18,
+        "lifetimeFrames": 64,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 6.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.38,
+        "hitbox": {
+          "offset": [
+            0,
+            0.18,
+            0
+          ],
+          "size": [
+            0.52,
+            1.05,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1.15,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }

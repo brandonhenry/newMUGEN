@@ -90,16 +90,7 @@
       "/characters/gohan-super-saiyan-2/frames/frame-143.png",
       "/characters/gohan-super-saiyan-2/frames/frame-144.png",
       "/characters/gohan-super-saiyan-2/frames/frame-145.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-146.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-147.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-148.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-149.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-150.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-151.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-152.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-153.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-154.png",
-      "/characters/gohan-super-saiyan-2/frames/frame-155.png"
+      "/characters/gohan-super-saiyan-2/frames/frame-146.png"
     ],
     "hitLight": [
       "/characters/gohan-super-saiyan-2/frames/frame-019.png"
@@ -548,45 +539,46 @@
     },
     {
       "id": "special",
-      "label": "Lightning Step Kick",
+      "label": "Super Kamehameha",
       "input": "special",
-      "startupFrames": 25,
-      "activeFrames": 5,
+      "startupFrames": 24,
+      "activeFrames": 8,
       "recoveryFrames": 34,
-      "damage": 12,
-      "blockDamage": 0,
+      "damage": 16,
+      "blockDamage": 3,
       "hitLevel": "mid",
-      "onBlockFrames": -9,
-      "onHitFrames": 18,
-      "onCounterHitFrames": 25,
-      "whiffRecoveryFrames": 7,
-      "range": 1.72,
-      "pushback": 0.98,
-      "blockPushback": 0.44,
-      "tracking": "medium",
+      "onBlockFrames": -11,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 10,
+      "range": 2.25,
+      "pushback": 1.15,
+      "blockPushback": 0.72,
+      "tracking": "low",
       "knockdown": false,
       "hitbox": {
         "offset": [
           0,
           1.12,
-          0.7976000000000001
+          0.92
         ],
         "size": [
-          0.72,
-          0.5,
-          0.7176
+          0.66,
+          0.58,
+          0.86
         ]
       },
       "counterHit": false,
       "cancelable": false,
-      "forwardForce": 0.92,
-      "forwardForceStartFrame": 13,
-      "forwardForceEndFrame": 17,
-      "onComboHitFrames": 15,
-      "onJuggleHitFrames": 10,
+      "forwardForce": 0.25,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 18,
+      "kiBurst": true,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
       "juggleRepeatPenaltyFrames": 8,
-      "description": "Fast mid kick with very long active coverage as Gohan drives forward."
+      "description": "Mid ki blast that releases Gohan's Super Kamehameha from frames 141-146."
     }
   ],
   "hurtboxes": [
@@ -686,25 +678,27 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
-      "damage": 9,
-      "blockDamage": 1,
-      "onBlockFrames": 0,
-      "onHitFrames": 13,
-      "onCounterHitFrames": 17,
-      "whiffRecoveryFrames": 7,
-      "range": 1.7,
-      "forwardForce": 0.92,
-      "forwardForceStartFrame": 8,
-      "forwardForceEndFrame": 10,
-      "label": "Lightning Step Kick",
+      "startupFrames": 24,
+      "activeFrames": 8,
+      "recoveryFrames": 34,
+      "damage": 16,
+      "blockDamage": 3,
+      "onBlockFrames": -11,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 10,
+      "range": 2.25,
+      "forwardForce": 0.25,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 18,
+      "label": "Super Kamehameha",
       "hitLevel": "mid",
-      "onComboHitFrames": 12,
-      "onJuggleHitFrames": 10,
+      "tracking": "low",
+      "kiBurst": true,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 8
     },
     "cmd:f+1": {
       "startupFrames": 13,
@@ -1787,7 +1781,7 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "cmd:1+4": {
-      "label": "Lightning Step Kick",
+      "label": "Ascended Step Strike",
       "hitLevel": "mid",
       "startupFrames": 14,
       "activeFrames": 2,
@@ -3108,9 +3102,91 @@
         0
       ],
       "color": "#ffe06e"
+    },
+    {
+      "id": "super-kamehameha-blast",
+      "name": "Super Kamehameha",
+      "kind": "blast",
+      "frames": [],
+      "animationFrames": {},
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#8feaff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#8feaff",
+        "outerColor": "#4fb8ff",
+        "impactColor": "#dff8ff",
+        "radius": 0.48,
+        "growFrames": 6,
+        "fadeFrames": 16,
+        "shake": 0.18
+      }
     }
   ],
   "moveProjectiles": {
+    "kickright": [
+      {
+        "id": "super-kamehameha-blast-release",
+        "projectileId": "super-kamehameha-blast",
+        "kind": "blast",
+        "label": "Super Kamehameha",
+        "spawnFrame": 5,
+        "spawnOffset": [
+          0,
+          1.14,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 34,
+        "recoveryFrames": 18,
+        "lifetimeFrames": 58,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 8.5,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.42,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.68,
+            0.78,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.05,
+        "blockPushbackScale": 1.2,
+        "mirrorWithFacing": true,
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
     "cmd:qcf+4": [
       {
         "id": "cmd-qcf-4-ki-energy",
