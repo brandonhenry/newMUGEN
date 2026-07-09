@@ -4,6 +4,7 @@ export const TOURNAMENT_EMAIL_STORE_NAME = 'kore-tournament-email-reminders';
 const RESEND_EMAIL_URL = 'https://api.resend.com/emails';
 const FROM_EMAIL = 'KORE <hello@playkore.com>';
 const DEFAULT_ADMIN_REVIEW_EMAIL = 'thetekkentrainer@gmail.com';
+const ADMIN_REVIEW_EMAIL_MAX_ATTEMPTS = 3;
 
 export function getTournamentEmailStore(event) {
   return getBlobStore(TOURNAMENT_EMAIL_STORE_NAME, event);
@@ -102,22 +103,41 @@ export async function notifyTournamentAdminReview(store, bracket, match, reason 
   if (!adminEmail) return { emailSent: false, skipped: true };
   const notificationKey = adminReviewNotificationKey(bracket.id, match.id, reason);
   const existing = await store.get(notificationKey, { type: 'json' }).catch(() => null);
-  if (existing?.sentAt || existing?.attemptedAt) return { emailSent: false, skipped: true };
-  const emailSent = await sendTournamentEmail({
-    to: adminEmail,
-    subject: 'KORE prizepool tournament needs review',
-    html: adminReviewHtml(bracket, match, reason)
-  });
+  if (existing?.state === 'sent' || existing?.sentAt) return { emailSent: false, skipped: true };
+  const attempts = Number(existing?.attempts || 0);
+  if (attempts >= ADMIN_REVIEW_EMAIL_MAX_ATTEMPTS) return { emailSent: false, skipped: true, attempts };
   await store.setJSON(notificationKey, {
+    ...(existing || {}),
     tournamentId: bracket.id,
     matchId: match.id,
     reason,
     email: adminEmail,
+    state: 'pending',
+    attempts,
+    updatedAt: now
+  });
+  const emailSent = await sendTournamentEmail({
+    to: adminEmail,
+    subject: 'KORE prizepool tournament needs review',
+    html: adminReviewHtml(bracket, match, reason)
+  }).catch((error) => {
+    console.warn('Prizepool admin review email send failed', error);
+    return false;
+  });
+  await store.setJSON(notificationKey, {
+    ...(existing || {}),
+    tournamentId: bracket.id,
+    matchId: match.id,
+    reason,
+    email: adminEmail,
+    state: emailSent ? 'sent' : 'failed',
+    attempts: attempts + 1,
     emailSent,
     attemptedAt: now,
+    lastAttemptAt: now,
     sentAt: emailSent ? now : undefined
   });
-  return { emailSent, skipped: false };
+  return { emailSent, skipped: false, attempts: attempts + 1 };
 }
 
 export async function sendTournamentEmail({ to, subject, html }) {

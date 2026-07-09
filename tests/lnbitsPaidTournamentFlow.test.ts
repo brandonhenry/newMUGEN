@@ -213,6 +213,35 @@ describe('LNbits paid tournament flow', () => {
     expect(next.bracket.entries).toHaveLength(1);
   });
 
+  it('moves late paid confirmations into manual review after the bracket locks', async () => {
+    setLightningEnv({ PAID_TOURNAMENT_MAX_PLAYERS: '2' });
+    const paidChecks = new Set<string>();
+    installLnbitsFetch(paidChecks);
+    const stores = makeStores();
+    const { confirmPaidEntryByCheckingId, enterPaidTournament } = await import('../netlify/functions/_paid-tournament-store.mjs');
+
+    const p1 = await enterPaidTournament(stores, { playerId: 'player-1', posthogDeviceId: 'device-1', displayName: 'P1', characterId: 'kiro' }, 1000);
+    const p2 = await enterPaidTournament(stores, { playerId: 'player-2', posthogDeviceId: 'device-2', displayName: 'P2', characterId: 'riven' }, 1001);
+    const late = await enterPaidTournament(stores, { playerId: 'player-3', posthogDeviceId: 'device-3', displayName: 'P3', characterId: 'kiro' }, 1002);
+    paidChecks.add(p1.entry.checkingId);
+    paidChecks.add(p2.entry.checkingId);
+    paidChecks.add(late.entry.checkingId);
+    await confirmPaidEntryByCheckingId(stores, p1.entry.checkingId, 1100);
+    const locked = await confirmPaidEntryByCheckingId(stores, p2.entry.checkingId, 1200);
+    expect(locked.bracket.status).toBe('roundActive');
+
+    const reviewed = await confirmPaidEntryByCheckingId(stores, late.entry.checkingId, 1300);
+
+    expect(reviewed).toMatchObject({ paid: true, latePayment: true, manualReview: true });
+    expect(reviewed.entry).toMatchObject({ playerId: 'player-3', paymentState: 'manualReview', manualReviewReason: 'late_payment_after_bracket_locked' });
+    expect(reviewed.bracket.status).toBe('roundActive');
+    expect(reviewed.bracket.matches.some((match: any) => match.entryAId === late.entry.id || match.entryBId === late.entry.id)).toBe(false);
+    expect([...stores.ledger.data.values()]).toEqual(expect.arrayContaining([
+      expect.objectContaining({ type: 'paid_entry_late_confirmed', playerId: 'player-3' }),
+      expect.objectContaining({ type: 'paid_entry_manual_review', playerId: 'player-3' })
+    ]));
+  });
+
   it('confirms paid entries from LNbits payment hash webhook payloads', async () => {
     const paidChecks = new Set<string>();
     installLnbitsFetch(paidChecks);
@@ -385,6 +414,28 @@ describe('LNbits paid tournament flow', () => {
     }, 2300)).rejects.toMatchObject({ code: 'recovery_expired' });
   });
 
+  it('throttles paid recovery code requests per entry and allows them after the window', async () => {
+    installLnbitsFetch();
+    const stores = makeStores();
+    const { enterPaidTournament, requestPaidTournamentRecovery } = await import('../netlify/functions/_paid-tournament-store.mjs');
+    const { saveTournamentEmailSubscription } = await import('../netlify/functions/_tournament-email.mjs');
+    const entered = await enterPaidTournament(stores, { playerId: 'player-1', posthogDeviceId: 'device-1', displayName: 'P1', characterId: 'kiro' }, 1000);
+    await saveTournamentEmailSubscription(stores.email, {
+      playerId: 'player-1',
+      displayName: 'P1',
+      email: 'p1@example.com',
+      tournamentId: entered.bracket.id,
+      entryId: entered.entry.id,
+      kind: 'paidOnline'
+    }, 1001);
+
+    await requestPaidTournamentRecovery(stores, { tournamentId: entered.bracket.id, playerId: 'player-1', email: 'p1@example.com' }, 1100);
+    await requestPaidTournamentRecovery(stores, { tournamentId: entered.bracket.id, playerId: 'player-1', email: 'p1@example.com' }, 1200);
+    await requestPaidTournamentRecovery(stores, { tournamentId: entered.bracket.id, playerId: 'player-1', email: 'p1@example.com' }, 1300);
+    await expect(requestPaidTournamentRecovery(stores, { tournamentId: entered.bracket.id, playerId: 'player-1', email: 'p1@example.com' }, 1400)).rejects.toMatchObject({ code: 'recovery_request_limited' });
+    await expect(requestPaidTournamentRecovery(stores, { tournamentId: entered.bracket.id, playerId: 'player-1', email: 'p1@example.com' }, 1100 + 15 * 60 * 1000)).resolves.toMatchObject({ ok: true });
+  });
+
   it('freezes conflicting paid reports for review and lets admin resolve the match', async () => {
     setLightningEnv({ PAID_TOURNAMENT_MAX_PLAYERS: '2' });
     process.env.RESEND_API_KEY = 'test-resend-key';
@@ -424,6 +475,30 @@ describe('LNbits paid tournament flow', () => {
     const resolvedMatch = resolved.bracket.matches.find((candidate: any) => candidate.id === match.id);
     expect(resolvedMatch).toMatchObject({ status: 'completed', winnerEntryId: p1.entry.id, reportState: 'agreed' });
     expect(resolved.bracket.status).toBe('completed');
+  });
+
+  it('returns completed state for duplicate paid result reports without double advancing', async () => {
+    setLightningEnv({ PAID_TOURNAMENT_MAX_PLAYERS: '2' });
+    const paidChecks = new Set<string>();
+    installLnbitsFetch(paidChecks);
+    const stores = makeStores();
+    const { confirmPaidEntryByCheckingId, enterPaidTournament, reportPaidTournamentWinner } = await import('../netlify/functions/_paid-tournament-store.mjs');
+
+    const p1 = await enterPaidTournament(stores, { playerId: 'player-1', posthogDeviceId: 'device-1', displayName: 'P1', characterId: 'kiro' }, 1000);
+    paidChecks.add(p1.entry.checkingId);
+    await confirmPaidEntryByCheckingId(stores, p1.entry.checkingId, 1100);
+    const p2 = await enterPaidTournament(stores, { playerId: 'player-2', posthogDeviceId: 'device-2', displayName: 'P2', characterId: 'riven' }, 1200);
+    paidChecks.add(p2.entry.checkingId);
+    const locked = await confirmPaidEntryByCheckingId(stores, p2.entry.checkingId, 1300);
+    const match = locked.bracket.matches.find((candidate: any) => candidate.status === 'ready') as any;
+
+    await reportPaidTournamentWinner(stores, match.id, 'player-1', p1.entry.id, 'device-1', match.roomId, 1400);
+    const completed = await reportPaidTournamentWinner(stores, match.id, 'player-2', p1.entry.id, 'device-2', match.roomId, 1500);
+    const duplicate = await reportPaidTournamentWinner(stores, match.id, 'player-1', p1.entry.id, 'device-1', match.roomId, 1600);
+
+    expect(completed.bracket.status).toBe('completed');
+    expect(duplicate.bracket.status).toBe('completed');
+    expect(duplicate.bracket.matches.filter((candidate: any) => candidate.id === match.id && candidate.winnerEntryId === p1.entry.id)).toHaveLength(1);
   });
 
   it('returns Cash App labels and estimated start metadata for paid tournament status', async () => {

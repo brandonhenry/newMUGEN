@@ -42,6 +42,8 @@ const RECOVERY_STORE_NAME = 'kore-paid-recovery-codes';
 const ACTIVE_KEY = 'active.json';
 const PAID_SERIES_ID = 'paid-lightning';
 const PAID_TOURNAMENT_STAGE_POOL = ['the-chamber', 'the-chamber-green', 'metro-ring', 'forge-yard'];
+const RECOVERY_REQUEST_WINDOW_MS = 15 * 60 * 1000;
+const RECOVERY_REQUEST_MAX_PER_WINDOW = 3;
 
 export function getPaidTournamentStores(event) {
   return {
@@ -251,6 +253,27 @@ export async function confirmPaidEntryByCheckingId(stores, checkingId, now = Dat
   let bracket = await readPaidTournament(stores, index.tournamentId);
   let entry = await readEntry(stores, index.tournamentId, index.playerId);
   if (!bracket || !entry) throw Object.assign(new Error('Paid tournament entry not found'), { statusCode: 404, code: 'paid_entry_not_found' });
+  const wasConfirmed = entry.paymentState === 'paid' || entry.paymentState === 'entryLocked';
+  const bracketEntry = bracket.entries.find((candidate) => candidate.id === entry.id);
+  if (bracket.status !== 'open' && !wasConfirmed) {
+    await writeLedgerEvent(stores, 'paid_entry_late_confirmed', { tournamentId: bracket.id, playerId: entry.playerId, entryId: entry.id, bracketStatus: bracket.status }, now);
+    if (bracketEntry && bracketEntry.paymentState !== 'invoicePending' && bracketEntry.paymentState !== 'invoiceProcessing') {
+      entry = { ...entry, ...bracketEntry };
+      await writeEntry(stores, bracket.id, entry);
+      await writeLedgerEvent(stores, 'paid_entry_restored', { tournamentId: bracket.id, playerId: entry.playerId, entryId: entry.id, paymentState: entry.paymentState }, now);
+      return { bracket, entry, paid: true, latePayment: true, restored: true };
+    }
+    entry = { ...entry, paymentState: 'manualReview', paidAt: now, manualReviewReason: 'late_payment_after_bracket_locked' };
+    bracket = {
+      ...bracket,
+      entries: bracket.entries.map((candidate) => candidate.id === entry.id ? entry : candidate),
+      updatedAt: now
+    };
+    await writeEntry(stores, bracket.id, entry);
+    await writePaidTournament(stores, bracket);
+    await writeLedgerEvent(stores, 'paid_entry_manual_review', { tournamentId: bracket.id, playerId: entry.playerId, entryId: entry.id, reason: 'late_payment_after_bracket_locked' }, now);
+    return { bracket, entry, paid: true, latePayment: true, manualReview: true };
+  }
   if (entry.paymentState !== 'paid' && entry.paymentState !== 'entryLocked') {
     const seed = confirmedPaidEntries(bracket).length + 1;
     entry = { ...entry, paymentState: 'paid', seed, paidAt: now };
@@ -306,6 +329,7 @@ export async function getPaidTournamentStatus(stores, playerId, posthogDeviceId)
     entriesNeeded: timing.entriesNeeded,
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
+    resumeNotice: paidResumeNotice(bracket, nextEntry, nextAssignment.match, matchRoom),
     statusText: paidStatusText(bracket, nextAssignment.match)
   };
 }
@@ -351,6 +375,21 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
   if (match.entryAId !== cleanWinnerEntryId && match.entryBId !== cleanWinnerEntryId) {
     throw Object.assign(new Error('Winner is not assigned to this match'), { statusCode: 400, code: 'invalid_winner' });
   }
+  if (match.status === 'completed' && match.winnerEntryId === cleanWinnerEntryId) {
+    const assignment = assignedMatch(bracket, cleanReporterId);
+    const timing = paidTimingSummary(bracket);
+    return {
+      bracket,
+      entry: assignment.entry || reporterEntry,
+      assignedMatch: assignment.match,
+      payment: paidPaymentSummary(assignment.entry || reporterEntry),
+      confirmedEntries: timing.confirmedEntries,
+      entriesNeeded: timing.entriesNeeded,
+      estimatedStartLabel: timing.estimatedStartLabel,
+      startsWhenFullLabel: timing.startsWhenFullLabel,
+      statusText: paidStatusText(bracket, assignment.match)
+    };
+  }
   const reports = { ...(match.resultReports || {}), [reporterEntry.id]: cleanWinnerEntryId };
   const reportedWinnerIds = Object.values(reports);
   const uniqueWinners = [...new Set(reportedWinnerIds)];
@@ -395,6 +434,7 @@ export async function reportPaidTournamentWinner(stores, matchId, reporterPlayer
     entriesNeeded: timing.entriesNeeded,
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
+    resumeNotice: paidResumeNotice(bracket, assignment.entry || reporterEntry, assignment.match, matchRoom),
     statusText: uniqueWinners.length > 1 ? 'Result conflict needs review' : reportedWinnerIds.length < 2 ? 'Waiting for opponent result confirmation' : paidStatusText(bracket, assignment.match)
   };
 }
@@ -473,6 +513,14 @@ export async function requestPaidTournamentRecovery(stores, { tournamentId, play
   if (!subscription?.email || (requestedEmail && subscription.email !== requestedEmail)) {
     throw Object.assign(new Error('No saved reminder email for this paid entry'), { statusCode: 403, code: 'recovery_email_unavailable' });
   }
+  const throttleKey = recoveryThrottleKey(bracket.id, cleanPlayerId, subscription.email, entry.registeredDeviceId);
+  const throttle = await stores.recovery.get(throttleKey, { type: 'json' }).catch(() => null);
+  const recentRequests = Array.isArray(throttle?.requests)
+    ? throttle.requests.filter((timestamp) => now - Number(timestamp) < RECOVERY_REQUEST_WINDOW_MS)
+    : [];
+  if (recentRequests.length >= RECOVERY_REQUEST_MAX_PER_WINDOW) {
+    throw Object.assign(new Error('Too many recovery code requests. Try again in a few minutes.'), { statusCode: 429, code: 'recovery_request_limited' });
+  }
   const code = String(randomInt(100000, 1000000));
   const expiresAt = now + 10 * 60 * 1000;
   await stores.recovery.setJSON(recoveryKey(bracket.id, cleanPlayerId), {
@@ -490,6 +538,7 @@ export async function requestPaidTournamentRecovery(stores, { tournamentId, play
     subject: 'Your KORE paid tournament recovery code',
     html: `<div style="font-family:Inter,Arial,sans-serif;line-height:1.5;color:#101114"><h1>KORE recovery code</h1><p>Your paid tournament recovery code is <strong>${code}</strong>.</p><p>This code expires in 10 minutes and can only be used once.</p></div>`
   });
+  await stores.recovery.setJSON(throttleKey, { tournamentId: bracket.id, playerId: cleanPlayerId, email: subscription.email, requests: [...recentRequests, now], updatedAt: now });
   await writeLedgerEvent(stores, 'paid_recovery_requested', { tournamentId: bracket.id, playerId: cleanPlayerId, emailSent }, now);
   return { ok: true, email: maskEmail(subscription.email), emailSent, expiresAt };
 }
@@ -607,6 +656,7 @@ export async function joinPaidTournamentRoom(stores, { tournamentId, matchId, pl
     entriesNeeded: timing.entriesNeeded,
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
+    resumeNotice: paidResumeNotice(bracket, entry, assignment.match, room),
     statusText: room.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
   };
 }
@@ -635,6 +685,7 @@ export async function getPaidTournamentRoomStatus(stores, { tournamentId, matchI
     entriesNeeded: timing.entriesNeeded,
     estimatedStartLabel: timing.estimatedStartLabel,
     startsWhenFullLabel: timing.startsWhenFullLabel,
+    resumeNotice: paidResumeNotice(bracket, entry, match, room),
     statusText: room?.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
   };
 }
@@ -819,6 +870,13 @@ function paidStatusText(bracket, match) {
   return 'Waiting for next round';
 }
 
+function paidResumeNotice(bracket, entry, match, room) {
+  if (entry?.paymentState === 'manualReview') return 'late_payment_review';
+  if (room?.status === 'review' || match?.roomStatus === 'review' || match?.reportState === 'conflict') return 'admin_review';
+  if (entry && bracket.matches?.some((candidate) => candidate.winnerEntryId === entry.id && candidate.roomStatus === 'forfeit' && candidate.reportState === 'forfeit')) return 'forfeit_win';
+  return undefined;
+}
+
 function tournamentKey(id) {
   return `${id}.json`;
 }
@@ -841,6 +899,11 @@ function payoutKey(tournamentId, playerId) {
 
 function recoveryKey(tournamentId, playerId) {
   return `${cleanId(tournamentId)}/${cleanId(playerId)}.json`;
+}
+
+function recoveryThrottleKey(tournamentId, playerId, email, deviceId) {
+  const emailHash = createHash('sha256').update(cleanRecoveryEmail(email)).digest('hex').slice(0, 24);
+  return `throttle/${cleanId(tournamentId)}/${cleanId(playerId)}/${cleanDeviceId(deviceId) || 'device'}/${emailHash}.json`;
 }
 
 function cleanDeviceId(value) {

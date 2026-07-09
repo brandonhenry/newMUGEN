@@ -6,6 +6,7 @@ import {
   getPaidTournamentStores,
   readPaidTournament
 } from './_paid-tournament-store.mjs';
+import { notifyTournamentAdminReview } from './_tournament-email.mjs';
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
@@ -24,7 +25,20 @@ async function listPaidReviews(stores) {
     .map((blob) => String(blob.key || '').replace(/\.json$/, ''))
     .filter((id) => id && id !== 'active'))];
   const brackets = await Promise.all(ids.map((id) => readPaidTournament(stores, id).catch(() => null)));
-  return brackets.flatMap((bracket) => bracket?.kind === 'paidOnline' ? reviewRows(bracket) : []);
+  const reviews = [];
+  for (const bracket of brackets) {
+    if (bracket?.kind !== 'paidOnline') continue;
+    const rows = reviewRows(bracket);
+    reviews.push(...rows);
+    await Promise.all(rows.map((row) => {
+      const match = bracket.matches.find((candidate) => candidate.id === row.matchId);
+      const reason = row.reportState === 'conflict' ? 'conflicting_result_reports' : 'room_expired_no_arrivals';
+      return notifyTournamentAdminReview(stores.email, bracket, match, reason).catch((error) => {
+        console.warn('Paid tournament admin review email retry failed', error);
+      });
+    }));
+  }
+  return reviews;
 }
 
 function reviewRows(bracket) {

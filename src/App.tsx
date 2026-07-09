@@ -234,6 +234,7 @@ import {
   type TournamentBracket,
   type TournamentEntry,
   type TournamentMatch,
+  type TournamentReportRequest,
   type TournamentStatusResult,
   type TournamentSummary
 } from './lib/tournament';
@@ -328,6 +329,7 @@ const ONLINE_TRAINING_CHAT_CONTROLLER_CHARACTERS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZa
 const BOT_REMATCH_READY_MS = 5_000;
 const BOT_REMATCH_LEAVE_MS = 10_000;
 const ONLINE_ASSET_WARMUP_TIMEOUT_MS = 300_000;
+const TOURNAMENT_READY_CONNECTION_TIMEOUT_MS = 12_000;
 const RANKED_REMATCH_LIMIT = 2;
 function isTournamentMatchMode(mode: MatchMode) {
   return mode === 'tournamentLocal' || mode === 'tournamentOnline' || mode === 'tournamentInfinite';
@@ -437,6 +439,7 @@ const LOCAL_LEADERBOARD_STORAGE_KEY = 'kore.online.localLeaderboard';
 const CHARACTER_VIEWER_VIEW_MODE_STORAGE_KEY = 'kore.characterViewer.viewMode.v1';
 const STARTER_GUIDE_DISMISSED_KEY = 'kore.starterGuide.dismissed.v1';
 const FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY = 'kore.tournament.freeOnlineEntry.v1';
+const PENDING_TOURNAMENT_RESULT_STORAGE_KEY = 'kore.tournament.pendingResults.v1';
 const MEMORY_CARD_FORMAT = 'kore.memorycard';
 const MEMORY_CARD_VERSION = 1;
 const MEMORY_CARD_SAVE_KEYS = [
@@ -1450,6 +1453,69 @@ function clearSavedFreeOnlineTournamentId(playerId: string | undefined) {
   } catch {
     window.localStorage.removeItem(FREE_ONLINE_TOURNAMENT_ENTRY_STORAGE_KEY);
   }
+}
+
+function pendingTournamentResultKey(tournamentId: string | undefined, matchId: string | undefined, playerId: string | undefined) {
+  return tournamentId && matchId && playerId ? `${tournamentId}:${matchId}:${playerId}` : '';
+}
+
+function readPendingTournamentResult(tournamentId: string | undefined, matchId: string | undefined, playerId: string | undefined): TournamentReportRequest | null {
+  if (typeof window === 'undefined') return null;
+  const key = pendingTournamentResultKey(tournamentId, matchId, playerId);
+  if (!key) return null;
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(PENDING_TOURNAMENT_RESULT_STORAGE_KEY) ?? '{}') as Record<string, TournamentReportRequest>;
+    const result = parsed[key];
+    return result?.tournamentId === tournamentId && result.matchId === matchId && result.reporterPlayerId === playerId ? result : null;
+  } catch {
+    return null;
+  }
+}
+
+function readAnyPendingTournamentResult(tournamentId: string | undefined, playerId: string | undefined): TournamentReportRequest | null {
+  if (typeof window === 'undefined' || !tournamentId || !playerId) return null;
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(PENDING_TOURNAMENT_RESULT_STORAGE_KEY) ?? '{}') as Record<string, TournamentReportRequest>;
+    return Object.values(parsed).find((result) => result?.tournamentId === tournamentId && result.reporterPlayerId === playerId) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function writePendingTournamentResult(result: TournamentReportRequest) {
+  if (typeof window === 'undefined') return;
+  const key = pendingTournamentResultKey(result.tournamentId, result.matchId, result.reporterPlayerId);
+  if (!key) return;
+  let parsed: Record<string, TournamentReportRequest> = {};
+  try {
+    parsed = JSON.parse(window.localStorage.getItem(PENDING_TOURNAMENT_RESULT_STORAGE_KEY) ?? '{}') as Record<string, TournamentReportRequest>;
+  } catch {
+    parsed = {};
+  }
+  window.localStorage.setItem(PENDING_TOURNAMENT_RESULT_STORAGE_KEY, JSON.stringify({ ...parsed, [key]: result }));
+}
+
+function clearPendingTournamentResult(tournamentId: string | undefined, matchId: string | undefined, playerId: string | undefined) {
+  if (typeof window === 'undefined') return;
+  const key = pendingTournamentResultKey(tournamentId, matchId, playerId);
+  if (!key) return;
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(PENDING_TOURNAMENT_RESULT_STORAGE_KEY) ?? '{}') as Record<string, TournamentReportRequest>;
+    if (!(key in parsed)) return;
+    const { [key]: _removed, ...next } = parsed;
+    window.localStorage.setItem(PENDING_TOURNAMENT_RESULT_STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    window.localStorage.removeItem(PENDING_TOURNAMENT_RESULT_STORAGE_KEY);
+  }
+}
+
+function tournamentStatusDisplayText(status: TournamentStatusResult | null, fallback = '') {
+  if (!status) return fallback;
+  if (status.resumeNotice === 'forfeit_win') return 'Forfeit win awarded. You advanced to the next round.';
+  if (status.resumeNotice === 'admin_review') return 'Prizepool match needs admin review.';
+  if (status.resumeNotice === 'late_payment_review') return 'Payment received after the bracket locked. Prizepool admin review needed.';
+  if (status.resumeNotice === 'connection_retry') return 'Tournament connection failed. Return to the lobby and try again.';
+  return status.statusText || fallback;
 }
 
 function getStarterGuideDismissed() {
@@ -2951,6 +3017,7 @@ export default function App() {
   const seenFriendChatIdsRef = useRef<Set<string>>(new Set());
   const friendChatNotificationSinceRef = useRef(Date.now());
   const starterGuideAutoRequestedRef = useRef(false);
+  const pendingTournamentSubmitRef = useRef('');
   const [starterGuideOpen, setStarterGuideOpen] = useState(false);
   const { readInputsForStep, peekInputs, setVirtualAction, clearMenuInputs, getLastInput } = useControls(mode, settings.controls);
   const isDevHost = isLocalDevHost();
@@ -3357,7 +3424,7 @@ export default function App() {
         if (cancelled || !status.entry) return;
         setOnlineTournamentStatus(status);
         setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
-        setTournamentStatusText(status.statusText);
+        setTournamentStatusText(tournamentStatusDisplayText(status));
       })
       .catch(() => undefined);
     return () => {
@@ -3379,7 +3446,7 @@ export default function App() {
         setOnlineTournamentStatus(existingStatus);
         setLocalTournamentBracket(null);
         setActiveTournamentMatchId(existingStatus.assignedMatch?.id ?? '');
-        setTournamentStatusText(existingStatus.statusText || 'Tournament entry found');
+        setTournamentStatusText(tournamentStatusDisplayText(existingStatus, 'Tournament entry found'));
         setScreen('tournamentLobby');
         captureAppAnalytics('tournament_entry_succeeded', {
           tournament_mode: tournamentMode,
@@ -3403,7 +3470,7 @@ export default function App() {
         setE2eSimulateOnlineTournament(false);
         setLocalTournamentBracket(null);
         setActiveTournamentMatchId(existingStatus.assignedMatch?.id ?? '');
-        setTournamentStatusText(existingStatus.statusText || 'Tournament entry found');
+        setTournamentStatusText(tournamentStatusDisplayText(existingStatus, 'Tournament entry found'));
         setScreen('tournamentLobby');
         captureAppAnalytics('tournament_entry_succeeded', {
           tournament_mode: tournamentMode,
@@ -3465,7 +3532,7 @@ export default function App() {
     setE2eSimulateOnlineTournament(false);
     setLocalTournamentBracket(null);
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
-    setTournamentStatusText(status.statusText);
+    setTournamentStatusText(tournamentStatusDisplayText(status));
     setScreen('tournamentLobby');
     captureAppAnalytics('tournament_entry_succeeded', {
       tournament_mode: tournamentMode,
@@ -3535,7 +3602,7 @@ export default function App() {
       posthogDeviceId
     });
     setOnlineTournamentStatus(status);
-    setTournamentStatusText(status.statusText || 'Paid tournament recovered');
+    setTournamentStatusText(tournamentStatusDisplayText(status, 'Paid tournament recovered'));
     return 'Paid tournament recovered';
   }, [onlineProfile, onlineTournamentStatus?.bracket.id]);
 
@@ -3547,13 +3614,43 @@ export default function App() {
     const status = await fetchTournamentStatus(current.bracket.id, profile.playerId, posthogDeviceId);
     setOnlineTournamentStatus(status);
     setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
-    setTournamentStatusText(status.statusText);
+    setTournamentStatusText(tournamentStatusDisplayText(status));
     captureAppAnalytics('tournament_lobby_refreshed', {
       status: 'success',
       tournament_id: status.bracket.id,
       assigned_match: Boolean(status.assignedMatch)
     });
   }, [captureAppAnalytics, onlineProfile, onlineTournamentStatus]);
+
+  useEffect(() => {
+    const current = onlineTournamentStatus;
+    const profile = onlineProfile;
+    if (screen !== 'tournamentLobby' || !current || !profile) return;
+    const pending = readAnyPendingTournamentResult(current.bracket.id, profile.playerId);
+    if (!pending) return;
+    const submitKey = pendingTournamentResultKey(pending.tournamentId, pending.matchId, pending.reporterPlayerId);
+    if (!submitKey || pendingTournamentSubmitRef.current === submitKey) return;
+    pendingTournamentSubmitRef.current = submitKey;
+    setTournamentStatusText('Submitting saved tournament result');
+    void reportTournamentMatch(pending)
+      .then((status) => {
+        clearPendingTournamentResult(pending.tournamentId, pending.matchId, pending.reporterPlayerId);
+        pendingTournamentSubmitRef.current = '';
+        setOnlineTournamentStatus(status);
+        setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
+        setTournamentStatusText(tournamentStatusDisplayText(status));
+        captureAppAnalytics('tournament_match_reported', {
+          status: 'resumed',
+          tournament_id: pending.tournamentId,
+          match_id: pending.matchId
+        });
+      })
+      .catch((error) => {
+        pendingTournamentSubmitRef.current = '';
+        console.error('Failed to submit saved tournament result', error);
+        setTournamentStatusText('Saved tournament result could not be submitted. Try Next Round again.');
+      });
+  }, [captureAppAnalytics, onlineProfile, onlineTournamentStatus, screen]);
 
   useEffect(() => {
     const current = onlineTournamentStatus;
@@ -3568,7 +3665,7 @@ export default function App() {
         if (cancelled) return;
         setOnlineTournamentStatus(status);
         setActiveTournamentMatchId(status.assignedMatch?.id ?? '');
-        setTournamentStatusText(status.statusText);
+        setTournamentStatusText(tournamentStatusDisplayText(status));
       } catch (error) {
         if (!cancelled) console.error('Failed to poll tournament payment status', error);
       }
@@ -3622,7 +3719,7 @@ export default function App() {
       setLocalTournamentSlotEntryIds({});
       setE2eSimulateOnlineTournament(true);
       setActiveTournamentMatchId(match.id);
-      setTournamentStatusText(status.statusText);
+      setTournamentStatusText(tournamentStatusDisplayText(status));
       setMode('tournamentOnline');
       setScreen('tournamentLobby');
     };
@@ -3720,7 +3817,7 @@ export default function App() {
       const localWinnerSlot = localRole === 'guest' ? 2 : 1;
       const winnerEntryId = result.winnerSlot === localWinnerSlot ? entry.id : opponentEntryId;
       if (!winnerEntryId) return;
-      void reportTournamentMatch({
+      const pendingReport: TournamentReportRequest = {
         tournamentId: onlineTournamentStatus.bracket.id,
         matchId: activeTournamentMatchId,
         reporterPlayerId: onlineProfile.playerId,
@@ -3729,9 +3826,12 @@ export default function App() {
           : undefined,
         roomId: onlineTournamentStatus.matchRoom?.roomId ?? match.roomId,
         winnerEntryId
-      }).then((status) => {
+      };
+      writePendingTournamentResult(pendingReport);
+      void reportTournamentMatch(pendingReport).then((status) => {
+        clearPendingTournamentResult(pendingReport.tournamentId, pendingReport.matchId, pendingReport.reporterPlayerId);
         setOnlineTournamentStatus(status);
-        setTournamentStatusText(status.statusText);
+        setTournamentStatusText(tournamentStatusDisplayText(status));
         setScreen('tournamentLobby');
         captureAppAnalytics('tournament_match_reported', {
           status: 'success',
@@ -5413,7 +5513,9 @@ export default function App() {
             posthogDeviceId={mode === 'tournamentOnline' ? getPostHogDeviceId() : undefined}
             onOnlineTournamentStatusChange={setOnlineTournamentStatus}
             onTournamentRoomFailure={(message) => {
-              setTournamentStatusText(message);
+              const currentStatus = onlineTournamentStatus;
+              setOnlineTournamentStatus((current) => current ? { ...current, resumeNotice: 'connection_retry', statusText: message } : current);
+              setTournamentStatusText(currentStatus ? tournamentStatusDisplayText({ ...currentStatus, resumeNotice: 'connection_retry', statusText: message }, message) : message);
               setScreen('tournamentLobby');
             }}
             onRankedProfileChange={setRankedProfile}
@@ -9854,6 +9956,7 @@ function TournamentLobbyScreen({
   const entryCharacter = tournamentEntryCharacter(roster, onlineStatus?.entry);
   const canRecoverPaidEntry = !onlineStatus && /device mismatch|same device|different device/i.test(statusText) && Boolean(sanitizeEmail(onlineProfile?.email));
   const checkoutKey = payment?.checkingId ?? onlineStatus?.entry?.checkingId ?? '';
+  const isPrizepoolReview = onlineStatus?.resumeNotice === 'admin_review' || bracket?.kind === 'paidOnline' && (assignedMatch?.roomStatus === 'review' || onlineStatus?.matchRoom?.status === 'review');
   const [cashAppCheckoutDismissed, setCashAppCheckoutDismissed] = useState(false);
 
   useEffect(() => {
@@ -9906,6 +10009,15 @@ function TournamentLobbyScreen({
             )}
             {paymentProcessing && <div className="tournament-payment-strip is-processing">Payment received. Confirming entry.</div>}
             {paymentConfirmed && <div className="tournament-status-strip">Success. You entered. Tournament starts once enough players enter.</div>}
+            {onlineStatus?.resumeNotice === 'late_payment_review' && (
+              <div className="tournament-status-strip">Payment received after the bracket locked. Prizepool admin review needed.</div>
+            )}
+            {onlineStatus?.resumeNotice === 'connection_retry' && (
+              <div className="tournament-status-strip">Tournament connection failed. Return to the lobby and try again.</div>
+            )}
+            {onlineStatus?.resumeNotice === 'forfeit_win' && (
+              <div className="tournament-status-strip">Forfeit win awarded. You advanced to the next round.</div>
+            )}
             {onlineStatus?.entry && (
               <div className="tournament-status-strip">
                 Already entered as {onlineStatus.entry.displayName} with {entryCharacter?.displayName ?? onlineStatus.entry.characterId}. Entry details are locked for this bracket.
@@ -9914,17 +10026,17 @@ function TournamentLobbyScreen({
             {matchRoom && (
               <div className="tournament-status-strip">
                 {matchRoom.status === 'forfeit'
-                  ? 'Forfeit win awarded. Opponent did not arrive.'
+                  ? 'Forfeit win awarded. You advanced to the next round.'
                   : matchRoom.status === 'review'
-                    ? 'Match needs review before the bracket can continue.'
+                    ? isPrizepoolReview ? 'Prizepool match needs admin review.' : 'Match needs review before the bracket can continue.'
                     : `Match room ${matchRoom.status}. ${matchRoom.localRole ? `You are ${matchRoom.localRole}.` : 'Join during your live room slot.'}`}
               </div>
             )}
             {!matchRoom && assignedMatch?.roomStatus === 'review' && (
-              <div className="tournament-status-strip">Match needs review before the bracket can continue.</div>
+              <div className="tournament-status-strip">{isPrizepoolReview ? 'Prizepool match needs admin review.' : 'Match needs review before the bracket can continue.'}</div>
             )}
             {!matchRoom && assignedMatch?.roomStatus === 'forfeit' && (
-              <div className="tournament-status-strip">Forfeit win awarded. Opponent did not arrive.</div>
+              <div className="tournament-status-strip">Forfeit win awarded. You advanced to the next round.</div>
             )}
             <TournamentBracketBoard bracket={bracket} roster={roster} focusMatchId={assignedMatch?.id} />
             {winnerEntry && (
@@ -24484,6 +24596,7 @@ function FightScreen({
         if (mode === 'tournamentOnline' && onlineTournamentStatus?.assignedMatch && onlineTournamentStatus.entry) {
           const paidTournamentRoom = onlineTournamentStatus.bracket.kind === 'paidOnline';
           if (paidTournamentRoom && !posthogDeviceId) throw new Error('Tournament device id unavailable');
+          let tournamentRoomReadySince = 0;
           const joinOrPollTournamentRoom = async (join: boolean) => {
             const request = {
               tournamentId: onlineTournamentStatus.bracket.id,
@@ -24502,6 +24615,14 @@ function FightScreen({
             if (roomStatus === 'review') throw new Error('Tournament match needs review');
             const result = tournamentRoomToOnlineResult(status, session.peerId);
             if (!result) throw new Error(roomStatus === 'closed' ? 'Tournament match room closed' : 'Tournament match room unavailable');
+            if (result.status === 'matched') {
+              tournamentRoomReadySince = tournamentRoomReadySince || Date.now();
+              if (Date.now() - tournamentRoomReadySince > TOURNAMENT_READY_CONNECTION_TIMEOUT_MS) {
+                throw new Error('Tournament connection failed. Return to the lobby and try again.');
+              }
+            } else {
+              tournamentRoomReadySince = 0;
+            }
             onlineRoomRef.current = result;
             onlineRoleRef.current = result.role;
             setOnlineRole(result.role);
@@ -24521,7 +24642,6 @@ function FightScreen({
           await joinOrPollTournamentRoom(true);
           matchmakingTimer = window.setInterval(() => {
             if (cancelled || onlineStateRef.current === 'connected' || onlineAssetGateRef.current) return;
-            if (onlineRoleRef.current === 'guest' && onlineStateRef.current === 'connecting') return;
             void joinOrPollTournamentRoom(false).catch((error) => {
               if (cancelled) return;
               const message = error instanceof Error ? error.message : 'TOURNAMENT ROOM ERROR';
@@ -25253,6 +25373,25 @@ function FightScreen({
     addFriend(onlineProfile, tournamentFriendTarget, Date.now());
     setTournamentFriendAdded(true);
   }, [onlineProfile, tournamentFriendTarget]);
+
+  useEffect(() => {
+    if (mode !== 'tournamentOnline' || match.phase !== 'matchOver' || !match.winnerSlot || !onlineTournamentStatus?.assignedMatch || !onlineTournamentStatus.entry || !onlineProfile) return;
+    const tournamentMatch = onlineTournamentStatus.assignedMatch;
+    const entry = onlineTournamentStatus.entry;
+    const opponentEntryId = tournamentMatch.entryAId === entry.id ? tournamentMatch.entryBId : tournamentMatch.entryAId;
+    const localRole = onlineTournamentStatus.matchRoom?.localRole;
+    const localWinnerSlot = localRole === 'guest' ? 2 : 1;
+    const winnerEntryId = match.winnerSlot === localWinnerSlot ? entry.id : opponentEntryId;
+    if (!winnerEntryId) return;
+    writePendingTournamentResult({
+      tournamentId: onlineTournamentStatus.bracket.id,
+      matchId: tournamentMatch.id,
+      reporterPlayerId: onlineProfile.playerId,
+      posthogDeviceId: onlineTournamentStatus.bracket.kind === 'paidOnline' ? posthogDeviceId : undefined,
+      roomId: onlineTournamentStatus.matchRoom?.roomId ?? tournamentMatch.roomId,
+      winnerEntryId
+    });
+  }, [match.phase, match.winnerSlot, mode, onlineProfile, onlineTournamentStatus, posthogDeviceId]);
 
   const advanceOnlineTournamentRound = useCallback(() => {
     if (mode !== 'tournamentOnline' || !match.winnerSlot || tournamentAdvanceRequested) return;

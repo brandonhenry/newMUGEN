@@ -44,11 +44,17 @@ export async function handler(event) {
       assignedMatch: assignment.match,
       matchRoom,
       payment: paymentSummary(assignment.entry),
+      resumeNotice: freeResumeNotice(bracket, assignment.entry, assignment.match, matchRoom),
       statusText: statusText(bracket, assignment.match)
     });
   } catch (error) {
     return errorJson(error);
   }
+}
+
+function freeResumeNotice(bracket, entry, match, matchRoom) {
+  if (entry && bracket.matches?.some((candidate) => candidate.winnerEntryId === entry.id && candidate.roomStatus === 'forfeit' && candidate.reportState === 'forfeit')) return 'forfeit_win';
+  return undefined;
 }
 
 async function resolveFreeTournamentStatusBracket(store, playerId) {

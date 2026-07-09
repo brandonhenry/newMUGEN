@@ -18,6 +18,7 @@ export type TournamentPaymentState =
   | 'entryLocked'
   | 'expired'
   | 'invalid'
+  | 'manualReview'
   | 'rewardPending'
   | 'rewardSent'
   | 'payoutBlocked';
@@ -177,6 +178,8 @@ export type TournamentStatusResult = {
   entriesNeeded?: number;
   estimatedStartLabel?: string;
   startsWhenFullLabel?: string;
+  resumeNotice?: 'forfeit_win' | 'admin_review' | 'connection_retry' | 'late_payment_review';
+  pendingResult?: { matchId: string; winnerEntryId: string; roomId?: string };
   statusText: string;
 };
 

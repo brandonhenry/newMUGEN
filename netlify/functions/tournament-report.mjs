@@ -53,6 +53,15 @@ export async function handler(event) {
     if (currentAssignment.match.roomId && cleanId(body.roomId) !== currentAssignment.match.roomId) {
       return json(403, { error: 'room_required', message: 'Match room is required to report this result' });
     }
+    if (currentAssignment.match.status === 'completed' && currentAssignment.match.winnerEntryId === winnerEntryId) {
+      return json(200, {
+        bracket,
+        entry: currentAssignment.entry,
+        assignedMatch: currentAssignment.match,
+        payment: paymentSummary(currentAssignment.entry),
+        statusText: statusText(bracket, currentAssignment.match)
+      });
+    }
     const reported = reportWinner(bracket, matchId, winnerEntryId, Date.now());
     await writeTournament(store, reported);
     const assignment = assignedMatch(reported, reporterPlayerId);

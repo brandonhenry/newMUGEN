@@ -127,4 +127,32 @@ describe('tournament email reminders', () => {
       sentAt: 4000
     });
   });
+
+  it('retries failed prizepool admin review emails and dedupes after success', async () => {
+    process.env.RESEND_API_KEY = 'test-resend-key';
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse({ error: 'temporary' }, 500))
+      .mockResolvedValueOnce(jsonResponse({ id: 'email-admin-review' }));
+    vi.stubGlobal('fetch', fetchMock);
+    const store = makeStore();
+    const { notifyTournamentAdminReview } = await import('../netlify/functions/_tournament-email.mjs');
+    const bracket = {
+      id: 'paid-lightning-beta-1',
+      kind: 'paidOnline',
+      entries: [
+        { id: 'paid-player-1', displayName: 'P1' },
+        { id: 'paid-player-2', displayName: 'P2' }
+      ]
+    };
+    const match = { id: 'match-1', entryAId: 'paid-player-1', entryBId: 'paid-player-2', roomId: 'room-1' };
+
+    expect(await notifyTournamentAdminReview(store, bracket, match, 'room_expired_no_arrivals', 6000)).toMatchObject({ emailSent: false, skipped: false, attempts: 1 });
+    expect(store.data.get('notifications/admin-review/paid-lightning-beta-1/match-1/roomexpirednoarrivals.json')).toMatchObject({ state: 'failed', attempts: 1 });
+
+    expect(await notifyTournamentAdminReview(store, bracket, match, 'room_expired_no_arrivals', 7000)).toMatchObject({ emailSent: true, skipped: false, attempts: 2 });
+    expect(await notifyTournamentAdminReview(store, bracket, match, 'room_expired_no_arrivals', 8000)).toMatchObject({ emailSent: false, skipped: true });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(store.data.get('notifications/admin-review/paid-lightning-beta-1/match-1/roomexpirednoarrivals.json')).toMatchObject({ state: 'sent', attempts: 2, sentAt: 7000 });
+  });
 });

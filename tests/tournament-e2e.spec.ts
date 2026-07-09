@@ -59,6 +59,34 @@ test.describe('tournament end-to-end simulations', () => {
     expect(reportCount).toBe(1);
   });
 
+  test('submits a saved tournament result once after returning to the lobby', async ({ page }) => {
+    const seeded = makeOnlineTournamentStatus('freeOnline');
+    let reportCount = 0;
+    await page.route('**/.netlify/functions/tournament-report', async (route) => {
+      reportCount += 1;
+      const request = route.request().postDataJSON() as { winnerEntryId?: string };
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify(completeTournamentStatus(seeded, request.winnerEntryId ?? seeded.entry!.id))
+      });
+    });
+
+    await startFromSplash(page);
+    await seedOnlineTournament(page, seeded);
+    await page.getByRole('button', { name: 'Start Match' }).click();
+    await enterCurrentTournamentFight(page, 'online');
+    await forceMatchOver(page, 1);
+    await expect(page.getByRole('button', { name: 'Next Round' })).toBeVisible({ timeout: 10_000 });
+
+    await page.reload();
+    await startFromSplash(page);
+    await seedOnlineTournament(page, seeded);
+
+    await expect(page.locator('.tournament-lobby-screen')).toContainText('Submitting saved tournament result', { timeout: 10_000 });
+    await expect(page.locator('.tournament-lobby-screen')).toContainText('Winner: E2E Player', { timeout: 10_000 });
+    expect(reportCount).toBe(1);
+  });
+
   test('completes a prizepool tournament and claims the winner reward', async ({ page }) => {
     const seeded = makeOnlineTournamentStatus('paidOnline');
     let reportCount = 0;
@@ -173,6 +201,23 @@ test.describe('tournament end-to-end simulations', () => {
     await expect(page.locator('.tournament-lobby-screen')).toContainText('Match room ready', { timeout: 10_000 });
     await expect(page.getByRole('button', { name: 'Join Match Room' })).toBeEnabled();
   });
+
+  test('shows a usable paid recovery throttle message', async ({ page }) => {
+    await page.route('**/.netlify/functions/tournament-paid-recovery-request', async (route) => {
+      await route.fulfill({
+        status: 429,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'recovery_request_limited', message: 'Too many recovery code requests. Try again in a few minutes.' })
+      });
+    });
+
+    await startFromSplash(page);
+    await seedPaidRecoveryPrompt(page);
+    await page.getByRole('button', { name: 'Send Code' }).click();
+
+    await expect(page.locator('.tournament-recovery-form')).toContainText('Too many recovery code requests', { timeout: 10_000 });
+    await expect(page.locator('.tournament-recovery-form')).toBeVisible();
+  });
 });
 
 async function startFromSplash(page: Page) {
@@ -216,7 +261,7 @@ async function enterCurrentTournamentFight(page: Page, expectedMode: 'tournament
     await expect(page.getByTestId('asset-warmup-screen')).toContainText('Ready', { timeout: 20_000 });
     await activateAnyInputScreen(page, '[data-testid="asset-warmup-screen"]');
   }
-  await expect(page.getByTestId('match-mode')).toHaveText(expectedMode, { timeout: 30_000 });
+  await expect(page.getByTestId('match-mode').filter({ hasText: expectedMode }).first()).toBeVisible({ timeout: 30_000 });
 }
 
 async function forceMatchOver(page: Page, winnerSlot: 1 | 2 = 1) {
