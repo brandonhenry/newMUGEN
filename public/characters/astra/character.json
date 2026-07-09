@@ -71,7 +71,10 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 11,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 7
+      "juggleRepeatPenaltyFrames": 7,
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 14
     },
     {
       "id": "kick",
@@ -109,7 +112,10 @@
       "onComboHitFrames": 16,
       "onJuggleHitFrames": 13,
       "comboRepeatPenaltyFrames": 5,
-      "juggleRepeatPenaltyFrames": 8
+      "juggleRepeatPenaltyFrames": 8,
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 19
     },
     {
       "id": "heavy",
@@ -147,7 +153,10 @@
       "onComboHitFrames": 13,
       "onJuggleHitFrames": 8,
       "comboRepeatPenaltyFrames": 7,
-      "juggleRepeatPenaltyFrames": 11
+      "juggleRepeatPenaltyFrames": 11,
+      "startupFrames": 18,
+      "activeFrames": 5,
+      "recoveryFrames": 29
     },
     {
       "id": "special",
@@ -185,7 +194,10 @@
       "onComboHitFrames": 17,
       "onJuggleHitFrames": 13,
       "comboRepeatPenaltyFrames": 6,
-      "juggleRepeatPenaltyFrames": 9
+      "juggleRepeatPenaltyFrames": 9,
+      "startupFrames": 18,
+      "activeFrames": 5,
+      "recoveryFrames": 30
     }
   ],
   "hurtboxes": [

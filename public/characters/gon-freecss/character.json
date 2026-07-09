@@ -1575,8 +1575,8 @@
     },
     "cmd:d+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1596,8 +1596,8 @@
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1616,9 +1616,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,

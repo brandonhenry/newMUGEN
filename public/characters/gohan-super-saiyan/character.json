@@ -507,9 +507,9 @@
       "id": "special",
       "label": "Kamehameha",
       "input": "special",
-      "startupFrames": 25,
+      "startupFrames": 23,
       "activeFrames": 5,
-      "recoveryFrames": 34,
+      "recoveryFrames": 31,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "special",
@@ -645,9 +645,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -877,9 +877,9 @@
       "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -1546,9 +1546,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:f+3": {
-      "startupFrames": 23,
-      "activeFrames": 5,
-      "recoveryFrames": 31,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1571,8 +1571,8 @@
     },
     "cmd:d+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1615,9 +1615,9 @@
       "juggleRepeatPenaltyFrames": 6
     },
     "cmd:d/f+3": {
-      "startupFrames": 23,
-      "activeFrames": 5,
-      "recoveryFrames": 31,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,
@@ -1640,8 +1640,8 @@
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,

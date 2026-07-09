@@ -393,7 +393,7 @@
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 1,
-      "recoveryFrames": 13,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 1,
       "hitLevel": "high",
@@ -475,9 +475,9 @@
       "id": "heavy",
       "label": "Muscle Body Punch",
       "input": "heavy",
-      "startupFrames": 14,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 16,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -586,7 +586,7 @@
     "jableft": {
       "startupFrames": 9,
       "activeFrames": 1,
-      "recoveryFrames": 13,
+      "recoveryFrames": 12,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -607,9 +607,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
-      "startupFrames": 14,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 16,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -1599,9 +1599,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d+1": {
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1621,9 +1621,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:qcf+1": {
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1645,7 +1645,7 @@
     "cmd:WS+2": {
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,

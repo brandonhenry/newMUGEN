@@ -517,9 +517,9 @@
       "id": "special",
       "label": "Stepping Kunai Cut",
       "input": "special",
-      "startupFrames": 24,
-      "activeFrames": 5,
-      "recoveryFrames": 33,
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 14,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -651,9 +651,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
-      "startupFrames": 15,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 19,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -696,9 +696,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 28,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -722,9 +722,9 @@
       "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
-      "startupFrames": 24,
-      "activeFrames": 5,
-      "recoveryFrames": 33,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -745,7 +745,7 @@
       "juggleRepeatPenaltyFrames": 10
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
+      "startupFrames": 14,
       "activeFrames": 3,
       "recoveryFrames": 20,
       "damage": 12,
@@ -1531,9 +1531,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+2": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1553,8 +1553,8 @@
     },
     "cmd:d+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1574,8 +1574,8 @@
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1657,9 +1657,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
-      "startupFrames": 28,
-      "activeFrames": 7,
-      "recoveryFrames": 36,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "onBlockFrames": -10,
       "onHitFrames": 17,
       "onCounterHitFrames": 24,

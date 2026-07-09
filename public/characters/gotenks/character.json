@@ -328,9 +328,9 @@
       "id": "heavy",
       "label": "Fusion Body Check",
       "input": "heavy",
-      "startupFrames": 14,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 16,
       "damage": 8,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -418,9 +418,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "jabright": {
-      "startupFrames": 14,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 16,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -441,9 +441,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "cmd:f+1": {
-      "startupFrames": 13,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 18,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -463,9 +463,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
-      "startupFrames": 16,
+      "startupFrames": 17,
       "activeFrames": 3,
-      "recoveryFrames": 25,
+      "recoveryFrames": 27,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -1239,8 +1239,8 @@
     },
     "cmd:d+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1260,8 +1260,8 @@
     },
     "cmd:qcf+1": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 15,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,
@@ -1280,9 +1280,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:WS+2": {
-      "startupFrames": 14,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "onBlockFrames": -5,
       "onHitFrames": 16,
       "onCounterHitFrames": 21,

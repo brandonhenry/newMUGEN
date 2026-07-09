@@ -547,9 +547,9 @@
       "id": "special",
       "label": "Heavy Tail Wheel",
       "input": "special",
-      "startupFrames": 22,
+      "startupFrames": 21,
       "activeFrames": 4,
-      "recoveryFrames": 30,
+      "recoveryFrames": 28,
       "damage": 14,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -683,8 +683,8 @@
     },
     "kickright": {
       "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -2,
@@ -727,9 +727,9 @@
       "juggleRepeatPenaltyFrames": 5
     },
     "cmd:d/f+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 27,
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -753,9 +753,9 @@
       "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
+      "startupFrames": 20,
       "activeFrames": 4,
-      "recoveryFrames": 30,
+      "recoveryFrames": 27,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -777,8 +777,8 @@
     },
     "cmd:WS+4": {
       "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -798,9 +798,9 @@
       "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 1,
@@ -892,8 +892,8 @@
     },
     "cmd:2+3": {
       "startupFrames": 30,
-      "activeFrames": 4,
-      "recoveryFrames": 36,
+      "activeFrames": 8,
+      "recoveryFrames": 38,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -964,9 +964,9 @@
       "juggleRepeatPenaltyFrames": 10
     },
     "cmd:O+2": {
-      "startupFrames": 30,
-      "activeFrames": 8,
-      "recoveryFrames": 38,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "damage": 16,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -1673,7 +1673,7 @@
     "cmd:SS+4": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 19,
+      "recoveryFrames": 20,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
@@ -1713,9 +1713,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "cmd:O+4": {
-      "startupFrames": 25,
-      "activeFrames": 6,
-      "recoveryFrames": 32,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "onBlockFrames": -9,
       "onHitFrames": 18,
       "onCounterHitFrames": 25,
