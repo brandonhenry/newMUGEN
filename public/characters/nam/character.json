@@ -1,0 +1,1004 @@
+{
+  "id": "nam",
+  "displayName": "Nam",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/nam/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://nam",
+  "spriteSheetPath": "/characters/nam/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/nam/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 92
+    }
+  ],
+  "spriteFrameCount": 93,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/nam/frames/frame-000.png",
+      "/characters/nam/frames/frame-001.png",
+      "/characters/nam/frames/frame-002.png",
+      "/characters/nam/frames/frame-003.png",
+      "/characters/nam/frames/frame-004.png",
+      "/characters/nam/frames/frame-005.png",
+      "/characters/nam/frames/frame-006.png",
+      "/characters/nam/frames/frame-007.png"
+    ],
+    "walkForward": [
+      "/characters/nam/frames/frame-020.png",
+      "/characters/nam/frames/frame-021.png",
+      "/characters/nam/frames/frame-022.png"
+    ],
+    "walkBack": [
+      "/characters/nam/frames/frame-049.png",
+      "/characters/nam/frames/frame-048.png",
+      "/characters/nam/frames/frame-047.png",
+      "/characters/nam/frames/frame-046.png"
+    ],
+    "sprint": [
+      "/characters/nam/frames/frame-020.png",
+      "/characters/nam/frames/frame-021.png"
+    ],
+    "backHop": [
+      "/characters/nam/frames/frame-015.png"
+    ],
+    "sidestepLeft": [
+      "/characters/nam/frames/frame-054.png"
+    ],
+    "sidestepRight": [
+      "/characters/nam/frames/frame-054.png"
+    ],
+    "jump": [
+      "/characters/nam/frames/frame-010.png",
+      "/characters/nam/frames/frame-011.png",
+      "/characters/nam/frames/frame-012.png",
+      "/characters/nam/frames/frame-013.png",
+      "/characters/nam/frames/frame-014.png",
+      "/characters/nam/frames/frame-015.png",
+      "/characters/nam/frames/frame-016.png",
+      "/characters/nam/frames/frame-017.png"
+    ],
+    "crouch": [
+      "/characters/nam/frames/frame-019.png"
+    ],
+    "crouchBlock": [
+      "/characters/nam/frames/frame-092.png"
+    ],
+    "block": [
+      "/characters/nam/frames/frame-008.png"
+    ],
+    "chargeKi": [
+      "/characters/nam/frames/frame-087.png"
+    ],
+    "jableft": [
+      "/characters/nam/frames/frame-026.png",
+      "/characters/nam/frames/frame-027.png",
+      "/characters/nam/frames/frame-028.png",
+      "/characters/nam/frames/frame-029.png",
+      "/characters/nam/frames/frame-030.png",
+      "/characters/nam/frames/frame-031.png",
+      "/characters/nam/frames/frame-032.png"
+    ],
+    "jabright": [
+      "/characters/nam/frames/frame-051.png",
+      "/characters/nam/frames/frame-052.png",
+      "/characters/nam/frames/frame-053.png",
+      "/characters/nam/frames/frame-054.png"
+    ],
+    "kickleft": [
+      "/characters/nam/frames/frame-038.png",
+      "/characters/nam/frames/frame-039.png",
+      "/characters/nam/frames/frame-040.png",
+      "/characters/nam/frames/frame-041.png",
+      "/characters/nam/frames/frame-042.png",
+      "/characters/nam/frames/frame-043.png",
+      "/characters/nam/frames/frame-044.png",
+      "/characters/nam/frames/frame-045.png",
+      "/characters/nam/frames/frame-046.png",
+      "/characters/nam/frames/frame-047.png"
+    ],
+    "kickright": [
+      "/characters/nam/frames/frame-054.png",
+      "/characters/nam/frames/frame-055.png",
+      "/characters/nam/frames/frame-056.png",
+      "/characters/nam/frames/frame-057.png",
+      "/characters/nam/frames/frame-058.png",
+      "/characters/nam/frames/frame-059.png",
+      "/characters/nam/frames/frame-060.png",
+      "/characters/nam/frames/frame-061.png"
+    ],
+    "hitLight": [
+      "/characters/nam/frames/frame-072.png"
+    ],
+    "hitHeavy": [
+      "/characters/nam/frames/frame-073.png",
+      "/characters/nam/frames/frame-074.png",
+      "/characters/nam/frames/frame-075.png",
+      "/characters/nam/frames/frame-076.png"
+    ],
+    "juggle": [
+      "/characters/nam/frames/frame-078.png",
+      "/characters/nam/frames/frame-079.png"
+    ],
+    "knockdown": [
+      "/characters/nam/frames/frame-080.png",
+      "/characters/nam/frames/frame-081.png"
+    ],
+    "getupStand": [
+      "/characters/nam/frames/frame-082.png",
+      "/characters/nam/frames/frame-081.png",
+      "/characters/nam/frames/frame-080.png",
+      "/characters/nam/frames/frame-083.png",
+      "/characters/nam/frames/frame-084.png",
+      "/characters/nam/frames/frame-000.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/nam/frames/frame-087.png",
+      "/characters/nam/frames/frame-088.png",
+      "/characters/nam/frames/frame-089.png"
+    ],
+    "lose": [
+      "/characters/nam/frames/frame-073.png",
+      "/characters/nam/frames/frame-074.png",
+      "/characters/nam/frames/frame-075.png",
+      "/characters/nam/frames/frame-076.png",
+      "/characters/nam/frames/frame-077.png"
+    ],
+    "cmd:f+1": [
+      "/characters/nam/frames/frame-033.png",
+      "/characters/nam/frames/frame-034.png",
+      "/characters/nam/frames/frame-035.png",
+      "/characters/nam/frames/frame-036.png",
+      "/characters/nam/frames/frame-037.png",
+      "/characters/nam/frames/frame-038.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/nam/frames/frame-024.png",
+      "/characters/nam/frames/frame-025.png",
+      "/characters/nam/frames/frame-026.png",
+      "/characters/nam/frames/frame-027.png",
+      "/characters/nam/frames/frame-028.png",
+      "/characters/nam/frames/frame-029.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/nam/frames/frame-039.png",
+      "/characters/nam/frames/frame-040.png",
+      "/characters/nam/frames/frame-041.png",
+      "/characters/nam/frames/frame-042.png",
+      "/characters/nam/frames/frame-043.png",
+      "/characters/nam/frames/frame-044.png",
+      "/characters/nam/frames/frame-045.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/nam/frames/frame-050.png",
+      "/characters/nam/frames/frame-051.png",
+      "/characters/nam/frames/frame-052.png",
+      "/characters/nam/frames/frame-053.png",
+      "/characters/nam/frames/frame-054.png",
+      "/characters/nam/frames/frame-055.png",
+      "/characters/nam/frames/frame-056.png",
+      "/characters/nam/frames/frame-057.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/nam/frames/frame-020.png",
+      "/characters/nam/frames/frame-021.png",
+      "/characters/nam/frames/frame-022.png",
+      "/characters/nam/frames/frame-023.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/nam/frames/frame-030.png",
+      "/characters/nam/frames/frame-031.png",
+      "/characters/nam/frames/frame-032.png",
+      "/characters/nam/frames/frame-035.png",
+      "/characters/nam/frames/frame-036.png"
+    ],
+    "cmd:1+2": [
+      "/characters/nam/frames/frame-052.png",
+      "/characters/nam/frames/frame-053.png",
+      "/characters/nam/frames/frame-054.png",
+      "/characters/nam/frames/frame-055.png",
+      "/characters/nam/frames/frame-056.png",
+      "/characters/nam/frames/frame-057.png"
+    ],
+    "cmd:1+3": [
+      "/characters/nam/frames/frame-010.png",
+      "/characters/nam/frames/frame-011.png",
+      "/characters/nam/frames/frame-012.png",
+      "/characters/nam/frames/frame-013.png",
+      "/characters/nam/frames/frame-014.png",
+      "/characters/nam/frames/frame-015.png",
+      "/characters/nam/frames/frame-016.png",
+      "/characters/nam/frames/frame-017.png"
+    ],
+    "cmd:2+3": [
+      "/characters/nam/frames/frame-058.png",
+      "/characters/nam/frames/frame-059.png",
+      "/characters/nam/frames/frame-069.png",
+      "/characters/nam/frames/frame-070.png",
+      "/characters/nam/frames/frame-071.png"
+    ],
+    "cmd:2+4": [
+      "/characters/nam/frames/frame-030.png",
+      "/characters/nam/frames/frame-031.png",
+      "/characters/nam/frames/frame-032.png",
+      "/characters/nam/frames/frame-058.png",
+      "/characters/nam/frames/frame-059.png"
+    ],
+    "cmd:3+4": [
+      "/characters/nam/frames/frame-060.png",
+      "/characters/nam/frames/frame-061.png",
+      "/characters/nam/frames/frame-062.png",
+      "/characters/nam/frames/frame-063.png",
+      "/characters/nam/frames/frame-064.png",
+      "/characters/nam/frames/frame-065.png",
+      "/characters/nam/frames/frame-066.png"
+    ],
+    "cmd:O+2": [
+      "/characters/nam/frames/frame-010.png",
+      "/characters/nam/frames/frame-011.png",
+      "/characters/nam/frames/frame-012.png",
+      "/characters/nam/frames/frame-013.png",
+      "/characters/nam/frames/frame-014.png",
+      "/characters/nam/frames/frame-015.png",
+      "/characters/nam/frames/frame-016.png",
+      "/characters/nam/frames/frame-017.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 7,
+    "walkForward": 9,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 9,
+    "crouch": 7,
+    "crouchBlock": 5,
+    "block": 6,
+    "chargeKi": 6,
+    "jableft": 12,
+    "jabright": 11,
+    "kickleft": 10,
+    "kickright": 10,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 9,
+    "win": 5,
+    "lose": 5,
+    "cmd:f+1": 11,
+    "cmd:d/f+2": 10,
+    "cmd:qcf+4": 10,
+    "cmd:WS+4": 10,
+    "cmd:FC+1": 9,
+    "cmd:FC+2": 9,
+    "cmd:1+2": 10,
+    "cmd:1+3": 9,
+    "cmd:2+3": 9,
+    "cmd:2+4": 9,
+    "cmd:3+4": 11,
+    "cmd:O+2": 9
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.2,
+    0
+  ],
+  "stats": {
+    "health": 100,
+    "speed": 5.28,
+    "sidestepSpeed": 4.62,
+    "dashDistance": 0.98,
+    "jumpForce": 8.35,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Temple Guard Jab",
+      "input": "jab",
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -1,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 5,
+      "range": 1.38,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      },
+      "description": "Fast straight jab that checks movement without overcommitting."
+    },
+    {
+      "id": "kick",
+      "label": "Low Sand Sweep",
+      "input": "kick",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "blockDamage": 1,
+      "hitLevel": "low",
+      "onBlockFrames": -13,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 10,
+      "whiffRecoveryFrames": 7,
+      "range": 1.58,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      },
+      "endsInCrouch": true,
+      "description": "Low sliding sweep that clips stand guard and leaves Nam crouched."
+    },
+    {
+      "id": "heavy",
+      "label": "Desert Palm Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 3,
+      "recoveryFrames": 17,
+      "damage": 9,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -5,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 7,
+      "range": 1.52,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      },
+      "description": "Compact mid palm for close-range confirms."
+    },
+    {
+      "id": "special",
+      "label": "Cross Step Roundhouse",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 4,
+      "recoveryFrames": 24,
+      "damage": 12,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 19,
+      "whiffRecoveryFrames": 7,
+      "range": 1.78,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      },
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 18,
+      "description": "Forward-stepping roundhouse that carries Nam into simple enders."
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        0.98,
+        0
+      ],
+      "size": [
+        0.78,
+        1.82,
+        0.56
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#d98216",
+    "secondary": "#82358d",
+    "accent": "#f1e5d6"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "blockDamage": 0,
+      "onBlockFrames": -1,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 4,
+      "range": 1.38,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Temple Guard Jab",
+      "description": "Fast high jab that starts Nam's close pressure.",
+      "hitLevel": "high",
+      "tracking": "medium"
+    },
+    "jabright": {
+      "startupFrames": 12,
+      "activeFrames": 3,
+      "recoveryFrames": 17,
+      "damage": 9,
+      "blockDamage": 0,
+      "onBlockFrames": -5,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 5,
+      "range": 1.52,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Desert Palm Check",
+      "description": "Mid palm check that links from jab and keeps Nam stable.",
+      "hitLevel": "mid",
+      "tracking": "medium"
+    },
+    "kickleft": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "blockDamage": 1,
+      "onBlockFrames": -13,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 10,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Low Sand Sweep",
+      "description": "Low sliding sweep that threatens stand block but is punishable.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "endsInCrouch": true
+    },
+    "kickright": {
+      "startupFrames": 16,
+      "activeFrames": 4,
+      "recoveryFrames": 24,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -8,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 19,
+      "whiffRecoveryFrames": 8,
+      "range": 1.78,
+      "forwardForce": 1,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 19,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Cross Step Roundhouse",
+      "description": "Committed mid roundhouse that carries Nam forward for combo enders.",
+      "hitLevel": "mid",
+      "tracking": "medium"
+    },
+    "cmd:f+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 11,
+      "blockDamage": 1,
+      "onBlockFrames": -6,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 15,
+      "whiffRecoveryFrames": 8,
+      "range": 1.82,
+      "forwardForce": 1.15,
+      "forwardForceStartFrame": 7,
+      "forwardForceEndFrame": 16,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Pilgrim Step Palm",
+      "description": "Advancing palm that reaches farther than Nam's standing checks.",
+      "hitLevel": "mid",
+      "tracking": "medium"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
+      "damage": 15,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 28,
+      "onCounterHitFrames": 34,
+      "whiffRecoveryFrames": 13,
+      "range": 1.66,
+      "forwardForce": 0.7,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 16,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "launchHeight": 2.05,
+      "launchVelocity": 5.85,
+      "juggleRefloatVelocity": 4.2,
+      "juggleGravityScale": 0.54,
+      "label": "Desert Rising Palm",
+      "description": "Unsafe rising palm that launches when Nam reads a grounded approach.",
+      "hitLevel": "mid",
+      "tracking": "medium"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
+      "damage": 17,
+      "blockDamage": 1,
+      "onBlockFrames": -10,
+      "onHitFrames": 19,
+      "onCounterHitFrames": 27,
+      "whiffRecoveryFrames": 13,
+      "range": 1.96,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Desert Gale Roundhouse",
+      "description": "Spinning roundhouse with enough lift to stabilize juggle routes.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": true,
+      "tornado": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.6,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "launchHeight": 1.45,
+      "launchVelocity": 5.25,
+      "juggleRefloatVelocity": 3.9,
+      "juggleGravityScale": 0.58,
+      "label": "Rising Turban Kick",
+      "description": "While-standing kick that catches opponents after crouch pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "blockDamage": 0,
+      "onBlockFrames": -4,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 10,
+      "whiffRecoveryFrames": 5,
+      "range": 1.32,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Crouching Prayer Palm",
+      "description": "Quick crouching palm for interrupting after a blocked low.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "endsInCrouch": true
+    },
+    "cmd:FC+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 30,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 26,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 13,
+      "range": 1.48,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "launchHeight": 1.95,
+      "launchVelocity": 5.7,
+      "juggleRefloatVelocity": 4.05,
+      "juggleGravityScale": 0.55,
+      "label": "Low Well Launcher",
+      "description": "Crouch-starting launcher with real reward and real block risk.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "endsInCrouch": true
+    },
+    "cmd:1+2": {
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 25,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 20,
+      "whiffRecoveryFrames": 9,
+      "range": 1.74,
+      "forwardForce": 1.2,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 20,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Prayer Palm Barrage",
+      "description": "Two-palm rush that keeps Nam close when it lands.",
+      "hitLevel": "mid",
+      "tracking": "medium"
+    },
+    "cmd:1+3": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
+      "damage": 16,
+      "blockDamage": 1,
+      "onBlockFrames": -15,
+      "onHitFrames": 29,
+      "onCounterHitFrames": 36,
+      "whiffRecoveryFrames": 15,
+      "range": 1.72,
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 23,
+      "moveJumpForce": 8.3,
+      "moveJumpGravity": 22,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "launchHeight": 2.25,
+      "launchVelocity": 6,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.5,
+      "label": "Heaven Cross Lift",
+      "description": "Leaping cross-arm starter that launches but leaves Nam open on block.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "jumpBeforeMove": true
+    },
+    "cmd:2+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
+      "damage": 10,
+      "blockDamage": 1,
+      "onBlockFrames": -12,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 13,
+      "counterHitStunBonusFrames": 5,
+      "whiffRecoveryFrames": 8,
+      "range": 1.56,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Pilgrim Low Feint",
+      "description": "Low feint that slips under highs and returns Nam to crouch.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "endsInCrouch": true,
+      "counterHit": true
+    },
+    "cmd:2+4": {
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
+      "damage": 15,
+      "blockDamage": 1,
+      "onBlockFrames": -16,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 18,
+      "whiffRecoveryFrames": 13,
+      "range": 1.82,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 22,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Sliding Sand Sweep",
+      "description": "Long low sweep that knocks down when Nam commits to the slide.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": true,
+      "endsInCrouch": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 24,
+      "activeFrames": 5,
+      "recoveryFrames": 36,
+      "damage": 18,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 16,
+      "range": 1.95,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 31,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 23,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Cross-Arm Dive",
+      "description": "Signature aerial dive that cashes out juggle routes with a hard knockdown.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 28,
+      "activeFrames": 5,
+      "recoveryFrames": 39,
+      "damage": 23,
+      "blockDamage": 1,
+      "onBlockFrames": -16,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 35,
+      "whiffRecoveryFrames": 18,
+      "range": 2.05,
+      "forwardForce": 1.9,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 34,
+      "moveJumpForce": 9,
+      "moveJumpGravity": 24,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "kiCost": 35,
+      "label": "Heaven Cross Strike",
+      "description": "Ki-spending cross-arm finisher with strong carry and no projectile follow-up.",
+      "hitLevel": "special",
+      "tracking": "medium",
+      "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Temple Second Palm",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Temple Palm Confirm",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Temple Low Changeup",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-jab-special": {
+      "label": "Temple Roundhouse Ender",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-heavy": {
+      "label": "Guard Palm Link",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Guard to Low Sweep",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Guard Roundhouse Route",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-kick": {
+      "label": "Low Sand Link",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Low to Desert Palm",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-kick-special": {
+      "label": "Low Roundhouse Route",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-special": {
+      "label": "Cross Step Setup",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Cross Step Palm Route",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:heavy-jab": {
+      "label": "Palm Jab Reset",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Desert Palm Loop",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Palm Roundhouse Ender",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:heavy-kick": {
+      "label": "Palm Low Changeup",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Palm Sweep Ender",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:heavy-special": {
+      "label": "Desert Gale Setup",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Gale Low Reset",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:kick-jab": {
+      "label": "Sweep Jab Reset",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:kick-jab-special": {
+      "label": "Sweep Roundhouse",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:kick-heavy": {
+      "label": "Sweep Palm Link",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Sweep Gale Ender",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:kick-special": {
+      "label": "Sand Roundhouse",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Roundhouse Palm Route",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:special-jab": {
+      "label": "Cross Step Jab Reset",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Cross Step Palm Route",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:special-heavy": {
+      "label": "Cross Step Drive",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    },
+    "neutral:special-kick": {
+      "label": "Cross Step Sweep",
+      "description": "Nam string route built around close-range palm checks, low sweeps, and cross-arm finishers."
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.63,
+    "guard": 0.47,
+    "spacing": 1.49,
+    "specialChance": 0.32
+  },
+  "moveProjectiles": {},
+  "projectiles": [],
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  },
+  "animationScales": {}
+}

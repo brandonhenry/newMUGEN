@@ -408,7 +408,7 @@ def merge_nearby_boxes(boxes: list[Box], width: int, height: int, padding: int) 
     return merged
 
 
-def detect_connected_boxes(ink: bytearray, width: int, height: int) -> list[dict[str, Any]]:
+def detect_connected_boxes(ink: bytearray, width: int, height: int, merge_padding: int | None = 2) -> list[dict[str, Any]]:
     visited = bytearray(width * height)
     raw: list[Box] = []
     minimum_area = max(8, round(width * height * 0.000006))
@@ -451,8 +451,10 @@ def detect_connected_boxes(ink: bytearray, width: int, height: int) -> list[dict
             raw.append((max(0, min_x - 1), max(0, min_y - 1), min(width, max_x + 2), min(height, max_y + 2)))
 
     # A small padding glues limbs/weapons that are separated by antialias gaps while
-    # still keeping adjacent sprites split on compact sprite sheets.
-    merged = merge_nearby_boxes(raw, width, height, padding=2)
+    # still keeping adjacent sprites split on compact sprite sheets. Some packed
+    # sheets have frames close enough that this creates one chain across a row; the
+    # caller can disable merging for that fallback.
+    merged = raw if merge_padding is None else merge_nearby_boxes(raw, width, height, padding=merge_padding)
     merged = [box for box in merged if box[2] - box[0] >= 4 and box[3] - box[1] >= 4]
     merged.sort(key=lambda box: (box[1], box[0]))
     row = -1
@@ -466,6 +468,49 @@ def detect_connected_boxes(ink: bytearray, width: int, height: int) -> list[dict
             current_bottom = max(current_bottom, box[3])
         entries.append({"box": box, "row": max(0, row)})
     return entries
+
+
+def filter_dense_connected_sprite_boxes(entries: list[dict[str, Any]], width: int, height: int) -> list[dict[str, Any]]:
+    filtered: list[dict[str, Any]] = []
+    for entry in entries:
+        left, top, right, bottom = entry["box"]
+        box_width = right - left
+        box_height = bottom - top
+        if box_width < 12 or box_height < 16:
+            continue
+        if box_width > width * 0.12 and box_height > height * 0.12:
+            continue
+        if top >= height * 0.88 and left >= width * 0.48:
+            continue
+        filtered.append(dict(entry))
+    if not filtered:
+        return filtered
+    ordered = sorted(
+        filtered,
+        key=lambda entry: (
+            (entry["box"][1] + entry["box"][3]) / 2,
+            entry["box"][0],
+        ),
+    )
+    rows: list[dict[str, Any]] = []
+    for entry in ordered:
+        left, top, right, bottom = entry["box"]
+        center_y = (top + bottom) / 2
+        box_height = bottom - top
+        if not rows or center_y > rows[-1]["centerY"] + max(18, rows[-1]["height"] * 0.72):
+            rows.append({"centerY": center_y, "height": box_height, "entries": [entry]})
+            continue
+        row = rows[-1]
+        row["entries"].append(entry)
+        count = len(row["entries"])
+        row["centerY"] = (row["centerY"] * (count - 1) + center_y) / count
+        row["height"] = max(row["height"], box_height)
+    rerowed: list[dict[str, Any]] = []
+    for row_index, row in enumerate(rows):
+        for entry in sorted(row["entries"], key=lambda candidate: (candidate["box"][0], candidate["box"][1])):
+            entry["row"] = row_index
+            rerowed.append(entry)
+    return rerowed
 
 
 def detect_dense_projection_boxes(ink: bytearray, width: int, height: int) -> list[dict[str, Any]]:
@@ -539,6 +584,7 @@ def detect_projection_boxes(image: Image.Image) -> list[dict[str, Any]]:
 
     dense_boxes = detect_dense_projection_boxes(ink, width, height)
     connected_boxes = detect_connected_boxes(ink, width, height)
+    dense_connected_boxes = filter_dense_connected_sprite_boxes(detect_connected_boxes(ink, width, height, merge_padding=None), width, height)
     projection_area = sum((entry["box"][2] - entry["box"][0]) * (entry["box"][3] - entry["box"][1]) for entry in boxes)
     dense_area = sum((entry["box"][2] - entry["box"][0]) * (entry["box"][3] - entry["box"][1]) for entry in dense_boxes)
     connected_area = sum((entry["box"][2] - entry["box"][0]) * (entry["box"][3] - entry["box"][1]) for entry in connected_boxes)
@@ -568,6 +614,9 @@ def detect_projection_boxes(image: Image.Image) -> list[dict[str, Any]]:
         or max_projection_aspect > 4.5
     ):
         boxes = connected_boxes
+
+    if len(boxes) <= 2 and len(dense_connected_boxes) >= 32:
+        boxes = dense_connected_boxes
 
     if len(boxes) <= 1:
         fallback = trim_box(ink, width, height, 0, 0, width - 1, height - 1)
