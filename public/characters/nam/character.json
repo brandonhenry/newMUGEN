@@ -156,10 +156,6 @@
       "/characters/nam/frames/frame-089.png"
     ],
     "lose": [
-      "/characters/nam/frames/frame-073.png",
-      "/characters/nam/frames/frame-074.png",
-      "/characters/nam/frames/frame-075.png",
-      "/characters/nam/frames/frame-076.png",
       "/characters/nam/frames/frame-077.png"
     ],
     "cmd:f+1": [
@@ -1000,5 +996,14 @@
     "width": 1.08,
     "height": 1.08
   },
-  "animationScales": {}
+  "animationScales": {},
+  "animationFrameScales": {
+    "lose": {
+      "77": {
+        "width": 0.82,
+        "height": 0.4,
+        "offsetX": 0
+      }
+    }
+  }
 }

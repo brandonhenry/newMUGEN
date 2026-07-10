@@ -17388,6 +17388,46 @@ function CharacterViewer({
       <span>Drag to rotate. Scroll or pinch to zoom.</span>
     </>
   );
+  const sheetActionControls = isLocalDev ? (
+    <>
+      <button
+        className="secondary-button compact-button"
+        onClick={() => void generateHeightSheet()}
+        disabled={heightSheetStatus === 'generating'}
+        data-testid="generate-height-sheet"
+      >
+        <Ruler size={18} />
+        {heightSheetStatus === 'generating' ? 'Generating Height Sheet' : 'Generate Height Sheet'}
+      </button>
+      <button
+        className="secondary-button compact-button"
+        onClick={() => void generateFrameComparisonSheet()}
+        disabled={frameSheetStatus === 'generating'}
+        data-testid="generate-frame-sheet"
+      >
+        <List size={18} />
+        {frameSheetStatus === 'generating' ? 'Generating Frame Sheet' : 'Generate Frame Sheet'}
+      </button>
+      <button
+        className="secondary-button compact-button"
+        onClick={() => void generateMovesSheet()}
+        disabled={movesSheetStatus === 'generating'}
+        data-testid="generate-moves-sheet"
+      >
+        <Gamepad2 size={18} />
+        {movesSheetStatus === 'generating' ? 'Generating Moves Sheet' : 'Generate Moves Sheet'}
+      </button>
+      <button
+        className="secondary-button compact-button"
+        onClick={() => void generateUnusedFramesSheet()}
+        disabled={unusedFrameSheetStatus === 'generating'}
+        data-testid="generate-unused-frames-sheet"
+      >
+        <EyeOff size={18} />
+        {unusedFrameSheetStatus === 'generating' ? 'Generating Unused Frames' : 'Generate Unused Frames Sheet'}
+      </button>
+    </>
+  ) : null;
   const toggleViewMode = () => {
     setViewMode((current) => {
       const next = current === 'display' ? 'compact' : 'display';
@@ -17470,6 +17510,7 @@ function CharacterViewer({
                   <div className="viewer-action-row">
                     {isLocalDev && devPreviewActionControls}
                     {!isIdleGhostSideView && zoomActionControls}
+                    {sheetActionControls}
                   </div>
                 </div>
               )}
@@ -17490,6 +17531,7 @@ function CharacterViewer({
                   {isLocalDev && !isCompactView && devPreviewActionControls}
                   {variantActionControls}
                   {!isCompactView && !isIdleGhostSideView && zoomActionControls}
+                  {!isCompactView && sheetActionControls}
                 </>
               )}
               {isEditingSpriteSheet && (
@@ -17957,46 +17999,6 @@ function CharacterViewer({
           </div>
         </article>
       </div>
-      {isLocalDev && (
-        <>
-          <button
-            className="secondary-button"
-            onClick={() => void generateHeightSheet()}
-            disabled={heightSheetStatus === 'generating'}
-            data-testid="generate-height-sheet"
-          >
-            <Ruler size={18} />
-            {heightSheetStatus === 'generating' ? 'Generating Height Sheet' : 'Generate Height Sheet'}
-          </button>
-          <button
-            className="secondary-button"
-            onClick={() => void generateFrameComparisonSheet()}
-            disabled={frameSheetStatus === 'generating'}
-            data-testid="generate-frame-sheet"
-          >
-            <List size={18} />
-            {frameSheetStatus === 'generating' ? 'Generating Frame Sheet' : 'Generate Frame Sheet'}
-          </button>
-          <button
-            className="secondary-button"
-            onClick={() => void generateMovesSheet()}
-            disabled={movesSheetStatus === 'generating'}
-            data-testid="generate-moves-sheet"
-          >
-            <Gamepad2 size={18} />
-            {movesSheetStatus === 'generating' ? 'Generating Moves Sheet' : 'Generate Moves Sheet'}
-          </button>
-          <button
-            className="secondary-button"
-            onClick={() => void generateUnusedFramesSheet()}
-            disabled={unusedFrameSheetStatus === 'generating'}
-            data-testid="generate-unused-frames-sheet"
-          >
-            <EyeOff size={18} />
-            {unusedFrameSheetStatus === 'generating' ? 'Generating Unused Frames' : 'Generate Unused Frames Sheet'}
-          </button>
-        </>
-      )}
       <button className="secondary-button" onClick={() => {
         onAnalytics('navigation_clicked', { destination: 'menu', source: 'viewer_back' });
         onBack();

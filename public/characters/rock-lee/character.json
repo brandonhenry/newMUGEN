@@ -112,10 +112,7 @@
     "kickleft": [],
     "kickright": [],
     "hitLight": [
-      "/characters/rock-lee/frames/frame-146.png",
-      "/characters/rock-lee/frames/frame-147.png",
-      "/characters/rock-lee/frames/frame-148.png",
-      "/characters/rock-lee/frames/frame-149.png"
+      "/characters/rock-lee/frames/frame-051.png"
     ],
     "hitHeavy": [
       "/characters/rock-lee/frames/frame-140.png",
@@ -144,22 +141,7 @@
       "/characters/rock-lee/frames/frame-019.png",
       "/characters/rock-lee/frames/frame-000.png"
     ],
-    "getupRollUp": [
-      "/characters/rock-lee/frames/frame-108.png",
-      "/characters/rock-lee/frames/frame-109.png",
-      "/characters/rock-lee/frames/frame-110.png",
-      "/characters/rock-lee/frames/frame-111.png",
-      "/characters/rock-lee/frames/frame-112.png",
-      "/characters/rock-lee/frames/frame-113.png",
-      "/characters/rock-lee/frames/frame-114.png",
-      "/characters/rock-lee/frames/frame-115.png",
-      "/characters/rock-lee/frames/frame-116.png",
-      "/characters/rock-lee/frames/frame-117.png",
-      "/characters/rock-lee/frames/frame-118.png",
-      "/characters/rock-lee/frames/frame-119.png",
-      "/characters/rock-lee/frames/frame-120.png",
-      "/characters/rock-lee/frames/frame-121.png"
-    ],
+    "getupRollUp": [],
     "win": [
       "/characters/rock-lee/frames/frame-084.png",
       "/characters/rock-lee/frames/frame-085.png",
@@ -175,8 +157,7 @@
       "/characters/rock-lee/frames/frame-095.png"
     ],
     "lose": [
-      "/characters/rock-lee/frames/frame-098.png",
-      "/characters/rock-lee/frames/frame-099.png"
+      "/characters/rock-lee/frames/frame-149.png"
     ],
     "cmd:f+1": [
       "/characters/rock-lee/frames/frame-038.png",
@@ -928,8 +909,7 @@
       "hitLevel": "mid",
       "tracking": "medium",
       "knockdown": true,
-      "jumpBeforeMove": true,
-      "lotusCaptureFinisher": true
+      "jumpBeforeMove": true
     },
     "cmd:2+3": {
       "startupFrames": 17,
@@ -997,8 +977,7 @@
       "tracking": "medium",
       "knockdown": true,
       "tornado": true,
-      "jumpBeforeMove": true,
-      "lotusCaptureFinisher": true
+      "jumpBeforeMove": true
     },
     "cmd:SS+3": {
       "startupFrames": 23,
@@ -1036,6 +1015,7 @@
       "forwardForceEndFrame": 30,
       "pushback": 0.98,
       "blockPushback": 0.45,
+      "launchHeight": 0,
       "kiCost": 30,
       "armorStartFrame": 8,
       "armorEndFrame": 18,
@@ -1044,11 +1024,9 @@
       "hitLevel": "throw",
       "tracking": "medium",
       "knockdown": false,
-      "usesKi": true,
-      "jumpBeforeMove": true,
       "throwCapture": true,
-      "lotusCaptureStarter": true,
-      "launchHeight": 0
+      "jumpBeforeMove": true,
+      "usesKi": true
     },
     "cmd:O+2": {
       "startupFrames": 23,
@@ -1927,6 +1905,11 @@
       "99": {
         "width": 0.99,
         "height": 0.71,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 1.69,
+        "height": 0.27,
         "offsetX": 0
       }
     },
