@@ -241,6 +241,7 @@ NEUTRAL_LABELS = (
 
 
 Box = tuple[int, int, int, int]
+TEAL_CELL_COLOR = (0, 152, 128)
 
 
 def slugify(value: str) -> str:
@@ -470,6 +471,115 @@ def detect_connected_boxes(ink: bytearray, width: int, height: int, merge_paddin
     return entries
 
 
+def transparent_cell_crop(image: Image.Image, box: Box) -> Image.Image:
+    crop = image.convert("RGBA").crop(box)
+    pixels = crop.load()
+    width, height = crop.size
+    for y in range(height):
+        for x in range(width):
+            red, green, blue, alpha = pixels[x, y]
+            if alpha <= 16 or (red, green, blue) == TEAL_CELL_COLOR:
+                pixels[x, y] = (red, green, blue, 0)
+    return crop
+
+
+def has_character_body_pixels(crop: Image.Image) -> bool:
+    raw = crop.convert("RGBA").tobytes()
+    pixels = [
+        (raw[index], raw[index + 1], raw[index + 2], raw[index + 3])
+        for index in range(0, len(raw), 4)
+        if raw[index + 3] > 16
+    ]
+    if not pixels:
+        return False
+    body_like = 0
+    red_effect = 0
+    for red, green, blue, _ in pixels:
+        skin = red >= 180 and green >= 120 and blue >= 70
+        orange_gi = red >= 180 and 70 <= green <= 140 and blue <= 80
+        dark_hair_or_line = red <= 45 and green <= 45 and blue <= 45
+        if skin or orange_gi or dark_hair_or_line:
+            body_like += 1
+        if red >= 130 and green <= 90 and blue <= 90:
+            red_effect += 1
+    if red_effect / max(1, len(pixels)) > 0.55 and body_like < max(35, len(pixels) * 0.18):
+        return False
+    return body_like >= 20 or len(pixels) >= 120
+
+
+def detect_teal_cell_boxes(image: Image.Image) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    rgba = image.convert("RGBA")
+    width, height = rgba.size
+    pixels = rgba.load()
+    mask = bytearray(width * height)
+    for y in range(height):
+        row = y * width
+        for x in range(width):
+            red, green, blue, alpha = pixels[x, y]
+            if alpha > 16 and (red, green, blue) == TEAL_CELL_COLOR:
+                mask[row + x] = 1
+
+    visited = bytearray(width * height)
+    raw: list[Box] = []
+    for start in range(width * height):
+        if visited[start] or not mask[start]:
+            continue
+        queue: deque[int] = deque([start])
+        visited[start] = 1
+        area = 0
+        min_x = width
+        min_y = height
+        max_x = -1
+        max_y = -1
+        while queue:
+            key = queue.popleft()
+            x = key % width
+            y = key // width
+            area += 1
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x)
+            max_y = max(max_y, y)
+            for nx, ny in ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)):
+                if nx < 0 or ny < 0 or nx >= width or ny >= height:
+                    continue
+                next_key = ny * width + nx
+                if visited[next_key] or not mask[next_key]:
+                    continue
+                visited[next_key] = 1
+                queue.append(next_key)
+        box_width = max_x - min_x + 1
+        box_height = max_y - min_y + 1
+        if area >= 120 and box_width >= 12 and box_height >= 14:
+            raw.append((min_x, min_y, max_x + 1, max_y + 1))
+
+    included: list[dict[str, Any]] = []
+    excluded: list[dict[str, Any]] = []
+    rows: list[dict[str, Any]] = []
+    for box in sorted(raw, key=lambda candidate: (candidate[1], candidate[0])):
+        left, top, right, bottom = box
+        reason = ""
+        if left >= width * 0.66:
+            reason = "right-side-credit-or-palette"
+        elif not has_character_body_pixels(transparent_cell_crop(rgba, box)):
+            reason = "effect-only-or-empty-cell"
+
+        center_y = (top + bottom) / 2
+        row_height = bottom - top
+        if not rows or center_y > rows[-1]["centerY"] + max(18, rows[-1]["height"] * 0.72):
+            rows.append({"centerY": center_y, "height": row_height})
+        else:
+            row = rows[-1]
+            row["centerY"] = (row["centerY"] + center_y) / 2
+            row["height"] = max(row["height"], row_height)
+        entry = {"box": box, "row": len(rows) - 1, "source": "teal-cell"}
+        if reason:
+            excluded.append({**entry, "excludeReason": reason})
+        else:
+            included.append(entry)
+    return included, excluded
+
+
 def filter_dense_connected_sprite_boxes(entries: list[dict[str, Any]], width: int, height: int) -> list[dict[str, Any]]:
     filtered: list[dict[str, Any]] = []
     for entry in entries:
@@ -690,6 +800,10 @@ def is_footer_text_entry(entry: dict[str, Any], image: Image.Image) -> bool:
 
 
 def filtered_projection_boxes(image: Image.Image) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    teal_included, teal_excluded = detect_teal_cell_boxes(image)
+    if len(teal_included) >= 32:
+        return teal_included, teal_excluded
+
     included: list[dict[str, Any]] = []
     excluded: list[dict[str, Any]] = []
     for entry in detect_projection_boxes(image):
@@ -727,6 +841,8 @@ def select_frames(row_groups: list[list[int]], frame_count: int, slot_index: int
 def animation_frame_map(character_id: str, frames: list[dict[str, Any]]) -> tuple[dict[str, list[str]], dict[str, float]]:
     if character_id == "rock-lee":
         return rock_lee_animation_frame_map(character_id, len(frames))
+    if character_id == "kid-goku":
+        return kid_goku_animation_frame_map(character_id, len(frames))
     frame_count = len(frames)
     rows: dict[int, list[int]] = {}
     for index, frame in enumerate(frames):
@@ -834,6 +950,85 @@ def rock_lee_animation_frame_map(character_id: str, frame_count: int) -> tuple[d
     return result, rates
 
 
+def kid_goku_animation_frame_map(character_id: str, frame_count: int) -> tuple[dict[str, list[str]], dict[str, float]]:
+    def paths(indexes: list[int]) -> list[str]:
+        return frame_paths(character_id, indexes, frame_count)
+
+    result = {
+        "idle": paths([0, 1, 2, 3, 4, 5, 6, 7]),
+        "walkForward": paths([16, 17, 18, 19, 20, 21, 22, 23]),
+        "walkBack": paths([23, 22, 21, 20, 19, 18, 17, 16]),
+        "sprint": paths([96, 97, 98, 99, 100, 101, 102, 103]),
+        "backHop": paths([54, 55, 56, 57]),
+        "sidestepLeft": paths([42, 43]),
+        "sidestepRight": paths([43, 42]),
+        "jump": paths([72, 73, 74, 75, 76, 77, 78]),
+        "crouch": paths([316, 317, 318, 319]),
+        "crouchBlock": paths([316, 317]),
+        "block": paths([36, 37, 38, 39]),
+        "chargeKi": paths([226, 227, 228, 229, 230, 231, 232, 233]),
+        "jableft": paths([44, 45, 46, 47, 48, 49]),
+        "jabright": paths([50, 51, 52, 53]),
+        "kickleft": paths([54, 55, 56, 57, 58, 59, 60, 61]),
+        "kickright": paths([64, 65, 66, 67, 68, 69, 70, 71]),
+        "hitLight": paths([83, 84, 85, 86, 87]),
+        "hitHeavy": paths([88, 89, 90, 91, 92, 93, 94]),
+        "juggle": paths([72, 73, 74]),
+        "knockdown": paths([212, 213, 214, 215, 216, 217, 218, 219]),
+        "getupStand": paths([219, 218, 217, 216, 0]),
+        "getupRollUp": paths([243, 244, 245, 246, 247, 248, 249]),
+        "win": paths([114, 115, 116, 117, 118]),
+        "lose": paths([220, 221]),
+        "cmd:f+1": paths([100, 101, 102, 103, 104, 105, 106, 107]),
+        "cmd:f+3": paths([96, 97, 98, 99, 100, 101, 102, 103]),
+        "cmd:d+3": paths([199, 200, 201, 202, 203, 204, 205, 206]),
+        "cmd:d/f+2": paths([83, 84, 85, 86, 87, 88, 89, 90]),
+        "cmd:d/f+3": paths([132, 133, 134, 135, 136, 137, 138, 139]),
+        "cmd:qcf+3": paths([152, 153, 154, 155, 156, 157, 158, 159]),
+        "cmd:qcf+4": paths([152, 153, 154, 155, 156, 157, 158, 159]),
+        "cmd:WS+4": paths([132, 133, 134, 135, 136, 137, 138, 139]),
+        "cmd:FC+1": paths([316, 317, 318, 319, 320, 321, 322, 323]),
+        "cmd:FC+2": paths([243, 244, 245, 246, 247, 248]),
+        "cmd:1+2": paths([145, 146, 147, 148, 149, 150, 151]),
+        "cmd:1+3": paths([170, 171, 172, 173, 174, 175]),
+        "cmd:2+3": paths([167, 168, 169]),
+        "cmd:2+4": paths([199, 200, 201, 202, 203, 204, 205, 206]),
+        "cmd:3+4": paths([295, 296, 297, 298]),
+        "cmd:SS+3": paths([140, 141, 142, 143, 144]),
+        "cmd:O+1": paths([226, 227, 228, 229, 230, 231, 232, 233]),
+        "cmd:O+2": paths([362, 363, 364, 365, 366, 367, 368, 369]),
+    }
+    rates = {
+        "idle": 7,
+        "walkForward": 12,
+        "walkBack": 10,
+        "sprint": 14,
+        "backHop": 10,
+        "sidestepLeft": 10,
+        "sidestepRight": 10,
+        "jump": 9,
+        "crouch": 7,
+        "crouchBlock": 5,
+        "block": 6,
+        "chargeKi": 8,
+        "jableft": 12,
+        "jabright": 12,
+        "kickleft": 11,
+        "kickright": 11,
+        "hitLight": 8,
+        "hitHeavy": 8,
+        "juggle": 8,
+        "knockdown": 8,
+        "getupStand": 7,
+        "getupRollUp": 9,
+        "win": 7,
+        "lose": 5,
+    }
+    for key in result:
+        rates.setdefault(key, 10 if key.startswith("cmd:") else ANIMATION_RATES.get(key, 8))
+    return result, rates
+
+
 def stable_unit(value: str, salt: str) -> float:
     digest = hashlib.sha256(f"{value}:{salt}".encode("utf8")).digest()
     return int.from_bytes(digest[:4], "big") / 0xFFFFFFFF
@@ -888,6 +1083,8 @@ def base_move(label_stem: str, move_id: str, input_name: str, timing: tuple[int,
 def move_overrides(display_name: str, frame_lengths: dict[str, int]) -> dict[str, dict[str, Any]]:
     if display_name == "Rock Lee":
         return rock_lee_move_overrides()
+    if display_name == "Kid Goku":
+        return kid_goku_move_overrides()
 
     def duration(key: str, fallback: int) -> int:
         return max(1, frame_lengths.get(key, fallback))
@@ -1120,6 +1317,180 @@ def move_overrides(display_name: str, frame_lengths: dict[str, int]) -> dict[str
     return overrides
 
 
+def kid_goku_move(
+    label: str,
+    startup: int,
+    active: int,
+    recovery: int,
+    damage: int,
+    hit_level: str,
+    on_block: int,
+    on_hit: int,
+    on_counter_hit: int,
+    range_value: float,
+    description: str,
+    **extra: Any,
+) -> dict[str, Any]:
+    is_low = hit_level == "low"
+    move = {
+        "label": label,
+        "description": description,
+        "startupFrames": startup,
+        "activeFrames": active,
+        "recoveryFrames": recovery,
+        "damage": damage,
+        "blockDamage": 1 if damage >= 12 else 0,
+        "hitLevel": hit_level,
+        "onBlockFrames": on_block,
+        "onHitFrames": on_hit,
+        "onCounterHitFrames": on_counter_hit,
+        "onComboHitFrames": max(6, on_hit - 2),
+        "onJuggleHitFrames": max(5, min(on_counter_hit, on_hit + 2)),
+        "comboRepeatPenaltyFrames": 5,
+        "juggleRepeatPenaltyFrames": 8,
+        "whiffRecoveryFrames": max(4, recovery // 3),
+        "range": range_value,
+        "pushback": round(0.74 + range_value * 0.13, 2),
+        "blockPushback": round(0.34 + range_value * 0.06, 2),
+        "tracking": "medium",
+        "knockdown": False,
+        "hitbox": {
+            "offset": [0, 0.84 if is_low else 1.1, 0.66 + range_value * 0.08],
+            "size": [0.74, 0.42 if is_low else 0.5, 0.58 + range_value * 0.08],
+        },
+    }
+    move.update(extra)
+    return move
+
+
+def kid_goku_base_moves() -> list[dict[str, Any]]:
+    jab = kid_goku_move(
+        "Quick Turtle Jab",
+        9,
+        2,
+        13,
+        6,
+        "high",
+        -1,
+        9,
+        13,
+        1.42,
+        "Fast high jab with short reach that starts Kid Goku's close pressure.",
+    )
+    jab.update({"id": "jab", "input": "jab"})
+    kick = kid_goku_move(
+        "Low Tail Trip",
+        15,
+        3,
+        21,
+        10,
+        "low",
+        -12,
+        7,
+        12,
+        1.62,
+        "Quick low tail trip that ducks under highs and leaves Kid Goku near crouch range.",
+        endsInCrouch=True,
+    )
+    kick.update({"id": "kick", "input": "kick"})
+    heavy = kid_goku_move(
+        "Power Pole Poke",
+        12,
+        3,
+        18,
+        9,
+        "mid",
+        -5,
+        12,
+        17,
+        1.72,
+        "Quick mid staff poke with better reach than his bare-handed checks.",
+    )
+    heavy.update({"id": "heavy", "input": "heavy"})
+    special = kid_goku_move(
+        "Power Pole Sweep",
+        17,
+        4,
+        25,
+        13,
+        "mid",
+        -8,
+        15,
+        22,
+        1.86,
+        "Forward staff swing that works as a reliable mid combo ender.",
+        forwardForce=1.05,
+        forwardForceStartFrame=9,
+        forwardForceEndFrame=20,
+    )
+    special.update({"id": "special", "input": "special"})
+    return [jab, kick, heavy, special]
+
+
+def kid_goku_move_overrides() -> dict[str, dict[str, Any]]:
+    overrides: dict[str, dict[str, Any]] = {
+        "jableft": kid_goku_move("Quick Turtle Jab", 9, 2, 13, 6, "high", -1, 9, 13, 1.42, "Fast high jab with short reach that checks close pressure."),
+        "jabright": kid_goku_move("Turtle School Body Blow", 11, 2, 16, 8, "mid", -4, 11, 16, 1.5, "Quick mid punch that keeps Kid Goku close enough to continue strings."),
+        "kickleft": kid_goku_move("Low Tail Trip", 15, 3, 21, 10, "low", -12, 7, 12, 1.62, "Quick low tail trip that clips stand guard and recovers crouched.", endsInCrouch=True),
+        "kickright": kid_goku_move("Power Pole Poke", 14, 3, 20, 11, "mid", -6, 12, 18, 1.82, "Steady mid staff poke with enough reach to punish small whiffs."),
+        "cmd:f+1": kid_goku_move("Turtle Dash Punch", 14, 3, 22, 12, "mid", -6, 13, 18, 1.78, "Forward-moving mid punch that carries Kid Goku into pressure.", forwardForce=1.25, forwardForceStartFrame=8, forwardForceEndFrame=17),
+        "cmd:f+3": kid_goku_move("Running Power Pole", 17, 3, 25, 13, "mid", -8, 12, 24, 1.92, "Committed running staff check that wins timing wars on counter hit.", counterHit=True, counterHitStunBonusFrames=8, forwardForce=1.35, forwardForceStartFrame=9, forwardForceEndFrame=18),
+        "cmd:d+3": kid_goku_move("Low Monkey Sweep", 16, 3, 23, 11, "low", -13, 8, 13, 1.68, "Low sliding sweep that stays compact and threatens crouch routes.", endsInCrouch=True),
+        "cmd:d/f+2": kid_goku_move("Rising Tail Pop", 18, 3, 31, 14, "mid", -14, 28, 34, 1.66, "Unsafe rising pop-up that starts Kid Goku's juggle routes.", launchHeight=2.15, launchVelocity=6.0, juggleRefloatVelocity=4.35, juggleGravityScale=0.52, forwardForce=0.85, forwardForceStartFrame=10, forwardForceEndFrame=17),
+        "cmd:d/f+3": kid_goku_move("Leaping Staff Kick", 19, 4, 27, 13, "mid", -9, 17, 24, 1.78, "Leaping mid kick that lifts slightly and keeps juggle pressure moving.", launchHeight=1.35, launchVelocity=5.35, juggleRefloatVelocity=4.0, juggleGravityScale=0.58, jumpBeforeMove=True, moveJumpForce=7.8, moveJumpGravity=22),
+        "cmd:qcf+3": kid_goku_move("Power Pole Rush", 20, 4, 28, 14, "mid", -9, 18, 25, 1.95, "Long-reaching staff rush that carries forward and catches retreat.", forwardForce=1.55, forwardForceStartFrame=10, forwardForceEndFrame=24),
+        "cmd:qcf+4": kid_goku_move("Power Pole Rush", 20, 4, 28, 14, "mid", -9, 18, 25, 1.95, "Long-reaching staff rush that carries forward and catches retreat.", forwardForce=1.55, forwardForceStartFrame=10, forwardForceEndFrame=24),
+        "cmd:WS+4": kid_goku_move("Rising Monkey Kick", 15, 3, 25, 12, "mid", -9, 17, 24, 1.7, "While-standing mid kick that lifts opponents after crouch pressure.", launchHeight=1.6, launchVelocity=5.55, juggleRefloatVelocity=4.05, juggleGravityScale=0.56),
+        "cmd:FC+1": kid_goku_move("Crouching Staff Check", 12, 2, 16, 7, "mid", -3, 9, 13, 1.44, "Quick crouching staff poke for interrupting from low stance.", endsInCrouch=True),
+        "cmd:FC+2": kid_goku_move("Monkey Roll Launcher", 18, 3, 30, 13, "mid", -14, 26, 32, 1.54, "Rolling mid launcher that rewards a hard read from full crouch.", launchHeight=2.0, launchVelocity=5.8, juggleRefloatVelocity=4.2, juggleGravityScale=0.54, endsInCrouch=True),
+        "cmd:1+2": kid_goku_move("Power Pole Barrage", 18, 4, 25, 15, "mid", -7, 15, 21, 1.92, "Mid staff barrage that keeps Kid Goku close for route extensions.", forwardForce=1.25, forwardForceStartFrame=10, forwardForceEndFrame=22),
+        "cmd:1+3": kid_goku_move("Monkey Wheel Lift", 21, 4, 34, 17, "mid", -15, 29, 36, 1.72, "Spinning lift starter that launches but is very punishable on block.", launchHeight=2.2, launchVelocity=5.95, juggleRefloatVelocity=4.4, juggleGravityScale=0.5, tornado=True),
+        "cmd:2+3": kid_goku_move("Tail Feint Sweep", 19, 3, 24, 10, "low", -12, 8, 15, 1.58, "Low tail feint that slips under highs and sets up crouch pressure.", endsInCrouch=True, counterHit=True, counterHitStunBonusFrames=5),
+        "cmd:2+4": kid_goku_move("Sliding Monkey Trip", 21, 4, 30, 14, "low", -16, 13, 19, 1.78, "Risky low slide that knocks down when Kid Goku commits to the full sweep.", knockdown=True, endsInCrouch=True),
+        "cmd:3+4": kid_goku_move("Tail Cyclone", 24, 5, 35, 17, "mid", -12, 20, 29, 1.9, "Spinning mid tail attack that works as a tornado extender in juggles.", tornado=True, knockdown=True, tracking="strong", homingSpeed=9),
+        "cmd:SS+3": kid_goku_move("Side Staff Swing", 17, 4, 27, 13, "mid", -8, 14, 22, 1.84, "Sidestep staff swing that covers lateral movement and keeps him mobile.", tracking="strong", homingSpeed=10),
+        "cmd:O+1": kid_goku_move("Turtle Spirit Burst", 27, 5, 38, 18, "special", -10, 20, 28, 1.8, "Ki-cost aura burst that armors through light checks before Kid Goku drives forward.", usesKi=True, kiCost=30, armorStartFrame=8, armorEndFrame=18, knockdown=True, forwardForce=1.3, forwardForceStartFrame=14, forwardForceEndFrame=30),
+        "cmd:O+2": kid_goku_move("Afterimage Power Pole", 30, 6, 42, 24, "special", -16, 25, 36, 2.08, "Expensive afterimage staff finisher with high juggle reward and real block risk.", usesKi=True, kiCost=45, knockdown=True, tornado=True, jumpBeforeMove=True, moveJumpForce=8.8, moveJumpGravity=24, forwardForce=1.9, forwardForceStartFrame=15, forwardForceEndFrame=36, whiffRecoveryFrames=18),
+    }
+    neutral_labels = {
+        "neutral:jab-jab": "Turtle Combo Second Beat",
+        "neutral:jab-jab-heavy": "Turtle Body Route",
+        "neutral:jab-jab-kick": "Tail Trip Changeup",
+        "neutral:jab-jab-special": "Power Pole Ender",
+        "neutral:jab-heavy": "Turtle Drive",
+        "neutral:jab-heavy-kick": "Staff Barrage",
+        "neutral:jab-heavy-special": "Dash Pole Ender",
+        "neutral:jab-kick": "Tail Trip Link",
+        "neutral:jab-kick-heavy": "Tail to Staff",
+        "neutral:jab-kick-special": "Tail Pole Route",
+        "neutral:jab-special": "Power Pole Setup",
+        "neutral:jab-special-heavy": "Pole Crush",
+        "neutral:heavy-jab": "Staff Jab Reset",
+        "neutral:heavy-jab-heavy": "Power Pole Loop",
+        "neutral:heavy-jab-special": "Pole Rush Ender",
+        "neutral:heavy-kick": "Staff Low Mix",
+        "neutral:heavy-kick-special": "Pole Sweep Route",
+        "neutral:heavy-special": "Staff Drive",
+        "neutral:heavy-special-kick": "Pole Low Reset",
+        "neutral:kick-jab": "Tail Jab Reset",
+        "neutral:kick-jab-special": "Tail Pole Setup",
+        "neutral:kick-heavy": "Tail Staff Link",
+        "neutral:kick-heavy-special": "Tail Rush Ender",
+        "neutral:kick-special": "Tail Cyclone",
+        "neutral:kick-special-heavy": "Cyclone Staff Route",
+        "neutral:special-jab": "Pole Jab Reset",
+        "neutral:special-jab-heavy": "Pole Body Route",
+        "neutral:special-heavy": "Power Pole Drive",
+        "neutral:special-kick": "Power Pole Trip",
+    }
+    for key, label in neutral_labels.items():
+        overrides[key] = {
+            "label": label,
+            "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+        }
+    return overrides
+
+
 def rock_lee_move(
     label: str,
     startup: int,
@@ -1306,18 +1677,23 @@ def manifest_for(character_id: str, display_name: str, frame_count: int, animati
     speed = round(4.9 + stable_unit(character_id, "speed") * 0.55, 2)
     health = round(96 + stable_unit(character_id, "health") * 10)
     jump_force = round(7.8 + stable_unit(character_id, "jump") * 0.55, 2)
-    moves = rock_lee_base_moves() if character_id == "rock-lee" else [
+    if character_id == "rock-lee":
+        moves = rock_lee_base_moves()
+    elif character_id == "kid-goku":
+        moves = kid_goku_base_moves()
+    else:
+        moves = [
         base_move(f"{display_name} Left Check", "jab", "jab", (10, 2, 14), 6, "high", 1.42),
         base_move(f"{display_name} Left Kick", "kick", "kick", (14, 3, 20), 10, "low", 1.62),
         base_move(f"{display_name} Right Check", "heavy", "heavy", (12, 2, 17), 8, "mid", 1.5),
         base_move(f"{display_name} Right Kick", "special", "special", (16, 3, 22), 12, "mid", 1.72),
-    ]
+        ]
     stats = {
-        "health": 94 if character_id == "rock-lee" else health,
-        "speed": 5.55 if character_id == "rock-lee" else speed,
-        "sidestepSpeed": 4.86 if character_id == "rock-lee" else round(max(4.05, speed - 0.62), 2),
-        "dashDistance": 1.02 if character_id == "rock-lee" else None,
-        "jumpForce": 8.75 if character_id == "rock-lee" else jump_force,
+        "health": 94 if character_id == "rock-lee" else (92 if character_id == "kid-goku" else health),
+        "speed": 5.55 if character_id == "rock-lee" else (5.42 if character_id == "kid-goku" else speed),
+        "sidestepSpeed": 4.86 if character_id == "rock-lee" else (4.78 if character_id == "kid-goku" else round(max(4.05, speed - 0.62), 2)),
+        "dashDistance": 1.02 if character_id == "rock-lee" else (1.08 if character_id == "kid-goku" else None),
+        "jumpForce": 8.75 if character_id == "rock-lee" else (8.62 if character_id == "kid-goku" else jump_force),
         "gravity": 18,
     }
     return {
@@ -1423,7 +1799,7 @@ def import_character(
     first_frame: Image.Image | None = None
     for index, entry in enumerate(boxes):
         box = tuple(int(value) for value in entry["box"])
-        cropped = transparent_crop(image, box, backgrounds)
+        cropped = transparent_cell_crop(image, box) if entry.get("source") == "teal-cell" else transparent_crop(image, box, backgrounds)
         cropped = repair_known_character_crop(character_id, index, cropped)
         if first_frame is None:
             first_frame = cropped

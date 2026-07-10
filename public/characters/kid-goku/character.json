@@ -1,0 +1,1249 @@
+{
+  "id": "kid-goku",
+  "displayName": "Kid Goku",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/kid-goku/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://kid-goku",
+  "spriteSheetPath": "/characters/kid-goku/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/kid-goku/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 408
+    }
+  ],
+  "spriteFrameCount": 409,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/kid-goku/frames/frame-000.png",
+      "/characters/kid-goku/frames/frame-001.png",
+      "/characters/kid-goku/frames/frame-002.png",
+      "/characters/kid-goku/frames/frame-003.png",
+      "/characters/kid-goku/frames/frame-004.png",
+      "/characters/kid-goku/frames/frame-005.png",
+      "/characters/kid-goku/frames/frame-006.png",
+      "/characters/kid-goku/frames/frame-007.png"
+    ],
+    "walkForward": [
+      "/characters/kid-goku/frames/frame-011.png",
+      "/characters/kid-goku/frames/frame-012.png",
+      "/characters/kid-goku/frames/frame-013.png",
+      "/characters/kid-goku/frames/frame-014.png",
+      "/characters/kid-goku/frames/frame-015.png",
+      "/characters/kid-goku/frames/frame-016.png",
+      "/characters/kid-goku/frames/frame-017.png",
+      "/characters/kid-goku/frames/frame-018.png"
+    ],
+    "walkBack": [
+      "/characters/kid-goku/frames/frame-044.png"
+    ],
+    "sprint": [
+      "/characters/kid-goku/frames/frame-019.png",
+      "/characters/kid-goku/frames/frame-020.png",
+      "/characters/kid-goku/frames/frame-021.png",
+      "/characters/kid-goku/frames/frame-022.png",
+      "/characters/kid-goku/frames/frame-023.png",
+      "/characters/kid-goku/frames/frame-024.png",
+      "/characters/kid-goku/frames/frame-025.png",
+      "/characters/kid-goku/frames/frame-026.png"
+    ],
+    "backHop": [
+      "/characters/kid-goku/frames/frame-054.png",
+      "/characters/kid-goku/frames/frame-055.png",
+      "/characters/kid-goku/frames/frame-056.png",
+      "/characters/kid-goku/frames/frame-057.png"
+    ],
+    "sidestepLeft": [
+      "/characters/kid-goku/frames/frame-041.png"
+    ],
+    "sidestepRight": [
+      "/characters/kid-goku/frames/frame-041.png"
+    ],
+    "jump": [
+      "/characters/kid-goku/frames/frame-072.png",
+      "/characters/kid-goku/frames/frame-073.png",
+      "/characters/kid-goku/frames/frame-074.png",
+      "/characters/kid-goku/frames/frame-075.png",
+      "/characters/kid-goku/frames/frame-076.png",
+      "/characters/kid-goku/frames/frame-077.png",
+      "/characters/kid-goku/frames/frame-078.png"
+    ],
+    "crouch": [
+      "/characters/kid-goku/frames/frame-316.png"
+    ],
+    "crouchBlock": [
+      "/characters/kid-goku/frames/frame-408.png"
+    ],
+    "block": [
+      "/characters/kid-goku/frames/frame-038.png",
+      "/characters/kid-goku/frames/frame-039.png"
+    ],
+    "chargeKi": [],
+    "jableft": [
+      "/characters/kid-goku/frames/frame-044.png",
+      "/characters/kid-goku/frames/frame-045.png",
+      "/characters/kid-goku/frames/frame-046.png",
+      "/characters/kid-goku/frames/frame-047.png",
+      "/characters/kid-goku/frames/frame-048.png",
+      "/characters/kid-goku/frames/frame-049.png"
+    ],
+    "jabright": [
+      "/characters/kid-goku/frames/frame-050.png",
+      "/characters/kid-goku/frames/frame-051.png",
+      "/characters/kid-goku/frames/frame-052.png",
+      "/characters/kid-goku/frames/frame-053.png"
+    ],
+    "kickleft": [
+      "/characters/kid-goku/frames/frame-054.png",
+      "/characters/kid-goku/frames/frame-055.png",
+      "/characters/kid-goku/frames/frame-056.png",
+      "/characters/kid-goku/frames/frame-057.png",
+      "/characters/kid-goku/frames/frame-058.png",
+      "/characters/kid-goku/frames/frame-059.png",
+      "/characters/kid-goku/frames/frame-060.png",
+      "/characters/kid-goku/frames/frame-061.png"
+    ],
+    "kickright": [
+      "/characters/kid-goku/frames/frame-064.png",
+      "/characters/kid-goku/frames/frame-065.png",
+      "/characters/kid-goku/frames/frame-066.png",
+      "/characters/kid-goku/frames/frame-067.png",
+      "/characters/kid-goku/frames/frame-068.png",
+      "/characters/kid-goku/frames/frame-069.png",
+      "/characters/kid-goku/frames/frame-070.png",
+      "/characters/kid-goku/frames/frame-071.png"
+    ],
+    "hitLight": [
+      "/characters/kid-goku/frames/frame-083.png",
+      "/characters/kid-goku/frames/frame-084.png",
+      "/characters/kid-goku/frames/frame-085.png",
+      "/characters/kid-goku/frames/frame-086.png",
+      "/characters/kid-goku/frames/frame-087.png"
+    ],
+    "hitHeavy": [
+      "/characters/kid-goku/frames/frame-088.png",
+      "/characters/kid-goku/frames/frame-089.png",
+      "/characters/kid-goku/frames/frame-090.png",
+      "/characters/kid-goku/frames/frame-091.png",
+      "/characters/kid-goku/frames/frame-092.png",
+      "/characters/kid-goku/frames/frame-093.png",
+      "/characters/kid-goku/frames/frame-094.png"
+    ],
+    "juggle": [
+      "/characters/kid-goku/frames/frame-072.png",
+      "/characters/kid-goku/frames/frame-073.png",
+      "/characters/kid-goku/frames/frame-074.png"
+    ],
+    "knockdown": [
+      "/characters/kid-goku/frames/frame-212.png",
+      "/characters/kid-goku/frames/frame-213.png",
+      "/characters/kid-goku/frames/frame-214.png",
+      "/characters/kid-goku/frames/frame-215.png",
+      "/characters/kid-goku/frames/frame-216.png",
+      "/characters/kid-goku/frames/frame-217.png",
+      "/characters/kid-goku/frames/frame-218.png",
+      "/characters/kid-goku/frames/frame-219.png"
+    ],
+    "getupStand": [
+      "/characters/kid-goku/frames/frame-219.png",
+      "/characters/kid-goku/frames/frame-218.png",
+      "/characters/kid-goku/frames/frame-217.png",
+      "/characters/kid-goku/frames/frame-216.png",
+      "/characters/kid-goku/frames/frame-000.png"
+    ],
+    "getupRollUp": [
+      "/characters/kid-goku/frames/frame-243.png",
+      "/characters/kid-goku/frames/frame-244.png",
+      "/characters/kid-goku/frames/frame-245.png",
+      "/characters/kid-goku/frames/frame-246.png",
+      "/characters/kid-goku/frames/frame-247.png",
+      "/characters/kid-goku/frames/frame-248.png",
+      "/characters/kid-goku/frames/frame-249.png"
+    ],
+    "win": [
+      "/characters/kid-goku/frames/frame-114.png",
+      "/characters/kid-goku/frames/frame-115.png",
+      "/characters/kid-goku/frames/frame-116.png",
+      "/characters/kid-goku/frames/frame-117.png",
+      "/characters/kid-goku/frames/frame-118.png"
+    ],
+    "lose": [
+      "/characters/kid-goku/frames/frame-220.png",
+      "/characters/kid-goku/frames/frame-221.png"
+    ],
+    "cmd:f+1": [
+      "/characters/kid-goku/frames/frame-100.png",
+      "/characters/kid-goku/frames/frame-101.png",
+      "/characters/kid-goku/frames/frame-102.png",
+      "/characters/kid-goku/frames/frame-103.png",
+      "/characters/kid-goku/frames/frame-104.png",
+      "/characters/kid-goku/frames/frame-105.png",
+      "/characters/kid-goku/frames/frame-106.png",
+      "/characters/kid-goku/frames/frame-107.png"
+    ],
+    "cmd:f+3": [
+      "/characters/kid-goku/frames/frame-096.png",
+      "/characters/kid-goku/frames/frame-097.png",
+      "/characters/kid-goku/frames/frame-098.png",
+      "/characters/kid-goku/frames/frame-099.png",
+      "/characters/kid-goku/frames/frame-100.png",
+      "/characters/kid-goku/frames/frame-101.png",
+      "/characters/kid-goku/frames/frame-102.png",
+      "/characters/kid-goku/frames/frame-103.png"
+    ],
+    "cmd:d+3": [
+      "/characters/kid-goku/frames/frame-199.png",
+      "/characters/kid-goku/frames/frame-200.png",
+      "/characters/kid-goku/frames/frame-201.png",
+      "/characters/kid-goku/frames/frame-202.png",
+      "/characters/kid-goku/frames/frame-203.png",
+      "/characters/kid-goku/frames/frame-204.png",
+      "/characters/kid-goku/frames/frame-205.png",
+      "/characters/kid-goku/frames/frame-206.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/kid-goku/frames/frame-083.png",
+      "/characters/kid-goku/frames/frame-084.png",
+      "/characters/kid-goku/frames/frame-085.png",
+      "/characters/kid-goku/frames/frame-086.png",
+      "/characters/kid-goku/frames/frame-087.png",
+      "/characters/kid-goku/frames/frame-088.png",
+      "/characters/kid-goku/frames/frame-089.png",
+      "/characters/kid-goku/frames/frame-090.png"
+    ],
+    "cmd:d/f+3": [
+      "/characters/kid-goku/frames/frame-132.png",
+      "/characters/kid-goku/frames/frame-133.png",
+      "/characters/kid-goku/frames/frame-134.png",
+      "/characters/kid-goku/frames/frame-135.png",
+      "/characters/kid-goku/frames/frame-136.png",
+      "/characters/kid-goku/frames/frame-137.png",
+      "/characters/kid-goku/frames/frame-138.png",
+      "/characters/kid-goku/frames/frame-139.png"
+    ],
+    "cmd:qcf+3": [
+      "/characters/kid-goku/frames/frame-152.png",
+      "/characters/kid-goku/frames/frame-153.png",
+      "/characters/kid-goku/frames/frame-154.png",
+      "/characters/kid-goku/frames/frame-155.png",
+      "/characters/kid-goku/frames/frame-156.png",
+      "/characters/kid-goku/frames/frame-157.png",
+      "/characters/kid-goku/frames/frame-158.png",
+      "/characters/kid-goku/frames/frame-159.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/kid-goku/frames/frame-152.png",
+      "/characters/kid-goku/frames/frame-153.png",
+      "/characters/kid-goku/frames/frame-154.png",
+      "/characters/kid-goku/frames/frame-155.png",
+      "/characters/kid-goku/frames/frame-156.png",
+      "/characters/kid-goku/frames/frame-157.png",
+      "/characters/kid-goku/frames/frame-158.png",
+      "/characters/kid-goku/frames/frame-159.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/kid-goku/frames/frame-132.png",
+      "/characters/kid-goku/frames/frame-133.png",
+      "/characters/kid-goku/frames/frame-134.png",
+      "/characters/kid-goku/frames/frame-135.png",
+      "/characters/kid-goku/frames/frame-136.png",
+      "/characters/kid-goku/frames/frame-137.png",
+      "/characters/kid-goku/frames/frame-138.png",
+      "/characters/kid-goku/frames/frame-139.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/kid-goku/frames/frame-316.png",
+      "/characters/kid-goku/frames/frame-317.png",
+      "/characters/kid-goku/frames/frame-318.png",
+      "/characters/kid-goku/frames/frame-319.png",
+      "/characters/kid-goku/frames/frame-320.png",
+      "/characters/kid-goku/frames/frame-321.png",
+      "/characters/kid-goku/frames/frame-322.png",
+      "/characters/kid-goku/frames/frame-323.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/kid-goku/frames/frame-243.png",
+      "/characters/kid-goku/frames/frame-244.png",
+      "/characters/kid-goku/frames/frame-245.png",
+      "/characters/kid-goku/frames/frame-246.png",
+      "/characters/kid-goku/frames/frame-247.png",
+      "/characters/kid-goku/frames/frame-248.png"
+    ],
+    "cmd:1+2": [
+      "/characters/kid-goku/frames/frame-145.png",
+      "/characters/kid-goku/frames/frame-146.png",
+      "/characters/kid-goku/frames/frame-147.png",
+      "/characters/kid-goku/frames/frame-148.png",
+      "/characters/kid-goku/frames/frame-149.png",
+      "/characters/kid-goku/frames/frame-150.png",
+      "/characters/kid-goku/frames/frame-151.png"
+    ],
+    "cmd:1+3": [
+      "/characters/kid-goku/frames/frame-170.png",
+      "/characters/kid-goku/frames/frame-171.png",
+      "/characters/kid-goku/frames/frame-172.png",
+      "/characters/kid-goku/frames/frame-173.png",
+      "/characters/kid-goku/frames/frame-174.png",
+      "/characters/kid-goku/frames/frame-175.png"
+    ],
+    "cmd:2+3": [
+      "/characters/kid-goku/frames/frame-167.png",
+      "/characters/kid-goku/frames/frame-168.png",
+      "/characters/kid-goku/frames/frame-169.png"
+    ],
+    "cmd:2+4": [
+      "/characters/kid-goku/frames/frame-199.png",
+      "/characters/kid-goku/frames/frame-200.png",
+      "/characters/kid-goku/frames/frame-201.png",
+      "/characters/kid-goku/frames/frame-202.png",
+      "/characters/kid-goku/frames/frame-203.png",
+      "/characters/kid-goku/frames/frame-204.png",
+      "/characters/kid-goku/frames/frame-205.png",
+      "/characters/kid-goku/frames/frame-206.png"
+    ],
+    "cmd:3+4": [
+      "/characters/kid-goku/frames/frame-295.png",
+      "/characters/kid-goku/frames/frame-296.png",
+      "/characters/kid-goku/frames/frame-297.png",
+      "/characters/kid-goku/frames/frame-298.png"
+    ],
+    "cmd:SS+3": [
+      "/characters/kid-goku/frames/frame-140.png",
+      "/characters/kid-goku/frames/frame-141.png",
+      "/characters/kid-goku/frames/frame-142.png",
+      "/characters/kid-goku/frames/frame-143.png",
+      "/characters/kid-goku/frames/frame-144.png"
+    ],
+    "cmd:O+1": [
+      "/characters/kid-goku/frames/frame-226.png",
+      "/characters/kid-goku/frames/frame-227.png",
+      "/characters/kid-goku/frames/frame-228.png",
+      "/characters/kid-goku/frames/frame-229.png",
+      "/characters/kid-goku/frames/frame-230.png",
+      "/characters/kid-goku/frames/frame-231.png",
+      "/characters/kid-goku/frames/frame-232.png",
+      "/characters/kid-goku/frames/frame-233.png"
+    ],
+    "cmd:O+2": [
+      "/characters/kid-goku/frames/frame-362.png",
+      "/characters/kid-goku/frames/frame-363.png",
+      "/characters/kid-goku/frames/frame-364.png",
+      "/characters/kid-goku/frames/frame-365.png",
+      "/characters/kid-goku/frames/frame-366.png",
+      "/characters/kid-goku/frames/frame-367.png",
+      "/characters/kid-goku/frames/frame-368.png",
+      "/characters/kid-goku/frames/frame-369.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 7,
+    "walkForward": 12,
+    "walkBack": 10,
+    "sprint": 14,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 9,
+    "crouch": 7,
+    "crouchBlock": 5,
+    "block": 6,
+    "chargeKi": 8,
+    "jableft": 12,
+    "jabright": 12,
+    "kickleft": 11,
+    "kickright": 11,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 9,
+    "win": 7,
+    "lose": 5,
+    "cmd:f+1": 10,
+    "cmd:f+3": 10,
+    "cmd:d+3": 10,
+    "cmd:d/f+2": 10,
+    "cmd:d/f+3": 10,
+    "cmd:qcf+3": 10,
+    "cmd:qcf+4": 10,
+    "cmd:WS+4": 10,
+    "cmd:FC+1": 10,
+    "cmd:FC+2": 10,
+    "cmd:1+2": 10,
+    "cmd:1+3": 10,
+    "cmd:2+3": 10,
+    "cmd:2+4": 10,
+    "cmd:3+4": 10,
+    "cmd:SS+3": 10,
+    "cmd:O+1": 10,
+    "cmd:O+2": 10
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 92,
+    "speed": 5.42,
+    "sidestepSpeed": 4.78,
+    "dashDistance": 1.08,
+    "jumpForce": 8.62,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "label": "Quick Turtle Jab",
+      "description": "Fast high jab with short reach that starts Kid Goku's close pressure.",
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -1,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "pushback": 0.92,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.7736000000000001
+        ],
+        "size": [
+          0.74,
+          0.5,
+          0.6936
+        ]
+      },
+      "id": "jab",
+      "input": "jab"
+    },
+    {
+      "label": "Low Tail Trip",
+      "description": "Quick low tail trip that ducks under highs and leaves Kid Goku near crouch range.",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.95,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.84,
+          0.7896000000000001
+        ],
+        "size": [
+          0.74,
+          0.42,
+          0.7096
+        ]
+      },
+      "endsInCrouch": true,
+      "id": "kick",
+      "input": "kick"
+    },
+    {
+      "label": "Power Pole Poke",
+      "description": "Quick mid staff poke with better reach than his bare-handed checks.",
+      "startupFrames": 12,
+      "activeFrames": 3,
+      "recoveryFrames": 18,
+      "damage": 9,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -5,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 17,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 6,
+      "range": 1.72,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.7976000000000001
+        ],
+        "size": [
+          0.74,
+          0.5,
+          0.7176
+        ]
+      },
+      "id": "heavy",
+      "input": "heavy"
+    },
+    {
+      "label": "Power Pole Sweep",
+      "description": "Forward staff swing that works as a reliable mid combo ender.",
+      "startupFrames": 17,
+      "activeFrames": 4,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.86,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8088000000000001
+        ],
+        "size": [
+          0.74,
+          0.5,
+          0.7288
+        ]
+      },
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 20,
+      "id": "special",
+      "input": "special"
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#a32ebb",
+    "secondary": "#43d963",
+    "accent": "#e84270"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "blockDamage": 0,
+      "onBlockFrames": -1,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "pushback": 0.92,
+      "blockPushback": 0.43,
+      "label": "Quick Turtle Jab",
+      "description": "Fast high jab with short reach that checks close pressure.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "jabright": {
+      "startupFrames": 11,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "blockDamage": 0,
+      "onBlockFrames": -4,
+      "onHitFrames": 11,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "label": "Turtle School Body Blow",
+      "description": "Quick mid punch that keeps Kid Goku close enough to continue strings.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "kickleft": {
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 10,
+      "blockDamage": 0,
+      "onBlockFrames": -12,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.95,
+      "blockPushback": 0.44,
+      "label": "Low Tail Trip",
+      "description": "Quick low tail trip that clips stand guard and recovers crouched.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true
+    },
+    "kickright": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 11,
+      "blockDamage": 0,
+      "onBlockFrames": -6,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 18,
+      "whiffRecoveryFrames": 6,
+      "range": 1.82,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "label": "Power Pole Poke",
+      "description": "Steady mid staff poke with enough reach to punish small whiffs.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:f+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -6,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 18,
+      "whiffRecoveryFrames": 7,
+      "range": 1.78,
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 17,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "label": "Turtle Dash Punch",
+      "description": "Forward-moving mid punch that carries Kid Goku into pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:f+3": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -8,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 24,
+      "counterHitStunBonusFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.92,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 18,
+      "pushback": 0.99,
+      "blockPushback": 0.46,
+      "label": "Running Power Pole",
+      "description": "Committed running staff check that wins timing wars on counter hit.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false,
+      "counterHit": true
+    },
+    "cmd:d+3": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
+      "damage": 11,
+      "blockDamage": 0,
+      "onBlockFrames": -13,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.68,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "label": "Low Monkey Sweep",
+      "description": "Low sliding sweep that stays compact and threatens crouch routes.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 28,
+      "onCounterHitFrames": 34,
+      "whiffRecoveryFrames": 10,
+      "range": 1.66,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 17,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "launchHeight": 2.15,
+      "launchVelocity": 6,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
+      "label": "Rising Tail Pop",
+      "description": "Unsafe rising pop-up that starts Kid Goku's juggle routes.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:d/f+3": {
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -9,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "whiffRecoveryFrames": 9,
+      "range": 1.78,
+      "moveJumpForce": 7.8,
+      "moveJumpGravity": 22,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "launchHeight": 1.35,
+      "launchVelocity": 5.35,
+      "juggleRefloatVelocity": 4,
+      "juggleGravityScale": 0.58,
+      "label": "Leaping Staff Kick",
+      "description": "Leaping mid kick that lifts slightly and keeps juggle pressure moving.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false,
+      "jumpBeforeMove": true
+    },
+    "cmd:qcf+3": {
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 9,
+      "range": 1.95,
+      "forwardForce": 1.55,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24,
+      "pushback": 0.99,
+      "blockPushback": 0.46,
+      "label": "Power Pole Rush",
+      "description": "Long-reaching staff rush that carries forward and catches retreat.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 9,
+      "range": 1.95,
+      "forwardForce": 1.55,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24,
+      "pushback": 0.99,
+      "blockPushback": 0.46,
+      "label": "Power Pole Rush",
+      "description": "Long-reaching staff rush that carries forward and catches retreat.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:WS+4": {
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -9,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "whiffRecoveryFrames": 8,
+      "range": 1.7,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "launchHeight": 1.6,
+      "launchVelocity": 5.55,
+      "juggleRefloatVelocity": 4.05,
+      "juggleGravityScale": 0.56,
+      "label": "Rising Monkey Kick",
+      "description": "While-standing mid kick that lifts opponents after crouch pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:FC+1": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 7,
+      "blockDamage": 0,
+      "onBlockFrames": -3,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 5,
+      "range": 1.44,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "label": "Crouching Staff Check",
+      "description": "Quick crouching staff poke for interrupting from low stance.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true
+    },
+    "cmd:FC+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 30,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 26,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 10,
+      "range": 1.54,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "launchHeight": 2,
+      "launchVelocity": 5.8,
+      "juggleRefloatVelocity": 4.2,
+      "juggleGravityScale": 0.54,
+      "label": "Monkey Roll Launcher",
+      "description": "Rolling mid launcher that rewards a hard read from full crouch.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true
+    },
+    "cmd:1+2": {
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "blockDamage": 1,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 21,
+      "whiffRecoveryFrames": 8,
+      "range": 1.92,
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 22,
+      "pushback": 0.99,
+      "blockPushback": 0.46,
+      "label": "Power Pole Barrage",
+      "description": "Mid staff barrage that keeps Kid Goku close for route extensions.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:1+3": {
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
+      "damage": 17,
+      "blockDamage": 1,
+      "onBlockFrames": -15,
+      "onHitFrames": 29,
+      "onCounterHitFrames": 36,
+      "whiffRecoveryFrames": 11,
+      "range": 1.72,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.4,
+      "juggleGravityScale": 0.5,
+      "label": "Monkey Wheel Lift",
+      "description": "Spinning lift starter that launches but is very punishable on block.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false,
+      "tornado": true
+    },
+    "cmd:2+3": {
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 10,
+      "blockDamage": 0,
+      "onBlockFrames": -12,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 15,
+      "counterHitStunBonusFrames": 5,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "pushback": 0.95,
+      "blockPushback": 0.43,
+      "label": "Tail Feint Sweep",
+      "description": "Low tail feint that slips under highs and sets up crouch pressure.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true,
+      "counterHit": true
+    },
+    "cmd:2+4": {
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -16,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 19,
+      "whiffRecoveryFrames": 10,
+      "range": 1.78,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "label": "Sliding Monkey Trip",
+      "description": "Risky low slide that knocks down when Kid Goku commits to the full sweep.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": true,
+      "endsInCrouch": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 24,
+      "activeFrames": 5,
+      "recoveryFrames": 35,
+      "damage": 17,
+      "blockDamage": 1,
+      "onBlockFrames": -12,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 29,
+      "whiffRecoveryFrames": 11,
+      "range": 1.9,
+      "homingSpeed": 9,
+      "pushback": 0.99,
+      "blockPushback": 0.45,
+      "label": "Tail Cyclone",
+      "description": "Spinning mid tail attack that works as a tornado extender in juggles.",
+      "hitLevel": "mid",
+      "tracking": "strong",
+      "knockdown": true,
+      "tornado": true
+    },
+    "cmd:SS+3": {
+      "startupFrames": 17,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 9,
+      "range": 1.84,
+      "homingSpeed": 10,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "label": "Side Staff Swing",
+      "description": "Sidestep staff swing that covers lateral movement and keeps him mobile.",
+      "hitLevel": "mid",
+      "tracking": "strong",
+      "knockdown": false
+    },
+    "cmd:O+1": {
+      "startupFrames": 27,
+      "activeFrames": 5,
+      "recoveryFrames": 38,
+      "damage": 18,
+      "blockDamage": 1,
+      "onBlockFrames": -10,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 28,
+      "whiffRecoveryFrames": 12,
+      "range": 1.8,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 30,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "kiCost": 30,
+      "armorStartFrame": 8,
+      "armorEndFrame": 18,
+      "label": "Turtle Spirit Burst",
+      "description": "Ki-cost aura burst that armors through light checks before Kid Goku drives forward.",
+      "hitLevel": "special",
+      "tracking": "medium",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 30,
+      "activeFrames": 6,
+      "recoveryFrames": 42,
+      "damage": 24,
+      "blockDamage": 1,
+      "onBlockFrames": -16,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 36,
+      "whiffRecoveryFrames": 18,
+      "range": 2.08,
+      "forwardForce": 1.9,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 36,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 24,
+      "pushback": 1.01,
+      "blockPushback": 0.46,
+      "kiCost": 45,
+      "label": "Afterimage Power Pole",
+      "description": "Expensive afterimage staff finisher with high juggle reward and real block risk.",
+      "hitLevel": "special",
+      "tracking": "medium",
+      "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Turtle Combo Second Beat",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Turtle Body Route",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Tail Trip Changeup",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-jab-special": {
+      "label": "Power Pole Ender",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-heavy": {
+      "label": "Turtle Drive",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Staff Barrage",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Dash Pole Ender",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-kick": {
+      "label": "Tail Trip Link",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Tail to Staff",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-kick-special": {
+      "label": "Tail Pole Route",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-special": {
+      "label": "Power Pole Setup",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Pole Crush",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:heavy-jab": {
+      "label": "Staff Jab Reset",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Power Pole Loop",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Pole Rush Ender",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:heavy-kick": {
+      "label": "Staff Low Mix",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Pole Sweep Route",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:heavy-special": {
+      "label": "Staff Drive",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Pole Low Reset",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:kick-jab": {
+      "label": "Tail Jab Reset",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:kick-jab-special": {
+      "label": "Tail Pole Setup",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:kick-heavy": {
+      "label": "Tail Staff Link",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Tail Rush Ender",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:kick-special": {
+      "label": "Tail Cyclone",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Cyclone Staff Route",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:special-jab": {
+      "label": "Pole Jab Reset",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Pole Body Route",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:special-heavy": {
+      "label": "Power Pole Drive",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    },
+    "neutral:special-kick": {
+      "label": "Power Pole Trip",
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.68,
+    "guard": 0.45,
+    "spacing": 1.47,
+    "specialChance": 0.2
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}
