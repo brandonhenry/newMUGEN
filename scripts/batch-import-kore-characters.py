@@ -242,6 +242,7 @@ NEUTRAL_LABELS = (
 
 Box = tuple[int, int, int, int]
 TEAL_CELL_COLOR = (0, 152, 128)
+JAKE_LONG_BG_COLOR = (0, 128, 128)
 
 
 def slugify(value: str) -> str:
@@ -752,6 +753,134 @@ def transparent_crop(image: Image.Image, box: Box, backgrounds: list[tuple[int, 
     return crop
 
 
+def is_jake_long_background(pixel: tuple[int, int, int, int], tolerance: int = 8) -> bool:
+    red, green, blue, alpha = pixel
+    if alpha <= 16:
+        return True
+    return (
+        abs(red - JAKE_LONG_BG_COLOR[0]) <= tolerance
+        and abs(green - JAKE_LONG_BG_COLOR[1]) <= tolerance
+        and abs(blue - JAKE_LONG_BG_COLOR[2]) <= tolerance
+    )
+
+
+def detect_jake_long_boxes(image: Image.Image) -> list[dict[str, Any]]:
+    """Extract Jake Long sprites while ignoring the source sheet's text labels."""
+    rgba = image.convert("RGBA")
+    width, height = rgba.size
+    pixels = rgba.load()
+    ink = bytearray(width * height)
+    for y in range(height):
+        row = y * width
+        for x in range(width):
+            if not is_jake_long_background(pixels[x, y]):
+                ink[row + x] = 1
+
+    visited = bytearray(width * height)
+    components: list[dict[str, Any]] = []
+    for start in range(width * height):
+        if visited[start] or not ink[start]:
+            visited[start] = 1
+            continue
+        queue: deque[int] = deque([start])
+        visited[start] = 1
+        area = 0
+        min_x = width
+        min_y = height
+        max_x = -1
+        max_y = -1
+        black = 0
+        bright = 0
+        red_like = 0
+        green_like = 0
+        blue_like = 0
+        skin_like = 0
+        yellow_like = 0
+        white_like = 0
+        orange_like = 0
+        while queue:
+            key = queue.popleft()
+            x = key % width
+            y = key // width
+            area += 1
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x)
+            max_y = max(max_y, y)
+            red, green, blue, _ = pixels[x, y]
+            if red < 55 and green < 55 and blue < 55:
+                black += 1
+            if max(red, green, blue) - min(red, green, blue) > 30 or max(red, green, blue) > 150:
+                bright += 1
+            if red > 130 and green < 120 and blue < 110:
+                red_like += 1
+            if green > 90 and red < 100 and blue < 130:
+                green_like += 1
+            if blue > 120 and red < 170:
+                blue_like += 1
+            if red > 170 and 80 < green < 190 and blue < 150:
+                skin_like += 1
+            if red > 180 and green > 130 and blue < 90:
+                yellow_like += 1
+            if red > 180 and green > 180 and blue > 180:
+                white_like += 1
+            if red > 180 and 50 < green < 150 and blue < 90:
+                orange_like += 1
+            for ny in range(y - 1, y + 2):
+                for nx in range(x - 1, x + 2):
+                    if nx < 0 or ny < 0 or nx >= width or ny >= height:
+                        continue
+                    next_key = ny * width + nx
+                    if visited[next_key] or not ink[next_key]:
+                        continue
+                    visited[next_key] = 1
+                    queue.append(next_key)
+
+        box_width = max_x - min_x + 1
+        box_height = max_y - min_y + 1
+        colored = red_like + green_like + blue_like + skin_like + yellow_like + white_like + orange_like
+        mostly_black_text = area > 0 and black / area > 0.72 and colored / area < 0.12
+        repeat_text = area > 0 and box_height <= 10 and red_like / area > 0.45 and black / area < 0.15
+        tiny_noise = box_width < 10 or box_height < 10 or area < 45
+        footer_or_credit = min_y > height * 0.965
+        face_icon = (max_y < 34 and max_x < 42) or (1260 <= min_y <= 1305 and max_x < 42)
+        horizontal_rule = box_height <= 2 and box_width > 20
+        if tiny_noise or footer_or_credit or face_icon or mostly_black_text or repeat_text or horizontal_rule:
+            continue
+        if box_height < 14 or box_width < 12 or (colored < 18 and bright < 40):
+            continue
+        components.append(
+            {
+                "box": (
+                    max(0, min_x - 1),
+                    max(0, min_y - 1),
+                    min(width, max_x + 2),
+                    min(height, max_y + 2),
+                )
+            }
+        )
+
+    rows: list[dict[str, Any]] = []
+    for component in sorted(components, key=lambda entry: ((entry["box"][1] + entry["box"][3]) / 2, entry["box"][0])):
+        left, top, right, bottom = component["box"]
+        center_y = (top + bottom) / 2
+        box_height = bottom - top
+        if not rows or center_y > rows[-1]["centerY"] + max(18, rows[-1]["height"] * 0.72):
+            rows.append({"centerY": center_y, "height": box_height, "entries": [component]})
+            continue
+        row = rows[-1]
+        row["entries"].append(component)
+        count = len(row["entries"])
+        row["centerY"] = (row["centerY"] * (count - 1) + center_y) / count
+        row["height"] = max(row["height"], box_height)
+
+    entries: list[dict[str, Any]] = []
+    for row_index, row in enumerate(rows):
+        for component in sorted(row["entries"], key=lambda entry: entry["box"][0]):
+            entries.append({"box": component["box"], "row": row_index, "source": "jake-long-component"})
+    return entries
+
+
 ROCK_LEE_CROP_REPAIRS: dict[int, Box] = {
     27: (0, 0, 34, 56),
     31: (17, 2, 62, 56),
@@ -799,7 +928,9 @@ def is_footer_text_entry(entry: dict[str, Any], image: Image.Image) -> bool:
     return top >= image.height * 0.955 and width >= image.width * 0.25 and height <= image.height * 0.06
 
 
-def filtered_projection_boxes(image: Image.Image) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def filtered_projection_boxes(image: Image.Image, character_id: str | None = None) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if character_id == "jake-long":
+        return detect_jake_long_boxes(image), []
     teal_included, teal_excluded = detect_teal_cell_boxes(image)
     if len(teal_included) >= 32:
         return teal_included, teal_excluded
@@ -843,6 +974,8 @@ def animation_frame_map(character_id: str, frames: list[dict[str, Any]]) -> tupl
         return rock_lee_animation_frame_map(character_id, len(frames))
     if character_id == "kid-goku":
         return kid_goku_animation_frame_map(character_id, len(frames))
+    if character_id == "jake-long":
+        return jake_long_animation_frame_map(character_id, len(frames))
     frame_count = len(frames)
     rows: dict[int, list[int]] = {}
     for index, frame in enumerate(frames):
@@ -1029,6 +1162,85 @@ def kid_goku_animation_frame_map(character_id: str, frame_count: int) -> tuple[d
     return result, rates
 
 
+def jake_long_animation_frame_map(character_id: str, frame_count: int) -> tuple[dict[str, list[str]], dict[str, float]]:
+    def paths(indexes: list[int]) -> list[str]:
+        return frame_paths(character_id, indexes, frame_count)
+
+    result = {
+        "idle": paths([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),
+        "walkForward": paths([39, 40, 41, 42, 43, 44, 45, 46, 47]),
+        "walkBack": paths([47, 46, 45, 44, 43, 42, 41, 40, 39]),
+        "sprint": paths([29, 30, 31, 32, 33, 34, 35, 36, 37, 38]),
+        "backHop": paths([48, 49, 50, 51]),
+        "sidestepLeft": paths([24, 25, 26, 27, 28]),
+        "sidestepRight": paths([28, 27, 26, 25, 24]),
+        "jump": paths([48, 49, 50, 51, 52, 53, 54]),
+        "crouch": paths([12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]),
+        "crouchBlock": paths([12, 13, 14]),
+        "block": paths([24, 25, 26, 27, 28]),
+        "chargeKi": paths([198, 199, 200, 201, 202, 203, 204, 205, 214, 215, 216, 217, 218, 219, 220, 221]),
+        "jableft": paths([55, 56, 57, 58, 59, 60]),
+        "jabright": paths([61, 62, 63, 64, 65, 66, 67]),
+        "kickleft": paths([86, 87, 88, 89, 90, 91, 92]),
+        "kickright": paths([68, 69, 70, 71, 72, 73, 74, 75]),
+        "hitLight": paths([123, 124, 125, 126]),
+        "hitHeavy": paths([123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134]),
+        "juggle": paths([127, 128, 129, 130]),
+        "knockdown": paths([128, 129, 130, 131, 132, 133, 134]),
+        "getupStand": paths([134, 133, 132, 131, 130, 0]),
+        "getupRollUp": paths([152, 153, 154, 155, 156, 157, 158]),
+        "win": paths([198, 199, 200, 201, 202, 203, 204, 205, 206, 207]),
+        "lose": paths([134]),
+        "cmd:f+1": paths([61, 62, 63, 64, 65, 66, 67]),
+        "cmd:f+3": paths([173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185]),
+        "cmd:d+3": paths([86, 87, 88, 89, 90, 91, 92]),
+        "cmd:d/f+2": paths([68, 69, 70, 71, 72, 73, 74, 75]),
+        "cmd:d/f+3": paths([98, 99, 100, 101, 102, 103, 104]),
+        "cmd:qcf+3": paths([76, 77, 78, 79, 80, 81, 82, 83, 84, 85]),
+        "cmd:qcf+4": paths([251, 252, 253, 254, 255, 256, 257, 258]),
+        "cmd:WS+4": paths([113, 114, 115, 116, 117, 118, 119, 120, 121, 122]),
+        "cmd:FC+1": paths([86, 87, 88, 89, 90, 91, 92]),
+        "cmd:FC+2": paths([105, 106, 107, 108, 109, 110, 111, 112]),
+        "cmd:1+2": paths([76, 77, 78, 79, 80, 81, 82, 83, 84, 85]),
+        "cmd:1+3": paths([244, 245, 246, 247, 248, 249, 250]),
+        "cmd:2+3": paths([186, 187, 188, 189, 190, 191, 192, 193]),
+        "cmd:2+4": paths([173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185]),
+        "cmd:3+4": paths([259, 260, 261, 262, 263, 264, 265, 266]),
+        "cmd:SS+3": paths([152, 153, 154, 155, 156, 157, 158]),
+        "cmd:O+1": paths([198, 199, 200, 201, 202, 203, 204, 205, 214, 215, 216, 217, 218, 219, 220, 221, 237, 238, 239, 240, 241, 242, 243]),
+        "cmd:O+2": paths([277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289]),
+    }
+    rates = {
+        "idle": 7,
+        "walkForward": 11,
+        "walkBack": 10,
+        "sprint": 13,
+        "backHop": 10,
+        "sidestepLeft": 10,
+        "sidestepRight": 10,
+        "jump": 9,
+        "crouch": 7,
+        "crouchBlock": 5,
+        "block": 6,
+        "chargeKi": 8,
+        "jableft": 12,
+        "jabright": 12,
+        "kickleft": 11,
+        "kickright": 11,
+        "hitLight": 8,
+        "hitHeavy": 8,
+        "juggle": 8,
+        "knockdown": 8,
+        "getupStand": 7,
+        "getupRollUp": 9,
+        "win": 7,
+        "lose": 5,
+    }
+    for key in result:
+        rates.setdefault(key, 10 if key.startswith("cmd:") else ANIMATION_RATES.get(key, 8))
+    return result, rates
+
+
 def stable_unit(value: str, salt: str) -> float:
     digest = hashlib.sha256(f"{value}:{salt}".encode("utf8")).digest()
     return int.from_bytes(digest[:4], "big") / 0xFFFFFFFF
@@ -1085,6 +1297,8 @@ def move_overrides(display_name: str, frame_lengths: dict[str, int]) -> dict[str
         return rock_lee_move_overrides()
     if display_name == "Kid Goku":
         return kid_goku_move_overrides()
+    if display_name == "Jake Long":
+        return jake_long_move_overrides()
 
     def duration(key: str, fallback: int) -> int:
         return max(1, frame_lengths.get(key, fallback))
@@ -1668,6 +1882,180 @@ def rock_lee_move_overrides() -> dict[str, dict[str, Any]]:
     return overrides
 
 
+def jake_long_move(
+    label: str,
+    startup: int,
+    active: int,
+    recovery: int,
+    damage: int,
+    hit_level: str,
+    on_block: int,
+    on_hit: int,
+    on_counter_hit: int,
+    range_value: float,
+    description: str,
+    **extra: Any,
+) -> dict[str, Any]:
+    is_low = hit_level == "low"
+    move = {
+        "label": label,
+        "description": description,
+        "startupFrames": startup,
+        "activeFrames": active,
+        "recoveryFrames": recovery,
+        "damage": damage,
+        "blockDamage": 1 if damage >= 12 or hit_level == "special" else 0,
+        "hitLevel": hit_level,
+        "onBlockFrames": on_block,
+        "onHitFrames": on_hit,
+        "onCounterHitFrames": on_counter_hit,
+        "onComboHitFrames": max(6, on_hit - 2),
+        "onJuggleHitFrames": max(5, min(on_counter_hit, on_hit + 3)),
+        "comboRepeatPenaltyFrames": 5,
+        "juggleRepeatPenaltyFrames": 8,
+        "whiffRecoveryFrames": max(4, recovery // 3),
+        "range": range_value,
+        "pushback": round(0.72 + range_value * 0.14, 2),
+        "blockPushback": round(0.34 + range_value * 0.06, 2),
+        "tracking": "medium",
+        "knockdown": False,
+        "hitbox": {
+            "offset": [0, 0.84 if is_low else 1.1, 0.66 + range_value * 0.08],
+            "size": [0.74, 0.42 if is_low else 0.52, 0.58 + range_value * 0.08],
+        },
+    }
+    move.update(extra)
+    return move
+
+
+def jake_long_base_moves() -> list[dict[str, Any]]:
+    jab = jake_long_move(
+        "American Dragon Jab",
+        9,
+        2,
+        13,
+        6,
+        "high",
+        -1,
+        9,
+        13,
+        1.4,
+        "Fast human-form check that starts Jake's close pressure.",
+    )
+    jab.update({"id": "jab", "input": "jab"})
+    kick = jake_long_move(
+        "Skate Park Low",
+        15,
+        3,
+        22,
+        10,
+        "low",
+        -13,
+        7,
+        12,
+        1.62,
+        "Low crouching strike that ducks under highs and keeps Jake near the opponent.",
+        endsInCrouch=True,
+    )
+    kick.update({"id": "kick", "input": "kick"})
+    heavy = jake_long_move(
+        "Dragon Claw Check",
+        12,
+        3,
+        17,
+        9,
+        "mid",
+        -4,
+        12,
+        17,
+        1.55,
+        "Compact red-aura claw swipe with better reward than his fastest jab.",
+    )
+    heavy.update({"id": "heavy", "input": "heavy"})
+    special = jake_long_move(
+        "Dragon Tail Spark",
+        17,
+        4,
+        25,
+        13,
+        "mid",
+        -8,
+        15,
+        22,
+        1.82,
+        "Forward red-aura swing that cashes out basic human strings.",
+        forwardForce=1.05,
+        forwardForceStartFrame=9,
+        forwardForceEndFrame=20,
+    )
+    special.update({"id": "special", "input": "special"})
+    return [jab, kick, heavy, special]
+
+
+def jake_long_move_overrides() -> dict[str, dict[str, Any]]:
+    overrides: dict[str, dict[str, Any]] = {
+        "jableft": jake_long_move("American Dragon Jab", 9, 2, 13, 6, "high", -1, 9, 13, 1.4, "Fast human-form jab for checking movement and starting pressure."),
+        "jabright": jake_long_move("Dragon Claw Check", 11, 3, 16, 8, "mid", -4, 11, 16, 1.54, "Quick red-aura mid swipe that keeps Jake close enough to keep talking with his fists."),
+        "kickleft": jake_long_move("Skate Park Low", 15, 3, 22, 10, "low", -13, 7, 12, 1.62, "Crouching low that slips under highs and leaves Jake in full crouch.", endsInCrouch=True),
+        "kickright": jake_long_move("Dragon Tail Spark", 16, 4, 24, 12, "mid", -8, 14, 20, 1.78, "Forward red-aura swing with enough advantage to keep pressure honest.", forwardForce=1.0, forwardForceStartFrame=9, forwardForceEndFrame=20),
+        "cmd:f+1": jake_long_move("Claw Dash", 14, 3, 22, 12, "mid", -6, 13, 18, 1.78, "Forward-moving claw strike that reaches farther than Jake's standing checks.", forwardForce=1.28, forwardForceStartFrame=8, forwardForceEndFrame=17),
+        "cmd:f+3": jake_long_move("Skateboard Shoulder", 18, 4, 27, 14, "mid", -9, 14, 22, 1.96, "Committed skateboard approach that catches backdash attempts but is punishable on block.", forwardForce=1.65, forwardForceStartFrame=8, forwardForceEndFrame=24),
+        "cmd:d+3": jake_long_move("Crouching Dragon Sweep", 16, 3, 23, 11, "low", -14, 8, 13, 1.66, "Low crouching swipe that keeps Jake compact and threatens crouch routes.", endsInCrouch=True),
+        "cmd:d/f+2": jake_long_move("Rising Dragon Claw", 18, 3, 31, 14, "mid", -14, 28, 34, 1.66, "Unsafe rising claw that starts Jake's juggle routes.", launchHeight=2.15, launchVelocity=6.0, juggleRefloatVelocity=4.35, juggleGravityScale=0.52, forwardForce=0.85, forwardForceStartFrame=10, forwardForceEndFrame=17),
+        "cmd:d/f+3": jake_long_move("Airborne Talon", 19, 4, 28, 13, "mid", -9, 17, 24, 1.76, "Jumping talon hit that lifts slightly and keeps aerial pressure moving.", launchHeight=1.35, launchVelocity=5.35, juggleRefloatVelocity=4.0, juggleGravityScale=0.58, jumpBeforeMove=True, moveJumpForce=8.0, moveJumpGravity=22),
+        "cmd:qcf+3": jake_long_move("Dragon Rush", 20, 4, 29, 15, "mid", -9, 18, 25, 1.96, "Red-aura rush that carries forward and catches retreat.", forwardForce=1.5, forwardForceStartFrame=10, forwardForceEndFrame=24),
+        "cmd:qcf+4": jake_long_move("Full Dragon Pounce", 23, 5, 35, 17, "mid", -12, 20, 29, 2.08, "Dragon-form pounce that works as a high-commitment juggle extender.", tornado=True, knockdown=True, jumpBeforeMove=True, moveJumpForce=8.6, moveJumpGravity=23, forwardForce=1.85, forwardForceStartFrame=12, forwardForceEndFrame=31),
+        "cmd:WS+4": jake_long_move("Rising Skate Kick", 15, 3, 25, 12, "mid", -9, 17, 24, 1.7, "While-standing kick that lifts after crouch pressure.", launchHeight=1.55, launchVelocity=5.55, juggleRefloatVelocity=4.05, juggleGravityScale=0.56),
+        "cmd:FC+1": jake_long_move("Crouch Claw Poke", 12, 2, 16, 7, "mid", -3, 9, 13, 1.34, "Quick crouching poke for interrupting after Skate Park Low.", endsInCrouch=True),
+        "cmd:FC+2": jake_long_move("Low Dragon Pop", 18, 3, 30, 13, "mid", -14, 26, 32, 1.5, "Crouch-starting launcher that rewards a hard read from full crouch.", launchHeight=2.0, launchVelocity=5.8, juggleRefloatVelocity=4.2, juggleGravityScale=0.54),
+        "cmd:1+2": jake_long_move("Claw Flare Barrage", 18, 4, 25, 15, "mid", -7, 15, 21, 1.84, "Red-aura barrage that keeps Jake close for route extensions.", forwardForce=1.25, forwardForceStartFrame=10, forwardForceEndFrame=22),
+        "cmd:1+3": jake_long_move("Dragon Morph Lift", 22, 5, 35, 18, "mid", -15, 29, 36, 1.9, "Transformation starter that launches but leaves Jake very punishable on block.", launchHeight=2.25, launchVelocity=6.05, juggleRefloatVelocity=4.45, juggleGravityScale=0.5, tornado=True, usesKi=True, kiCost=20),
+        "cmd:2+3": jake_long_move("Board Flip Feint", 19, 3, 25, 11, "low", -13, 8, 15, 1.62, "Skateboard low feint that slips into crouch and punishes stand blocking.", endsInCrouch=True, counterHit=True, counterHitStunBonusFrames=5),
+        "cmd:2+4": jake_long_move("Skateboard Knockdown", 22, 4, 31, 15, "low", -17, 13, 19, 1.82, "Risky low skateboard sweep that knocks down on commitment.", knockdown=True, endsInCrouch=True, forwardForce=1.25, forwardForceStartFrame=10, forwardForceEndFrame=25),
+        "cmd:3+4": jake_long_move("Dragon Cyclone", 25, 6, 38, 19, "mid", -14, 21, 30, 2.02, "Dragon-form spin that creates tornado routes after a launcher.", tornado=True, knockdown=True, tracking="strong", homingSpeed=9),
+        "cmd:SS+3": jake_long_move("Skate Side Slash", 17, 4, 27, 13, "mid", -8, 14, 22, 1.84, "Sidestep skateboard slash that catches linear retaliation and keeps Jake mobile.", tracking="strong", homingSpeed=10),
+        "cmd:O+1": jake_long_move("Dragon Up", 29, 5, 40, 19, "special", -11, 20, 29, 1.82, "Ki-cost transformation burst that armors through light checks before Jake morphs forward.", usesKi=True, kiCost=35, armorStartFrame=8, armorEndFrame=20, knockdown=True, forwardForce=1.35, forwardForceStartFrame=14, forwardForceEndFrame=31),
+        "cmd:O+2": jake_long_move("American Dragon Fire Breath", 31, 6, 45, 25, "special", -17, 26, 38, 2.18, "Expensive dragon fire finisher with strong juggle reward and real block risk.", usesKi=True, kiCost=50, knockdown=True, tornado=True, forwardForce=1.55, forwardForceStartFrame=15, forwardForceEndFrame=38, whiffRecoveryFrames=18),
+    }
+    neutral_labels = {
+        "neutral:jab-jab": "Dragon Combo Second Beat",
+        "neutral:jab-jab-heavy": "Claw Check Route",
+        "neutral:jab-jab-kick": "Skate Park Changeup",
+        "neutral:jab-jab-special": "Dragon Tail Ender",
+        "neutral:jab-heavy": "Claw Drive",
+        "neutral:jab-heavy-kick": "Claw to Low",
+        "neutral:jab-heavy-special": "Dragon Rush Ender",
+        "neutral:jab-kick": "Low Skate Link",
+        "neutral:jab-kick-heavy": "Low to Claw Check",
+        "neutral:jab-kick-special": "Low Dragon Spark",
+        "neutral:jab-special": "Tail Spark Setup",
+        "neutral:jab-special-heavy": "Spark Crush",
+        "neutral:heavy-jab": "Claw Reset",
+        "neutral:heavy-jab-heavy": "Double Claw Loop",
+        "neutral:heavy-jab-special": "Claw to Dragon Rush",
+        "neutral:heavy-kick": "Claw Low",
+        "neutral:heavy-kick-special": "Skate Spark",
+        "neutral:heavy-special": "Dragon Pressure",
+        "neutral:heavy-special-kick": "Spark Low Reset",
+        "neutral:kick-jab": "Skate Jab Reset",
+        "neutral:kick-jab-special": "Skate Dragon Spark",
+        "neutral:kick-heavy": "Skate Claw Check",
+        "neutral:kick-heavy-special": "Skate Rush Ender",
+        "neutral:kick-special": "Skate Spark",
+        "neutral:kick-special-heavy": "Spark Claw Route",
+        "neutral:special-jab": "Dragon Tail Reset",
+        "neutral:special-jab-heavy": "Tail to Claw",
+        "neutral:special-heavy": "Dragon Tail Drive",
+        "neutral:special-kick": "Dragon Tail Low",
+    }
+    for key, label in neutral_labels.items():
+        overrides[key] = {
+            "label": label,
+            "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+        }
+    return overrides
+
+
 def manifest_for(character_id: str, display_name: str, frame_count: int, animation_frames: dict[str, list[str]], animation_rates: dict[str, float]) -> dict[str, Any]:
     variant_of = VARIANT_OF.get(character_id)
     frame_lengths = {key: len(value) for key, value in animation_frames.items()}
@@ -1681,6 +2069,8 @@ def manifest_for(character_id: str, display_name: str, frame_count: int, animati
         moves = rock_lee_base_moves()
     elif character_id == "kid-goku":
         moves = kid_goku_base_moves()
+    elif character_id == "jake-long":
+        moves = jake_long_base_moves()
     else:
         moves = [
         base_move(f"{display_name} Left Check", "jab", "jab", (10, 2, 14), 6, "high", 1.42),
@@ -1689,11 +2079,11 @@ def manifest_for(character_id: str, display_name: str, frame_count: int, animati
         base_move(f"{display_name} Right Kick", "special", "special", (16, 3, 22), 12, "mid", 1.72),
         ]
     stats = {
-        "health": 94 if character_id == "rock-lee" else (92 if character_id == "kid-goku" else health),
-        "speed": 5.55 if character_id == "rock-lee" else (5.42 if character_id == "kid-goku" else speed),
-        "sidestepSpeed": 4.86 if character_id == "rock-lee" else (4.78 if character_id == "kid-goku" else round(max(4.05, speed - 0.62), 2)),
-        "dashDistance": 1.02 if character_id == "rock-lee" else (1.08 if character_id == "kid-goku" else None),
-        "jumpForce": 8.75 if character_id == "rock-lee" else (8.62 if character_id == "kid-goku" else jump_force),
+        "health": 94 if character_id == "rock-lee" else (92 if character_id == "kid-goku" else (98 if character_id == "jake-long" else health)),
+        "speed": 5.55 if character_id == "rock-lee" else (5.42 if character_id == "kid-goku" else (5.28 if character_id == "jake-long" else speed)),
+        "sidestepSpeed": 4.86 if character_id == "rock-lee" else (4.78 if character_id == "kid-goku" else (4.72 if character_id == "jake-long" else round(max(4.05, speed - 0.62), 2))),
+        "dashDistance": 1.02 if character_id == "rock-lee" else (1.08 if character_id == "kid-goku" else (1.12 if character_id == "jake-long" else None)),
+        "jumpForce": 8.75 if character_id == "rock-lee" else (8.62 if character_id == "kid-goku" else (8.7 if character_id == "jake-long" else jump_force)),
         "gravity": 18,
     }
     return {
@@ -1775,7 +2165,7 @@ def import_character(
         source_path = source_file
     display_name = display_name or source_dir.name
     image = load_source_image(source_path)
-    boxes, excluded_boxes = filtered_projection_boxes(image)
+    boxes, excluded_boxes = filtered_projection_boxes(image, character_id)
     backgrounds = dominant_border_backgrounds(image, sample_backgrounds(image))
     character_dir = repo / "public" / "characters" / character_id
     if character_id in PROTECTED_IDS:

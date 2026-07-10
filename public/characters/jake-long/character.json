@@ -1,0 +1,1710 @@
+{
+  "id": "jake-long",
+  "displayName": "Jake Long",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/jake-long/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://jake-long",
+  "spriteSheetPath": "/characters/jake-long/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/jake-long/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 300
+    }
+  ],
+  "spriteFrameCount": 301,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/jake-long/frames/frame-000.png",
+      "/characters/jake-long/frames/frame-001.png",
+      "/characters/jake-long/frames/frame-002.png",
+      "/characters/jake-long/frames/frame-003.png",
+      "/characters/jake-long/frames/frame-004.png",
+      "/characters/jake-long/frames/frame-005.png",
+      "/characters/jake-long/frames/frame-006.png",
+      "/characters/jake-long/frames/frame-007.png",
+      "/characters/jake-long/frames/frame-008.png",
+      "/characters/jake-long/frames/frame-009.png",
+      "/characters/jake-long/frames/frame-010.png",
+      "/characters/jake-long/frames/frame-011.png"
+    ],
+    "walkForward": [
+      "/characters/jake-long/frames/frame-039.png",
+      "/characters/jake-long/frames/frame-040.png",
+      "/characters/jake-long/frames/frame-041.png",
+      "/characters/jake-long/frames/frame-042.png",
+      "/characters/jake-long/frames/frame-043.png",
+      "/characters/jake-long/frames/frame-044.png",
+      "/characters/jake-long/frames/frame-045.png",
+      "/characters/jake-long/frames/frame-046.png",
+      "/characters/jake-long/frames/frame-047.png"
+    ],
+    "walkBack": [
+      "/characters/jake-long/frames/frame-047.png",
+      "/characters/jake-long/frames/frame-046.png",
+      "/characters/jake-long/frames/frame-045.png",
+      "/characters/jake-long/frames/frame-044.png",
+      "/characters/jake-long/frames/frame-043.png",
+      "/characters/jake-long/frames/frame-042.png",
+      "/characters/jake-long/frames/frame-041.png",
+      "/characters/jake-long/frames/frame-040.png",
+      "/characters/jake-long/frames/frame-039.png"
+    ],
+    "sprint": [
+      "/characters/jake-long/frames/frame-029.png",
+      "/characters/jake-long/frames/frame-030.png",
+      "/characters/jake-long/frames/frame-031.png",
+      "/characters/jake-long/frames/frame-032.png",
+      "/characters/jake-long/frames/frame-033.png",
+      "/characters/jake-long/frames/frame-034.png",
+      "/characters/jake-long/frames/frame-035.png",
+      "/characters/jake-long/frames/frame-036.png",
+      "/characters/jake-long/frames/frame-037.png",
+      "/characters/jake-long/frames/frame-038.png"
+    ],
+    "backHop": [
+      "/characters/jake-long/frames/frame-048.png",
+      "/characters/jake-long/frames/frame-049.png",
+      "/characters/jake-long/frames/frame-050.png",
+      "/characters/jake-long/frames/frame-051.png"
+    ],
+    "sidestepLeft": [
+      "/characters/jake-long/frames/frame-024.png",
+      "/characters/jake-long/frames/frame-025.png",
+      "/characters/jake-long/frames/frame-026.png",
+      "/characters/jake-long/frames/frame-027.png",
+      "/characters/jake-long/frames/frame-028.png"
+    ],
+    "sidestepRight": [
+      "/characters/jake-long/frames/frame-028.png",
+      "/characters/jake-long/frames/frame-027.png",
+      "/characters/jake-long/frames/frame-026.png",
+      "/characters/jake-long/frames/frame-025.png",
+      "/characters/jake-long/frames/frame-024.png"
+    ],
+    "jump": [
+      "/characters/jake-long/frames/frame-048.png",
+      "/characters/jake-long/frames/frame-049.png",
+      "/characters/jake-long/frames/frame-050.png",
+      "/characters/jake-long/frames/frame-051.png",
+      "/characters/jake-long/frames/frame-052.png",
+      "/characters/jake-long/frames/frame-053.png",
+      "/characters/jake-long/frames/frame-054.png"
+    ],
+    "crouch": [
+      "/characters/jake-long/frames/frame-012.png",
+      "/characters/jake-long/frames/frame-013.png",
+      "/characters/jake-long/frames/frame-014.png",
+      "/characters/jake-long/frames/frame-015.png",
+      "/characters/jake-long/frames/frame-016.png",
+      "/characters/jake-long/frames/frame-017.png",
+      "/characters/jake-long/frames/frame-018.png",
+      "/characters/jake-long/frames/frame-019.png",
+      "/characters/jake-long/frames/frame-020.png",
+      "/characters/jake-long/frames/frame-021.png",
+      "/characters/jake-long/frames/frame-022.png",
+      "/characters/jake-long/frames/frame-023.png"
+    ],
+    "crouchBlock": [
+      "/characters/jake-long/frames/frame-300.png"
+    ],
+    "block": [
+      "/characters/jake-long/frames/frame-024.png",
+      "/characters/jake-long/frames/frame-025.png",
+      "/characters/jake-long/frames/frame-026.png",
+      "/characters/jake-long/frames/frame-027.png",
+      "/characters/jake-long/frames/frame-028.png"
+    ],
+    "chargeKi": [
+      "/characters/jake-long/frames/frame-198.png",
+      "/characters/jake-long/frames/frame-199.png",
+      "/characters/jake-long/frames/frame-200.png",
+      "/characters/jake-long/frames/frame-201.png",
+      "/characters/jake-long/frames/frame-202.png",
+      "/characters/jake-long/frames/frame-203.png",
+      "/characters/jake-long/frames/frame-204.png",
+      "/characters/jake-long/frames/frame-205.png",
+      "/characters/jake-long/frames/frame-214.png",
+      "/characters/jake-long/frames/frame-215.png",
+      "/characters/jake-long/frames/frame-216.png",
+      "/characters/jake-long/frames/frame-217.png",
+      "/characters/jake-long/frames/frame-218.png",
+      "/characters/jake-long/frames/frame-219.png",
+      "/characters/jake-long/frames/frame-220.png",
+      "/characters/jake-long/frames/frame-221.png"
+    ],
+    "jableft": [
+      "/characters/jake-long/frames/frame-055.png",
+      "/characters/jake-long/frames/frame-056.png",
+      "/characters/jake-long/frames/frame-057.png",
+      "/characters/jake-long/frames/frame-058.png",
+      "/characters/jake-long/frames/frame-059.png",
+      "/characters/jake-long/frames/frame-060.png"
+    ],
+    "jabright": [
+      "/characters/jake-long/frames/frame-061.png",
+      "/characters/jake-long/frames/frame-062.png",
+      "/characters/jake-long/frames/frame-063.png",
+      "/characters/jake-long/frames/frame-064.png",
+      "/characters/jake-long/frames/frame-065.png",
+      "/characters/jake-long/frames/frame-066.png",
+      "/characters/jake-long/frames/frame-067.png"
+    ],
+    "kickleft": [
+      "/characters/jake-long/frames/frame-086.png",
+      "/characters/jake-long/frames/frame-087.png",
+      "/characters/jake-long/frames/frame-088.png",
+      "/characters/jake-long/frames/frame-089.png",
+      "/characters/jake-long/frames/frame-090.png",
+      "/characters/jake-long/frames/frame-091.png",
+      "/characters/jake-long/frames/frame-092.png"
+    ],
+    "kickright": [
+      "/characters/jake-long/frames/frame-068.png",
+      "/characters/jake-long/frames/frame-069.png",
+      "/characters/jake-long/frames/frame-070.png",
+      "/characters/jake-long/frames/frame-071.png",
+      "/characters/jake-long/frames/frame-072.png",
+      "/characters/jake-long/frames/frame-073.png",
+      "/characters/jake-long/frames/frame-074.png",
+      "/characters/jake-long/frames/frame-075.png"
+    ],
+    "hitLight": [
+      "/characters/jake-long/frames/frame-123.png",
+      "/characters/jake-long/frames/frame-124.png",
+      "/characters/jake-long/frames/frame-125.png",
+      "/characters/jake-long/frames/frame-126.png"
+    ],
+    "hitHeavy": [
+      "/characters/jake-long/frames/frame-123.png",
+      "/characters/jake-long/frames/frame-124.png",
+      "/characters/jake-long/frames/frame-125.png",
+      "/characters/jake-long/frames/frame-126.png",
+      "/characters/jake-long/frames/frame-127.png",
+      "/characters/jake-long/frames/frame-128.png",
+      "/characters/jake-long/frames/frame-129.png",
+      "/characters/jake-long/frames/frame-130.png",
+      "/characters/jake-long/frames/frame-131.png",
+      "/characters/jake-long/frames/frame-132.png",
+      "/characters/jake-long/frames/frame-133.png",
+      "/characters/jake-long/frames/frame-134.png"
+    ],
+    "juggle": [
+      "/characters/jake-long/frames/frame-127.png",
+      "/characters/jake-long/frames/frame-128.png",
+      "/characters/jake-long/frames/frame-129.png",
+      "/characters/jake-long/frames/frame-130.png"
+    ],
+    "knockdown": [
+      "/characters/jake-long/frames/frame-128.png",
+      "/characters/jake-long/frames/frame-129.png",
+      "/characters/jake-long/frames/frame-130.png",
+      "/characters/jake-long/frames/frame-131.png",
+      "/characters/jake-long/frames/frame-132.png",
+      "/characters/jake-long/frames/frame-133.png",
+      "/characters/jake-long/frames/frame-134.png"
+    ],
+    "getupStand": [
+      "/characters/jake-long/frames/frame-134.png",
+      "/characters/jake-long/frames/frame-133.png",
+      "/characters/jake-long/frames/frame-132.png",
+      "/characters/jake-long/frames/frame-131.png",
+      "/characters/jake-long/frames/frame-130.png",
+      "/characters/jake-long/frames/frame-000.png"
+    ],
+    "getupRollUp": [
+      "/characters/jake-long/frames/frame-152.png",
+      "/characters/jake-long/frames/frame-153.png",
+      "/characters/jake-long/frames/frame-154.png",
+      "/characters/jake-long/frames/frame-155.png",
+      "/characters/jake-long/frames/frame-156.png",
+      "/characters/jake-long/frames/frame-157.png",
+      "/characters/jake-long/frames/frame-158.png"
+    ],
+    "win": [
+      "/characters/jake-long/frames/frame-198.png",
+      "/characters/jake-long/frames/frame-199.png",
+      "/characters/jake-long/frames/frame-200.png",
+      "/characters/jake-long/frames/frame-201.png",
+      "/characters/jake-long/frames/frame-202.png",
+      "/characters/jake-long/frames/frame-203.png",
+      "/characters/jake-long/frames/frame-204.png",
+      "/characters/jake-long/frames/frame-205.png",
+      "/characters/jake-long/frames/frame-206.png",
+      "/characters/jake-long/frames/frame-207.png"
+    ],
+    "lose": [
+      "/characters/jake-long/frames/frame-134.png"
+    ],
+    "cmd:f+1": [
+      "/characters/jake-long/frames/frame-061.png",
+      "/characters/jake-long/frames/frame-062.png",
+      "/characters/jake-long/frames/frame-063.png",
+      "/characters/jake-long/frames/frame-064.png",
+      "/characters/jake-long/frames/frame-065.png",
+      "/characters/jake-long/frames/frame-066.png",
+      "/characters/jake-long/frames/frame-067.png"
+    ],
+    "cmd:f+3": [
+      "/characters/jake-long/frames/frame-173.png",
+      "/characters/jake-long/frames/frame-174.png",
+      "/characters/jake-long/frames/frame-175.png",
+      "/characters/jake-long/frames/frame-176.png",
+      "/characters/jake-long/frames/frame-177.png",
+      "/characters/jake-long/frames/frame-178.png",
+      "/characters/jake-long/frames/frame-179.png",
+      "/characters/jake-long/frames/frame-180.png",
+      "/characters/jake-long/frames/frame-181.png",
+      "/characters/jake-long/frames/frame-182.png",
+      "/characters/jake-long/frames/frame-183.png",
+      "/characters/jake-long/frames/frame-184.png",
+      "/characters/jake-long/frames/frame-185.png"
+    ],
+    "cmd:d+3": [
+      "/characters/jake-long/frames/frame-086.png",
+      "/characters/jake-long/frames/frame-087.png",
+      "/characters/jake-long/frames/frame-088.png",
+      "/characters/jake-long/frames/frame-089.png",
+      "/characters/jake-long/frames/frame-090.png",
+      "/characters/jake-long/frames/frame-091.png",
+      "/characters/jake-long/frames/frame-092.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/jake-long/frames/frame-068.png",
+      "/characters/jake-long/frames/frame-069.png",
+      "/characters/jake-long/frames/frame-070.png",
+      "/characters/jake-long/frames/frame-071.png",
+      "/characters/jake-long/frames/frame-072.png",
+      "/characters/jake-long/frames/frame-073.png",
+      "/characters/jake-long/frames/frame-074.png",
+      "/characters/jake-long/frames/frame-075.png"
+    ],
+    "cmd:d/f+3": [
+      "/characters/jake-long/frames/frame-098.png",
+      "/characters/jake-long/frames/frame-099.png",
+      "/characters/jake-long/frames/frame-100.png",
+      "/characters/jake-long/frames/frame-101.png",
+      "/characters/jake-long/frames/frame-102.png",
+      "/characters/jake-long/frames/frame-103.png",
+      "/characters/jake-long/frames/frame-104.png"
+    ],
+    "cmd:qcf+3": [
+      "/characters/jake-long/frames/frame-076.png",
+      "/characters/jake-long/frames/frame-077.png",
+      "/characters/jake-long/frames/frame-078.png",
+      "/characters/jake-long/frames/frame-079.png",
+      "/characters/jake-long/frames/frame-080.png",
+      "/characters/jake-long/frames/frame-081.png",
+      "/characters/jake-long/frames/frame-082.png",
+      "/characters/jake-long/frames/frame-083.png",
+      "/characters/jake-long/frames/frame-084.png",
+      "/characters/jake-long/frames/frame-085.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/jake-long/frames/frame-251.png",
+      "/characters/jake-long/frames/frame-252.png",
+      "/characters/jake-long/frames/frame-253.png",
+      "/characters/jake-long/frames/frame-254.png",
+      "/characters/jake-long/frames/frame-255.png",
+      "/characters/jake-long/frames/frame-256.png",
+      "/characters/jake-long/frames/frame-257.png",
+      "/characters/jake-long/frames/frame-258.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/jake-long/frames/frame-113.png",
+      "/characters/jake-long/frames/frame-114.png",
+      "/characters/jake-long/frames/frame-115.png",
+      "/characters/jake-long/frames/frame-116.png",
+      "/characters/jake-long/frames/frame-117.png",
+      "/characters/jake-long/frames/frame-118.png",
+      "/characters/jake-long/frames/frame-119.png",
+      "/characters/jake-long/frames/frame-120.png",
+      "/characters/jake-long/frames/frame-121.png",
+      "/characters/jake-long/frames/frame-122.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/jake-long/frames/frame-086.png",
+      "/characters/jake-long/frames/frame-087.png",
+      "/characters/jake-long/frames/frame-088.png",
+      "/characters/jake-long/frames/frame-089.png",
+      "/characters/jake-long/frames/frame-090.png",
+      "/characters/jake-long/frames/frame-091.png",
+      "/characters/jake-long/frames/frame-092.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/jake-long/frames/frame-105.png",
+      "/characters/jake-long/frames/frame-106.png",
+      "/characters/jake-long/frames/frame-107.png",
+      "/characters/jake-long/frames/frame-108.png",
+      "/characters/jake-long/frames/frame-109.png",
+      "/characters/jake-long/frames/frame-110.png",
+      "/characters/jake-long/frames/frame-111.png",
+      "/characters/jake-long/frames/frame-112.png"
+    ],
+    "cmd:1+2": [
+      "/characters/jake-long/frames/frame-076.png",
+      "/characters/jake-long/frames/frame-077.png",
+      "/characters/jake-long/frames/frame-078.png",
+      "/characters/jake-long/frames/frame-079.png",
+      "/characters/jake-long/frames/frame-080.png",
+      "/characters/jake-long/frames/frame-081.png",
+      "/characters/jake-long/frames/frame-082.png",
+      "/characters/jake-long/frames/frame-083.png",
+      "/characters/jake-long/frames/frame-084.png",
+      "/characters/jake-long/frames/frame-085.png"
+    ],
+    "cmd:1+3": [
+      "/characters/jake-long/frames/frame-244.png",
+      "/characters/jake-long/frames/frame-245.png",
+      "/characters/jake-long/frames/frame-246.png",
+      "/characters/jake-long/frames/frame-247.png",
+      "/characters/jake-long/frames/frame-248.png",
+      "/characters/jake-long/frames/frame-249.png",
+      "/characters/jake-long/frames/frame-250.png"
+    ],
+    "cmd:2+3": [
+      "/characters/jake-long/frames/frame-186.png",
+      "/characters/jake-long/frames/frame-187.png",
+      "/characters/jake-long/frames/frame-188.png",
+      "/characters/jake-long/frames/frame-189.png",
+      "/characters/jake-long/frames/frame-190.png",
+      "/characters/jake-long/frames/frame-191.png",
+      "/characters/jake-long/frames/frame-192.png",
+      "/characters/jake-long/frames/frame-193.png"
+    ],
+    "cmd:2+4": [
+      "/characters/jake-long/frames/frame-173.png",
+      "/characters/jake-long/frames/frame-174.png",
+      "/characters/jake-long/frames/frame-175.png",
+      "/characters/jake-long/frames/frame-176.png",
+      "/characters/jake-long/frames/frame-177.png",
+      "/characters/jake-long/frames/frame-178.png",
+      "/characters/jake-long/frames/frame-179.png",
+      "/characters/jake-long/frames/frame-180.png",
+      "/characters/jake-long/frames/frame-181.png",
+      "/characters/jake-long/frames/frame-182.png",
+      "/characters/jake-long/frames/frame-183.png",
+      "/characters/jake-long/frames/frame-184.png",
+      "/characters/jake-long/frames/frame-185.png"
+    ],
+    "cmd:3+4": [
+      "/characters/jake-long/frames/frame-259.png",
+      "/characters/jake-long/frames/frame-260.png",
+      "/characters/jake-long/frames/frame-261.png",
+      "/characters/jake-long/frames/frame-262.png",
+      "/characters/jake-long/frames/frame-263.png",
+      "/characters/jake-long/frames/frame-264.png",
+      "/characters/jake-long/frames/frame-265.png",
+      "/characters/jake-long/frames/frame-266.png"
+    ],
+    "cmd:SS+3": [
+      "/characters/jake-long/frames/frame-152.png",
+      "/characters/jake-long/frames/frame-153.png",
+      "/characters/jake-long/frames/frame-154.png",
+      "/characters/jake-long/frames/frame-155.png",
+      "/characters/jake-long/frames/frame-156.png",
+      "/characters/jake-long/frames/frame-157.png",
+      "/characters/jake-long/frames/frame-158.png"
+    ],
+    "cmd:O+1": [
+      "/characters/jake-long/frames/frame-198.png",
+      "/characters/jake-long/frames/frame-199.png",
+      "/characters/jake-long/frames/frame-200.png",
+      "/characters/jake-long/frames/frame-201.png",
+      "/characters/jake-long/frames/frame-202.png",
+      "/characters/jake-long/frames/frame-203.png",
+      "/characters/jake-long/frames/frame-204.png",
+      "/characters/jake-long/frames/frame-205.png",
+      "/characters/jake-long/frames/frame-214.png",
+      "/characters/jake-long/frames/frame-215.png",
+      "/characters/jake-long/frames/frame-216.png",
+      "/characters/jake-long/frames/frame-217.png",
+      "/characters/jake-long/frames/frame-218.png",
+      "/characters/jake-long/frames/frame-219.png",
+      "/characters/jake-long/frames/frame-220.png",
+      "/characters/jake-long/frames/frame-221.png",
+      "/characters/jake-long/frames/frame-237.png",
+      "/characters/jake-long/frames/frame-238.png",
+      "/characters/jake-long/frames/frame-239.png",
+      "/characters/jake-long/frames/frame-240.png",
+      "/characters/jake-long/frames/frame-241.png",
+      "/characters/jake-long/frames/frame-242.png",
+      "/characters/jake-long/frames/frame-243.png"
+    ],
+    "cmd:O+2": [
+      "/characters/jake-long/frames/frame-277.png",
+      "/characters/jake-long/frames/frame-278.png",
+      "/characters/jake-long/frames/frame-279.png",
+      "/characters/jake-long/frames/frame-280.png",
+      "/characters/jake-long/frames/frame-281.png",
+      "/characters/jake-long/frames/frame-282.png",
+      "/characters/jake-long/frames/frame-283.png",
+      "/characters/jake-long/frames/frame-284.png",
+      "/characters/jake-long/frames/frame-285.png",
+      "/characters/jake-long/frames/frame-286.png",
+      "/characters/jake-long/frames/frame-287.png",
+      "/characters/jake-long/frames/frame-288.png",
+      "/characters/jake-long/frames/frame-289.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 7,
+    "walkForward": 11,
+    "walkBack": 10,
+    "sprint": 13,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 9,
+    "crouch": 7,
+    "crouchBlock": 5,
+    "block": 6,
+    "chargeKi": 8,
+    "jableft": 12,
+    "jabright": 12,
+    "kickleft": 11,
+    "kickright": 11,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 9,
+    "win": 7,
+    "lose": 5,
+    "cmd:f+1": 10,
+    "cmd:f+3": 10,
+    "cmd:d+3": 10,
+    "cmd:d/f+2": 10,
+    "cmd:d/f+3": 10,
+    "cmd:qcf+3": 10,
+    "cmd:qcf+4": 10,
+    "cmd:WS+4": 10,
+    "cmd:FC+1": 10,
+    "cmd:FC+2": 10,
+    "cmd:1+2": 10,
+    "cmd:1+3": 10,
+    "cmd:2+3": 10,
+    "cmd:2+4": 10,
+    "cmd:3+4": 10,
+    "cmd:SS+3": 10,
+    "cmd:O+1": 10,
+    "cmd:O+2": 10
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 98,
+    "speed": 5.28,
+    "sidestepSpeed": 4.72,
+    "dashDistance": 1.12,
+    "jumpForce": 8.7,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "label": "American Dragon Jab",
+      "description": "Fast human-form check that starts Jake's close pressure.",
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -1,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 4,
+      "range": 1.4,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.772
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.692
+        ]
+      },
+      "id": "jab",
+      "input": "jab"
+    },
+    {
+      "label": "Skate Park Low",
+      "description": "Low crouching strike that ducks under highs and keeps Jake near the opponent.",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -13,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.95,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.84,
+          0.7896000000000001
+        ],
+        "size": [
+          0.74,
+          0.42,
+          0.7096
+        ]
+      },
+      "endsInCrouch": true,
+      "id": "kick",
+      "input": "kick"
+    },
+    {
+      "label": "Dragon Claw Check",
+      "description": "Compact red-aura claw swipe with better reward than his fastest jab.",
+      "startupFrames": 12,
+      "activeFrames": 3,
+      "recoveryFrames": 17,
+      "damage": 9,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -4,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 17,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 15,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 5,
+      "range": 1.55,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.784
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.704
+        ]
+      },
+      "id": "heavy",
+      "input": "heavy"
+    },
+    {
+      "label": "Dragon Tail Spark",
+      "description": "Forward red-aura swing that cashes out basic human strings.",
+      "startupFrames": 17,
+      "activeFrames": 4,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 22,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.82,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8056000000000001
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7256
+        ]
+      },
+      "forwardForce": 1.05,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 20,
+      "id": "special",
+      "input": "special"
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#44d6a1",
+    "secondary": "#2ac667",
+    "accent": "#eb3c9c"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "label": "American Dragon Jab",
+      "description": "Fast human-form jab for checking movement and starting pressure.",
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -1,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 4,
+      "range": 1.4,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.772
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.692
+        ]
+      }
+    },
+    "jabright": {
+      "label": "Dragon Claw Check",
+      "description": "Quick red-aura mid swipe that keeps Jake close enough to keep talking with his fists.",
+      "startupFrames": 11,
+      "activeFrames": 3,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -4,
+      "onHitFrames": 11,
+      "onCounterHitFrames": 16,
+      "onComboHitFrames": 9,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 5,
+      "range": 1.54,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.7832
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7031999999999999
+        ]
+      }
+    },
+    "kickleft": {
+      "label": "Skate Park Low",
+      "description": "Crouching low that slips under highs and leaves Jake in full crouch.",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -13,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 10,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.95,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.84,
+          0.7896000000000001
+        ],
+        "size": [
+          0.74,
+          0.42,
+          0.7096
+        ]
+      },
+      "endsInCrouch": true
+    },
+    "kickright": {
+      "label": "Dragon Tail Spark",
+      "description": "Forward red-aura swing with enough advantage to keep pressure honest.",
+      "startupFrames": 16,
+      "activeFrames": 4,
+      "recoveryFrames": 24,
+      "damage": 12,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 20,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.78,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8024
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7223999999999999
+        ]
+      },
+      "forwardForce": 1.0,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 20
+    },
+    "cmd:f+1": {
+      "label": "Claw Dash",
+      "description": "Forward-moving claw strike that reaches farther than Jake's standing checks.",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -6,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 18,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.78,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8024
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7223999999999999
+        ]
+      },
+      "forwardForce": 1.28,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 17
+    },
+    "cmd:f+3": {
+      "label": "Skateboard Shoulder",
+      "description": "Committed skateboard approach that catches backdash attempts but is punishable on block.",
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 14,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 9,
+      "range": 1.96,
+      "pushback": 0.99,
+      "blockPushback": 0.46,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8168
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7367999999999999
+        ]
+      },
+      "forwardForce": 1.65,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 24
+    },
+    "cmd:d+3": {
+      "label": "Crouching Dragon Sweep",
+      "description": "Low crouching swipe that keeps Jake compact and threatens crouch routes.",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
+      "damage": 11,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -14,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.66,
+      "pushback": 0.95,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.84,
+          0.7928000000000001
+        ],
+        "size": [
+          0.74,
+          0.42,
+          0.7128
+        ]
+      },
+      "endsInCrouch": true
+    },
+    "cmd:d/f+2": {
+      "label": "Rising Dragon Claw",
+      "description": "Unsafe rising claw that starts Jake's juggle routes.",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
+      "damage": 14,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -14,
+      "onHitFrames": 28,
+      "onCounterHitFrames": 34,
+      "onComboHitFrames": 26,
+      "onJuggleHitFrames": 31,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 10,
+      "range": 1.66,
+      "pushback": 0.95,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.7928000000000001
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7128
+        ]
+      },
+      "launchHeight": 2.15,
+      "launchVelocity": 6.0,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 17
+    },
+    "cmd:d/f+3": {
+      "label": "Airborne Talon",
+      "description": "Jumping talon hit that lifts slightly and keeps aerial pressure moving.",
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 13,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 20,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 9,
+      "range": 1.76,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8008000000000001
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7208
+        ]
+      },
+      "launchHeight": 1.35,
+      "launchVelocity": 5.35,
+      "juggleRefloatVelocity": 4.0,
+      "juggleGravityScale": 0.58,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.0,
+      "moveJumpGravity": 22
+    },
+    "cmd:qcf+3": {
+      "label": "Dragon Rush",
+      "description": "Red-aura rush that carries forward and catches retreat.",
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
+      "damage": 15,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "onComboHitFrames": 16,
+      "onJuggleHitFrames": 21,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 9,
+      "range": 1.96,
+      "pushback": 0.99,
+      "blockPushback": 0.46,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8168
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7367999999999999
+        ]
+      },
+      "forwardForce": 1.5,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 24
+    },
+    "cmd:qcf+4": {
+      "label": "Full Dragon Pounce",
+      "description": "Dragon-form pounce that works as a high-commitment juggle extender.",
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 35,
+      "damage": 17,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -12,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 29,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 11,
+      "range": 2.08,
+      "pushback": 1.01,
+      "blockPushback": 0.46,
+      "tracking": "medium",
+      "knockdown": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8264
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7464
+        ]
+      },
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "moveJumpForce": 8.6,
+      "moveJumpGravity": 23,
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 31
+    },
+    "cmd:WS+4": {
+      "label": "Rising Skate Kick",
+      "description": "While-standing kick that lifts after crouch pressure.",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 12,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "onComboHitFrames": 15,
+      "onJuggleHitFrames": 20,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.7,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.796
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.716
+        ]
+      },
+      "launchHeight": 1.55,
+      "launchVelocity": 5.55,
+      "juggleRefloatVelocity": 4.05,
+      "juggleGravityScale": 0.56
+    },
+    "cmd:FC+1": {
+      "label": "Crouch Claw Poke",
+      "description": "Quick crouching poke for interrupting after Skate Park Low.",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 7,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -3,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 12,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "pushback": 0.91,
+      "blockPushback": 0.42,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.7672
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.6871999999999999
+        ]
+      },
+      "endsInCrouch": true
+    },
+    "cmd:FC+2": {
+      "label": "Low Dragon Pop",
+      "description": "Crouch-starting launcher that rewards a hard read from full crouch.",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 30,
+      "damage": 13,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -14,
+      "onHitFrames": 26,
+      "onCounterHitFrames": 32,
+      "onComboHitFrames": 24,
+      "onJuggleHitFrames": 29,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 10,
+      "range": 1.5,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.78
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7
+        ]
+      },
+      "launchHeight": 2.0,
+      "launchVelocity": 5.8,
+      "juggleRefloatVelocity": 4.2,
+      "juggleGravityScale": 0.54
+    },
+    "cmd:1+2": {
+      "label": "Claw Flare Barrage",
+      "description": "Red-aura barrage that keeps Jake close for route extensions.",
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 21,
+      "onComboHitFrames": 13,
+      "onJuggleHitFrames": 18,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.84,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8072
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7272
+        ]
+      },
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 22
+    },
+    "cmd:1+3": {
+      "label": "Dragon Morph Lift",
+      "description": "Transformation starter that launches but leaves Jake very punishable on block.",
+      "startupFrames": 22,
+      "activeFrames": 5,
+      "recoveryFrames": 35,
+      "damage": 18,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -15,
+      "onHitFrames": 29,
+      "onCounterHitFrames": 36,
+      "onComboHitFrames": 27,
+      "onJuggleHitFrames": 32,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 11,
+      "range": 1.9,
+      "pushback": 0.99,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.812
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.732
+        ]
+      },
+      "launchHeight": 2.25,
+      "launchVelocity": 6.05,
+      "juggleRefloatVelocity": 4.45,
+      "juggleGravityScale": 0.5,
+      "tornado": true,
+      "usesKi": true,
+      "kiCost": 20
+    },
+    "cmd:2+3": {
+      "label": "Board Flip Feint",
+      "description": "Skateboard low feint that slips into crouch and punishes stand blocking.",
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 11,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -13,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 15,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "pushback": 0.95,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.84,
+          0.7896000000000001
+        ],
+        "size": [
+          0.74,
+          0.42,
+          0.7096
+        ]
+      },
+      "endsInCrouch": true,
+      "counterHit": true,
+      "counterHitStunBonusFrames": 5
+    },
+    "cmd:2+4": {
+      "label": "Skateboard Knockdown",
+      "description": "Risky low skateboard sweep that knocks down on commitment.",
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
+      "damage": 15,
+      "blockDamage": 1,
+      "hitLevel": "low",
+      "onBlockFrames": -17,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 19,
+      "onComboHitFrames": 11,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 10,
+      "range": 1.82,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": true,
+      "hitbox": {
+        "offset": [
+          0,
+          0.84,
+          0.8056000000000001
+        ],
+        "size": [
+          0.74,
+          0.42,
+          0.7256
+        ]
+      },
+      "endsInCrouch": true,
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 25
+    },
+    "cmd:3+4": {
+      "label": "Dragon Cyclone",
+      "description": "Dragon-form spin that creates tornado routes after a launcher.",
+      "startupFrames": 25,
+      "activeFrames": 6,
+      "recoveryFrames": 38,
+      "damage": 19,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -14,
+      "onHitFrames": 21,
+      "onCounterHitFrames": 30,
+      "onComboHitFrames": 19,
+      "onJuggleHitFrames": 24,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 12,
+      "range": 2.02,
+      "pushback": 1.0,
+      "blockPushback": 0.46,
+      "tracking": "strong",
+      "knockdown": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8216
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7415999999999999
+        ]
+      },
+      "tornado": true,
+      "homingSpeed": 9
+    },
+    "cmd:SS+3": {
+      "label": "Skate Side Slash",
+      "description": "Sidestep skateboard slash that catches linear retaliation and keeps Jake mobile.",
+      "startupFrames": 17,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 13,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 17,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 9,
+      "range": 1.84,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "tracking": "strong",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8072
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7272
+        ]
+      },
+      "homingSpeed": 10
+    },
+    "cmd:O+1": {
+      "label": "Dragon Up",
+      "description": "Ki-cost transformation burst that armors through light checks before Jake morphs forward.",
+      "startupFrames": 29,
+      "activeFrames": 5,
+      "recoveryFrames": 40,
+      "damage": 19,
+      "blockDamage": 1,
+      "hitLevel": "special",
+      "onBlockFrames": -11,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 29,
+      "onComboHitFrames": 18,
+      "onJuggleHitFrames": 23,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 13,
+      "range": 1.82,
+      "pushback": 0.97,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8056000000000001
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7256
+        ]
+      },
+      "usesKi": true,
+      "kiCost": 35,
+      "armorStartFrame": 8,
+      "armorEndFrame": 20,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 31
+    },
+    "cmd:O+2": {
+      "label": "American Dragon Fire Breath",
+      "description": "Expensive dragon fire finisher with strong juggle reward and real block risk.",
+      "startupFrames": 31,
+      "activeFrames": 6,
+      "recoveryFrames": 45,
+      "damage": 25,
+      "blockDamage": 1,
+      "hitLevel": "special",
+      "onBlockFrames": -17,
+      "onHitFrames": 26,
+      "onCounterHitFrames": 38,
+      "onComboHitFrames": 24,
+      "onJuggleHitFrames": 29,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 18,
+      "range": 2.18,
+      "pushback": 1.03,
+      "blockPushback": 0.47,
+      "tracking": "medium",
+      "knockdown": true,
+      "hitbox": {
+        "offset": [
+          0,
+          1.1,
+          0.8344
+        ],
+        "size": [
+          0.74,
+          0.52,
+          0.7544
+        ]
+      },
+      "usesKi": true,
+      "kiCost": 50,
+      "tornado": true,
+      "forwardForce": 1.55,
+      "forwardForceStartFrame": 15,
+      "forwardForceEndFrame": 38
+    },
+    "neutral:jab-jab": {
+      "label": "Dragon Combo Second Beat",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Claw Check Route",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Skate Park Changeup",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-jab-special": {
+      "label": "Dragon Tail Ender",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-heavy": {
+      "label": "Claw Drive",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Claw to Low",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Dragon Rush Ender",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-kick": {
+      "label": "Low Skate Link",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Low to Claw Check",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-kick-special": {
+      "label": "Low Dragon Spark",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-special": {
+      "label": "Tail Spark Setup",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Spark Crush",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:heavy-jab": {
+      "label": "Claw Reset",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Double Claw Loop",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Claw to Dragon Rush",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:heavy-kick": {
+      "label": "Claw Low",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Skate Spark",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:heavy-special": {
+      "label": "Dragon Pressure",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Spark Low Reset",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:kick-jab": {
+      "label": "Skate Jab Reset",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:kick-jab-special": {
+      "label": "Skate Dragon Spark",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:kick-heavy": {
+      "label": "Skate Claw Check",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Skate Rush Ender",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:kick-special": {
+      "label": "Skate Spark",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Spark Claw Route",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:special-jab": {
+      "label": "Dragon Tail Reset",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Tail to Claw",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:special-heavy": {
+      "label": "Dragon Tail Drive",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    },
+    "neutral:special-kick": {
+      "label": "Dragon Tail Low",
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.68,
+    "guard": 0.41,
+    "spacing": 1.56,
+    "specialChance": 0.3
+  }
+}
