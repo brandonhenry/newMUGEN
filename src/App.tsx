@@ -1295,6 +1295,9 @@ function sanitizeMoveOverride(override: MoveOverride): MoveOverride {
   if (typeof override.knockdown === 'boolean') next.knockdown = override.knockdown;
   if (typeof override.tornado === 'boolean') next.tornado = override.tornado;
   if (typeof override.throwCapture === 'boolean') next.throwCapture = override.throwCapture;
+  if (typeof override.throwSideSwap === 'boolean') next.throwSideSwap = override.throwSideSwap;
+  if (typeof override.lotusCaptureStarter === 'boolean') next.lotusCaptureStarter = override.lotusCaptureStarter;
+  if (typeof override.lotusCaptureFinisher === 'boolean') next.lotusCaptureFinisher = override.lotusCaptureFinisher;
   if (typeof override.endsInCrouch === 'boolean') next.endsInCrouch = override.endsInCrouch;
   if (typeof override.holdable === 'boolean') next.holdable = override.holdable;
   if (typeof override.cancelable === 'boolean') next.cancelable = override.cancelable;

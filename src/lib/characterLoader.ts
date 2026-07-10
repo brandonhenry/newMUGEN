@@ -170,6 +170,8 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     tornado: Boolean(move.tornado),
     throwCapture: Boolean(move.throwCapture),
     throwSideSwap: Boolean(move.throwSideSwap),
+    lotusCaptureStarter: Boolean(move.lotusCaptureStarter),
+    lotusCaptureFinisher: Boolean(move.lotusCaptureFinisher),
     endsInCrouch: Boolean(move.endsInCrouch),
     holdable: Boolean(move.holdable),
     cancelable: Boolean(move.cancelable),

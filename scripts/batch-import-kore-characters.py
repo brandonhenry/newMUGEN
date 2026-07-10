@@ -593,6 +593,64 @@ def transparent_crop(image: Image.Image, box: Box, backgrounds: list[tuple[int, 
     return crop
 
 
+ROCK_LEE_CROP_REPAIRS: dict[int, Box] = {
+    27: (0, 0, 34, 56),
+    31: (17, 2, 62, 56),
+    37: (0, 0, 43, 56),
+    50: (0, 18, 46, 74),
+    51: (0, 2, 42, 50),
+    54: (0, 2, 64, 38),
+    81: (10, 0, 60, 44),
+    83: (5, 1, 36, 61),
+    96: (0, 74, 50, 118),
+    102: (0, 0, 33, 82),
+    126: (5, 1, 35, 56),
+    127: (4, 4, 35, 61),
+    129: (8, 0, 40, 70),
+    130: (26, 88, 61, 119),
+    131: (31, 46, 62, 101),
+}
+
+
+def repair_known_character_crop(character_id: str, index: int, image: Image.Image) -> Image.Image:
+    if character_id != "rock-lee":
+        return image
+    repair = ROCK_LEE_CROP_REPAIRS.get(index)
+    if repair is None:
+        return image
+    left, top, right, bottom = repair
+    right = min(image.width, right)
+    bottom = min(image.height, bottom)
+    return image.crop((max(0, left), max(0, top), right, bottom))
+
+
+def load_source_image(source_path: Path) -> Image.Image:
+    image = Image.open(source_path)
+    try:
+        image.seek(0)
+    except EOFError:
+        pass
+    return image.convert("RGBA")
+
+
+def is_footer_text_entry(entry: dict[str, Any], image: Image.Image) -> bool:
+    left, top, right, bottom = (int(value) for value in entry["box"])
+    width = right - left
+    height = bottom - top
+    return top >= image.height * 0.955 and width >= image.width * 0.25 and height <= image.height * 0.06
+
+
+def filtered_projection_boxes(image: Image.Image) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    included: list[dict[str, Any]] = []
+    excluded: list[dict[str, Any]] = []
+    for entry in detect_projection_boxes(image):
+        if is_footer_text_entry(entry, image):
+            excluded.append({**entry, "excludeReason": "footer-text"})
+        else:
+            included.append(entry)
+    return included, excluded
+
+
 def make_face_card(frame: Image.Image) -> Image.Image:
     card = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
     working = frame.convert("RGBA")
@@ -618,6 +676,8 @@ def select_frames(row_groups: list[list[int]], frame_count: int, slot_index: int
 
 
 def animation_frame_map(character_id: str, frames: list[dict[str, Any]]) -> tuple[dict[str, list[str]], dict[str, float]]:
+    if character_id == "rock-lee":
+        return rock_lee_animation_frame_map(character_id, len(frames))
     frame_count = len(frames)
     rows: dict[int, list[int]] = {}
     for index, frame in enumerate(frames):
@@ -640,6 +700,89 @@ def animation_frame_map(character_id: str, frames: list[dict[str, Any]]) -> tupl
 
 def frame_path(character_id: str, index: int) -> str:
     return f"/characters/{character_id}/frames/frame-{index:03d}.png"
+
+
+def frame_paths(character_id: str, indexes: list[int], frame_count: int) -> list[str]:
+    return [frame_path(character_id, index) for index in indexes if 0 <= index < frame_count]
+
+
+def rock_lee_animation_frame_map(character_id: str, frame_count: int) -> tuple[dict[str, list[str]], dict[str, float]]:
+    def paths(indexes: list[int]) -> list[str]:
+        return frame_paths(character_id, indexes, frame_count)
+
+    result = {
+        "idle": paths([0, 1, 2, 3, 4, 5]),
+        "walkForward": paths([6, 7, 8, 9, 10, 11]),
+        "walkBack": paths([11, 10, 9, 8, 7, 6]),
+        "sprint": paths([12, 13, 14, 15, 16, 17]),
+        "backHop": paths([18]),
+        "sidestepLeft": paths([36, 37, 38]),
+        "sidestepRight": paths([38, 37, 36]),
+        "jump": paths([53, 54]),
+        "crouch": paths([21, 22, 23]),
+        "crouchBlock": paths([21]),
+        "block": paths([40, 41]),
+        "chargeKi": paths([102, 103, 104, 105, 106, 107]),
+        "jableft": paths([38, 39, 40, 41, 42, 43]),
+        "jabright": paths([44, 45, 46, 47, 48, 49]),
+        "kickleft": paths([26, 28, 29, 30]),
+        "kickright": paths([70, 71, 72, 73, 74, 75]),
+        "hitLight": paths([146, 147, 148, 149]),
+        "hitHeavy": paths([140, 141, 142, 143, 144, 145, 146]),
+        "juggle": paths([54]),
+        "knockdown": paths([55, 56, 57, 58, 59, 60]),
+        "getupStand": paths([59, 58, 57, 19, 0]),
+        "getupRollUp": paths([108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]),
+        "win": paths([84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95]),
+        "lose": paths([98, 99]),
+        "cmd:f+1": paths([38, 39, 40, 41, 42, 43]),
+        "cmd:f+3": paths([12, 13, 14, 15, 16, 17]),
+        "cmd:d+3": paths([26, 28, 29, 30]),
+        "cmd:d/f+2": paths([44, 45, 46, 47, 48, 49]),
+        "cmd:d/f+3": paths([32, 33, 34, 35, 36]),
+        "cmd:qcf+3": paths([70, 71, 72, 73, 74, 75]),
+        "cmd:qcf+4": paths([70, 71, 72, 73, 74, 75]),
+        "cmd:WS+4": paths([42, 43, 44, 45, 46, 47, 48, 49]),
+        "cmd:FC+1": paths([21, 22, 23, 24, 25]),
+        "cmd:FC+2": paths([44, 45, 46, 47, 48, 49]),
+        "cmd:1+2": paths([32, 33, 34, 35, 36]),
+        "cmd:1+3": paths([108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]),
+        "cmd:2+3": paths([26, 28, 29, 30]),
+        "cmd:2+4": paths([32, 33, 34, 35, 36]),
+        "cmd:3+4": paths([108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]),
+        "cmd:SS+3": paths([42, 43, 44, 45, 46, 47, 48, 49]),
+        "cmd:O+1": paths([102, 103, 104, 105, 106, 107]),
+        "cmd:O+2": paths([134, 135, 136, 137, 138, 139]),
+    }
+    rates = {
+        "idle": 7,
+        "walkForward": 12,
+        "walkBack": 10,
+        "sprint": 15,
+        "backHop": 10,
+        "sidestepLeft": 12,
+        "sidestepRight": 12,
+        "jump": 8,
+        "crouch": 7,
+        "crouchBlock": 5,
+        "block": 6,
+        "chargeKi": 8,
+        "jableft": 13,
+        "jabright": 12,
+        "kickleft": 12,
+        "kickright": 11,
+        "hitLight": 8,
+        "hitHeavy": 8,
+        "juggle": 8,
+        "knockdown": 8,
+        "getupStand": 7,
+        "getupRollUp": 9,
+        "win": 7,
+        "lose": 5,
+    }
+    for key in result:
+        rates.setdefault(key, 10 if key.startswith("cmd:") else ANIMATION_RATES.get(key, 8))
+    return result, rates
 
 
 def stable_unit(value: str, salt: str) -> float:
@@ -694,6 +837,9 @@ def base_move(label_stem: str, move_id: str, input_name: str, timing: tuple[int,
 
 
 def move_overrides(display_name: str, frame_lengths: dict[str, int]) -> dict[str, dict[str, Any]]:
+    if display_name == "Rock Lee":
+        return rock_lee_move_overrides()
+
     def duration(key: str, fallback: int) -> int:
         return max(1, frame_lengths.get(key, fallback))
 
@@ -925,6 +1071,183 @@ def move_overrides(display_name: str, frame_lengths: dict[str, int]) -> dict[str
     return overrides
 
 
+def rock_lee_move(
+    label: str,
+    startup: int,
+    active: int,
+    recovery: int,
+    damage: int,
+    hit_level: str,
+    on_block: int,
+    on_hit: int,
+    on_counter_hit: int,
+    range_value: float,
+    description: str,
+    **extra: Any,
+) -> dict[str, Any]:
+    is_low = hit_level == "low"
+    move = {
+        "label": label,
+        "description": description,
+        "startupFrames": startup,
+        "activeFrames": active,
+        "recoveryFrames": recovery,
+        "damage": damage,
+        "blockDamage": 1 if damage >= 10 else 0,
+        "hitLevel": hit_level,
+        "onBlockFrames": on_block,
+        "onHitFrames": on_hit,
+        "onCounterHitFrames": on_counter_hit,
+        "onComboHitFrames": max(6, on_hit - 2),
+        "onJuggleHitFrames": max(5, min(on_counter_hit, on_hit + 2)),
+        "comboRepeatPenaltyFrames": 5,
+        "juggleRepeatPenaltyFrames": 8,
+        "whiffRecoveryFrames": max(4, recovery // 3),
+        "range": range_value,
+        "pushback": round(0.75 + range_value * 0.13, 2),
+        "blockPushback": round(0.34 + range_value * 0.06, 2),
+        "tracking": "medium",
+        "knockdown": False,
+        "hitbox": {
+            "offset": [0, 0.84 if is_low else 1.08, 0.66 + range_value * 0.08],
+            "size": [0.74, 0.42 if is_low else 0.5, 0.58 + range_value * 0.08],
+        },
+    }
+    move.update(extra)
+    return move
+
+
+def rock_lee_base_moves() -> list[dict[str, Any]]:
+    jab = rock_lee_move(
+        "Leaf Intercept Jab",
+        9,
+        2,
+        13,
+        6,
+        "high",
+        -1,
+        9,
+        13,
+        1.42,
+        "Fast high taijutsu check that starts Rock Lee's close-range pressure.",
+    )
+    jab.update({"id": "jab", "input": "jab"})
+    kick = rock_lee_move(
+        "Leaf Gale",
+        15,
+        3,
+        21,
+        10,
+        "low",
+        -12,
+        7,
+        12,
+        1.62,
+        "Low sweeping kick that clips stand guard and leaves Lee crouched on contact.",
+        endsInCrouch=True,
+    )
+    kick.update({"id": "kick", "input": "kick"})
+    heavy = rock_lee_move(
+        "Dynamic Entry",
+        12,
+        3,
+        18,
+        9,
+        "mid",
+        -5,
+        12,
+        17,
+        1.58,
+        "Quick mid body blow with forward momentum for punishing small whiffs.",
+        forwardForce=0.9,
+        forwardForceStartFrame=8,
+        forwardForceEndFrame=15,
+    )
+    heavy.update({"id": "heavy", "input": "heavy"})
+    special = rock_lee_move(
+        "Leaf Whirlwind",
+        16,
+        4,
+        24,
+        12,
+        "mid",
+        -8,
+        14,
+        20,
+        1.78,
+        "Spinning mid kick that carries Lee forward and works as a simple combo finisher.",
+        forwardForce=1.15,
+        forwardForceStartFrame=10,
+        forwardForceEndFrame=20,
+    )
+    special.update({"id": "special", "input": "special"})
+    return [jab, kick, heavy, special]
+
+
+def rock_lee_move_overrides() -> dict[str, dict[str, Any]]:
+    overrides: dict[str, dict[str, Any]] = {
+        "jableft": rock_lee_move("Leaf Intercept Jab", 9, 2, 13, 7, "high", -1, 9, 13, 1.42, "Fast high jab for checking movement and starting pressure."),
+        "jabright": rock_lee_move("Strong Fist Body Blow", 11, 3, 16, 9, "mid", -4, 12, 17, 1.55, "Compact mid punch that links after Lee's quickest checks."),
+        "kickleft": rock_lee_move("Leaf Gale", 15, 3, 21, 10, "low", -12, 7, 12, 1.62, "Low taijutsu sweep that ducks under highs and ends in crouch.", endsInCrouch=True),
+        "kickright": rock_lee_move("Leaf Whirlwind", 16, 4, 24, 12, "mid", -8, 14, 20, 1.78, "Forward-spinning mid kick with enough hit advantage to continue pressure.", forwardForce=1.15, forwardForceStartFrame=10, forwardForceEndFrame=20),
+        "cmd:f+1": rock_lee_move("Dynamic Entry", 14, 3, 22, 12, "mid", -6, 13, 18, 1.82, "Leaping forward strike that reaches farther than Lee's standing checks.", forwardForce=1.35, forwardForceStartFrame=8, forwardForceEndFrame=17),
+        "cmd:f+3": rock_lee_move("Youthful Counter Kick", 17, 3, 25, 13, "mid", -8, 12, 24, 1.76, "Committed mid kick that turns counter hits into a real follow-up.", counterHit=True, counterHitStunBonusFrames=8, forwardForce=1.25, forwardForceStartFrame=9, forwardForceEndFrame=18),
+        "cmd:d+3": rock_lee_move("Leaf Gale Sweep", 16, 3, 23, 11, "low", -13, 8, 13, 1.68, "Low spinning sweep that keeps Lee low and threatens crouch routes.", endsInCrouch=True),
+        "cmd:d/f+2": rock_lee_move("Rising Lotus Launcher", 18, 3, 31, 14, "mid", -14, 28, 34, 1.66, "Unsafe rising mid that launches for Lee's aerial lotus routes.", launchHeight=2.15, launchVelocity=6.0, juggleRefloatVelocity=4.35, juggleGravityScale=0.52, forwardForce=0.85, forwardForceStartFrame=10, forwardForceEndFrame=17),
+        "cmd:d/f+3": rock_lee_move("Leaf Hurricane Low", 19, 4, 27, 12, "low", -15, 10, 16, 1.72, "Low hurricane kick that knocks down when Lee catches the opponent stepping.", knockdown=True, endsInCrouch=True, forwardForce=0.95, forwardForceStartFrame=10, forwardForceEndFrame=22),
+        "cmd:qcf+3": rock_lee_move("Leaf Rising Wind", 20, 4, 28, 14, "mid", -9, 18, 25, 1.86, "Rising spin kick that lifts grounded hits into Lee's juggle plan.", launchHeight=1.35, launchVelocity=5.45, juggleRefloatVelocity=4.1, juggleGravityScale=0.58, forwardForce=1.3, forwardForceStartFrame=11, forwardForceEndFrame=24),
+        "cmd:qcf+4": rock_lee_move("Front Lotus Spiral", 24, 6, 36, 16, "mid", -13, 20, 28, 2.02, "High-commitment lotus spin that causes tornado in juggles and cashes out launch routes.", tornado=True, knockdown=True, jumpBeforeMove=True, moveJumpForce=8.6, moveJumpGravity=23, forwardForce=1.85, forwardForceStartFrame=12, forwardForceEndFrame=31),
+        "cmd:WS+4": rock_lee_move("Rising Leaf Whirlwind", 15, 3, 25, 12, "mid", -9, 17, 24, 1.7, "While-standing mid kick that lifts opponents after crouch pressure.", launchHeight=1.65, launchVelocity=5.65, juggleRefloatVelocity=4.1, juggleGravityScale=0.56),
+        "cmd:FC+1": rock_lee_move("Crouching Strong Fist", 12, 2, 16, 7, "mid", -3, 9, 13, 1.34, "Quick crouching body shot for interrupting after Leaf Gale."),
+        "cmd:FC+2": rock_lee_move("Crouch Lotus Launcher", 18, 3, 30, 13, "mid", -14, 26, 32, 1.5, "Crouch-starting launcher that rewards a hard read from full crouch.", launchHeight=2.0, launchVelocity=5.8, juggleRefloatVelocity=4.2, juggleGravityScale=0.54),
+        "cmd:1+2": rock_lee_move("Strong Fist Barrage", 18, 4, 25, 15, "mid", -7, 15, 21, 1.78, "Two-hand taijutsu rush that keeps Lee close for route extensions.", forwardForce=1.35, forwardForceStartFrame=10, forwardForceEndFrame=22),
+        "cmd:1+3": rock_lee_move("Primary Lotus Lift", 21, 4, 34, 17, "mid", -15, 29, 36, 1.72, "Primary Lotus starter that launches but leaves Lee punishable on block.", launchHeight=2.25, launchVelocity=6.05, juggleRefloatVelocity=4.45, juggleGravityScale=0.5, jumpBeforeMove=True, moveJumpForce=8.4, moveJumpGravity=22),
+        "cmd:2+3": rock_lee_move("Drunken Feint Sweep", 19, 3, 24, 10, "low", -12, 8, 15, 1.58, "Low feint sweep that slips into crouch and frustrates stand blocking.", endsInCrouch=True, counterHit=True, counterHitStunBonusFrames=5),
+        "cmd:2+4": rock_lee_move("Leaf Gale Knockdown", 21, 4, 30, 14, "low", -16, 13, 19, 1.78, "Risky low sweep that knocks down when Lee commits to the full arc.", knockdown=True, endsInCrouch=True),
+        "cmd:3+4": rock_lee_move("Front Lotus", 25, 6, 37, 18, "mid", -14, 20, 29, 1.96, "Spinning lotus kick that creates tornado routes after a launcher.", tornado=True, knockdown=True, jumpBeforeMove=True, moveJumpForce=8.8, moveJumpGravity=23, forwardForce=1.7, forwardForceStartFrame=13, forwardForceEndFrame=32),
+        "cmd:SS+3": rock_lee_move("Side Step Leaf Cyclone", 17, 4, 27, 13, "mid", -8, 14, 22, 1.8, "Sidestep kick that catches linear retaliation and keeps Lee mobile.", tracking="strong", homingSpeed=10),
+        "cmd:O+1": rock_lee_move("Eight Gates Release", 28, 5, 38, 18, "special", -10, 20, 28, 1.78, "Ki-cost gate burst that armors through light checks before Lee drives forward.", usesKi=True, kiCost=30, armorStartFrame=8, armorEndFrame=18, knockdown=True, forwardForce=1.4, forwardForceStartFrame=14, forwardForceEndFrame=30),
+        "cmd:O+2": rock_lee_move("Hidden Lotus", 31, 6, 44, 24, "special", -17, 25, 36, 2.08, "Expensive Hidden Lotus finisher with huge reward after launch but real block risk.", usesKi=True, kiCost=45, knockdown=True, tornado=True, jumpBeforeMove=True, moveJumpForce=9.2, moveJumpGravity=24, forwardForce=2.1, forwardForceStartFrame=16, forwardForceEndFrame=38, whiffRecoveryFrames=18),
+    }
+    neutral_labels = {
+        "neutral:jab-jab": "Leaf Combo Second Beat",
+        "neutral:jab-jab-heavy": "Strong Fist Body Route",
+        "neutral:jab-jab-kick": "Leaf Gale Changeup",
+        "neutral:jab-jab-special": "Whirlwind Ender",
+        "neutral:jab-heavy": "Youth Drive",
+        "neutral:jab-heavy-kick": "Strong Fist Barrage",
+        "neutral:jab-heavy-special": "Dynamic Entry Ender",
+        "neutral:jab-kick": "Low Gale Link",
+        "neutral:jab-kick-heavy": "Low to Body Blow",
+        "neutral:jab-kick-special": "Low Whirlwind Route",
+        "neutral:jab-special": "Leaf Whirlwind Setup",
+        "neutral:jab-special-heavy": "Whirlwind Crush",
+        "neutral:heavy-jab": "Body Blow Check",
+        "neutral:heavy-jab-heavy": "Strong Fist Loop",
+        "neutral:heavy-jab-special": "Entry to Whirlwind",
+        "neutral:heavy-kick": "Body Blow Low",
+        "neutral:heavy-kick-special": "Gale Cyclone",
+        "neutral:heavy-special": "Dynamic Whirlwind",
+        "neutral:heavy-special-kick": "Whirlwind Low Reset",
+        "neutral:kick-jab": "Gale Jab Reset",
+        "neutral:kick-jab-special": "Gale Whirlwind",
+        "neutral:kick-heavy": "Gale Body Blow",
+        "neutral:kick-heavy-special": "Gale Entry Ender",
+        "neutral:kick-special": "Gale Cyclone",
+        "neutral:kick-special-heavy": "Cyclone Body Route",
+        "neutral:special-jab": "Whirlwind Jab Reset",
+        "neutral:special-jab-heavy": "Whirlwind Strong Fist",
+        "neutral:special-heavy": "Whirlwind Drive",
+        "neutral:special-kick": "Whirlwind Gale",
+    }
+    for key, label in neutral_labels.items():
+        overrides[key] = {
+            "label": label,
+            "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+        }
+    return overrides
+
+
 def manifest_for(character_id: str, display_name: str, frame_count: int, animation_frames: dict[str, list[str]], animation_rates: dict[str, float]) -> dict[str, Any]:
     variant_of = VARIANT_OF.get(character_id)
     frame_lengths = {key: len(value) for key, value in animation_frames.items()}
@@ -934,6 +1257,20 @@ def manifest_for(character_id: str, display_name: str, frame_count: int, animati
     speed = round(4.9 + stable_unit(character_id, "speed") * 0.55, 2)
     health = round(96 + stable_unit(character_id, "health") * 10)
     jump_force = round(7.8 + stable_unit(character_id, "jump") * 0.55, 2)
+    moves = rock_lee_base_moves() if character_id == "rock-lee" else [
+        base_move(f"{display_name} Left Check", "jab", "jab", (10, 2, 14), 6, "high", 1.42),
+        base_move(f"{display_name} Left Kick", "kick", "kick", (14, 3, 20), 10, "low", 1.62),
+        base_move(f"{display_name} Right Check", "heavy", "heavy", (12, 2, 17), 8, "mid", 1.5),
+        base_move(f"{display_name} Right Kick", "special", "special", (16, 3, 22), 12, "mid", 1.72),
+    ]
+    stats = {
+        "health": 94 if character_id == "rock-lee" else health,
+        "speed": 5.55 if character_id == "rock-lee" else speed,
+        "sidestepSpeed": 4.86 if character_id == "rock-lee" else round(max(4.05, speed - 0.62), 2),
+        "dashDistance": 1.02 if character_id == "rock-lee" else None,
+        "jumpForce": 8.75 if character_id == "rock-lee" else jump_force,
+        "gravity": 18,
+    }
     return {
         "id": character_id,
         "displayName": display_name,
@@ -969,20 +1306,9 @@ def manifest_for(character_id: str, display_name: str, frame_count: int, animati
         "animationFps": 6,
         "scale": 1.08,
         "cameraOffset": [0, 1.22, 0],
-        "stats": {
-            "health": health,
-            "speed": speed,
-            "sidestepSpeed": round(max(4.05, speed - 0.62), 2),
-            "jumpForce": jump_force,
-            "gravity": 18,
-        },
+        "stats": stats,
         "animations": ANIMATION_NAMES,
-        "moves": [
-            base_move(f"{display_name} Left Check", "jab", "jab", (10, 2, 14), 6, "high", 1.42),
-            base_move(f"{display_name} Left Kick", "kick", "kick", (14, 3, 20), 10, "low", 1.62),
-            base_move(f"{display_name} Right Check", "heavy", "heavy", (12, 2, 17), 8, "mid", 1.5),
-            base_move(f"{display_name} Right Kick", "special", "special", (16, 3, 22), 12, "mid", 1.72),
-        ],
+        "moves": moves,
         "hurtboxes": [{"offset": [0, 1, 0], "size": [0.86, 1.9, 0.58]}],
         "inputMap": {"jab": "J", "kick": "K", "heavy": "L", "special": "U", "block": "I"},
         "colors": {"primary": primary, "secondary": secondary, "accent": accent},
@@ -1007,28 +1333,49 @@ def remove_none(value: Any) -> Any:
     return value
 
 
-def import_character(repo: Path, source_dir: Path, character_id: str) -> dict[str, Any]:
-    pngs = sorted(source_dir.glob("*.png"))
-    if not pngs:
-        raise RuntimeError(f"No PNG found in {source_dir}")
-    source_png = pngs[0]
-    image = Image.open(source_png).convert("RGBA")
-    boxes = detect_projection_boxes(image)
+def import_character(
+    repo: Path,
+    source_dir: Path,
+    character_id: str,
+    display_name: str | None = None,
+    source_file: Path | None = None,
+    dry_run: bool = False,
+) -> dict[str, Any]:
+    if source_file is None:
+        pngs = sorted(source_dir.glob("*.png"))
+        if not pngs:
+            raise RuntimeError(f"No PNG found in {source_dir}")
+        source_path = pngs[0]
+    else:
+        source_path = source_file
+    display_name = display_name or source_dir.name
+    image = load_source_image(source_path)
+    boxes, excluded_boxes = filtered_projection_boxes(image)
     backgrounds = dominant_border_backgrounds(image, sample_backgrounds(image))
     character_dir = repo / "public" / "characters" / character_id
     if character_id in PROTECTED_IDS:
         raise RuntimeError(f"Refusing to overwrite protected character id {character_id}")
+    if dry_run:
+        return {
+            "id": character_id,
+            "name": display_name,
+            "frames": len(boxes),
+            "excluded": len(excluded_boxes),
+            "source": str(source_path),
+            "dryRun": True,
+        }
     if character_dir.exists():
         shutil.rmtree(character_dir)
     frames_dir = character_dir / "frames"
     frames_dir.mkdir(parents=True, exist_ok=True)
 
-    shutil.copy2(source_png, character_dir / "animation-sheet.png")
+    image.save(character_dir / "animation-sheet.png")
     frames: list[dict[str, Any]] = []
     first_frame: Image.Image | None = None
     for index, entry in enumerate(boxes):
         box = tuple(int(value) for value in entry["box"])
         cropped = transparent_crop(image, box, backgrounds)
+        cropped = repair_known_character_crop(character_id, index, cropped)
         if first_frame is None:
             first_frame = cropped
         frame_file = frames_dir / f"frame-{index:03d}.png"
@@ -1039,7 +1386,7 @@ def import_character(repo: Path, source_dir: Path, character_id: str) -> dict[st
                 "path": frame_path(character_id, index),
                 "sheetId": "main",
                 "sheetPath": f"/characters/{character_id}/animation-sheet.png",
-                "sourceName": source_png.name,
+                "sourceName": source_path.name,
                 "box": list(box),
                 "width": cropped.size[0],
                 "height": cropped.size[1],
@@ -1052,8 +1399,17 @@ def import_character(repo: Path, source_dir: Path, character_id: str) -> dict[st
 
     make_face_card(first_frame or image).save(character_dir / "face-card.png")
     frames_json = {
-        "source": source_png.name,
+        "source": source_path.name,
         "count": len(frames),
+        "excluded": [
+            {
+                "sourceName": source_path.name,
+                "box": list(entry["box"]),
+                "row": int(entry["row"]),
+                "reason": entry.get("excludeReason", "excluded"),
+            }
+            for entry in excluded_boxes
+        ],
         "sheets": [
             {
                 "id": "main",
@@ -1067,10 +1423,16 @@ def import_character(repo: Path, source_dir: Path, character_id: str) -> dict[st
     }
     (frames_dir / "frames.json").write_text(json.dumps(frames_json, indent=2, ensure_ascii=False) + "\n")
     animation_frames, animation_rates = animation_frame_map(character_id, frames)
-    manifest = manifest_for(character_id, source_dir.name, len(frames), animation_frames, animation_rates)
+    manifest = manifest_for(character_id, display_name, len(frames), animation_frames, animation_rates)
     (character_dir / "character.json").write_text(json.dumps(remove_none(manifest), indent=2, ensure_ascii=False) + "\n")
     synthesize_character(repo, character_id, apply=True)
-    return {"id": character_id, "name": source_dir.name, "frames": len(frames), "source": str(source_png)}
+    return {
+        "id": character_id,
+        "name": display_name,
+        "frames": len(frames),
+        "excluded": len(excluded_boxes),
+        "source": str(source_path),
+    }
 
 
 def discover_sources(source_root: Path) -> list[tuple[Path, str]]:
@@ -1091,13 +1453,41 @@ def discover_sources(source_root: Path) -> list[tuple[Path, str]]:
     return selected
 
 
+def append_character_index(repo: Path, character_id: str) -> None:
+    index_path = repo / "public" / "characters" / "index.json"
+    index = json.loads(index_path.read_text()) if index_path.exists() else {"characters": []}
+    characters = index.setdefault("characters", [])
+    if character_id not in characters:
+        characters.append(character_id)
+        index_path.write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", type=Path, default=Path.cwd())
     parser.add_argument("--source-root", type=Path, default=SOURCE_ROOT)
+    parser.add_argument("--source-file", type=Path)
+    parser.add_argument("--character-id")
+    parser.add_argument("--display-name")
+    parser.add_argument("--append-index", action="store_true")
+    parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     repo = args.repo.expanduser().resolve()
     source_root = args.source_root.expanduser().resolve()
+
+    if args.source_file:
+        source_file = args.source_file.expanduser().resolve()
+        if not source_file.exists():
+            raise SystemExit(f"Source file does not exist: {source_file}")
+        character_id = args.character_id or slugify(args.display_name or source_file.parent.name)
+        display_name = args.display_name or source_file.parent.name
+        result = import_character(repo, source_file.parent, character_id, display_name, source_file, args.dry_run)
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        if args.append_index and not args.dry_run:
+            append_character_index(repo, character_id)
+            print(f"appended {character_id} to {repo / 'public' / 'characters' / 'index.json'}")
+        return
+
     if not source_root.exists():
         raise SystemExit(f"Source root does not exist: {source_root}")
 

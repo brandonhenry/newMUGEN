@@ -1,0 +1,2579 @@
+{
+  "id": "rock-lee",
+  "displayName": "Rock Lee",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/rock-lee/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://rock-lee",
+  "spriteSheetPath": "/characters/rock-lee/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/rock-lee/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 150
+    }
+  ],
+  "spriteFrameCount": 151,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/rock-lee/frames/frame-000.png",
+      "/characters/rock-lee/frames/frame-001.png",
+      "/characters/rock-lee/frames/frame-002.png",
+      "/characters/rock-lee/frames/frame-003.png",
+      "/characters/rock-lee/frames/frame-004.png",
+      "/characters/rock-lee/frames/frame-005.png"
+    ],
+    "walkForward": [
+      "/characters/rock-lee/frames/frame-006.png",
+      "/characters/rock-lee/frames/frame-007.png",
+      "/characters/rock-lee/frames/frame-008.png",
+      "/characters/rock-lee/frames/frame-009.png",
+      "/characters/rock-lee/frames/frame-010.png",
+      "/characters/rock-lee/frames/frame-011.png"
+    ],
+    "walkBack": [
+      "/characters/rock-lee/frames/frame-011.png",
+      "/characters/rock-lee/frames/frame-010.png",
+      "/characters/rock-lee/frames/frame-009.png",
+      "/characters/rock-lee/frames/frame-008.png",
+      "/characters/rock-lee/frames/frame-007.png",
+      "/characters/rock-lee/frames/frame-006.png"
+    ],
+    "sprint": [
+      "/characters/rock-lee/frames/frame-012.png",
+      "/characters/rock-lee/frames/frame-013.png",
+      "/characters/rock-lee/frames/frame-014.png",
+      "/characters/rock-lee/frames/frame-015.png",
+      "/characters/rock-lee/frames/frame-016.png",
+      "/characters/rock-lee/frames/frame-017.png"
+    ],
+    "backHop": [
+      "/characters/rock-lee/frames/frame-018.png"
+    ],
+    "sidestepLeft": [
+      "/characters/rock-lee/frames/frame-026.png"
+    ],
+    "sidestepRight": [
+      "/characters/rock-lee/frames/frame-026.png"
+    ],
+    "jump": [
+      "/characters/rock-lee/frames/frame-053.png",
+      "/characters/rock-lee/frames/frame-054.png"
+    ],
+    "crouch": [
+      "/characters/rock-lee/frames/frame-021.png",
+      "/characters/rock-lee/frames/frame-022.png",
+      "/characters/rock-lee/frames/frame-023.png"
+    ],
+    "crouchBlock": [
+      "/characters/rock-lee/frames/frame-150.png"
+    ],
+    "block": [
+      "/characters/rock-lee/frames/frame-040.png",
+      "/characters/rock-lee/frames/frame-041.png"
+    ],
+    "chargeKi": [
+      "/characters/rock-lee/frames/frame-102.png",
+      "/characters/rock-lee/frames/frame-103.png",
+      "/characters/rock-lee/frames/frame-104.png",
+      "/characters/rock-lee/frames/frame-105.png",
+      "/characters/rock-lee/frames/frame-106.png",
+      "/characters/rock-lee/frames/frame-107.png"
+    ],
+    "jableft": [
+      "/characters/rock-lee/frames/frame-038.png",
+      "/characters/rock-lee/frames/frame-039.png",
+      "/characters/rock-lee/frames/frame-040.png"
+    ],
+    "jabright": [
+      "/characters/rock-lee/frames/frame-044.png",
+      "/characters/rock-lee/frames/frame-045.png",
+      "/characters/rock-lee/frames/frame-046.png",
+      "/characters/rock-lee/frames/frame-047.png",
+      "/characters/rock-lee/frames/frame-048.png",
+      "/characters/rock-lee/frames/frame-049.png"
+    ],
+    "kickleft": [],
+    "kickright": [],
+    "hitLight": [
+      "/characters/rock-lee/frames/frame-146.png",
+      "/characters/rock-lee/frames/frame-147.png",
+      "/characters/rock-lee/frames/frame-148.png",
+      "/characters/rock-lee/frames/frame-149.png"
+    ],
+    "hitHeavy": [
+      "/characters/rock-lee/frames/frame-140.png",
+      "/characters/rock-lee/frames/frame-141.png",
+      "/characters/rock-lee/frames/frame-142.png",
+      "/characters/rock-lee/frames/frame-143.png",
+      "/characters/rock-lee/frames/frame-144.png",
+      "/characters/rock-lee/frames/frame-145.png",
+      "/characters/rock-lee/frames/frame-146.png"
+    ],
+    "juggle": [
+      "/characters/rock-lee/frames/frame-054.png"
+    ],
+    "knockdown": [
+      "/characters/rock-lee/frames/frame-055.png",
+      "/characters/rock-lee/frames/frame-056.png",
+      "/characters/rock-lee/frames/frame-057.png",
+      "/characters/rock-lee/frames/frame-058.png",
+      "/characters/rock-lee/frames/frame-059.png",
+      "/characters/rock-lee/frames/frame-060.png"
+    ],
+    "getupStand": [
+      "/characters/rock-lee/frames/frame-059.png",
+      "/characters/rock-lee/frames/frame-058.png",
+      "/characters/rock-lee/frames/frame-057.png",
+      "/characters/rock-lee/frames/frame-019.png",
+      "/characters/rock-lee/frames/frame-000.png"
+    ],
+    "getupRollUp": [
+      "/characters/rock-lee/frames/frame-108.png",
+      "/characters/rock-lee/frames/frame-109.png",
+      "/characters/rock-lee/frames/frame-110.png",
+      "/characters/rock-lee/frames/frame-111.png",
+      "/characters/rock-lee/frames/frame-112.png",
+      "/characters/rock-lee/frames/frame-113.png",
+      "/characters/rock-lee/frames/frame-114.png",
+      "/characters/rock-lee/frames/frame-115.png",
+      "/characters/rock-lee/frames/frame-116.png",
+      "/characters/rock-lee/frames/frame-117.png",
+      "/characters/rock-lee/frames/frame-118.png",
+      "/characters/rock-lee/frames/frame-119.png",
+      "/characters/rock-lee/frames/frame-120.png",
+      "/characters/rock-lee/frames/frame-121.png"
+    ],
+    "win": [
+      "/characters/rock-lee/frames/frame-084.png",
+      "/characters/rock-lee/frames/frame-085.png",
+      "/characters/rock-lee/frames/frame-086.png",
+      "/characters/rock-lee/frames/frame-087.png",
+      "/characters/rock-lee/frames/frame-088.png",
+      "/characters/rock-lee/frames/frame-089.png",
+      "/characters/rock-lee/frames/frame-090.png",
+      "/characters/rock-lee/frames/frame-091.png",
+      "/characters/rock-lee/frames/frame-092.png",
+      "/characters/rock-lee/frames/frame-093.png",
+      "/characters/rock-lee/frames/frame-094.png",
+      "/characters/rock-lee/frames/frame-095.png"
+    ],
+    "lose": [
+      "/characters/rock-lee/frames/frame-098.png",
+      "/characters/rock-lee/frames/frame-099.png"
+    ],
+    "cmd:f+1": [
+      "/characters/rock-lee/frames/frame-038.png",
+      "/characters/rock-lee/frames/frame-039.png",
+      "/characters/rock-lee/frames/frame-040.png",
+      "/characters/rock-lee/frames/frame-041.png",
+      "/characters/rock-lee/frames/frame-042.png",
+      "/characters/rock-lee/frames/frame-043.png"
+    ],
+    "cmd:f+3": [],
+    "cmd:d+3": [],
+    "cmd:d/f+2": [
+      "/characters/rock-lee/frames/frame-044.png",
+      "/characters/rock-lee/frames/frame-045.png",
+      "/characters/rock-lee/frames/frame-046.png",
+      "/characters/rock-lee/frames/frame-047.png",
+      "/characters/rock-lee/frames/frame-048.png",
+      "/characters/rock-lee/frames/frame-049.png"
+    ],
+    "cmd:d/f+3": [
+      "/characters/rock-lee/frames/frame-032.png",
+      "/characters/rock-lee/frames/frame-033.png",
+      "/characters/rock-lee/frames/frame-034.png",
+      "/characters/rock-lee/frames/frame-035.png",
+      "/characters/rock-lee/frames/frame-036.png"
+    ],
+    "cmd:qcf+3": [],
+    "cmd:qcf+4": [],
+    "cmd:WS+4": [
+      "/characters/rock-lee/frames/frame-042.png",
+      "/characters/rock-lee/frames/frame-043.png",
+      "/characters/rock-lee/frames/frame-044.png",
+      "/characters/rock-lee/frames/frame-045.png",
+      "/characters/rock-lee/frames/frame-046.png",
+      "/characters/rock-lee/frames/frame-047.png",
+      "/characters/rock-lee/frames/frame-048.png",
+      "/characters/rock-lee/frames/frame-049.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/rock-lee/frames/frame-021.png",
+      "/characters/rock-lee/frames/frame-022.png",
+      "/characters/rock-lee/frames/frame-023.png",
+      "/characters/rock-lee/frames/frame-024.png",
+      "/characters/rock-lee/frames/frame-025.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/rock-lee/frames/frame-044.png",
+      "/characters/rock-lee/frames/frame-045.png",
+      "/characters/rock-lee/frames/frame-046.png",
+      "/characters/rock-lee/frames/frame-047.png",
+      "/characters/rock-lee/frames/frame-048.png",
+      "/characters/rock-lee/frames/frame-049.png"
+    ],
+    "cmd:1+2": [
+      "/characters/rock-lee/frames/frame-032.png",
+      "/characters/rock-lee/frames/frame-033.png",
+      "/characters/rock-lee/frames/frame-034.png",
+      "/characters/rock-lee/frames/frame-035.png",
+      "/characters/rock-lee/frames/frame-036.png"
+    ],
+    "cmd:1+3": [
+      "/characters/rock-lee/frames/frame-108.png",
+      "/characters/rock-lee/frames/frame-109.png",
+      "/characters/rock-lee/frames/frame-110.png",
+      "/characters/rock-lee/frames/frame-111.png",
+      "/characters/rock-lee/frames/frame-112.png",
+      "/characters/rock-lee/frames/frame-113.png",
+      "/characters/rock-lee/frames/frame-114.png",
+      "/characters/rock-lee/frames/frame-115.png",
+      "/characters/rock-lee/frames/frame-116.png",
+      "/characters/rock-lee/frames/frame-117.png",
+      "/characters/rock-lee/frames/frame-118.png",
+      "/characters/rock-lee/frames/frame-119.png",
+      "/characters/rock-lee/frames/frame-120.png",
+      "/characters/rock-lee/frames/frame-121.png"
+    ],
+    "cmd:2+3": [],
+    "cmd:2+4": [
+      "/characters/rock-lee/frames/frame-032.png",
+      "/characters/rock-lee/frames/frame-033.png",
+      "/characters/rock-lee/frames/frame-034.png",
+      "/characters/rock-lee/frames/frame-035.png",
+      "/characters/rock-lee/frames/frame-036.png"
+    ],
+    "cmd:3+4": [
+      "/characters/rock-lee/frames/frame-108.png",
+      "/characters/rock-lee/frames/frame-109.png",
+      "/characters/rock-lee/frames/frame-110.png",
+      "/characters/rock-lee/frames/frame-111.png",
+      "/characters/rock-lee/frames/frame-112.png",
+      "/characters/rock-lee/frames/frame-113.png",
+      "/characters/rock-lee/frames/frame-114.png",
+      "/characters/rock-lee/frames/frame-115.png",
+      "/characters/rock-lee/frames/frame-116.png",
+      "/characters/rock-lee/frames/frame-117.png",
+      "/characters/rock-lee/frames/frame-118.png",
+      "/characters/rock-lee/frames/frame-119.png",
+      "/characters/rock-lee/frames/frame-120.png",
+      "/characters/rock-lee/frames/frame-121.png"
+    ],
+    "cmd:SS+3": [
+      "/characters/rock-lee/frames/frame-042.png",
+      "/characters/rock-lee/frames/frame-043.png",
+      "/characters/rock-lee/frames/frame-044.png",
+      "/characters/rock-lee/frames/frame-045.png",
+      "/characters/rock-lee/frames/frame-046.png",
+      "/characters/rock-lee/frames/frame-047.png",
+      "/characters/rock-lee/frames/frame-048.png",
+      "/characters/rock-lee/frames/frame-049.png"
+    ],
+    "cmd:O+1": [
+      "/characters/rock-lee/frames/frame-102.png",
+      "/characters/rock-lee/frames/frame-103.png",
+      "/characters/rock-lee/frames/frame-104.png",
+      "/characters/rock-lee/frames/frame-105.png",
+      "/characters/rock-lee/frames/frame-106.png",
+      "/characters/rock-lee/frames/frame-107.png"
+    ],
+    "cmd:O+2": []
+  },
+  "animationFrameRates": {
+    "idle": 7,
+    "walkForward": 12,
+    "walkBack": 10,
+    "sprint": 15,
+    "backHop": 10,
+    "sidestepLeft": 12,
+    "sidestepRight": 12,
+    "jump": 8,
+    "crouch": 7,
+    "crouchBlock": 5,
+    "block": 6,
+    "chargeKi": 8,
+    "jableft": 13,
+    "jabright": 12,
+    "kickleft": 12,
+    "kickright": 11,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 9,
+    "win": 7,
+    "lose": 5,
+    "cmd:f+1": 10,
+    "cmd:f+3": 10,
+    "cmd:d+3": 10,
+    "cmd:d/f+2": 10,
+    "cmd:d/f+3": 10,
+    "cmd:qcf+3": 10,
+    "cmd:qcf+4": 10,
+    "cmd:WS+4": 10,
+    "cmd:FC+1": 10,
+    "cmd:FC+2": 10,
+    "cmd:1+2": 10,
+    "cmd:1+3": 10,
+    "cmd:2+3": 10,
+    "cmd:2+4": 10,
+    "cmd:3+4": 10,
+    "cmd:SS+3": 10,
+    "cmd:O+1": 10,
+    "cmd:O+2": 10
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 94,
+    "speed": 5.55,
+    "sidestepSpeed": 4.86,
+    "dashDistance": 1.02,
+    "jumpForce": 8.75,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "label": "Leaf Intercept Jab",
+      "description": "Fast high taijutsu check that starts Rock Lee's close-range pressure.",
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -1,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "onComboHitFrames": 7,
+      "onJuggleHitFrames": 11,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.08,
+          0.7736000000000001
+        ],
+        "size": [
+          0.74,
+          0.5,
+          0.6936
+        ]
+      },
+      "id": "jab",
+      "input": "jab"
+    },
+    {
+      "label": "Leaf Gale",
+      "description": "Low sweeping kick that clips stand guard and leaves Lee crouched on contact.",
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
+      "damage": 10,
+      "blockDamage": 1,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "onComboHitFrames": 6,
+      "onJuggleHitFrames": 9,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.84,
+          0.7896000000000001
+        ],
+        "size": [
+          0.74,
+          0.42,
+          0.7096
+        ]
+      },
+      "endsInCrouch": true,
+      "id": "kick",
+      "input": "kick"
+    },
+    {
+      "label": "Dynamic Entry",
+      "description": "Quick mid body blow with forward momentum for punishing small whiffs.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 9,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -5,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 17,
+      "onComboHitFrames": 10,
+      "onJuggleHitFrames": 14,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 6,
+      "range": 1.58,
+      "pushback": 0.96,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.08,
+          0.7864
+        ],
+        "size": [
+          0.74,
+          0.5,
+          0.7063999999999999
+        ]
+      },
+      "forwardForce": 0.9,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 15,
+      "id": "heavy",
+      "input": "heavy"
+    },
+    {
+      "label": "Leaf Whirlwind",
+      "description": "Spinning mid kick that carries Lee forward and works as a simple combo finisher.",
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 12,
+      "blockDamage": 1,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 20,
+      "onComboHitFrames": 12,
+      "onJuggleHitFrames": 16,
+      "comboRepeatPenaltyFrames": 5,
+      "juggleRepeatPenaltyFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.78,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.08,
+          0.8024
+        ],
+        "size": [
+          0.74,
+          0.5,
+          0.7223999999999999
+        ]
+      },
+      "forwardForce": 1.15,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 20,
+      "id": "special",
+      "input": "special"
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#318ed9",
+    "secondary": "#8fdb38",
+    "accent": "#3a69da"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
+      "damage": 7,
+      "blockDamage": 0,
+      "onBlockFrames": -1,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "label": "Leaf Intercept Jab",
+      "description": "Fast high jab for checking movement and starting pressure.",
+      "hitLevel": "high",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "jabright": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 9,
+      "blockDamage": 0,
+      "onBlockFrames": -4,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 17,
+      "whiffRecoveryFrames": 5,
+      "range": 1.55,
+      "pushback": 0.95,
+      "blockPushback": 0.43,
+      "label": "Strong Fist Body Blow",
+      "description": "Compact mid punch that links after Lee's quickest checks.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "kickleft": {
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
+      "damage": 10,
+      "blockDamage": 1,
+      "onBlockFrames": -12,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "label": "Leaf Gale",
+      "description": "Low taijutsu sweep that ducks under highs and ends in crouch.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true
+    },
+    "kickright": {
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 20,
+      "whiffRecoveryFrames": 8,
+      "range": 1.78,
+      "forwardForce": 1.15,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 20,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "label": "Leaf Whirlwind",
+      "description": "Forward-spinning mid kick with enough hit advantage to continue pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:f+1": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -6,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 18,
+      "whiffRecoveryFrames": 7,
+      "range": 1.82,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 8,
+      "forwardForceEndFrame": 17,
+      "pushback": 0.99,
+      "blockPushback": 0.45,
+      "label": "Dynamic Entry",
+      "description": "Leaping forward strike that reaches farther than Lee's standing checks.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:f+3": {
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -8,
+      "onHitFrames": 12,
+      "onCounterHitFrames": 24,
+      "counterHitStunBonusFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.76,
+      "forwardForce": 1.25,
+      "forwardForceStartFrame": 9,
+      "forwardForceEndFrame": 18,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "label": "Youthful Counter Kick",
+      "description": "Committed mid kick that turns counter hits into a real follow-up.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false,
+      "counterHit": true
+    },
+    "cmd:d+3": {
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
+      "damage": 11,
+      "blockDamage": 1,
+      "onBlockFrames": -13,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.68,
+      "pushback": 0.97,
+      "blockPushback": 0.44,
+      "label": "Leaf Gale Sweep",
+      "description": "Low spinning sweep that keeps Lee low and threatens crouch routes.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 28,
+      "onCounterHitFrames": 34,
+      "whiffRecoveryFrames": 10,
+      "range": 1.66,
+      "forwardForce": 0.85,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 17,
+      "pushback": 0.97,
+      "blockPushback": 0.44,
+      "launchHeight": 2.15,
+      "launchVelocity": 6,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
+      "label": "Rising Lotus Launcher",
+      "description": "Unsafe rising mid that launches for Lee's aerial lotus routes.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:d/f+3": {
+      "startupFrames": 24,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -15,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "forwardForce": 0.95,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 22,
+      "pushback": 0.97,
+      "blockPushback": 0.44,
+      "label": "Leaf Hurricane Low",
+      "description": "Low hurricane kick that knocks down when Lee catches the opponent stepping.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": true,
+      "endsInCrouch": true
+    },
+    "cmd:qcf+3": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 9,
+      "range": 1.86,
+      "forwardForce": 1.3,
+      "forwardForceStartFrame": 11,
+      "forwardForceEndFrame": 24,
+      "pushback": 0.99,
+      "blockPushback": 0.45,
+      "launchHeight": 1.35,
+      "launchVelocity": 5.45,
+      "juggleRefloatVelocity": 4.1,
+      "juggleGravityScale": 0.58,
+      "label": "Leaf Rising Wind",
+      "description": "Rising spin kick that lifts grounded hits into Lee's juggle plan.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
+      "damage": 16,
+      "blockDamage": 1,
+      "onBlockFrames": -13,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 28,
+      "whiffRecoveryFrames": 12,
+      "range": 2.02,
+      "forwardForce": 1.85,
+      "forwardForceStartFrame": 12,
+      "forwardForceEndFrame": 31,
+      "moveJumpForce": 8.6,
+      "moveJumpGravity": 23,
+      "pushback": 1.01,
+      "blockPushback": 0.46,
+      "label": "Front Lotus Spiral",
+      "description": "High-commitment lotus spin that causes tornado in juggles and cashes out launch routes.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 12,
+      "blockDamage": 1,
+      "onBlockFrames": -9,
+      "onHitFrames": 17,
+      "onCounterHitFrames": 24,
+      "whiffRecoveryFrames": 8,
+      "range": 1.7,
+      "pushback": 0.97,
+      "blockPushback": 0.44,
+      "launchHeight": 1.65,
+      "launchVelocity": 5.65,
+      "juggleRefloatVelocity": 4.1,
+      "juggleGravityScale": 0.56,
+      "label": "Rising Leaf Whirlwind",
+      "description": "While-standing mid kick that lifts opponents after crouch pressure.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:FC+1": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 7,
+      "blockDamage": 0,
+      "onBlockFrames": -3,
+      "onHitFrames": 9,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "pushback": 0.92,
+      "blockPushback": 0.42,
+      "label": "Crouching Strong Fist",
+      "description": "Quick crouching body shot for interrupting after Leaf Gale.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:FC+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 26,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 10,
+      "range": 1.5,
+      "pushback": 0.95,
+      "blockPushback": 0.43,
+      "launchHeight": 2,
+      "launchVelocity": 5.8,
+      "juggleRefloatVelocity": 4.2,
+      "juggleGravityScale": 0.54,
+      "label": "Crouch Lotus Launcher",
+      "description": "Crouch-starting launcher that rewards a hard read from full crouch.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:1+2": {
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 15,
+      "blockDamage": 1,
+      "onBlockFrames": -7,
+      "onHitFrames": 15,
+      "onCounterHitFrames": 21,
+      "whiffRecoveryFrames": 8,
+      "range": 1.78,
+      "forwardForce": 1.35,
+      "forwardForceStartFrame": 10,
+      "forwardForceEndFrame": 22,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "label": "Strong Fist Barrage",
+      "description": "Two-hand taijutsu rush that keeps Lee close for route extensions.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": false
+    },
+    "cmd:1+3": {
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
+      "damage": 17,
+      "blockDamage": 1,
+      "onBlockFrames": -15,
+      "onHitFrames": 29,
+      "onCounterHitFrames": 36,
+      "whiffRecoveryFrames": 11,
+      "range": 1.72,
+      "moveJumpForce": 8.4,
+      "moveJumpGravity": 22,
+      "pushback": 0.97,
+      "blockPushback": 0.44,
+      "launchHeight": 2.25,
+      "launchVelocity": 6.05,
+      "juggleRefloatVelocity": 4.45,
+      "juggleGravityScale": 0.5,
+      "label": "Primary Lotus Lift",
+      "description": "Lotus finisher: if Eight Gates Release is holding the opponent, Lee vanishes them into the Lotus sequence and leaves them knocked down.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": true,
+      "jumpBeforeMove": true,
+      "lotusCaptureFinisher": true
+    },
+    "cmd:2+3": {
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
+      "damage": 10,
+      "blockDamage": 1,
+      "onBlockFrames": -12,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 15,
+      "counterHitStunBonusFrames": 5,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "pushback": 0.96,
+      "blockPushback": 0.43,
+      "label": "Drunken Feint Sweep",
+      "description": "Low feint sweep that slips into crouch and frustrates stand blocking.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": false,
+      "endsInCrouch": true,
+      "counterHit": true
+    },
+    "cmd:2+4": {
+      "startupFrames": 24,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 14,
+      "blockDamage": 1,
+      "onBlockFrames": -16,
+      "onHitFrames": 13,
+      "onCounterHitFrames": 19,
+      "whiffRecoveryFrames": 10,
+      "range": 1.78,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "label": "Leaf Gale Knockdown",
+      "description": "Risky low sweep that knocks down when Lee commits to the full arc.",
+      "hitLevel": "low",
+      "tracking": "medium",
+      "knockdown": true,
+      "endsInCrouch": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
+      "damage": 18,
+      "blockDamage": 1,
+      "onBlockFrames": -14,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 29,
+      "whiffRecoveryFrames": 12,
+      "range": 1.96,
+      "forwardForce": 1.7,
+      "forwardForceStartFrame": 13,
+      "forwardForceEndFrame": 32,
+      "moveJumpForce": 8.8,
+      "moveJumpGravity": 23,
+      "pushback": 1,
+      "blockPushback": 0.46,
+      "label": "Front Lotus",
+      "description": "Lotus finisher: cashes out an Eight Gates hold into a cinematic Front Lotus knockdown.",
+      "hitLevel": "mid",
+      "tracking": "medium",
+      "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "lotusCaptureFinisher": true
+    },
+    "cmd:SS+3": {
+      "startupFrames": 23,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
+      "damage": 13,
+      "blockDamage": 1,
+      "onBlockFrames": -8,
+      "onHitFrames": 14,
+      "onCounterHitFrames": 22,
+      "whiffRecoveryFrames": 9,
+      "range": 1.8,
+      "homingSpeed": 10,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "label": "Side Step Leaf Cyclone",
+      "description": "Sidestep kick that catches linear retaliation and keeps Lee mobile.",
+      "hitLevel": "mid",
+      "tracking": "strong",
+      "knockdown": false
+    },
+    "cmd:O+1": {
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
+      "damage": 18,
+      "blockDamage": 1,
+      "onBlockFrames": -10,
+      "onHitFrames": 20,
+      "onCounterHitFrames": 28,
+      "whiffRecoveryFrames": 12,
+      "range": 1.78,
+      "forwardForce": 1.4,
+      "forwardForceStartFrame": 14,
+      "forwardForceEndFrame": 30,
+      "pushback": 0.98,
+      "blockPushback": 0.45,
+      "kiCost": 30,
+      "armorStartFrame": 8,
+      "armorEndFrame": 18,
+      "label": "Eight Gates Release",
+      "description": "Leaps in to open the Eight Gates and latch onto the opponent; Primary Lotus Lift or Front Lotus can cash out the capture.",
+      "hitLevel": "throw",
+      "tracking": "medium",
+      "knockdown": false,
+      "usesKi": true,
+      "jumpBeforeMove": true,
+      "throwCapture": true,
+      "lotusCaptureStarter": true,
+      "launchHeight": 0
+    },
+    "cmd:O+2": {
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
+      "damage": 24,
+      "blockDamage": 1,
+      "onBlockFrames": -17,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 36,
+      "whiffRecoveryFrames": 18,
+      "range": 2.08,
+      "forwardForce": 2.1,
+      "forwardForceStartFrame": 16,
+      "forwardForceEndFrame": 38,
+      "moveJumpForce": 9.2,
+      "moveJumpGravity": 24,
+      "pushback": 1.02,
+      "blockPushback": 0.46,
+      "kiCost": 45,
+      "label": "Hidden Lotus",
+      "description": "Expensive Hidden Lotus finisher with huge reward after launch but real block risk.",
+      "hitLevel": "special",
+      "tracking": "medium",
+      "knockdown": true,
+      "tornado": true,
+      "jumpBeforeMove": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Leaf Combo Second Beat",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-jab-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Strong Fist Body Route",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-jab-kick": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Leaf Gale Changeup",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-jab-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Whirlwind Ender",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Youth Drive",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-heavy-kick": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Strong Fist Barrage",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-heavy-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Dynamic Entry Ender",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-kick": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Low Gale Link",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-kick-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Low to Body Blow",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-kick-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Low Whirlwind Route",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Leaf Whirlwind Setup",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:jab-special-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Whirlwind Crush",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:heavy-jab": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Body Blow Check",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:heavy-jab-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Strong Fist Loop",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:heavy-jab-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Entry to Whirlwind",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:heavy-kick": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Body Blow Low",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:heavy-kick-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Gale Cyclone",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:heavy-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Dynamic Whirlwind",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:heavy-special-kick": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Whirlwind Low Reset",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:kick-jab": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Gale Jab Reset",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:kick-jab-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Gale Whirlwind",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:kick-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Gale Body Blow",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:kick-heavy-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Gale Entry Ender",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:kick-special": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Gale Cyclone",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:kick-special-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Cyclone Body Route",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:special-jab": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Whirlwind Jab Reset",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:special-jab-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Whirlwind Strong Fist",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:special-heavy": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Whirlwind Drive",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    },
+    "neutral:special-kick": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "label": "Whirlwind Gale",
+      "description": "Auto-generated Rock Lee string route built from his fast taijutsu links."
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.76,
+    "guard": 0.37,
+    "spacing": 1.45,
+    "specialChance": 0.32
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.94,
+        "height": 0.95,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 0.94,
+        "height": 0.92,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "6": {
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 0.85,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 0.99,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.04,
+        "height": 0.82,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 0.88,
+        "height": 0.84,
+        "offsetX": 0
+      },
+      "11": {
+        "width": 0.99,
+        "height": 0.88,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "6": {
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 0.85,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 0.99,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.04,
+        "height": 0.82,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 0.88,
+        "height": 0.84,
+        "offsetX": 0
+      },
+      "11": {
+        "width": 0.99,
+        "height": 0.88,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "12": {
+        "width": 1.02,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 0.79,
+        "height": 0.79,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "18": {
+        "width": 0.96,
+        "height": 0.88,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "36": {
+        "width": 0.72,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 1.1,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "36": {
+        "width": 0.72,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 1.1,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "53": {
+        "width": 1.5,
+        "height": 0.41,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.66,
+        "height": 0.64,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "21": {
+        "width": 0.91,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 0.96,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.91,
+        "height": 0.66,
+        "offsetX": 0
+      }
+    },
+    "crouchBlock": {
+      "150": {
+        "width": 0.88,
+        "height": 0.66,
+        "offsetX": 0
+      }
+    },
+    "block": {
+      "40": {
+        "width": 0.99,
+        "height": 0.82,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 0.78,
+        "height": 0.9,
+        "offsetX": 0
+      }
+    },
+    "chargeKi": {
+      "102": {
+        "width": 0.72,
+        "height": 1.25,
+        "offsetX": 0
+      },
+      "103": {
+        "width": 0.72,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 0.75,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 0.72,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 0.75,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 0.72,
+        "height": 1.5,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "38": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.99,
+        "height": 0.82,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 0.78,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "44": {
+        "width": 0.88,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.85,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.85,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 1.07,
+        "height": 0.92,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 1.15,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 1.04,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "26": {
+        "width": 0.85,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "70": {
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "73": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "75": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "146": {
+        "width": 0.96,
+        "height": 1.08,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 1.42,
+        "height": 0.6,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 1.2,
+        "height": 0.67,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 1.63,
+        "height": 0.34,
+        "offsetX": 0
+      }
+    },
+    "hitHeavy": {
+      "140": {
+        "width": 0.94,
+        "height": 1.85,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 0.94,
+        "height": 1.76,
+        "offsetX": 0
+      },
+      "142": {
+        "width": 0.94,
+        "height": 1.8,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 0.94,
+        "height": 1.78,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 0.94,
+        "height": 1.74,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 0.96,
+        "height": 1.76,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 0.96,
+        "height": 1.08,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "54": {
+        "width": 1.66,
+        "height": 0.64,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "55": {
+        "width": 1.98,
+        "height": 0.62,
+        "offsetX": 0
+      },
+      "56": {
+        "width": 1.98,
+        "height": 0.39,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 1.87,
+        "height": 0.39,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 1.55,
+        "height": 0.39,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 1.5,
+        "height": 0.39,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 0.67,
+        "height": 0.75,
+        "offsetX": 0
+      }
+    },
+    "getupStand": {
+      "0": {
+        "width": 0.94,
+        "height": 0.95,
+        "offsetX": 0
+      },
+      "19": {
+        "width": 0.94,
+        "height": 0.95,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 1.87,
+        "height": 0.39,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 1.55,
+        "height": 0.39,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 1.5,
+        "height": 0.39,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "108": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "111": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "113": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "114": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "116": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "117": {
+        "width": 1.42,
+        "height": 1.48,
+        "offsetX": 0
+      },
+      "118": {
+        "width": 1.42,
+        "height": 1.7,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 1.42,
+        "height": 1.93,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 1.31,
+        "height": 2.13,
+        "offsetX": 0
+      },
+      "121": {
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0
+      }
+    },
+    "win": {
+      "84": {
+        "width": 0.83,
+        "height": 0.99,
+        "offsetX": 0
+      },
+      "85": {
+        "width": 0.75,
+        "height": 0.99,
+        "offsetX": 0
+      },
+      "86": {
+        "width": 0.94,
+        "height": 0.99,
+        "offsetX": 0
+      },
+      "87": {
+        "width": 0.78,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "88": {
+        "width": 0.78,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.78,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 0.78,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 0.78,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 0.78,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.78,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 0.99,
+        "height": 0.86,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 1.44,
+        "height": 0.92,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "98": {
+        "width": 1.12,
+        "height": 0.54,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 0.99,
+        "height": 0.71,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+1": {
+      "38": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.99,
+        "height": 0.82,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 0.78,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+3": {
+      "12": {
+        "width": 1.02,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 0.79,
+        "height": 0.79,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0
+      }
+    },
+    "cmd:d+3": {
+      "26": {
+        "width": 0.85,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "44": {
+        "width": 0.88,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.85,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.85,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 1.07,
+        "height": 0.92,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 1.15,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 1.04,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+3": {
+      "32": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.72,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+3": {
+      "70": {
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "73": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "75": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "70": {
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "73": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "75": {
+        "width": 0.94,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "42": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 0.88,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.85,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.85,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 1.07,
+        "height": 0.92,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 1.15,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 1.04,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "21": {
+        "width": 0.91,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 0.96,
+        "height": 0.58,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.91,
+        "height": 0.66,
+        "offsetX": 0
+      },
+      "24": {
+        "width": 0.79,
+        "height": 0.79,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 0.94,
+        "height": 0.95,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "44": {
+        "width": 0.88,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.85,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.85,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 1.07,
+        "height": 0.92,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 1.15,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 1.04,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "32": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.72,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "108": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "111": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "113": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "114": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "116": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "117": {
+        "width": 1.42,
+        "height": 1.48,
+        "offsetX": 0
+      },
+      "118": {
+        "width": 1.42,
+        "height": 1.7,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 1.42,
+        "height": 1.93,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 1.31,
+        "height": 2.13,
+        "offsetX": 0
+      },
+      "121": {
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "26": {
+        "width": 0.85,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "32": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.72,
+        "height": 0.8,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "108": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "111": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "113": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "114": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "116": {
+        "width": 0.94,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "117": {
+        "width": 1.42,
+        "height": 1.48,
+        "offsetX": 0
+      },
+      "118": {
+        "width": 1.42,
+        "height": 1.7,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 1.42,
+        "height": 1.93,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 1.31,
+        "height": 2.13,
+        "offsetX": 0
+      },
+      "121": {
+        "width": 1.42,
+        "height": 1.42,
+        "offsetX": 0
+      }
+    },
+    "cmd:SS+3": {
+      "42": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 0.88,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.85,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.85,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 1.07,
+        "height": 0.92,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 1.15,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 1.04,
+        "height": 0.94,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+1": {
+      "102": {
+        "width": 0.72,
+        "height": 1.25,
+        "offsetX": 0
+      },
+      "103": {
+        "width": 0.72,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 0.75,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 0.72,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 0.75,
+        "height": 1.5,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 0.72,
+        "height": 1.5,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "134": {
+        "width": 1.04,
+        "height": 0.86,
+        "offsetX": 0
+      },
+      "135": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0
+      },
+      "136": {
+        "width": 0.79,
+        "height": 0.79,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 0.56,
+        "height": 0.94,
+        "offsetX": 0
+      },
+      "138": {
+        "width": 0.88,
+        "height": 1.33,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 0.32,
+        "height": 1.27,
+        "offsetX": 0
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.08,
+    "height": 1.08
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

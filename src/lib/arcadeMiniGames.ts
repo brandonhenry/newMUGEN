@@ -695,6 +695,8 @@ function createMiniGameFighter(character: CharacterDefinition, position: { x: nu
     throwEscapeProgress: 0,
     throwEscapeGoal: 0,
     throwShakeFrames: 0,
+    lotusFinisherDefenderSlot: null,
+    lotusCinematicFrames: 0,
     blockFlash: 0,
     hitFlash: 0,
     visualHitstop: { framesRemaining: 0, animationKey: null, progress: 0 },

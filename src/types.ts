@@ -135,6 +135,8 @@ export type MoveDefinition = {
   tornado?: boolean;
   throwCapture?: boolean;
   throwSideSwap?: boolean;
+  lotusCaptureStarter?: boolean;
+  lotusCaptureFinisher?: boolean;
   endsInCrouch?: boolean;
   holdable?: boolean;
   cancelable?: boolean;
@@ -1285,6 +1287,8 @@ export type FighterRuntime = {
   throwEscapeProgress: number;
   throwEscapeGoal: number;
   throwShakeFrames: number;
+  lotusFinisherDefenderSlot: 1 | 2 | null;
+  lotusCinematicFrames: number;
   blockFlash: number;
   hitFlash: number;
   visualHitstop: VisualHitstopRuntime;

@@ -9202,6 +9202,51 @@ describe('fight engine', () => {
     expect(match.fighters[1].juggleTornadoCount).toBe(0);
   });
 
+  it('lets lotus capture starters cash out into lotus finishers and knockdown', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    match.fighters[0].character = {
+      ...match.fighters[0].character,
+      animationFrames: {
+        ...match.fighters[0].character.animationFrames,
+        'cmd:1+3': match.fighters[0].character.animationFrames?.jableft ?? ['/test-frame.png']
+      },
+      moveOverrides: {
+        ...match.fighters[0].character.moveOverrides,
+        'cmd:1+3': {
+          label: 'Test Lotus Finisher',
+          damage: 12,
+          startupFrames: 1,
+          activeFrames: 2,
+          recoveryFrames: 5,
+          hitLevel: 'mid',
+          knockdown: true,
+          lotusCaptureFinisher: true
+        }
+      }
+    };
+    startActiveThrowHit(match, 0, makeThrowCaptureMove({ lotusCaptureStarter: true }));
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(match.fighters[0].state).toBe('throwHold');
+    expect(match.fighters[1].state).toBe('throwHeld');
+
+    const lotusInput = { ...emptyInputFrame(), jab: true, kick: true };
+    match = stepMatch(match, lotusInput, emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('attack');
+    expect(match.fighters[0].currentMove?.lotusCaptureFinisher).toBe(true);
+    expect(match.fighters[1].state).toBe('throwHeld');
+    expect(match.fighters[1].lotusCinematicFrames).toBeGreaterThan(0);
+
+    for (let i = 0; i < 18 && match.fighters[1].state !== 'knockdown'; i += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[1].state).toBe('knockdown');
+    expect(match.fighters[1].throwCaptorSlot).toBeNull();
+    expect(match.fighters[1].lotusCinematicFrames).toBe(0);
+  });
+
   it('keeps the defender attached until mash escape or timeout release', () => {
     let mashMatch = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     startActiveThrowHit(mashMatch);

@@ -4287,6 +4287,8 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     throwEscapeProgress: 0,
     throwEscapeGoal: 0,
     throwShakeFrames: 0,
+    lotusFinisherDefenderSlot: null,
+    lotusCinematicFrames: 0,
     blockFlash: 0,
     hitFlash: 0,
     visualHitstop: { framesRemaining: 0, animationKey: null, progress: 0 },
@@ -6117,6 +6119,7 @@ function FighterRig({
   preferProcedural?: boolean;
   visualScale?: number;
 }) {
+  if (fighter.state === 'throwHeld' && fighter.lotusCinematicFrames > 0) return null;
   const group = useRef<THREE.Group>(null);
   const yawInitialized = useRef(false);
   const scaledTime = useRef(0);

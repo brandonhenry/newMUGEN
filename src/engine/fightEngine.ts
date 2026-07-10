@@ -651,6 +651,8 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     throwEscapeProgress: 0,
     throwEscapeGoal: 0,
     throwShakeFrames: 0,
+    lotusFinisherDefenderSlot: null,
+    lotusCinematicFrames: 0,
     blockFlash: 0,
     hitFlash: 0,
     visualHitstop: createEmptyVisualHitstop(),
@@ -1114,7 +1116,20 @@ function handleThrowCaptureStep(match: MatchSnapshot, fighter: FighterRuntime, o
 
   if (fighter.state === 'throwHeld') {
     const captor = match.fighters.find((candidate) => candidate.slot === fighter.throwCaptorSlot);
-    if (!captor || captor.state !== 'throwHold') {
+    if (!captor) {
+      clearThrowRuntime(fighter);
+      fighter.state = 'idle';
+      return;
+    }
+    if (captor.lotusFinisherDefenderSlot === fighter.slot) {
+      applyThrowHoldPosition(captor, fighter);
+      fighter.lotusCinematicFrames = Math.max(0, fighter.lotusCinematicFrames - frameDelta);
+      if (captor.state !== 'attack' || captor.actionFramesRemaining === 0 || fighter.lotusCinematicFrames === 0) {
+        finishLotusCapture(captor, fighter);
+      }
+      return;
+    }
+    if (captor.state !== 'throwHold') {
       clearThrowRuntime(fighter);
       fighter.state = 'idle';
       return;
@@ -1141,6 +1156,9 @@ function handleThrowCaptureStep(match: MatchSnapshot, fighter: FighterRuntime, o
   fighter.throwHoldFrames += frameDelta;
   fighter.throwJabCooldownFrames = Math.max(0, fighter.throwJabCooldownFrames - frameDelta);
   applyThrowHoldPosition(fighter, defender);
+  if (fighter.currentMove?.lotusCaptureStarter && tryStartLotusFinisherFromCapture(match, fighter, defender, input)) {
+    return;
+  }
   if (fighter.throwJabActive) {
     handleThrowHoldJabStep(match, fighter, defender, frameDelta);
   } else {
@@ -1382,6 +1400,81 @@ function applyThrowHoldPosition(attacker: FighterRuntime, defender: FighterRunti
   defender.velocityY = 0;
 }
 
+function tryStartLotusFinisherFromCapture(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, input: InputFrame) {
+  const intent = getFreshMoveIntent(attacker, input);
+  if (!intent) return false;
+  const move = previewResolvedMove(attacker, defender, intent.inputSnapshot, intent.moveInput, intent);
+  if (!move?.lotusCaptureFinisher) return false;
+  if (!startComboAttack(attacker, defender, intent.inputSnapshot, intent.moveInput, 'neutral', intent)) return false;
+  const finisher = attacker.currentMove;
+  if (!finisher?.lotusCaptureFinisher) return false;
+  beginLotusFinisherCinematic(match, attacker, defender, finisher);
+  clearBufferedMoveInput(attacker);
+  return true;
+}
+
+function previewResolvedMove(
+  fighter: FighterRuntime,
+  opponent: FighterRuntime,
+  input: InputFrame,
+  moveInput: MoveInput,
+  intent?: FighterRuntime['bufferedMoveIntent']
+): MoveDefinition | null {
+  const baseMove = fighter.character.moves.find((candidate) => candidate.input === moveInput);
+  if (!baseMove) return null;
+  const route = getComboRoute(fighter, opponent, input);
+  const sequence = [moveInput];
+  const command = intent?.beginnerForcedCommand ? makeCommandCandidate(intent.beginnerForcedCommand) : findConfiguredCommand(fighter, opponent, input, moveInput);
+  const move = buildComboMove(fighter.character, baseMove, moveInput, route, 1, sequence, command);
+  return scaleBeginnerMoveDamage(input.charge ? buildKiBurstMove(move, getMoveKiCost(move)) : move, intent?.beginnerDamageScale);
+}
+
+function beginLotusFinisherCinematic(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, move: MoveDefinition) {
+  attacker.lotusFinisherDefenderSlot = defender.slot;
+  defender.lotusCinematicFrames = Math.max(1, totalMoveFrames(move));
+  defender.throwCaptorSlot = attacker.slot;
+  defender.throwShakeFrames = 0;
+  defender.velocityY = 0;
+  defender.position.y = 0;
+  const comboHits = Math.max(1, attacker.comboHits + 1);
+  const damage = getScaledComboHitDamage(move, comboHits);
+  attacker.comboHits = comboHits;
+  attacker.comboTimer = Math.max(attacker.comboTimer, COMBO_WINDOW);
+  attacker.comboDamage = Math.max(0, attacker.comboDamage + damage);
+  erodeRecoverableHealthForStarter(defender, { move, comboHits, throwHit: true });
+  applyFighterDamage(defender, damage, { move, comboHits, throwHit: true });
+  recoverHealthFromDamage(attacker, damage, 0.2);
+  const impactId = nextHitEventId(match);
+  const impactPosition: [number, number, number] = [defender.position.x, defender.position.y + 1.12, defender.position.z];
+  pushImpactSparkEvent(match, impactId, attacker, defender, move, 'hit', {
+    comboHits,
+    damage,
+    launched: false,
+    juggled: false,
+    tornado: Boolean(move.tornado),
+    kiBurst: Boolean(move.kiBurst)
+  }, impactPosition);
+  pushCombatPopupEvent(match, impactId, attacker, move, comboHits >= 2 ? 'combo' : null, {
+    launched: false,
+    juggled: false,
+    tornado: Boolean(move.tornado),
+    kiBurst: Boolean(move.kiBurst)
+  });
+}
+
+function finishLotusCapture(attacker: FighterRuntime, defender: FighterRuntime) {
+  const knockdownFrames = Math.max(KNOCKDOWN_MIN_FRAMES + GETUP_FRAMES, defender.lotusCinematicFrames + KNOCKDOWN_MIN_FRAMES);
+  clearThrowRuntime(attacker);
+  clearThrowRuntime(defender);
+  attacker.lotusFinisherDefenderSlot = null;
+  defender.lotusCinematicFrames = 0;
+  defender.position.y = 0;
+  defender.velocityY = 0;
+  defender.currentMove = null;
+  defender.moveFrame = 0;
+  enterKnockdown(defender, knockdownFrames);
+}
+
 function releaseThrowCapture(attacker: FighterRuntime, defender: FighterRuntime) {
   const releaseX = attacker.position.x + attacker.facing * THROW_RELEASE_SPACING;
   const releaseZ = attacker.position.z;
@@ -1417,6 +1510,8 @@ function clearThrowRuntime(fighter: FighterRuntime) {
   fighter.throwEscapeProgress = 0;
   fighter.throwEscapeGoal = 0;
   fighter.throwShakeFrames = 0;
+  fighter.lotusFinisherDefenderSlot = null;
+  fighter.lotusCinematicFrames = 0;
 }
 
 function bufferMoveIntent(fighter: FighterRuntime, intent: NonNullable<FighterRuntime['bufferedMoveIntent']>) {
