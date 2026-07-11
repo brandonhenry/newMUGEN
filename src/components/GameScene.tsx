@@ -6985,9 +6985,13 @@ function ImageVoxelFighter({
       root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, (crouch ? -0.28 : 0) + blockBreath * 0.014, smooth);
       const signedWidth = animationScale.width * animationScale.voxelScaleX * (animationScale.flipX ? -1 : 1);
       const signedHeight = animationScale.height * animationScale.voxelScaleY * (animationScale.flipY ? -1 : 1);
-      root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, signedWidth, smooth);
-      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, signedHeight * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
-      root.current.scale.z = THREE.MathUtils.lerp(root.current.scale.z, animationScale.width * animationScale.voxelScaleX, smooth);
+      // The frame geometry and its authored compensation scale must change on the
+      // same render tick. Easing the scale made a newly loaded wide/tall frame use
+      // the previous frame's dimensions briefly, so it visibly popped large and
+      // then shrank to the locked W/H value during animation playback.
+      root.current.scale.x = signedWidth;
+      root.current.scale.y = signedHeight * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012);
+      root.current.scale.z = animationScale.width * animationScale.voxelScaleX;
     }
     if (torso.current) {
       torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.26 - crouch * 0.18 + hit * 0.2 - blockBreathUp * 0.025, smooth);
@@ -8150,9 +8154,9 @@ function VoxelSpriteFighter({
       root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, (crouch ? -0.28 : 0) + blockBreath * 0.014, smooth);
       const signedWidth = animationScale.width * (animationScale.flipX ? -1 : 1);
       const signedHeight = animationScale.height * (animationScale.flipY ? -1 : 1);
-      root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, signedWidth, smooth);
-      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, signedHeight * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
-      root.current.scale.z = THREE.MathUtils.lerp(root.current.scale.z, animationScale.width, smooth);
+      root.current.scale.x = signedWidth;
+      root.current.scale.y = signedHeight * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012);
+      root.current.scale.z = animationScale.width;
     }
     if (torso.current) {
       torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.28 - crouch * 0.18 + hit * 0.2 - blockBreathUp * 0.025, smooth);

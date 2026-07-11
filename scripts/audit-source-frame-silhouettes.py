@@ -313,8 +313,8 @@ def expected_silhouette(
             keep = True
             # An authored outline color can be connected to a same-colored
             # sheet background when the sprite touches its source-cell edge.
-            # The per-pixel primary-span gate below still limits restoration
-            # to holes bracketed by the existing body silhouette, so accepting
+            # The per-pixel silhouette-span gate below still limits restoration
+            # to holes bracketed by the existing body, so accepting
             # the component here cannot grow into the surrounding matte.
             confidence = "authored-adjacent-silhouette"
         elif not authored and not touches_border and len(component) <= 24 and adjacent:
@@ -329,7 +329,7 @@ def expected_silhouette(
                 continue
             x, y = key % width, key // width
             # Automatic repair is interior-only. Source-confirmed pixels must be
-            # bracketed by the primary body on a row or column; outer-contour
+            # bracketed by the body on a row or column; outer-contour
             # expansion is review work because it can belong to the next cell.
             if not inside_primary_span(span_mask, width, height, x, y):
                 continue
