@@ -228,17 +228,31 @@ def foreground_components(
     return components
 
 
-def align_current_to_source(source_crop: Image.Image, current: Image.Image, min_score: float) -> tuple[int, int, float, float] | None:
+def source_color_index(image: Image.Image) -> dict[RGB, list[tuple[int, int]]]:
+    rgba = image.convert("RGBA")
+    pixels = rgba.load()
+    result: dict[RGB, list[tuple[int, int]]] = {}
+    for y in range(rgba.height):
+        for x in range(rgba.width):
+            red, green, blue, _ = pixels[x, y]
+            result.setdefault((red, green, blue), []).append((x, y))
+    return result
+
+
+def align_current_to_source(
+    source_crop: Image.Image,
+    current: Image.Image,
+    min_score: float,
+    indexed_source_colors: dict[RGB, list[tuple[int, int]]] | None = None,
+) -> tuple[int, int, float, float] | None:
     source_rgba = source_crop.convert("RGBA")
     current_rgba = current.convert("RGBA")
     if current.width > source_crop.width or current.height > source_crop.height:
         return None
-    source_by_color: dict[RGB, list[tuple[int, int]]] = {}
+    source_by_color = indexed_source_colors or {}
     source_pixels = source_rgba.load()
-    for y in range(source_rgba.height):
-        for x in range(source_rgba.width):
-            red, green, blue, _ = source_pixels[x, y]
-            source_by_color.setdefault((red, green, blue), []).append((x, y))
+    if indexed_source_colors is None:
+        source_by_color = source_color_index(source_rgba)
     opaque: list[tuple[int, int, RGB]] = []
     current_pixels = current_rgba.load()
     for y in range(current_rgba.height):
@@ -469,6 +483,7 @@ def audit_character(
     source_counts = source_color_counts(source)
     dominant = {color for color, count in source_counts.items() if count >= source.width * source.height * dominant_ratio}
     authored = current_palette(sorted((character_dir / "frames").glob("frame-*.png")))
+    global_source_colors = source_color_index(source) if global_fallback else None
     changes: list[dict[str, Any]] = []
     review_only: list[dict[str, Any]] = []
     unaligned: list[int] = []
@@ -476,10 +491,30 @@ def audit_character(
         index = int(entry["index"])
         if approved_frames is not None and index not in approved_frames:
             continue
+        current = Image.open(character_dir / "frames" / f"frame-{index:03d}.png").convert("RGBA")
         box = entry.get("sourceBox")
         if entry.get("sourceName") != source_name or not isinstance(box, list) or len(box) != 4:
-            continue
-        current = Image.open(character_dir / "frames" / f"frame-{index:03d}.png").convert("RGBA")
+            if not global_fallback:
+                continue
+            current_bounds = alpha_bounds(current)
+            current_visible = current.crop(current_bounds) if current_bounds is not None else current
+            global_alignment = align_current_to_source(
+                source,
+                current_visible,
+                alignment_min_score,
+                global_source_colors,
+            )
+            if global_alignment is None:
+                unaligned.append(index)
+                continue
+            global_x, global_y, _, _ = global_alignment
+            padding = 6
+            box = [
+                max(0, global_x - padding),
+                max(0, global_y - padding),
+                min(source.width, global_x + current_visible.width + padding),
+                min(source.height, global_y + current_visible.height + padding),
+            ]
         crop = source.crop(tuple(int(value) for value in box)).convert("RGBA")
         candidate_source_box = [int(value) for value in box]
         alignment: dict[str, Any] | None = None
