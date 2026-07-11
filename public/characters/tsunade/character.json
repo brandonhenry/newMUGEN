@@ -1,0 +1,1919 @@
+{
+  "id": "tsunade",
+  "displayName": "Tsunade",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/tsunade/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://tsunade",
+  "spriteSheetPath": "/characters/tsunade/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/tsunade/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 138
+    }
+  ],
+  "spriteFrameCount": 139,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/tsunade/frames/frame-132.png",
+      "/characters/tsunade/frames/frame-133.png",
+      "/characters/tsunade/frames/frame-134.png",
+      "/characters/tsunade/frames/frame-135.png",
+      "/characters/tsunade/frames/frame-136.png",
+      "/characters/tsunade/frames/frame-137.png",
+      "/characters/tsunade/frames/frame-136.png",
+      "/characters/tsunade/frames/frame-135.png",
+      "/characters/tsunade/frames/frame-134.png",
+      "/characters/tsunade/frames/frame-133.png"
+    ],
+    "walkForward": [
+      "/characters/tsunade/frames/frame-030.png",
+      "/characters/tsunade/frames/frame-031.png",
+      "/characters/tsunade/frames/frame-032.png",
+      "/characters/tsunade/frames/frame-033.png",
+      "/characters/tsunade/frames/frame-034.png",
+      "/characters/tsunade/frames/frame-035.png"
+    ],
+    "walkBack": [
+      "/characters/tsunade/frames/frame-036.png",
+      "/characters/tsunade/frames/frame-035.png",
+      "/characters/tsunade/frames/frame-034.png",
+      "/characters/tsunade/frames/frame-033.png",
+      "/characters/tsunade/frames/frame-032.png",
+      "/characters/tsunade/frames/frame-031.png",
+      "/characters/tsunade/frames/frame-030.png"
+    ],
+    "sprint": [
+      "/characters/tsunade/frames/frame-011.png",
+      "/characters/tsunade/frames/frame-012.png",
+      "/characters/tsunade/frames/frame-013.png",
+      "/characters/tsunade/frames/frame-014.png",
+      "/characters/tsunade/frames/frame-015.png"
+    ],
+    "backHop": [
+      "/characters/tsunade/frames/frame-016.png",
+      "/characters/tsunade/frames/frame-017.png",
+      "/characters/tsunade/frames/frame-018.png",
+      "/characters/tsunade/frames/frame-019.png"
+    ],
+    "sidestepLeft": [
+      "/characters/tsunade/frames/frame-020.png",
+      "/characters/tsunade/frames/frame-021.png",
+      "/characters/tsunade/frames/frame-022.png",
+      "/characters/tsunade/frames/frame-023.png"
+    ],
+    "sidestepRight": [
+      "/characters/tsunade/frames/frame-024.png",
+      "/characters/tsunade/frames/frame-025.png",
+      "/characters/tsunade/frames/frame-026.png",
+      "/characters/tsunade/frames/frame-027.png",
+      "/characters/tsunade/frames/frame-028.png",
+      "/characters/tsunade/frames/frame-029.png"
+    ],
+    "jump": [
+      "/characters/tsunade/frames/frame-030.png",
+      "/characters/tsunade/frames/frame-031.png",
+      "/characters/tsunade/frames/frame-032.png",
+      "/characters/tsunade/frames/frame-033.png",
+      "/characters/tsunade/frames/frame-034.png",
+      "/characters/tsunade/frames/frame-035.png"
+    ],
+    "crouch": [
+      "/characters/tsunade/frames/frame-036.png"
+    ],
+    "crouchBlock": [
+      "/characters/tsunade/frames/frame-036.png"
+    ],
+    "block": [
+      "/characters/tsunade/frames/frame-041.png"
+    ],
+    "chargeKi": [
+      "/characters/tsunade/frames/frame-043.png",
+      "/characters/tsunade/frames/frame-044.png",
+      "/characters/tsunade/frames/frame-045.png"
+    ],
+    "jableft": [
+      "/characters/tsunade/frames/frame-000.png",
+      "/characters/tsunade/frames/frame-001.png",
+      "/characters/tsunade/frames/frame-002.png"
+    ],
+    "jabright": [
+      "/characters/tsunade/frames/frame-003.png",
+      "/characters/tsunade/frames/frame-004.png",
+      "/characters/tsunade/frames/frame-005.png"
+    ],
+    "kickleft": [
+      "/characters/tsunade/frames/frame-069.png",
+      "/characters/tsunade/frames/frame-070.png",
+      "/characters/tsunade/frames/frame-071.png",
+      "/characters/tsunade/frames/frame-073.png",
+      "/characters/tsunade/frames/frame-074.png",
+      "/characters/tsunade/frames/frame-075.png",
+      "/characters/tsunade/frames/frame-077.png",
+      "/characters/tsunade/frames/frame-078.png"
+    ],
+    "kickright": [
+      "/characters/tsunade/frames/frame-080.png"
+    ],
+    "hitLight": [
+      "/characters/tsunade/frames/frame-102.png"
+    ],
+    "hitHeavy": [
+      "/characters/tsunade/frames/frame-103.png"
+    ],
+    "juggle": [
+      "/characters/tsunade/frames/frame-103.png"
+    ],
+    "knockdown": [
+      "/characters/tsunade/frames/frame-102.png",
+      "/characters/tsunade/frames/frame-103.png"
+    ],
+    "getupStand": [
+      "/characters/tsunade/frames/frame-098.png",
+      "/characters/tsunade/frames/frame-099.png",
+      "/characters/tsunade/frames/frame-100.png",
+      "/characters/tsunade/frames/frame-101.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/tsunade/frames/frame-104.png",
+      "/characters/tsunade/frames/frame-105.png"
+    ],
+    "lose": [
+      "/characters/tsunade/frames/frame-106.png",
+      "/characters/tsunade/frames/frame-107.png"
+    ],
+    "cmd:f+1": [
+      "/characters/tsunade/frames/frame-108.png",
+      "/characters/tsunade/frames/frame-109.png",
+      "/characters/tsunade/frames/frame-111.png",
+      "/characters/tsunade/frames/frame-113.png",
+      "/characters/tsunade/frames/frame-115.png",
+      "/characters/tsunade/frames/frame-117.png",
+      "/characters/tsunade/frames/frame-119.png",
+      "/characters/tsunade/frames/frame-121.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/tsunade/frames/frame-123.png",
+      "/characters/tsunade/frames/frame-124.png",
+      "/characters/tsunade/frames/frame-126.png",
+      "/characters/tsunade/frames/frame-128.png",
+      "/characters/tsunade/frames/frame-130.png",
+      "/characters/tsunade/frames/frame-132.png",
+      "/characters/tsunade/frames/frame-134.png",
+      "/characters/tsunade/frames/frame-136.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/tsunade/frames/frame-000.png",
+      "/characters/tsunade/frames/frame-001.png",
+      "/characters/tsunade/frames/frame-002.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/tsunade/frames/frame-003.png",
+      "/characters/tsunade/frames/frame-004.png",
+      "/characters/tsunade/frames/frame-005.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/tsunade/frames/frame-006.png",
+      "/characters/tsunade/frames/frame-007.png",
+      "/characters/tsunade/frames/frame-008.png",
+      "/characters/tsunade/frames/frame-009.png",
+      "/characters/tsunade/frames/frame-010.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/tsunade/frames/frame-011.png",
+      "/characters/tsunade/frames/frame-012.png",
+      "/characters/tsunade/frames/frame-013.png",
+      "/characters/tsunade/frames/frame-014.png",
+      "/characters/tsunade/frames/frame-015.png"
+    ],
+    "cmd:1+2": [
+      "/characters/tsunade/frames/frame-016.png",
+      "/characters/tsunade/frames/frame-017.png",
+      "/characters/tsunade/frames/frame-018.png",
+      "/characters/tsunade/frames/frame-019.png"
+    ],
+    "cmd:1+3": [
+      "/characters/tsunade/frames/frame-020.png",
+      "/characters/tsunade/frames/frame-021.png",
+      "/characters/tsunade/frames/frame-022.png",
+      "/characters/tsunade/frames/frame-023.png"
+    ],
+    "cmd:2+3": [
+      "/characters/tsunade/frames/frame-006.png",
+      "/characters/tsunade/frames/frame-007.png",
+      "/characters/tsunade/frames/frame-008.png",
+      "/characters/tsunade/frames/frame-009.png",
+      "/characters/tsunade/frames/frame-010.png"
+    ],
+    "cmd:2+4": [
+      "/characters/tsunade/frames/frame-011.png",
+      "/characters/tsunade/frames/frame-012.png",
+      "/characters/tsunade/frames/frame-013.png",
+      "/characters/tsunade/frames/frame-014.png",
+      "/characters/tsunade/frames/frame-015.png"
+    ],
+    "cmd:3+4": [
+      "/characters/tsunade/frames/frame-069.png",
+      "/characters/tsunade/frames/frame-070.png",
+      "/characters/tsunade/frames/frame-071.png",
+      "/characters/tsunade/frames/frame-073.png",
+      "/characters/tsunade/frames/frame-074.png",
+      "/characters/tsunade/frames/frame-075.png",
+      "/characters/tsunade/frames/frame-077.png",
+      "/characters/tsunade/frames/frame-078.png"
+    ],
+    "cmd:O+2": [
+      "/characters/tsunade/frames/frame-080.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 100,
+    "speed": 5.18,
+    "sidestepSpeed": 4.56,
+    "jumpForce": 8.21,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Tsunade Left Check",
+      "input": "jab",
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Tsunade Left Kick",
+      "input": "kick",
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Tsunade Right Check",
+      "input": "heavy",
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Tsunade Right Kick",
+      "input": "special",
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#aee945",
+    "secondary": "#1d96dc",
+    "accent": "#e5d14a"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Tsunade Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Tsunade Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Tsunade Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Tsunade Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Tsunade Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Tsunade Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Tsunade Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Tsunade Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Tsunade Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Tsunade Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Tsunade Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Tsunade Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Tsunade Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 24,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Tsunade Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Tsunade Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Tsunade Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Tsunade Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Tsunade Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Tsunade Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-special": {
+      "label": "Tsunade Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy": {
+      "label": "Tsunade Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Tsunade Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Tsunade Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick": {
+      "label": "Tsunade Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Tsunade Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-special": {
+      "label": "Tsunade Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special": {
+      "label": "Tsunade Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Tsunade Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab": {
+      "label": "Tsunade Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Tsunade Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Tsunade Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick": {
+      "label": "Tsunade Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Tsunade Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special": {
+      "label": "Tsunade Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Tsunade Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab": {
+      "label": "Tsunade Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab-special": {
+      "label": "Tsunade Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy": {
+      "label": "Tsunade Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Tsunade Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special": {
+      "label": "Tsunade Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Tsunade Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab": {
+      "label": "Tsunade Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Tsunade Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-heavy": {
+      "label": "Tsunade Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-kick": {
+      "label": "Tsunade Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.74,
+    "guard": 0.34,
+    "spacing": 1.34,
+    "specialChance": 0.23
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.47,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 0.82,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "132": {
+        "width": 1.224,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 1.189,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "134": {
+        "width": 1.189,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "135": {
+        "width": 1.189,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "136": {
+        "width": 1.364,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 1.294,
+        "height": 1.208,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "3": {
+        "width": 0.33,
+        "height": 0.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 0.26,
+        "height": 0.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "5": {
+        "width": 0.26,
+        "height": 0.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1.189,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.643,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1.294,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.748,
+        "height": 1.05,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "6": {
+        "width": 0.49,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 0.71,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 0.93,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 0.66,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 0.67,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1.189,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.643,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1.294,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.748,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 1.224,
+        "height": 1.07,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "11": {
+        "width": 1.433,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 1.189,
+        "height": 1.169,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "16": {
+        "width": 1.329,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 1.573,
+        "height": 1.287,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.364,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "19": {
+        "width": 1.364,
+        "height": 1.208,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "20": {
+        "width": 1.109,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "21": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 1.129,
+        "height": 1.129,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 1.03,
+        "height": 1.03,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "24": {
+        "width": 0.804,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 0.769,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 0.874,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "27": {
+        "width": 0.734,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 0.734,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 0.979,
+        "height": 1.208,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "30": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1.189,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.643,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1.294,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.748,
+        "height": 1.05,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "36": {
+        "width": 1.224,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.71,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 0.71,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "36": {
+        "width": 1.224,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "138": {
+        "width": 0.55,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "41": {
+        "width": 1.154,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 0.55,
+        "height": 0.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "43": {
+        "width": 1.224,
+        "height": 1.169,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 1.468,
+        "height": 1.129,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 1.224,
+        "height": 1.07,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "46": {
+        "width": 1.014,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 0.944,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 1.119,
+        "height": 1.248,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 1.259,
+        "height": 1.248,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1.049,
+        "height": 1.248,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 0.979,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 0.909,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.084,
+        "height": 1.248,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "56": {
+        "width": 0.416,
+        "height": 0.416,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 0.416,
+        "height": 0.416,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 0.535,
+        "height": 0.535,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 0.535,
+        "height": 0.535,
+        "offsetX": 0
+      },
+      "62": {
+        "width": 0.416,
+        "height": 0.416,
+        "offsetX": 0
+      },
+      "64": {
+        "width": 0.535,
+        "height": 0.535,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 0.535,
+        "height": 0.535,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 0.416,
+        "height": 0.416,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "69": {
+        "width": 1.154,
+        "height": 0.99,
+        "offsetX": 0
+      },
+      "70": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 1.129,
+        "height": 1.129,
+        "offsetX": 0
+      },
+      "73": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.189,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "75": {
+        "width": 1.154,
+        "height": 1.169,
+        "offsetX": 0
+      },
+      "77": {
+        "width": 0.891,
+        "height": 0.891,
+        "offsetX": 0
+      },
+      "78": {
+        "width": 0.713,
+        "height": 0.713,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "80": {
+        "width": 1.189,
+        "height": 1.03,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "81": {
+        "width": 1.014,
+        "height": 1.268,
+        "offsetX": 0
+      },
+      "82": {
+        "width": 0.51,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.53,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.55,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.53,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 0.51,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "87": {
+        "width": 1.259,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "88": {
+        "width": 0.6,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "89": {
+        "width": 1.853,
+        "height": 1.089,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 1.189,
+        "height": 1.129,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 1.888,
+        "height": 1.149,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 1.678,
+        "height": 1.089,
+        "offsetX": 0
+      },
+      "103": {
+        "width": 1.958,
+        "height": 0.733,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "93": {
+        "width": 0.46,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.55,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.25,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 0.64,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.64,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "102": {
+        "width": 1.188,
+        "height": 1.188,
+        "offsetX": 0,
+        "voxelScaleX": 1.76516,
+        "voxelScaleY": 0.61004
+      },
+      "103": {
+        "width": 1.188,
+        "height": 1.188,
+        "offsetX": 0,
+        "voxelScaleX": 1.76518,
+        "voxelScaleY": 0.6606
+      }
+    },
+    "getupStand": {
+      "98": {
+        "width": 1.468,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 1.468,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "100": {
+        "width": 1.818,
+        "height": 1.129,
+        "offsetX": 0
+      },
+      "101": {
+        "width": 1.538,
+        "height": 1.03,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "102": {
+        "width": 0.85,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "103": {
+        "width": 0.78,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "104": {
+        "width": 1.433,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 1.434,
+        "height": 1.07,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "106": {
+        "width": 1.433,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 1.434,
+        "height": 1.07,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+1": {
+      "108": {
+        "width": 0.944,
+        "height": 1.248,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 0.979,
+        "height": 1.248,
+        "offsetX": 0
+      },
+      "111": {
+        "width": 0.944,
+        "height": 1.248,
+        "offsetX": 0
+      },
+      "113": {
+        "width": 1.119,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 1.049,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "117": {
+        "width": 0.792,
+        "height": 0.792,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 0.733,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "121": {
+        "width": 0.812,
+        "height": 0.812,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "123": {
+        "width": 0.891,
+        "height": 0.891,
+        "offsetX": 0
+      },
+      "124": {
+        "width": 0.753,
+        "height": 0.753,
+        "offsetX": 0
+      },
+      "126": {
+        "width": 0.792,
+        "height": 0.792,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.792,
+        "height": 0.792,
+        "offsetX": 0
+      },
+      "130": {
+        "width": 0.792,
+        "height": 0.792,
+        "offsetX": 0
+      },
+      "132": {
+        "width": 1.224,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "134": {
+        "width": 1.189,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "136": {
+        "width": 1.364,
+        "height": 1.208,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "0": {
+        "width": 1.084,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 1.169,
+        "height": 1.169,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.189,
+        "height": 1.188,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "3": {
+        "width": 1.084,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.169,
+        "height": 1.169,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 1.189,
+        "height": 1.188,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "6": {
+        "width": 1.329,
+        "height": 1.149,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.09,
+        "height": 1.089,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 1.228,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.09,
+        "height": 1.089,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.399,
+        "height": 1.208,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "11": {
+        "width": 1.433,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 1.189,
+        "height": 1.169,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "16": {
+        "width": 1.329,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 1.573,
+        "height": 1.287,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.364,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "19": {
+        "width": 1.364,
+        "height": 1.208,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "20": {
+        "width": 1.109,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "21": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 1.129,
+        "height": 1.129,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 1.03,
+        "height": 1.03,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "24": {
+        "width": 0.804,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 0.769,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 0.874,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "27": {
+        "width": 0.734,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 0.734,
+        "height": 1.228,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 0.979,
+        "height": 1.208,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "30": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1.189,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.643,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.503,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1.294,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.748,
+        "height": 1.05,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "36": {
+        "width": 1.224,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.673,
+        "height": 0.673,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.594,
+        "height": 0.594,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "39": {
+        "width": 1.119,
+        "height": 1.188,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 1.119,
+        "height": 1.188,
+        "offsetX": 0
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1,
+    "height": 1
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

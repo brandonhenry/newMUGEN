@@ -16,7 +16,7 @@ import {
   prepareVerticalTapForRead
 } from '../hooks/useControls';
 import { compactMatchSnapshot, hydrateMatchSnapshot } from '../lib/online/codec';
-import { emptyInputFrame, type ActionName, type CharacterDefinition, type InputFrameWithMetadata, type MatchSnapshot, type MoveDefinition, type MoveInput, type MoveProjectileInstance, type StageDefinition } from '../types';
+import { emptyInputFrame, type ActionName, type CharacterDefinition, type ImpactSparkShape, type InputFrameWithMetadata, type MatchSnapshot, type MoveDefinition, type MoveInput, type MoveProjectileInstance, type StageDefinition } from '../types';
 import { activeMoveProgress, createMatch, getAuthoredNeutralStringDamageCeiling, getAuthoredNeutralStringRouteCount, getFighterAnimationFrameSource, stepMatch } from './fightEngine';
 
 function unwrappedAngleDelta(next: number, previous: number) {
@@ -1383,6 +1383,7 @@ describe('character manifests', () => {
     expect(settings.display.impactSparks.cinematic).toBe(false);
     expect(settings.display.impactSparks.shape).toBe('ring');
     expect(settings.display.impactSparks.hitColor).toBe('#12ABef');
+    expect(settings.display.impactSparks.hitAccentColor).toBe(defaultGameSettings.display.impactSparks.hitAccentColor);
     expect(settings.display.impactSparks.blockColor).toBe(defaultGameSettings.display.impactSparks.blockColor);
     expect(settings.display.impactSparks.size).toBe(1.8);
     expect(settings.display.impactSparks.intensity).toBe(0.35);
@@ -1390,6 +1391,35 @@ describe('character manifests', () => {
     expect(settings.audio.bgmTrackIndex).toBe(99);
     expect(settings.audio.hitSfx).toBe(2);
     expect(settings.audio.voices).toBe(1);
+  });
+
+  it('sanitizes procedural impact spark shapes and their two-color palette without migrating legacy choices', () => {
+    const shapes: ImpactSparkShape[] = ['voxel-burst', 'sharp-spark', 'heavy-burst', 'white-ink', 'burst', 'ring', 'shards'];
+
+    for (const shape of shapes) {
+      const settings = sanitizeGameSettings({
+        display: {
+          impactSparks: {
+            shape,
+            hitColor: '#A1b2C3',
+            hitAccentColor: '#d4E5f6'
+          }
+        }
+      });
+      expect(settings.display.impactSparks.shape).toBe(shape);
+      expect(settings.display.impactSparks.hitColor).toBe('#A1b2C3');
+      expect(settings.display.impactSparks.hitAccentColor).toBe('#d4E5f6');
+    }
+
+    const invalid = sanitizeGameSettings({
+      display: { impactSparks: { shape: 'unknown', hitColor: 'yellow', hitAccentColor: '#12' } }
+    });
+    expect(defaultGameSettings.display.impactSparks.shape).toBe('voxel-burst');
+    expect(defaultGameSettings.display.impactSparks.hitColor).toBe('#ffe600');
+    expect(defaultGameSettings.display.impactSparks.hitAccentColor).toBe('#ff9d00');
+    expect(invalid.display.impactSparks.shape).toBe('voxel-burst');
+    expect(invalid.display.impactSparks.hitColor).toBe('#ffe600');
+    expect(invalid.display.impactSparks.hitAccentColor).toBe('#ff9d00');
   });
 
   it('sanitizes control scheme settings', () => {
@@ -4898,6 +4928,49 @@ describe('fight engine', () => {
     expect(match.fighters[0].position.z).toBeGreaterThan(beforeWalk + 0.35);
   });
 
+  it('allows neutral ground movement actions within 0.05 of the ground', () => {
+    for (const groundOffset of [-0.05, 0.05]) {
+      const makeOffsetMatch = () => {
+        const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+        match.phase = 'fighting';
+        match.countdown = 0;
+        match.fighters[0].state = 'idle';
+        match.fighters[0].position.y = groundOffset;
+        match.fighters[0].velocityY = 0;
+        return match;
+      };
+
+      const jump = stepMatch(makeOffsetMatch(), { ...emptyInputFrame(), jump: true }, emptyInputFrame(), 1 / 60);
+      expect(jump.fighters[0].state, `jump at y=${groundOffset}`).toBe('jump');
+      expect(jump.fighters[0].velocityY, `jump at y=${groundOffset}`).toBeGreaterThan(0);
+
+      const backHop = stepMatch(
+        makeOffsetMatch(),
+        { ...emptyInputFrame(), left: true, dashBack: true },
+        emptyInputFrame(),
+        1 / 60
+      );
+      expect(backHop.fighters[0].backHopTotalFrames, `back hop at y=${groundOffset}`).toBeGreaterThan(0);
+
+      const sprint = stepMatch(
+        makeOffsetMatch(),
+        { ...emptyInputFrame(), right: true, dashForward: true },
+        emptyInputFrame(),
+        1 / 60
+      );
+      expect(sprint.fighters[0].dashForwardFrames, `forward sprint at y=${groundOffset}`).toBeGreaterThan(0);
+
+      const sidestep = stepMatch(
+        makeOffsetMatch(),
+        { ...emptyInputFrame(), sidestepUp: true },
+        emptyInputFrame(),
+        1 / 60
+      );
+      expect(sidestep.fighters[0].state, `sidestep at y=${groundOffset}`).toBe('sidestep');
+      expect(sidestep.fighters[0].position.y, `sidestep at y=${groundOffset}`).toBe(0);
+    }
+  });
+
   it('boosts forward movement on double-tap forward and keeps normal forward movement afterward', () => {
     const dashCharacter: CharacterDefinition = {
       ...starterCharacters[0],
@@ -7886,6 +7959,21 @@ describe('fight engine', () => {
     expect(match.fighters[1].recoverableHp).toBe(3);
     expect(match.fighters[1].recoverableRecoveryDelayFrames).toBeGreaterThan(0);
     expect(match.fighters[1].recoverableFlashFrames).toBeGreaterThan(0);
+  });
+
+  it('records the real attack direction after fighters swap sides', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveTestHit(match);
+    match.fighters[0].position.x = 0.45;
+    match.fighters[1].position.x = -0.45;
+    match.fighters[0].facing = -1;
+    match.fighters[0].facingYaw = -Math.PI / 2;
+    match.fighters[1].facing = 1;
+    match.fighters[1].facingYaw = Math.PI / 2;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.impactEvents[0]).toMatchObject({ attackerSlot: 1, defenderSlot: 2, direction: -1 });
   });
 
   it('makes blocked chip mostly recoverable', () => {

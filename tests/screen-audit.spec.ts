@@ -19,6 +19,7 @@ type AuditScreen =
   | 'friends'
   | 'matchHistory'
   | 'privateRooms'
+  | 'customRooms'
   | 'settings'
   | 'viewer'
   | 'stageEditor'
@@ -75,6 +76,7 @@ const auditScreens: AuditScreen[] = [
   'friends',
   'matchHistory',
   'privateRooms',
+  'customRooms',
   'settings',
   'viewer',
   'stageEditor',
@@ -214,6 +216,7 @@ function screenSelector(screen: AuditScreen) {
     friends: '.friend-list-screen',
     matchHistory: '.match-history-screen',
     privateRooms: '.private-rooms-screen',
+    customRooms: '.custom-entry-screen',
     settings: '.settings-screen',
     viewer: '.viewer-screen',
     stageEditor: '.stage-editor-screen',

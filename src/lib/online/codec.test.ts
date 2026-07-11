@@ -22,7 +22,7 @@ describe('online codec', () => {
   });
 
   it('hydrates render-critical match state from a compact snapshot', () => {
-    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { aiSeed: 9090, playIntro: true });
+    const match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online', 3, { aiSeed: 9090, playIntro: true, roundsToWin: 5 });
     match.fighters[0].hp = 42;
     match.fighters[0].recoverableHp = 11;
     match.fighters[0].displayRecoverableHp = 7;
@@ -165,6 +165,7 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].shadowClone?.currentMove?.input).toBe('jab');
     expect(hydrated.fighters[0].shadowClone?.visualHitstop).toEqual({ framesRemaining: 5, animationKey: 'jabright', progress: 0.38 });
     expect(hydrated.fighters[1].roundsWon).toBe(1);
+    expect(hydrated.roundsToWin).toBe(5);
     expect(hydrated.aiSeed).toBe(match.aiSeed);
     expect(hydrated.roundAiSeed).toBe(match.roundAiSeed);
     expect(hydrated.idleQuietFrames).toBe(1234);
@@ -172,5 +173,9 @@ describe('online codec', () => {
     expect(hydrated.clashState.sequence).toEqual(['jab', 'heavy', 'special']);
     expect(hydrated.clashState.p1.progress).toBe(1);
     expect(hydrated.clashState.contactPoint).toEqual([0.2, 1.4, -0.1]);
+
+    const legacySnapshot = { ...snapshot };
+    delete (legacySnapshot as Partial<typeof snapshot>).roundsToWin;
+    expect(hydrateMatchSnapshot(base, legacySnapshot).roundsToWin).toBe(3);
   });
 });

@@ -1,0 +1,2427 @@
+{
+  "id": "tayuya-curse-mark",
+  "displayName": "Tayuya Curse Mark",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/tayuya-curse-mark/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://tayuya-curse-mark",
+  "spriteSheetPath": "/characters/tayuya-curse-mark/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/tayuya-curse-mark/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 174
+    }
+  ],
+  "spriteFrameCount": 174,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/tayuya-curse-mark/frames/frame-000.png",
+      "/characters/tayuya-curse-mark/frames/frame-001.png",
+      "/characters/tayuya-curse-mark/frames/frame-000.png"
+    ],
+    "walkForward": [
+      "/characters/tayuya-curse-mark/frames/frame-033.png",
+      "/characters/tayuya-curse-mark/frames/frame-035.png"
+    ],
+    "walkBack": [
+      "/characters/tayuya-curse-mark/frames/frame-038.png",
+      "/characters/tayuya-curse-mark/frames/frame-037.png",
+      "/characters/tayuya-curse-mark/frames/frame-036.png",
+      "/characters/tayuya-curse-mark/frames/frame-035.png",
+      "/characters/tayuya-curse-mark/frames/frame-034.png",
+      "/characters/tayuya-curse-mark/frames/frame-033.png",
+      "/characters/tayuya-curse-mark/frames/frame-032.png"
+    ],
+    "sprint": [
+      "/characters/tayuya-curse-mark/frames/frame-118.png",
+      "/characters/tayuya-curse-mark/frames/frame-119.png",
+      "/characters/tayuya-curse-mark/frames/frame-120.png"
+    ],
+    "backHop": [
+      "/characters/tayuya-curse-mark/frames/frame-121.png",
+      "/characters/tayuya-curse-mark/frames/frame-122.png",
+      "/characters/tayuya-curse-mark/frames/frame-124.png",
+      "/characters/tayuya-curse-mark/frames/frame-126.png",
+      "/characters/tayuya-curse-mark/frames/frame-128.png",
+      "/characters/tayuya-curse-mark/frames/frame-129.png",
+      "/characters/tayuya-curse-mark/frames/frame-131.png",
+      "/characters/tayuya-curse-mark/frames/frame-133.png"
+    ],
+    "sidestepLeft": [
+      "/characters/tayuya-curse-mark/frames/frame-135.png",
+      "/characters/tayuya-curse-mark/frames/frame-137.png",
+      "/characters/tayuya-curse-mark/frames/frame-139.png",
+      "/characters/tayuya-curse-mark/frames/frame-141.png",
+      "/characters/tayuya-curse-mark/frames/frame-143.png",
+      "/characters/tayuya-curse-mark/frames/frame-145.png",
+      "/characters/tayuya-curse-mark/frames/frame-147.png",
+      "/characters/tayuya-curse-mark/frames/frame-149.png"
+    ],
+    "sidestepRight": [
+      "/characters/tayuya-curse-mark/frames/frame-151.png",
+      "/characters/tayuya-curse-mark/frames/frame-152.png",
+      "/characters/tayuya-curse-mark/frames/frame-153.png",
+      "/characters/tayuya-curse-mark/frames/frame-154.png",
+      "/characters/tayuya-curse-mark/frames/frame-155.png"
+    ],
+    "jump": [
+      "/characters/tayuya-curse-mark/frames/frame-156.png",
+      "/characters/tayuya-curse-mark/frames/frame-157.png",
+      "/characters/tayuya-curse-mark/frames/frame-158.png",
+      "/characters/tayuya-curse-mark/frames/frame-159.png",
+      "/characters/tayuya-curse-mark/frames/frame-160.png",
+      "/characters/tayuya-curse-mark/frames/frame-161.png"
+    ],
+    "crouch": [
+      "/characters/tayuya-curse-mark/frames/frame-000.png"
+    ],
+    "crouchBlock": [
+      "/characters/tayuya-curse-mark/frames/frame-000.png"
+    ],
+    "block": [
+      "/characters/tayuya-curse-mark/frames/frame-094.png"
+    ],
+    "chargeKi": [
+      "/characters/tayuya-curse-mark/frames/frame-118.png",
+      "/characters/tayuya-curse-mark/frames/frame-119.png",
+      "/characters/tayuya-curse-mark/frames/frame-120.png"
+    ],
+    "jableft": [
+      "/characters/tayuya-curse-mark/frames/frame-121.png",
+      "/characters/tayuya-curse-mark/frames/frame-122.png",
+      "/characters/tayuya-curse-mark/frames/frame-124.png",
+      "/characters/tayuya-curse-mark/frames/frame-126.png",
+      "/characters/tayuya-curse-mark/frames/frame-128.png",
+      "/characters/tayuya-curse-mark/frames/frame-129.png",
+      "/characters/tayuya-curse-mark/frames/frame-131.png",
+      "/characters/tayuya-curse-mark/frames/frame-133.png"
+    ],
+    "jabright": [
+      "/characters/tayuya-curse-mark/frames/frame-135.png",
+      "/characters/tayuya-curse-mark/frames/frame-137.png",
+      "/characters/tayuya-curse-mark/frames/frame-139.png",
+      "/characters/tayuya-curse-mark/frames/frame-141.png",
+      "/characters/tayuya-curse-mark/frames/frame-143.png",
+      "/characters/tayuya-curse-mark/frames/frame-145.png",
+      "/characters/tayuya-curse-mark/frames/frame-147.png",
+      "/characters/tayuya-curse-mark/frames/frame-149.png"
+    ],
+    "kickleft": [
+      "/characters/tayuya-curse-mark/frames/frame-151.png",
+      "/characters/tayuya-curse-mark/frames/frame-152.png",
+      "/characters/tayuya-curse-mark/frames/frame-153.png",
+      "/characters/tayuya-curse-mark/frames/frame-154.png",
+      "/characters/tayuya-curse-mark/frames/frame-155.png"
+    ],
+    "kickright": [
+      "/characters/tayuya-curse-mark/frames/frame-156.png",
+      "/characters/tayuya-curse-mark/frames/frame-157.png",
+      "/characters/tayuya-curse-mark/frames/frame-158.png",
+      "/characters/tayuya-curse-mark/frames/frame-159.png",
+      "/characters/tayuya-curse-mark/frames/frame-160.png",
+      "/characters/tayuya-curse-mark/frames/frame-161.png"
+    ],
+    "hitLight": [
+      "/characters/tayuya-curse-mark/frames/frame-039.png"
+    ],
+    "hitHeavy": [
+      "/characters/tayuya-curse-mark/frames/frame-040.png"
+    ],
+    "juggle": [
+      "/characters/tayuya-curse-mark/frames/frame-102.png"
+    ],
+    "knockdown": [
+      "/characters/tayuya-curse-mark/frames/frame-039.png",
+      "/characters/tayuya-curse-mark/frames/frame-040.png",
+      "/characters/tayuya-curse-mark/frames/frame-041.png",
+      "/characters/tayuya-curse-mark/frames/frame-042.png"
+    ],
+    "getupStand": [
+      "/characters/tayuya-curse-mark/frames/frame-121.png",
+      "/characters/tayuya-curse-mark/frames/frame-122.png",
+      "/characters/tayuya-curse-mark/frames/frame-124.png",
+      "/characters/tayuya-curse-mark/frames/frame-126.png",
+      "/characters/tayuya-curse-mark/frames/frame-128.png",
+      "/characters/tayuya-curse-mark/frames/frame-129.png",
+      "/characters/tayuya-curse-mark/frames/frame-131.png",
+      "/characters/tayuya-curse-mark/frames/frame-133.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/tayuya-curse-mark/frames/frame-151.png",
+      "/characters/tayuya-curse-mark/frames/frame-152.png",
+      "/characters/tayuya-curse-mark/frames/frame-153.png",
+      "/characters/tayuya-curse-mark/frames/frame-154.png",
+      "/characters/tayuya-curse-mark/frames/frame-155.png"
+    ],
+    "lose": [
+      "/characters/tayuya-curse-mark/frames/frame-156.png",
+      "/characters/tayuya-curse-mark/frames/frame-157.png",
+      "/characters/tayuya-curse-mark/frames/frame-158.png",
+      "/characters/tayuya-curse-mark/frames/frame-159.png",
+      "/characters/tayuya-curse-mark/frames/frame-160.png",
+      "/characters/tayuya-curse-mark/frames/frame-161.png"
+    ],
+    "cmd:f+1": [
+      "/characters/tayuya-curse-mark/frames/frame-012.png",
+      "/characters/tayuya-curse-mark/frames/frame-013.png",
+      "/characters/tayuya-curse-mark/frames/frame-014.png",
+      "/characters/tayuya-curse-mark/frames/frame-015.png",
+      "/characters/tayuya-curse-mark/frames/frame-016.png",
+      "/characters/tayuya-curse-mark/frames/frame-017.png",
+      "/characters/tayuya-curse-mark/frames/frame-018.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/tayuya-curse-mark/frames/frame-019.png",
+      "/characters/tayuya-curse-mark/frames/frame-020.png",
+      "/characters/tayuya-curse-mark/frames/frame-021.png",
+      "/characters/tayuya-curse-mark/frames/frame-022.png",
+      "/characters/tayuya-curse-mark/frames/frame-023.png",
+      "/characters/tayuya-curse-mark/frames/frame-024.png",
+      "/characters/tayuya-curse-mark/frames/frame-025.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/tayuya-curse-mark/frames/frame-097.png",
+      "/characters/tayuya-curse-mark/frames/frame-098.png",
+      "/characters/tayuya-curse-mark/frames/frame-099.png",
+      "/characters/tayuya-curse-mark/frames/frame-100.png",
+      "/characters/tayuya-curse-mark/frames/frame-101.png",
+      "/characters/tayuya-curse-mark/frames/frame-102.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/tayuya-curse-mark/frames/frame-118.png",
+      "/characters/tayuya-curse-mark/frames/frame-119.png",
+      "/characters/tayuya-curse-mark/frames/frame-120.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/tayuya-curse-mark/frames/frame-121.png",
+      "/characters/tayuya-curse-mark/frames/frame-122.png",
+      "/characters/tayuya-curse-mark/frames/frame-124.png",
+      "/characters/tayuya-curse-mark/frames/frame-126.png",
+      "/characters/tayuya-curse-mark/frames/frame-128.png",
+      "/characters/tayuya-curse-mark/frames/frame-129.png",
+      "/characters/tayuya-curse-mark/frames/frame-131.png",
+      "/characters/tayuya-curse-mark/frames/frame-133.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/tayuya-curse-mark/frames/frame-135.png",
+      "/characters/tayuya-curse-mark/frames/frame-137.png",
+      "/characters/tayuya-curse-mark/frames/frame-139.png",
+      "/characters/tayuya-curse-mark/frames/frame-141.png",
+      "/characters/tayuya-curse-mark/frames/frame-143.png",
+      "/characters/tayuya-curse-mark/frames/frame-145.png",
+      "/characters/tayuya-curse-mark/frames/frame-147.png",
+      "/characters/tayuya-curse-mark/frames/frame-149.png"
+    ],
+    "cmd:1+2": [
+      "/characters/tayuya-curse-mark/frames/frame-151.png",
+      "/characters/tayuya-curse-mark/frames/frame-152.png",
+      "/characters/tayuya-curse-mark/frames/frame-153.png",
+      "/characters/tayuya-curse-mark/frames/frame-154.png",
+      "/characters/tayuya-curse-mark/frames/frame-155.png"
+    ],
+    "cmd:1+3": [
+      "/characters/tayuya-curse-mark/frames/frame-156.png",
+      "/characters/tayuya-curse-mark/frames/frame-157.png",
+      "/characters/tayuya-curse-mark/frames/frame-158.png",
+      "/characters/tayuya-curse-mark/frames/frame-159.png",
+      "/characters/tayuya-curse-mark/frames/frame-160.png",
+      "/characters/tayuya-curse-mark/frames/frame-161.png"
+    ],
+    "cmd:2+3": [
+      "/characters/tayuya-curse-mark/frames/frame-012.png",
+      "/characters/tayuya-curse-mark/frames/frame-013.png",
+      "/characters/tayuya-curse-mark/frames/frame-014.png",
+      "/characters/tayuya-curse-mark/frames/frame-015.png",
+      "/characters/tayuya-curse-mark/frames/frame-016.png",
+      "/characters/tayuya-curse-mark/frames/frame-017.png",
+      "/characters/tayuya-curse-mark/frames/frame-018.png"
+    ],
+    "cmd:2+4": [
+      "/characters/tayuya-curse-mark/frames/frame-019.png",
+      "/characters/tayuya-curse-mark/frames/frame-020.png",
+      "/characters/tayuya-curse-mark/frames/frame-021.png",
+      "/characters/tayuya-curse-mark/frames/frame-022.png",
+      "/characters/tayuya-curse-mark/frames/frame-023.png",
+      "/characters/tayuya-curse-mark/frames/frame-024.png",
+      "/characters/tayuya-curse-mark/frames/frame-025.png"
+    ],
+    "cmd:3+4": [
+      "/characters/tayuya-curse-mark/frames/frame-097.png",
+      "/characters/tayuya-curse-mark/frames/frame-098.png",
+      "/characters/tayuya-curse-mark/frames/frame-099.png",
+      "/characters/tayuya-curse-mark/frames/frame-100.png",
+      "/characters/tayuya-curse-mark/frames/frame-101.png",
+      "/characters/tayuya-curse-mark/frames/frame-102.png"
+    ],
+    "cmd:O+2": [
+      "/characters/tayuya-curse-mark/frames/frame-118.png",
+      "/characters/tayuya-curse-mark/frames/frame-119.png",
+      "/characters/tayuya-curse-mark/frames/frame-120.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 97,
+    "speed": 5.41,
+    "sidestepSpeed": 4.79,
+    "jumpForce": 7.89,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Tayuya Curse Mark Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Tayuya Curse Mark Left Kick",
+      "input": "kick",
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Tayuya Curse Mark Right Check",
+      "input": "heavy",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Tayuya Curse Mark Right Kick",
+      "input": "special",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#21ceb3",
+    "secondary": "#d7cd54",
+    "accent": "#de2547"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Tayuya Curse Mark Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Tayuya Curse Mark Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Tayuya Curse Mark Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Tayuya Curse Mark Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Tayuya Curse Mark Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Tayuya Curse Mark Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 30,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Tayuya Curse Mark Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Tayuya Curse Mark Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Tayuya Curse Mark Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Tayuya Curse Mark Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Tayuya Curse Mark Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Tayuya Curse Mark Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Tayuya Curse Mark Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 26,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Tayuya Curse Mark Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Tayuya Curse Mark Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Tayuya Curse Mark Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Tayuya Curse Mark Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Tayuya Curse Mark Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Tayuya Curse Mark Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-special": {
+      "label": "Tayuya Curse Mark Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy": {
+      "label": "Tayuya Curse Mark Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Tayuya Curse Mark Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Tayuya Curse Mark Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick": {
+      "label": "Tayuya Curse Mark Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Tayuya Curse Mark Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-special": {
+      "label": "Tayuya Curse Mark Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special": {
+      "label": "Tayuya Curse Mark Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Tayuya Curse Mark Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab": {
+      "label": "Tayuya Curse Mark Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Tayuya Curse Mark Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Tayuya Curse Mark Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick": {
+      "label": "Tayuya Curse Mark Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Tayuya Curse Mark Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special": {
+      "label": "Tayuya Curse Mark Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Tayuya Curse Mark Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab": {
+      "label": "Tayuya Curse Mark Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab-special": {
+      "label": "Tayuya Curse Mark Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy": {
+      "label": "Tayuya Curse Mark Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Tayuya Curse Mark Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special": {
+      "label": "Tayuya Curse Mark Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Tayuya Curse Mark Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab": {
+      "label": "Tayuya Curse Mark Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Tayuya Curse Mark Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-heavy": {
+      "label": "Tayuya Curse Mark Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-kick": {
+      "label": "Tayuya Curse Mark Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.61,
+    "guard": 0.4,
+    "spacing": 1.36,
+    "specialChance": 0.31
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 1.067,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 1.287,
+        "height": 1.287,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.207,
+        "height": 2.548,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.235,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.179,
+        "height": 1.262,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 1.291,
+        "height": 1.356,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.544,
+        "height": 1.239,
+        "offsetX": 0
+      },
+      "21": {
+        "width": 1.151,
+        "height": 1.239,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 1.375,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 1.74,
+        "height": 1.192,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.123,
+        "height": 1.356,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "33": {
+        "width": 1.375,
+        "height": 1.028,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.46,
+        "height": 1.075,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 1.29,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "42": {
+        "width": 1.77,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 1.24,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "54": {
+        "width": 0.93,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "60": {
+        "width": 0.25,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "66": {
+        "width": 1.21,
+        "height": 1.31,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 1.29,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 1.18,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.87,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 1.12,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkBack": {
+      "32": {
+        "width": 1.123,
+        "height": 1.356,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.375,
+        "height": 1.028,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.954,
+        "height": 1.332,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.46,
+        "height": 1.075,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 1.291,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 1.319,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 1.207,
+        "height": 1.262,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 1.24,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 1.49,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "103": {
+        "width": 1.12,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 0.98,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 1.04,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.98,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 1.49,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "113": {
+        "width": 1.38,
+        "height": 1.31,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sprint": {
+      "118": {
+        "width": 2.751,
+        "height": 2.594,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 3.452,
+        "height": 3.506,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 4.351,
+        "height": 4.254,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "121": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "124": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "126": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "129": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 3.34,
+        "height": 2.992,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "135": {
+        "width": 2.898,
+        "height": 2.898,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 0.351,
+        "height": 0.351,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 0.646,
+        "height": 0.538,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 2.975,
+        "height": 2.571,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.589,
+        "height": 0.538,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "151": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 2.863,
+        "height": 2.641,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "156": {
+        "width": 2.021,
+        "height": 1.8,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.488,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "159": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 1.039,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.954,
+        "height": 1.426,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "0": {
+        "width": 1.067,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.24,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 1.24,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 1.12,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.54,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 1.12,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 1.01,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "31": {
+        "width": 1.74,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "0": {
+        "width": 1.067,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 1.01,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "94": {
+        "width": 2.021,
+        "height": 1.823,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 1.24,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "102": {
+        "width": 1.03,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.95,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 1.04,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 1.21,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.98,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 1.19,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "118": {
+        "width": 2.751,
+        "height": 2.594,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 3.452,
+        "height": 3.506,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 4.351,
+        "height": 4.254,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "121": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "124": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "126": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "129": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 3.34,
+        "height": 2.992,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "135": {
+        "width": 2.898,
+        "height": 2.898,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 0.351,
+        "height": 0.351,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 0.646,
+        "height": 0.538,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 2.975,
+        "height": 2.571,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.589,
+        "height": 0.538,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "151": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 2.863,
+        "height": 2.641,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "156": {
+        "width": 2.021,
+        "height": 1.8,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.488,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "159": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 1.039,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.954,
+        "height": 1.426,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "0": {
+        "width": 1.07,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 1.24,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 1.235,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 1.12,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.54,
+        "height": 1.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 1.12,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 1.01,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "31": {
+        "width": 1.74,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "36": {
+        "width": 1.29,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "43": {
+        "width": 0.49,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 1.516,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 1.18,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "66": {
+        "width": 1.21,
+        "height": 1.31,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 1.09,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 0.84,
+        "height": 1.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 0.98,
+        "height": 1.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "97": {
+        "width": 1.235,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 1.052,
+        "height": 1.052,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 1.028,
+        "height": 1.028,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 0.954,
+        "height": 1.426,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 1.039,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 1.207,
+        "height": 1.449,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.982,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 1.215,
+        "height": 1.215,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "39": {
+        "width": 1.286,
+        "height": 1.286,
+        "offsetX": 0,
+        "voxelScaleX": 1.20084,
+        "voxelScaleY": 0.42839
+      },
+      "40": {
+        "width": 1.286,
+        "height": 1.286,
+        "offsetX": 0,
+        "voxelScaleX": 1.20084,
+        "voxelScaleY": 0.42839
+      },
+      "41": {
+        "width": 1.286,
+        "height": 1.286,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "42": {
+        "width": 1.286,
+        "height": 1.286,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "118": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupStand": {
+      "121": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "124": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "126": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "129": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 3.34,
+        "height": 2.992,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "135": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "137": {
+        "width": 0.35,
+        "height": 0.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "139": {
+        "width": 0.42,
+        "height": 0.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "141": {
+        "width": 0.65,
+        "height": 0.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "143": {
+        "width": 0.42,
+        "height": 0.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "145": {
+        "width": 0.31,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "147": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "149": {
+        "width": 0.59,
+        "height": 0.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "151": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 2.863,
+        "height": 2.641,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "156": {
+        "width": 2.021,
+        "height": 1.8,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.488,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "159": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 1.039,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.954,
+        "height": 1.426,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+1": {
+      "0": {
+        "width": 1.067,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 0.771,
+        "height": 0.771,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.235,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 1.123,
+        "height": 1.239,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.544,
+        "height": 1.239,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 1.123,
+        "height": 1.356,
+        "offsetX": 0
+      },
+      "27": {
+        "width": 1.01,
+        "height": 1.356,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1.192,
+        "height": 1.192,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "36": {
+        "width": 1.291,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.491,
+        "height": 0.491,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1.516,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 1.179,
+        "height": 1.332,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 1.207,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.095,
+        "height": 1.426,
+        "offsetX": 0
+      },
+      "81": {
+        "width": 0.842,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.982,
+        "height": 1.262,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "97": {
+        "width": 1.235,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 1.052,
+        "height": 1.052,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 1.028,
+        "height": 1.028,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 0.954,
+        "height": 1.426,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 1.039,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 1.207,
+        "height": 1.449,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.982,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 1.215,
+        "height": 1.215,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "118": {
+        "width": 2.751,
+        "height": 2.594,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 3.452,
+        "height": 3.506,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 4.351,
+        "height": 4.254,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "121": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "124": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "126": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "129": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 3.34,
+        "height": 2.992,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "135": {
+        "width": 2.898,
+        "height": 2.898,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 0.351,
+        "height": 0.351,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 0.646,
+        "height": 0.538,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 2.975,
+        "height": 2.571,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.589,
+        "height": 0.538,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "151": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 2.863,
+        "height": 2.641,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "156": {
+        "width": 2.021,
+        "height": 1.8,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.488,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 0.309,
+        "height": 0.514,
+        "offsetX": 0
+      },
+      "159": {
+        "width": 0.421,
+        "height": 0.374,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 1.039,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.954,
+        "height": 1.426,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "0": {
+        "width": 1.067,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 0.771,
+        "height": 0.771,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.235,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 1.123,
+        "height": 1.239,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.544,
+        "height": 1.239,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 1.123,
+        "height": 1.356,
+        "offsetX": 0
+      },
+      "27": {
+        "width": 1.01,
+        "height": 1.356,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1.192,
+        "height": 1.192,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "36": {
+        "width": 1.291,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.491,
+        "height": 0.491,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1.516,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 1.179,
+        "height": 1.332,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 1.207,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.095,
+        "height": 1.426,
+        "offsetX": 0
+      },
+      "81": {
+        "width": 0.842,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.982,
+        "height": 1.262,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "97": {
+        "width": 1.235,
+        "height": 1.286,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 1.052,
+        "height": 1.052,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 1.028,
+        "height": 1.028,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 0.954,
+        "height": 1.426,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 1.039,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 1.207,
+        "height": 1.449,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.982,
+        "height": 1.473,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 1.215,
+        "height": 1.215,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "118": {
+        "width": 2.751,
+        "height": 2.594,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 3.452,
+        "height": 3.506,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 4.351,
+        "height": 4.254,
+        "offsetX": 0
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.04,
+    "height": 1.04
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

@@ -1,0 +1,4305 @@
+{
+  "source": "Veemon.png",
+  "count": 262,
+  "excluded": [],
+  "sheets": [
+    {
+      "id": "generated",
+      "name": "Generated Frame Atlas",
+      "path": "/characters/veemon/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 262
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/veemon/frames/frame-000.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        37,
+        73,
+        57,
+        100
+      ],
+      "width": 20,
+      "height": 27,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/veemon/frames/frame-001.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        130,
+        76,
+        154,
+        100
+      ],
+      "width": 24,
+      "height": 24,
+      "row": 0,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 1,
+        "originalSize": [
+          38,
+          56
+        ],
+        "cropBox": [
+          14,
+          32,
+          38,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          22,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 2,
+      "path": "/characters/veemon/frames/frame-002.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        226,
+        74,
+        249,
+        100
+      ],
+      "width": 23,
+      "height": 26,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/veemon/frames/frame-003.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        318,
+        77,
+        347,
+        100
+      ],
+      "width": 29,
+      "height": 23,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/veemon/frames/frame-004.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        416,
+        73,
+        438,
+        100
+      ],
+      "width": 22,
+      "height": 27,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/veemon/frames/frame-005.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        511,
+        73,
+        533,
+        100
+      ],
+      "width": 22,
+      "height": 27,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/veemon/frames/frame-006.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        574,
+        4,
+        661,
+        100
+      ],
+      "width": 87,
+      "height": 96,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/veemon/frames/frame-007.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        703,
+        73,
+        722,
+        100
+      ],
+      "width": 19,
+      "height": 27,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/veemon/frames/frame-008.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        798,
+        65,
+        817,
+        100
+      ],
+      "width": 19,
+      "height": 35,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/veemon/frames/frame-009.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        893,
+        72,
+        911,
+        100
+      ],
+      "width": 18,
+      "height": 28,
+      "row": 0
+    },
+    {
+      "index": 10,
+      "path": "/characters/veemon/frames/frame-010.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        988,
+        64,
+        1007,
+        100
+      ],
+      "width": 19,
+      "height": 36,
+      "row": 0
+    },
+    {
+      "index": 11,
+      "path": "/characters/veemon/frames/frame-011.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1081,
+        73,
+        1103,
+        100
+      ],
+      "width": 22,
+      "height": 27,
+      "row": 0
+    },
+    {
+      "index": 12,
+      "path": "/characters/veemon/frames/frame-012.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        35,
+        169,
+        59,
+        204
+      ],
+      "width": 24,
+      "height": 35,
+      "row": 1
+    },
+    {
+      "index": 13,
+      "path": "/characters/veemon/frames/frame-013.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        131,
+        178,
+        153,
+        204
+      ],
+      "width": 22,
+      "height": 26,
+      "row": 1
+    },
+    {
+      "index": 14,
+      "path": "/characters/veemon/frames/frame-014.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        224,
+        171,
+        250,
+        204
+      ],
+      "width": 26,
+      "height": 33,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/veemon/frames/frame-015.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        322,
+        177,
+        342,
+        204
+      ],
+      "width": 20,
+      "height": 27,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/veemon/frames/frame-016.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        413,
+        174,
+        441,
+        204
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/veemon/frames/frame-017.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        512,
+        177,
+        532,
+        204
+      ],
+      "width": 20,
+      "height": 27,
+      "row": 1
+    },
+    {
+      "index": 18,
+      "path": "/characters/veemon/frames/frame-018.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        607,
+        177,
+        627,
+        204
+      ],
+      "width": 20,
+      "height": 27,
+      "row": 1
+    },
+    {
+      "index": 19,
+      "path": "/characters/veemon/frames/frame-019.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        702,
+        176,
+        723,
+        204
+      ],
+      "width": 21,
+      "height": 28,
+      "row": 1
+    },
+    {
+      "index": 20,
+      "path": "/characters/veemon/frames/frame-020.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        796,
+        175,
+        819,
+        204
+      ],
+      "width": 23,
+      "height": 29,
+      "row": 1
+    },
+    {
+      "index": 21,
+      "path": "/characters/veemon/frames/frame-021.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        893,
+        163,
+        911,
+        204
+      ],
+      "width": 18,
+      "height": 41,
+      "row": 1
+    },
+    {
+      "index": 22,
+      "path": "/characters/veemon/frames/frame-022.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        984,
+        177,
+        1011,
+        204
+      ],
+      "width": 27,
+      "height": 27,
+      "row": 1
+    },
+    {
+      "index": 23,
+      "path": "/characters/veemon/frames/frame-023.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1083,
+        163,
+        1101,
+        204
+      ],
+      "width": 18,
+      "height": 41,
+      "row": 1
+    },
+    {
+      "index": 24,
+      "path": "/characters/veemon/frames/frame-024.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        35,
+        281,
+        59,
+        308
+      ],
+      "width": 24,
+      "height": 27,
+      "row": 2
+    },
+    {
+      "index": 25,
+      "path": "/characters/veemon/frames/frame-025.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        133,
+        267,
+        151,
+        308
+      ],
+      "width": 18,
+      "height": 41,
+      "row": 2
+    },
+    {
+      "index": 26,
+      "path": "/characters/veemon/frames/frame-026.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        225,
+        280,
+        249,
+        308
+      ],
+      "width": 24,
+      "height": 28,
+      "row": 2
+    },
+    {
+      "index": 27,
+      "path": "/characters/veemon/frames/frame-027.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        320,
+        275,
+        344,
+        308
+      ],
+      "width": 24,
+      "height": 33,
+      "row": 2
+    },
+    {
+      "index": 28,
+      "path": "/characters/veemon/frames/frame-028.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        416,
+        278,
+        439,
+        308
+      ],
+      "width": 23,
+      "height": 30,
+      "row": 2
+    },
+    {
+      "index": 29,
+      "path": "/characters/veemon/frames/frame-029.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        509,
+        278,
+        535,
+        308
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 2
+    },
+    {
+      "index": 30,
+      "path": "/characters/veemon/frames/frame-030.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        606,
+        280,
+        628,
+        308
+      ],
+      "width": 22,
+      "height": 28,
+      "row": 2
+    },
+    {
+      "index": 31,
+      "path": "/characters/veemon/frames/frame-031.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        701,
+        280,
+        723,
+        308
+      ],
+      "width": 22,
+      "height": 28,
+      "row": 2
+    },
+    {
+      "index": 32,
+      "path": "/characters/veemon/frames/frame-032.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        790,
+        276,
+        824,
+        308
+      ],
+      "width": 34,
+      "height": 32,
+      "row": 2,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 32,
+        "originalSize": [
+          41,
+          56
+        ],
+        "cropBox": [
+          7,
+          24,
+          41,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          19,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 33,
+      "path": "/characters/veemon/frames/frame-033.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        892,
+        281,
+        913,
+        308
+      ],
+      "width": 21,
+      "height": 27,
+      "row": 2
+    },
+    {
+      "index": 34,
+      "path": "/characters/veemon/frames/frame-034.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        980,
+        278,
+        1014,
+        308
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 2
+    },
+    {
+      "index": 35,
+      "path": "/characters/veemon/frames/frame-035.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1078,
+        279,
+        1106,
+        308
+      ],
+      "width": 28,
+      "height": 29,
+      "row": 2
+    },
+    {
+      "index": 36,
+      "path": "/characters/veemon/frames/frame-036.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        33,
+        383,
+        61,
+        412
+      ],
+      "width": 28,
+      "height": 29,
+      "row": 3
+    },
+    {
+      "index": 37,
+      "path": "/characters/veemon/frames/frame-037.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        125,
+        389,
+        159,
+        412
+      ],
+      "width": 34,
+      "height": 23,
+      "row": 3
+    },
+    {
+      "index": 38,
+      "path": "/characters/veemon/frames/frame-038.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        218,
+        394,
+        256,
+        412
+      ],
+      "width": 38,
+      "height": 18,
+      "row": 3
+    },
+    {
+      "index": 39,
+      "path": "/characters/veemon/frames/frame-039.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        313,
+        394,
+        351,
+        412
+      ],
+      "width": 38,
+      "height": 18,
+      "row": 3
+    },
+    {
+      "index": 40,
+      "path": "/characters/veemon/frames/frame-040.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        415,
+        388,
+        439,
+        412
+      ],
+      "width": 24,
+      "height": 24,
+      "row": 3,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 40,
+        "originalSize": [
+          36,
+          56
+        ],
+        "cropBox": [
+          12,
+          32,
+          36,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          36,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 41,
+      "path": "/characters/veemon/frames/frame-041.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        510,
+        388,
+        534,
+        412
+      ],
+      "width": 24,
+      "height": 24,
+      "row": 3
+    },
+    {
+      "index": 42,
+      "path": "/characters/veemon/frames/frame-042.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        608,
+        387,
+        627,
+        412
+      ],
+      "width": 19,
+      "height": 25,
+      "row": 3
+    },
+    {
+      "index": 43,
+      "path": "/characters/veemon/frames/frame-043.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        703,
+        386,
+        722,
+        412
+      ],
+      "width": 19,
+      "height": 26,
+      "row": 3
+    },
+    {
+      "index": 44,
+      "path": "/characters/veemon/frames/frame-044.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        795,
+        386,
+        819,
+        412
+      ],
+      "width": 24,
+      "height": 26,
+      "row": 3
+    },
+    {
+      "index": 45,
+      "path": "/characters/veemon/frames/frame-045.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        893,
+        387,
+        912,
+        412
+      ],
+      "width": 19,
+      "height": 25,
+      "row": 3
+    },
+    {
+      "index": 46,
+      "path": "/characters/veemon/frames/frame-046.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        988,
+        386,
+        1007,
+        412
+      ],
+      "width": 19,
+      "height": 26,
+      "row": 3
+    },
+    {
+      "index": 47,
+      "path": "/characters/veemon/frames/frame-047.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1082,
+        385,
+        1103,
+        412
+      ],
+      "width": 21,
+      "height": 27,
+      "row": 3
+    },
+    {
+      "index": 48,
+      "path": "/characters/veemon/frames/frame-048.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        33,
+        494,
+        61,
+        516
+      ],
+      "width": 28,
+      "height": 22,
+      "row": 4
+    },
+    {
+      "index": 49,
+      "path": "/characters/veemon/frames/frame-049.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        130,
+        494,
+        155,
+        516
+      ],
+      "width": 25,
+      "height": 22,
+      "row": 4
+    },
+    {
+      "index": 50,
+      "path": "/characters/veemon/frames/frame-050.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        226,
+        492,
+        249,
+        516
+      ],
+      "width": 23,
+      "height": 24,
+      "row": 4
+    },
+    {
+      "index": 51,
+      "path": "/characters/veemon/frames/frame-051.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        321,
+        487,
+        343,
+        516
+      ],
+      "width": 22,
+      "height": 29,
+      "row": 4
+    },
+    {
+      "index": 52,
+      "path": "/characters/veemon/frames/frame-052.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        418,
+        484,
+        437,
+        516
+      ],
+      "width": 19,
+      "height": 32,
+      "row": 4
+    },
+    {
+      "index": 53,
+      "path": "/characters/veemon/frames/frame-053.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        512,
+        484,
+        533,
+        516
+      ],
+      "width": 21,
+      "height": 32,
+      "row": 4
+    },
+    {
+      "index": 54,
+      "path": "/characters/veemon/frames/frame-054.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        606,
+        485,
+        629,
+        516
+      ],
+      "width": 23,
+      "height": 31,
+      "row": 4
+    },
+    {
+      "index": 55,
+      "path": "/characters/veemon/frames/frame-055.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        700,
+        485,
+        724,
+        516
+      ],
+      "width": 24,
+      "height": 31,
+      "row": 4
+    },
+    {
+      "index": 56,
+      "path": "/characters/veemon/frames/frame-056.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        795,
+        480,
+        819,
+        516
+      ],
+      "width": 24,
+      "height": 36,
+      "row": 4
+    },
+    {
+      "index": 57,
+      "path": "/characters/veemon/frames/frame-057.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        889,
+        486,
+        916,
+        516
+      ],
+      "width": 27,
+      "height": 30,
+      "row": 4
+    },
+    {
+      "index": 58,
+      "path": "/characters/veemon/frames/frame-058.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        987,
+        486,
+        1008,
+        516
+      ],
+      "width": 21,
+      "height": 30,
+      "row": 4
+    },
+    {
+      "index": 59,
+      "path": "/characters/veemon/frames/frame-059.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1083,
+        483,
+        1102,
+        516
+      ],
+      "width": 19,
+      "height": 33,
+      "row": 4
+    },
+    {
+      "index": 60,
+      "path": "/characters/veemon/frames/frame-060.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        37,
+        588,
+        57,
+        620
+      ],
+      "width": 20,
+      "height": 32,
+      "row": 5
+    },
+    {
+      "index": 61,
+      "path": "/characters/veemon/frames/frame-061.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        132,
+        589,
+        153,
+        620
+      ],
+      "width": 21,
+      "height": 31,
+      "row": 5
+    },
+    {
+      "index": 62,
+      "path": "/characters/veemon/frames/frame-062.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        227,
+        589,
+        247,
+        620
+      ],
+      "width": 20,
+      "height": 31,
+      "row": 5
+    },
+    {
+      "index": 63,
+      "path": "/characters/veemon/frames/frame-063.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        323,
+        586,
+        342,
+        620
+      ],
+      "width": 19,
+      "height": 34,
+      "row": 5
+    },
+    {
+      "index": 64,
+      "path": "/characters/veemon/frames/frame-064.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        418,
+        587,
+        436,
+        620
+      ],
+      "width": 18,
+      "height": 33,
+      "row": 5
+    },
+    {
+      "index": 65,
+      "path": "/characters/veemon/frames/frame-065.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        511,
+        588,
+        533,
+        620
+      ],
+      "width": 22,
+      "height": 32,
+      "row": 5
+    },
+    {
+      "index": 66,
+      "path": "/characters/veemon/frames/frame-066.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        607,
+        590,
+        627,
+        620
+      ],
+      "width": 20,
+      "height": 30,
+      "row": 5
+    },
+    {
+      "index": 67,
+      "path": "/characters/veemon/frames/frame-067.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        701,
+        594,
+        723,
+        620
+      ],
+      "width": 22,
+      "height": 26,
+      "row": 5
+    },
+    {
+      "index": 68,
+      "path": "/characters/veemon/frames/frame-068.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        798,
+        585,
+        817,
+        620
+      ],
+      "width": 19,
+      "height": 35,
+      "row": 5
+    },
+    {
+      "index": 69,
+      "path": "/characters/veemon/frames/frame-069.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        888,
+        591,
+        917,
+        620
+      ],
+      "width": 29,
+      "height": 29,
+      "row": 5
+    },
+    {
+      "index": 70,
+      "path": "/characters/veemon/frames/frame-070.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        981,
+        592,
+        1013,
+        620
+      ],
+      "width": 32,
+      "height": 28,
+      "row": 5
+    },
+    {
+      "index": 71,
+      "path": "/characters/veemon/frames/frame-071.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1079,
+        591,
+        1105,
+        620
+      ],
+      "width": 26,
+      "height": 29,
+      "row": 5
+    },
+    {
+      "index": 72,
+      "path": "/characters/veemon/frames/frame-072.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        34,
+        696,
+        61,
+        724
+      ],
+      "width": 27,
+      "height": 28,
+      "row": 6
+    },
+    {
+      "index": 73,
+      "path": "/characters/veemon/frames/frame-073.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        132,
+        695,
+        152,
+        724
+      ],
+      "width": 20,
+      "height": 29,
+      "row": 6,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 73,
+        "originalSize": [
+          44,
+          56
+        ],
+        "cropBox": [
+          16,
+          27,
+          36,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          44,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 74,
+      "path": "/characters/veemon/frames/frame-074.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        227,
+        697,
+        247,
+        724
+      ],
+      "width": 20,
+      "height": 27,
+      "row": 6
+    },
+    {
+      "index": 75,
+      "path": "/characters/veemon/frames/frame-075.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        322,
+        691,
+        342,
+        724
+      ],
+      "width": 20,
+      "height": 33,
+      "row": 6
+    },
+    {
+      "index": 76,
+      "path": "/characters/veemon/frames/frame-076.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        417,
+        690,
+        437,
+        724
+      ],
+      "width": 20,
+      "height": 34,
+      "row": 6
+    },
+    {
+      "index": 77,
+      "path": "/characters/veemon/frames/frame-077.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        511,
+        690,
+        534,
+        724
+      ],
+      "width": 23,
+      "height": 34,
+      "row": 6
+    },
+    {
+      "index": 78,
+      "path": "/characters/veemon/frames/frame-078.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        607,
+        692,
+        628,
+        724
+      ],
+      "width": 21,
+      "height": 32,
+      "row": 6
+    },
+    {
+      "index": 79,
+      "path": "/characters/veemon/frames/frame-079.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        701,
+        695,
+        723,
+        724
+      ],
+      "width": 22,
+      "height": 29,
+      "row": 6
+    },
+    {
+      "index": 80,
+      "path": "/characters/veemon/frames/frame-080.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        795,
+        694,
+        819,
+        724
+      ],
+      "width": 24,
+      "height": 30,
+      "row": 6
+    },
+    {
+      "index": 81,
+      "path": "/characters/veemon/frames/frame-081.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        891,
+        694,
+        914,
+        724
+      ],
+      "width": 23,
+      "height": 30,
+      "row": 6
+    },
+    {
+      "index": 82,
+      "path": "/characters/veemon/frames/frame-082.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        987,
+        697,
+        1007,
+        724
+      ],
+      "width": 20,
+      "height": 27,
+      "row": 6
+    },
+    {
+      "index": 83,
+      "path": "/characters/veemon/frames/frame-083.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1081,
+        693,
+        1104,
+        724
+      ],
+      "width": 23,
+      "height": 31,
+      "row": 6
+    },
+    {
+      "index": 84,
+      "path": "/characters/veemon/frames/frame-084.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        31,
+        806,
+        64,
+        828
+      ],
+      "width": 33,
+      "height": 22,
+      "row": 7
+    },
+    {
+      "index": 85,
+      "path": "/characters/veemon/frames/frame-085.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        128,
+        796,
+        156,
+        828
+      ],
+      "width": 28,
+      "height": 32,
+      "row": 7
+    },
+    {
+      "index": 86,
+      "path": "/characters/veemon/frames/frame-086.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        224,
+        799,
+        250,
+        828
+      ],
+      "width": 26,
+      "height": 29,
+      "row": 7
+    },
+    {
+      "index": 87,
+      "path": "/characters/veemon/frames/frame-087.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        317,
+        802,
+        347,
+        828
+      ],
+      "width": 30,
+      "height": 26,
+      "row": 7
+    },
+    {
+      "index": 88,
+      "path": "/characters/veemon/frames/frame-088.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        416,
+        813,
+        439,
+        828
+      ],
+      "width": 23,
+      "height": 15,
+      "row": 7
+    },
+    {
+      "index": 89,
+      "path": "/characters/veemon/frames/frame-089.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        511,
+        805,
+        533,
+        828
+      ],
+      "width": 22,
+      "height": 23,
+      "row": 7
+    },
+    {
+      "index": 90,
+      "path": "/characters/veemon/frames/frame-090.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        606,
+        806,
+        629,
+        828
+      ],
+      "width": 23,
+      "height": 22,
+      "row": 7
+    },
+    {
+      "index": 91,
+      "path": "/characters/veemon/frames/frame-091.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        701,
+        813,
+        724,
+        828
+      ],
+      "width": 23,
+      "height": 15,
+      "row": 7
+    },
+    {
+      "index": 92,
+      "path": "/characters/veemon/frames/frame-092.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        793,
+        807,
+        821,
+        828
+      ],
+      "width": 28,
+      "height": 21,
+      "row": 7
+    },
+    {
+      "index": 93,
+      "path": "/characters/veemon/frames/frame-093.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        890,
+        798,
+        915,
+        828
+      ],
+      "width": 25,
+      "height": 30,
+      "row": 7
+    },
+    {
+      "index": 94,
+      "path": "/characters/veemon/frames/frame-094.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        983,
+        797,
+        1012,
+        828
+      ],
+      "width": 29,
+      "height": 31,
+      "row": 7
+    },
+    {
+      "index": 95,
+      "path": "/characters/veemon/frames/frame-095.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1079,
+        792,
+        1105,
+        828
+      ],
+      "width": 26,
+      "height": 36,
+      "row": 7
+    },
+    {
+      "index": 96,
+      "path": "/characters/veemon/frames/frame-096.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        32,
+        896,
+        62,
+        932
+      ],
+      "width": 30,
+      "height": 36,
+      "row": 8
+    },
+    {
+      "index": 97,
+      "path": "/characters/veemon/frames/frame-097.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        126,
+        903,
+        159,
+        932
+      ],
+      "width": 33,
+      "height": 29,
+      "row": 8
+    },
+    {
+      "index": 98,
+      "path": "/characters/veemon/frames/frame-098.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        222,
+        910,
+        252,
+        932
+      ],
+      "width": 30,
+      "height": 22,
+      "row": 8
+    },
+    {
+      "index": 99,
+      "path": "/characters/veemon/frames/frame-099.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        320,
+        908,
+        344,
+        932
+      ],
+      "width": 24,
+      "height": 24,
+      "row": 8
+    },
+    {
+      "index": 100,
+      "path": "/characters/veemon/frames/frame-100.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        416,
+        900,
+        439,
+        932
+      ],
+      "width": 23,
+      "height": 32,
+      "row": 8
+    },
+    {
+      "index": 101,
+      "path": "/characters/veemon/frames/frame-101.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        511,
+        900,
+        534,
+        932
+      ],
+      "width": 23,
+      "height": 32,
+      "row": 8
+    },
+    {
+      "index": 102,
+      "path": "/characters/veemon/frames/frame-102.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        603,
+        913,
+        632,
+        932
+      ],
+      "width": 29,
+      "height": 19,
+      "row": 8
+    },
+    {
+      "index": 103,
+      "path": "/characters/veemon/frames/frame-103.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        696,
+        916,
+        728,
+        932
+      ],
+      "width": 32,
+      "height": 16,
+      "row": 8
+    },
+    {
+      "index": 104,
+      "path": "/characters/veemon/frames/frame-104.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        796,
+        911,
+        818,
+        932
+      ],
+      "width": 22,
+      "height": 21,
+      "row": 8
+    },
+    {
+      "index": 105,
+      "path": "/characters/veemon/frames/frame-105.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        892,
+        911,
+        912,
+        932
+      ],
+      "width": 20,
+      "height": 21,
+      "row": 8
+    },
+    {
+      "index": 106,
+      "path": "/characters/veemon/frames/frame-106.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        985,
+        907,
+        1010,
+        932
+      ],
+      "width": 25,
+      "height": 25,
+      "row": 8
+    },
+    {
+      "index": 107,
+      "path": "/characters/veemon/frames/frame-107.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1080,
+        909,
+        1104,
+        932
+      ],
+      "width": 24,
+      "height": 23,
+      "row": 8
+    },
+    {
+      "index": 108,
+      "path": "/characters/veemon/frames/frame-108.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        37,
+        1004,
+        58,
+        1036
+      ],
+      "width": 21,
+      "height": 32,
+      "row": 9
+    },
+    {
+      "index": 109,
+      "path": "/characters/veemon/frames/frame-109.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        128,
+        1013,
+        157,
+        1036
+      ],
+      "width": 29,
+      "height": 23,
+      "row": 9
+    },
+    {
+      "index": 110,
+      "path": "/characters/veemon/frames/frame-110.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        225,
+        1013,
+        249,
+        1036
+      ],
+      "width": 24,
+      "height": 23,
+      "row": 9
+    },
+    {
+      "index": 111,
+      "path": "/characters/veemon/frames/frame-111.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        320,
+        1006,
+        345,
+        1036
+      ],
+      "width": 25,
+      "height": 30,
+      "row": 9
+    },
+    {
+      "index": 112,
+      "path": "/characters/veemon/frames/frame-112.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        413,
+        1005,
+        442,
+        1036
+      ],
+      "width": 29,
+      "height": 31,
+      "row": 9
+    },
+    {
+      "index": 113,
+      "path": "/characters/veemon/frames/frame-113.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        509,
+        1000,
+        535,
+        1036
+      ],
+      "width": 26,
+      "height": 36,
+      "row": 9
+    },
+    {
+      "index": 114,
+      "path": "/characters/veemon/frames/frame-114.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        599,
+        1004,
+        636,
+        1036
+      ],
+      "width": 37,
+      "height": 32,
+      "row": 9
+    },
+    {
+      "index": 115,
+      "path": "/characters/veemon/frames/frame-115.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        696,
+        1010,
+        729,
+        1036
+      ],
+      "width": 33,
+      "height": 26,
+      "row": 9
+    },
+    {
+      "index": 116,
+      "path": "/characters/veemon/frames/frame-116.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        792,
+        1011,
+        822,
+        1036
+      ],
+      "width": 30,
+      "height": 25,
+      "row": 9
+    },
+    {
+      "index": 117,
+      "path": "/characters/veemon/frames/frame-117.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        888,
+        1006,
+        917,
+        1036
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 9
+    },
+    {
+      "index": 118,
+      "path": "/characters/veemon/frames/frame-118.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        984,
+        1004,
+        1011,
+        1036
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 9
+    },
+    {
+      "index": 119,
+      "path": "/characters/veemon/frames/frame-119.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1079,
+        1007,
+        1106,
+        1036
+      ],
+      "width": 27,
+      "height": 29,
+      "row": 9
+    },
+    {
+      "index": 120,
+      "path": "/characters/veemon/frames/frame-120.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        33,
+        1110,
+        61,
+        1140
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 10
+    },
+    {
+      "index": 121,
+      "path": "/characters/veemon/frames/frame-121.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        131,
+        1113,
+        153,
+        1140
+      ],
+      "width": 22,
+      "height": 27,
+      "row": 10
+    },
+    {
+      "index": 122,
+      "path": "/characters/veemon/frames/frame-122.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        227,
+        1114,
+        248,
+        1140
+      ],
+      "width": 21,
+      "height": 26,
+      "row": 10
+    },
+    {
+      "index": 123,
+      "path": "/characters/veemon/frames/frame-123.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        316,
+        1112,
+        349,
+        1140
+      ],
+      "width": 33,
+      "height": 28,
+      "row": 10
+    },
+    {
+      "index": 124,
+      "path": "/characters/veemon/frames/frame-124.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        411,
+        1112,
+        444,
+        1140
+      ],
+      "width": 33,
+      "height": 28,
+      "row": 10
+    },
+    {
+      "index": 125,
+      "path": "/characters/veemon/frames/frame-125.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        505,
+        1112,
+        539,
+        1140
+      ],
+      "width": 34,
+      "height": 28,
+      "row": 10
+    },
+    {
+      "index": 126,
+      "path": "/characters/veemon/frames/frame-126.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        600,
+        1112,
+        634,
+        1140
+      ],
+      "width": 34,
+      "height": 28,
+      "row": 10
+    },
+    {
+      "index": 127,
+      "path": "/characters/veemon/frames/frame-127.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        696,
+        1113,
+        728,
+        1140
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 10
+    },
+    {
+      "index": 128,
+      "path": "/characters/veemon/frames/frame-128.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        791,
+        1113,
+        823,
+        1140
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 10
+    },
+    {
+      "index": 129,
+      "path": "/characters/veemon/frames/frame-129.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        886,
+        1113,
+        918,
+        1140
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 10
+    },
+    {
+      "index": 130,
+      "path": "/characters/veemon/frames/frame-130.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        980,
+        1114,
+        1014,
+        1140
+      ],
+      "width": 34,
+      "height": 26,
+      "row": 10
+    },
+    {
+      "index": 131,
+      "path": "/characters/veemon/frames/frame-131.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1073,
+        1100,
+        1111,
+        1140
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 10
+    },
+    {
+      "index": 132,
+      "path": "/characters/veemon/frames/frame-132.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        28,
+        1204,
+        66,
+        1244
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 11
+    },
+    {
+      "index": 133,
+      "path": "/characters/veemon/frames/frame-133.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        126,
+        1208,
+        159,
+        1244
+      ],
+      "width": 33,
+      "height": 36,
+      "row": 11
+    },
+    {
+      "index": 134,
+      "path": "/characters/veemon/frames/frame-134.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        221,
+        1208,
+        254,
+        1244
+      ],
+      "width": 33,
+      "height": 36,
+      "row": 11
+    },
+    {
+      "index": 135,
+      "path": "/characters/veemon/frames/frame-135.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        313,
+        1204,
+        351,
+        1244
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 11
+    },
+    {
+      "index": 136,
+      "path": "/characters/veemon/frames/frame-136.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        408,
+        1204,
+        446,
+        1244
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 11
+    },
+    {
+      "index": 137,
+      "path": "/characters/veemon/frames/frame-137.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        506,
+        1207,
+        539,
+        1244
+      ],
+      "width": 33,
+      "height": 37,
+      "row": 11
+    },
+    {
+      "index": 138,
+      "path": "/characters/veemon/frames/frame-138.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        601,
+        1207,
+        634,
+        1244
+      ],
+      "width": 33,
+      "height": 37,
+      "row": 11
+    },
+    {
+      "index": 139,
+      "path": "/characters/veemon/frames/frame-139.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        693,
+        1203,
+        731,
+        1244
+      ],
+      "width": 38,
+      "height": 41,
+      "row": 11
+    },
+    {
+      "index": 140,
+      "path": "/characters/veemon/frames/frame-140.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        788,
+        1204,
+        826,
+        1244
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 11
+    },
+    {
+      "index": 141,
+      "path": "/characters/veemon/frames/frame-141.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        886,
+        1216,
+        919,
+        1244
+      ],
+      "width": 33,
+      "height": 28,
+      "row": 11
+    },
+    {
+      "index": 142,
+      "path": "/characters/veemon/frames/frame-142.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        981,
+        1216,
+        1014,
+        1244
+      ],
+      "width": 33,
+      "height": 28,
+      "row": 11
+    },
+    {
+      "index": 143,
+      "path": "/characters/veemon/frames/frame-143.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1075,
+        1213,
+        1109,
+        1244
+      ],
+      "width": 34,
+      "height": 31,
+      "row": 11
+    },
+    {
+      "index": 144,
+      "path": "/characters/veemon/frames/frame-144.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        30,
+        1317,
+        65,
+        1348
+      ],
+      "width": 35,
+      "height": 31,
+      "row": 12
+    },
+    {
+      "index": 145,
+      "path": "/characters/veemon/frames/frame-145.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        131,
+        1322,
+        153,
+        1348
+      ],
+      "width": 22,
+      "height": 26,
+      "row": 12
+    },
+    {
+      "index": 146,
+      "path": "/characters/veemon/frames/frame-146.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        221,
+        1321,
+        253,
+        1348
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 147,
+      "path": "/characters/veemon/frames/frame-147.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        317,
+        1321,
+        348,
+        1348
+      ],
+      "width": 31,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 148,
+      "path": "/characters/veemon/frames/frame-148.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        412,
+        1317,
+        443,
+        1348
+      ],
+      "width": 31,
+      "height": 31,
+      "row": 12
+    },
+    {
+      "index": 149,
+      "path": "/characters/veemon/frames/frame-149.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        504,
+        1322,
+        541,
+        1348
+      ],
+      "width": 37,
+      "height": 26,
+      "row": 12
+    },
+    {
+      "index": 150,
+      "path": "/characters/veemon/frames/frame-150.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        601,
+        1312,
+        634,
+        1348
+      ],
+      "width": 33,
+      "height": 36,
+      "row": 12
+    },
+    {
+      "index": 151,
+      "path": "/characters/veemon/frames/frame-151.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        696,
+        1313,
+        729,
+        1348
+      ],
+      "width": 33,
+      "height": 35,
+      "row": 12
+    },
+    {
+      "index": 152,
+      "path": "/characters/veemon/frames/frame-152.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        795,
+        1321,
+        819,
+        1348
+      ],
+      "width": 24,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 153,
+      "path": "/characters/veemon/frames/frame-153.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        888,
+        1321,
+        916,
+        1348
+      ],
+      "width": 28,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 154,
+      "path": "/characters/veemon/frames/frame-154.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        983,
+        1316,
+        1012,
+        1348
+      ],
+      "width": 29,
+      "height": 32,
+      "row": 12
+    },
+    {
+      "index": 155,
+      "path": "/characters/veemon/frames/frame-155.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1079,
+        1309,
+        1106,
+        1348
+      ],
+      "width": 27,
+      "height": 39,
+      "row": 12
+    },
+    {
+      "index": 156,
+      "path": "/characters/veemon/frames/frame-156.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        37,
+        1412,
+        57,
+        1452
+      ],
+      "width": 20,
+      "height": 40,
+      "row": 13
+    },
+    {
+      "index": 157,
+      "path": "/characters/veemon/frames/frame-157.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        122,
+        1418,
+        162,
+        1452
+      ],
+      "width": 40,
+      "height": 34,
+      "row": 13
+    },
+    {
+      "index": 158,
+      "path": "/characters/veemon/frames/frame-158.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        219,
+        1414,
+        256,
+        1452
+      ],
+      "width": 37,
+      "height": 38,
+      "row": 13
+    },
+    {
+      "index": 159,
+      "path": "/characters/veemon/frames/frame-159.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        312,
+        1413,
+        353,
+        1452
+      ],
+      "width": 41,
+      "height": 39,
+      "row": 13
+    },
+    {
+      "index": 160,
+      "path": "/characters/veemon/frames/frame-160.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        410,
+        1420,
+        444,
+        1452
+      ],
+      "width": 34,
+      "height": 32,
+      "row": 13
+    },
+    {
+      "index": 161,
+      "path": "/characters/veemon/frames/frame-161.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        500,
+        1421,
+        545,
+        1452
+      ],
+      "width": 45,
+      "height": 31,
+      "row": 13
+    },
+    {
+      "index": 162,
+      "path": "/characters/veemon/frames/frame-162.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        599,
+        1420,
+        636,
+        1452
+      ],
+      "width": 37,
+      "height": 32,
+      "row": 13
+    },
+    {
+      "index": 163,
+      "path": "/characters/veemon/frames/frame-163.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        691,
+        1415,
+        734,
+        1452
+      ],
+      "width": 43,
+      "height": 37,
+      "row": 13
+    },
+    {
+      "index": 164,
+      "path": "/characters/veemon/frames/frame-164.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        790,
+        1418,
+        825,
+        1452
+      ],
+      "width": 35,
+      "height": 34,
+      "row": 13
+    },
+    {
+      "index": 165,
+      "path": "/characters/veemon/frames/frame-165.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        884,
+        1419,
+        920,
+        1452
+      ],
+      "width": 36,
+      "height": 33,
+      "row": 13
+    },
+    {
+      "index": 166,
+      "path": "/characters/veemon/frames/frame-166.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        979,
+        1419,
+        1015,
+        1452
+      ],
+      "width": 36,
+      "height": 33,
+      "row": 13
+    },
+    {
+      "index": 167,
+      "path": "/characters/veemon/frames/frame-167.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1073,
+        1419,
+        1111,
+        1452
+      ],
+      "width": 38,
+      "height": 33,
+      "row": 13
+    },
+    {
+      "index": 168,
+      "path": "/characters/veemon/frames/frame-168.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        30,
+        1524,
+        65,
+        1556
+      ],
+      "width": 35,
+      "height": 32,
+      "row": 14
+    },
+    {
+      "index": 169,
+      "path": "/characters/veemon/frames/frame-169.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        124,
+        1523,
+        160,
+        1556
+      ],
+      "width": 36,
+      "height": 33,
+      "row": 14
+    },
+    {
+      "index": 170,
+      "path": "/characters/veemon/frames/frame-170.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        219,
+        1523,
+        255,
+        1556
+      ],
+      "width": 36,
+      "height": 33,
+      "row": 14
+    },
+    {
+      "index": 171,
+      "path": "/characters/veemon/frames/frame-171.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        314,
+        1525,
+        350,
+        1556
+      ],
+      "width": 36,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 172,
+      "path": "/characters/veemon/frames/frame-172.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        410,
+        1525,
+        445,
+        1556
+      ],
+      "width": 35,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 173,
+      "path": "/characters/veemon/frames/frame-173.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        511,
+        1525,
+        534,
+        1556
+      ],
+      "width": 23,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 174,
+      "path": "/characters/veemon/frames/frame-174.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        605,
+        1525,
+        629,
+        1556
+      ],
+      "width": 24,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 175,
+      "path": "/characters/veemon/frames/frame-175.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        697,
+        1519,
+        727,
+        1556
+      ],
+      "width": 30,
+      "height": 37,
+      "row": 14
+    },
+    {
+      "index": 176,
+      "path": "/characters/veemon/frames/frame-176.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        794,
+        1519,
+        821,
+        1556
+      ],
+      "width": 27,
+      "height": 37,
+      "row": 14
+    },
+    {
+      "index": 177,
+      "path": "/characters/veemon/frames/frame-177.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        886,
+        1516,
+        918,
+        1556
+      ],
+      "width": 32,
+      "height": 40,
+      "row": 14
+    },
+    {
+      "index": 178,
+      "path": "/characters/veemon/frames/frame-178.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        983,
+        1523,
+        1012,
+        1556
+      ],
+      "width": 29,
+      "height": 33,
+      "row": 14
+    },
+    {
+      "index": 179,
+      "path": "/characters/veemon/frames/frame-179.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1075,
+        1527,
+        1109,
+        1556
+      ],
+      "width": 34,
+      "height": 29,
+      "row": 14
+    },
+    {
+      "index": 180,
+      "path": "/characters/veemon/frames/frame-180.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        30,
+        1629,
+        65,
+        1660
+      ],
+      "width": 35,
+      "height": 31,
+      "row": 15
+    },
+    {
+      "index": 181,
+      "path": "/characters/veemon/frames/frame-181.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        123,
+        1627,
+        161,
+        1660
+      ],
+      "width": 38,
+      "height": 33,
+      "row": 15
+    },
+    {
+      "index": 182,
+      "path": "/characters/veemon/frames/frame-182.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        218,
+        1622,
+        256,
+        1660
+      ],
+      "width": 38,
+      "height": 38,
+      "row": 15
+    },
+    {
+      "index": 183,
+      "path": "/characters/veemon/frames/frame-183.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        314,
+        1628,
+        351,
+        1660
+      ],
+      "width": 37,
+      "height": 32,
+      "row": 15
+    },
+    {
+      "index": 184,
+      "path": "/characters/veemon/frames/frame-184.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        409,
+        1628,
+        446,
+        1660
+      ],
+      "width": 37,
+      "height": 32,
+      "row": 15
+    },
+    {
+      "index": 185,
+      "path": "/characters/veemon/frames/frame-185.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        504,
+        1627,
+        541,
+        1660
+      ],
+      "width": 37,
+      "height": 33,
+      "row": 15
+    },
+    {
+      "index": 186,
+      "path": "/characters/veemon/frames/frame-186.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        599,
+        1623,
+        636,
+        1660
+      ],
+      "width": 37,
+      "height": 37,
+      "row": 15
+    },
+    {
+      "index": 187,
+      "path": "/characters/veemon/frames/frame-187.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        694,
+        1621,
+        731,
+        1660
+      ],
+      "width": 37,
+      "height": 39,
+      "row": 15
+    },
+    {
+      "index": 188,
+      "path": "/characters/veemon/frames/frame-188.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        789,
+        1629,
+        825,
+        1660
+      ],
+      "width": 36,
+      "height": 31,
+      "row": 15
+    },
+    {
+      "index": 189,
+      "path": "/characters/veemon/frames/frame-189.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        886,
+        1624,
+        919,
+        1660
+      ],
+      "width": 33,
+      "height": 36,
+      "row": 15
+    },
+    {
+      "index": 190,
+      "path": "/characters/veemon/frames/frame-190.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        985,
+        1621,
+        1009,
+        1660
+      ],
+      "width": 24,
+      "height": 39,
+      "row": 15
+    },
+    {
+      "index": 191,
+      "path": "/characters/veemon/frames/frame-191.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1080,
+        1625,
+        1104,
+        1660
+      ],
+      "width": 24,
+      "height": 35,
+      "row": 15
+    },
+    {
+      "index": 192,
+      "path": "/characters/veemon/frames/frame-192.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        29,
+        1728,
+        65,
+        1764
+      ],
+      "width": 36,
+      "height": 36,
+      "row": 16
+    },
+    {
+      "index": 193,
+      "path": "/characters/veemon/frames/frame-193.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        125,
+        1731,
+        159,
+        1764
+      ],
+      "width": 34,
+      "height": 33,
+      "row": 16
+    },
+    {
+      "index": 194,
+      "path": "/characters/veemon/frames/frame-194.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        222,
+        1732,
+        253,
+        1764
+      ],
+      "width": 31,
+      "height": 32,
+      "row": 16
+    },
+    {
+      "index": 195,
+      "path": "/characters/veemon/frames/frame-195.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        316,
+        1730,
+        349,
+        1764
+      ],
+      "width": 33,
+      "height": 34,
+      "row": 16
+    },
+    {
+      "index": 196,
+      "path": "/characters/veemon/frames/frame-196.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        411,
+        1733,
+        444,
+        1764
+      ],
+      "width": 33,
+      "height": 31,
+      "row": 16
+    },
+    {
+      "index": 197,
+      "path": "/characters/veemon/frames/frame-197.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        505,
+        1734,
+        539,
+        1764
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 16
+    },
+    {
+      "index": 198,
+      "path": "/characters/veemon/frames/frame-198.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        602,
+        1733,
+        632,
+        1764
+      ],
+      "width": 30,
+      "height": 31,
+      "row": 16
+    },
+    {
+      "index": 199,
+      "path": "/characters/veemon/frames/frame-199.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        698,
+        1740,
+        726,
+        1764
+      ],
+      "width": 28,
+      "height": 24,
+      "row": 16
+    },
+    {
+      "index": 200,
+      "path": "/characters/veemon/frames/frame-200.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        791,
+        1741,
+        823,
+        1764
+      ],
+      "width": 32,
+      "height": 23,
+      "row": 16
+    },
+    {
+      "index": 201,
+      "path": "/characters/veemon/frames/frame-201.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        886,
+        1741,
+        918,
+        1764
+      ],
+      "width": 32,
+      "height": 23,
+      "row": 16
+    },
+    {
+      "index": 202,
+      "path": "/characters/veemon/frames/frame-202.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        983,
+        1740,
+        1011,
+        1764
+      ],
+      "width": 28,
+      "height": 24,
+      "row": 16
+    },
+    {
+      "index": 203,
+      "path": "/characters/veemon/frames/frame-203.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1083,
+        1736,
+        1102,
+        1764
+      ],
+      "width": 19,
+      "height": 28,
+      "row": 16
+    },
+    {
+      "index": 204,
+      "path": "/characters/veemon/frames/frame-204.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        33,
+        1838,
+        62,
+        1868
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 17
+    },
+    {
+      "index": 205,
+      "path": "/characters/veemon/frames/frame-205.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        128,
+        1838,
+        157,
+        1868
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 17
+    },
+    {
+      "index": 206,
+      "path": "/characters/veemon/frames/frame-206.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        223,
+        1838,
+        252,
+        1868
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 17
+    },
+    {
+      "index": 207,
+      "path": "/characters/veemon/frames/frame-207.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        318,
+        1838,
+        347,
+        1868
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 17
+    },
+    {
+      "index": 208,
+      "path": "/characters/veemon/frames/frame-208.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        410,
+        1841,
+        444,
+        1868
+      ],
+      "width": 34,
+      "height": 27,
+      "row": 17
+    },
+    {
+      "index": 209,
+      "path": "/characters/veemon/frames/frame-209.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        509,
+        1838,
+        536,
+        1868
+      ],
+      "width": 27,
+      "height": 30,
+      "row": 17
+    },
+    {
+      "index": 210,
+      "path": "/characters/veemon/frames/frame-210.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        603,
+        1837,
+        631,
+        1868
+      ],
+      "width": 28,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 211,
+      "path": "/characters/veemon/frames/frame-211.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        699,
+        1822,
+        726,
+        1868
+      ],
+      "width": 27,
+      "height": 46,
+      "row": 17
+    },
+    {
+      "index": 212,
+      "path": "/characters/veemon/frames/frame-212.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        795,
+        1821,
+        819,
+        1868
+      ],
+      "width": 24,
+      "height": 47,
+      "row": 17
+    },
+    {
+      "index": 213,
+      "path": "/characters/veemon/frames/frame-213.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        889,
+        1822,
+        915,
+        1868
+      ],
+      "width": 26,
+      "height": 46,
+      "row": 17
+    },
+    {
+      "index": 214,
+      "path": "/characters/veemon/frames/frame-214.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        984,
+        1831,
+        1011,
+        1868
+      ],
+      "width": 27,
+      "height": 37,
+      "row": 17
+    },
+    {
+      "index": 215,
+      "path": "/characters/veemon/frames/frame-215.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1080,
+        1820,
+        1105,
+        1868
+      ],
+      "width": 25,
+      "height": 48,
+      "row": 17
+    },
+    {
+      "index": 216,
+      "path": "/characters/veemon/frames/frame-216.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        35,
+        1926,
+        60,
+        1972
+      ],
+      "width": 25,
+      "height": 46,
+      "row": 18
+    },
+    {
+      "index": 217,
+      "path": "/characters/veemon/frames/frame-217.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        126,
+        1936,
+        159,
+        1972
+      ],
+      "width": 33,
+      "height": 36,
+      "row": 18
+    },
+    {
+      "index": 218,
+      "path": "/characters/veemon/frames/frame-218.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        223,
+        1943,
+        251,
+        1972
+      ],
+      "width": 28,
+      "height": 29,
+      "row": 18
+    },
+    {
+      "index": 219,
+      "path": "/characters/veemon/frames/frame-219.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        319,
+        1951,
+        346,
+        1972
+      ],
+      "width": 27,
+      "height": 21,
+      "row": 18
+    },
+    {
+      "index": 220,
+      "path": "/characters/veemon/frames/frame-220.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        417,
+        1945,
+        438,
+        1972
+      ],
+      "width": 21,
+      "height": 27,
+      "row": 18
+    },
+    {
+      "index": 221,
+      "path": "/characters/veemon/frames/frame-221.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        509,
+        1951,
+        536,
+        1972
+      ],
+      "width": 27,
+      "height": 21,
+      "row": 18
+    },
+    {
+      "index": 222,
+      "path": "/characters/veemon/frames/frame-222.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        607,
+        1945,
+        628,
+        1972
+      ],
+      "width": 21,
+      "height": 27,
+      "row": 18
+    },
+    {
+      "index": 223,
+      "path": "/characters/veemon/frames/frame-223.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        697,
+        1938,
+        727,
+        1972
+      ],
+      "width": 30,
+      "height": 34,
+      "row": 18
+    },
+    {
+      "index": 224,
+      "path": "/characters/veemon/frames/frame-224.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        791,
+        1951,
+        824,
+        1972
+      ],
+      "width": 33,
+      "height": 21,
+      "row": 18
+    },
+    {
+      "index": 225,
+      "path": "/characters/veemon/frames/frame-225.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        887,
+        1941,
+        917,
+        1972
+      ],
+      "width": 30,
+      "height": 31,
+      "row": 18
+    },
+    {
+      "index": 226,
+      "path": "/characters/veemon/frames/frame-226.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        982,
+        1944,
+        1012,
+        1972
+      ],
+      "width": 30,
+      "height": 28,
+      "row": 18
+    },
+    {
+      "index": 227,
+      "path": "/characters/veemon/frames/frame-227.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1077,
+        1943,
+        1107,
+        1972
+      ],
+      "width": 30,
+      "height": 29,
+      "row": 18
+    },
+    {
+      "index": 228,
+      "path": "/characters/veemon/frames/frame-228.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        33,
+        2048,
+        61,
+        2076
+      ],
+      "width": 28,
+      "height": 28,
+      "row": 19
+    },
+    {
+      "index": 229,
+      "path": "/characters/veemon/frames/frame-229.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        128,
+        2046,
+        156,
+        2076
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 19
+    },
+    {
+      "index": 230,
+      "path": "/characters/veemon/frames/frame-230.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        223,
+        2045,
+        251,
+        2076
+      ],
+      "width": 28,
+      "height": 31,
+      "row": 19
+    },
+    {
+      "index": 231,
+      "path": "/characters/veemon/frames/frame-231.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        319,
+        2041,
+        346,
+        2076
+      ],
+      "width": 27,
+      "height": 35,
+      "row": 19
+    },
+    {
+      "index": 232,
+      "path": "/characters/veemon/frames/frame-232.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        413,
+        2046,
+        441,
+        2076
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 19
+    },
+    {
+      "index": 233,
+      "path": "/characters/veemon/frames/frame-233.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        508,
+        2046,
+        537,
+        2076
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 19
+    },
+    {
+      "index": 234,
+      "path": "/characters/veemon/frames/frame-234.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        605,
+        2046,
+        629,
+        2076
+      ],
+      "width": 24,
+      "height": 30,
+      "row": 19
+    },
+    {
+      "index": 235,
+      "path": "/characters/veemon/frames/frame-235.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        699,
+        2036,
+        726,
+        2076
+      ],
+      "width": 27,
+      "height": 40,
+      "row": 19
+    },
+    {
+      "index": 236,
+      "path": "/characters/veemon/frames/frame-236.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        794,
+        2036,
+        820,
+        2076
+      ],
+      "width": 26,
+      "height": 40,
+      "row": 19
+    },
+    {
+      "index": 237,
+      "path": "/characters/veemon/frames/frame-237.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        888,
+        2043,
+        917,
+        2076
+      ],
+      "width": 29,
+      "height": 33,
+      "row": 19
+    },
+    {
+      "index": 238,
+      "path": "/characters/veemon/frames/frame-238.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        981,
+        2038,
+        1013,
+        2076
+      ],
+      "width": 32,
+      "height": 38,
+      "row": 19
+    },
+    {
+      "index": 239,
+      "path": "/characters/veemon/frames/frame-239.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1081,
+        2042,
+        1104,
+        2076
+      ],
+      "width": 23,
+      "height": 34,
+      "row": 19
+    },
+    {
+      "index": 240,
+      "path": "/characters/veemon/frames/frame-240.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        34,
+        2148,
+        61,
+        2180
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 20
+    },
+    {
+      "index": 241,
+      "path": "/characters/veemon/frames/frame-241.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        129,
+        2146,
+        156,
+        2180
+      ],
+      "width": 27,
+      "height": 34,
+      "row": 20
+    },
+    {
+      "index": 242,
+      "path": "/characters/veemon/frames/frame-242.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        228,
+        2152,
+        246,
+        2180
+      ],
+      "width": 18,
+      "height": 28,
+      "row": 20
+    },
+    {
+      "index": 243,
+      "path": "/characters/veemon/frames/frame-243.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        322,
+        2151,
+        343,
+        2180
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 244,
+      "path": "/characters/veemon/frames/frame-244.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        411,
+        2152,
+        444,
+        2180
+      ],
+      "width": 33,
+      "height": 28,
+      "row": 20
+    },
+    {
+      "index": 245,
+      "path": "/characters/veemon/frames/frame-245.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        511,
+        2153,
+        533,
+        2180
+      ],
+      "width": 22,
+      "height": 27,
+      "row": 20
+    },
+    {
+      "index": 246,
+      "path": "/characters/veemon/frames/frame-246.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        604,
+        2154,
+        630,
+        2180
+      ],
+      "width": 26,
+      "height": 26,
+      "row": 20
+    },
+    {
+      "index": 247,
+      "path": "/characters/veemon/frames/frame-247.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        699,
+        2151,
+        725,
+        2180
+      ],
+      "width": 26,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 248,
+      "path": "/characters/veemon/frames/frame-248.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        792,
+        2152,
+        823,
+        2180
+      ],
+      "width": 31,
+      "height": 28,
+      "row": 20
+    },
+    {
+      "index": 249,
+      "path": "/characters/veemon/frames/frame-249.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        889,
+        2152,
+        916,
+        2180
+      ],
+      "width": 27,
+      "height": 28,
+      "row": 20
+    },
+    {
+      "index": 250,
+      "path": "/characters/veemon/frames/frame-250.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        983,
+        2152,
+        1012,
+        2180
+      ],
+      "width": 29,
+      "height": 28,
+      "row": 20
+    },
+    {
+      "index": 251,
+      "path": "/characters/veemon/frames/frame-251.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        1080,
+        2151,
+        1104,
+        2180
+      ],
+      "width": 24,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 252,
+      "path": "/characters/veemon/frames/frame-252.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        35,
+        2257,
+        59,
+        2284
+      ],
+      "width": 24,
+      "height": 27,
+      "row": 21
+    },
+    {
+      "index": 253,
+      "path": "/characters/veemon/frames/frame-253.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        129,
+        2250,
+        156,
+        2284
+      ],
+      "width": 27,
+      "height": 34,
+      "row": 21
+    },
+    {
+      "index": 254,
+      "path": "/characters/veemon/frames/frame-254.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        227,
+        2252,
+        248,
+        2284
+      ],
+      "width": 21,
+      "height": 32,
+      "row": 21
+    },
+    {
+      "index": 255,
+      "path": "/characters/veemon/frames/frame-255.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        322,
+        2255,
+        343,
+        2284
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 21
+    },
+    {
+      "index": 256,
+      "path": "/characters/veemon/frames/frame-256.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        416,
+        2258,
+        439,
+        2284
+      ],
+      "width": 23,
+      "height": 26,
+      "row": 21
+    },
+    {
+      "index": 257,
+      "path": "/characters/veemon/frames/frame-257.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        506,
+        2254,
+        539,
+        2284
+      ],
+      "width": 33,
+      "height": 30,
+      "row": 21
+    },
+    {
+      "index": 258,
+      "path": "/characters/veemon/frames/frame-258.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        604,
+        2252,
+        631,
+        2284
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 21
+    },
+    {
+      "index": 259,
+      "path": "/characters/veemon/frames/frame-259.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        699,
+        2246,
+        725,
+        2284
+      ],
+      "width": 26,
+      "height": 38,
+      "row": 21
+    },
+    {
+      "index": 260,
+      "path": "/characters/veemon/frames/frame-260.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png",
+      "sourceName": "Veemon.png",
+      "box": [
+        791,
+        2249,
+        823,
+        2284
+      ],
+      "width": 32,
+      "height": 35,
+      "row": 21
+    },
+    {
+      "index": 261,
+      "path": "/characters/veemon/frames/frame-261.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 46,
+      "replacementHeight": 48,
+      "box": [
+        887,
+        2256,
+        918,
+        2284
+      ],
+      "width": 31,
+      "height": 28,
+      "row": 21,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/veemon/frames/frame-142.png|widthScale=0.96",
+      "generatedSources": {
+        "crouch": "/characters/veemon/frames/frame-142.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.96
+      },
+      "sheetId": "generated",
+      "sheetPath": "/characters/veemon/animation-sheet.png"
+    }
+  ]
+}

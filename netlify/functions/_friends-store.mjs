@@ -62,6 +62,7 @@ export function normalizeInvite(value, now = Date.now()) {
     roomId: cleanToken(value?.roomId),
     roomName: cleanRoomName(value?.roomName),
     password: cleanPassword(value?.password),
+    roomKind: value?.roomKind === 'custom' ? 'custom' : 'private',
     status,
     createdAt,
     respondedAt: value?.respondedAt ? cleanTimestamp(value.respondedAt) : undefined

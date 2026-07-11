@@ -136,6 +136,7 @@ const BACK_HOP_COOLDOWN_FRAMES = 18;
 const BACK_HOP_MIN_SIZE = 0.65;
 const BACK_HOP_MAX_SIZE = 1.45;
 const BACK_HOP_GRAVITY_SCALE = 1.45;
+const NEUTRAL_GROUND_TOLERANCE = 0.05;
 const KI_CHARGE_DEFAULT_STARTUP_FRAMES = 14;
 const KI_CHARGE_DEFAULT_ACTIVE_FRAMES = 18;
 const KI_CHARGE_DEFAULT_RECOVERY_FRAMES = 16;
@@ -204,6 +205,7 @@ export function createMatch(
   options: MatchOptions = {}
 ): MatchSnapshot {
   const roundTime = normalizeRoundTime(options.roundTime);
+  const roundsToWin = normalizeRoundsToWin(options.roundsToWin);
   const maxHealth = normalizeMaxHealth(options.maxHealth);
   const aiSeed = normalizeAiSeed(options.aiSeed);
   const roster = normalizeTransformRoster(options.roster, p1, p2);
@@ -218,6 +220,7 @@ export function createMatch(
     aiSeed,
     roundAiSeed: makeRoundAiSeed(aiSeed, 1),
     roundTime,
+    roundsToWin,
     maxHealth,
     trainingInfiniteHealth: options.trainingInfiniteHealth ?? true,
     controlScheme,
@@ -276,7 +279,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     next.countdown -= dt;
     updateRoundOverVisuals(next);
     if (next.countdown <= 0) {
-      const winner = next.fighters.find((fighter) => fighter.roundsWon >= ROUNDS_TO_WIN);
+      const winner = next.fighters.find((fighter) => fighter.roundsWon >= next.roundsToWin);
       if (winner) {
           next.phase = 'matchOver';
           next.winnerSlot = winner.slot;
@@ -357,6 +360,10 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
 function normalizeRoundTime(roundTime: number | undefined) {
   if (roundTime !== undefined && roundTime <= 0) return 0;
   return clamp(Math.round(roundTime ?? ROUND_TIME), 30, 99);
+}
+
+function normalizeRoundsToWin(roundsToWin: number | undefined) {
+  return clamp(Math.round(roundsToWin ?? ROUNDS_TO_WIN), 1, 5);
 }
 
 function normalizeMaxHealth(maxHealth: number | undefined) {
@@ -1014,9 +1021,13 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
   const holdingBack = horizontalIntent.back;
   const laneWalk = input.sidewalkUp ? -1 : input.sidewalkDown ? 1 : 0;
   const sidestepTap = input.sidestepUp ? -1 : input.sidestepDown ? 1 : 0;
-  const grounded = fighter.position.y === 0 && fighter.velocityY === 0;
+  const grounded = isNeutralGrounded(fighter);
+  if (grounded) {
+    fighter.position.y = 0;
+    fighter.velocityY = 0;
+  }
   const crouching = input.down && grounded;
-  const jumping = isAirborne(fighter);
+  const jumping = !grounded && isAirborne(fighter);
   const backHopRequested = dashIntent.back && holdingBack && grounded && !crouching && !jumping && fighter.backHopCooldownFrames === 0;
   const blocking = input.block || (holdingBack && !backHopRequested);
   const axisSpeedScale = crouching ? 0 : blocking ? 0.42 : 1;
@@ -4633,6 +4644,7 @@ function pushImpactSparkEvent(
       position,
       attackerSlot: attacker.slot,
       defenderSlot: defender.slot,
+      direction: attacker.facing,
       hitLevel: move.hitLevel,
       damage: kind === 'block' ? move.blockDamage : context.damage ?? move.damage,
       moveLabel: move.label,
@@ -4719,6 +4731,17 @@ function getPostLockState(fighter: FighterRuntime, input?: InputFrame): FighterR
 
 function isAirborne(fighter: FighterRuntime) {
   return fighter.position.y > 0 || fighter.velocityY !== 0;
+}
+
+function isNeutralGrounded(fighter: FighterRuntime) {
+  const neutralState =
+    fighter.state === 'idle' ||
+    fighter.state === 'walk' ||
+    fighter.state === 'sidestep' ||
+    fighter.state === 'crouch' ||
+    fighter.state === 'crouchBlock' ||
+    fighter.state === 'block';
+  return neutralState && Math.abs(fighter.position.y) <= NEUTRAL_GROUND_TOLERANCE;
 }
 
 function isGrounded(fighter: FighterRuntime) {

@@ -1,0 +1,2429 @@
+{
+  "id": "shadow-the-hedgehog",
+  "displayName": "Shadow the Hedgehog",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/shadow-the-hedgehog/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://shadow-the-hedgehog",
+  "spriteSheetPath": "/characters/shadow-the-hedgehog/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/shadow-the-hedgehog/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 410
+    }
+  ],
+  "spriteFrameCount": 410,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/shadow-the-hedgehog/frames/frame-000.png",
+      "/characters/shadow-the-hedgehog/frames/frame-001.png",
+      "/characters/shadow-the-hedgehog/frames/frame-002.png",
+      "/characters/shadow-the-hedgehog/frames/frame-003.png",
+      "/characters/shadow-the-hedgehog/frames/frame-004.png",
+      "/characters/shadow-the-hedgehog/frames/frame-005.png"
+    ],
+    "walkForward": [
+      "/characters/shadow-the-hedgehog/frames/frame-009.png",
+      "/characters/shadow-the-hedgehog/frames/frame-010.png",
+      "/characters/shadow-the-hedgehog/frames/frame-011.png",
+      "/characters/shadow-the-hedgehog/frames/frame-012.png",
+      "/characters/shadow-the-hedgehog/frames/frame-013.png",
+      "/characters/shadow-the-hedgehog/frames/frame-014.png",
+      "/characters/shadow-the-hedgehog/frames/frame-015.png",
+      "/characters/shadow-the-hedgehog/frames/frame-016.png",
+      "/characters/shadow-the-hedgehog/frames/frame-017.png",
+      "/characters/shadow-the-hedgehog/frames/frame-018.png",
+      "/characters/shadow-the-hedgehog/frames/frame-019.png",
+      "/characters/shadow-the-hedgehog/frames/frame-020.png",
+      "/characters/shadow-the-hedgehog/frames/frame-021.png",
+      "/characters/shadow-the-hedgehog/frames/frame-022.png",
+      "/characters/shadow-the-hedgehog/frames/frame-023.png",
+      "/characters/shadow-the-hedgehog/frames/frame-024.png"
+    ],
+    "walkBack": [
+      "/characters/shadow-the-hedgehog/frames/frame-023.png",
+      "/characters/shadow-the-hedgehog/frames/frame-021.png",
+      "/characters/shadow-the-hedgehog/frames/frame-020.png",
+      "/characters/shadow-the-hedgehog/frames/frame-018.png",
+      "/characters/shadow-the-hedgehog/frames/frame-017.png",
+      "/characters/shadow-the-hedgehog/frames/frame-015.png",
+      "/characters/shadow-the-hedgehog/frames/frame-013.png",
+      "/characters/shadow-the-hedgehog/frames/frame-012.png",
+      "/characters/shadow-the-hedgehog/frames/frame-010.png",
+      "/characters/shadow-the-hedgehog/frames/frame-009.png"
+    ],
+    "sprint": [
+      "/characters/shadow-the-hedgehog/frames/frame-025.png",
+      "/characters/shadow-the-hedgehog/frames/frame-026.png",
+      "/characters/shadow-the-hedgehog/frames/frame-027.png",
+      "/characters/shadow-the-hedgehog/frames/frame-029.png",
+      "/characters/shadow-the-hedgehog/frames/frame-030.png",
+      "/characters/shadow-the-hedgehog/frames/frame-032.png",
+      "/characters/shadow-the-hedgehog/frames/frame-033.png",
+      "/characters/shadow-the-hedgehog/frames/frame-034.png",
+      "/characters/shadow-the-hedgehog/frames/frame-036.png",
+      "/characters/shadow-the-hedgehog/frames/frame-037.png"
+    ],
+    "backHop": [
+      "/characters/shadow-the-hedgehog/frames/frame-039.png",
+      "/characters/shadow-the-hedgehog/frames/frame-040.png",
+      "/characters/shadow-the-hedgehog/frames/frame-041.png",
+      "/characters/shadow-the-hedgehog/frames/frame-043.png",
+      "/characters/shadow-the-hedgehog/frames/frame-044.png",
+      "/characters/shadow-the-hedgehog/frames/frame-045.png",
+      "/characters/shadow-the-hedgehog/frames/frame-047.png",
+      "/characters/shadow-the-hedgehog/frames/frame-048.png"
+    ],
+    "sidestepLeft": [
+      "/characters/shadow-the-hedgehog/frames/frame-050.png",
+      "/characters/shadow-the-hedgehog/frames/frame-051.png",
+      "/characters/shadow-the-hedgehog/frames/frame-052.png",
+      "/characters/shadow-the-hedgehog/frames/frame-053.png",
+      "/characters/shadow-the-hedgehog/frames/frame-054.png",
+      "/characters/shadow-the-hedgehog/frames/frame-055.png",
+      "/characters/shadow-the-hedgehog/frames/frame-056.png",
+      "/characters/shadow-the-hedgehog/frames/frame-057.png"
+    ],
+    "sidestepRight": [
+      "/characters/shadow-the-hedgehog/frames/frame-059.png",
+      "/characters/shadow-the-hedgehog/frames/frame-060.png",
+      "/characters/shadow-the-hedgehog/frames/frame-061.png",
+      "/characters/shadow-the-hedgehog/frames/frame-062.png",
+      "/characters/shadow-the-hedgehog/frames/frame-063.png"
+    ],
+    "jump": [
+      "/characters/shadow-the-hedgehog/frames/frame-064.png",
+      "/characters/shadow-the-hedgehog/frames/frame-065.png",
+      "/characters/shadow-the-hedgehog/frames/frame-066.png",
+      "/characters/shadow-the-hedgehog/frames/frame-067.png",
+      "/characters/shadow-the-hedgehog/frames/frame-068.png",
+      "/characters/shadow-the-hedgehog/frames/frame-069.png"
+    ],
+    "crouch": [
+      "/characters/shadow-the-hedgehog/frames/frame-070.png"
+    ],
+    "crouchBlock": [
+      "/characters/shadow-the-hedgehog/frames/frame-070.png"
+    ],
+    "block": [
+      "/characters/shadow-the-hedgehog/frames/frame-300.png"
+    ],
+    "chargeKi": [
+      "/characters/shadow-the-hedgehog/frames/frame-083.png",
+      "/characters/shadow-the-hedgehog/frames/frame-084.png",
+      "/characters/shadow-the-hedgehog/frames/frame-085.png",
+      "/characters/shadow-the-hedgehog/frames/frame-086.png"
+    ],
+    "jableft": [
+      "/characters/shadow-the-hedgehog/frames/frame-087.png",
+      "/characters/shadow-the-hedgehog/frames/frame-088.png",
+      "/characters/shadow-the-hedgehog/frames/frame-089.png"
+    ],
+    "jabright": [
+      "/characters/shadow-the-hedgehog/frames/frame-090.png",
+      "/characters/shadow-the-hedgehog/frames/frame-091.png",
+      "/characters/shadow-the-hedgehog/frames/frame-092.png",
+      "/characters/shadow-the-hedgehog/frames/frame-093.png"
+    ],
+    "kickleft": [
+      "/characters/shadow-the-hedgehog/frames/frame-094.png",
+      "/characters/shadow-the-hedgehog/frames/frame-095.png",
+      "/characters/shadow-the-hedgehog/frames/frame-096.png",
+      "/characters/shadow-the-hedgehog/frames/frame-097.png",
+      "/characters/shadow-the-hedgehog/frames/frame-098.png",
+      "/characters/shadow-the-hedgehog/frames/frame-099.png"
+    ],
+    "kickright": [
+      "/characters/shadow-the-hedgehog/frames/frame-100.png",
+      "/characters/shadow-the-hedgehog/frames/frame-101.png",
+      "/characters/shadow-the-hedgehog/frames/frame-102.png",
+      "/characters/shadow-the-hedgehog/frames/frame-103.png",
+      "/characters/shadow-the-hedgehog/frames/frame-104.png",
+      "/characters/shadow-the-hedgehog/frames/frame-105.png",
+      "/characters/shadow-the-hedgehog/frames/frame-106.png",
+      "/characters/shadow-the-hedgehog/frames/frame-107.png"
+    ],
+    "hitLight": [
+      "/characters/shadow-the-hedgehog/frames/frame-111.png"
+    ],
+    "hitHeavy": [
+      "/characters/shadow-the-hedgehog/frames/frame-111.png"
+    ],
+    "juggle": [
+      "/characters/shadow-the-hedgehog/frames/frame-111.png"
+    ],
+    "knockdown": [
+      "/characters/shadow-the-hedgehog/frames/frame-222.png"
+    ],
+    "getupStand": [
+      "/characters/shadow-the-hedgehog/frames/frame-167.png",
+      "/characters/shadow-the-hedgehog/frames/frame-168.png",
+      "/characters/shadow-the-hedgehog/frames/frame-169.png",
+      "/characters/shadow-the-hedgehog/frames/frame-170.png",
+      "/characters/shadow-the-hedgehog/frames/frame-171.png",
+      "/characters/shadow-the-hedgehog/frames/frame-172.png",
+      "/characters/shadow-the-hedgehog/frames/frame-173.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/shadow-the-hedgehog/frames/frame-185.png",
+      "/characters/shadow-the-hedgehog/frames/frame-188.png",
+      "/characters/shadow-the-hedgehog/frames/frame-191.png",
+      "/characters/shadow-the-hedgehog/frames/frame-194.png",
+      "/characters/shadow-the-hedgehog/frames/frame-197.png",
+      "/characters/shadow-the-hedgehog/frames/frame-200.png",
+      "/characters/shadow-the-hedgehog/frames/frame-203.png",
+      "/characters/shadow-the-hedgehog/frames/frame-206.png"
+    ],
+    "lose": [
+      "/characters/shadow-the-hedgehog/frames/frame-210.png",
+      "/characters/shadow-the-hedgehog/frames/frame-211.png",
+      "/characters/shadow-the-hedgehog/frames/frame-212.png",
+      "/characters/shadow-the-hedgehog/frames/frame-213.png",
+      "/characters/shadow-the-hedgehog/frames/frame-214.png",
+      "/characters/shadow-the-hedgehog/frames/frame-215.png",
+      "/characters/shadow-the-hedgehog/frames/frame-216.png"
+    ],
+    "cmd:f+1": [
+      "/characters/shadow-the-hedgehog/frames/frame-217.png",
+      "/characters/shadow-the-hedgehog/frames/frame-218.png",
+      "/characters/shadow-the-hedgehog/frames/frame-219.png",
+      "/characters/shadow-the-hedgehog/frames/frame-220.png",
+      "/characters/shadow-the-hedgehog/frames/frame-221.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/shadow-the-hedgehog/frames/frame-222.png",
+      "/characters/shadow-the-hedgehog/frames/frame-223.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/shadow-the-hedgehog/frames/frame-224.png",
+      "/characters/shadow-the-hedgehog/frames/frame-225.png",
+      "/characters/shadow-the-hedgehog/frames/frame-226.png",
+      "/characters/shadow-the-hedgehog/frames/frame-228.png",
+      "/characters/shadow-the-hedgehog/frames/frame-229.png",
+      "/characters/shadow-the-hedgehog/frames/frame-230.png",
+      "/characters/shadow-the-hedgehog/frames/frame-232.png",
+      "/characters/shadow-the-hedgehog/frames/frame-233.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/shadow-the-hedgehog/frames/frame-235.png",
+      "/characters/shadow-the-hedgehog/frames/frame-236.png",
+      "/characters/shadow-the-hedgehog/frames/frame-237.png",
+      "/characters/shadow-the-hedgehog/frames/frame-238.png",
+      "/characters/shadow-the-hedgehog/frames/frame-239.png",
+      "/characters/shadow-the-hedgehog/frames/frame-240.png",
+      "/characters/shadow-the-hedgehog/frames/frame-241.png",
+      "/characters/shadow-the-hedgehog/frames/frame-242.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/shadow-the-hedgehog/frames/frame-244.png",
+      "/characters/shadow-the-hedgehog/frames/frame-245.png",
+      "/characters/shadow-the-hedgehog/frames/frame-247.png",
+      "/characters/shadow-the-hedgehog/frames/frame-248.png",
+      "/characters/shadow-the-hedgehog/frames/frame-250.png",
+      "/characters/shadow-the-hedgehog/frames/frame-252.png",
+      "/characters/shadow-the-hedgehog/frames/frame-253.png",
+      "/characters/shadow-the-hedgehog/frames/frame-255.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/shadow-the-hedgehog/frames/frame-100.png",
+      "/characters/shadow-the-hedgehog/frames/frame-101.png",
+      "/characters/shadow-the-hedgehog/frames/frame-102.png",
+      "/characters/shadow-the-hedgehog/frames/frame-103.png",
+      "/characters/shadow-the-hedgehog/frames/frame-104.png",
+      "/characters/shadow-the-hedgehog/frames/frame-105.png",
+      "/characters/shadow-the-hedgehog/frames/frame-106.png",
+      "/characters/shadow-the-hedgehog/frames/frame-107.png"
+    ],
+    "cmd:1+2": [
+      "/characters/shadow-the-hedgehog/frames/frame-094.png",
+      "/characters/shadow-the-hedgehog/frames/frame-095.png",
+      "/characters/shadow-the-hedgehog/frames/frame-096.png",
+      "/characters/shadow-the-hedgehog/frames/frame-097.png",
+      "/characters/shadow-the-hedgehog/frames/frame-098.png",
+      "/characters/shadow-the-hedgehog/frames/frame-099.png"
+    ],
+    "cmd:1+3": [
+      "/characters/shadow-the-hedgehog/frames/frame-296.png",
+      "/characters/shadow-the-hedgehog/frames/frame-297.png",
+      "/characters/shadow-the-hedgehog/frames/frame-298.png",
+      "/characters/shadow-the-hedgehog/frames/frame-299.png",
+      "/characters/shadow-the-hedgehog/frames/frame-300.png",
+      "/characters/shadow-the-hedgehog/frames/frame-301.png",
+      "/characters/shadow-the-hedgehog/frames/frame-302.png",
+      "/characters/shadow-the-hedgehog/frames/frame-303.png"
+    ],
+    "cmd:2+3": [
+      "/characters/shadow-the-hedgehog/frames/frame-305.png",
+      "/characters/shadow-the-hedgehog/frames/frame-306.png",
+      "/characters/shadow-the-hedgehog/frames/frame-307.png",
+      "/characters/shadow-the-hedgehog/frames/frame-308.png",
+      "/characters/shadow-the-hedgehog/frames/frame-309.png",
+      "/characters/shadow-the-hedgehog/frames/frame-310.png",
+      "/characters/shadow-the-hedgehog/frames/frame-311.png",
+      "/characters/shadow-the-hedgehog/frames/frame-312.png"
+    ],
+    "cmd:2+4": [
+      "/characters/shadow-the-hedgehog/frames/frame-224.png",
+      "/characters/shadow-the-hedgehog/frames/frame-225.png",
+      "/characters/shadow-the-hedgehog/frames/frame-226.png",
+      "/characters/shadow-the-hedgehog/frames/frame-228.png",
+      "/characters/shadow-the-hedgehog/frames/frame-229.png",
+      "/characters/shadow-the-hedgehog/frames/frame-230.png",
+      "/characters/shadow-the-hedgehog/frames/frame-232.png",
+      "/characters/shadow-the-hedgehog/frames/frame-233.png"
+    ],
+    "cmd:3+4": [
+      "/characters/shadow-the-hedgehog/frames/frame-235.png",
+      "/characters/shadow-the-hedgehog/frames/frame-236.png",
+      "/characters/shadow-the-hedgehog/frames/frame-237.png",
+      "/characters/shadow-the-hedgehog/frames/frame-238.png",
+      "/characters/shadow-the-hedgehog/frames/frame-239.png",
+      "/characters/shadow-the-hedgehog/frames/frame-240.png",
+      "/characters/shadow-the-hedgehog/frames/frame-241.png",
+      "/characters/shadow-the-hedgehog/frames/frame-242.png"
+    ],
+    "cmd:O+2": [
+      "/characters/shadow-the-hedgehog/frames/frame-329.png",
+      "/characters/shadow-the-hedgehog/frames/frame-331.png",
+      "/characters/shadow-the-hedgehog/frames/frame-334.png",
+      "/characters/shadow-the-hedgehog/frames/frame-336.png",
+      "/characters/shadow-the-hedgehog/frames/frame-339.png",
+      "/characters/shadow-the-hedgehog/frames/frame-341.png",
+      "/characters/shadow-the-hedgehog/frames/frame-344.png",
+      "/characters/shadow-the-hedgehog/frames/frame-346.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 98,
+    "speed": 5.26,
+    "sidestepSpeed": 4.64,
+    "jumpForce": 8.26,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Shadow the Hedgehog Left Check",
+      "input": "jab",
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Shadow the Hedgehog Left Kick",
+      "input": "kick",
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Shadow the Hedgehog Right Check",
+      "input": "heavy",
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Shadow the Hedgehog Right Kick",
+      "input": "special",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#32eace",
+    "secondary": "#6ebf32",
+    "accent": "#31e234"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Shadow the Hedgehog Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Shadow the Hedgehog Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Shadow the Hedgehog Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Shadow the Hedgehog Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Shadow the Hedgehog Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 15,
+      "activeFrames": 2,
+      "recoveryFrames": 22,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Shadow the Hedgehog Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 26,
+      "activeFrames": 6,
+      "recoveryFrames": 33,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Shadow the Hedgehog Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Shadow the Hedgehog Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Shadow the Hedgehog Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Shadow the Hedgehog Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Shadow the Hedgehog Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Shadow the Hedgehog Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Shadow the Hedgehog Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 27,
+      "activeFrames": 3,
+      "recoveryFrames": 32,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Shadow the Hedgehog Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Shadow the Hedgehog Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 26,
+      "activeFrames": 6,
+      "recoveryFrames": 33,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Shadow the Hedgehog Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Shadow the Hedgehog Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Shadow the Hedgehog Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Shadow the Hedgehog Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-special": {
+      "label": "Shadow the Hedgehog Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy": {
+      "label": "Shadow the Hedgehog Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Shadow the Hedgehog Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Shadow the Hedgehog Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick": {
+      "label": "Shadow the Hedgehog Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Shadow the Hedgehog Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-special": {
+      "label": "Shadow the Hedgehog Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special": {
+      "label": "Shadow the Hedgehog Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Shadow the Hedgehog Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab": {
+      "label": "Shadow the Hedgehog Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Shadow the Hedgehog Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Shadow the Hedgehog Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick": {
+      "label": "Shadow the Hedgehog Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Shadow the Hedgehog Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special": {
+      "label": "Shadow the Hedgehog Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Shadow the Hedgehog Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab": {
+      "label": "Shadow the Hedgehog Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab-special": {
+      "label": "Shadow the Hedgehog Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy": {
+      "label": "Shadow the Hedgehog Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Shadow the Hedgehog Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special": {
+      "label": "Shadow the Hedgehog Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Shadow the Hedgehog Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab": {
+      "label": "Shadow the Hedgehog Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Shadow the Hedgehog Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-heavy": {
+      "label": "Shadow the Hedgehog Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-kick": {
+      "label": "Shadow the Hedgehog Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.59,
+    "guard": 0.48,
+    "spacing": 1.58,
+    "specialChance": 0.24
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.776,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 0.751,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 0.701,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 0.651,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 0.701,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 0.751,
+        "height": 0.713,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "6": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 0.58,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 0.701,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 0.626,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "11": {
+        "width": 0.776,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 0.676,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 1.052,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.951,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 1.052,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 1.027,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 1.077,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.002,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "19": {
+        "width": 1.077,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "20": {
+        "width": 1.077,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "21": {
+        "width": 1.027,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 0.876,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.826,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "24": {
+        "width": 0.776,
+        "height": 0.674,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "9": {
+        "width": 0.701,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 0.626,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 0.676,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "13": {
+        "width": 1.052,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 1.052,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 1.077,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.002,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "20": {
+        "width": 1.077,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "21": {
+        "width": 1.027,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.826,
+        "height": 0.674,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "25": {
+        "width": 0.676,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 0.576,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "27": {
+        "width": 0.694,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 0.694,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 0.733,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.851,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.674,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.694,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.801,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.776,
+        "height": 0.694,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "39": {
+        "width": 0.776,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.901,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 0.801,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.751,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 0.801,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.776,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "47": {
+        "width": 0.776,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "48": {
+        "width": 0.626,
+        "height": 0.634,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "50": {
+        "width": 0.776,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 0.901,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 0.801,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 0.851,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 0.801,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 0.901,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "56": {
+        "width": 0.701,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 0.676,
+        "height": 0.654,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "59": {
+        "width": 0.701,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 0.851,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 0.851,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "62": {
+        "width": 0.851,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "63": {
+        "width": 0.826,
+        "height": 0.634,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "64": {
+        "width": 0.826,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 0.776,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 0.776,
+        "height": 0.515,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 0.751,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "68": {
+        "width": 0.751,
+        "height": 0.594,
+        "offsetX": 0
+      },
+      "69": {
+        "width": 0.801,
+        "height": 0.555,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "70": {
+        "width": 0.676,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 0.58,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.69,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.73,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.69,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "70": {
+        "width": 0.676,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "384": {
+        "width": 0.56,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "78": {
+        "width": 0.69,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.69,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 0.71,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 0.69,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 0.6,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "300": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0
+      }
+    },
+    "chargeKi": {
+      "83": {
+        "width": 0.676,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "84": {
+        "width": 0.676,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "85": {
+        "width": 0.676,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "86": {
+        "width": 0.676,
+        "height": 0.634,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "87": {
+        "width": 0.676,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "88": {
+        "width": 0.701,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.676,
+        "height": 0.674,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "90": {
+        "width": 0.751,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 0.751,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 0.726,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.751,
+        "height": 0.713,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "94": {
+        "width": 0.701,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 0.751,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.694,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 0.634,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 0.801,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 0.776,
+        "height": 0.674,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "100": {
+        "width": 0.701,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "101": {
+        "width": 0.676,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 0.876,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "103": {
+        "width": 0.851,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 0.626,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 0.751,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 0.614,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 0.674,
+        "height": 0.674,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "108": {
+        "width": 0.54,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.56,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 0.67,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.926,
+        "height": 0.515,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 0.82,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "113": {
+        "width": 0.73,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 0.78,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "117": {
+        "width": 0.58,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "118": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 0.58,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "121": {
+        "width": 0.826,
+        "height": 0.753,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.67,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "123": {
+        "width": 0.71,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "125": {
+        "width": 0.73,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "126": {
+        "width": 0.78,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "111": {
+        "width": 0.926,
+        "height": 0.516,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.626,
+        "height": 0.495,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 0.576,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "134": {
+        "width": 0.626,
+        "height": 0.495,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 0.576,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 0.526,
+        "height": 0.495,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 0.851,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 0.526,
+        "height": 0.495,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 0.576,
+        "height": 0.614,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "154": {
+        "width": 0.56,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "155": {
+        "width": 0.58,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "157": {
+        "width": 0.71,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "158": {
+        "width": 0.67,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "160": {
+        "width": 0.67,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "162": {
+        "width": 0.67,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "163": {
+        "width": 0.67,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "165": {
+        "width": 0.67,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "222": {
+        "width": 0.694,
+        "height": 0.694,
+        "offsetX": 0,
+        "voxelScaleX": 0.65603,
+        "voxelScaleY": 0.34061
+      }
+    },
+    "getupStand": {
+      "167": {
+        "width": 0.576,
+        "height": 0.495,
+        "offsetX": 0
+      },
+      "168": {
+        "width": 0.651,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "169": {
+        "width": 0.651,
+        "height": 0.594,
+        "offsetX": 0
+      },
+      "170": {
+        "width": 0.576,
+        "height": 0.495,
+        "offsetX": 0
+      },
+      "171": {
+        "width": 0.651,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "172": {
+        "width": 0.401,
+        "height": 0.456,
+        "offsetX": 0
+      },
+      "173": {
+        "width": 0.576,
+        "height": 0.495,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "174": {
+        "width": 0.69,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "175": {
+        "width": 0.69,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "176": {
+        "width": 0.67,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "178": {
+        "width": 0.69,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "179": {
+        "width": 0.69,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "180": {
+        "width": 0.69,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "182": {
+        "width": 0.71,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "183": {
+        "width": 0.71,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "185": {
+        "width": 0.326,
+        "height": 0.159,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 0.501,
+        "height": 0.357,
+        "offsetX": 0
+      },
+      "191": {
+        "width": 0.275,
+        "height": 0.159,
+        "offsetX": 0
+      },
+      "194": {
+        "width": 0.551,
+        "height": 0.258,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 0.501,
+        "height": 0.357,
+        "offsetX": 0
+      },
+      "200": {
+        "width": 0.275,
+        "height": 0.159,
+        "offsetX": 0
+      },
+      "203": {
+        "width": 0.376,
+        "height": 0.337,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 0.326,
+        "height": 0.139,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "210": {
+        "width": 0.876,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 0.701,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 0.876,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "213": {
+        "width": 0.751,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "214": {
+        "width": 0.776,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "215": {
+        "width": 0.751,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "216": {
+        "width": 0.726,
+        "height": 0.694,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+1": {
+      "217": {
+        "width": 0.801,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "218": {
+        "width": 0.776,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "219": {
+        "width": 0.726,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "220": {
+        "width": 0.726,
+        "height": 0.594,
+        "offsetX": 0
+      },
+      "221": {
+        "width": 0.751,
+        "height": 0.614,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "222": {
+        "width": 0.416,
+        "height": 0.416,
+        "offsetX": 0
+      },
+      "223": {
+        "width": 0.317,
+        "height": 0.317,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "224": {
+        "width": 0.776,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "225": {
+        "width": 0.651,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "226": {
+        "width": 0.651,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "228": {
+        "width": 0.676,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "229": {
+        "width": 0.694,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "230": {
+        "width": 0.694,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "232": {
+        "width": 0.901,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "233": {
+        "width": 0.851,
+        "height": 0.733,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "235": {
+        "width": 0.801,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "236": {
+        "width": 0.876,
+        "height": 0.753,
+        "offsetX": 0
+      },
+      "237": {
+        "width": 0.733,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "238": {
+        "width": 0.701,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "239": {
+        "width": 0.701,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "240": {
+        "width": 0.726,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "241": {
+        "width": 0.701,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "242": {
+        "width": 0.701,
+        "height": 0.694,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "244": {
+        "width": 0.555,
+        "height": 0.555,
+        "offsetX": 0
+      },
+      "245": {
+        "width": 0.674,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "247": {
+        "width": 0.426,
+        "height": 0.515,
+        "offsetX": 0
+      },
+      "248": {
+        "width": 0.451,
+        "height": 0.515,
+        "offsetX": 0
+      },
+      "250": {
+        "width": 1.202,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "252": {
+        "width": 1.202,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "253": {
+        "width": 1.202,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "255": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "257": {
+        "width": 0.676,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "260": {
+        "width": 0.651,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "263": {
+        "width": 0.726,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "266": {
+        "width": 0.701,
+        "height": 0.753,
+        "offsetX": 0
+      },
+      "269": {
+        "width": 0.651,
+        "height": 0.733,
+        "offsetX": 0
+      },
+      "272": {
+        "width": 0.651,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "275": {
+        "width": 0.751,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "278": {
+        "width": 0.776,
+        "height": 0.694,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "281": {
+        "width": 0.676,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "282": {
+        "width": 0.626,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "284": {
+        "width": 0.651,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "286": {
+        "width": 0.751,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "288": {
+        "width": 0.426,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "290": {
+        "width": 0.826,
+        "height": 0.713,
+        "offsetX": 0
+      },
+      "292": {
+        "width": 0.776,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "294": {
+        "width": 0.701,
+        "height": 0.634,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "296": {
+        "width": 0.751,
+        "height": 0.773,
+        "offsetX": 0
+      },
+      "297": {
+        "width": 0.25,
+        "height": 0.238,
+        "offsetX": 0
+      },
+      "298": {
+        "width": 1.03,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "299": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "300": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "301": {
+        "width": 0.991,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "302": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "303": {
+        "width": 1.302,
+        "height": 1.07,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "305": {
+        "width": 1.011,
+        "height": 1.011,
+        "offsetX": 0
+      },
+      "306": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "307": {
+        "width": 0.971,
+        "height": 0.971,
+        "offsetX": 0
+      },
+      "308": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "309": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "310": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0
+      },
+      "311": {
+        "width": 0.601,
+        "height": 1.07,
+        "offsetX": 0
+      },
+      "312": {
+        "width": 0.275,
+        "height": 0.852,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "313": {
+        "width": 0.726,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "314": {
+        "width": 0.676,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "315": {
+        "width": 0.601,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "316": {
+        "width": 0.801,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "317": {
+        "width": 0.654,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "318": {
+        "width": 0.726,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "319": {
+        "width": 0.726,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "320": {
+        "width": 0.776,
+        "height": 0.674,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "322": {
+        "width": 0.676,
+        "height": 0.674,
+        "offsetX": 0
+      },
+      "323": {
+        "width": 0.651,
+        "height": 0.634,
+        "offsetX": 0
+      },
+      "324": {
+        "width": 0.693,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "325": {
+        "width": 0.726,
+        "height": 0.654,
+        "offsetX": 0
+      },
+      "326": {
+        "width": 0.701,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "327": {
+        "width": 0.701,
+        "height": 0.694,
+        "offsetX": 0
+      },
+      "328": {
+        "width": 0.726,
+        "height": 0.674,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "329": {
+        "width": 0.225,
+        "height": 0.297,
+        "offsetX": 0
+      },
+      "331": {
+        "width": 0.275,
+        "height": 0.218,
+        "offsetX": 0
+      },
+      "334": {
+        "width": 0.275,
+        "height": 0.218,
+        "offsetX": 0
+      },
+      "336": {
+        "width": 0.776,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "339": {
+        "width": 0.726,
+        "height": 0.575,
+        "offsetX": 0
+      },
+      "341": {
+        "width": 0.676,
+        "height": 0.535,
+        "offsetX": 0
+      },
+      "344": {
+        "width": 0.2,
+        "height": 0.416,
+        "offsetX": 0
+      },
+      "346": {
+        "width": 0.726,
+        "height": 0.575,
+        "offsetX": 0
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.39,
+    "height": 1.39
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

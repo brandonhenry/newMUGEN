@@ -7,6 +7,7 @@ export const stages: StageDefinition[] = [
     subtitle: 'Infinite white simulation room',
     renderMode: 'procedural',
     visualStylePreset: 'training-clean',
+    tournamentEligible: true,
     music: {
       path: 'sounds/0012 SEQ_BGMB_STG_01.mp3',
       trackIndex: 0,
@@ -30,6 +31,7 @@ export const stages: StageDefinition[] = [
     subtitle: 'Infinite green simulation room',
     renderMode: 'procedural',
     visualStylePreset: 'training-clean',
+    tournamentEligible: true,
     music: {
       path: 'sounds/0013 SEQ_BGMB_STG_02.mp3',
       trackIndex: 1,

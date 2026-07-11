@@ -1,5 +1,5 @@
 import type { ArcadeRunState, MiniGameResult } from '../types';
-import type { OnlinePlayerProfile } from './online/leaderboard';
+import { LEGACY_SCORE_CHARACTER_ID, sanitizeCharacterId, sanitizeDisplayName, sanitizePlayerId, type OnlinePlayerProfile } from './online/leaderboard';
 
 export const ARCADE_RUN_HIGH_SCORE_STORAGE_KEY = 'kore.arcadeRunHighScores.v1';
 export const ARCADE_RUN_STARTING_LIVES = 3;
@@ -8,6 +8,7 @@ export const ARCADE_LEVEL_SCORE_STEP = 2500;
 export type ArcadeRunHighScoreEntry = {
   playerId: string;
   displayName: string;
+  characterId: string;
   score: number;
   updatedAt: number;
 };
@@ -82,21 +83,23 @@ export function awardArcadePoints(run: ArcadeRunState, points: number, patch: Pa
   };
 }
 
-export function readLocalArcadeRunHighScore(profile?: OnlinePlayerProfile | null) {
+export function readLocalArcadeRunHighScore(profile?: OnlinePlayerProfile | null, characterId?: string) {
   if (typeof window === 'undefined') return 0;
-  return readLocalArcadeRunEntries().find((entry) => entry.playerId === profile?.playerId)?.score
-    ?? readLocalArcadeRunEntries()[0]?.score
+  const key = scoreKey(profile?.playerId || 'local-player', normalizeCharacterId(characterId));
+  return readLocalArcadeRunEntries().find((entry) => scoreKey(entry.playerId, entry.characterId) === key)?.score
     ?? 0;
 }
 
-export function writeLocalArcadeRunHighScore(profile: OnlinePlayerProfile | null | undefined, score: number) {
+export function writeLocalArcadeRunHighScore(profile: OnlinePlayerProfile | null | undefined, characterId: string | undefined, score: number) {
   if (typeof window === 'undefined') return 0;
   const playerId = profile?.playerId || 'local-player';
-  const displayName = profile?.displayName || 'PLAYER';
-  const byId = new Map(readLocalArcadeRunEntries().map((entry) => [entry.playerId, entry]));
-  const current = byId.get(playerId);
+  const displayName = sanitizeDisplayName(profile?.displayName) || 'PLAYER';
+  const safeCharacterId = normalizeCharacterId(characterId);
+  const key = scoreKey(playerId, safeCharacterId);
+  const byId = new Map(readLocalArcadeRunEntries().map((entry) => [scoreKey(entry.playerId, entry.characterId), entry]));
+  const current = byId.get(key);
   const nextScore = Math.max(Math.round(score), current?.score ?? 0, 0);
-  byId.set(playerId, { playerId, displayName, score: nextScore, updatedAt: Date.now() });
+  byId.set(key, { playerId, displayName, characterId: safeCharacterId, score: nextScore, updatedAt: Date.now() });
   const entries = sortArcadeRunEntries([...byId.values()]).slice(0, 100);
   window.localStorage.setItem(ARCADE_RUN_HIGH_SCORE_STORAGE_KEY, JSON.stringify(entries));
   return nextScore;
@@ -109,11 +112,13 @@ export async function fetchArcadeRunLeaderboard(): Promise<ArcadeRunLeaderboardR
   });
 }
 
-export async function submitArcadeRunScore(profile: OnlinePlayerProfile | null | undefined, score: number): Promise<ArcadeRunLeaderboardResult> {
+export async function submitArcadeRunScore(profile: OnlinePlayerProfile | null | undefined, characterId: string | undefined, score: number): Promise<ArcadeRunLeaderboardResult> {
   const safeProfile = profile ?? { playerId: 'local-player', displayName: 'PLAYER' };
-  writeLocalArcadeRunHighScore(safeProfile, score);
+  const safeCharacterId = normalizeCharacterId(characterId);
+  writeLocalArcadeRunHighScore(safeProfile, safeCharacterId, score);
   return postJson<ArcadeRunLeaderboardResult>('/.netlify/functions/arcade-leaderboard-submit', {
     profile: safeProfile,
+    characterId: safeCharacterId,
     score: Math.max(0, Math.round(score))
   }).catch((error) => {
     if (isLocalFallbackAllowed()) return { entries: readLocalArcadeRunEntries() };
@@ -132,15 +137,16 @@ function readLocalArcadeRunEntries(): ArcadeRunHighScoreEntry[] {
 }
 
 function normalizeArcadeRunEntry(entry: Partial<ArcadeRunHighScoreEntry>): ArcadeRunHighScoreEntry | null {
-  const playerId = typeof entry.playerId === 'string' ? entry.playerId.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 96) : '';
-  const displayName = typeof entry.displayName === 'string' ? entry.displayName.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 12) : '';
+  const playerId = sanitizePlayerId(entry.playerId);
+  const displayName = sanitizeDisplayName(entry.displayName);
+  const characterId = normalizeCharacterId(entry.characterId);
   const score = Math.max(0, Math.round(Number(entry.score) || 0));
   if (!playerId || !displayName || score <= 0) return null;
-  return { playerId, displayName, score, updatedAt: Math.max(0, Math.round(Number(entry.updatedAt) || 0)) };
+  return { playerId, displayName, characterId, score, updatedAt: Math.max(0, Math.round(Number(entry.updatedAt) || 0)) };
 }
 
 function sortArcadeRunEntries(entries: ArcadeRunHighScoreEntry[]) {
-  return [...entries].sort((a, b) => b.score - a.score || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName));
+  return [...entries].sort((a, b) => b.score - a.score || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName) || a.characterId.localeCompare(b.characterId));
 }
 
 async function getJson<T>(url: string): Promise<T> {
@@ -161,4 +167,12 @@ async function postJson<T>(url: string, body: unknown): Promise<T> {
 
 function isLocalFallbackAllowed() {
   return typeof window !== 'undefined' && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+}
+
+function normalizeCharacterId(value: unknown) {
+  return sanitizeCharacterId(value) || LEGACY_SCORE_CHARACTER_ID;
+}
+
+function scoreKey(playerId: string, characterId: string) {
+  return `${sanitizePlayerId(playerId) || 'local-player'}:${normalizeCharacterId(characterId)}`;
 }

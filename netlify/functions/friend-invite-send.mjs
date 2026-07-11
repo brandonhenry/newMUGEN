@@ -15,6 +15,7 @@ export async function handler(event) {
       roomId: cleanToken(body.roomId),
       roomName: cleanRoomName(body.roomName),
       password: cleanPassword(body.password),
+      roomKind: body.roomKind === 'custom' ? 'custom' : 'private',
       status: 'pending',
       createdAt: Date.now()
     });

@@ -21,6 +21,13 @@ export type RollbackSavedState = {
   match: MatchSnapshot;
 };
 
+export type RollbackConfirmedInputBatch = {
+  startFrame: number;
+  p1Masks: number[];
+  p2Masks: number[];
+  latestConfirmedFrame: number;
+};
+
 export type RollbackNetworkStats = {
   currentFrame: number;
   localFrame: number;
@@ -259,6 +266,29 @@ export function createRollbackSession(options: RollbackSessionOptions) {
     };
   };
 
+  const getConfirmedFrame = () => Math.min(stats.localFrame, getHighestActualRemoteFrame());
+
+  const getSavedState = (frame: number): RollbackSavedState | null => {
+    const saved = savedStates.get(frame);
+    return saved ? { ...saved, match: options.cloneMatch(saved.match) } : null;
+  };
+
+  const makeConfirmedInputBatch = (startFrame: number, maxFrames = 6): RollbackConfirmedInputBatch => {
+    const latestConfirmedFrame = getConfirmedFrame();
+    const safeStart = Math.max(0, Math.round(startFrame));
+    const endFrame = Math.min(latestConfirmedFrame, safeStart + Math.max(1, Math.round(maxFrames)) - 1);
+    const p1Masks: number[] = [];
+    const p2Masks: number[] = [];
+    for (let frame = safeStart; frame <= endFrame; frame += 1) {
+      const p1 = inputHistory[0].get(frame);
+      const p2 = inputHistory[1].get(frame);
+      if (p1 === undefined || p2 === undefined) break;
+      p1Masks.push(p1);
+      p2Masks.push(p2);
+    }
+    return { startFrame: safeStart, p1Masks, p2Masks, latestConfirmedFrame };
+  };
+
   const loadGameState = (frame: number) => {
     const saved = savedStates.get(frame);
     if (!saved) return false;
@@ -398,6 +428,9 @@ export function createRollbackSession(options: RollbackSessionOptions) {
     getNetworkStats,
     receiveRemoteInputBatch,
     makeInputBatch,
+    makeConfirmedInputBatch,
+    getConfirmedFrame,
+    getSavedState,
     reset,
     getMatch,
     getStats,

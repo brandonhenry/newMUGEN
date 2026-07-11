@@ -1,0 +1,3635 @@
+{
+  "id": "beetlemon",
+  "displayName": "Beetlemon",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/beetlemon/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://beetlemon",
+  "spriteSheetPath": "/characters/beetlemon/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "generated",
+      "name": "Generated Frame Atlas",
+      "path": "/characters/beetlemon/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 384
+    }
+  ],
+  "spriteFrameCount": 384,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/beetlemon/frames/frame-000.png",
+      "/characters/beetlemon/frames/frame-001.png"
+    ],
+    "walkForward": [
+      "/characters/beetlemon/frames/frame-003.png"
+    ],
+    "walkBack": [
+      "/characters/beetlemon/frames/frame-019.png",
+      "/characters/beetlemon/frames/frame-018.png",
+      "/characters/beetlemon/frames/frame-017.png",
+      "/characters/beetlemon/frames/frame-016.png",
+      "/characters/beetlemon/frames/frame-015.png",
+      "/characters/beetlemon/frames/frame-014.png",
+      "/characters/beetlemon/frames/frame-013.png",
+      "/characters/beetlemon/frames/frame-012.png"
+    ],
+    "sprint": [
+      "/characters/beetlemon/frames/frame-035.png",
+      "/characters/beetlemon/frames/frame-036.png",
+      "/characters/beetlemon/frames/frame-037.png",
+      "/characters/beetlemon/frames/frame-038.png",
+      "/characters/beetlemon/frames/frame-039.png",
+      "/characters/beetlemon/frames/frame-040.png",
+      "/characters/beetlemon/frames/frame-041.png"
+    ],
+    "backHop": [
+      "/characters/beetlemon/frames/frame-091.png"
+    ],
+    "sidestepLeft": [
+      "/characters/beetlemon/frames/frame-014.png"
+    ],
+    "sidestepRight": [
+      "/characters/beetlemon/frames/frame-014.png"
+    ],
+    "jump": [
+      "/characters/beetlemon/frames/frame-014.png"
+    ],
+    "crouch": [
+      "/characters/beetlemon/frames/frame-074.png"
+    ],
+    "crouchBlock": [
+      "/characters/beetlemon/frames/frame-331.png"
+    ],
+    "block": [
+      "/characters/beetlemon/frames/frame-022.png"
+    ],
+    "chargeKi": [
+      "/characters/beetlemon/frames/frame-157.png",
+      "/characters/beetlemon/frames/frame-158.png",
+      "/characters/beetlemon/frames/frame-159.png",
+      "/characters/beetlemon/frames/frame-160.png",
+      "/characters/beetlemon/frames/frame-161.png",
+      "/characters/beetlemon/frames/frame-162.png",
+      "/characters/beetlemon/frames/frame-163.png"
+    ],
+    "jableft": [
+      "/characters/beetlemon/frames/frame-026.png",
+      "/characters/beetlemon/frames/frame-027.png",
+      "/characters/beetlemon/frames/frame-028.png",
+      "/characters/beetlemon/frames/frame-029.png"
+    ],
+    "jabright": [
+      "/characters/beetlemon/frames/frame-066.png",
+      "/characters/beetlemon/frames/frame-067.png",
+      "/characters/beetlemon/frames/frame-068.png",
+      "/characters/beetlemon/frames/frame-069.png",
+      "/characters/beetlemon/frames/frame-070.png",
+      "/characters/beetlemon/frames/frame-071.png",
+      "/characters/beetlemon/frames/frame-072.png",
+      "/characters/beetlemon/frames/frame-073.png",
+      "/characters/beetlemon/frames/frame-074.png",
+      "/characters/beetlemon/frames/frame-075.png",
+      "/characters/beetlemon/frames/frame-076.png",
+      "/characters/beetlemon/frames/frame-077.png"
+    ],
+    "kickleft": [
+      "/characters/beetlemon/frames/frame-086.png",
+      "/characters/beetlemon/frames/frame-087.png",
+      "/characters/beetlemon/frames/frame-088.png",
+      "/characters/beetlemon/frames/frame-089.png",
+      "/characters/beetlemon/frames/frame-090.png",
+      "/characters/beetlemon/frames/frame-091.png"
+    ],
+    "kickright": [
+      "/characters/beetlemon/frames/frame-108.png",
+      "/characters/beetlemon/frames/frame-109.png",
+      "/characters/beetlemon/frames/frame-110.png",
+      "/characters/beetlemon/frames/frame-111.png",
+      "/characters/beetlemon/frames/frame-112.png",
+      "/characters/beetlemon/frames/frame-113.png",
+      "/characters/beetlemon/frames/frame-114.png",
+      "/characters/beetlemon/frames/frame-115.png",
+      "/characters/beetlemon/frames/frame-116.png"
+    ],
+    "hitLight": [
+      "/characters/beetlemon/frames/frame-143.png"
+    ],
+    "hitHeavy": [
+      "/characters/beetlemon/frames/frame-158.png"
+    ],
+    "juggle": [
+      "/characters/beetlemon/frames/frame-134.png"
+    ],
+    "knockdown": [
+      "/characters/beetlemon/frames/frame-138.png"
+    ],
+    "getupStand": [
+      "/characters/beetlemon/frames/frame-137.png",
+      "/characters/beetlemon/frames/frame-138.png",
+      "/characters/beetlemon/frames/frame-139.png",
+      "/characters/beetlemon/frames/frame-140.png",
+      "/characters/beetlemon/frames/frame-141.png",
+      "/characters/beetlemon/frames/frame-142.png",
+      "/characters/beetlemon/frames/frame-143.png",
+      "/characters/beetlemon/frames/frame-144.png",
+      "/characters/beetlemon/frames/frame-145.png",
+      "/characters/beetlemon/frames/frame-146.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/beetlemon/frames/frame-235.png",
+      "/characters/beetlemon/frames/frame-236.png",
+      "/characters/beetlemon/frames/frame-237.png",
+      "/characters/beetlemon/frames/frame-239.png",
+      "/characters/beetlemon/frames/frame-240.png",
+      "/characters/beetlemon/frames/frame-241.png",
+      "/characters/beetlemon/frames/frame-243.png",
+      "/characters/beetlemon/frames/frame-244.png"
+    ],
+    "lose": [
+      "/characters/beetlemon/frames/frame-138.png"
+    ],
+    "cmd:f+1": [
+      "/characters/beetlemon/frames/frame-026.png",
+      "/characters/beetlemon/frames/frame-027.png",
+      "/characters/beetlemon/frames/frame-028.png",
+      "/characters/beetlemon/frames/frame-029.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/beetlemon/frames/frame-095.png",
+      "/characters/beetlemon/frames/frame-096.png",
+      "/characters/beetlemon/frames/frame-097.png",
+      "/characters/beetlemon/frames/frame-098.png",
+      "/characters/beetlemon/frames/frame-099.png",
+      "/characters/beetlemon/frames/frame-100.png",
+      "/characters/beetlemon/frames/frame-101.png",
+      "/characters/beetlemon/frames/frame-102.png",
+      "/characters/beetlemon/frames/frame-103.png",
+      "/characters/beetlemon/frames/frame-104.png",
+      "/characters/beetlemon/frames/frame-105.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/beetlemon/frames/frame-095.png",
+      "/characters/beetlemon/frames/frame-096.png",
+      "/characters/beetlemon/frames/frame-097.png",
+      "/characters/beetlemon/frames/frame-098.png",
+      "/characters/beetlemon/frames/frame-099.png",
+      "/characters/beetlemon/frames/frame-100.png",
+      "/characters/beetlemon/frames/frame-101.png",
+      "/characters/beetlemon/frames/frame-102.png",
+      "/characters/beetlemon/frames/frame-103.png",
+      "/characters/beetlemon/frames/frame-104.png",
+      "/characters/beetlemon/frames/frame-105.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/beetlemon/frames/frame-304.png",
+      "/characters/beetlemon/frames/frame-306.png",
+      "/characters/beetlemon/frames/frame-309.png",
+      "/characters/beetlemon/frames/frame-312.png",
+      "/characters/beetlemon/frames/frame-315.png",
+      "/characters/beetlemon/frames/frame-317.png",
+      "/characters/beetlemon/frames/frame-320.png",
+      "/characters/beetlemon/frames/frame-323.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/beetlemon/frames/frame-326.png",
+      "/characters/beetlemon/frames/frame-327.png",
+      "/characters/beetlemon/frames/frame-328.png",
+      "/characters/beetlemon/frames/frame-329.png",
+      "/characters/beetlemon/frames/frame-330.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/beetlemon/frames/frame-066.png",
+      "/characters/beetlemon/frames/frame-067.png",
+      "/characters/beetlemon/frames/frame-068.png",
+      "/characters/beetlemon/frames/frame-069.png",
+      "/characters/beetlemon/frames/frame-070.png",
+      "/characters/beetlemon/frames/frame-071.png",
+      "/characters/beetlemon/frames/frame-072.png",
+      "/characters/beetlemon/frames/frame-073.png",
+      "/characters/beetlemon/frames/frame-074.png",
+      "/characters/beetlemon/frames/frame-075.png",
+      "/characters/beetlemon/frames/frame-076.png",
+      "/characters/beetlemon/frames/frame-077.png",
+      "/characters/beetlemon/frames/frame-078.png"
+    ],
+    "cmd:1+2": [
+      "/characters/beetlemon/frames/frame-026.png",
+      "/characters/beetlemon/frames/frame-027.png",
+      "/characters/beetlemon/frames/frame-028.png",
+      "/characters/beetlemon/frames/frame-029.png"
+    ],
+    "cmd:1+3": [
+      "/characters/beetlemon/frames/frame-066.png",
+      "/characters/beetlemon/frames/frame-067.png",
+      "/characters/beetlemon/frames/frame-068.png",
+      "/characters/beetlemon/frames/frame-069.png",
+      "/characters/beetlemon/frames/frame-070.png",
+      "/characters/beetlemon/frames/frame-071.png",
+      "/characters/beetlemon/frames/frame-072.png",
+      "/characters/beetlemon/frames/frame-073.png",
+      "/characters/beetlemon/frames/frame-074.png",
+      "/characters/beetlemon/frames/frame-075.png",
+      "/characters/beetlemon/frames/frame-076.png",
+      "/characters/beetlemon/frames/frame-077.png",
+      "/characters/beetlemon/frames/frame-078.png"
+    ],
+    "cmd:2+3": [
+      "/characters/beetlemon/frames/frame-026.png",
+      "/characters/beetlemon/frames/frame-027.png",
+      "/characters/beetlemon/frames/frame-028.png",
+      "/characters/beetlemon/frames/frame-029.png"
+    ],
+    "cmd:2+4": [
+      "/characters/beetlemon/frames/frame-023.png",
+      "/characters/beetlemon/frames/frame-024.png",
+      "/characters/beetlemon/frames/frame-026.png",
+      "/characters/beetlemon/frames/frame-027.png",
+      "/characters/beetlemon/frames/frame-029.png",
+      "/characters/beetlemon/frames/frame-030.png",
+      "/characters/beetlemon/frames/frame-032.png",
+      "/characters/beetlemon/frames/frame-033.png"
+    ],
+    "cmd:3+4": [
+      "/characters/beetlemon/frames/frame-035.png",
+      "/characters/beetlemon/frames/frame-036.png",
+      "/characters/beetlemon/frames/frame-037.png",
+      "/characters/beetlemon/frames/frame-038.png",
+      "/characters/beetlemon/frames/frame-039.png",
+      "/characters/beetlemon/frames/frame-040.png",
+      "/characters/beetlemon/frames/frame-041.png",
+      "/characters/beetlemon/frames/frame-042.png"
+    ],
+    "cmd:O+2": [
+      "/characters/beetlemon/frames/frame-035.png",
+      "/characters/beetlemon/frames/frame-036.png",
+      "/characters/beetlemon/frames/frame-037.png",
+      "/characters/beetlemon/frames/frame-038.png",
+      "/characters/beetlemon/frames/frame-039.png",
+      "/characters/beetlemon/frames/frame-040.png",
+      "/characters/beetlemon/frames/frame-041.png",
+      "/characters/beetlemon/frames/frame-042.png"
+    ],
+    "cmd:b+1": [
+      "/characters/beetlemon/frames/frame-095.png",
+      "/characters/beetlemon/frames/frame-096.png",
+      "/characters/beetlemon/frames/frame-097.png",
+      "/characters/beetlemon/frames/frame-098.png",
+      "/characters/beetlemon/frames/frame-099.png",
+      "/characters/beetlemon/frames/frame-100.png",
+      "/characters/beetlemon/frames/frame-101.png",
+      "/characters/beetlemon/frames/frame-102.png",
+      "/characters/beetlemon/frames/frame-103.png",
+      "/characters/beetlemon/frames/frame-104.png",
+      "/characters/beetlemon/frames/frame-105.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8,
+    "cmd:b+1": 10
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 103,
+    "speed": 5.26,
+    "sidestepSpeed": 4.64,
+    "jumpForce": 7.83,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Beetlemon Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Beetlemon Left Kick",
+      "input": "kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Beetlemon Right Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Beetlemon Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#d238d8",
+    "secondary": "#cc34c1",
+    "accent": "#c0d138"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 11,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Beetlemon Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Beetlemon Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Beetlemon Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Beetlemon Right Kick",
+      "hitLevel": "throw",
+      "throwCapture": true
+    },
+    "cmd:f+1": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Beetlemon Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Beetlemon Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Beetlemon Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Beetlemon Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Beetlemon Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Beetlemon Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Beetlemon Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Beetlemon Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Beetlemon Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Beetlemon Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Beetlemon Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Beetlemon Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Beetlemon Second Beat"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Beetlemon Body Blow"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Beetlemon Low Changeup"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Beetlemon Pressure Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Beetlemon Drive"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Beetlemon Barrage"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Beetlemon Finisher"
+    },
+    "neutral:jab-kick": {
+      "label": "Beetlemon Step Kick"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Beetlemon Palm String"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Beetlemon Rising Chain"
+    },
+    "neutral:jab-special": {
+      "label": "Beetlemon Special Setup"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Beetlemon Break Art"
+    },
+    "neutral:heavy-jab": {
+      "label": "Beetlemon Check Hook"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Beetlemon Heavy Break"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Beetlemon Charged Follow"
+    },
+    "neutral:heavy-kick": {
+      "label": "Beetlemon Drop Kick"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Beetlemon Arc Finisher"
+    },
+    "neutral:heavy-special": {
+      "label": "Beetlemon Focus Stance"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Beetlemon Mode Shift"
+    },
+    "neutral:kick-jab": {
+      "label": "Beetlemon Heel Feint"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Beetlemon Summon Strike"
+    },
+    "neutral:kick-heavy": {
+      "label": "Beetlemon Guard Snare"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Beetlemon Armor Break"
+    },
+    "neutral:kick-special": {
+      "label": "Beetlemon Power Setup"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Beetlemon Switch Strike"
+    },
+    "neutral:special-jab": {
+      "label": "Beetlemon Spark Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Beetlemon Binding Blow"
+    },
+    "neutral:special-heavy": {
+      "label": "Beetlemon Heavy Draw"
+    },
+    "neutral:special-kick": {
+      "label": "Beetlemon Kick Ender"
+    },
+    "cmd:b+1": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Beetlemon Back Rush",
+      "description": "Reverse rush sequence using unused close-range Beetlemon frames.",
+      "hitLevel": "mid"
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.65,
+    "guard": 0.48,
+    "spacing": 1.36,
+    "specialChance": 0.19
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.83,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 0.85,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 0.83,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 0.88,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 1.44,
+        "height": 2.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "5": {
+        "width": 0.84,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 1.7,
+        "height": 2.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "332": {
+        "width": 0.85,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "333": {
+        "width": 0.78,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "334": {
+        "width": 0.88,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "335": {
+        "width": 0.85,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "336": {
+        "width": 0.78,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "337": {
+        "width": 0.83,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "338": {
+        "width": 0.8,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "339": {
+        "width": 0.8,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "340": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "341": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "342": {
+        "width": 0.9,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "343": {
+        "width": 0.85,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "344": {
+        "width": 0.9,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "345": {
+        "width": 0.9,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "346": {
+        "width": 0.85,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "347": {
+        "width": 0.85,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "348": {
+        "width": 0.83,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "349": {
+        "width": 0.75,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "350": {
+        "width": 0.85,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "351": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "352": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "353": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkForward": {
+      "3": {
+        "width": 0.92,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkBack": {
+      "9": {
+        "width": 0.85,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 0.78,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "11": {
+        "width": 0.8,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "12": {
+        "width": 0.69,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.73,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 0.92,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 0.92,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 0.85,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 0.73,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 0.76,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 0.83,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sprint": {
+      "21": {
+        "width": 0.85,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 0.78,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "37": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "backHop": {
+      "23": {
+        "width": 0.73,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "24": {
+        "width": 0.66,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.88,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.7,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "29": {
+        "width": 0.61,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.97,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 0.75,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 0.94,
+        "height": 0.82,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepLeft": {
+      "14": {
+        "width": 0.92,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "37": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "42": {
+        "width": 0.85,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepRight": {
+      "14": {
+        "width": 0.92,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "44": {
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 0.73,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 0.75,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 0.83,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 0.83,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "49": {
+        "width": 0.95,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "50": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jump": {
+      "14": {
+        "width": 0.92,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 0.88,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 0.75,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "54": {
+        "width": 0.66,
+        "height": 1.11,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 0.66,
+        "height": 1.11,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 0.68,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "60": {
+        "width": 0.75,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 0.83,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "64": {
+        "width": 0.7,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouch": {
+      "66": {
+        "width": 0.73,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "67": {
+        "width": 0.7,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.92,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 0.92,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 1,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.76,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "76": {
+        "width": 0.8,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.75,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "331": {
+        "width": 0.67,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "22": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 1,
+        "height": 0.79,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.95,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "88": {
+        "width": 1.02,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 1.05,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 1,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 1,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "92": {
+        "width": 0.58,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "93": {
+        "width": 0.88,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.8,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 0.88,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 0.8,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 0.83,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "102": {
+        "width": 0.85,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.75,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.88,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "157": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "158": {
+        "width": 0.69,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "159": {
+        "width": 0.69,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "160": {
+        "width": 0.71,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "161": {
+        "width": 0.69,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "162": {
+        "width": 0.69,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "163": {
+        "width": 0.69,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jableft": {
+      "26": {
+        "width": 0.83,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.67,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "28": {
+        "width": 0.87,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "29": {
+        "width": 0.6,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 0.63,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 0.75,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.75,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.8,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.68,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "118": {
+        "width": 0.8,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jabright": {
+      "66": {
+        "width": 0.69,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "67": {
+        "width": 0.69,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.64,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.87,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.69,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "71": {
+        "width": 0.87,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.56,
+        "height": 0.56,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.76,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.76,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "76": {
+        "width": 0.76,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "77": {
+        "width": 0.78,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.71,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "125": {
+        "width": 0.75,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "126": {
+        "width": 1,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "127": {
+        "width": 0.63,
+        "height": 2.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "130": {
+        "width": 1.56,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "354": {
+        "width": 0.83,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "355": {
+        "width": 0.83,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "356": {
+        "width": 0.83,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "357": {
+        "width": 1.05,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "358": {
+        "width": 1.07,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "359": {
+        "width": 0.56,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "360": {
+        "width": 0.85,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "361": {
+        "width": 0.75,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "362": {
+        "width": 0.63,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "363": {
+        "width": 1,
+        "height": 0.79,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "364": {
+        "width": 1.05,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "365": {
+        "width": 0.9,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "366": {
+        "width": 0.97,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "367": {
+        "width": 0.85,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "368": {
+        "width": 1,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "369": {
+        "width": 0.97,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "370": {
+        "width": 1,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "371": {
+        "width": 1.05,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "372": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "373": {
+        "width": 0.9,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "374": {
+        "width": 0.95,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "375": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "376": {
+        "width": 0.95,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "377": {
+        "width": 0.92,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "378": {
+        "width": 0.88,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "379": {
+        "width": 0.7,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickleft": {
+      "41": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "44": {
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 0.69,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "131": {
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "132": {
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "133": {
+        "width": 0.56,
+        "height": 0.56,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "134": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "135": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickright": {
+      "41": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "44": {
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 0.69,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "136": {
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "137": {
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "139": {
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "141": {
+        "width": 0.56,
+        "height": 0.56,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "143": {
+        "width": 0.8,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "144": {
+        "width": 0.85,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "146": {
+        "width": 0.8,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "148": {
+        "width": 0.32,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitLight": {
+      "143": {
+        "width": 0.76,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "150": {
+        "width": 0.88,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "151": {
+        "width": 0.9,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "152": {
+        "width": 0.9,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "153": {
+        "width": 0.9,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "154": {
+        "width": 0.9,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "155": {
+        "width": 0.34,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "156": {
+        "width": 0.88,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "157": {
+        "width": 0.73,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "158": {
+        "width": 0.69,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "159": {
+        "width": 0.73,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "160": {
+        "width": 0.75,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "161": {
+        "width": 0.73,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "162": {
+        "width": 0.73,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "163": {
+        "width": 0.73,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "134": {
+        "width": 0.96,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "165": {
+        "width": 0.9,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "167": {
+        "width": 0.85,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "170": {
+        "width": 1.09,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "173": {
+        "width": 0.95,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "176": {
+        "width": 0.44,
+        "height": 0.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "178": {
+        "width": 0.68,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "181": {
+        "width": 0.8,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "184": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "knockdown": {
+      "138": {
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "187": {
+        "width": 2.38,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "188": {
+        "width": 2.41,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "189": {
+        "width": 0.39,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "190": {
+        "width": 0.39,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "191": {
+        "width": 0.39,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "380": {
+        "width": 0.39,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "381": {
+        "width": 0.39,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "382": {
+        "width": 0.39,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "383": {
+        "width": 0.39,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupStand": {
+      "137": {
+        "width": 1.03,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "138": {
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "139": {
+        "width": 1.03,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "140": {
+        "width": 0.73,
+        "height": 0.56,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "141": {
+        "width": 0.71,
+        "height": 0.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "142": {
+        "width": 0.67,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "143": {
+        "width": 0.76,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "144": {
+        "width": 0.8,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "145": {
+        "width": 0.73,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "146": {
+        "width": 0.76,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "195": {
+        "width": 0.29,
+        "height": 0.26,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "198": {
+        "width": 1.19,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "201": {
+        "width": 1.07,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "204": {
+        "width": 0.92,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "207": {
+        "width": 1.02,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "210": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "213": {
+        "width": 0.8,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "216": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupRollUp": {
+      "219": {
+        "width": 0.85,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "221": {
+        "width": 1,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "223": {
+        "width": 1,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "225": {
+        "width": 1.14,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "227": {
+        "width": 1.22,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "229": {
+        "width": 1.09,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "231": {
+        "width": 1.05,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "233": {
+        "width": 1,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "235": {
+        "width": 0.94,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "236": {
+        "width": 0.94,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "237": {
+        "width": 0.94,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "239": {
+        "width": 0.99,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "240": {
+        "width": 1.03,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "241": {
+        "width": 1.03,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "243": {
+        "width": 1.13,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "244": {
+        "width": 1.17,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "lose": {
+      "138": {
+        "width": 0.95,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "246": {
+        "width": 0.85,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "247": {
+        "width": 0.85,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "249": {
+        "width": 0.85,
+        "height": 1.11,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "251": {
+        "width": 0.88,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "253": {
+        "width": 0.9,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "254": {
+        "width": 0.85,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "256": {
+        "width": 0.85,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "258": {
+        "width": 0.49,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:f+1": {
+      "260": {
+        "width": 0.29,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "261": {
+        "width": 0.29,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "263": {
+        "width": 0.34,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "265": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "267": {
+        "width": 0.28,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "268": {
+        "width": 0.29,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "270": {
+        "width": 0.3,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "272": {
+        "width": 0.28,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:d/f+2": {
+      "274": {
+        "width": 0.29,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "275": {
+        "width": 0.39,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "276": {
+        "width": 0.48,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "277": {
+        "width": 0.34,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "279": {
+        "width": 0.44,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "280": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "281": {
+        "width": 0.3,
+        "height": 0.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "282": {
+        "width": 0.69,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:qcf+4": {
+      "284": {
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "286": {
+        "width": 0.96,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "289": {
+        "width": 0.92,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "291": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "294": {
+        "width": 1.22,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "296": {
+        "width": 1.22,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "299": {
+        "width": 1.1,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "301": {
+        "width": 1.03,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:WS+4": {
+      "304": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "306": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "309": {
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "312": {
+        "width": 1.08,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "315": {
+        "width": 1.1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "317": {
+        "width": 1.15,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "320": {
+        "width": 1.15,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "323": {
+        "width": 1.19,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+1": {
+      "326": {
+        "width": 0.25,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "327": {
+        "width": 0.25,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "328": {
+        "width": 1.22,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "329": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "330": {
+        "width": 0.96,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+2": {
+      "0": {
+        "width": 0.88,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 0.9,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 0.83,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 0.88,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 1.44,
+        "height": 2.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "5": {
+        "width": 0.84,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 1.7,
+        "height": 2.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "332": {
+        "width": 0.8,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "333": {
+        "width": 0.78,
+        "height": 0.82,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "334": {
+        "width": 0.83,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "335": {
+        "width": 0.8,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "336": {
+        "width": 0.78,
+        "height": 0.82,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "337": {
+        "width": 0.78,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "338": {
+        "width": 0.76,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "339": {
+        "width": 0.76,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "340": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "341": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "342": {
+        "width": 0.85,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "343": {
+        "width": 0.8,
+        "height": 0.82,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "344": {
+        "width": 0.85,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "345": {
+        "width": 0.85,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "346": {
+        "width": 0.8,
+        "height": 0.82,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "347": {
+        "width": 0.8,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "348": {
+        "width": 0.78,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "349": {
+        "width": 0.76,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "350": {
+        "width": 0.8,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "351": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "352": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "353": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+2": {
+      "7": {
+        "width": 0.8,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+3": {
+      "9": {
+        "width": 0.8,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 0.73,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "12": {
+        "width": 0.69,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.73,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 0.92,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 0.85,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 0.76,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 0.83,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+3": {
+      "21": {
+        "width": 0.8,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+4": {
+      "23": {
+        "width": 0.69,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "24": {
+        "width": 0.64,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.83,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.67,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "29": {
+        "width": 0.6,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 0.46,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.92,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 0.71,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:3+4": {
+      "35": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "37": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "42": {
+        "width": 0.8,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:O+2": {
+      "44": {
+        "width": 0.63,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 0.69,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 0.71,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 0.78,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 0.78,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "49": {
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "50": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:b+1": {
+      "95": {
+        "width": 0.71,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 0.85,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.71,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 0.76,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.71,
+        "height": 0.98,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 0.78,
+        "height": 0.98,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 0.78,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "102": {
+        "width": 0.8,
+        "height": 0.98,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "103": {
+        "width": 0.76,
+        "height": 0.82,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.71,
+        "height": 0.63,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 0.71,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.26,
+    "height": 1.26
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

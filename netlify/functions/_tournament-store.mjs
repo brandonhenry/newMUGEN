@@ -8,6 +8,8 @@ import {
   upsertTournamentMatchRoom,
   writeTournamentMatchRoomRecord
 } from './_tournament-rooms.mjs';
+import { withSpectatorCredentials } from './_spectator-token.mjs';
+import { withTournamentPublicMetadata } from './_tournament-public.mjs';
 
 export const TOURNAMENT_STORE_NAME = 'kore-tournaments';
 export const FREE_ONLINE_TOURNAMENT_ID = 'free-online-daily';
@@ -102,7 +104,7 @@ export async function getOrCreatePaidTournament(store, now = Date.now()) {
 }
 
 export function makeOpenFreeTournament(now = Date.now()) {
-  return {
+  return withTournamentPublicMetadata({
     id: `${FREE_ONLINE_TOURNAMENT_ID}-${now}`,
     seriesId: FREE_SERIES_ID,
     kind: 'freeOnline',
@@ -116,7 +118,7 @@ export function makeOpenFreeTournament(now = Date.now()) {
     createdAt: now,
     updatedAt: now,
     reward: { kind: 'profilePoints', label: 'Tournament profile trophy', state: 'locked' }
-  };
+  });
 }
 
 export function paidEnabled() {
@@ -390,7 +392,7 @@ export async function joinFreeTournamentRoom(store, { tournamentId, matchId, pla
     bracket,
     entry,
     assignedMatch: assignment.match,
-    matchRoom: room,
+    matchRoom: withSpectatorCredentials(room, bracket, assignment.match, entry, now),
     payment: paymentSummary(entry),
     statusText: room.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
   };
@@ -414,7 +416,7 @@ export async function getFreeTournamentRoomStatus(store, { tournamentId, matchId
     bracket,
     entry,
     assignedMatch: match,
-    matchRoom: room,
+    matchRoom: withSpectatorCredentials(room, bracket, match, entry, now),
     payment: paymentSummary(entry),
     statusText: room?.status === 'ready' ? 'Match room ready' : 'Waiting for opponent'
   };
@@ -532,7 +534,7 @@ export function statusText(bracket, match) {
 }
 
 export function sanitizeBracket(value) {
-  return {
+  return withTournamentPublicMetadata({
     ...value,
     entries: Array.isArray(value.entries) ? value.entries : [],
     matches: Array.isArray(value.matches) ? value.matches : [],
@@ -542,7 +544,7 @@ export function sanitizeBracket(value) {
     capacity: Math.max(2, Math.round(Number(value.capacity) || FREE_ONLINE_CAPACITY)),
     minEntries: Math.max(2, Math.round(Number(value.minEntries) || FREE_ONLINE_MIN_ENTRIES)),
     paidEnabled: Boolean(value.paidEnabled)
-  };
+  });
 }
 
 export function confirmedTournamentEntries(bracket) {

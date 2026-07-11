@@ -11,6 +11,7 @@ export function sanitizeStageManifest(stage: Record<string, unknown>, stageId: s
     subtitle: typeof stage.subtitle === 'string' ? stage.subtitle : 'Sprite-cutout arena',
     renderMode: sanitizeStageRenderMode(stage.renderMode),
     hidden: Boolean(stage.hidden),
+    tournamentEligible: Boolean(stage.tournamentEligible),
     floor: colors.floor,
     floorAssetId: typeof stage.floorAssetId === 'string' ? stage.floorAssetId : undefined,
     floorTexturePath: typeof stage.floorTexturePath === 'string' ? stage.floorTexturePath : undefined,

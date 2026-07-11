@@ -72,3 +72,48 @@ describe('normalizeCharacter voice', () => {
     expect(normalized.voice).toBeUndefined();
   });
 });
+
+describe('normalizeCharacter animation frame paths', () => {
+  it('resolves character-relative frame paths to public character URLs', () => {
+    const normalized = normalizeCharacter(makeCharacter({
+      id: 'model-px',
+      animationFrames: {
+        idle: [
+          'frames/frame-014.png',
+          './frames/frame-015.png',
+          '/frames/frame-016.png',
+          'frame-017.png',
+          'characters/model-px/frames/frame-018.png'
+        ],
+        walkForward: ['/characters/model-px/frames/frame-019.png']
+      }
+    }));
+
+    expect(normalized.animationFrames?.idle).toEqual([
+      '/characters/model-px/frames/frame-014.png',
+      '/characters/model-px/frames/frame-015.png',
+      '/characters/model-px/frames/frame-016.png',
+      '/characters/model-px/frames/frame-017.png',
+      '/characters/model-px/frames/frame-018.png'
+    ]);
+    expect(normalized.animationFrames?.walkForward).toEqual(['/characters/model-px/frames/frame-019.png']);
+  });
+
+  it('leaves absolute and generated frame sources untouched', () => {
+    const normalized = normalizeCharacter(makeCharacter({
+      animationFrames: {
+        idle: [
+          'https://example.test/frame.png',
+          'data:image/png;base64,abc',
+          'blob:http://localhost/frame'
+        ]
+      }
+    }));
+
+    expect(normalized.animationFrames?.idle).toEqual([
+      'https://example.test/frame.png',
+      'data:image/png;base64,abc',
+      'blob:http://localhost/frame'
+    ]);
+  });
+});

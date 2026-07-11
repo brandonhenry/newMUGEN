@@ -1,0 +1,1949 @@
+{
+  "id": "tayuya",
+  "displayName": "Tayuya",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/tayuya/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://tayuya",
+  "spriteSheetPath": "/characters/tayuya/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/tayuya/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 304
+    }
+  ],
+  "spriteFrameCount": 304,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/tayuya/frames/frame-000.png"
+    ],
+    "walkForward": [],
+    "walkBack": [
+      "/characters/tayuya/frames/frame-039.png",
+      "/characters/tayuya/frames/frame-038.png",
+      "/characters/tayuya/frames/frame-037.png",
+      "/characters/tayuya/frames/frame-036.png",
+      "/characters/tayuya/frames/frame-035.png",
+      "/characters/tayuya/frames/frame-034.png",
+      "/characters/tayuya/frames/frame-033.png",
+      "/characters/tayuya/frames/frame-032.png"
+    ],
+    "sprint": [
+      "/characters/tayuya/frames/frame-021.png",
+      "/characters/tayuya/frames/frame-290.png",
+      "/characters/tayuya/frames/frame-291.png",
+      "/characters/tayuya/frames/frame-292.png",
+      "/characters/tayuya/frames/frame-022.png",
+      "/characters/tayuya/frames/frame-023.png",
+      "/characters/tayuya/frames/frame-024.png",
+      "/characters/tayuya/frames/frame-025.png",
+      "/characters/tayuya/frames/frame-026.png",
+      "/characters/tayuya/frames/frame-027.png",
+      "/characters/tayuya/frames/frame-028.png"
+    ],
+    "backHop": [
+      "/characters/tayuya/frames/frame-029.png",
+      "/characters/tayuya/frames/frame-030.png",
+      "/characters/tayuya/frames/frame-031.png"
+    ],
+    "sidestepLeft": [
+      "/characters/tayuya/frames/frame-032.png",
+      "/characters/tayuya/frames/frame-033.png",
+      "/characters/tayuya/frames/frame-034.png",
+      "/characters/tayuya/frames/frame-035.png",
+      "/characters/tayuya/frames/frame-036.png",
+      "/characters/tayuya/frames/frame-037.png"
+    ],
+    "sidestepRight": [
+      "/characters/tayuya/frames/frame-038.png",
+      "/characters/tayuya/frames/frame-039.png"
+    ],
+    "jump": [
+      "/characters/tayuya/frames/frame-040.png"
+    ],
+    "crouch": [
+      "/characters/tayuya/frames/frame-041.png"
+    ],
+    "crouchBlock": [
+      "/characters/tayuya/frames/frame-041.png"
+    ],
+    "block": [
+      "/characters/tayuya/frames/frame-062.png"
+    ],
+    "chargeKi": [
+      "/characters/tayuya/frames/frame-063.png",
+      "/characters/tayuya/frames/frame-064.png",
+      "/characters/tayuya/frames/frame-066.png",
+      "/characters/tayuya/frames/frame-067.png",
+      "/characters/tayuya/frames/frame-069.png",
+      "/characters/tayuya/frames/frame-070.png",
+      "/characters/tayuya/frames/frame-072.png",
+      "/characters/tayuya/frames/frame-073.png"
+    ],
+    "jableft": [
+      "/characters/tayuya/frames/frame-075.png",
+      "/characters/tayuya/frames/frame-076.png",
+      "/characters/tayuya/frames/frame-077.png",
+      "/characters/tayuya/frames/frame-078.png",
+      "/characters/tayuya/frames/frame-079.png",
+      "/characters/tayuya/frames/frame-080.png",
+      "/characters/tayuya/frames/frame-081.png"
+    ],
+    "jabright": [
+      "/characters/tayuya/frames/frame-082.png",
+      "/characters/tayuya/frames/frame-083.png",
+      "/characters/tayuya/frames/frame-084.png",
+      "/characters/tayuya/frames/frame-085.png",
+      "/characters/tayuya/frames/frame-086.png",
+      "/characters/tayuya/frames/frame-087.png",
+      "/characters/tayuya/frames/frame-088.png"
+    ],
+    "kickleft": [
+      "/characters/tayuya/frames/frame-089.png",
+      "/characters/tayuya/frames/frame-090.png",
+      "/characters/tayuya/frames/frame-091.png",
+      "/characters/tayuya/frames/frame-092.png",
+      "/characters/tayuya/frames/frame-093.png"
+    ],
+    "kickright": [
+      "/characters/tayuya/frames/frame-094.png",
+      "/characters/tayuya/frames/frame-095.png",
+      "/characters/tayuya/frames/frame-096.png",
+      "/characters/tayuya/frames/frame-097.png",
+      "/characters/tayuya/frames/frame-098.png"
+    ],
+    "hitLight": [
+      "/characters/tayuya/frames/frame-100.png"
+    ],
+    "hitHeavy": [
+      "/characters/tayuya/frames/frame-102.png"
+    ],
+    "juggle": [
+      "/characters/tayuya/frames/frame-107.png"
+    ],
+    "knockdown": [
+      "/characters/tayuya/frames/frame-137.png",
+      "/characters/tayuya/frames/frame-138.png",
+      "/characters/tayuya/frames/frame-139.png",
+      "/characters/tayuya/frames/frame-140.png"
+    ],
+    "getupStand": [
+      "/characters/tayuya/frames/frame-128.png",
+      "/characters/tayuya/frames/frame-129.png",
+      "/characters/tayuya/frames/frame-130.png",
+      "/characters/tayuya/frames/frame-131.png",
+      "/characters/tayuya/frames/frame-132.png",
+      "/characters/tayuya/frames/frame-133.png",
+      "/characters/tayuya/frames/frame-134.png",
+      "/characters/tayuya/frames/frame-135.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/tayuya/frames/frame-141.png",
+      "/characters/tayuya/frames/frame-142.png",
+      "/characters/tayuya/frames/frame-143.png"
+    ],
+    "lose": [
+      "/characters/tayuya/frames/frame-144.png",
+      "/characters/tayuya/frames/frame-145.png",
+      "/characters/tayuya/frames/frame-146.png"
+    ],
+    "cmd:f+1": [
+      "/characters/tayuya/frames/frame-147.png",
+      "/characters/tayuya/frames/frame-148.png",
+      "/characters/tayuya/frames/frame-149.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/tayuya/frames/frame-075.png",
+      "/characters/tayuya/frames/frame-076.png",
+      "/characters/tayuya/frames/frame-077.png",
+      "/characters/tayuya/frames/frame-078.png",
+      "/characters/tayuya/frames/frame-079.png",
+      "/characters/tayuya/frames/frame-080.png",
+      "/characters/tayuya/frames/frame-081.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/tayuya/frames/frame-082.png",
+      "/characters/tayuya/frames/frame-083.png",
+      "/characters/tayuya/frames/frame-084.png",
+      "/characters/tayuya/frames/frame-085.png",
+      "/characters/tayuya/frames/frame-086.png",
+      "/characters/tayuya/frames/frame-087.png",
+      "/characters/tayuya/frames/frame-088.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/tayuya/frames/frame-089.png",
+      "/characters/tayuya/frames/frame-090.png",
+      "/characters/tayuya/frames/frame-091.png",
+      "/characters/tayuya/frames/frame-092.png",
+      "/characters/tayuya/frames/frame-093.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/tayuya/frames/frame-094.png",
+      "/characters/tayuya/frames/frame-095.png",
+      "/characters/tayuya/frames/frame-096.png",
+      "/characters/tayuya/frames/frame-097.png",
+      "/characters/tayuya/frames/frame-098.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/tayuya/frames/frame-147.png",
+      "/characters/tayuya/frames/frame-148.png",
+      "/characters/tayuya/frames/frame-149.png"
+    ],
+    "cmd:1+2": [
+      "/characters/tayuya/frames/frame-075.png",
+      "/characters/tayuya/frames/frame-076.png",
+      "/characters/tayuya/frames/frame-077.png",
+      "/characters/tayuya/frames/frame-078.png",
+      "/characters/tayuya/frames/frame-079.png",
+      "/characters/tayuya/frames/frame-080.png",
+      "/characters/tayuya/frames/frame-081.png"
+    ],
+    "cmd:1+3": [
+      "/characters/tayuya/frames/frame-170.png",
+      "/characters/tayuya/frames/frame-171.png"
+    ],
+    "cmd:2+3": [
+      "/characters/tayuya/frames/frame-172.png",
+      "/characters/tayuya/frames/frame-173.png"
+    ],
+    "cmd:2+4": [
+      "/characters/tayuya/frames/frame-175.png"
+    ],
+    "cmd:3+4": [
+      "/characters/tayuya/frames/frame-176.png",
+      "/characters/tayuya/frames/frame-179.png",
+      "/characters/tayuya/frames/frame-181.png"
+    ],
+    "cmd:O+2": [
+      "/characters/tayuya/frames/frame-182.png",
+      "/characters/tayuya/frames/frame-183.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 102,
+    "speed": 4.92,
+    "sidestepSpeed": 4.3,
+    "jumpForce": 8.06,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Tayuya Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Tayuya Left Kick",
+      "input": "kick",
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Tayuya Right Check",
+      "input": "heavy",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Tayuya Right Kick",
+      "input": "special",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#cb50db",
+    "secondary": "#4cd66c",
+    "accent": "#b9d73d"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Tayuya Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Tayuya Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Tayuya Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Tayuya Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Tayuya Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Tayuya Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 24,
+      "activeFrames": 6,
+      "recoveryFrames": 32,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Tayuya Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Tayuya Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Tayuya Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 15,
+      "activeFrames": 2,
+      "recoveryFrames": 22,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Tayuya Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Tayuya Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 15,
+      "activeFrames": 2,
+      "recoveryFrames": 22,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Tayuya Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Tayuya Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 22,
+      "activeFrames": 2,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Tayuya Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Tayuya Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Tayuya Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Tayuya Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Tayuya Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Tayuya Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-special": {
+      "label": "Tayuya Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy": {
+      "label": "Tayuya Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Tayuya Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Tayuya Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick": {
+      "label": "Tayuya Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Tayuya Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-special": {
+      "label": "Tayuya Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special": {
+      "label": "Tayuya Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Tayuya Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab": {
+      "label": "Tayuya Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Tayuya Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Tayuya Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick": {
+      "label": "Tayuya Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Tayuya Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special": {
+      "label": "Tayuya Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Tayuya Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab": {
+      "label": "Tayuya Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab-special": {
+      "label": "Tayuya Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy": {
+      "label": "Tayuya Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Tayuya Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special": {
+      "label": "Tayuya Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Tayuya Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab": {
+      "label": "Tayuya Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Tayuya Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-heavy": {
+      "label": "Tayuya Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-kick": {
+      "label": "Tayuya Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.76,
+    "guard": 0.47,
+    "spacing": 1.46,
+    "specialChance": 0.22
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.808,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 0.667,
+        "height": 1.044,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.111,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 0.788,
+        "height": 1.044,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "6": {
+        "width": 1.192,
+        "height": 0.914,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.172,
+        "height": 0.914,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 0.99,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 0.808,
+        "height": 0.951,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "11": {
+        "width": 0.81,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "12": {
+        "width": 0.92,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 1.07,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 1.09,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 0.69,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkBack": {
+      "16": {
+        "width": 0.62,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 0.71,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 0.85,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 0.71,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 0.62,
+        "height": 1.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.788,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.768,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.727,
+        "height": 0.989,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.727,
+        "height": 0.989,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.748,
+        "height": 1.044,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.748,
+        "height": 1.082,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.849,
+        "height": 0.858,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.849,
+        "height": 0.858,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "21": {
+        "width": 0.808,
+        "height": 0.858,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 1.111,
+        "height": 2.891,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.93,
+        "height": 2.966,
+        "offsetX": 0
+      },
+      "24": {
+        "width": 1.394,
+        "height": 2.91,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 0.99,
+        "height": 2.872,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 0.909,
+        "height": 2.22,
+        "offsetX": 0
+      },
+      "27": {
+        "width": 0.97,
+        "height": 0.783,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 1.031,
+        "height": 0.933,
+        "offsetX": 0
+      },
+      "290": {
+        "width": 0.424,
+        "height": 1.026,
+        "offsetX": 0
+      },
+      "291": {
+        "width": 0.485,
+        "height": 1.026,
+        "offsetX": 0
+      },
+      "292": {
+        "width": 0.849,
+        "height": 0.858,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "29": {
+        "width": 0.808,
+        "height": 0.877,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 0.808,
+        "height": 0.653,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.808,
+        "height": 0.653,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "32": {
+        "width": 0.788,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.768,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.727,
+        "height": 0.989,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 0.727,
+        "height": 0.989,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.748,
+        "height": 1.044,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.748,
+        "height": 1.082,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "38": {
+        "width": 0.849,
+        "height": 0.858,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.849,
+        "height": 0.858,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "40": {
+        "width": 0.748,
+        "height": 0.989,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "41": {
+        "width": 0.748,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 0.77,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "43": {
+        "width": 0.75,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "41": {
+        "width": 0.748,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "289": {
+        "width": 0.68,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "62": {
+        "width": 0.667,
+        "height": 0.727,
+        "offsetX": 0
+      }
+    },
+    "chargeKi": {
+      "63": {
+        "width": 0.808,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "64": {
+        "width": 0.687,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 0.727,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 0.727,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "69": {
+        "width": 1.132,
+        "height": 1.324,
+        "offsetX": 0
+      },
+      "70": {
+        "width": 1.414,
+        "height": 1.455,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 1.455,
+        "height": 1.455,
+        "offsetX": 0
+      },
+      "73": {
+        "width": 1.172,
+        "height": 1.343,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "75": {
+        "width": 1.455,
+        "height": 1.455,
+        "offsetX": 0
+      },
+      "76": {
+        "width": 0.727,
+        "height": 0.783,
+        "offsetX": 0
+      },
+      "77": {
+        "width": 0.647,
+        "height": 0.783,
+        "offsetX": 0
+      },
+      "78": {
+        "width": 0.647,
+        "height": 0.802,
+        "offsetX": 0
+      },
+      "79": {
+        "width": 0.788,
+        "height": 0.783,
+        "offsetX": 0
+      },
+      "80": {
+        "width": 0.647,
+        "height": 0.783,
+        "offsetX": 0
+      },
+      "81": {
+        "width": 0.808,
+        "height": 0.877,
+        "offsetX": 0
+      },
+      "293": {
+        "width": 1.132,
+        "height": 1.324,
+        "offsetX": 0
+      },
+      "294": {
+        "width": 0.687,
+        "height": 0.783,
+        "offsetX": 0
+      },
+      "295": {
+        "width": 0.97,
+        "height": 0.839,
+        "offsetX": 0
+      },
+      "296": {
+        "width": 0.808,
+        "height": 0.895,
+        "offsetX": 0
+      },
+      "297": {
+        "width": 0.768,
+        "height": 0.839,
+        "offsetX": 0
+      },
+      "298": {
+        "width": 0.788,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "299": {
+        "width": 0.788,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "300": {
+        "width": 0.788,
+        "height": 0.933,
+        "offsetX": 0
+      },
+      "301": {
+        "width": 0.788,
+        "height": 0.914,
+        "offsetX": 0
+      },
+      "302": {
+        "width": 0.788,
+        "height": 0.914,
+        "offsetX": 0
+      },
+      "303": {
+        "width": 0.788,
+        "height": 0.895,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "82": {
+        "width": 0.707,
+        "height": 0.989,
+        "offsetX": 0
+      },
+      "83": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "84": {
+        "width": 0.162,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "85": {
+        "width": 0.125,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "86": {
+        "width": 0.123,
+        "height": 0.989,
+        "offsetX": 0
+      },
+      "87": {
+        "width": 0.929,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "88": {
+        "width": 0.869,
+        "height": 0.951,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "89": {
+        "width": 0.768,
+        "height": 1.044,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 0.97,
+        "height": 1.026,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 0.821,
+        "height": 0.821,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 1.051,
+        "height": 0.914,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.707,
+        "height": 1.007,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "94": {
+        "width": 0.869,
+        "height": 0.895,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 0.808,
+        "height": 0.914,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.93,
+        "height": 0.951,
+        "offsetX": 0
+      },
+      "97": {
+        "width": 0.768,
+        "height": 0.858,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 0.748,
+        "height": 0.821,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "99": {
+        "width": 0.88,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 0.95,
+        "height": 0.746,
+        "offsetX": 0
+      }
+    },
+    "hitHeavy": {
+      "101": {
+        "width": 0.98,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "102": {
+        "width": 1.051,
+        "height": 0.765,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "103": {
+        "width": 0.808,
+        "height": 0.821,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 0.889,
+        "height": 0.877,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 0.97,
+        "height": 0.839,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 1.01,
+        "height": 0.765,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 1.091,
+        "height": 0.821,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 0.849,
+        "height": 0.821,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 0.889,
+        "height": 0.839,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 0.97,
+        "height": 0.783,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "112": {
+        "width": 0.77,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.75,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.86,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "118": {
+        "width": 0.86,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 0.86,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.86,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "124": {
+        "width": 0.75,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "126": {
+        "width": 0.75,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "137": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "138": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "139": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "140": {
+        "width": 0.951,
+        "height": 0.951,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      }
+    },
+    "getupStand": {
+      "128": {
+        "width": 0.99,
+        "height": 2.089,
+        "offsetX": 0
+      },
+      "129": {
+        "width": 1.111,
+        "height": 2.089,
+        "offsetX": 0
+      },
+      "130": {
+        "width": 0.768,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 0.687,
+        "height": 1.007,
+        "offsetX": 0
+      },
+      "132": {
+        "width": 0.808,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.768,
+        "height": 0.989,
+        "offsetX": 0
+      },
+      "134": {
+        "width": 0.929,
+        "height": 0.97,
+        "offsetX": 0
+      },
+      "135": {
+        "width": 0.808,
+        "height": 0.97,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "137": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "138": {
+        "width": 2.24,
+        "height": 2.04,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "139": {
+        "width": 2.5,
+        "height": 2.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "140": {
+        "width": 2.5,
+        "height": 2.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "141": {
+        "width": 2.849,
+        "height": 2.313,
+        "offsetX": 0
+      },
+      "142": {
+        "width": 2.849,
+        "height": 2.313,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 2.849,
+        "height": 2.313,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "144": {
+        "width": 2.849,
+        "height": 2.313,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 2.849,
+        "height": 2.313,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 2.849,
+        "height": 2.313,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+1": {
+      "147": {
+        "width": 2.849,
+        "height": 2.313,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 2.849,
+        "height": 2.387,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 2.89,
+        "height": 2.331,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "150": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "153": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "156": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "159": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "162": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "163": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 0.626,
+        "height": 1.063,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "165": {
+        "width": 0.202,
+        "height": 0.877,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 0.465,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 0.364,
+        "height": 1.026,
+        "offsetX": 0
+      },
+      "168": {
+        "width": 0.303,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "169": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "170": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "171": {
+        "width": 0.667,
+        "height": 1.063,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "172": {
+        "width": 1.231,
+        "height": 1.231,
+        "offsetX": 0
+      },
+      "173": {
+        "width": 1.435,
+        "height": 1.231,
+        "offsetX": 0
+      },
+      "174": {
+        "width": 0.448,
+        "height": 0.448,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "175": {
+        "width": 0.97,
+        "height": 0.839,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "176": {
+        "width": 1.435,
+        "height": 1.231,
+        "offsetX": 0
+      },
+      "177": {
+        "width": 0.448,
+        "height": 0.448,
+        "offsetX": 0
+      },
+      "178": {
+        "width": 0.465,
+        "height": 1.082,
+        "offsetX": 0
+      },
+      "179": {
+        "width": 1.212,
+        "height": 1.212,
+        "offsetX": 0
+      },
+      "180": {
+        "width": 0.141,
+        "height": 1.026,
+        "offsetX": 0
+      },
+      "181": {
+        "width": 1.231,
+        "height": 1.231,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "182": {
+        "width": 1.231,
+        "height": 1.231,
+        "offsetX": 0
+      },
+      "183": {
+        "width": 0.424,
+        "height": 0.429,
+        "offsetX": 0
+      },
+      "184": {
+        "width": 0.597,
+        "height": 0.597,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 1.231,
+        "height": 1.231,
+        "offsetX": 0
+      },
+      "186": {
+        "width": 0.424,
+        "height": 0.429,
+        "offsetX": 0
+      },
+      "187": {
+        "width": 1.293,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 1.231,
+        "height": 1.231,
+        "offsetX": 0
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.1,
+    "height": 1.1
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

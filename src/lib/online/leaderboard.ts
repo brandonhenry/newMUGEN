@@ -10,6 +10,7 @@ export type OnlinePlayerProfile = {
 export type LeaderboardEntry = {
   playerId: string;
   displayName: string;
+  characterId: string;
   points: number;
   updatedAt: number;
 };
@@ -20,6 +21,7 @@ export type LeaderboardResult = {
 
 export type LeaderboardPointAward = {
   profile: OnlinePlayerProfile;
+  characterId: string;
   points: number;
 };
 
@@ -33,6 +35,7 @@ export type LeaderboardSubmitRequest = {
 const ONLINE_PROFILE_KEY = 'kore.online.profile';
 const LOCAL_LEADERBOARD_KEY = 'kore.online.localLeaderboard';
 const LEGACY_POINTS_PER_WIN = 100;
+export const LEGACY_SCORE_CHARACTER_ID = 'legacy';
 
 export function readOnlineProfile(): OnlinePlayerProfile | null {
   if (typeof window === 'undefined') return null;
@@ -93,6 +96,11 @@ export function sanitizePlayerId(value: unknown) {
   return value.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 96);
 }
 
+export function sanitizeCharacterId(value: unknown) {
+  if (typeof value !== 'string') return '';
+  return value.toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 96);
+}
+
 export function sanitizeEmail(value: unknown) {
   if (typeof value !== 'string') return '';
   const email = value.trim().toLowerCase().replace(/\s+/g, '').slice(0, 254);
@@ -147,14 +155,16 @@ function localLeaderboard(): LeaderboardResult {
 function localSubmitLeaderboardResult(request: LeaderboardSubmitRequest): LeaderboardResult {
   const awards = normalizeAwards(request);
   if (awards.length === 0) return localLeaderboard();
-  const byId = new Map(readLocalLeaderboard().map((entry) => [entry.playerId, entry]));
+  const byId = new Map(readLocalLeaderboard().map((entry) => [scoreKey(entry.playerId, entry.characterId), entry]));
   const now = Date.now();
-  awards.forEach(({ profile, points }) => {
-    const entry = byId.get(profile.playerId) ?? { ...profile, points: 0, updatedAt: now };
+  awards.forEach(({ profile, characterId, points }) => {
+    const key = scoreKey(profile.playerId, characterId);
+    const entry = byId.get(key) ?? { ...profile, characterId, points: 0, updatedAt: now };
     entry.displayName = profile.displayName;
+    entry.characterId = characterId;
     entry.points += points;
     entry.updatedAt = now;
-    byId.set(profile.playerId, entry);
+    byId.set(key, entry);
   });
   const entries = sortEntries([...byId.values()]).slice(0, 100);
   window.localStorage.setItem(LOCAL_LEADERBOARD_KEY, JSON.stringify(entries));
@@ -181,11 +191,14 @@ function normalizeAwards(request: LeaderboardSubmitRequest): LeaderboardPointAwa
     const byId = new Map<string, LeaderboardPointAward>();
     request.players.forEach((award) => {
       const profile = normalizeProfile(award.profile);
+      const characterId = normalizeCharacterId(award.characterId);
       const points = normalizeAwardPoints(award.points);
       if (!profile || points <= 0) return;
-      const current = byId.get(profile.playerId);
-      byId.set(profile.playerId, {
+      const key = scoreKey(profile.playerId, characterId);
+      const current = byId.get(key);
+      byId.set(key, {
         profile,
+        characterId,
         points: (current?.points ?? 0) + points
       });
     });
@@ -196,7 +209,7 @@ function normalizeAwards(request: LeaderboardSubmitRequest): LeaderboardPointAwa
     const winner = normalizeProfile(request.winner);
     const loser = normalizeProfile(request.loser);
     if (!winner || !loser || winner.playerId === loser.playerId) return [];
-    return [{ profile: winner, points: LEGACY_POINTS_PER_WIN }];
+    return [{ profile: winner, characterId: LEGACY_SCORE_CHARACTER_ID, points: LEGACY_POINTS_PER_WIN }];
   }
   return [];
 }
@@ -208,10 +221,12 @@ function normalizeAwardPoints(value: unknown) {
 function normalizeEntry(entry: Partial<LeaderboardEntry>): LeaderboardEntry | null {
   const profile = normalizeProfile(entry as OnlinePlayerProfile);
   if (!profile) return null;
+  const characterId = normalizeCharacterId(entry.characterId);
   const points = normalizePoints(entry);
   if (points <= 0) return null;
   return {
     ...profile,
+    characterId,
     points,
     updatedAt: Math.max(0, Math.round(Number(entry.updatedAt) || 0))
   };
@@ -225,6 +240,14 @@ function normalizePoints(entry: Partial<LeaderboardEntry> & { wins?: unknown; lo
 
 function sortEntries(entries: LeaderboardEntry[]) {
   return [...entries].sort((a, b) => {
-    return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName);
+    return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName) || a.characterId.localeCompare(b.characterId);
   });
+}
+
+function normalizeCharacterId(value: unknown) {
+  return sanitizeCharacterId(value) || LEGACY_SCORE_CHARACTER_ID;
+}
+
+function scoreKey(playerId: string, characterId: string) {
+  return `${playerId}:${characterId}`;
 }

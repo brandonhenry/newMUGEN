@@ -23,6 +23,7 @@ export type FriendInvite = {
   roomId: string;
   roomName: string;
   password: string;
+  roomKind?: 'private' | 'custom';
   status: 'pending' | 'accepted' | 'declined' | 'expired';
   createdAt: number;
   respondedAt?: number;
@@ -77,9 +78,10 @@ export async function sendFriendInvite(
   friendId: string,
   roomName: string,
   password: string,
-  roomId: string
+  roomId: string,
+  roomKind: 'private' | 'custom' = 'private'
 ): Promise<FriendInvite> {
-  const body = normalizeInviteRequest(profile, friendId, roomName, password, roomId);
+  const body = normalizeInviteRequest(profile, friendId, roomName, password, roomId, roomKind);
   return postJson<FriendInvite>('/.netlify/functions/friend-invite-send', body).catch((error) => {
     if (isLocalFallbackAllowed()) return localSendFriendInvite(body);
     throw error;
@@ -150,14 +152,15 @@ function normalizePresenceRequest(profile: OnlinePlayerProfile, peerId: string, 
   };
 }
 
-function normalizeInviteRequest(profile: OnlinePlayerProfile, friendId: string, roomName: string, password: string, roomId: string) {
+function normalizeInviteRequest(profile: OnlinePlayerProfile, friendId: string, roomName: string, password: string, roomId: string, roomKind: 'private' | 'custom') {
   return {
     fromPlayerId: sanitizePlayerId(profile.playerId),
     fromDisplayName: sanitizeDisplayName(profile.displayName),
     toPlayerId: sanitizePlayerId(friendId),
     roomId: cleanToken(roomId, 120),
     roomName: cleanRoomName(roomName),
-    password: cleanPassword(password)
+    password: cleanPassword(password),
+    roomKind
   };
 }
 
@@ -214,6 +217,7 @@ function localSendFriendInvite(body: ReturnType<typeof normalizeInviteRequest>):
     roomId: body.roomId,
     roomName: body.roomName,
     password: body.password,
+    roomKind: body.roomKind,
     status: 'pending',
     createdAt: Date.now()
   };

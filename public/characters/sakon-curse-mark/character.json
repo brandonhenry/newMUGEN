@@ -1,0 +1,2310 @@
+{
+  "id": "sakon-curse-mark",
+  "displayName": "Sakon Curse Mark",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/sakon-curse-mark/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://sakon-curse-mark",
+  "spriteSheetPath": "/characters/sakon-curse-mark/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/sakon-curse-mark/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 256
+    }
+  ],
+  "spriteFrameCount": 256,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/sakon-curse-mark/frames/frame-062.png"
+    ],
+    "walkForward": [
+      "/characters/sakon-curse-mark/frames/frame-051.png",
+      "/characters/sakon-curse-mark/frames/frame-052.png",
+      "/characters/sakon-curse-mark/frames/frame-053.png",
+      "/characters/sakon-curse-mark/frames/frame-054.png",
+      "/characters/sakon-curse-mark/frames/frame-055.png"
+    ],
+    "walkBack": [
+      "/characters/sakon-curse-mark/frames/frame-055.png",
+      "/characters/sakon-curse-mark/frames/frame-054.png",
+      "/characters/sakon-curse-mark/frames/frame-053.png",
+      "/characters/sakon-curse-mark/frames/frame-052.png",
+      "/characters/sakon-curse-mark/frames/frame-051.png"
+    ],
+    "sprint": [
+      "/characters/sakon-curse-mark/frames/frame-036.png",
+      "/characters/sakon-curse-mark/frames/frame-037.png",
+      "/characters/sakon-curse-mark/frames/frame-038.png",
+      "/characters/sakon-curse-mark/frames/frame-039.png",
+      "/characters/sakon-curse-mark/frames/frame-040.png",
+      "/characters/sakon-curse-mark/frames/frame-042.png",
+      "/characters/sakon-curse-mark/frames/frame-043.png",
+      "/characters/sakon-curse-mark/frames/frame-044.png",
+      "/characters/sakon-curse-mark/frames/frame-045.png",
+      "/characters/sakon-curse-mark/frames/frame-046.png"
+    ],
+    "backHop": [
+      "/characters/sakon-curse-mark/frames/frame-048.png",
+      "/characters/sakon-curse-mark/frames/frame-049.png",
+      "/characters/sakon-curse-mark/frames/frame-050.png",
+      "/characters/sakon-curse-mark/frames/frame-051.png",
+      "/characters/sakon-curse-mark/frames/frame-052.png",
+      "/characters/sakon-curse-mark/frames/frame-053.png",
+      "/characters/sakon-curse-mark/frames/frame-054.png",
+      "/characters/sakon-curse-mark/frames/frame-055.png"
+    ],
+    "sidestepLeft": [
+      "/characters/sakon-curse-mark/frames/frame-056.png",
+      "/characters/sakon-curse-mark/frames/frame-249.png",
+      "/characters/sakon-curse-mark/frames/frame-250.png",
+      "/characters/sakon-curse-mark/frames/frame-251.png",
+      "/characters/sakon-curse-mark/frames/frame-252.png",
+      "/characters/sakon-curse-mark/frames/frame-253.png",
+      "/characters/sakon-curse-mark/frames/frame-254.png",
+      "/characters/sakon-curse-mark/frames/frame-255.png"
+    ],
+    "sidestepRight": [
+      "/characters/sakon-curse-mark/frames/frame-057.png",
+      "/characters/sakon-curse-mark/frames/frame-058.png",
+      "/characters/sakon-curse-mark/frames/frame-059.png",
+      "/characters/sakon-curse-mark/frames/frame-060.png",
+      "/characters/sakon-curse-mark/frames/frame-061.png"
+    ],
+    "jump": [
+      "/characters/sakon-curse-mark/frames/frame-062.png",
+      "/characters/sakon-curse-mark/frames/frame-065.png",
+      "/characters/sakon-curse-mark/frames/frame-068.png",
+      "/characters/sakon-curse-mark/frames/frame-071.png",
+      "/characters/sakon-curse-mark/frames/frame-074.png",
+      "/characters/sakon-curse-mark/frames/frame-077.png",
+      "/characters/sakon-curse-mark/frames/frame-080.png",
+      "/characters/sakon-curse-mark/frames/frame-083.png"
+    ],
+    "crouch": [
+      "/characters/sakon-curse-mark/frames/frame-087.png",
+      "/characters/sakon-curse-mark/frames/frame-090.png",
+      "/characters/sakon-curse-mark/frames/frame-093.png",
+      "/characters/sakon-curse-mark/frames/frame-096.png",
+      "/characters/sakon-curse-mark/frames/frame-099.png",
+      "/characters/sakon-curse-mark/frames/frame-102.png",
+      "/characters/sakon-curse-mark/frames/frame-105.png",
+      "/characters/sakon-curse-mark/frames/frame-108.png"
+    ],
+    "crouchBlock": [
+      "/characters/sakon-curse-mark/frames/frame-248.png"
+    ],
+    "block": [
+      "/characters/sakon-curse-mark/frames/frame-117.png"
+    ],
+    "chargeKi": [
+      "/characters/sakon-curse-mark/frames/frame-119.png",
+      "/characters/sakon-curse-mark/frames/frame-120.png",
+      "/characters/sakon-curse-mark/frames/frame-121.png",
+      "/characters/sakon-curse-mark/frames/frame-122.png"
+    ],
+    "jableft": [
+      "/characters/sakon-curse-mark/frames/frame-029.png",
+      "/characters/sakon-curse-mark/frames/frame-030.png",
+      "/characters/sakon-curse-mark/frames/frame-031.png",
+      "/characters/sakon-curse-mark/frames/frame-032.png"
+    ],
+    "jabright": [
+      "/characters/sakon-curse-mark/frames/frame-126.png",
+      "/characters/sakon-curse-mark/frames/frame-128.png",
+      "/characters/sakon-curse-mark/frames/frame-131.png",
+      "/characters/sakon-curse-mark/frames/frame-133.png",
+      "/characters/sakon-curse-mark/frames/frame-136.png",
+      "/characters/sakon-curse-mark/frames/frame-139.png",
+      "/characters/sakon-curse-mark/frames/frame-141.png",
+      "/characters/sakon-curse-mark/frames/frame-144.png"
+    ],
+    "kickleft": [
+      "/characters/sakon-curse-mark/frames/frame-147.png",
+      "/characters/sakon-curse-mark/frames/frame-148.png",
+      "/characters/sakon-curse-mark/frames/frame-149.png",
+      "/characters/sakon-curse-mark/frames/frame-150.png",
+      "/characters/sakon-curse-mark/frames/frame-152.png",
+      "/characters/sakon-curse-mark/frames/frame-153.png"
+    ],
+    "kickright": [
+      "/characters/sakon-curse-mark/frames/frame-048.png",
+      "/characters/sakon-curse-mark/frames/frame-051.png",
+      "/characters/sakon-curse-mark/frames/frame-052.png",
+      "/characters/sakon-curse-mark/frames/frame-053.png",
+      "/characters/sakon-curse-mark/frames/frame-054.png",
+      "/characters/sakon-curse-mark/frames/frame-055.png"
+    ],
+    "hitLight": [
+      "/characters/sakon-curse-mark/frames/frame-154.png"
+    ],
+    "hitHeavy": [
+      "/characters/sakon-curse-mark/frames/frame-179.png"
+    ],
+    "juggle": [
+      "/characters/sakon-curse-mark/frames/frame-181.png"
+    ],
+    "knockdown": [
+      "/characters/sakon-curse-mark/frames/frame-179.png",
+      "/characters/sakon-curse-mark/frames/frame-181.png"
+    ],
+    "getupStand": [
+      "/characters/sakon-curse-mark/frames/frame-187.png",
+      "/characters/sakon-curse-mark/frames/frame-188.png",
+      "/characters/sakon-curse-mark/frames/frame-189.png",
+      "/characters/sakon-curse-mark/frames/frame-190.png",
+      "/characters/sakon-curse-mark/frames/frame-191.png",
+      "/characters/sakon-curse-mark/frames/frame-192.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/sakon-curse-mark/frames/frame-202.png",
+      "/characters/sakon-curse-mark/frames/frame-203.png",
+      "/characters/sakon-curse-mark/frames/frame-205.png",
+      "/characters/sakon-curse-mark/frames/frame-206.png",
+      "/characters/sakon-curse-mark/frames/frame-208.png",
+      "/characters/sakon-curse-mark/frames/frame-209.png",
+      "/characters/sakon-curse-mark/frames/frame-211.png",
+      "/characters/sakon-curse-mark/frames/frame-212.png"
+    ],
+    "lose": [
+      "/characters/sakon-curse-mark/frames/frame-214.png",
+      "/characters/sakon-curse-mark/frames/frame-216.png",
+      "/characters/sakon-curse-mark/frames/frame-219.png",
+      "/characters/sakon-curse-mark/frames/frame-222.png",
+      "/characters/sakon-curse-mark/frames/frame-225.png",
+      "/characters/sakon-curse-mark/frames/frame-227.png",
+      "/characters/sakon-curse-mark/frames/frame-230.png",
+      "/characters/sakon-curse-mark/frames/frame-233.png"
+    ],
+    "cmd:f+1": [
+      "/characters/sakon-curse-mark/frames/frame-236.png",
+      "/characters/sakon-curse-mark/frames/frame-237.png",
+      "/characters/sakon-curse-mark/frames/frame-238.png",
+      "/characters/sakon-curse-mark/frames/frame-239.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/sakon-curse-mark/frames/frame-240.png",
+      "/characters/sakon-curse-mark/frames/frame-241.png",
+      "/characters/sakon-curse-mark/frames/frame-242.png",
+      "/characters/sakon-curse-mark/frames/frame-243.png",
+      "/characters/sakon-curse-mark/frames/frame-244.png",
+      "/characters/sakon-curse-mark/frames/frame-246.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/sakon-curse-mark/frames/frame-240.png",
+      "/characters/sakon-curse-mark/frames/frame-241.png",
+      "/characters/sakon-curse-mark/frames/frame-242.png",
+      "/characters/sakon-curse-mark/frames/frame-243.png",
+      "/characters/sakon-curse-mark/frames/frame-244.png",
+      "/characters/sakon-curse-mark/frames/frame-246.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/sakon-curse-mark/frames/frame-000.png",
+      "/characters/sakon-curse-mark/frames/frame-001.png",
+      "/characters/sakon-curse-mark/frames/frame-002.png",
+      "/characters/sakon-curse-mark/frames/frame-003.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/sakon-curse-mark/frames/frame-004.png",
+      "/characters/sakon-curse-mark/frames/frame-005.png",
+      "/characters/sakon-curse-mark/frames/frame-006.png",
+      "/characters/sakon-curse-mark/frames/frame-007.png",
+      "/characters/sakon-curse-mark/frames/frame-008.png",
+      "/characters/sakon-curse-mark/frames/frame-009.png",
+      "/characters/sakon-curse-mark/frames/frame-010.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/sakon-curse-mark/frames/frame-019.png",
+      "/characters/sakon-curse-mark/frames/frame-020.png",
+      "/characters/sakon-curse-mark/frames/frame-021.png",
+      "/characters/sakon-curse-mark/frames/frame-022.png",
+      "/characters/sakon-curse-mark/frames/frame-023.png",
+      "/characters/sakon-curse-mark/frames/frame-024.png",
+      "/characters/sakon-curse-mark/frames/frame-025.png",
+      "/characters/sakon-curse-mark/frames/frame-026.png"
+    ],
+    "cmd:1+2": [
+      "/characters/sakon-curse-mark/frames/frame-029.png",
+      "/characters/sakon-curse-mark/frames/frame-030.png",
+      "/characters/sakon-curse-mark/frames/frame-031.png",
+      "/characters/sakon-curse-mark/frames/frame-032.png"
+    ],
+    "cmd:1+3": [
+      "/characters/sakon-curse-mark/frames/frame-048.png",
+      "/characters/sakon-curse-mark/frames/frame-051.png",
+      "/characters/sakon-curse-mark/frames/frame-052.png",
+      "/characters/sakon-curse-mark/frames/frame-053.png",
+      "/characters/sakon-curse-mark/frames/frame-054.png",
+      "/characters/sakon-curse-mark/frames/frame-055.png"
+    ],
+    "cmd:2+3": [
+      "/characters/sakon-curse-mark/frames/frame-126.png",
+      "/characters/sakon-curse-mark/frames/frame-128.png",
+      "/characters/sakon-curse-mark/frames/frame-131.png",
+      "/characters/sakon-curse-mark/frames/frame-133.png",
+      "/characters/sakon-curse-mark/frames/frame-136.png",
+      "/characters/sakon-curse-mark/frames/frame-139.png",
+      "/characters/sakon-curse-mark/frames/frame-141.png",
+      "/characters/sakon-curse-mark/frames/frame-144.png"
+    ],
+    "cmd:2+4": [
+      "/characters/sakon-curse-mark/frames/frame-154.png",
+      "/characters/sakon-curse-mark/frames/frame-155.png",
+      "/characters/sakon-curse-mark/frames/frame-156.png",
+      "/characters/sakon-curse-mark/frames/frame-157.png",
+      "/characters/sakon-curse-mark/frames/frame-158.png",
+      "/characters/sakon-curse-mark/frames/frame-159.png",
+      "/characters/sakon-curse-mark/frames/frame-160.png"
+    ],
+    "cmd:3+4": [
+      "/characters/sakon-curse-mark/frames/frame-019.png",
+      "/characters/sakon-curse-mark/frames/frame-020.png",
+      "/characters/sakon-curse-mark/frames/frame-021.png",
+      "/characters/sakon-curse-mark/frames/frame-022.png",
+      "/characters/sakon-curse-mark/frames/frame-023.png",
+      "/characters/sakon-curse-mark/frames/frame-024.png",
+      "/characters/sakon-curse-mark/frames/frame-025.png",
+      "/characters/sakon-curse-mark/frames/frame-026.png"
+    ],
+    "cmd:O+2": [
+      "/characters/sakon-curse-mark/frames/frame-103.png",
+      "/characters/sakon-curse-mark/frames/frame-104.png",
+      "/characters/sakon-curse-mark/frames/frame-105.png",
+      "/characters/sakon-curse-mark/frames/frame-106.png",
+      "/characters/sakon-curse-mark/frames/frame-107.png",
+      "/characters/sakon-curse-mark/frames/frame-108.png",
+      "/characters/sakon-curse-mark/frames/frame-109.png",
+      "/characters/sakon-curse-mark/frames/frame-110.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 103,
+    "speed": 5.36,
+    "sidestepSpeed": 4.74,
+    "jumpForce": 8.05,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Sakon Curse Mark Left Check",
+      "input": "jab",
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Sakon Curse Mark Left Kick",
+      "input": "kick",
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Sakon Curse Mark Right Check",
+      "input": "heavy",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Sakon Curse Mark Right Kick",
+      "input": "special",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#deb349",
+    "secondary": "#d86223",
+    "accent": "#68d736"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Sakon Curse Mark Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Sakon Curse Mark Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 21,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Sakon Curse Mark Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Sakon Curse Mark Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Sakon Curse Mark Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Sakon Curse Mark Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 30,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Sakon Curse Mark Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Sakon Curse Mark Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Sakon Curse Mark Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Sakon Curse Mark Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Sakon Curse Mark Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Sakon Curse Mark Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Sakon Curse Mark Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 26,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Sakon Curse Mark Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Sakon Curse Mark Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 26,
+      "activeFrames": 6,
+      "recoveryFrames": 33,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Sakon Curse Mark Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Sakon Curse Mark Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Sakon Curse Mark Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Sakon Curse Mark Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-jab-special": {
+      "label": "Sakon Curse Mark Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy": {
+      "label": "Sakon Curse Mark Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Sakon Curse Mark Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Sakon Curse Mark Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick": {
+      "label": "Sakon Curse Mark Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Sakon Curse Mark Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-kick-special": {
+      "label": "Sakon Curse Mark Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special": {
+      "label": "Sakon Curse Mark Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Sakon Curse Mark Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab": {
+      "label": "Sakon Curse Mark Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Sakon Curse Mark Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Sakon Curse Mark Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick": {
+      "label": "Sakon Curse Mark Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Sakon Curse Mark Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special": {
+      "label": "Sakon Curse Mark Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Sakon Curse Mark Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab": {
+      "label": "Sakon Curse Mark Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-jab-special": {
+      "label": "Sakon Curse Mark Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy": {
+      "label": "Sakon Curse Mark Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Sakon Curse Mark Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special": {
+      "label": "Sakon Curse Mark Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Sakon Curse Mark Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab": {
+      "label": "Sakon Curse Mark Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Sakon Curse Mark Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-heavy": {
+      "label": "Sakon Curse Mark Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    },
+    "neutral:special-kick": {
+      "label": "Sakon Curse Mark Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.6,
+    "guard": 0.47,
+    "spacing": 1.4,
+    "specialChance": 0.29
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.52,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 0.39,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "4": {
+        "width": 0.77,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "5": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.72,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 0.8,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 0.67,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 0.67,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 0.74,
+        "height": 0.74,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 1.062,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1.322,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 1.062,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.039,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 1.251,
+        "height": 1.109,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "11": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.83,
+        "height": 0.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 0.93,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 0.52,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "21": {
+        "width": 1.26,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "23": {
+        "width": 1.2,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 1.02,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "28": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "31": {
+        "width": 0.72,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 0.78,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 1.062,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1.322,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 1.062,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.039,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 1.251,
+        "height": 1.109,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "36": {
+        "width": 1.086,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.897,
+        "height": 1.086,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 0.991,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.614,
+        "height": 0.779,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.472,
+        "height": 0.661,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 0.661,
+        "height": 0.59,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.944,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 1.015,
+        "height": 1.204,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.566,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.685,
+        "height": 0.803,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "48": {
+        "width": 0.85,
+        "height": 0.543,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 0.425,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "50": {
+        "width": 0.566,
+        "height": 0.543,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1.062,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1.322,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 1.062,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.039,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 1.251,
+        "height": 1.109,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "56": {
+        "width": 0.755,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "249": {
+        "width": 0.732,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "250": {
+        "width": 0.732,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "251": {
+        "width": 0.779,
+        "height": 0.708,
+        "offsetX": 0
+      },
+      "252": {
+        "width": 0.496,
+        "height": 0.661,
+        "offsetX": 0
+      },
+      "253": {
+        "width": 0.496,
+        "height": 0.637,
+        "offsetX": 0
+      },
+      "254": {
+        "width": 0.685,
+        "height": 0.85,
+        "offsetX": 0
+      },
+      "255": {
+        "width": 0.708,
+        "height": 0.803,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "57": {
+        "width": 1.039,
+        "height": 1.416,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 0.968,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 0.968,
+        "height": 1.015,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 1.086,
+        "height": 1.463,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 1.062,
+        "height": 1.298,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "62": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 1.086,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "68": {
+        "width": 1.204,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 0.708,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.204,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "77": {
+        "width": 0.637,
+        "height": 0.378,
+        "offsetX": 0
+      },
+      "80": {
+        "width": 0.519,
+        "height": 0.566,
+        "offsetX": 0
+      },
+      "83": {
+        "width": 0.803,
+        "height": 0.897,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "87": {
+        "width": 1.275,
+        "height": 0.661,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 0.603,
+        "height": 0.85,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.921,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.685,
+        "height": 0.33,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 0.782,
+        "height": 0.85,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 0.755,
+        "height": 0.708,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 0.779,
+        "height": 0.921,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 0.655,
+        "height": 0.85,
+        "offsetX": 0
+      }
+    },
+    "crouchBlock": {
+      "248": {
+        "width": 1.18,
+        "height": 0.637,
+        "offsetX": 0
+      }
+    },
+    "block": {
+      "117": {
+        "width": 0.921,
+        "height": 1.015,
+        "offsetX": 0
+      },
+      "118": {
+        "width": 0.76,
+        "height": 0.72,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "119": {
+        "width": 1.086,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 1.039,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "121": {
+        "width": 0.991,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.944,
+        "height": 1.039,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "123": {
+        "width": 0.401,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "124": {
+        "width": 0.637,
+        "height": 1.227,
+        "offsetX": 0
+      },
+      "125": {
+        "width": 0.448,
+        "height": 0.732,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "126": {
+        "width": 0.685,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 1.062,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 1.062,
+        "height": 1.345,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.897,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "136": {
+        "width": 1.109,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 0.991,
+        "height": 1.157,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 1.322,
+        "height": 1.511,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 1.275,
+        "height": 1.109,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "147": {
+        "width": 1.039,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 1.015,
+        "height": 1.251,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "149": {
+        "width": 1.157,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 0.826,
+        "height": 0.921,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 0.566,
+        "height": 0.566,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.684,
+        "height": 0.685,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.826,
+        "height": 0.826,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "154": {
+        "width": 1.039,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 1.133,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "156": {
+        "width": 1.227,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.039,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 0.897,
+        "height": 1.039,
+        "offsetX": 0
+      }
+    },
+    "hitHeavy": {
+      "159": {
+        "width": 1.18,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 0.944,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.236,
+        "height": 0.472,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 1.251,
+        "height": 1.015,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "163": {
+        "width": 0.165,
+        "height": 0.685,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 0.236,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 0.1,
+        "height": 0.496,
+        "offsetX": 0
+      },
+      "169": {
+        "width": 0.755,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "171": {
+        "width": 0.189,
+        "height": 1.275,
+        "offsetX": 0
+      },
+      "173": {
+        "width": 0.637,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "175": {
+        "width": 0.472,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "177": {
+        "width": 0.637,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "181": {
+        "width": 0.779,
+        "height": 0.732,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "179": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 0.88564
+      },
+      "180": {
+        "width": 0.25,
+        "height": 0.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "181": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 0.88564
+      },
+      "182": {
+        "width": 0.25,
+        "height": 0.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "183": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "184": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "185": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "186": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupStand": {
+      "187": {
+        "width": 0.685,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 0.685,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "189": {
+        "width": 0.685,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "190": {
+        "width": 0.685,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "191": {
+        "width": 0.685,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "192": {
+        "width": 0.685,
+        "height": 0.944,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "193": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "194": {
+        "width": 0.33,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "195": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "196": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "197": {
+        "width": 1.15,
+        "height": 0.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "198": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "199": {
+        "width": 0.63,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "200": {
+        "width": 2.08,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "202": {
+        "width": 0.614,
+        "height": 0.921,
+        "offsetX": 0
+      },
+      "203": {
+        "width": 4.815,
+        "height": 1.298,
+        "offsetX": 0
+      },
+      "205": {
+        "width": 4.532,
+        "height": 1.817,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 5.476,
+        "height": 3.186,
+        "offsetX": 0
+      },
+      "208": {
+        "width": 0.685,
+        "height": 0.921,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 0.732,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 0.614,
+        "height": 0.921,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 0.732,
+        "height": 0.991,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "214": {
+        "width": 0.732,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "216": {
+        "width": 0.614,
+        "height": 0.921,
+        "offsetX": 0
+      },
+      "219": {
+        "width": 0.944,
+        "height": 1.393,
+        "offsetX": 0
+      },
+      "222": {
+        "width": 3.517,
+        "height": 0.378,
+        "offsetX": 0
+      },
+      "225": {
+        "width": 0.732,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "227": {
+        "width": 0.519,
+        "height": 0.566,
+        "offsetX": 0
+      },
+      "230": {
+        "width": 5.854,
+        "height": 1.888,
+        "offsetX": 0
+      },
+      "233": {
+        "width": 1.015,
+        "height": 0.165,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+1": {
+      "236": {
+        "width": 0.613,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "237": {
+        "width": 0.377,
+        "height": 0.378,
+        "offsetX": 0
+      },
+      "238": {
+        "width": 0.613,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "239": {
+        "width": 0.377,
+        "height": 0.378,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "240": {
+        "width": 0.236,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "241": {
+        "width": 0.236,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "242": {
+        "width": 0.1,
+        "height": 0.496,
+        "offsetX": 0
+      },
+      "243": {
+        "width": 1.251,
+        "height": 1.015,
+        "offsetX": 0
+      },
+      "244": {
+        "width": 0.944,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "245": {
+        "width": 0.236,
+        "height": 0.472,
+        "offsetX": 0
+      },
+      "246": {
+        "width": 1.18,
+        "height": 0.944,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "240": {
+        "width": 0.236,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "241": {
+        "width": 0.236,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "242": {
+        "width": 0.1,
+        "height": 0.496,
+        "offsetX": 0
+      },
+      "243": {
+        "width": 1.251,
+        "height": 1.015,
+        "offsetX": 0
+      },
+      "244": {
+        "width": 0.944,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "245": {
+        "width": 0.236,
+        "height": 0.472,
+        "offsetX": 0
+      },
+      "246": {
+        "width": 1.18,
+        "height": 0.944,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "0": {
+        "width": 0.637,
+        "height": 0.826,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 0.543,
+        "height": 0.685,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.251,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.157,
+        "height": 1.133,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "4": {
+        "width": 1.227,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 1.251,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "6": {
+        "width": 1.157,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 0.873,
+        "height": 1.015,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 0.732,
+        "height": 1.157,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.133,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.133,
+        "height": 1.086,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "11": {
+        "width": 1.039,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.566,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 0.897,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "20": {
+        "width": 1.204,
+        "height": 1.109,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 1.322,
+        "height": 1.511,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 1.18,
+        "height": 1.511,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 1.062,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.086,
+        "height": 1.133,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "36": {
+        "width": 1.086,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "37": {
+        "width": 0.897,
+        "height": 1.086,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 0.614,
+        "height": 0.779,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.472,
+        "height": 0.661,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 0.661,
+        "height": 0.59,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 0.944,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.566,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.685,
+        "height": 0.803,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "48": {
+        "width": 0.85,
+        "height": 0.543,
+        "offsetX": 0
+      },
+      "49": {
+        "width": 0.425,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "50": {
+        "width": 0.566,
+        "height": 0.543,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1.062,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1.322,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 1.062,
+        "height": 1.133,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.039,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 1.251,
+        "height": 1.109,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "56": {
+        "width": 0.755,
+        "height": 0.944,
+        "offsetX": 0
+      },
+      "249": {
+        "width": 0.732,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "250": {
+        "width": 0.732,
+        "height": 0.732,
+        "offsetX": 0
+      },
+      "251": {
+        "width": 0.779,
+        "height": 0.708,
+        "offsetX": 0
+      },
+      "252": {
+        "width": 0.496,
+        "height": 0.661,
+        "offsetX": 0
+      },
+      "253": {
+        "width": 0.496,
+        "height": 0.637,
+        "offsetX": 0
+      },
+      "254": {
+        "width": 0.685,
+        "height": 0.85,
+        "offsetX": 0
+      },
+      "255": {
+        "width": 0.708,
+        "height": 0.803,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "57": {
+        "width": 1.039,
+        "height": 1.416,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 0.968,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 0.968,
+        "height": 1.015,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 1.086,
+        "height": 1.463,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 1.062,
+        "height": 1.298,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "62": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 1.086,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "68": {
+        "width": 1.204,
+        "height": 1.039,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 0.708,
+        "height": 0.614,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.204,
+        "height": 1.062,
+        "offsetX": 0
+      },
+      "77": {
+        "width": 0.637,
+        "height": 0.378,
+        "offsetX": 0
+      },
+      "80": {
+        "width": 0.519,
+        "height": 0.566,
+        "offsetX": 0
+      },
+      "83": {
+        "width": 0.803,
+        "height": 0.897,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "87": {
+        "width": 1.275,
+        "height": 0.661,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 0.921,
+        "height": 1.298,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.921,
+        "height": 0.519,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.685,
+        "height": 0.33,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 1.087,
+        "height": 1.18,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 0.755,
+        "height": 0.708,
+        "offsetX": 0
+      },
+      "105": {
+        "width": 0.779,
+        "height": 0.921,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 0.91,
+        "height": 1.18,
+        "offsetX": 0
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.1,
+    "height": 1.1
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

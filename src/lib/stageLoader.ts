@@ -99,6 +99,7 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
     ...stage,
     renderMode: stage.renderMode ?? 'procedural',
     hidden: stage.hidden === true,
+    tournamentEligible: stage.tournamentEligible === true,
     floor: stage.floor ?? '#07182c',
     floorAssetId: stage.floorAssetId,
     floorTexturePath: stage.floorTexturePath,

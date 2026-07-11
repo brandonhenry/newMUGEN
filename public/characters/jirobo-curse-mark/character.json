@@ -1,0 +1,3405 @@
+{
+  "id": "jirobo-curse-mark",
+  "displayName": "Jirobo Curse Mark",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/jirobo-curse-mark/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://jirobo-curse-mark",
+  "spriteSheetPath": "/characters/jirobo-curse-mark/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/jirobo-curse-mark/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 231
+    }
+  ],
+  "spriteFrameCount": 231,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/jirobo-curse-mark/frames/frame-000.png",
+      "/characters/jirobo-curse-mark/frames/frame-003.png",
+      "/characters/jirobo-curse-mark/frames/frame-004.png",
+      "/characters/jirobo-curse-mark/frames/frame-010.png",
+      "/characters/jirobo-curse-mark/frames/frame-011.png"
+    ],
+    "walkForward": [
+      "/characters/jirobo-curse-mark/frames/frame-003.png",
+      "/characters/jirobo-curse-mark/frames/frame-004.png",
+      "/characters/jirobo-curse-mark/frames/frame-005.png",
+      "/characters/jirobo-curse-mark/frames/frame-007.png",
+      "/characters/jirobo-curse-mark/frames/frame-008.png",
+      "/characters/jirobo-curse-mark/frames/frame-010.png",
+      "/characters/jirobo-curse-mark/frames/frame-011.png",
+      "/characters/jirobo-curse-mark/frames/frame-012.png"
+    ],
+    "walkBack": [
+      "/characters/jirobo-curse-mark/frames/frame-066.png",
+      "/characters/jirobo-curse-mark/frames/frame-065.png",
+      "/characters/jirobo-curse-mark/frames/frame-064.png",
+      "/characters/jirobo-curse-mark/frames/frame-063.png",
+      "/characters/jirobo-curse-mark/frames/frame-062.png",
+      "/characters/jirobo-curse-mark/frames/frame-061.png"
+    ],
+    "sprint": [
+      "/characters/jirobo-curse-mark/frames/frame-024.png",
+      "/characters/jirobo-curse-mark/frames/frame-025.png",
+      "/characters/jirobo-curse-mark/frames/frame-026.png",
+      "/characters/jirobo-curse-mark/frames/frame-027.png",
+      "/characters/jirobo-curse-mark/frames/frame-028.png",
+      "/characters/jirobo-curse-mark/frames/frame-029.png",
+      "/characters/jirobo-curse-mark/frames/frame-030.png"
+    ],
+    "backHop": [
+      "/characters/jirobo-curse-mark/frames/frame-060.png"
+    ],
+    "sidestepLeft": [
+      "/characters/jirobo-curse-mark/frames/frame-031.png"
+    ],
+    "sidestepRight": [
+      "/characters/jirobo-curse-mark/frames/frame-031.png"
+    ],
+    "jump": [
+      "/characters/jirobo-curse-mark/frames/frame-034.png",
+      "/characters/jirobo-curse-mark/frames/frame-035.png",
+      "/characters/jirobo-curse-mark/frames/frame-036.png"
+    ],
+    "crouch": [
+      "/characters/jirobo-curse-mark/frames/frame-050.png"
+    ],
+    "crouchBlock": [
+      "/characters/jirobo-curse-mark/frames/frame-051.png"
+    ],
+    "block": [
+      "/characters/jirobo-curse-mark/frames/frame-052.png"
+    ],
+    "chargeKi": [
+      "/characters/jirobo-curse-mark/frames/frame-000.png",
+      "/characters/jirobo-curse-mark/frames/frame-003.png",
+      "/characters/jirobo-curse-mark/frames/frame-004.png",
+      "/characters/jirobo-curse-mark/frames/frame-010.png"
+    ],
+    "jableft": [
+      "/characters/jirobo-curse-mark/frames/frame-068.png",
+      "/characters/jirobo-curse-mark/frames/frame-069.png",
+      "/characters/jirobo-curse-mark/frames/frame-070.png",
+      "/characters/jirobo-curse-mark/frames/frame-071.png"
+    ],
+    "jabright": [
+      "/characters/jirobo-curse-mark/frames/frame-063.png",
+      "/characters/jirobo-curse-mark/frames/frame-064.png",
+      "/characters/jirobo-curse-mark/frames/frame-065.png",
+      "/characters/jirobo-curse-mark/frames/frame-066.png",
+      "/characters/jirobo-curse-mark/frames/frame-067.png"
+    ],
+    "kickleft": [
+      "/characters/jirobo-curse-mark/frames/frame-068.png",
+      "/characters/jirobo-curse-mark/frames/frame-069.png",
+      "/characters/jirobo-curse-mark/frames/frame-070.png",
+      "/characters/jirobo-curse-mark/frames/frame-071.png"
+    ],
+    "kickright": [
+      "/characters/jirobo-curse-mark/frames/frame-072.png",
+      "/characters/jirobo-curse-mark/frames/frame-073.png",
+      "/characters/jirobo-curse-mark/frames/frame-074.png"
+    ],
+    "hitLight": [
+      "/characters/jirobo-curse-mark/frames/frame-060.png"
+    ],
+    "hitHeavy": [
+      "/characters/jirobo-curse-mark/frames/frame-077.png"
+    ],
+    "juggle": [
+      "/characters/jirobo-curse-mark/frames/frame-077.png"
+    ],
+    "knockdown": [
+      "/characters/jirobo-curse-mark/frames/frame-077.png",
+      "/characters/jirobo-curse-mark/frames/frame-078.png",
+      "/characters/jirobo-curse-mark/frames/frame-079.png",
+      "/characters/jirobo-curse-mark/frames/frame-080.png"
+    ],
+    "getupStand": [
+      "/characters/jirobo-curse-mark/frames/frame-080.png",
+      "/characters/jirobo-curse-mark/frames/frame-079.png",
+      "/characters/jirobo-curse-mark/frames/frame-078.png",
+      "/characters/jirobo-curse-mark/frames/frame-077.png",
+      "/characters/jirobo-curse-mark/frames/frame-082.png",
+      "/characters/jirobo-curse-mark/frames/frame-083.png",
+      "/characters/jirobo-curse-mark/frames/frame-084.png",
+      "/characters/jirobo-curse-mark/frames/frame-085.png"
+    ],
+    "getupRollUp": [
+      "/characters/jirobo-curse-mark/frames/frame-080.png",
+      "/characters/jirobo-curse-mark/frames/frame-079.png",
+      "/characters/jirobo-curse-mark/frames/frame-078.png",
+      "/characters/jirobo-curse-mark/frames/frame-077.png",
+      "/characters/jirobo-curse-mark/frames/frame-082.png",
+      "/characters/jirobo-curse-mark/frames/frame-083.png",
+      "/characters/jirobo-curse-mark/frames/frame-084.png",
+      "/characters/jirobo-curse-mark/frames/frame-085.png"
+    ],
+    "win": [
+      "/characters/jirobo-curse-mark/frames/frame-038.png",
+      "/characters/jirobo-curse-mark/frames/frame-039.png",
+      "/characters/jirobo-curse-mark/frames/frame-040.png",
+      "/characters/jirobo-curse-mark/frames/frame-041.png",
+      "/characters/jirobo-curse-mark/frames/frame-042.png",
+      "/characters/jirobo-curse-mark/frames/frame-043.png",
+      "/characters/jirobo-curse-mark/frames/frame-044.png"
+    ],
+    "lose": [
+      "/characters/jirobo-curse-mark/frames/frame-078.png"
+    ],
+    "cmd:f+1": [
+      "/characters/jirobo-curse-mark/frames/frame-142.png",
+      "/characters/jirobo-curse-mark/frames/frame-143.png",
+      "/characters/jirobo-curse-mark/frames/frame-144.png",
+      "/characters/jirobo-curse-mark/frames/frame-145.png",
+      "/characters/jirobo-curse-mark/frames/frame-146.png",
+      "/characters/jirobo-curse-mark/frames/frame-147.png",
+      "/characters/jirobo-curse-mark/frames/frame-148.png",
+      "/characters/jirobo-curse-mark/frames/frame-149.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/jirobo-curse-mark/frames/frame-159.png",
+      "/characters/jirobo-curse-mark/frames/frame-160.png",
+      "/characters/jirobo-curse-mark/frames/frame-161.png",
+      "/characters/jirobo-curse-mark/frames/frame-162.png",
+      "/characters/jirobo-curse-mark/frames/frame-163.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/jirobo-curse-mark/frames/frame-183.png",
+      "/characters/jirobo-curse-mark/frames/frame-184.png",
+      "/characters/jirobo-curse-mark/frames/frame-185.png",
+      "/characters/jirobo-curse-mark/frames/frame-186.png",
+      "/characters/jirobo-curse-mark/frames/frame-187.png",
+      "/characters/jirobo-curse-mark/frames/frame-188.png",
+      "/characters/jirobo-curse-mark/frames/frame-189.png",
+      "/characters/jirobo-curse-mark/frames/frame-190.png",
+      "/characters/jirobo-curse-mark/frames/frame-191.png",
+      "/characters/jirobo-curse-mark/frames/frame-192.png",
+      "/characters/jirobo-curse-mark/frames/frame-193.png",
+      "/characters/jirobo-curse-mark/frames/frame-194.png",
+      "/characters/jirobo-curse-mark/frames/frame-195.png",
+      "/characters/jirobo-curse-mark/frames/frame-196.png",
+      "/characters/jirobo-curse-mark/frames/frame-197.png",
+      "/characters/jirobo-curse-mark/frames/frame-198.png",
+      "/characters/jirobo-curse-mark/frames/frame-199.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/jirobo-curse-mark/frames/frame-204.png",
+      "/characters/jirobo-curse-mark/frames/frame-205.png",
+      "/characters/jirobo-curse-mark/frames/frame-206.png",
+      "/characters/jirobo-curse-mark/frames/frame-207.png",
+      "/characters/jirobo-curse-mark/frames/frame-208.png",
+      "/characters/jirobo-curse-mark/frames/frame-209.png",
+      "/characters/jirobo-curse-mark/frames/frame-210.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/jirobo-curse-mark/frames/frame-142.png",
+      "/characters/jirobo-curse-mark/frames/frame-143.png",
+      "/characters/jirobo-curse-mark/frames/frame-144.png",
+      "/characters/jirobo-curse-mark/frames/frame-145.png",
+      "/characters/jirobo-curse-mark/frames/frame-146.png",
+      "/characters/jirobo-curse-mark/frames/frame-147.png",
+      "/characters/jirobo-curse-mark/frames/frame-148.png",
+      "/characters/jirobo-curse-mark/frames/frame-149.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/jirobo-curse-mark/frames/frame-159.png",
+      "/characters/jirobo-curse-mark/frames/frame-160.png",
+      "/characters/jirobo-curse-mark/frames/frame-161.png",
+      "/characters/jirobo-curse-mark/frames/frame-162.png",
+      "/characters/jirobo-curse-mark/frames/frame-163.png"
+    ],
+    "cmd:1+2": [
+      "/characters/jirobo-curse-mark/frames/frame-183.png",
+      "/characters/jirobo-curse-mark/frames/frame-184.png",
+      "/characters/jirobo-curse-mark/frames/frame-185.png",
+      "/characters/jirobo-curse-mark/frames/frame-186.png",
+      "/characters/jirobo-curse-mark/frames/frame-187.png",
+      "/characters/jirobo-curse-mark/frames/frame-188.png",
+      "/characters/jirobo-curse-mark/frames/frame-189.png",
+      "/characters/jirobo-curse-mark/frames/frame-190.png",
+      "/characters/jirobo-curse-mark/frames/frame-191.png",
+      "/characters/jirobo-curse-mark/frames/frame-192.png",
+      "/characters/jirobo-curse-mark/frames/frame-193.png",
+      "/characters/jirobo-curse-mark/frames/frame-194.png",
+      "/characters/jirobo-curse-mark/frames/frame-195.png",
+      "/characters/jirobo-curse-mark/frames/frame-196.png",
+      "/characters/jirobo-curse-mark/frames/frame-197.png",
+      "/characters/jirobo-curse-mark/frames/frame-198.png",
+      "/characters/jirobo-curse-mark/frames/frame-199.png"
+    ],
+    "cmd:1+3": [
+      "/characters/jirobo-curse-mark/frames/frame-204.png",
+      "/characters/jirobo-curse-mark/frames/frame-205.png",
+      "/characters/jirobo-curse-mark/frames/frame-206.png",
+      "/characters/jirobo-curse-mark/frames/frame-207.png",
+      "/characters/jirobo-curse-mark/frames/frame-208.png",
+      "/characters/jirobo-curse-mark/frames/frame-209.png",
+      "/characters/jirobo-curse-mark/frames/frame-210.png"
+    ],
+    "cmd:2+3": [
+      "/characters/jirobo-curse-mark/frames/frame-142.png",
+      "/characters/jirobo-curse-mark/frames/frame-143.png",
+      "/characters/jirobo-curse-mark/frames/frame-144.png",
+      "/characters/jirobo-curse-mark/frames/frame-145.png",
+      "/characters/jirobo-curse-mark/frames/frame-146.png",
+      "/characters/jirobo-curse-mark/frames/frame-147.png",
+      "/characters/jirobo-curse-mark/frames/frame-148.png",
+      "/characters/jirobo-curse-mark/frames/frame-149.png"
+    ],
+    "cmd:2+4": [
+      "/characters/jirobo-curse-mark/frames/frame-159.png",
+      "/characters/jirobo-curse-mark/frames/frame-160.png",
+      "/characters/jirobo-curse-mark/frames/frame-161.png",
+      "/characters/jirobo-curse-mark/frames/frame-162.png",
+      "/characters/jirobo-curse-mark/frames/frame-163.png"
+    ],
+    "cmd:3+4": [
+      "/characters/jirobo-curse-mark/frames/frame-183.png",
+      "/characters/jirobo-curse-mark/frames/frame-184.png",
+      "/characters/jirobo-curse-mark/frames/frame-185.png",
+      "/characters/jirobo-curse-mark/frames/frame-186.png",
+      "/characters/jirobo-curse-mark/frames/frame-187.png",
+      "/characters/jirobo-curse-mark/frames/frame-188.png",
+      "/characters/jirobo-curse-mark/frames/frame-189.png",
+      "/characters/jirobo-curse-mark/frames/frame-190.png",
+      "/characters/jirobo-curse-mark/frames/frame-191.png",
+      "/characters/jirobo-curse-mark/frames/frame-192.png",
+      "/characters/jirobo-curse-mark/frames/frame-193.png",
+      "/characters/jirobo-curse-mark/frames/frame-194.png",
+      "/characters/jirobo-curse-mark/frames/frame-195.png",
+      "/characters/jirobo-curse-mark/frames/frame-196.png",
+      "/characters/jirobo-curse-mark/frames/frame-197.png",
+      "/characters/jirobo-curse-mark/frames/frame-198.png",
+      "/characters/jirobo-curse-mark/frames/frame-199.png"
+    ],
+    "cmd:O+2": [
+      "/characters/jirobo-curse-mark/frames/frame-204.png",
+      "/characters/jirobo-curse-mark/frames/frame-205.png",
+      "/characters/jirobo-curse-mark/frames/frame-206.png",
+      "/characters/jirobo-curse-mark/frames/frame-207.png",
+      "/characters/jirobo-curse-mark/frames/frame-208.png",
+      "/characters/jirobo-curse-mark/frames/frame-209.png",
+      "/characters/jirobo-curse-mark/frames/frame-210.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 100,
+    "speed": 5.43,
+    "sidestepSpeed": 4.81,
+    "jumpForce": 8.08,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Jirobo Curse Mark Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Jirobo Curse Mark Left Kick",
+      "input": "kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Jirobo Curse Mark Right Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Jirobo Curse Mark Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#3dd285",
+    "secondary": "#5417d3",
+    "accent": "#e720b0"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Jirobo Curse Mark Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 11,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Jirobo Curse Mark Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Jirobo Curse Mark Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Jirobo Curse Mark Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Jirobo Curse Mark Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Jirobo Curse Mark Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Jirobo Curse Mark Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Jirobo Curse Mark Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Jirobo Curse Mark Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Jirobo Curse Mark Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Jirobo Curse Mark Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Jirobo Curse Mark Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Jirobo Curse Mark Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Jirobo Curse Mark Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Jirobo Curse Mark Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Jirobo Curse Mark Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Jirobo Curse Mark Second Beat"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Jirobo Curse Mark Body Blow"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Jirobo Curse Mark Low Changeup"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Jirobo Curse Mark Pressure Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Jirobo Curse Mark Drive"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Jirobo Curse Mark Barrage"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Jirobo Curse Mark Finisher"
+    },
+    "neutral:jab-kick": {
+      "label": "Jirobo Curse Mark Step Kick"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Jirobo Curse Mark Palm String"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Jirobo Curse Mark Rising Chain"
+    },
+    "neutral:jab-special": {
+      "label": "Jirobo Curse Mark Special Setup"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Jirobo Curse Mark Break Art"
+    },
+    "neutral:heavy-jab": {
+      "label": "Jirobo Curse Mark Check Hook"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Jirobo Curse Mark Heavy Break"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Jirobo Curse Mark Charged Follow"
+    },
+    "neutral:heavy-kick": {
+      "label": "Jirobo Curse Mark Drop Kick"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Jirobo Curse Mark Arc Finisher"
+    },
+    "neutral:heavy-special": {
+      "label": "Jirobo Curse Mark Focus Stance"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Jirobo Curse Mark Mode Shift"
+    },
+    "neutral:kick-jab": {
+      "label": "Jirobo Curse Mark Heel Feint"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Jirobo Curse Mark Summon Strike"
+    },
+    "neutral:kick-heavy": {
+      "label": "Jirobo Curse Mark Guard Snare"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Jirobo Curse Mark Armor Break"
+    },
+    "neutral:kick-special": {
+      "label": "Jirobo Curse Mark Power Setup"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Jirobo Curse Mark Switch Strike"
+    },
+    "neutral:special-jab": {
+      "label": "Jirobo Curse Mark Spark Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Jirobo Curse Mark Binding Blow"
+    },
+    "neutral:special-heavy": {
+      "label": "Jirobo Curse Mark Heavy Draw"
+    },
+    "neutral:special-kick": {
+      "label": "Jirobo Curse Mark Kick Ender"
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.65,
+    "guard": 0.45,
+    "spacing": 1.41,
+    "specialChance": 0.28
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 1.186,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.16,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.134,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "11": {
+        "width": 1.239,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "204": {
+        "width": 0.91,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "205": {
+        "width": 1.41,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "206": {
+        "width": 1.41,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "207": {
+        "width": 1.19,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "208": {
+        "width": 1.03,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "209": {
+        "width": 1.07,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "210": {
+        "width": 1.37,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "211": {
+        "width": 1.03,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "212": {
+        "width": 1.31,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "213": {
+        "width": 1.13,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "214": {
+        "width": 1.11,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "215": {
+        "width": 0.97,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "216": {
+        "width": 0.99,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "217": {
+        "width": 1.37,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "218": {
+        "width": 1.15,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "219": {
+        "width": 1.39,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "220": {
+        "width": 0.95,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "221": {
+        "width": 0.95,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "222": {
+        "width": 0.95,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "223": {
+        "width": 0.89,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "224": {
+        "width": 1.03,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkForward": {
+      "1": {
+        "width": 1.35,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 1.11,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 1.16,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.134,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 1.134,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.134,
+        "height": 1.169,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 1.186,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 1.19,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "11": {
+        "width": 1.239,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 1.423,
+        "height": 1.169,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "13": {
+        "width": 1.07,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 1.15,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 1.25,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 1.29,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 1.03,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.11,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.11,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.07,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "21": {
+        "width": 1.07,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 1.23,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 1.423,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "62": {
+        "width": 1.152,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "63": {
+        "width": 1.371,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "64": {
+        "width": 1.397,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "24": {
+        "width": 0.653,
+        "height": 0.653,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 1.152,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "27": {
+        "width": 1.213,
+        "height": 1.461,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 1.213,
+        "height": 1.478,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 1.186,
+        "height": 1.031,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 1.186,
+        "height": 1.049,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "25": {
+        "width": 1.21,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 1.21,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.93,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "28": {
+        "width": 0.93,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "29": {
+        "width": 0.91,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 0.91,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "60": {
+        "width": 1.555,
+        "height": 0.808,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "31": {
+        "width": 1.423,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.09,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepRight": {
+      "31": {
+        "width": 1.423,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.09,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jump": {
+      "34": {
+        "width": 1.371,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.555,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 1.476,
+        "height": 1.134,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "37": {
+        "width": 1.01,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 1.25,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 1.11,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 1.15,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "43": {
+        "width": 1.09,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "44": {
+        "width": 1.03,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 0.95,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 1.05,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "50": {
+        "width": 1.371,
+        "height": 0.963,
+        "offsetX": 0
+      }
+    },
+    "crouchBlock": {
+      "51": {
+        "width": 1.766,
+        "height": 1.169,
+        "offsetX": 0
+      },
+      "203": {
+        "width": 0.97,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "50": {
+        "width": 1.05,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 1.35,
+        "height": 1.08,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 1.397,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 1.11,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 1.27,
+        "height": 1.08,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 0.97,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 0.97,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 0.97,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "0": {
+        "width": 1.186,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.16,
+        "height": 1.152,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.134,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "60": {
+        "width": 1.19,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jableft": {
+      "61": {
+        "width": 1.423,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "62": {
+        "width": 1.152,
+        "height": 1.152,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "63": {
+        "width": 1.371,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "64": {
+        "width": 1.397,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 1.371,
+        "height": 1.255,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "68": {
+        "width": 1.503,
+        "height": 1.22,
+        "offsetX": 0
+      },
+      "69": {
+        "width": 1.397,
+        "height": 1.238,
+        "offsetX": 0
+      },
+      "70": {
+        "width": 1.476,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 1.397,
+        "height": 1.238,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "72": {
+        "width": 1.239,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "73": {
+        "width": 1.476,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.292,
+        "height": 1.22,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "60": {
+        "width": 1.555,
+        "height": 0.808,
+        "offsetX": 0
+      },
+      "75": {
+        "width": 1.35,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "76": {
+        "width": 1.11,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "77": {
+        "width": 1.25,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 1.25,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 1.33,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.33,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 1.17,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 1.19,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "77": {
+        "width": 1.634,
+        "height": 0.859,
+        "offsetX": 0
+      },
+      "83": {
+        "width": 1.15,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 1.07,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 1.07,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 1.07,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 1.11,
+        "height": 1.08,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 1.05,
+        "height": 1.08,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "92": {
+        "width": 1.11,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.97,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "77": {
+        "width": 1.634,
+        "height": 0.859,
+        "offsetX": 0
+      },
+      "79": {
+        "width": 1.74,
+        "height": 0.894,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.83,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 2.36,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 2.46,
+        "height": 1.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 2.5,
+        "height": 1.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 2.5,
+        "height": 1.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 2.5,
+        "height": 1.58,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "102": {
+        "width": 2.5,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "225": {
+        "width": 0.81,
+        "height": 0.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "226": {
+        "width": 0.95,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "227": {
+        "width": 0.87,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "228": {
+        "width": 2.5,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "229": {
+        "width": 2.5,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "230": {
+        "width": 2.48,
+        "height": 1.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "knockdown": {
+      "77": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1.53356,
+        "voxelScaleY": 0.80638
+      },
+      "78": {
+        "width": 1.18599,
+        "height": 1.18599,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "79": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "80": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "103": {
+        "width": 2.46,
+        "height": 1.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 2.5,
+        "height": 1.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 2.48,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupStand": {
+      "77": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1.53356,
+        "voxelScaleY": 0.80638
+      },
+      "78": {
+        "width": 1.18599,
+        "height": 1.18599,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "79": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "80": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "82": {
+        "width": 1.555,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "83": {
+        "width": 1.503,
+        "height": 1.049,
+        "offsetX": 0
+      },
+      "84": {
+        "width": 1.397,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "85": {
+        "width": 1.397,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 2.5,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 2.5,
+        "height": 1.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 2.5,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupRollUp": {
+      "77": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1.53356,
+        "voxelScaleY": 0.80638
+      },
+      "78": {
+        "width": 1.18599,
+        "height": 1.18599,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "79": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "80": {
+        "width": 1.186,
+        "height": 1.186,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "82": {
+        "width": 1.555,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "83": {
+        "width": 1.503,
+        "height": 1.049,
+        "offsetX": 0
+      },
+      "84": {
+        "width": 1.397,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "85": {
+        "width": 1.397,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 2.5,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 2.5,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 2.5,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "38": {
+        "width": 1.634,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 1.344,
+        "height": 1.255,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 1.45,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 1.503,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 1.503,
+        "height": 1.049,
+        "offsetX": 0
+      },
+      "43": {
+        "width": 1.423,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 1.344,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 1.09,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "113": {
+        "width": 2.5,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 1.09,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 2.46,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.93,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 2.5,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "118": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "lose": {
+      "78": {
+        "width": 1.18599,
+        "height": 1.18599,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "119": {
+        "width": 0.63,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 2.46,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "121": {
+        "width": 0.44,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.63,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "123": {
+        "width": 2.5,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "124": {
+        "width": 0.44,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "125": {
+        "width": 0.65,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "126": {
+        "width": 2.46,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:f+1": {
+      "128": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "129": {
+        "width": 1.09,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "131": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "132": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "133": {
+        "width": 1.07,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "142": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 1.066,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 1.031,
+        "height": 1.031,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.928,
+        "height": 0.928,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 0.997,
+        "height": 0.997,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 1.066,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 1.031,
+        "height": 1.031,
+        "offsetX": 0
+      },
+      "156": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "135": {
+        "width": 1.02,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "136": {
+        "width": 1.02,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "137": {
+        "width": 1.02,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "138": {
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "139": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "140": {
+        "width": 0.6,
+        "height": 0.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "183": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "184": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "186": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "187": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "189": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "190": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "191": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "192": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "193": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "194": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "195": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "196": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "198": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "199": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "141": {
+        "width": 1.03,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "204": {
+        "width": 1.213,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "205": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "207": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "208": {
+        "width": 1.344,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "210": {
+        "width": 1.117,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 1.344,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "213": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "214": {
+        "width": 1.45,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "215": {
+        "width": 1.265,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "216": {
+        "width": 1.292,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "217": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "218": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "142": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 1.066,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 1.031,
+        "height": 1.031,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.928,
+        "height": 0.928,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 0.997,
+        "height": 0.997,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 1.066,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 1.031,
+        "height": 1.031,
+        "offsetX": 0
+      },
+      "156": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "151": {
+        "width": 1.17,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "152": {
+        "width": 1.07,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "153": {
+        "width": 1.13,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "154": {
+        "width": 1.13,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "156": {
+        "width": 1.11,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "157": {
+        "width": 1.15,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "158": {
+        "width": 1.15,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "159": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 0.963,
+        "height": 0.963,
+        "offsetX": 0
+      },
+      "163": {
+        "width": 1.397,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 1.213,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 1.397,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 1.239,
+        "height": 1.238,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "161": {
+        "width": 1.13,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "162": {
+        "width": 1.13,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "163": {
+        "width": 1.07,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "164": {
+        "width": 0.93,
+        "height": 1.11,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "165": {
+        "width": 1.07,
+        "height": 1.11,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "166": {
+        "width": 0.95,
+        "height": 1.15,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "167": {
+        "width": 1.23,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "183": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "184": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "186": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "187": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "189": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "190": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "191": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "192": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "193": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "194": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "195": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "196": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "198": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "199": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "168": {
+        "width": 0.95,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "169": {
+        "width": 0.95,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "170": {
+        "width": 1.11,
+        "height": 1.19,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "171": {
+        "width": 1.37,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "172": {
+        "width": 1.05,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "173": {
+        "width": 1.07,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "174": {
+        "width": 1.07,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "175": {
+        "width": 1.07,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "204": {
+        "width": 1.213,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "205": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "207": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "208": {
+        "width": 1.344,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "210": {
+        "width": 1.117,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 1.344,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "213": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "214": {
+        "width": 1.45,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "215": {
+        "width": 1.265,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "216": {
+        "width": 1.292,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "217": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "218": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "142": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 1.066,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 1.031,
+        "height": 1.031,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.928,
+        "height": 0.928,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 0.997,
+        "height": 0.997,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 1.014,
+        "height": 1.014,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 1.066,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 1.031,
+        "height": 1.031,
+        "offsetX": 0
+      },
+      "156": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "176": {
+        "width": 0.83,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "177": {
+        "width": 0.83,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "178": {
+        "width": 0.83,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "179": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "180": {
+        "width": 1.03,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "181": {
+        "width": 1.21,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "182": {
+        "width": 1.07,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "183": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+4": {
+      "159": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 0.963,
+        "height": 0.963,
+        "offsetX": 0
+      },
+      "163": {
+        "width": 1.397,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 1.213,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 1.397,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 1.239,
+        "height": 1.238,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "184": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "185": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "186": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "187": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "188": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "189": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "190": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "191": {
+        "width": 1.29,
+        "height": 1.02,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:3+4": {
+      "183": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "184": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "186": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "187": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "189": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "190": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "191": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "192": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "193": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "194": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "195": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "196": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "198": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "199": {
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "200": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "201": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "202": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "204": {
+        "width": 1.213,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "205": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "207": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "208": {
+        "width": 1.344,
+        "height": 1.1,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "210": {
+        "width": 1.117,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 1.344,
+        "height": 1.117,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "213": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "214": {
+        "width": 1.45,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "215": {
+        "width": 1.265,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "216": {
+        "width": 1.292,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "217": {
+        "width": 1.134,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "218": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "159": {
+        "width": 1.135,
+        "height": 1.134,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 0.98,
+        "height": 0.98,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 0.963,
+        "height": 0.963,
+        "offsetX": 0
+      },
+      "163": {
+        "width": 1.397,
+        "height": 1.186,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 1.213,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 1.397,
+        "height": 1.203,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 1.239,
+        "height": 1.238,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 1.083,
+        "height": 1.083,
+        "offsetX": 0
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 0.89,
+    "height": 0.89
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

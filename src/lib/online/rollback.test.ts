@@ -51,6 +51,31 @@ function batch(startFrame: number, masks: number[]) {
 }
 
 describe('rollback session', () => {
+  it('exports only fully confirmed two-player inputs and retained saved states', () => {
+    const controller = makeSession(makeMatch(), 0);
+    const localMasks: number[] = [];
+    const remoteMasks: number[] = [];
+    for (let frame = 0; frame < 5; frame += 1) {
+      const local = frame === 1 ? input(['jab']) : emptyInputFrame();
+      const remote = frame === 3 ? input(['kick']) : emptyInputFrame();
+      localMasks.push(encodeInputFrame(local));
+      remoteMasks.push(encodeInputFrame(remote));
+      controller.addLocalInput(0, local);
+      controller.receiveRemoteInputBatch(batch(frame, [remoteMasks[frame]]));
+      controller.advanceFrame();
+    }
+    controller.saveGameState(5);
+
+    expect(controller.getConfirmedFrame()).toBe(4);
+    expect(controller.makeConfirmedInputBatch(0, 6)).toEqual({
+      startFrame: 0,
+      p1Masks: localMasks,
+      p2Masks: remoteMasks,
+      latestConfirmedFrame: 4
+    });
+    expect(controller.getSavedState(5)?.checksum).toBe(checksumMatch(controller.getMatch()));
+  });
+
   it('does not roll back when late input matches prediction', () => {
     const controller = makeSession(makeMatch(), 0);
 

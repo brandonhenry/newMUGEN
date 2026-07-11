@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 19;
+export const ONLINE_PROTOCOL_VERSION = 20;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -128,6 +128,7 @@ export type CompactMatchSnapshot = {
   aiSeed: number;
   roundAiSeed: number;
   roundTime: number;
+  roundsToWin: number;
   maxHealth?: number;
   trainingInfiniteHealth: boolean;
   controlScheme?: ControlScheme;
@@ -177,6 +178,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     aiSeed: match.aiSeed,
     roundAiSeed: match.roundAiSeed,
     roundTime: match.roundTime,
+    roundsToWin: match.roundsToWin,
     maxHealth: match.maxHealth,
     trainingInfiniteHealth: match.trainingInfiniteHealth,
     controlScheme: match.controlScheme,
@@ -214,6 +216,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     aiSeed: snapshot.aiSeed ?? base.aiSeed,
     roundAiSeed: snapshot.roundAiSeed ?? base.roundAiSeed,
     roundTime: snapshot.roundTime,
+    roundsToWin: snapshot.roundsToWin ?? base.roundsToWin,
     maxHealth: snapshot.maxHealth ?? base.maxHealth,
     trainingInfiniteHealth: snapshot.trainingInfiniteHealth,
     controlScheme: snapshot.controlScheme === 'beginner' ? 'beginner' : 'kore',

@@ -1009,6 +1009,8 @@ function koreDevManifestWriter() {
             height: edit.height,
             row: edit.row,
             rotation: edit.rotation ?? 0,
+            flipX: edit.flipX ?? false,
+            flipY: edit.flipY ?? false,
             offset: edit.offset ?? [0, 0],
             scale: edit.scale ?? 1,
             hidden: edit.hidden ?? false,
@@ -2802,12 +2804,14 @@ function sanitizeAnimationScaleMap(scales: Record<string, Record<string, unknown
         {
           width: Number(Math.max(0.25, Math.min(2.5, finiteOr(value.width, 1))).toFixed(2)),
           height: Number(Math.max(0.25, Math.min(2.5, finiteOr(value.height, 1))).toFixed(2)),
-          offsetX: Number(Math.max(-6, Math.min(6, finiteOr(value.offsetX, 0))).toFixed(2))
+          offsetX: Number(Math.max(-6, Math.min(6, finiteOr(value.offsetX, 0))).toFixed(2)),
+          flipX: Boolean(value.flipX),
+          flipY: Boolean(value.flipY)
         }
       ])
       .filter(([, value]) => {
-        const size = value as { width: number; height: number; offsetX: number };
-        return size.width !== 1 || size.height !== 1 || size.offsetX !== 0;
+        const size = value as { width: number; height: number; offsetX: number; flipX: boolean; flipY: boolean };
+        return size.width !== 1 || size.height !== 1 || size.offsetX !== 0 || size.flipX || size.flipY;
       })
   );
 }
@@ -2834,12 +2838,14 @@ function sanitizeAnimationFrameScaleMap(scales: Record<string, Record<string, Re
               {
                 width: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.width, 1))).toFixed(2)),
                 height: Number(Math.max(0.25, Math.min(2.5, finiteOr(frameScale.height, 1))).toFixed(2)),
-                offsetX: Number(Math.max(-6, Math.min(6, finiteOr(frameScale.offsetX, 0))).toFixed(2))
+                offsetX: Number(Math.max(-6, Math.min(6, finiteOr(frameScale.offsetX, 0))).toFixed(2)),
+                flipX: Boolean(frameScale.flipX),
+                flipY: Boolean(frameScale.flipY)
               }
             ])
             .filter(([, value]) => {
-              const size = value as { width: number; height: number; offsetX: number };
-              return size.width !== 1 || size.height !== 1 || size.offsetX !== 0;
+              const size = value as { width: number; height: number; offsetX: number; flipX: boolean; flipY: boolean };
+              return size.width !== 1 || size.height !== 1 || size.offsetX !== 0 || size.flipX || size.flipY;
             })
         )
       ])
@@ -2947,6 +2953,8 @@ function sanitizeSpriteFrameEdit(edit: Record<string, unknown>) {
     height,
     row: Number.isFinite(edit.row) ? Math.round(Number(edit.row)) : undefined,
     rotation,
+    flipX: Boolean(edit.flipX),
+    flipY: Boolean(edit.flipY),
     offset,
     scale,
     hidden: Boolean(edit.hidden),

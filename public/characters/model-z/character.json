@@ -1,0 +1,4170 @@
+{
+  "id": "model-z",
+  "displayName": "Model Z",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/model-z/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://model-z",
+  "spriteSheetPath": "/characters/model-z/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "generated",
+      "name": "Generated Frame Atlas",
+      "path": "/characters/model-z/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 130
+    }
+  ],
+  "spriteFrameCount": 130,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/model-z/frames/frame-024.png",
+      "/characters/model-z/frames/frame-025.png",
+      "/characters/model-z/frames/frame-026.png",
+      "/characters/model-z/frames/frame-027.png",
+      "/characters/model-z/frames/frame-028.png",
+      "/characters/model-z/frames/frame-029.png",
+      "/characters/model-z/frames/frame-030.png",
+      "/characters/model-z/frames/frame-031.png",
+      "/characters/model-z/frames/frame-032.png",
+      "/characters/model-z/frames/frame-033.png",
+      "/characters/model-z/frames/frame-034.png",
+      "/characters/model-z/frames/frame-035.png",
+      "/characters/model-z/frames/frame-036.png"
+    ],
+    "walkForward": [
+      "/characters/model-z/frames/frame-044.png",
+      "/characters/model-z/frames/frame-045.png",
+      "/characters/model-z/frames/frame-046.png",
+      "/characters/model-z/frames/frame-047.png",
+      "/characters/model-z/frames/frame-048.png"
+    ],
+    "walkBack": [
+      "/characters/model-z/frames/frame-048.png",
+      "/characters/model-z/frames/frame-047.png",
+      "/characters/model-z/frames/frame-046.png",
+      "/characters/model-z/frames/frame-045.png",
+      "/characters/model-z/frames/frame-044.png"
+    ],
+    "sprint": [
+      "/characters/model-z/frames/frame-001.png",
+      "/characters/model-z/frames/frame-002.png",
+      "/characters/model-z/frames/frame-003.png",
+      "/characters/model-z/frames/frame-004.png",
+      "/characters/model-z/frames/frame-005.png",
+      "/characters/model-z/frames/frame-006.png",
+      "/characters/model-z/frames/frame-007.png",
+      "/characters/model-z/frames/frame-008.png",
+      "/characters/model-z/frames/frame-009.png",
+      "/characters/model-z/frames/frame-010.png"
+    ],
+    "backHop": [
+      "/characters/model-z/frames/frame-007.png"
+    ],
+    "sidestepLeft": [
+      "/characters/model-z/frames/frame-026.png"
+    ],
+    "sidestepRight": [
+      "/characters/model-z/frames/frame-026.png"
+    ],
+    "jump": [
+      "/characters/model-z/frames/frame-017.png",
+      "/characters/model-z/frames/frame-018.png",
+      "/characters/model-z/frames/frame-019.png",
+      "/characters/model-z/frames/frame-020.png",
+      "/characters/model-z/frames/frame-021.png"
+    ],
+    "crouch": [
+      "/characters/model-z/frames/frame-011.png"
+    ],
+    "crouchBlock": [
+      "/characters/model-z/frames/frame-092.png"
+    ],
+    "block": [
+      "/characters/model-z/frames/frame-091.png"
+    ],
+    "chargeKi": [
+      "/characters/model-z/frames/frame-022.png",
+      "/characters/model-z/frames/frame-023.png",
+      "/characters/model-z/frames/frame-024.png",
+      "/characters/model-z/frames/frame-025.png",
+      "/characters/model-z/frames/frame-026.png",
+      "/characters/model-z/frames/frame-027.png"
+    ],
+    "jableft": [
+      "/characters/model-z/frames/frame-052.png",
+      "/characters/model-z/frames/frame-053.png",
+      "/characters/model-z/frames/frame-054.png",
+      "/characters/model-z/frames/frame-061.png",
+      "/characters/model-z/frames/frame-062.png",
+      "/characters/model-z/frames/frame-064.png",
+      "/characters/model-z/frames/frame-065.png"
+    ],
+    "jabright": [
+      "/characters/model-z/frames/frame-077.png",
+      "/characters/model-z/frames/frame-078.png",
+      "/characters/model-z/frames/frame-079.png",
+      "/characters/model-z/frames/frame-080.png",
+      "/characters/model-z/frames/frame-081.png",
+      "/characters/model-z/frames/frame-082.png",
+      "/characters/model-z/frames/frame-083.png",
+      "/characters/model-z/frames/frame-084.png",
+      "/characters/model-z/frames/frame-085.png",
+      "/characters/model-z/frames/frame-086.png"
+    ],
+    "kickleft": [
+      "/characters/model-z/frames/frame-087.png",
+      "/characters/model-z/frames/frame-088.png",
+      "/characters/model-z/frames/frame-089.png",
+      "/characters/model-z/frames/frame-090.png",
+      "/characters/model-z/frames/frame-091.png",
+      "/characters/model-z/frames/frame-092.png",
+      "/characters/model-z/frames/frame-093.png",
+      "/characters/model-z/frames/frame-094.png",
+      "/characters/model-z/frames/frame-095.png",
+      "/characters/model-z/frames/frame-096.png",
+      "/characters/model-z/frames/frame-097.png",
+      "/characters/model-z/frames/frame-098.png",
+      "/characters/model-z/frames/frame-099.png"
+    ],
+    "kickright": [
+      "/characters/model-z/frames/frame-104.png",
+      "/characters/model-z/frames/frame-105.png",
+      "/characters/model-z/frames/frame-106.png",
+      "/characters/model-z/frames/frame-107.png",
+      "/characters/model-z/frames/frame-108.png"
+    ],
+    "hitLight": [
+      "/characters/model-z/frames/frame-044.png"
+    ],
+    "hitHeavy": [
+      "/characters/model-z/frames/frame-117.png"
+    ],
+    "juggle": [
+      "/characters/model-z/frames/frame-017.png"
+    ],
+    "knockdown": [
+      "/characters/model-z/frames/frame-117.png",
+      "/characters/model-z/frames/frame-118.png"
+    ],
+    "getupStand": [
+      "/characters/model-z/frames/frame-118.png",
+      "/characters/model-z/frames/frame-117.png",
+      "/characters/model-z/frames/frame-021.png",
+      "/characters/model-z/frames/frame-020.png",
+      "/characters/model-z/frames/frame-019.png",
+      "/characters/model-z/frames/frame-018.png",
+      "/characters/model-z/frames/frame-017.png",
+      "/characters/model-z/frames/frame-016.png",
+      "/characters/model-z/frames/frame-015.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/model-z/frames/frame-067.png",
+      "/characters/model-z/frames/frame-068.png",
+      "/characters/model-z/frames/frame-069.png",
+      "/characters/model-z/frames/frame-070.png",
+      "/characters/model-z/frames/frame-071.png",
+      "/characters/model-z/frames/frame-072.png",
+      "/characters/model-z/frames/frame-073.png",
+      "/characters/model-z/frames/frame-074.png",
+      "/characters/model-z/frames/frame-075.png",
+      "/characters/model-z/frames/frame-076.png"
+    ],
+    "lose": [
+      "/characters/model-z/frames/frame-118.png"
+    ],
+    "cmd:f+1": [
+      "/characters/model-z/frames/frame-052.png",
+      "/characters/model-z/frames/frame-053.png",
+      "/characters/model-z/frames/frame-054.png",
+      "/characters/model-z/frames/frame-061.png",
+      "/characters/model-z/frames/frame-062.png",
+      "/characters/model-z/frames/frame-064.png",
+      "/characters/model-z/frames/frame-065.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/model-z/frames/frame-077.png",
+      "/characters/model-z/frames/frame-078.png",
+      "/characters/model-z/frames/frame-079.png",
+      "/characters/model-z/frames/frame-080.png",
+      "/characters/model-z/frames/frame-081.png",
+      "/characters/model-z/frames/frame-082.png",
+      "/characters/model-z/frames/frame-083.png",
+      "/characters/model-z/frames/frame-084.png",
+      "/characters/model-z/frames/frame-085.png",
+      "/characters/model-z/frames/frame-086.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/model-z/frames/frame-087.png",
+      "/characters/model-z/frames/frame-088.png",
+      "/characters/model-z/frames/frame-089.png",
+      "/characters/model-z/frames/frame-090.png",
+      "/characters/model-z/frames/frame-091.png",
+      "/characters/model-z/frames/frame-092.png",
+      "/characters/model-z/frames/frame-093.png",
+      "/characters/model-z/frames/frame-094.png",
+      "/characters/model-z/frames/frame-095.png",
+      "/characters/model-z/frames/frame-096.png",
+      "/characters/model-z/frames/frame-097.png",
+      "/characters/model-z/frames/frame-098.png",
+      "/characters/model-z/frames/frame-099.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/model-z/frames/frame-104.png",
+      "/characters/model-z/frames/frame-105.png",
+      "/characters/model-z/frames/frame-106.png",
+      "/characters/model-z/frames/frame-107.png",
+      "/characters/model-z/frames/frame-108.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/model-z/frames/frame-052.png",
+      "/characters/model-z/frames/frame-053.png",
+      "/characters/model-z/frames/frame-054.png",
+      "/characters/model-z/frames/frame-061.png",
+      "/characters/model-z/frames/frame-062.png",
+      "/characters/model-z/frames/frame-064.png",
+      "/characters/model-z/frames/frame-065.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/model-z/frames/frame-077.png",
+      "/characters/model-z/frames/frame-078.png",
+      "/characters/model-z/frames/frame-079.png",
+      "/characters/model-z/frames/frame-080.png",
+      "/characters/model-z/frames/frame-081.png",
+      "/characters/model-z/frames/frame-082.png",
+      "/characters/model-z/frames/frame-083.png",
+      "/characters/model-z/frames/frame-084.png",
+      "/characters/model-z/frames/frame-085.png",
+      "/characters/model-z/frames/frame-086.png"
+    ],
+    "cmd:1+2": [
+      "/characters/model-z/frames/frame-087.png",
+      "/characters/model-z/frames/frame-088.png",
+      "/characters/model-z/frames/frame-089.png",
+      "/characters/model-z/frames/frame-090.png",
+      "/characters/model-z/frames/frame-091.png",
+      "/characters/model-z/frames/frame-092.png",
+      "/characters/model-z/frames/frame-093.png",
+      "/characters/model-z/frames/frame-094.png",
+      "/characters/model-z/frames/frame-095.png",
+      "/characters/model-z/frames/frame-096.png",
+      "/characters/model-z/frames/frame-097.png",
+      "/characters/model-z/frames/frame-098.png",
+      "/characters/model-z/frames/frame-099.png"
+    ],
+    "cmd:1+3": [
+      "/characters/model-z/frames/frame-104.png",
+      "/characters/model-z/frames/frame-105.png",
+      "/characters/model-z/frames/frame-106.png",
+      "/characters/model-z/frames/frame-107.png",
+      "/characters/model-z/frames/frame-108.png"
+    ],
+    "cmd:2+3": [
+      "/characters/model-z/frames/frame-067.png",
+      "/characters/model-z/frames/frame-068.png",
+      "/characters/model-z/frames/frame-069.png",
+      "/characters/model-z/frames/frame-070.png",
+      "/characters/model-z/frames/frame-071.png",
+      "/characters/model-z/frames/frame-072.png",
+      "/characters/model-z/frames/frame-073.png",
+      "/characters/model-z/frames/frame-074.png",
+      "/characters/model-z/frames/frame-075.png",
+      "/characters/model-z/frames/frame-076.png"
+    ],
+    "cmd:2+4": [
+      "/characters/model-z/frames/frame-067.png",
+      "/characters/model-z/frames/frame-068.png",
+      "/characters/model-z/frames/frame-069.png",
+      "/characters/model-z/frames/frame-070.png",
+      "/characters/model-z/frames/frame-071.png",
+      "/characters/model-z/frames/frame-072.png",
+      "/characters/model-z/frames/frame-073.png",
+      "/characters/model-z/frames/frame-074.png",
+      "/characters/model-z/frames/frame-075.png",
+      "/characters/model-z/frames/frame-076.png"
+    ],
+    "cmd:3+4": [
+      "/characters/model-z/frames/frame-077.png",
+      "/characters/model-z/frames/frame-078.png",
+      "/characters/model-z/frames/frame-079.png",
+      "/characters/model-z/frames/frame-080.png",
+      "/characters/model-z/frames/frame-081.png",
+      "/characters/model-z/frames/frame-082.png",
+      "/characters/model-z/frames/frame-083.png",
+      "/characters/model-z/frames/frame-084.png",
+      "/characters/model-z/frames/frame-085.png",
+      "/characters/model-z/frames/frame-086.png"
+    ],
+    "cmd:O+2": [
+      "/characters/model-z/frames/frame-104.png",
+      "/characters/model-z/frames/frame-105.png",
+      "/characters/model-z/frames/frame-106.png",
+      "/characters/model-z/frames/frame-107.png",
+      "/characters/model-z/frames/frame-108.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 104,
+    "speed": 5.44,
+    "sidestepSpeed": 4.82,
+    "jumpForce": 7.86,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Model Z Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Model Z Left Kick",
+      "input": "kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Model Z Right Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Model Z Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#3bd3c1",
+    "secondary": "#dc4e80",
+    "accent": "#812ebb"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Model Z Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Model Z Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Model Z Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Model Z Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Model Z Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Model Z Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Model Z Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Model Z Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Model Z Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Model Z Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Model Z Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Model Z Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Model Z Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Model Z Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Model Z Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Model Z Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Model Z Second Beat"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Model Z Body Blow"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Model Z Low Changeup"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Model Z Pressure Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Model Z Drive"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Model Z Barrage"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Model Z Finisher"
+    },
+    "neutral:jab-kick": {
+      "label": "Model Z Step Kick"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Model Z Palm String"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Model Z Rising Chain"
+    },
+    "neutral:jab-special": {
+      "label": "Model Z Special Setup"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Model Z Break Art"
+    },
+    "neutral:heavy-jab": {
+      "label": "Model Z Check Hook"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Model Z Heavy Break"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Model Z Charged Follow"
+    },
+    "neutral:heavy-kick": {
+      "label": "Model Z Drop Kick"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Model Z Arc Finisher"
+    },
+    "neutral:heavy-special": {
+      "label": "Model Z Focus Stance"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Model Z Mode Shift"
+    },
+    "neutral:kick-jab": {
+      "label": "Model Z Heel Feint"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Model Z Summon Strike"
+    },
+    "neutral:kick-heavy": {
+      "label": "Model Z Guard Snare"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Model Z Armor Break"
+    },
+    "neutral:kick-special": {
+      "label": "Model Z Power Setup"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Model Z Switch Strike"
+    },
+    "neutral:special-jab": {
+      "label": "Model Z Spark Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Model Z Binding Blow"
+    },
+    "neutral:special-heavy": {
+      "label": "Model Z Heavy Draw"
+    },
+    "neutral:special-kick": {
+      "label": "Model Z Kick Ender"
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.73,
+    "guard": 0.42,
+    "spacing": 1.4,
+    "specialChance": 0.3
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.69,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "5": {
+        "width": 0.6,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 0.78,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 0.69,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.28,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 0.8,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "23": {
+        "width": 0.63,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "24": {
+        "width": 0.6,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "25": {
+        "width": 0.6,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.58,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.57,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "28": {
+        "width": 0.71,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "29": {
+        "width": 0.73,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 0.73,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "31": {
+        "width": 0.73,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.73,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 0.71,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "34": {
+        "width": 0.71,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 0.71,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 0.73,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 0.75,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 1,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkForward": {
+      "44": {
+        "width": 0.95,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 0.97,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 0.97,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 0.97,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 1.04,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 2.24,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.99,
+        "height": 1.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 0.44,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 0.58,
+        "height": 0.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 0.25,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 0.33,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.89,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "64": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkBack": {
+      "44": {
+        "width": 0.95,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 0.97,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 0.97,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 0.97,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 1.04,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "67": {
+        "width": 0.62,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 1.33,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "76": {
+        "width": 1.44,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sprint": {
+      "1": {
+        "width": 0.63,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 0.6,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 0.63,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 0.65,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "5": {
+        "width": 0.58,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.8,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 0.8,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 0.8,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 0.8,
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 0.8,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "77": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 1.34,
+        "height": 1.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.55,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.97,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.95,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.04,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 0.73,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "backHop": {
+      "7": {
+        "width": 0.8,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 1.44,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 1.71,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 1.68,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 1.64,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 1.62,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepLeft": {
+      "26": {
+        "width": 0.58,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.73,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.64,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.66,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 0.78,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 0.32,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepRight": {
+      "26": {
+        "width": 0.58,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 0.4,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 0.29,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "121": {
+        "width": 0.25,
+        "height": 0.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.33,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jump": {
+      "0": {
+        "width": 0.69,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.82,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.71,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 0.97,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.21,
+        "height": 0.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.06,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.25,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "21": {
+        "width": 1.02,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.6,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.75,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 1,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouch": {
+      "11": {
+        "width": 0.73,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 2.24,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.99,
+        "height": 1.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 0.44,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 0.55,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 0.33,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.89,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "63": {
+        "width": 0.25,
+        "height": 0.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "92": {
+        "width": 1.02,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "129": {
+        "width": 2.15,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "77": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.36,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.97,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.95,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.04,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "22": {
+        "width": 0.8,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "23": {
+        "width": 0.63,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "24": {
+        "width": 0.6,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "25": {
+        "width": 0.6,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.58,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.65,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 1.44,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 1.71,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 1.68,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 1.64,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 1.62,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jableft": {
+      "52": {
+        "width": 1.44,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.49,
+        "height": 1.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "54": {
+        "width": 1.53,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "64": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.73,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.64,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.66,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 0.78,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 0.32,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jabright": {
+      "77": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 0.4,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 0.29,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "121": {
+        "width": 0.25,
+        "height": 0.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.33,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickleft": {
+      "0": {
+        "width": 0.69,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.82,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.71,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.08,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.6,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.75,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 1,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.95,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "88": {
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.93,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "92": {
+        "width": 1.02,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.02,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.93,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickright": {
+      "52": {
+        "width": 2.24,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.99,
+        "height": 1.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 0.44,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 0.55,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 0.33,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.89,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "63": {
+        "width": 0.25,
+        "height": 0.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitLight": {
+      "44": {
+        "width": 0.95,
+        "height": 0.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "67": {
+        "width": 0.62,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "77": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.36,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.97,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.95,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.04,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 1.02,
+        "height": 0.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "17": {
+        "width": 0.97,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 1.44,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 1.71,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 1.68,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 1.64,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 1.62,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "knockdown": {
+      "109": {
+        "width": 0.73,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.64,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.66,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 0.78,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 0.62992,
+        "height": 0.62992,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.12507,
+        "voxelScaleY": 0.34014
+      },
+      "118": {
+        "width": 0.62991,
+        "height": 0.62991,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      }
+    },
+    "getupStand": {
+      "15": {
+        "width": 0.67,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 0.73,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 0.97,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 0.74,
+        "height": 0.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.06,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 0.74,
+        "height": 0.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "21": {
+        "width": 1.02,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 0.62992,
+        "height": 0.62992,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.12507,
+        "voxelScaleY": 0.34014
+      },
+      "118": {
+        "width": 0.62991,
+        "height": 0.62991,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      },
+      "119": {
+        "width": 0.4,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 0.29,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "121": {
+        "width": 0.25,
+        "height": 0.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.33,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupRollUp": {
+      "0": {
+        "width": 0.69,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.82,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.71,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.08,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.6,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.75,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 1,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "52": {
+        "width": 2.24,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.99,
+        "height": 1.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 0.44,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 0.55,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 0.33,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.89,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "63": {
+        "width": 0.25,
+        "height": 0.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "67": {
+        "width": 0.6,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.87,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "76": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "lose": {
+      "67": {
+        "width": 0.62,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "118": {
+        "width": 0.62991,
+        "height": 0.62991,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
+      }
+    },
+    "cmd:f+1": {
+      "52": {
+        "width": 1.44,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.49,
+        "height": 1.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "54": {
+        "width": 1.53,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "64": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "77": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.36,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.97,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.95,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.04,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:d/f+2": {
+      "77": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 1.44,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 1.71,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 1.68,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 1.64,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 1.62,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:qcf+4": {
+      "87": {
+        "width": 0.95,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "88": {
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.93,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "92": {
+        "width": 1.02,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.02,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.93,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.73,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.71,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.64,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.66,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 0.78,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 0.32,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:WS+4": {
+      "104": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 0.4,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 0.29,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "121": {
+        "width": 0.25,
+        "height": 0.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.33,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+1": {
+      "0": {
+        "width": 0.69,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.82,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.71,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.08,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.6,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.75,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 1,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 1.44,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.49,
+        "height": 1.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "54": {
+        "width": 1.53,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "64": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+2": {
+      "52": {
+        "width": 2.24,
+        "height": 1.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.99,
+        "height": 1.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 0.44,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 0.55,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 0.33,
+        "height": 0.77,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 0.89,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "63": {
+        "width": 0.25,
+        "height": 0.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.82,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "77": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+2": {
+      "67": {
+        "width": 0.62,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.95,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "88": {
+        "width": 0.62,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.93,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "92": {
+        "width": 1.02,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.02,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.93,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+3": {
+      "77": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.36,
+        "height": 1.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.97,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 0.95,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.04,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.59,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+3": {
+      "67": {
+        "width": 0.6,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.87,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "76": {
+        "width": 0.85,
+        "height": 0.85,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 1.44,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 1.71,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 1.68,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 1.64,
+        "height": 0.87,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 1.62,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+4": {
+      "109": {
+        "width": 0.71,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "110": {
+        "width": 0.8,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.69,
+        "height": 0.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.63,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "113": {
+        "width": 0.63,
+        "height": 0.56,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.65,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "115": {
+        "width": 0.57,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "116": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "117": {
+        "width": 0.32,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:3+4": {
+      "77": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.68,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 1.2,
+        "height": 1.2,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 1.18,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.64,
+        "height": 0.64,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.74,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.52,
+        "height": 0.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 0.66,
+        "height": 0.66,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 0.4,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "120": {
+        "width": 0.29,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "121": {
+        "width": 0.25,
+        "height": 0.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "122": {
+        "width": 0.33,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:O+2": {
+      "0": {
+        "width": 0.69,
+        "height": 0.71,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.82,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.71,
+        "height": 0.83,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.08,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 0.6,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 0.75,
+        "height": 0.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 1,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "105": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.76,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 0.8,
+        "height": 0.8,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "108": {
+        "width": 0.61,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    }
+  },
+  "modelScale": {
+    "width": 1.31,
+    "height": 1.31
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

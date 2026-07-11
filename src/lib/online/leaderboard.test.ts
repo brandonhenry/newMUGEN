@@ -26,31 +26,48 @@ describe('online leaderboard', () => {
   it('adds performance points for both players instead of a flat win-only score', async () => {
     await submitLeaderboardResult({
       players: [
-        { profile: { playerId: 'p1', displayName: 'Winner' }, points: 87 },
-        { profile: { playerId: 'p2', displayName: 'Loser' }, points: 46 }
+        { profile: { playerId: 'p1', displayName: 'Winner' }, characterId: 'astra', points: 87 },
+        { profile: { playerId: 'p2', displayName: 'Loser' }, characterId: 'dax', points: 46 }
       ]
     });
 
     const result = await fetchLeaderboard();
 
     expect(result.entries).toEqual([
-      expect.objectContaining({ playerId: 'p1', displayName: 'WINNER', points: 87 }),
-      expect.objectContaining({ playerId: 'p2', displayName: 'LOSER', points: 46 })
+      expect.objectContaining({ playerId: 'p1', displayName: 'WINNER', characterId: 'astra', points: 87 }),
+      expect.objectContaining({ playerId: 'p2', displayName: 'LOSER', characterId: 'dax', points: 46 })
+    ]);
+  });
+
+  it('keeps separate rows per character for the same player and aggregates duplicate character awards', async () => {
+    await submitLeaderboardResult({
+      players: [
+        { profile: { playerId: 'p1', displayName: 'Hero' }, characterId: 'naruto-uzumaki-nine-tails-kyubi', points: 40 },
+        { profile: { playerId: 'p1', displayName: 'Hero' }, characterId: 'sasuke-curse-mark', points: 70 },
+        { profile: { playerId: 'p1', displayName: 'Hero' }, characterId: 'sasuke-curse-mark', points: 30 }
+      ]
+    });
+
+    const result = await fetchLeaderboard();
+
+    expect(result.entries).toEqual([
+      expect.objectContaining({ playerId: 'p1', characterId: 'sasuke-curse-mark', points: 100 }),
+      expect.objectContaining({ playerId: 'p1', characterId: 'naruto-uzumaki-nine-tails-kyubi', points: 40 })
     ]);
   });
 
   it('clamps submitted point awards before storing them', async () => {
     await submitLeaderboardResult({
       players: [
-        { profile: { playerId: 'p1', displayName: 'Cap' }, points: 9999 },
-        { profile: { playerId: 'p2', displayName: 'Zero' }, points: -5 }
+        { profile: { playerId: 'p1', displayName: 'Cap' }, characterId: 'astra', points: 9999 },
+        { profile: { playerId: 'p2', displayName: 'Zero' }, characterId: 'dax', points: -5 }
       ]
     });
 
     const result = await fetchLeaderboard();
 
     expect(result.entries).toHaveLength(1);
-    expect(result.entries[0]).toMatchObject({ playerId: 'p1', points: 500 });
+    expect(result.entries[0]).toMatchObject({ playerId: 'p1', characterId: 'astra', points: 500 });
   });
 
   it('validates reminder emails with a local part, domain, and TLD', () => {

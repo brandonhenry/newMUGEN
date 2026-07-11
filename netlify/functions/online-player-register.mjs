@@ -1,5 +1,6 @@
 import { getBlobStore } from './_blob-store.mjs';
 import { cleanCharacterId, cleanDisplayName, cleanPlayerId, cleanPostHogDeviceId, deviceMapKey, json, makePublicPlayerId, publicPlayerKey } from './_player-identity-store.mjs';
+import { signSpectatorToken } from './_spectator-token.mjs';
 
 const STORE_NAME = 'kore-player-identity';
 
@@ -27,7 +28,11 @@ export async function handler(event) {
     };
     await store.setJSON(publicPlayerKey(playerId), identity);
     if (posthogDeviceId) await store.setJSON(deviceMapKey(posthogDeviceId), { playerId, updatedAt: Date.now() });
-    return json(200, { ...identity, created: !existing });
+    const customSessionExpiresAt = Date.now() + 12 * 60 * 60 * 1000;
+    const customSessionToken = process.env.SPECTATOR_TOKEN_SECRET
+      ? signSpectatorToken({ aud: 'custom-room', playerId, displayName, exp: customSessionExpiresAt }, process.env.SPECTATOR_TOKEN_SECRET)
+      : undefined;
+    return json(200, { ...identity, created: !existing, customSessionToken, customSessionExpiresAt });
   } catch (error) {
     return json(500, { error: 'online_player_register_failed', message: error instanceof Error ? error.message : String(error) });
   }

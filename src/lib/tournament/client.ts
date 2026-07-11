@@ -13,9 +13,20 @@ import type {
   TournamentRoomJoinRequest,
   TournamentRoomStatusRequest,
   TournamentReportRequest,
+  TournamentPublicView,
   TournamentStatusResult,
   TournamentSummary
 } from './types';
+
+export async function fetchPublicTournament(slug: string): Promise<TournamentPublicView> {
+  const query = new URLSearchParams({ slug });
+  return getJson<{ tournament: TournamentPublicView }>(`/.netlify/functions/tournament-public?${query.toString()}`)
+    .then((result) => result.tournament)
+    .catch((error) => {
+      if (isLocalFallbackAllowed()) return localPublicTournament(slug);
+      throw error;
+    });
+}
 
 export async function fetchTournamentList(): Promise<{ tournaments: TournamentSummary[] }> {
   return getJson<{ tournaments: TournamentSummary[] }>('/.netlify/functions/tournament-list').catch((error) => {
@@ -84,6 +95,7 @@ export async function fetchTournamentMatchRoomStatus(request: TournamentRoomStat
 async function getJson<T>(url: string): Promise<T> {
   const response = await fetch(url);
   if (!response.ok) throw new Error(await extractErrorMessage(response));
+  if (!response.headers.get('content-type')?.includes('application/json')) throw new Error('Service returned an unexpected response');
   return (await response.json()) as T;
 }
 
@@ -108,6 +120,26 @@ async function extractErrorMessage(response: Response) {
 
 function isLocalFallbackAllowed() {
   return typeof window !== 'undefined' && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+}
+
+function localPublicTournament(slug: string): TournamentPublicView {
+  const bracket = readLocalTournament();
+  if (slug !== bracket.id && slug !== bracket.slug) throw new Error('Tournament not found');
+  return {
+    id: bracket.id,
+    slug: bracket.slug || bracket.id,
+    name: bracket.name || 'K.O.R.E Online Tournament',
+    kind: bracket.kind,
+    status: bracket.status,
+    entries: bracket.entries.map(({ id, displayName, characterId, seed, isCpu, isBot }) => ({ id, displayName, characterId, seed, isCpu, isBot })),
+    matches: bracket.matches.map(({ id, round, index, entryAId, entryBId, winnerEntryId, status, stageId, roomStatus, reportedAt }) => ({ id, round, index, entryAId, entryBId, winnerEntryId, status, stageId, roomStatus, reportedAt })),
+    currentRound: bracket.currentRound,
+    capacity: bracket.capacity,
+    minEntries: bracket.minEntries,
+    createdAt: bracket.createdAt,
+    updatedAt: bracket.updatedAt,
+    rewardLabel: bracket.reward?.label
+  };
 }
 
 function localTournamentList() {

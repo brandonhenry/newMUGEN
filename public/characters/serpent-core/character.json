@@ -1,0 +1,2832 @@
+{
+  "id": "serpent-core",
+  "displayName": "Serpent Core",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/serpent-core/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://serpent-core",
+  "spriteSheetPath": "/characters/serpent-core/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/serpent-core/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 233
+    }
+  ],
+  "spriteFrameCount": 233,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/serpent-core/frames/frame-000.png",
+      "/characters/serpent-core/frames/frame-001.png",
+      "/characters/serpent-core/frames/frame-002.png",
+      "/characters/serpent-core/frames/frame-003.png",
+      "/characters/serpent-core/frames/frame-004.png",
+      "/characters/serpent-core/frames/frame-005.png",
+      "/characters/serpent-core/frames/frame-006.png",
+      "/characters/serpent-core/frames/frame-007.png",
+      "/characters/serpent-core/frames/frame-008.png",
+      "/characters/serpent-core/frames/frame-009.png",
+      "/characters/serpent-core/frames/frame-010.png",
+      "/characters/serpent-core/frames/frame-011.png",
+      "/characters/serpent-core/frames/frame-012.png",
+      "/characters/serpent-core/frames/frame-013.png",
+      "/characters/serpent-core/frames/frame-012.png",
+      "/characters/serpent-core/frames/frame-011.png",
+      "/characters/serpent-core/frames/frame-010.png",
+      "/characters/serpent-core/frames/frame-009.png",
+      "/characters/serpent-core/frames/frame-008.png",
+      "/characters/serpent-core/frames/frame-007.png",
+      "/characters/serpent-core/frames/frame-006.png",
+      "/characters/serpent-core/frames/frame-005.png",
+      "/characters/serpent-core/frames/frame-004.png",
+      "/characters/serpent-core/frames/frame-003.png",
+      "/characters/serpent-core/frames/frame-002.png",
+      "/characters/serpent-core/frames/frame-001.png"
+    ],
+    "walkForward": [
+      "/characters/serpent-core/frames/frame-054.png",
+      "/characters/serpent-core/frames/frame-055.png",
+      "/characters/serpent-core/frames/frame-056.png",
+      "/characters/serpent-core/frames/frame-057.png",
+      "/characters/serpent-core/frames/frame-058.png",
+      "/characters/serpent-core/frames/frame-059.png",
+      "/characters/serpent-core/frames/frame-060.png",
+      "/characters/serpent-core/frames/frame-061.png",
+      "/characters/serpent-core/frames/frame-062.png"
+    ],
+    "walkBack": [
+      "/characters/serpent-core/frames/frame-062.png",
+      "/characters/serpent-core/frames/frame-061.png",
+      "/characters/serpent-core/frames/frame-060.png",
+      "/characters/serpent-core/frames/frame-059.png",
+      "/characters/serpent-core/frames/frame-058.png",
+      "/characters/serpent-core/frames/frame-057.png",
+      "/characters/serpent-core/frames/frame-056.png",
+      "/characters/serpent-core/frames/frame-055.png",
+      "/characters/serpent-core/frames/frame-054.png"
+    ],
+    "sprint": [
+      "/characters/serpent-core/frames/frame-083.png",
+      "/characters/serpent-core/frames/frame-084.png",
+      "/characters/serpent-core/frames/frame-085.png",
+      "/characters/serpent-core/frames/frame-086.png",
+      "/characters/serpent-core/frames/frame-087.png"
+    ],
+    "backHop": [
+      "/characters/serpent-core/frames/frame-088.png",
+      "/characters/serpent-core/frames/frame-089.png",
+      "/characters/serpent-core/frames/frame-091.png",
+      "/characters/serpent-core/frames/frame-093.png",
+      "/characters/serpent-core/frames/frame-095.png",
+      "/characters/serpent-core/frames/frame-097.png",
+      "/characters/serpent-core/frames/frame-099.png",
+      "/characters/serpent-core/frames/frame-101.png"
+    ],
+    "sidestepLeft": [
+      "/characters/serpent-core/frames/frame-103.png",
+      "/characters/serpent-core/frames/frame-104.png",
+      "/characters/serpent-core/frames/frame-106.png",
+      "/characters/serpent-core/frames/frame-107.png",
+      "/characters/serpent-core/frames/frame-109.png",
+      "/characters/serpent-core/frames/frame-111.png",
+      "/characters/serpent-core/frames/frame-112.png",
+      "/characters/serpent-core/frames/frame-114.png"
+    ],
+    "sidestepRight": [
+      "/characters/serpent-core/frames/frame-116.png",
+      "/characters/serpent-core/frames/frame-119.png",
+      "/characters/serpent-core/frames/frame-123.png",
+      "/characters/serpent-core/frames/frame-127.png",
+      "/characters/serpent-core/frames/frame-131.png",
+      "/characters/serpent-core/frames/frame-134.png",
+      "/characters/serpent-core/frames/frame-138.png",
+      "/characters/serpent-core/frames/frame-142.png"
+    ],
+    "jump": [
+      "/characters/serpent-core/frames/frame-146.png",
+      "/characters/serpent-core/frames/frame-147.png",
+      "/characters/serpent-core/frames/frame-148.png",
+      "/characters/serpent-core/frames/frame-150.png",
+      "/characters/serpent-core/frames/frame-151.png",
+      "/characters/serpent-core/frames/frame-152.png",
+      "/characters/serpent-core/frames/frame-154.png",
+      "/characters/serpent-core/frames/frame-155.png"
+    ],
+    "crouch": [
+      "/characters/serpent-core/frames/frame-000.png"
+    ],
+    "crouchBlock": [
+      "/characters/serpent-core/frames/frame-000.png"
+    ],
+    "block": [
+      "/characters/serpent-core/frames/frame-052.png"
+    ],
+    "chargeKi": [
+      "/characters/serpent-core/frames/frame-052.png"
+    ],
+    "jableft": [
+      "/characters/serpent-core/frames/frame-198.png",
+      "/characters/serpent-core/frames/frame-199.png",
+      "/characters/serpent-core/frames/frame-201.png",
+      "/characters/serpent-core/frames/frame-203.png",
+      "/characters/serpent-core/frames/frame-205.png",
+      "/characters/serpent-core/frames/frame-206.png",
+      "/characters/serpent-core/frames/frame-208.png",
+      "/characters/serpent-core/frames/frame-210.png"
+    ],
+    "jabright": [
+      "/characters/serpent-core/frames/frame-212.png",
+      "/characters/serpent-core/frames/frame-213.png",
+      "/characters/serpent-core/frames/frame-215.png",
+      "/characters/serpent-core/frames/frame-216.png",
+      "/characters/serpent-core/frames/frame-218.png",
+      "/characters/serpent-core/frames/frame-220.png",
+      "/characters/serpent-core/frames/frame-221.png",
+      "/characters/serpent-core/frames/frame-223.png"
+    ],
+    "kickleft": [
+      "/characters/serpent-core/frames/frame-225.png",
+      "/characters/serpent-core/frames/frame-226.png",
+      "/characters/serpent-core/frames/frame-231.png"
+    ],
+    "kickright": [
+      "/characters/serpent-core/frames/frame-000.png",
+      "/characters/serpent-core/frames/frame-006.png",
+      "/characters/serpent-core/frames/frame-013.png",
+      "/characters/serpent-core/frames/frame-020.png",
+      "/characters/serpent-core/frames/frame-027.png",
+      "/characters/serpent-core/frames/frame-033.png",
+      "/characters/serpent-core/frames/frame-040.png",
+      "/characters/serpent-core/frames/frame-047.png"
+    ],
+    "hitLight": [
+      "/characters/serpent-core/frames/frame-084.png"
+    ],
+    "hitHeavy": [
+      "/characters/serpent-core/frames/frame-085.png"
+    ],
+    "juggle": [
+      "/characters/serpent-core/frames/frame-085.png"
+    ],
+    "knockdown": [
+      "/characters/serpent-core/frames/frame-088.png",
+      "/characters/serpent-core/frames/frame-091.png"
+    ],
+    "getupStand": [
+      "/characters/serpent-core/frames/frame-103.png",
+      "/characters/serpent-core/frames/frame-104.png",
+      "/characters/serpent-core/frames/frame-106.png",
+      "/characters/serpent-core/frames/frame-107.png",
+      "/characters/serpent-core/frames/frame-109.png",
+      "/characters/serpent-core/frames/frame-111.png",
+      "/characters/serpent-core/frames/frame-112.png",
+      "/characters/serpent-core/frames/frame-114.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/serpent-core/frames/frame-146.png",
+      "/characters/serpent-core/frames/frame-147.png",
+      "/characters/serpent-core/frames/frame-148.png",
+      "/characters/serpent-core/frames/frame-150.png",
+      "/characters/serpent-core/frames/frame-151.png",
+      "/characters/serpent-core/frames/frame-152.png",
+      "/characters/serpent-core/frames/frame-154.png",
+      "/characters/serpent-core/frames/frame-155.png"
+    ],
+    "lose": [
+      "/characters/serpent-core/frames/frame-157.png",
+      "/characters/serpent-core/frames/frame-158.png",
+      "/characters/serpent-core/frames/frame-160.png",
+      "/characters/serpent-core/frames/frame-161.png",
+      "/characters/serpent-core/frames/frame-163.png",
+      "/characters/serpent-core/frames/frame-164.png",
+      "/characters/serpent-core/frames/frame-166.png",
+      "/characters/serpent-core/frames/frame-167.png"
+    ],
+    "cmd:f+1": [
+      "/characters/serpent-core/frames/frame-169.png",
+      "/characters/serpent-core/frames/frame-170.png",
+      "/characters/serpent-core/frames/frame-171.png",
+      "/characters/serpent-core/frames/frame-172.png",
+      "/characters/serpent-core/frames/frame-173.png",
+      "/characters/serpent-core/frames/frame-174.png",
+      "/characters/serpent-core/frames/frame-175.png",
+      "/characters/serpent-core/frames/frame-176.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/serpent-core/frames/frame-178.png",
+      "/characters/serpent-core/frames/frame-179.png",
+      "/characters/serpent-core/frames/frame-180.png",
+      "/characters/serpent-core/frames/frame-181.png",
+      "/characters/serpent-core/frames/frame-182.png",
+      "/characters/serpent-core/frames/frame-183.png",
+      "/characters/serpent-core/frames/frame-184.png",
+      "/characters/serpent-core/frames/frame-185.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/serpent-core/frames/frame-187.png",
+      "/characters/serpent-core/frames/frame-188.png",
+      "/characters/serpent-core/frames/frame-189.png",
+      "/characters/serpent-core/frames/frame-191.png",
+      "/characters/serpent-core/frames/frame-192.png",
+      "/characters/serpent-core/frames/frame-193.png",
+      "/characters/serpent-core/frames/frame-195.png",
+      "/characters/serpent-core/frames/frame-196.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/serpent-core/frames/frame-198.png",
+      "/characters/serpent-core/frames/frame-199.png",
+      "/characters/serpent-core/frames/frame-201.png",
+      "/characters/serpent-core/frames/frame-203.png",
+      "/characters/serpent-core/frames/frame-205.png",
+      "/characters/serpent-core/frames/frame-206.png",
+      "/characters/serpent-core/frames/frame-208.png",
+      "/characters/serpent-core/frames/frame-210.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/serpent-core/frames/frame-212.png",
+      "/characters/serpent-core/frames/frame-213.png",
+      "/characters/serpent-core/frames/frame-215.png",
+      "/characters/serpent-core/frames/frame-216.png",
+      "/characters/serpent-core/frames/frame-218.png",
+      "/characters/serpent-core/frames/frame-220.png",
+      "/characters/serpent-core/frames/frame-221.png",
+      "/characters/serpent-core/frames/frame-223.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/serpent-core/frames/frame-225.png",
+      "/characters/serpent-core/frames/frame-226.png",
+      "/characters/serpent-core/frames/frame-231.png"
+    ],
+    "cmd:1+2": [
+      "/characters/serpent-core/frames/frame-000.png",
+      "/characters/serpent-core/frames/frame-006.png",
+      "/characters/serpent-core/frames/frame-013.png",
+      "/characters/serpent-core/frames/frame-020.png",
+      "/characters/serpent-core/frames/frame-027.png",
+      "/characters/serpent-core/frames/frame-033.png",
+      "/characters/serpent-core/frames/frame-040.png",
+      "/characters/serpent-core/frames/frame-047.png"
+    ],
+    "cmd:1+3": [
+      "/characters/serpent-core/frames/frame-054.png",
+      "/characters/serpent-core/frames/frame-055.png",
+      "/characters/serpent-core/frames/frame-056.png",
+      "/characters/serpent-core/frames/frame-057.png",
+      "/characters/serpent-core/frames/frame-058.png",
+      "/characters/serpent-core/frames/frame-059.png",
+      "/characters/serpent-core/frames/frame-060.png",
+      "/characters/serpent-core/frames/frame-061.png"
+    ],
+    "cmd:2+3": [
+      "/characters/serpent-core/frames/frame-063.png",
+      "/characters/serpent-core/frames/frame-065.png",
+      "/characters/serpent-core/frames/frame-068.png",
+      "/characters/serpent-core/frames/frame-070.png",
+      "/characters/serpent-core/frames/frame-073.png",
+      "/characters/serpent-core/frames/frame-075.png",
+      "/characters/serpent-core/frames/frame-078.png",
+      "/characters/serpent-core/frames/frame-080.png"
+    ],
+    "cmd:2+4": [
+      "/characters/serpent-core/frames/frame-083.png",
+      "/characters/serpent-core/frames/frame-084.png",
+      "/characters/serpent-core/frames/frame-085.png",
+      "/characters/serpent-core/frames/frame-086.png",
+      "/characters/serpent-core/frames/frame-087.png"
+    ],
+    "cmd:3+4": [
+      "/characters/serpent-core/frames/frame-088.png",
+      "/characters/serpent-core/frames/frame-089.png",
+      "/characters/serpent-core/frames/frame-091.png",
+      "/characters/serpent-core/frames/frame-093.png",
+      "/characters/serpent-core/frames/frame-095.png",
+      "/characters/serpent-core/frames/frame-097.png",
+      "/characters/serpent-core/frames/frame-099.png",
+      "/characters/serpent-core/frames/frame-101.png"
+    ],
+    "cmd:O+2": [
+      "/characters/serpent-core/frames/frame-103.png",
+      "/characters/serpent-core/frames/frame-104.png",
+      "/characters/serpent-core/frames/frame-106.png",
+      "/characters/serpent-core/frames/frame-107.png",
+      "/characters/serpent-core/frames/frame-109.png",
+      "/characters/serpent-core/frames/frame-111.png",
+      "/characters/serpent-core/frames/frame-112.png",
+      "/characters/serpent-core/frames/frame-114.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 105,
+    "speed": 5.29,
+    "sidestepSpeed": 4.67,
+    "jumpForce": 7.83,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Serpent Core Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Serpent Core Left Kick",
+      "input": "kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Serpent Core Right Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Serpent Core Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#23b1c0",
+    "secondary": "#3fdabb",
+    "accent": "#eb443e"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 11,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Serpent Core Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 11,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Serpent Core Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Serpent Core Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Serpent Core Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Serpent Core Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Serpent Core Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Serpent Core Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Serpent Core Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Serpent Core Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Serpent Core Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Serpent Core Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Serpent Core Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Serpent Core Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Serpent Core Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Serpent Core Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Serpent Core Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Serpent Core Second Beat"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Serpent Core Body Blow"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Serpent Core Low Changeup"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Serpent Core Pressure Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Serpent Core Drive"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Serpent Core Barrage"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Serpent Core Finisher"
+    },
+    "neutral:jab-kick": {
+      "label": "Serpent Core Step Kick"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Serpent Core Palm String"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Serpent Core Rising Chain"
+    },
+    "neutral:jab-special": {
+      "label": "Serpent Core Special Setup"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Serpent Core Break Art"
+    },
+    "neutral:heavy-jab": {
+      "label": "Serpent Core Check Hook"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Serpent Core Heavy Break"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Serpent Core Charged Follow"
+    },
+    "neutral:heavy-kick": {
+      "label": "Serpent Core Drop Kick"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Serpent Core Arc Finisher"
+    },
+    "neutral:heavy-special": {
+      "label": "Serpent Core Focus Stance"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Serpent Core Mode Shift"
+    },
+    "neutral:kick-jab": {
+      "label": "Serpent Core Heel Feint"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Serpent Core Summon Strike"
+    },
+    "neutral:kick-heavy": {
+      "label": "Serpent Core Guard Snare"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Serpent Core Armor Break"
+    },
+    "neutral:kick-special": {
+      "label": "Serpent Core Power Setup"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Serpent Core Switch Strike"
+    },
+    "neutral:special-jab": {
+      "label": "Serpent Core Spark Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Serpent Core Binding Blow"
+    },
+    "neutral:special-heavy": {
+      "label": "Serpent Core Heavy Draw"
+    },
+    "neutral:special-kick": {
+      "label": "Serpent Core Kick Ender"
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.66,
+    "guard": 0.43,
+    "spacing": 1.54,
+    "specialChance": 0.28
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 1.086,
+        "height": 1.002,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 1.086,
+        "height": 1.002,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.086,
+        "height": 1.002,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "21": {
+        "width": 1.1,
+        "height": 1.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.36,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 0.36,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "37": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "43": {
+        "width": 0.3,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 0.3,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkForward": {
+      "54": {
+        "width": 1.1,
+        "height": 1.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 1.3,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 1.3,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 1.3,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 1.28,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 1.31,
+        "height": 2.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "60": {
+        "width": 1.09,
+        "height": 2.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 1.09,
+        "height": 2.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 1.09,
+        "height": 1.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkBack": {
+      "63": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "67": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "69": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "77": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sprint": {
+      "83": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "backHop": {
+      "88": {
+        "width": 1.05,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 0.7,
+        "height": 1.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 1.05,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 0.25,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.39,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.66,
+        "height": 1.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.65,
+        "height": 1.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 0.66,
+        "height": 1.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepLeft": {
+      "103": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.25,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.29,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 0.26,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.26,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.25,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.63,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepRight": {
+      "116": {
+        "width": 0.62,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 0.62,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "123": {
+        "width": 0.63,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "127": {
+        "width": 0.62,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "131": {
+        "width": 0.32,
+        "height": 0.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "134": {
+        "width": 0.32,
+        "height": 0.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "138": {
+        "width": 0.3,
+        "height": 0.46,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "142": {
+        "width": 0.28,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jump": {
+      "146": {
+        "width": 0.44,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "147": {
+        "width": 0.4,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "148": {
+        "width": 0.41,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "150": {
+        "width": 0.39,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "151": {
+        "width": 0.4,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "152": {
+        "width": 0.76,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "154": {
+        "width": 0.8,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "155": {
+        "width": 0.69,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouch": {
+      "157": {
+        "width": 0.43,
+        "height": 1.12,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "158": {
+        "width": 0.43,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "160": {
+        "width": 0.44,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "161": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "163": {
+        "width": 0.34,
+        "height": 0.46,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "164": {
+        "width": 0.34,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "166": {
+        "width": 0.34,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "167": {
+        "width": 0.25,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "232": {
+        "width": 0.41,
+        "height": 1.12,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "178": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "179": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "180": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "181": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "182": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "183": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "184": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "185": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "187": {
+        "width": 1.52,
+        "height": 2.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "188": {
+        "width": 1.13,
+        "height": 1.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "189": {
+        "width": 0.85,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "191": {
+        "width": 1.08,
+        "height": 1.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "192": {
+        "width": 0.8,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "193": {
+        "width": 0.55,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "195": {
+        "width": 1.66,
+        "height": 2.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "196": {
+        "width": 0.25,
+        "height": 0.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jableft": {
+      "198": {
+        "width": 0.3,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "199": {
+        "width": 0.3,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "201": {
+        "width": 0.28,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "203": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "205": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "206": {
+        "width": 0.25,
+        "height": 0.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "208": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "210": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jabright": {
+      "212": {
+        "width": 0.39,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "213": {
+        "width": 0.57,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "215": {
+        "width": 0.79,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "216": {
+        "width": 0.79,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "218": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "220": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "221": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "223": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickleft": {
+      "225": {
+        "width": 0.41,
+        "height": 0.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "226": {
+        "width": 0.39,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "231": {
+        "width": 0.91,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickright": {
+      "0": {
+        "width": 0.39,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.39,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.39,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.1,
+        "height": 1.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.36,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 0.36,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 0.3,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 0.3,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitLight": {
+      "54": {
+        "width": 1.1,
+        "height": 1.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 1.3,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 1.3,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 1.3,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 1.28,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 1.31,
+        "height": 2.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "60": {
+        "width": 1.09,
+        "height": 2.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 1.09,
+        "height": 2.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "63": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "83": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 6.643,
+        "height": 9.059,
+        "offsetX": 0
+      },
+      "86": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "knockdown": {
+      "88": {
+        "width": 2.714,
+        "height": 2.118,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.7,
+        "height": 1.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 2.714,
+        "height": 2.118,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.25,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.39,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.66,
+        "height": 1.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.65,
+        "height": 1.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 0.66,
+        "height": 1.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupStand": {
+      "103": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.25,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.29,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 0.26,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.26,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.25,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.63,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupRollUp": {
+      "116": {
+        "width": 0.62,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "119": {
+        "width": 0.62,
+        "height": 0.7,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "123": {
+        "width": 0.63,
+        "height": 0.57,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "127": {
+        "width": 0.62,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "131": {
+        "width": 0.32,
+        "height": 0.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "134": {
+        "width": 0.32,
+        "height": 0.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "138": {
+        "width": 0.3,
+        "height": 0.46,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "142": {
+        "width": 0.28,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "146": {
+        "width": 0.44,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "147": {
+        "width": 0.4,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "148": {
+        "width": 0.41,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "150": {
+        "width": 0.39,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "151": {
+        "width": 0.4,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "152": {
+        "width": 0.76,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "154": {
+        "width": 0.8,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "155": {
+        "width": 0.69,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "lose": {
+      "157": {
+        "width": 0.43,
+        "height": 1.12,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "158": {
+        "width": 0.43,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "160": {
+        "width": 0.44,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "161": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "163": {
+        "width": 0.34,
+        "height": 0.46,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "164": {
+        "width": 0.34,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "166": {
+        "width": 0.34,
+        "height": 0.51,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "167": {
+        "width": 0.25,
+        "height": 0.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:f+1": {
+      "169": {
+        "width": 0.39,
+        "height": 0.59,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "170": {
+        "width": 0.25,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "171": {
+        "width": 0.25,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "172": {
+        "width": 0.25,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "173": {
+        "width": 0.92,
+        "height": 0.95,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "174": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "175": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "176": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:d/f+2": {
+      "178": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "179": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "180": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "181": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "182": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "183": {
+        "width": 0.87,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "184": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "185": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:qcf+4": {
+      "187": {
+        "width": 1.52,
+        "height": 2.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "188": {
+        "width": 1.13,
+        "height": 1.73,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "189": {
+        "width": 0.85,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "191": {
+        "width": 1.08,
+        "height": 1.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "192": {
+        "width": 0.8,
+        "height": 1.22,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "193": {
+        "width": 0.55,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "195": {
+        "width": 1.66,
+        "height": 2.49,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "196": {
+        "width": 0.25,
+        "height": 0.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:WS+4": {
+      "198": {
+        "width": 0.3,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "199": {
+        "width": 0.3,
+        "height": 0.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "201": {
+        "width": 0.28,
+        "height": 0.42,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "203": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "205": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "206": {
+        "width": 0.25,
+        "height": 0.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "208": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "210": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+1": {
+      "212": {
+        "width": 0.39,
+        "height": 0.61,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "213": {
+        "width": 0.57,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "215": {
+        "width": 0.79,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "216": {
+        "width": 0.79,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "218": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "220": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "221": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "223": {
+        "width": 0.83,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+2": {
+      "225": {
+        "width": 0.41,
+        "height": 0.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "226": {
+        "width": 0.39,
+        "height": 0.68,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "231": {
+        "width": 0.91,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+2": {
+      "0": {
+        "width": 0.39,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 0.39,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 0.39,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.1,
+        "height": 1.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.36,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 0.36,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 0.3,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 0.3,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+3": {
+      "54": {
+        "width": 1.1,
+        "height": 1.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "55": {
+        "width": 1.3,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 1.3,
+        "height": 1.29,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 1.3,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 1.28,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 1.31,
+        "height": 2.24,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "60": {
+        "width": 1.09,
+        "height": 2.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 1.09,
+        "height": 2.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+3": {
+      "63": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 0.61,
+        "height": 0.93,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+4": {
+      "83": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:3+4": {
+      "88": {
+        "width": 1.05,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 0.7,
+        "height": 1.54,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 1.05,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 0.25,
+        "height": 0.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.39,
+        "height": 0.76,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.66,
+        "height": 1.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.65,
+        "height": 1.6,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 0.66,
+        "height": 1.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:O+2": {
+      "103": {
+        "width": 0.25,
+        "height": 0.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "104": {
+        "width": 0.25,
+        "height": 0.36,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "106": {
+        "width": 0.29,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "107": {
+        "width": 0.26,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "109": {
+        "width": 0.26,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "111": {
+        "width": 0.25,
+        "height": 0.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "112": {
+        "width": 0.25,
+        "height": 0.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "114": {
+        "width": 0.63,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    }
+  },
+  "unplayable": true,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 1.12,
+    "height": 1.12
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

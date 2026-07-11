@@ -1,5 +1,5 @@
 import { getBlobStore } from './_blob-store.mjs';
-import { cleanProfile, makeDefaultRankedProfile, normalizeRankedProfile } from './_online-ranked.mjs';
+import { cleanCharacterId, cleanProfile, makeDefaultRankedProfile, normalizeRankedProfile } from './_online-ranked.mjs';
 
 const STORE_NAME = 'kore-online-ranked';
 const PROFILE_PREFIX = 'profiles/';
@@ -10,20 +10,45 @@ export async function handler(event) {
   try {
     const body = JSON.parse(event.body || '{}');
     const profile = cleanProfile(body?.profile);
-    if (!profile) return json(400, { error: 'invalid_profile' });
+    const characterId = cleanCharacterId(body?.characterId);
+    if (!profile || !characterId) return json(400, { error: 'invalid_profile' });
 
     const store = getBlobStore(STORE_NAME, event);
-    const existing = await store.get(profileKey(profile.playerId), { type: 'json' }).catch(() => null);
-    const ranked = normalizeRankedProfile(existing ? { ...existing, displayName: profile.displayName } : makeDefaultRankedProfile(profile));
-    await store.setJSON(profileKey(profile.playerId), ranked);
+    const key = profileKey(profile.playerId, characterId);
+    const existing = await store.get(key, { type: 'json' }).catch(() => null);
+    const legacySeed = existing ? null : await readUnusedLegacySeed(store, profile.playerId);
+    const source = existing
+      ? { ...existing, displayName: profile.displayName, characterId }
+      : legacySeed
+        ? { ...legacySeed, playerId: profile.playerId, displayName: profile.displayName, characterId }
+        : makeDefaultRankedProfile(profile, characterId);
+    const ranked = normalizeRankedProfile(source);
+    await Promise.all([
+      store.setJSON(key, ranked),
+      legacySeed ? store.setJSON(legacySeedKey(profile.playerId), { seededCharacterId: characterId, seededAt: Date.now() }) : Promise.resolve()
+    ]);
     return json(200, ranked);
   } catch (error) {
     return json(500, { error: 'ranked_profile_failed', message: error instanceof Error ? error.message : String(error) });
   }
 }
 
-function profileKey(playerId) {
+function profileKey(playerId, characterId) {
+  return `${PROFILE_PREFIX}${playerId}/${characterId}`;
+}
+
+function legacyProfileKey(playerId) {
   return `${PROFILE_PREFIX}${playerId}`;
+}
+
+function legacySeedKey(playerId) {
+  return `${PROFILE_PREFIX}${playerId}/_legacy-seeded`;
+}
+
+async function readUnusedLegacySeed(store, playerId) {
+  const marker = await store.get(legacySeedKey(playerId), { type: 'json' }).catch(() => null);
+  if (marker?.seededCharacterId) return null;
+  return store.get(legacyProfileKey(playerId), { type: 'json' }).catch(() => null);
 }
 
 function json(statusCode, payload) {

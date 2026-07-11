@@ -59,6 +59,75 @@ describe('game settings', () => {
     expect(settings.display.reducedMotion).toBe(true);
   });
 
+  it('forces the voxel impact default once for old saves and preserves later user choices', () => {
+    const migrated = sanitizeGameSettings({
+      version: 9,
+      settings: {
+        display: { impactSparks: { shape: 'white-ink' } }
+      }
+    });
+    expect(migrated.display.impactSparks.shape).toBe('voxel-burst');
+
+    const current = sanitizeGameSettings({
+      version: 13,
+      settings: {
+        display: { impactSparks: { shape: 'white-ink' } }
+      }
+    });
+    expect(current.display.impactSparks.shape).toBe('white-ink');
+
+    const directSelection = sanitizeGameSettings({
+      display: { impactSparks: { shape: 'ring' } }
+    });
+    expect(directSelection.display.impactSparks.shape).toBe('ring');
+  });
+
+  it('defaults and migrates movement smoke styles while preserving new selections', () => {
+    expect(defaultGameSettings.display.movementSmokeStyle).toBe('speed-trail');
+    for (const style of ['speed-trail', 'soft-puff', 'burst-puff', 'dust-ring'] as const) {
+      expect(sanitizeGameSettings({ display: { movementSmokeStyle: style } }).display.movementSmokeStyle).toBe(style);
+    }
+    expect(sanitizeGameSettings({ display: { movementSmokeStyle: 'cloud' } }).display.movementSmokeStyle).toBe('speed-trail');
+
+    const migrated = sanitizeGameSettings({
+      version: 10,
+      settings: { display: { movementSmokeStyle: 'green' } }
+    });
+    expect(migrated.display.movementSmokeStyle).toBe('speed-trail');
+
+    const current = sanitizeGameSettings({
+      version: 13,
+      settings: { display: { movementSmokeStyle: 'dust-ring' } }
+    });
+    expect(current.display.movementSmokeStyle).toBe('dust-ring');
+  });
+
+  it('overwrites both effect selections for existing production settings exactly once', () => {
+    const migrated = sanitizeGameSettings({
+      version: 12,
+      settings: {
+        display: {
+          movementSmokeStyle: 'dust-ring',
+          impactSparks: { shape: 'white-ink' }
+        }
+      }
+    });
+    expect(migrated.display.movementSmokeStyle).toBe('speed-trail');
+    expect(migrated.display.impactSparks.shape).toBe('voxel-burst');
+
+    const afterMigration = sanitizeGameSettings({
+      version: 13,
+      settings: {
+        display: {
+          movementSmokeStyle: 'soft-puff',
+          impactSparks: { shape: 'heavy-burst' }
+        }
+      }
+    });
+    expect(afterMigration.display.movementSmokeStyle).toBe('soft-puff');
+    expect(afterMigration.display.impactSparks.shape).toBe('heavy-burst');
+  });
+
   it('sanitizes performance settings', () => {
     const settings = sanitizeGameSettings({
       performance: {

@@ -68,7 +68,15 @@ def foreground_bounds(image: Image.Image, alpha_threshold: int) -> tuple[int, in
 
 
 def row_spans(image: Image.Image, bounds: tuple[int, int, int, int], y: int, alpha_threshold: int) -> list[dict[str, float]]:
+    image_width, image_height = image.size
+    if image_width <= 0 or image_height <= 0:
+        return []
     min_x, _, max_x, _ = bounds
+    min_x = clamp(int(min_x), 0, image_width - 1)
+    max_x = clamp(int(max_x), 0, image_width - 1)
+    y = clamp(int(y), 0, image_height - 1)
+    if max_x < min_x:
+        return []
     pixels = image.load()
     spans: list[dict[str, float]] = []
     start = -1
@@ -102,7 +110,14 @@ def choose_body_span(spans: list[dict[str, float]], center_x: float) -> dict[str
 
 
 def estimate_body_center_x(image: Image.Image, bounds: tuple[int, int, int, int], alpha_threshold: int) -> float:
+    image_width, image_height = image.size
     min_x, min_y, max_x, max_y = bounds
+    min_x = clamp(int(min_x), 0, max(0, image_width - 1))
+    max_x = clamp(int(max_x), 0, max(0, image_width - 1))
+    min_y = clamp(int(min_y), 0, max(0, image_height - 1))
+    max_y = clamp(int(max_y), 0, max(0, image_height - 1))
+    if max_x < min_x or max_y < min_y:
+        return 0
     height = max_y - min_y + 1
     fallback = (min_x + max_x) / 2
     samples: list[float] = []
@@ -116,7 +131,14 @@ def estimate_body_center_x(image: Image.Image, bounds: tuple[int, int, int, int]
 
 
 def measure_body_metrics(image: Image.Image, bounds: tuple[int, int, int, int], alpha_threshold: int) -> dict | None:
+    image_width, image_height = image.size
     min_x, min_y, max_x, max_y = bounds
+    min_x = clamp(int(min_x), 0, max(0, image_width - 1))
+    max_x = clamp(int(max_x), 0, max(0, image_width - 1))
+    min_y = clamp(int(min_y), 0, max(0, image_height - 1))
+    max_y = clamp(int(max_y), 0, max(0, image_height - 1))
+    if max_x < min_x or max_y < min_y:
+        return None
     height = max_y - min_y + 1
     center_x = estimate_body_center_x(image, bounds, alpha_threshold)
     zones: dict[str, dict[str, float | int]] = {}

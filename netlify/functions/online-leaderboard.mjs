@@ -3,6 +3,7 @@ import { getBlobStore } from './_blob-store.mjs';
 const STORE_NAME = 'kore-online-leaderboard';
 const SCORES_KEY = 'scores';
 const LEGACY_POINTS_PER_WIN = 100;
+const LEGACY_CHARACTER_ID = 'legacy';
 
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return json(405, { error: 'method_not_allowed' });
@@ -30,6 +31,7 @@ function normalizeEntry(entry) {
   return {
     playerId,
     displayName,
+    characterId: cleanCharacterId(entry?.characterId) || LEGACY_CHARACTER_ID,
     points,
     updatedAt: Math.max(0, Math.round(Number(entry.updatedAt) || 0))
   };
@@ -43,7 +45,7 @@ function normalizePoints(entry) {
 
 function sortEntries(entries) {
   return [...entries].sort((a, b) => {
-    return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName);
+    return b.points - a.points || b.updatedAt - a.updatedAt || a.displayName.localeCompare(b.displayName) || a.characterId.localeCompare(b.characterId);
   });
 }
 
@@ -55,6 +57,11 @@ function cleanId(value) {
 function cleanName(value) {
   if (typeof value !== 'string') return '';
   return value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 12);
+}
+
+function cleanCharacterId(value) {
+  if (typeof value !== 'string') return '';
+  return value.toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 96);
 }
 
 function json(statusCode, payload) {

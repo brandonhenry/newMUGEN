@@ -87,6 +87,9 @@ export type TournamentMatchRoom = {
   hostPeerId?: string;
   guestPeerId?: string;
   localRole?: 'host' | 'guest';
+  spectatorRelayUrl?: string;
+  spectatorPublishToken?: string;
+  spectatorRole?: 'primary' | 'standby';
 };
 
 export type TournamentReward = {
@@ -97,6 +100,8 @@ export type TournamentReward = {
 
 export type TournamentBracket = {
   id: string;
+  slug?: string;
+  name?: string;
   kind: TournamentKind;
   status: TournamentStatus;
   entries: TournamentEntry[];
@@ -108,6 +113,29 @@ export type TournamentBracket = {
   createdAt: number;
   updatedAt: number;
   reward?: TournamentReward;
+};
+
+export type PublicTournamentEntry = Pick<TournamentEntry, 'id' | 'displayName' | 'characterId' | 'seed' | 'isCpu' | 'isBot'>;
+
+export type PublicTournamentMatch = Pick<
+  TournamentMatch,
+  'id' | 'round' | 'index' | 'entryAId' | 'entryBId' | 'winnerEntryId' | 'status' | 'stageId' | 'roomStatus' | 'reportedAt'
+>;
+
+export type TournamentPublicView = {
+  id: string;
+  slug: string;
+  name: string;
+  kind: TournamentKind;
+  status: TournamentStatus;
+  entries: PublicTournamentEntry[];
+  matches: PublicTournamentMatch[];
+  currentRound: number;
+  capacity: number;
+  minEntries: number;
+  createdAt: number;
+  updatedAt: number;
+  rewardLabel?: string;
 };
 
 export type TournamentSummary = {

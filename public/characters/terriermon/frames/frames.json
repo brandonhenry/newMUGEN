@@ -1,0 +1,4654 @@
+{
+  "source": "Terriermon.png",
+  "count": 272,
+  "excluded": [],
+  "sheets": [
+    {
+      "id": "generated",
+      "name": "Generated Frame Atlas",
+      "path": "/characters/terriermon/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 272
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/terriermon/frames/frame-000.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        174,
+        79,
+        200,
+        105
+      ],
+      "width": 26,
+      "height": 26,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/terriermon/frames/frame-001.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        548,
+        77,
+        573,
+        105
+      ],
+      "width": 25,
+      "height": 28,
+      "row": 0,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 1,
+        "originalSize": [
+          37,
+          56
+        ],
+        "cropBox": [
+          12,
+          28,
+          37,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          22,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 2,
+      "path": "/characters/terriermon/frames/frame-002.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        922,
+        77,
+        948,
+        105
+      ],
+      "width": 26,
+      "height": 28,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/terriermon/frames/frame-003.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1295,
+        84,
+        1322,
+        105
+      ],
+      "width": 27,
+      "height": 21,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/terriermon/frames/frame-004.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1670,
+        77,
+        1696,
+        105
+      ],
+      "width": 26,
+      "height": 28,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/terriermon/frames/frame-005.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2047,
+        75,
+        2067,
+        105
+      ],
+      "width": 20,
+      "height": 30,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/terriermon/frames/frame-006.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2374,
+        21,
+        2488,
+        105
+      ],
+      "width": 114,
+      "height": 84,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/terriermon/frames/frame-007.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2793,
+        76,
+        2817,
+        105
+      ],
+      "width": 24,
+      "height": 29,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/terriermon/frames/frame-008.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3168,
+        77,
+        3190,
+        105
+      ],
+      "width": 22,
+      "height": 28,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/terriermon/frames/frame-009.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3541,
+        76,
+        3565,
+        105
+      ],
+      "width": 24,
+      "height": 29,
+      "row": 0
+    },
+    {
+      "index": 10,
+      "path": "/characters/terriermon/frames/frame-010.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3913,
+        83,
+        3940,
+        105
+      ],
+      "width": 27,
+      "height": 22,
+      "row": 0
+    },
+    {
+      "index": 11,
+      "path": "/characters/terriermon/frames/frame-011.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4288,
+        76,
+        4313,
+        105
+      ],
+      "width": 25,
+      "height": 29,
+      "row": 0
+    },
+    {
+      "index": 12,
+      "path": "/characters/terriermon/frames/frame-012.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        176,
+        186,
+        198,
+        214
+      ],
+      "width": 22,
+      "height": 28,
+      "row": 1
+    },
+    {
+      "index": 13,
+      "path": "/characters/terriermon/frames/frame-013.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        547,
+        186,
+        575,
+        214
+      ],
+      "width": 28,
+      "height": 28,
+      "row": 1
+    },
+    {
+      "index": 14,
+      "path": "/characters/terriermon/frames/frame-014.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        921,
+        192,
+        948,
+        214
+      ],
+      "width": 27,
+      "height": 22,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/terriermon/frames/frame-015.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1294,
+        188,
+        1323,
+        214
+      ],
+      "width": 29,
+      "height": 26,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/terriermon/frames/frame-016.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1666,
+        181,
+        1699,
+        214
+      ],
+      "width": 33,
+      "height": 33,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/terriermon/frames/frame-017.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2042,
+        188,
+        2072,
+        214
+      ],
+      "width": 30,
+      "height": 26,
+      "row": 1
+    },
+    {
+      "index": 18,
+      "path": "/characters/terriermon/frames/frame-018.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2417,
+        186,
+        2444,
+        214
+      ],
+      "width": 27,
+      "height": 28,
+      "row": 1
+    },
+    {
+      "index": 19,
+      "path": "/characters/terriermon/frames/frame-019.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2792,
+        189,
+        2818,
+        214
+      ],
+      "width": 26,
+      "height": 25,
+      "row": 1
+    },
+    {
+      "index": 20,
+      "path": "/characters/terriermon/frames/frame-020.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3166,
+        187,
+        3191,
+        214
+      ],
+      "width": 25,
+      "height": 27,
+      "row": 1
+    },
+    {
+      "index": 21,
+      "path": "/characters/terriermon/frames/frame-021.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3537,
+        190,
+        3569,
+        214
+      ],
+      "width": 32,
+      "height": 24,
+      "row": 1
+    },
+    {
+      "index": 22,
+      "path": "/characters/terriermon/frames/frame-022.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3915,
+        188,
+        3939,
+        214
+      ],
+      "width": 24,
+      "height": 26,
+      "row": 1
+    },
+    {
+      "index": 23,
+      "path": "/characters/terriermon/frames/frame-023.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4284,
+        191,
+        4317,
+        214
+      ],
+      "width": 33,
+      "height": 23,
+      "row": 1
+    },
+    {
+      "index": 24,
+      "path": "/characters/terriermon/frames/frame-024.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        174,
+        297,
+        200,
+        323
+      ],
+      "width": 26,
+      "height": 26,
+      "row": 2
+    },
+    {
+      "index": 25,
+      "path": "/characters/terriermon/frames/frame-025.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        544,
+        300,
+        577,
+        323
+      ],
+      "width": 33,
+      "height": 23,
+      "row": 2
+    },
+    {
+      "index": 26,
+      "path": "/characters/terriermon/frames/frame-026.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        752,
+        222,
+        1118,
+        323
+      ],
+      "width": 366,
+      "height": 101,
+      "row": 2
+    },
+    {
+      "index": 27,
+      "path": "/characters/terriermon/frames/frame-027.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1295,
+        296,
+        1322,
+        323
+      ],
+      "width": 27,
+      "height": 27,
+      "row": 2
+    },
+    {
+      "index": 28,
+      "path": "/characters/terriermon/frames/frame-028.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1667,
+        299,
+        1699,
+        323
+      ],
+      "width": 32,
+      "height": 24,
+      "row": 2
+    },
+    {
+      "index": 29,
+      "path": "/characters/terriermon/frames/frame-029.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2045,
+        296,
+        2069,
+        323
+      ],
+      "width": 24,
+      "height": 27,
+      "row": 2
+    },
+    {
+      "index": 30,
+      "path": "/characters/terriermon/frames/frame-030.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2414,
+        300,
+        2447,
+        323
+      ],
+      "width": 33,
+      "height": 23,
+      "row": 2
+    },
+    {
+      "index": 31,
+      "path": "/characters/terriermon/frames/frame-031.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2793,
+        297,
+        2817,
+        323
+      ],
+      "width": 24,
+      "height": 26,
+      "row": 2
+    },
+    {
+      "index": 32,
+      "path": "/characters/terriermon/frames/frame-032.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3162,
+        300,
+        3195,
+        323
+      ],
+      "width": 33,
+      "height": 23,
+      "row": 2
+    },
+    {
+      "index": 33,
+      "path": "/characters/terriermon/frames/frame-033.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3540,
+        297,
+        3566,
+        323
+      ],
+      "width": 26,
+      "height": 26,
+      "row": 2
+    },
+    {
+      "index": 34,
+      "path": "/characters/terriermon/frames/frame-034.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3911,
+        300,
+        3943,
+        323
+      ],
+      "width": 32,
+      "height": 23,
+      "row": 2,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 34,
+        "originalSize": [
+          34,
+          56
+        ],
+        "cropBox": [
+          2,
+          33,
+          34,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          19,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 35,
+      "path": "/characters/terriermon/frames/frame-035.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4288,
+        296,
+        4314,
+        323
+      ],
+      "width": 26,
+      "height": 27,
+      "row": 2
+    },
+    {
+      "index": 36,
+      "path": "/characters/terriermon/frames/frame-036.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        171,
+        409,
+        202,
+        432
+      ],
+      "width": 31,
+      "height": 23,
+      "row": 3
+    },
+    {
+      "index": 37,
+      "path": "/characters/terriermon/frames/frame-037.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        548,
+        389,
+        573,
+        432
+      ],
+      "width": 25,
+      "height": 43,
+      "row": 3
+    },
+    {
+      "index": 38,
+      "path": "/characters/terriermon/frames/frame-038.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        923,
+        387,
+        946,
+        432
+      ],
+      "width": 23,
+      "height": 45,
+      "row": 3
+    },
+    {
+      "index": 39,
+      "path": "/characters/terriermon/frames/frame-039.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1291,
+        393,
+        1326,
+        432
+      ],
+      "width": 35,
+      "height": 39,
+      "row": 3
+    },
+    {
+      "index": 40,
+      "path": "/characters/terriermon/frames/frame-040.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1667,
+        401,
+        1699,
+        432
+      ],
+      "width": 32,
+      "height": 31,
+      "row": 3
+    },
+    {
+      "index": 41,
+      "path": "/characters/terriermon/frames/frame-041.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2038,
+        414,
+        2075,
+        432
+      ],
+      "width": 37,
+      "height": 18,
+      "row": 3
+    },
+    {
+      "index": 42,
+      "path": "/characters/terriermon/frames/frame-042.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2418,
+        409,
+        2443,
+        432
+      ],
+      "width": 25,
+      "height": 23,
+      "row": 3
+    },
+    {
+      "index": 43,
+      "path": "/characters/terriermon/frames/frame-043.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2791,
+        411,
+        2818,
+        432
+      ],
+      "width": 27,
+      "height": 21,
+      "row": 3
+    },
+    {
+      "index": 44,
+      "path": "/characters/terriermon/frames/frame-044.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3162,
+        404,
+        3196,
+        432
+      ],
+      "width": 34,
+      "height": 28,
+      "row": 3
+    },
+    {
+      "index": 45,
+      "path": "/characters/terriermon/frames/frame-045.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3542,
+        403,
+        3563,
+        432
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 3
+    },
+    {
+      "index": 46,
+      "path": "/characters/terriermon/frames/frame-046.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3916,
+        403,
+        3937,
+        432
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 3
+    },
+    {
+      "index": 47,
+      "path": "/characters/terriermon/frames/frame-047.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4290,
+        403,
+        4311,
+        432
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 3
+    },
+    {
+      "index": 48,
+      "path": "/characters/terriermon/frames/frame-048.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        177,
+        512,
+        197,
+        541
+      ],
+      "width": 20,
+      "height": 29,
+      "row": 4
+    },
+    {
+      "index": 49,
+      "path": "/characters/terriermon/frames/frame-049.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        546,
+        513,
+        575,
+        541
+      ],
+      "width": 29,
+      "height": 28,
+      "row": 4
+    },
+    {
+      "index": 50,
+      "path": "/characters/terriermon/frames/frame-050.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        917,
+        512,
+        952,
+        541
+      ],
+      "width": 35,
+      "height": 29,
+      "row": 4
+    },
+    {
+      "index": 51,
+      "path": "/characters/terriermon/frames/frame-051.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1285,
+        504,
+        1332,
+        541
+      ],
+      "width": 47,
+      "height": 37,
+      "row": 4
+    },
+    {
+      "index": 52,
+      "path": "/characters/terriermon/frames/frame-052.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1659,
+        503,
+        1706,
+        541
+      ],
+      "width": 47,
+      "height": 38,
+      "row": 4
+    },
+    {
+      "index": 53,
+      "path": "/characters/terriermon/frames/frame-053.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2033,
+        501,
+        2080,
+        541
+      ],
+      "width": 47,
+      "height": 40,
+      "row": 4
+    },
+    {
+      "index": 54,
+      "path": "/characters/terriermon/frames/frame-054.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2418,
+        499,
+        2443,
+        541
+      ],
+      "width": 25,
+      "height": 42,
+      "row": 4
+    },
+    {
+      "index": 55,
+      "path": "/characters/terriermon/frames/frame-055.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2791,
+        514,
+        2818,
+        541
+      ],
+      "width": 27,
+      "height": 27,
+      "row": 4,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 55,
+        "originalSize": [
+          36,
+          56
+        ],
+        "cropBox": [
+          9,
+          29,
+          36,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          36,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 56,
+      "path": "/characters/terriermon/frames/frame-056.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3164,
+        514,
+        3194,
+        541
+      ],
+      "width": 30,
+      "height": 27,
+      "row": 4
+    },
+    {
+      "index": 57,
+      "path": "/characters/terriermon/frames/frame-057.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3541,
+        516,
+        3564,
+        541
+      ],
+      "width": 23,
+      "height": 25,
+      "row": 4
+    },
+    {
+      "index": 58,
+      "path": "/characters/terriermon/frames/frame-058.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3916,
+        518,
+        3937,
+        541
+      ],
+      "width": 21,
+      "height": 23,
+      "row": 4
+    },
+    {
+      "index": 59,
+      "path": "/characters/terriermon/frames/frame-059.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4290,
+        520,
+        4311,
+        541
+      ],
+      "width": 21,
+      "height": 21,
+      "row": 4
+    },
+    {
+      "index": 60,
+      "path": "/characters/terriermon/frames/frame-060.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        172,
+        634,
+        201,
+        650
+      ],
+      "width": 29,
+      "height": 16,
+      "row": 5
+    },
+    {
+      "index": 61,
+      "path": "/characters/terriermon/frames/frame-061.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        546,
+        627,
+        575,
+        650
+      ],
+      "width": 29,
+      "height": 23,
+      "row": 5
+    },
+    {
+      "index": 62,
+      "path": "/characters/terriermon/frames/frame-062.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        921,
+        623,
+        948,
+        650
+      ],
+      "width": 27,
+      "height": 27,
+      "row": 5
+    },
+    {
+      "index": 63,
+      "path": "/characters/terriermon/frames/frame-063.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1293,
+        623,
+        1324,
+        650
+      ],
+      "width": 31,
+      "height": 27,
+      "row": 5
+    },
+    {
+      "index": 64,
+      "path": "/characters/terriermon/frames/frame-064.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1667,
+        621,
+        1698,
+        650
+      ],
+      "width": 31,
+      "height": 29,
+      "row": 5
+    },
+    {
+      "index": 65,
+      "path": "/characters/terriermon/frames/frame-065.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2046,
+        628,
+        2067,
+        650
+      ],
+      "width": 21,
+      "height": 22,
+      "row": 5
+    },
+    {
+      "index": 66,
+      "path": "/characters/terriermon/frames/frame-066.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2420,
+        623,
+        2442,
+        650
+      ],
+      "width": 22,
+      "height": 27,
+      "row": 5
+    },
+    {
+      "index": 67,
+      "path": "/characters/terriermon/frames/frame-067.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2794,
+        621,
+        2815,
+        650
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 5
+    },
+    {
+      "index": 68,
+      "path": "/characters/terriermon/frames/frame-068.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3167,
+        618,
+        3190,
+        650
+      ],
+      "width": 23,
+      "height": 32,
+      "row": 5
+    },
+    {
+      "index": 69,
+      "path": "/characters/terriermon/frames/frame-069.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3533,
+        616,
+        3573,
+        650
+      ],
+      "width": 40,
+      "height": 34,
+      "row": 5
+    },
+    {
+      "index": 70,
+      "path": "/characters/terriermon/frames/frame-070.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3912,
+        622,
+        3942,
+        650
+      ],
+      "width": 30,
+      "height": 28,
+      "row": 5
+    },
+    {
+      "index": 71,
+      "path": "/characters/terriermon/frames/frame-071.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4289,
+        625,
+        4312,
+        650
+      ],
+      "width": 23,
+      "height": 25,
+      "row": 5
+    },
+    {
+      "index": 72,
+      "path": "/characters/terriermon/frames/frame-072.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        176,
+        736,
+        197,
+        759
+      ],
+      "width": 21,
+      "height": 23,
+      "row": 6
+    },
+    {
+      "index": 73,
+      "path": "/characters/terriermon/frames/frame-073.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        550,
+        738,
+        571,
+        759
+      ],
+      "width": 21,
+      "height": 21,
+      "row": 6
+    },
+    {
+      "index": 74,
+      "path": "/characters/terriermon/frames/frame-074.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        919,
+        723,
+        951,
+        759
+      ],
+      "width": 32,
+      "height": 36,
+      "row": 6
+    },
+    {
+      "index": 75,
+      "path": "/characters/terriermon/frames/frame-075.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1297,
+        726,
+        1320,
+        759
+      ],
+      "width": 23,
+      "height": 33,
+      "row": 6
+    },
+    {
+      "index": 76,
+      "path": "/characters/terriermon/frames/frame-076.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1671,
+        727,
+        1694,
+        759
+      ],
+      "width": 23,
+      "height": 32,
+      "row": 6
+    },
+    {
+      "index": 77,
+      "path": "/characters/terriermon/frames/frame-077.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2045,
+        727,
+        2068,
+        759
+      ],
+      "width": 23,
+      "height": 32,
+      "row": 6
+    },
+    {
+      "index": 78,
+      "path": "/characters/terriermon/frames/frame-078.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2419,
+        725,
+        2442,
+        759
+      ],
+      "width": 23,
+      "height": 34,
+      "row": 6
+    },
+    {
+      "index": 79,
+      "path": "/characters/terriermon/frames/frame-079.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2793,
+        726,
+        2816,
+        759
+      ],
+      "width": 23,
+      "height": 33,
+      "row": 6
+    },
+    {
+      "index": 80,
+      "path": "/characters/terriermon/frames/frame-080.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3167,
+        727,
+        3190,
+        759
+      ],
+      "width": 23,
+      "height": 32,
+      "row": 6
+    },
+    {
+      "index": 81,
+      "path": "/characters/terriermon/frames/frame-081.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3541,
+        727,
+        3564,
+        759
+      ],
+      "width": 23,
+      "height": 32,
+      "row": 6
+    },
+    {
+      "index": 82,
+      "path": "/characters/terriermon/frames/frame-082.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3915,
+        725,
+        3938,
+        759
+      ],
+      "width": 23,
+      "height": 34,
+      "row": 6
+    },
+    {
+      "index": 83,
+      "path": "/characters/terriermon/frames/frame-083.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4287,
+        729,
+        4314,
+        759
+      ],
+      "width": 27,
+      "height": 30,
+      "row": 6
+    },
+    {
+      "index": 84,
+      "path": "/characters/terriermon/frames/frame-084.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        168,
+        839,
+        206,
+        868
+      ],
+      "width": 38,
+      "height": 29,
+      "row": 7
+    },
+    {
+      "index": 85,
+      "path": "/characters/terriermon/frames/frame-085.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        544,
+        833,
+        577,
+        868
+      ],
+      "width": 33,
+      "height": 35,
+      "row": 7
+    },
+    {
+      "index": 86,
+      "path": "/characters/terriermon/frames/frame-086.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        920,
+        832,
+        949,
+        868
+      ],
+      "width": 29,
+      "height": 36,
+      "row": 7
+    },
+    {
+      "index": 87,
+      "path": "/characters/terriermon/frames/frame-087.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1291,
+        828,
+        1326,
+        868
+      ],
+      "width": 35,
+      "height": 40,
+      "row": 7
+    },
+    {
+      "index": 88,
+      "path": "/characters/terriermon/frames/frame-088.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1668,
+        837,
+        1698,
+        868
+      ],
+      "width": 30,
+      "height": 31,
+      "row": 7
+    },
+    {
+      "index": 89,
+      "path": "/characters/terriermon/frames/frame-089.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2044,
+        848,
+        2069,
+        868
+      ],
+      "width": 25,
+      "height": 20,
+      "row": 7
+    },
+    {
+      "index": 90,
+      "path": "/characters/terriermon/frames/frame-090.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2416,
+        845,
+        2445,
+        868
+      ],
+      "width": 29,
+      "height": 23,
+      "row": 7
+    },
+    {
+      "index": 91,
+      "path": "/characters/terriermon/frames/frame-091.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2791,
+        835,
+        2818,
+        868
+      ],
+      "width": 27,
+      "height": 33,
+      "row": 7,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 91,
+        "originalSize": [
+          44,
+          55
+        ],
+        "cropBox": [
+          10,
+          22,
+          37,
+          55
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          44,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 92,
+      "path": "/characters/terriermon/frames/frame-092.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3165,
+        835,
+        3192,
+        868
+      ],
+      "width": 27,
+      "height": 33,
+      "row": 7
+    },
+    {
+      "index": 93,
+      "path": "/characters/terriermon/frames/frame-093.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3539,
+        831,
+        3567,
+        868
+      ],
+      "width": 28,
+      "height": 37,
+      "row": 7
+    },
+    {
+      "index": 94,
+      "path": "/characters/terriermon/frames/frame-094.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3913,
+        832,
+        3941,
+        868
+      ],
+      "width": 28,
+      "height": 36,
+      "row": 7
+    },
+    {
+      "index": 95,
+      "path": "/characters/terriermon/frames/frame-095.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4287,
+        831,
+        4314,
+        868
+      ],
+      "width": 27,
+      "height": 37,
+      "row": 7
+    },
+    {
+      "index": 96,
+      "path": "/characters/terriermon/frames/frame-096.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        173,
+        940,
+        200,
+        977
+      ],
+      "width": 27,
+      "height": 37,
+      "row": 8
+    },
+    {
+      "index": 97,
+      "path": "/characters/terriermon/frames/frame-097.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        548,
+        940,
+        574,
+        977
+      ],
+      "width": 26,
+      "height": 37,
+      "row": 8
+    },
+    {
+      "index": 98,
+      "path": "/characters/terriermon/frames/frame-098.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        922,
+        941,
+        948,
+        977
+      ],
+      "width": 26,
+      "height": 36,
+      "row": 8
+    },
+    {
+      "index": 99,
+      "path": "/characters/terriermon/frames/frame-099.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1296,
+        942,
+        1322,
+        977
+      ],
+      "width": 26,
+      "height": 35,
+      "row": 8
+    },
+    {
+      "index": 100,
+      "path": "/characters/terriermon/frames/frame-100.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1668,
+        954,
+        1697,
+        977
+      ],
+      "width": 29,
+      "height": 23,
+      "row": 8
+    },
+    {
+      "index": 101,
+      "path": "/characters/terriermon/frames/frame-101.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2035,
+        948,
+        2078,
+        977
+      ],
+      "width": 43,
+      "height": 29,
+      "row": 8
+    },
+    {
+      "index": 102,
+      "path": "/characters/terriermon/frames/frame-102.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2415,
+        950,
+        2447,
+        977
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 8
+    },
+    {
+      "index": 103,
+      "path": "/characters/terriermon/frames/frame-103.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2792,
+        939,
+        2817,
+        977
+      ],
+      "width": 25,
+      "height": 38,
+      "row": 8
+    },
+    {
+      "index": 104,
+      "path": "/characters/terriermon/frames/frame-104.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3163,
+        943,
+        3194,
+        977
+      ],
+      "width": 31,
+      "height": 34,
+      "row": 8
+    },
+    {
+      "index": 105,
+      "path": "/characters/terriermon/frames/frame-105.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3539,
+        942,
+        3567,
+        977
+      ],
+      "width": 28,
+      "height": 35,
+      "row": 8
+    },
+    {
+      "index": 106,
+      "path": "/characters/terriermon/frames/frame-106.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3907,
+        948,
+        3946,
+        977
+      ],
+      "width": 39,
+      "height": 29,
+      "row": 8
+    },
+    {
+      "index": 107,
+      "path": "/characters/terriermon/frames/frame-107.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4282,
+        949,
+        4319,
+        977
+      ],
+      "width": 37,
+      "height": 28,
+      "row": 8
+    },
+    {
+      "index": 108,
+      "path": "/characters/terriermon/frames/frame-108.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        174,
+        1049,
+        200,
+        1086
+      ],
+      "width": 26,
+      "height": 37,
+      "row": 9
+    },
+    {
+      "index": 109,
+      "path": "/characters/terriermon/frames/frame-109.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        538,
+        1064,
+        584,
+        1086
+      ],
+      "width": 46,
+      "height": 22,
+      "row": 9
+    },
+    {
+      "index": 110,
+      "path": "/characters/terriermon/frames/frame-110.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        921,
+        1059,
+        949,
+        1086
+      ],
+      "width": 28,
+      "height": 27,
+      "row": 9
+    },
+    {
+      "index": 111,
+      "path": "/characters/terriermon/frames/frame-111.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1298,
+        1054,
+        1320,
+        1086
+      ],
+      "width": 22,
+      "height": 32,
+      "row": 9
+    },
+    {
+      "index": 112,
+      "path": "/characters/terriermon/frames/frame-112.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1672,
+        1055,
+        1694,
+        1086
+      ],
+      "width": 22,
+      "height": 31,
+      "row": 9
+    },
+    {
+      "index": 113,
+      "path": "/characters/terriermon/frames/frame-113.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2041,
+        1059,
+        2073,
+        1086
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 9
+    },
+    {
+      "index": 114,
+      "path": "/characters/terriermon/frames/frame-114.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2416,
+        1059,
+        2445,
+        1086
+      ],
+      "width": 29,
+      "height": 27,
+      "row": 9
+    },
+    {
+      "index": 115,
+      "path": "/characters/terriermon/frames/frame-115.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2792,
+        1062,
+        2817,
+        1086
+      ],
+      "width": 25,
+      "height": 24,
+      "row": 9
+    },
+    {
+      "index": 116,
+      "path": "/characters/terriermon/frames/frame-116.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3167,
+        1061,
+        3191,
+        1086
+      ],
+      "width": 24,
+      "height": 25,
+      "row": 9
+    },
+    {
+      "index": 117,
+      "path": "/characters/terriermon/frames/frame-117.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3540,
+        1062,
+        3565,
+        1086
+      ],
+      "width": 25,
+      "height": 24,
+      "row": 9
+    },
+    {
+      "index": 118,
+      "path": "/characters/terriermon/frames/frame-118.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3915,
+        1061,
+        3939,
+        1086
+      ],
+      "width": 24,
+      "height": 25,
+      "row": 9
+    },
+    {
+      "index": 119,
+      "path": "/characters/terriermon/frames/frame-119.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4286,
+        1069,
+        4316,
+        1086
+      ],
+      "width": 30,
+      "height": 17,
+      "row": 9
+    },
+    {
+      "index": 120,
+      "path": "/characters/terriermon/frames/frame-120.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        172,
+        1158,
+        202,
+        1195
+      ],
+      "width": 30,
+      "height": 37,
+      "row": 10
+    },
+    {
+      "index": 121,
+      "path": "/characters/terriermon/frames/frame-121.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        547,
+        1162,
+        574,
+        1195
+      ],
+      "width": 27,
+      "height": 33,
+      "row": 10
+    },
+    {
+      "index": 122,
+      "path": "/characters/terriermon/frames/frame-122.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        918,
+        1173,
+        951,
+        1195
+      ],
+      "width": 33,
+      "height": 22,
+      "row": 10
+    },
+    {
+      "index": 123,
+      "path": "/characters/terriermon/frames/frame-123.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1292,
+        1175,
+        1325,
+        1195
+      ],
+      "width": 33,
+      "height": 20,
+      "row": 10
+    },
+    {
+      "index": 124,
+      "path": "/characters/terriermon/frames/frame-124.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1669,
+        1172,
+        1696,
+        1195
+      ],
+      "width": 27,
+      "height": 23,
+      "row": 10
+    },
+    {
+      "index": 125,
+      "path": "/characters/terriermon/frames/frame-125.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2045,
+        1170,
+        2069,
+        1195
+      ],
+      "width": 24,
+      "height": 25,
+      "row": 10
+    },
+    {
+      "index": 126,
+      "path": "/characters/terriermon/frames/frame-126.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2418,
+        1171,
+        2443,
+        1195
+      ],
+      "width": 25,
+      "height": 24,
+      "row": 10
+    },
+    {
+      "index": 127,
+      "path": "/characters/terriermon/frames/frame-127.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2787,
+        1158,
+        2823,
+        1195
+      ],
+      "width": 36,
+      "height": 37,
+      "row": 10
+    },
+    {
+      "index": 128,
+      "path": "/characters/terriermon/frames/frame-128.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3160,
+        1171,
+        3198,
+        1195
+      ],
+      "width": 38,
+      "height": 24,
+      "row": 10
+    },
+    {
+      "index": 129,
+      "path": "/characters/terriermon/frames/frame-129.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3533,
+        1182,
+        3572,
+        1195
+      ],
+      "width": 39,
+      "height": 13,
+      "row": 10
+    },
+    {
+      "index": 130,
+      "path": "/characters/terriermon/frames/frame-130.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3911,
+        1176,
+        3942,
+        1195
+      ],
+      "width": 31,
+      "height": 19,
+      "row": 10
+    },
+    {
+      "index": 131,
+      "path": "/characters/terriermon/frames/frame-131.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4285,
+        1171,
+        4316,
+        1195
+      ],
+      "width": 31,
+      "height": 24,
+      "row": 10
+    },
+    {
+      "index": 132,
+      "path": "/characters/terriermon/frames/frame-132.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        173,
+        1276,
+        200,
+        1304
+      ],
+      "width": 27,
+      "height": 28,
+      "row": 11
+    },
+    {
+      "index": 133,
+      "path": "/characters/terriermon/frames/frame-133.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        543,
+        1276,
+        579,
+        1304
+      ],
+      "width": 36,
+      "height": 28,
+      "row": 11
+    },
+    {
+      "index": 134,
+      "path": "/characters/terriermon/frames/frame-134.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        913,
+        1273,
+        956,
+        1304
+      ],
+      "width": 43,
+      "height": 31,
+      "row": 11
+    },
+    {
+      "index": 135,
+      "path": "/characters/terriermon/frames/frame-135.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1287,
+        1274,
+        1331,
+        1304
+      ],
+      "width": 44,
+      "height": 30,
+      "row": 11
+    },
+    {
+      "index": 136,
+      "path": "/characters/terriermon/frames/frame-136.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1656,
+        1283,
+        1710,
+        1304
+      ],
+      "width": 54,
+      "height": 21,
+      "row": 11
+    },
+    {
+      "index": 137,
+      "path": "/characters/terriermon/frames/frame-137.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2034,
+        1272,
+        2080,
+        1304
+      ],
+      "width": 46,
+      "height": 32,
+      "row": 11
+    },
+    {
+      "index": 138,
+      "path": "/characters/terriermon/frames/frame-138.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2409,
+        1266,
+        2453,
+        1304
+      ],
+      "width": 44,
+      "height": 38,
+      "row": 11
+    },
+    {
+      "index": 139,
+      "path": "/characters/terriermon/frames/frame-139.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2789,
+        1267,
+        2820,
+        1304
+      ],
+      "width": 31,
+      "height": 37,
+      "row": 11
+    },
+    {
+      "index": 140,
+      "path": "/characters/terriermon/frames/frame-140.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3163,
+        1262,
+        3194,
+        1304
+      ],
+      "width": 31,
+      "height": 42,
+      "row": 11
+    },
+    {
+      "index": 141,
+      "path": "/characters/terriermon/frames/frame-141.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3540,
+        1264,
+        3566,
+        1304
+      ],
+      "width": 26,
+      "height": 40,
+      "row": 11
+    },
+    {
+      "index": 142,
+      "path": "/characters/terriermon/frames/frame-142.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3915,
+        1264,
+        3938,
+        1304
+      ],
+      "width": 23,
+      "height": 40,
+      "row": 11
+    },
+    {
+      "index": 143,
+      "path": "/characters/terriermon/frames/frame-143.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4288,
+        1263,
+        4313,
+        1304
+      ],
+      "width": 25,
+      "height": 41,
+      "row": 11
+    },
+    {
+      "index": 144,
+      "path": "/characters/terriermon/frames/frame-144.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        174,
+        1383,
+        199,
+        1413
+      ],
+      "width": 25,
+      "height": 30,
+      "row": 12
+    },
+    {
+      "index": 145,
+      "path": "/characters/terriermon/frames/frame-145.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        540,
+        1382,
+        581,
+        1413
+      ],
+      "width": 41,
+      "height": 31,
+      "row": 12
+    },
+    {
+      "index": 146,
+      "path": "/characters/terriermon/frames/frame-146.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        910,
+        1386,
+        960,
+        1413
+      ],
+      "width": 50,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 147,
+      "path": "/characters/terriermon/frames/frame-147.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1282,
+        1386,
+        1335,
+        1413
+      ],
+      "width": 53,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 148,
+      "path": "/characters/terriermon/frames/frame-148.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1667,
+        1384,
+        1698,
+        1413
+      ],
+      "width": 31,
+      "height": 29,
+      "row": 12
+    },
+    {
+      "index": 149,
+      "path": "/characters/terriermon/frames/frame-149.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2041,
+        1388,
+        2072,
+        1413
+      ],
+      "width": 31,
+      "height": 25,
+      "row": 12
+    },
+    {
+      "index": 150,
+      "path": "/characters/terriermon/frames/frame-150.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2413,
+        1394,
+        2448,
+        1413
+      ],
+      "width": 35,
+      "height": 19,
+      "row": 12
+    },
+    {
+      "index": 151,
+      "path": "/characters/terriermon/frames/frame-151.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2788,
+        1389,
+        2821,
+        1413
+      ],
+      "width": 33,
+      "height": 24,
+      "row": 12
+    },
+    {
+      "index": 152,
+      "path": "/characters/terriermon/frames/frame-152.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3165,
+        1381,
+        3192,
+        1413
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 12
+    },
+    {
+      "index": 153,
+      "path": "/characters/terriermon/frames/frame-153.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3534,
+        1382,
+        3571,
+        1413
+      ],
+      "width": 37,
+      "height": 31,
+      "row": 12
+    },
+    {
+      "index": 154,
+      "path": "/characters/terriermon/frames/frame-154.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3910,
+        1379,
+        3944,
+        1413
+      ],
+      "width": 34,
+      "height": 34,
+      "row": 12
+    },
+    {
+      "index": 155,
+      "path": "/characters/terriermon/frames/frame-155.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4286,
+        1386,
+        4315,
+        1413
+      ],
+      "width": 29,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 156,
+      "path": "/characters/terriermon/frames/frame-156.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        171,
+        1499,
+        202,
+        1522
+      ],
+      "width": 31,
+      "height": 23,
+      "row": 13
+    },
+    {
+      "index": 157,
+      "path": "/characters/terriermon/frames/frame-157.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        543,
+        1493,
+        578,
+        1522
+      ],
+      "width": 35,
+      "height": 29,
+      "row": 13
+    },
+    {
+      "index": 158,
+      "path": "/characters/terriermon/frames/frame-158.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        913,
+        1494,
+        956,
+        1522
+      ],
+      "width": 43,
+      "height": 28,
+      "row": 13
+    },
+    {
+      "index": 159,
+      "path": "/characters/terriermon/frames/frame-159.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1293,
+        1489,
+        1324,
+        1522
+      ],
+      "width": 31,
+      "height": 33,
+      "row": 13
+    },
+    {
+      "index": 160,
+      "path": "/characters/terriermon/frames/frame-160.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1660,
+        1495,
+        1706,
+        1522
+      ],
+      "width": 46,
+      "height": 27,
+      "row": 13
+    },
+    {
+      "index": 161,
+      "path": "/characters/terriermon/frames/frame-161.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2048,
+        1492,
+        2066,
+        1522
+      ],
+      "width": 18,
+      "height": 30,
+      "row": 13
+    },
+    {
+      "index": 162,
+      "path": "/characters/terriermon/frames/frame-162.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2406,
+        1493,
+        2456,
+        1522
+      ],
+      "width": 50,
+      "height": 29,
+      "row": 13
+    },
+    {
+      "index": 163,
+      "path": "/characters/terriermon/frames/frame-163.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2785,
+        1481,
+        2824,
+        1522
+      ],
+      "width": 39,
+      "height": 41,
+      "row": 13
+    },
+    {
+      "index": 164,
+      "path": "/characters/terriermon/frames/frame-164.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3159,
+        1481,
+        3198,
+        1522
+      ],
+      "width": 39,
+      "height": 41,
+      "row": 13
+    },
+    {
+      "index": 165,
+      "path": "/characters/terriermon/frames/frame-165.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3534,
+        1481,
+        3572,
+        1522
+      ],
+      "width": 38,
+      "height": 41,
+      "row": 13
+    },
+    {
+      "index": 166,
+      "path": "/characters/terriermon/frames/frame-166.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3909,
+        1482,
+        3945,
+        1522
+      ],
+      "width": 36,
+      "height": 40,
+      "row": 13
+    },
+    {
+      "index": 167,
+      "path": "/characters/terriermon/frames/frame-167.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4285,
+        1487,
+        4317,
+        1522
+      ],
+      "width": 32,
+      "height": 35,
+      "row": 13
+    },
+    {
+      "index": 168,
+      "path": "/characters/terriermon/frames/frame-168.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        170,
+        1593,
+        204,
+        1631
+      ],
+      "width": 34,
+      "height": 38,
+      "row": 14
+    },
+    {
+      "index": 169,
+      "path": "/characters/terriermon/frames/frame-169.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        544,
+        1596,
+        577,
+        1631
+      ],
+      "width": 33,
+      "height": 35,
+      "row": 14
+    },
+    {
+      "index": 170,
+      "path": "/characters/terriermon/frames/frame-170.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        919,
+        1600,
+        951,
+        1631
+      ],
+      "width": 32,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 171,
+      "path": "/characters/terriermon/frames/frame-171.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1292,
+        1601,
+        1325,
+        1631
+      ],
+      "width": 33,
+      "height": 30,
+      "row": 14
+    },
+    {
+      "index": 172,
+      "path": "/characters/terriermon/frames/frame-172.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1667,
+        1600,
+        1699,
+        1631
+      ],
+      "width": 32,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 173,
+      "path": "/characters/terriermon/frames/frame-173.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2041,
+        1601,
+        2073,
+        1631
+      ],
+      "width": 32,
+      "height": 30,
+      "row": 14
+    },
+    {
+      "index": 174,
+      "path": "/characters/terriermon/frames/frame-174.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2420,
+        1610,
+        2442,
+        1631
+      ],
+      "width": 22,
+      "height": 21,
+      "row": 14,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 174,
+        "originalSize": [
+          25,
+          32
+        ],
+        "cropBox": [
+          1,
+          11,
+          23,
+          32
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          25,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 175,
+      "path": "/characters/terriermon/frames/frame-175.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2795,
+        1609,
+        2815,
+        1631
+      ],
+      "width": 20,
+      "height": 22,
+      "row": 14
+    },
+    {
+      "index": 176,
+      "path": "/characters/terriermon/frames/frame-176.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3169,
+        1609,
+        3189,
+        1631
+      ],
+      "width": 20,
+      "height": 22,
+      "row": 14,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 176,
+        "originalSize": [
+          26,
+          31
+        ],
+        "cropBox": [
+          4,
+          9,
+          24,
+          31
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          26,
+          7
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 177,
+      "path": "/characters/terriermon/frames/frame-177.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3543,
+        1610,
+        3562,
+        1631
+      ],
+      "width": 19,
+      "height": 21,
+      "row": 14
+    },
+    {
+      "index": 178,
+      "path": "/characters/terriermon/frames/frame-178.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3908,
+        1605,
+        3946,
+        1631
+      ],
+      "width": 38,
+      "height": 26,
+      "row": 14
+    },
+    {
+      "index": 179,
+      "path": "/characters/terriermon/frames/frame-179.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4286,
+        1600,
+        4316,
+        1631
+      ],
+      "width": 30,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 180,
+      "path": "/characters/terriermon/frames/frame-180.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        177,
+        1697,
+        197,
+        1740
+      ],
+      "width": 20,
+      "height": 43,
+      "row": 15
+    },
+    {
+      "index": 181,
+      "path": "/characters/terriermon/frames/frame-181.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        548,
+        1697,
+        574,
+        1740
+      ],
+      "width": 26,
+      "height": 43,
+      "row": 15
+    },
+    {
+      "index": 182,
+      "path": "/characters/terriermon/frames/frame-182.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        917,
+        1698,
+        952,
+        1740
+      ],
+      "width": 35,
+      "height": 42,
+      "row": 15
+    },
+    {
+      "index": 183,
+      "path": "/characters/terriermon/frames/frame-183.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1291,
+        1698,
+        1327,
+        1740
+      ],
+      "width": 36,
+      "height": 42,
+      "row": 15
+    },
+    {
+      "index": 184,
+      "path": "/characters/terriermon/frames/frame-184.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1665,
+        1694,
+        1701,
+        1740
+      ],
+      "width": 36,
+      "height": 46,
+      "row": 15
+    },
+    {
+      "index": 185,
+      "path": "/characters/terriermon/frames/frame-185.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2036,
+        1695,
+        2078,
+        1740
+      ],
+      "width": 42,
+      "height": 45,
+      "row": 15
+    },
+    {
+      "index": 186,
+      "path": "/characters/terriermon/frames/frame-186.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2410,
+        1696,
+        2451,
+        1740
+      ],
+      "width": 41,
+      "height": 44,
+      "row": 15
+    },
+    {
+      "index": 187,
+      "path": "/characters/terriermon/frames/frame-187.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2783,
+        1695,
+        2826,
+        1740
+      ],
+      "width": 43,
+      "height": 45,
+      "row": 15
+    },
+    {
+      "index": 188,
+      "path": "/characters/terriermon/frames/frame-188.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3161,
+        1701,
+        3196,
+        1740
+      ],
+      "width": 35,
+      "height": 39,
+      "row": 15,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 188,
+        "originalSize": [
+          65,
+          56
+        ],
+        "cropBox": [
+          10,
+          17,
+          45,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          65,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 189,
+      "path": "/characters/terriermon/frames/frame-189.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3538,
+        1716,
+        3568,
+        1740
+      ],
+      "width": 30,
+      "height": 24,
+      "row": 15
+    },
+    {
+      "index": 190,
+      "path": "/characters/terriermon/frames/frame-190.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3902,
+        1711,
+        3952,
+        1740
+      ],
+      "width": 50,
+      "height": 29,
+      "row": 15,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 190,
+        "originalSize": [
+          61,
+          56
+        ],
+        "cropBox": [
+          11,
+          27,
+          61,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          42,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 191,
+      "path": "/characters/terriermon/frames/frame-191.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4290,
+        1711,
+        4311,
+        1740
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 15
+    },
+    {
+      "index": 192,
+      "path": "/characters/terriermon/frames/frame-192.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        171,
+        1813,
+        203,
+        1849
+      ],
+      "width": 32,
+      "height": 36,
+      "row": 16
+    },
+    {
+      "index": 193,
+      "path": "/characters/terriermon/frames/frame-193.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        541,
+        1822,
+        581,
+        1849
+      ],
+      "width": 40,
+      "height": 27,
+      "row": 16
+    },
+    {
+      "index": 194,
+      "path": "/characters/terriermon/frames/frame-194.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        912,
+        1810,
+        957,
+        1849
+      ],
+      "width": 45,
+      "height": 39,
+      "row": 16
+    },
+    {
+      "index": 195,
+      "path": "/characters/terriermon/frames/frame-195.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1289,
+        1806,
+        1328,
+        1849
+      ],
+      "width": 39,
+      "height": 43,
+      "row": 16
+    },
+    {
+      "index": 196,
+      "path": "/characters/terriermon/frames/frame-196.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1667,
+        1802,
+        1698,
+        1849
+      ],
+      "width": 31,
+      "height": 47,
+      "row": 16
+    },
+    {
+      "index": 197,
+      "path": "/characters/terriermon/frames/frame-197.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2037,
+        1806,
+        2076,
+        1849
+      ],
+      "width": 39,
+      "height": 43,
+      "row": 16
+    },
+    {
+      "index": 198,
+      "path": "/characters/terriermon/frames/frame-198.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2408,
+        1810,
+        2453,
+        1849
+      ],
+      "width": 45,
+      "height": 39,
+      "row": 16
+    },
+    {
+      "index": 199,
+      "path": "/characters/terriermon/frames/frame-199.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2784,
+        1807,
+        2825,
+        1849
+      ],
+      "width": 41,
+      "height": 42,
+      "row": 16
+    },
+    {
+      "index": 200,
+      "path": "/characters/terriermon/frames/frame-200.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3162,
+        1802,
+        3196,
+        1849
+      ],
+      "width": 34,
+      "height": 47,
+      "row": 16
+    },
+    {
+      "index": 201,
+      "path": "/characters/terriermon/frames/frame-201.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3535,
+        1807,
+        3571,
+        1849
+      ],
+      "width": 36,
+      "height": 42,
+      "row": 16
+    },
+    {
+      "index": 202,
+      "path": "/characters/terriermon/frames/frame-202.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3905,
+        1806,
+        3948,
+        1849
+      ],
+      "width": 43,
+      "height": 43,
+      "row": 16
+    },
+    {
+      "index": 203,
+      "path": "/characters/terriermon/frames/frame-203.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4282,
+        1808,
+        4319,
+        1849
+      ],
+      "width": 37,
+      "height": 41,
+      "row": 16
+    },
+    {
+      "index": 204,
+      "path": "/characters/terriermon/frames/frame-204.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        170,
+        1912,
+        204,
+        1958
+      ],
+      "width": 34,
+      "height": 46,
+      "row": 17
+    },
+    {
+      "index": 205,
+      "path": "/characters/terriermon/frames/frame-205.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        535,
+        1931,
+        587,
+        1958
+      ],
+      "width": 52,
+      "height": 27,
+      "row": 17
+    },
+    {
+      "index": 206,
+      "path": "/characters/terriermon/frames/frame-206.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        915,
+        1914,
+        954,
+        1958
+      ],
+      "width": 39,
+      "height": 44,
+      "row": 17
+    },
+    {
+      "index": 207,
+      "path": "/characters/terriermon/frames/frame-207.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1292,
+        1912,
+        1326,
+        1958
+      ],
+      "width": 34,
+      "height": 46,
+      "row": 17
+    },
+    {
+      "index": 208,
+      "path": "/characters/terriermon/frames/frame-208.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1657,
+        1926,
+        1709,
+        1958
+      ],
+      "width": 52,
+      "height": 32,
+      "row": 17
+    },
+    {
+      "index": 209,
+      "path": "/characters/terriermon/frames/frame-209.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2034,
+        1919,
+        2079,
+        1958
+      ],
+      "width": 45,
+      "height": 39,
+      "row": 17
+    },
+    {
+      "index": 210,
+      "path": "/characters/terriermon/frames/frame-210.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2413,
+        1931,
+        2449,
+        1958
+      ],
+      "width": 36,
+      "height": 27,
+      "row": 17
+    },
+    {
+      "index": 211,
+      "path": "/characters/terriermon/frames/frame-211.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2784,
+        1938,
+        2825,
+        1958
+      ],
+      "width": 41,
+      "height": 20,
+      "row": 17
+    },
+    {
+      "index": 212,
+      "path": "/characters/terriermon/frames/frame-212.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3156,
+        1940,
+        3201,
+        1958
+      ],
+      "width": 45,
+      "height": 18,
+      "row": 17
+    },
+    {
+      "index": 213,
+      "path": "/characters/terriermon/frames/frame-213.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3531,
+        1942,
+        3574,
+        1958
+      ],
+      "width": 43,
+      "height": 16,
+      "row": 17
+    },
+    {
+      "index": 214,
+      "path": "/characters/terriermon/frames/frame-214.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3905,
+        1940,
+        3948,
+        1958
+      ],
+      "width": 43,
+      "height": 18,
+      "row": 17
+    },
+    {
+      "index": 215,
+      "path": "/characters/terriermon/frames/frame-215.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4279,
+        1942,
+        4323,
+        1958
+      ],
+      "width": 44,
+      "height": 16,
+      "row": 17
+    },
+    {
+      "index": 216,
+      "path": "/characters/terriermon/frames/frame-216.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        168,
+        2046,
+        205,
+        2067
+      ],
+      "width": 37,
+      "height": 21,
+      "row": 18
+    },
+    {
+      "index": 217,
+      "path": "/characters/terriermon/frames/frame-217.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        548,
+        2046,
+        574,
+        2067
+      ],
+      "width": 26,
+      "height": 21,
+      "row": 18
+    },
+    {
+      "index": 218,
+      "path": "/characters/terriermon/frames/frame-218.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        921,
+        2049,
+        949,
+        2067
+      ],
+      "width": 28,
+      "height": 18,
+      "row": 18
+    },
+    {
+      "index": 219,
+      "path": "/characters/terriermon/frames/frame-219.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1296,
+        2039,
+        1321,
+        2067
+      ],
+      "width": 25,
+      "height": 28,
+      "row": 18,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 219,
+        "originalSize": [
+          80,
+          41
+        ],
+        "cropBox": [
+          9,
+          13,
+          34,
+          41
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          80,
+          9
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 220,
+      "path": "/characters/terriermon/frames/frame-220.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1637,
+        2039,
+        1729,
+        2067
+      ],
+      "width": 92,
+      "height": 28,
+      "row": 18
+    },
+    {
+      "index": 221,
+      "path": "/characters/terriermon/frames/frame-221.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2045,
+        2038,
+        2069,
+        2067
+      ],
+      "width": 24,
+      "height": 29,
+      "row": 18
+    },
+    {
+      "index": 222,
+      "path": "/characters/terriermon/frames/frame-222.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2384,
+        2041,
+        2478,
+        2067
+      ],
+      "width": 94,
+      "height": 26,
+      "row": 18
+    },
+    {
+      "index": 223,
+      "path": "/characters/terriermon/frames/frame-223.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2789,
+        2038,
+        2820,
+        2067
+      ],
+      "width": 31,
+      "height": 29,
+      "row": 18
+    },
+    {
+      "index": 224,
+      "path": "/characters/terriermon/frames/frame-224.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3131,
+        2043,
+        3227,
+        2067
+      ],
+      "width": 96,
+      "height": 24,
+      "row": 18
+    },
+    {
+      "index": 225,
+      "path": "/characters/terriermon/frames/frame-225.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3532,
+        2043,
+        3573,
+        2067
+      ],
+      "width": 41,
+      "height": 24,
+      "row": 18
+    },
+    {
+      "index": 226,
+      "path": "/characters/terriermon/frames/frame-226.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3894,
+        2038,
+        3959,
+        2067
+      ],
+      "width": 65,
+      "height": 29,
+      "row": 18
+    },
+    {
+      "index": 227,
+      "path": "/characters/terriermon/frames/frame-227.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4288,
+        2045,
+        4314,
+        2067
+      ],
+      "width": 26,
+      "height": 22,
+      "row": 18
+    },
+    {
+      "index": 228,
+      "path": "/characters/terriermon/frames/frame-228.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        167,
+        2131,
+        206,
+        2176
+      ],
+      "width": 39,
+      "height": 45,
+      "row": 19,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 228,
+        "originalSize": [
+          49,
+          54
+        ],
+        "cropBox": [
+          6,
+          9,
+          45,
+          54
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          49,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 229,
+      "path": "/characters/terriermon/frames/frame-229.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        540,
+        2135,
+        581,
+        2176
+      ],
+      "width": 41,
+      "height": 41,
+      "row": 19,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 229,
+        "originalSize": [
+          44,
+          55
+        ],
+        "cropBox": [
+          3,
+          14,
+          44,
+          55
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          39,
+          9
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 230,
+      "path": "/characters/terriermon/frames/frame-230.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        917,
+        2144,
+        952,
+        2176
+      ],
+      "width": 35,
+      "height": 32,
+      "row": 19
+    },
+    {
+      "index": 231,
+      "path": "/characters/terriermon/frames/frame-231.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1291,
+        2147,
+        1327,
+        2176
+      ],
+      "width": 36,
+      "height": 29,
+      "row": 19
+    },
+    {
+      "index": 232,
+      "path": "/characters/terriermon/frames/frame-232.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1671,
+        2139,
+        1695,
+        2176
+      ],
+      "width": 24,
+      "height": 37,
+      "row": 19
+    },
+    {
+      "index": 233,
+      "path": "/characters/terriermon/frames/frame-233.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2041,
+        2147,
+        2073,
+        2176
+      ],
+      "width": 32,
+      "height": 29,
+      "row": 19
+    },
+    {
+      "index": 234,
+      "path": "/characters/terriermon/frames/frame-234.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2417,
+        2149,
+        2445,
+        2176
+      ],
+      "width": 28,
+      "height": 27,
+      "row": 19
+    },
+    {
+      "index": 235,
+      "path": "/characters/terriermon/frames/frame-235.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2782,
+        2149,
+        2827,
+        2176
+      ],
+      "width": 45,
+      "height": 27,
+      "row": 19
+    },
+    {
+      "index": 236,
+      "path": "/characters/terriermon/frames/frame-236.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3159,
+        2149,
+        3199,
+        2176
+      ],
+      "width": 40,
+      "height": 27,
+      "row": 19
+    },
+    {
+      "index": 237,
+      "path": "/characters/terriermon/frames/frame-237.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3532,
+        2153,
+        3574,
+        2176
+      ],
+      "width": 42,
+      "height": 23,
+      "row": 19
+    },
+    {
+      "index": 238,
+      "path": "/characters/terriermon/frames/frame-238.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3906,
+        2149,
+        3947,
+        2176
+      ],
+      "width": 41,
+      "height": 27,
+      "row": 19
+    },
+    {
+      "index": 239,
+      "path": "/characters/terriermon/frames/frame-239.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4279,
+        2152,
+        4323,
+        2176
+      ],
+      "width": 44,
+      "height": 24,
+      "row": 19
+    },
+    {
+      "index": 240,
+      "path": "/characters/terriermon/frames/frame-240.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        167,
+        2238,
+        207,
+        2285
+      ],
+      "width": 40,
+      "height": 47,
+      "row": 20
+    },
+    {
+      "index": 241,
+      "path": "/characters/terriermon/frames/frame-241.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        538,
+        2237,
+        584,
+        2285
+      ],
+      "width": 46,
+      "height": 48,
+      "row": 20
+    },
+    {
+      "index": 242,
+      "path": "/characters/terriermon/frames/frame-242.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        914,
+        2259,
+        956,
+        2285
+      ],
+      "width": 42,
+      "height": 26,
+      "row": 20
+    },
+    {
+      "index": 243,
+      "path": "/characters/terriermon/frames/frame-243.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1288,
+        2254,
+        1330,
+        2285
+      ],
+      "width": 42,
+      "height": 31,
+      "row": 20
+    },
+    {
+      "index": 244,
+      "path": "/characters/terriermon/frames/frame-244.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1661,
+        2256,
+        1705,
+        2285
+      ],
+      "width": 44,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 245,
+      "path": "/characters/terriermon/frames/frame-245.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2044,
+        2257,
+        2069,
+        2285
+      ],
+      "width": 25,
+      "height": 28,
+      "row": 20,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 245,
+        "originalSize": [
+          49,
+          55
+        ],
+        "cropBox": [
+          13,
+          27,
+          38,
+          55
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          49,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 246,
+      "path": "/characters/terriermon/frames/frame-246.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2419,
+        2256,
+        2443,
+        2285
+      ],
+      "width": 24,
+      "height": 29,
+      "row": 20,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 246,
+        "originalSize": [
+          41,
+          56
+        ],
+        "cropBox": [
+          12,
+          27,
+          36,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          33,
+          9
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 247,
+      "path": "/characters/terriermon/frames/frame-247.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2786,
+        2256,
+        2824,
+        2285
+      ],
+      "width": 38,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 248,
+      "path": "/characters/terriermon/frames/frame-248.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3160,
+        2256,
+        3197,
+        2285
+      ],
+      "width": 37,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 249,
+      "path": "/characters/terriermon/frames/frame-249.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3533,
+        2256,
+        3572,
+        2285
+      ],
+      "width": 39,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 250,
+      "path": "/characters/terriermon/frames/frame-250.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3910,
+        2256,
+        3944,
+        2285
+      ],
+      "width": 34,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 251,
+      "path": "/characters/terriermon/frames/frame-251.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4283,
+        2256,
+        4318,
+        2285
+      ],
+      "width": 35,
+      "height": 29,
+      "row": 20
+    },
+    {
+      "index": 252,
+      "path": "/characters/terriermon/frames/frame-252.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        171,
+        2365,
+        203,
+        2394
+      ],
+      "width": 32,
+      "height": 29,
+      "row": 21
+    },
+    {
+      "index": 253,
+      "path": "/characters/terriermon/frames/frame-253.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        543,
+        2370,
+        578,
+        2394
+      ],
+      "width": 35,
+      "height": 24,
+      "row": 21
+    },
+    {
+      "index": 254,
+      "path": "/characters/terriermon/frames/frame-254.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        919,
+        2358,
+        950,
+        2394
+      ],
+      "width": 31,
+      "height": 36,
+      "row": 21
+    },
+    {
+      "index": 255,
+      "path": "/characters/terriermon/frames/frame-255.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1293,
+        2365,
+        1325,
+        2394
+      ],
+      "width": 32,
+      "height": 29,
+      "row": 21
+    },
+    {
+      "index": 256,
+      "path": "/characters/terriermon/frames/frame-256.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1666,
+        2366,
+        1700,
+        2394
+      ],
+      "width": 34,
+      "height": 28,
+      "row": 21
+    },
+    {
+      "index": 257,
+      "path": "/characters/terriermon/frames/frame-257.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2046,
+        2365,
+        2067,
+        2394
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 21
+    },
+    {
+      "index": 258,
+      "path": "/characters/terriermon/frames/frame-258.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2420,
+        2365,
+        2441,
+        2394
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 21
+    },
+    {
+      "index": 259,
+      "path": "/characters/terriermon/frames/frame-259.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2794,
+        2365,
+        2815,
+        2394
+      ],
+      "width": 21,
+      "height": 29,
+      "row": 21
+    },
+    {
+      "index": 260,
+      "path": "/characters/terriermon/frames/frame-260.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3169,
+        2365,
+        3189,
+        2394
+      ],
+      "width": 20,
+      "height": 29,
+      "row": 21
+    },
+    {
+      "index": 261,
+      "path": "/characters/terriermon/frames/frame-261.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3538,
+        2366,
+        3567,
+        2394
+      ],
+      "width": 29,
+      "height": 28,
+      "row": 21
+    },
+    {
+      "index": 262,
+      "path": "/characters/terriermon/frames/frame-262.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        3911,
+        2358,
+        3943,
+        2394
+      ],
+      "width": 32,
+      "height": 36,
+      "row": 21
+    },
+    {
+      "index": 263,
+      "path": "/characters/terriermon/frames/frame-263.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        4281,
+        2355,
+        4320,
+        2394
+      ],
+      "width": 39,
+      "height": 39,
+      "row": 21
+    },
+    {
+      "index": 264,
+      "path": "/characters/terriermon/frames/frame-264.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        172,
+        2456,
+        201,
+        2503
+      ],
+      "width": 29,
+      "height": 47,
+      "row": 22
+    },
+    {
+      "index": 265,
+      "path": "/characters/terriermon/frames/frame-265.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        548,
+        2465,
+        573,
+        2503
+      ],
+      "width": 25,
+      "height": 38,
+      "row": 22
+    },
+    {
+      "index": 266,
+      "path": "/characters/terriermon/frames/frame-266.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        920,
+        2459,
+        949,
+        2503
+      ],
+      "width": 29,
+      "height": 44,
+      "row": 22
+    },
+    {
+      "index": 267,
+      "path": "/characters/terriermon/frames/frame-267.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1294,
+        2463,
+        1324,
+        2503
+      ],
+      "width": 30,
+      "height": 40,
+      "row": 22
+    },
+    {
+      "index": 268,
+      "path": "/characters/terriermon/frames/frame-268.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        1666,
+        2466,
+        1700,
+        2503
+      ],
+      "width": 34,
+      "height": 37,
+      "row": 22
+    },
+    {
+      "index": 269,
+      "path": "/characters/terriermon/frames/frame-269.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2038,
+        2466,
+        2075,
+        2503
+      ],
+      "width": 37,
+      "height": 37,
+      "row": 22
+    },
+    {
+      "index": 270,
+      "path": "/characters/terriermon/frames/frame-270.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png",
+      "sourceName": "Terriermon.png",
+      "box": [
+        2407,
+        2481,
+        2454,
+        2503
+      ],
+      "width": 47,
+      "height": 22,
+      "row": 22
+    },
+    {
+      "index": 271,
+      "path": "/characters/terriermon/frames/frame-271.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 61,
+      "replacementHeight": 48,
+      "box": [
+        2792,
+        2475,
+        2818,
+        2503
+      ],
+      "width": 26,
+      "height": 28,
+      "row": 22,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/terriermon/frames/frame-133.png|widthScale=0.96",
+      "generatedSources": {
+        "crouch": "/characters/terriermon/frames/frame-133.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.96
+      },
+      "sheetId": "generated",
+      "sheetPath": "/characters/terriermon/animation-sheet.png"
+    }
+  ]
+}

@@ -1,0 +1,2306 @@
+{
+  "id": "might-guy",
+  "displayName": "Might Guy",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/might-guy/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://might-guy",
+  "spriteSheetPath": "/characters/might-guy/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/might-guy/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 175
+    }
+  ],
+  "spriteFrameCount": 175,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/might-guy/frames/frame-000.png"
+    ],
+    "walkForward": [
+      "/characters/might-guy/frames/frame-005.png",
+      "/characters/might-guy/frames/frame-006.png",
+      "/characters/might-guy/frames/frame-007.png",
+      "/characters/might-guy/frames/frame-008.png"
+    ],
+    "walkBack": [
+      "/characters/might-guy/frames/frame-012.png",
+      "/characters/might-guy/frames/frame-011.png",
+      "/characters/might-guy/frames/frame-010.png",
+      "/characters/might-guy/frames/frame-009.png"
+    ],
+    "sprint": [
+      "/characters/might-guy/frames/frame-013.png",
+      "/characters/might-guy/frames/frame-014.png",
+      "/characters/might-guy/frames/frame-015.png",
+      "/characters/might-guy/frames/frame-016.png",
+      "/characters/might-guy/frames/frame-017.png",
+      "/characters/might-guy/frames/frame-018.png"
+    ],
+    "backHop": [
+      "/characters/might-guy/frames/frame-019.png"
+    ],
+    "sidestepLeft": [
+      "/characters/might-guy/frames/frame-022.png"
+    ],
+    "sidestepRight": [
+      "/characters/might-guy/frames/frame-022.png"
+    ],
+    "jump": [
+      "/characters/might-guy/frames/frame-027.png",
+      "/characters/might-guy/frames/frame-028.png",
+      "/characters/might-guy/frames/frame-029.png",
+      "/characters/might-guy/frames/frame-030.png",
+      "/characters/might-guy/frames/frame-031.png"
+    ],
+    "crouch": [
+      "/characters/might-guy/frames/frame-020.png"
+    ],
+    "crouchBlock": [
+      "/characters/might-guy/frames/frame-020.png"
+    ],
+    "block": [
+      "/characters/might-guy/frames/frame-065.png"
+    ],
+    "chargeKi": [
+      "/characters/might-guy/frames/frame-060.png",
+      "/characters/might-guy/frames/frame-061.png"
+    ],
+    "jableft": [
+      "/characters/might-guy/frames/frame-167.png",
+      "/characters/might-guy/frames/frame-168.png",
+      "/characters/might-guy/frames/frame-169.png",
+      "/characters/might-guy/frames/frame-170.png",
+      "/characters/might-guy/frames/frame-171.png",
+      "/characters/might-guy/frames/frame-172.png",
+      "/characters/might-guy/frames/frame-173.png",
+      "/characters/might-guy/frames/frame-174.png"
+    ],
+    "jabright": [
+      "/characters/might-guy/frames/frame-065.png",
+      "/characters/might-guy/frames/frame-066.png",
+      "/characters/might-guy/frames/frame-067.png",
+      "/characters/might-guy/frames/frame-068.png",
+      "/characters/might-guy/frames/frame-069.png",
+      "/characters/might-guy/frames/frame-070.png",
+      "/characters/might-guy/frames/frame-071.png",
+      "/characters/might-guy/frames/frame-072.png"
+    ],
+    "kickleft": [
+      "/characters/might-guy/frames/frame-073.png",
+      "/characters/might-guy/frames/frame-074.png",
+      "/characters/might-guy/frames/frame-075.png",
+      "/characters/might-guy/frames/frame-076.png"
+    ],
+    "kickright": [
+      "/characters/might-guy/frames/frame-049.png",
+      "/characters/might-guy/frames/frame-050.png",
+      "/characters/might-guy/frames/frame-051.png",
+      "/characters/might-guy/frames/frame-052.png",
+      "/characters/might-guy/frames/frame-054.png",
+      "/characters/might-guy/frames/frame-055.png",
+      "/characters/might-guy/frames/frame-056.png",
+      "/characters/might-guy/frames/frame-057.png"
+    ],
+    "hitLight": [
+      "/characters/might-guy/frames/frame-078.png"
+    ],
+    "hitHeavy": [
+      "/characters/might-guy/frames/frame-059.png"
+    ],
+    "juggle": [
+      "/characters/might-guy/frames/frame-073.png"
+    ],
+    "knockdown": [
+      "/characters/might-guy/frames/frame-059.png"
+    ],
+    "getupStand": [
+      "/characters/might-guy/frames/frame-076.png",
+      "/characters/might-guy/frames/frame-075.png",
+      "/characters/might-guy/frames/frame-074.png",
+      "/characters/might-guy/frames/frame-073.png",
+      "/characters/might-guy/frames/frame-078.png",
+      "/characters/might-guy/frames/frame-079.png",
+      "/characters/might-guy/frames/frame-080.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/might-guy/frames/frame-127.png",
+      "/characters/might-guy/frames/frame-128.png",
+      "/characters/might-guy/frames/frame-129.png",
+      "/characters/might-guy/frames/frame-130.png",
+      "/characters/might-guy/frames/frame-131.png",
+      "/characters/might-guy/frames/frame-132.png",
+      "/characters/might-guy/frames/frame-133.png",
+      "/characters/might-guy/frames/frame-134.png",
+      "/characters/might-guy/frames/frame-135.png",
+      "/characters/might-guy/frames/frame-136.png",
+      "/characters/might-guy/frames/frame-137.png",
+      "/characters/might-guy/frames/frame-138.png",
+      "/characters/might-guy/frames/frame-139.png"
+    ],
+    "lose": [
+      "/characters/might-guy/frames/frame-059.png"
+    ],
+    "cmd:f+1": [
+      "/characters/might-guy/frames/frame-150.png",
+      "/characters/might-guy/frames/frame-151.png",
+      "/characters/might-guy/frames/frame-152.png",
+      "/characters/might-guy/frames/frame-153.png",
+      "/characters/might-guy/frames/frame-154.png",
+      "/characters/might-guy/frames/frame-155.png",
+      "/characters/might-guy/frames/frame-156.png",
+      "/characters/might-guy/frames/frame-157.png",
+      "/characters/might-guy/frames/frame-158.png",
+      "/characters/might-guy/frames/frame-159.png",
+      "/characters/might-guy/frames/frame-160.png",
+      "/characters/might-guy/frames/frame-161.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/might-guy/frames/frame-073.png",
+      "/characters/might-guy/frames/frame-074.png",
+      "/characters/might-guy/frames/frame-075.png",
+      "/characters/might-guy/frames/frame-076.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/might-guy/frames/frame-049.png",
+      "/characters/might-guy/frames/frame-050.png",
+      "/characters/might-guy/frames/frame-051.png",
+      "/characters/might-guy/frames/frame-052.png",
+      "/characters/might-guy/frames/frame-054.png",
+      "/characters/might-guy/frames/frame-055.png",
+      "/characters/might-guy/frames/frame-056.png",
+      "/characters/might-guy/frames/frame-057.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/might-guy/frames/frame-167.png",
+      "/characters/might-guy/frames/frame-168.png",
+      "/characters/might-guy/frames/frame-169.png",
+      "/characters/might-guy/frames/frame-170.png",
+      "/characters/might-guy/frames/frame-171.png",
+      "/characters/might-guy/frames/frame-172.png",
+      "/characters/might-guy/frames/frame-173.png",
+      "/characters/might-guy/frames/frame-174.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/might-guy/frames/frame-065.png",
+      "/characters/might-guy/frames/frame-066.png",
+      "/characters/might-guy/frames/frame-067.png",
+      "/characters/might-guy/frames/frame-068.png",
+      "/characters/might-guy/frames/frame-069.png",
+      "/characters/might-guy/frames/frame-070.png",
+      "/characters/might-guy/frames/frame-071.png",
+      "/characters/might-guy/frames/frame-072.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/might-guy/frames/frame-073.png",
+      "/characters/might-guy/frames/frame-074.png",
+      "/characters/might-guy/frames/frame-075.png",
+      "/characters/might-guy/frames/frame-076.png"
+    ],
+    "cmd:1+2": [
+      "/characters/might-guy/frames/frame-150.png",
+      "/characters/might-guy/frames/frame-151.png",
+      "/characters/might-guy/frames/frame-152.png",
+      "/characters/might-guy/frames/frame-153.png",
+      "/characters/might-guy/frames/frame-154.png",
+      "/characters/might-guy/frames/frame-155.png",
+      "/characters/might-guy/frames/frame-156.png",
+      "/characters/might-guy/frames/frame-157.png",
+      "/characters/might-guy/frames/frame-158.png",
+      "/characters/might-guy/frames/frame-159.png",
+      "/characters/might-guy/frames/frame-160.png"
+    ],
+    "cmd:1+3": [
+      "/characters/might-guy/frames/frame-049.png",
+      "/characters/might-guy/frames/frame-050.png",
+      "/characters/might-guy/frames/frame-051.png",
+      "/characters/might-guy/frames/frame-052.png",
+      "/characters/might-guy/frames/frame-054.png",
+      "/characters/might-guy/frames/frame-055.png",
+      "/characters/might-guy/frames/frame-056.png",
+      "/characters/might-guy/frames/frame-057.png"
+    ],
+    "cmd:2+3": [
+      "/characters/might-guy/frames/frame-049.png",
+      "/characters/might-guy/frames/frame-050.png",
+      "/characters/might-guy/frames/frame-051.png",
+      "/characters/might-guy/frames/frame-052.png",
+      "/characters/might-guy/frames/frame-054.png",
+      "/characters/might-guy/frames/frame-055.png",
+      "/characters/might-guy/frames/frame-056.png",
+      "/characters/might-guy/frames/frame-057.png"
+    ],
+    "cmd:2+4": [
+      "/characters/might-guy/frames/frame-065.png",
+      "/characters/might-guy/frames/frame-066.png",
+      "/characters/might-guy/frames/frame-067.png",
+      "/characters/might-guy/frames/frame-068.png",
+      "/characters/might-guy/frames/frame-069.png",
+      "/characters/might-guy/frames/frame-070.png",
+      "/characters/might-guy/frames/frame-071.png",
+      "/characters/might-guy/frames/frame-072.png"
+    ],
+    "cmd:3+4": [
+      "/characters/might-guy/frames/frame-065.png",
+      "/characters/might-guy/frames/frame-066.png",
+      "/characters/might-guy/frames/frame-067.png",
+      "/characters/might-guy/frames/frame-068.png",
+      "/characters/might-guy/frames/frame-069.png",
+      "/characters/might-guy/frames/frame-070.png",
+      "/characters/might-guy/frames/frame-071.png",
+      "/characters/might-guy/frames/frame-072.png"
+    ],
+    "cmd:O+2": [
+      "/characters/might-guy/frames/frame-065.png",
+      "/characters/might-guy/frames/frame-066.png",
+      "/characters/might-guy/frames/frame-067.png",
+      "/characters/might-guy/frames/frame-068.png",
+      "/characters/might-guy/frames/frame-069.png",
+      "/characters/might-guy/frames/frame-070.png",
+      "/characters/might-guy/frames/frame-071.png",
+      "/characters/might-guy/frames/frame-072.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 97,
+    "speed": 5.44,
+    "sidestepSpeed": 4.82,
+    "jumpForce": 8.12,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Might Guy Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Might Guy Left Kick",
+      "input": "kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Might Guy Right Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Might Guy Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#9ed338",
+    "secondary": "#e51f34",
+    "accent": "#d83e71"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "label": "Might Guy Left Check",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "range": 1.42,
+      "whiffRecoveryFrames": 4
+    },
+    "jabright": {
+      "label": "Might Guy Right Check",
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "hitLevel": "mid",
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "range": 1.5,
+      "whiffRecoveryFrames": 5
+    },
+    "kickleft": {
+      "label": "Might Guy Left Kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "range": 1.62,
+      "whiffRecoveryFrames": 7
+    },
+    "kickright": {
+      "label": "Might Guy Right Kick",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 12,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "range": 1.7,
+      "whiffRecoveryFrames": 7
+    },
+    "cmd:f+1": {
+      "label": "Might Guy Rush",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "hitLevel": "mid",
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "whiffRecoveryFrames": 8
+    },
+    "cmd:d/f+2": {
+      "label": "Might Guy Launcher",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "hitLevel": "mid",
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "range": 1.68,
+      "whiffRecoveryFrames": 12
+    },
+    "cmd:qcf+4": {
+      "label": "Might Guy Burst",
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 17,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "knockdown": true,
+      "range": 2.05,
+      "whiffRecoveryFrames": 13
+    },
+    "cmd:WS+4": {
+      "label": "Might Guy Rising Strike",
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "hitLevel": "mid",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "range": 1.62,
+      "whiffRecoveryFrames": 8
+    },
+    "cmd:FC+1": {
+      "label": "Might Guy Crouch Jab",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "hitLevel": "mid",
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "range": 1.34,
+      "whiffRecoveryFrames": 5
+    },
+    "cmd:FC+2": {
+      "label": "Might Guy Crouch Launcher",
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "hitLevel": "mid",
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "launchHeight": 2,
+      "range": 1.48,
+      "whiffRecoveryFrames": 12
+    },
+    "cmd:1+2": {
+      "label": "Might Guy Twin Assault",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "range": 1.72,
+      "whiffRecoveryFrames": 9
+    },
+    "cmd:1+3": {
+      "label": "Might Guy Cross Launcher",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 15,
+      "hitLevel": "mid",
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "launchHeight": 2.2,
+      "range": 1.65,
+      "whiffRecoveryFrames": 13
+    },
+    "cmd:2+3": {
+      "label": "Might Guy Low Feint",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "range": 1.58,
+      "whiffRecoveryFrames": 8
+    },
+    "cmd:2+4": {
+      "label": "Might Guy Driving Kick",
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "hitLevel": "low",
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "knockdown": true,
+      "range": 1.74,
+      "whiffRecoveryFrames": 12
+    },
+    "cmd:3+4": {
+      "label": "Might Guy Power Crush",
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "hitLevel": "mid",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "knockdown": true,
+      "range": 1.9,
+      "whiffRecoveryFrames": 13
+    },
+    "cmd:O+2": {
+      "label": "Might Guy Aura Drive",
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 22,
+      "hitLevel": "special",
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "knockdown": true,
+      "usesKi": true,
+      "kiCost": 35,
+      "range": 2.1,
+      "whiffRecoveryFrames": 15
+    },
+    "neutral:jab-jab": {
+      "label": "Might Guy Second Beat"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Might Guy Body Blow"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Might Guy Low Changeup"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Might Guy Pressure Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Might Guy Drive"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Might Guy Barrage"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Might Guy Finisher"
+    },
+    "neutral:jab-kick": {
+      "label": "Might Guy Step Kick"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Might Guy Palm String"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Might Guy Rising Chain"
+    },
+    "neutral:jab-special": {
+      "label": "Might Guy Special Setup"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Might Guy Break Art"
+    },
+    "neutral:heavy-jab": {
+      "label": "Might Guy Check Hook"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Might Guy Heavy Break"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Might Guy Charged Follow"
+    },
+    "neutral:heavy-kick": {
+      "label": "Might Guy Drop Kick"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Might Guy Arc Finisher"
+    },
+    "neutral:heavy-special": {
+      "label": "Might Guy Focus Stance"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Might Guy Mode Shift"
+    },
+    "neutral:kick-jab": {
+      "label": "Might Guy Heel Feint"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Might Guy Summon Strike"
+    },
+    "neutral:kick-heavy": {
+      "label": "Might Guy Guard Snare"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Might Guy Armor Break"
+    },
+    "neutral:kick-special": {
+      "label": "Might Guy Power Setup"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Might Guy Switch Strike"
+    },
+    "neutral:special-jab": {
+      "label": "Might Guy Spark Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Might Guy Binding Blow"
+    },
+    "neutral:special-heavy": {
+      "label": "Might Guy Heavy Draw"
+    },
+    "neutral:special-kick": {
+      "label": "Might Guy Kick Ender"
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.64,
+    "guard": 0.49,
+    "spacing": 1.47,
+    "specialChance": 0.18
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 0.791,
+        "height": 1.235,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 1.303,
+        "height": 1.197,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.303,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.257,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.14,
+        "height": 1.197,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "5": {
+        "width": 0.768,
+        "height": 1.216,
+        "offsetX": 0
+      },
+      "6": {
+        "width": 1.396,
+        "height": 1.085,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.28,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 1.071,
+        "height": 1.197,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "9": {
+        "width": 1.28,
+        "height": 1.197,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.187,
+        "height": 1.197,
+        "offsetX": 0
+      },
+      "11": {
+        "width": 1.164,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 1.094,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "140": {
+        "width": 1.067,
+        "height": 1.067,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 0.687,
+        "height": 1.196,
+        "offsetX": 0
+      },
+      "142": {
+        "width": 0.687,
+        "height": 1.196,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 0.644,
+        "height": 0.975,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 0.881,
+        "height": 1.104,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 0.988,
+        "height": 0.993,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 0.322,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 0.387,
+        "height": 1.159,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 0.644,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.516,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 1.138,
+        "height": 1.14,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 1.074,
+        "height": 0.975,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.666,
+        "height": 1.416,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.687,
+        "height": 1.324,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 0.967,
+        "height": 1.269,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 0.644,
+        "height": 0.938,
+        "offsetX": 0
+      },
+      "156": {
+        "width": 0.924,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.01,
+        "height": 1.196,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 1.267,
+        "height": 1.104,
+        "offsetX": 0
+      },
+      "159": {
+        "width": 1.16,
+        "height": 0.938,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 0.623,
+        "height": 1.159,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.687,
+        "height": 1.196,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "13": {
+        "width": 1.21,
+        "height": 1.085,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.973,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 1.117,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 1.14,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.047,
+        "height": 1.085,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "19": {
+        "width": 1.21,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "20": {
+        "width": 0.773,
+        "height": 0.791,
+        "offsetX": 0
+      },
+      "21": {
+        "width": 0.773,
+        "height": 0.681,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "22": {
+        "width": 0.838,
+        "height": 0.692,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.773,
+        "height": 1.14,
+        "offsetX": 0
+      },
+      "24": {
+        "width": 0.773,
+        "height": 1.14,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "22": {
+        "width": 0.838,
+        "height": 0.692,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 1.16,
+        "height": 1.214,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 1.16,
+        "height": 1.214,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "27": {
+        "width": 1.49,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 1.49,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 1.024,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 1.024,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.978,
+        "height": 1.066,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "20": {
+        "width": 0.838,
+        "height": 0.804,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 0.752,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.816,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.73,
+        "height": 1.232,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 1.31,
+        "height": 1.012,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.795,
+        "height": 1.655,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 0.988,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 0.795,
+        "height": 1.655,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.795,
+        "height": 1.655,
+        "offsetX": 0
+      }
+    },
+    "crouchBlock": {
+      "20": {
+        "width": 0.838,
+        "height": 0.804,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 0.73,
+        "height": 1.122,
+        "offsetX": 0
+      }
+    },
+    "block": {
+      "59": {
+        "width": 0.772,
+        "height": 0.773,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 0.954,
+        "height": 1.122,
+        "offsetX": 0
+      }
+    },
+    "chargeKi": {
+      "60": {
+        "width": 1.164,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 1.071,
+        "height": 1.179,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "62": {
+        "width": 0.838,
+        "height": 1.197,
+        "offsetX": 0
+      },
+      "63": {
+        "width": 0.931,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "64": {
+        "width": 0.861,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 0.861,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "163": {
+        "width": 0.838,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 0.791,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 0.884,
+        "height": 1.328,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 0.861,
+        "height": 1.253,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 1.024,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "168": {
+        "width": 1.234,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "169": {
+        "width": 0.884,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "170": {
+        "width": 1.28,
+        "height": 1.235,
+        "offsetX": 0
+      },
+      "171": {
+        "width": 0.838,
+        "height": 1.422,
+        "offsetX": 0
+      },
+      "172": {
+        "width": 0.768,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "173": {
+        "width": 0.908,
+        "height": 1.197,
+        "offsetX": 0
+      },
+      "174": {
+        "width": 1.094,
+        "height": 1.216,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "65": {
+        "width": 0.954,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 1.071,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 1.094,
+        "height": 1.216,
+        "offsetX": 0
+      },
+      "68": {
+        "width": 1.001,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "69": {
+        "width": 1.373,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "70": {
+        "width": 0.991,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 1.164,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 1.094,
+        "height": 0.991,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "73": {
+        "width": 1.187,
+        "height": 0.935,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.187,
+        "height": 0.935,
+        "offsetX": 0
+      },
+      "75": {
+        "width": 1.303,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "76": {
+        "width": 1.303,
+        "height": 1.122,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "77": {
+        "width": 0.838,
+        "height": 1.328,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "78": {
+        "width": 1.21,
+        "height": 1.085,
+        "offsetX": 0
+      },
+      "79": {
+        "width": 1.117,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "81": {
+        "width": 1.031,
+        "height": 1.012,
+        "offsetX": 0
+      },
+      "82": {
+        "width": 1.117,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "84": {
+        "width": 0.816,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "86": {
+        "width": 0.58,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "87": {
+        "width": 1.332,
+        "height": 0.993,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.601,
+        "height": 1.288,
+        "offsetX": 0
+      }
+    },
+    "hitHeavy": {
+      "59": {
+        "width": 1.164,
+        "height": 0.786,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 0.795,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 0.967,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 1.138,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 0.967,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 1.138,
+        "height": 1.379,
+        "offsetX": 0
+      },
+      "100": {
+        "width": 0.967,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 1.267,
+        "height": 1.306,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 1.138,
+        "height": 1.379,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "73": {
+        "width": 1.187,
+        "height": 0.935,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 1.267,
+        "height": 1.269,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "59": {
+        "width": 1.23501,
+        "height": 1.23501,
+        "offsetX": 0,
+        "voxelScaleX": 1.24418,
+        "voxelScaleY": 0.83994
+      },
+      "107": {
+        "width": 0.967,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 0.967,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 1.933,
+        "height": 0.956,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 0.967,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "111": {
+        "width": 2.105,
+        "height": 0.993,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 2.019,
+        "height": 0.975,
+        "offsetX": 0
+      },
+      "113": {
+        "width": 1.74,
+        "height": 1.048,
+        "offsetX": 0
+      },
+      "114": {
+        "width": 1.224,
+        "height": 1.177,
+        "offsetX": 0
+      }
+    },
+    "getupStand": {
+      "73": {
+        "width": 1.187,
+        "height": 0.935,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.187,
+        "height": 0.935,
+        "offsetX": 0
+      },
+      "75": {
+        "width": 1.303,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "76": {
+        "width": 1.303,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "78": {
+        "width": 1.21,
+        "height": 1.085,
+        "offsetX": 0
+      },
+      "79": {
+        "width": 1.21,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "80": {
+        "width": 1.42,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "116": {
+        "width": 1.31,
+        "height": 1.048,
+        "offsetX": 0
+      },
+      "117": {
+        "width": 1.01,
+        "height": 0.993,
+        "offsetX": 0
+      },
+      "118": {
+        "width": 0.988,
+        "height": 1.048,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 1.418,
+        "height": 1.196,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 1.547,
+        "height": 1.508,
+        "offsetX": 0
+      },
+      "121": {
+        "width": 1.546,
+        "height": 1.747,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 1.632,
+        "height": 1.766,
+        "offsetX": 0
+      },
+      "123": {
+        "width": 1.675,
+        "height": 1.729,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "125": {
+        "width": 0.967,
+        "height": 1.14,
+        "offsetX": 0
+      },
+      "126": {
+        "width": 0.967,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.838,
+        "height": 1.288,
+        "offsetX": 0
+      },
+      "130": {
+        "width": 0.838,
+        "height": 1.288,
+        "offsetX": 0
+      },
+      "132": {
+        "width": 0.773,
+        "height": 1.288,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.773,
+        "height": 1.288,
+        "offsetX": 0
+      },
+      "135": {
+        "width": 0.773,
+        "height": 1.288,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 0.773,
+        "height": 1.288,
+        "offsetX": 0
+      }
+    },
+    "win": {
+      "0": {
+        "width": 0.73,
+        "height": 1.214,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 1.203,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.203,
+        "height": 1.14,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.16,
+        "height": 1.14,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.052,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "127": {
+        "width": 0.745,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.908,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "129": {
+        "width": 0.908,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "130": {
+        "width": 0.908,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 0.908,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "132": {
+        "width": 0.838,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "133": {
+        "width": 0.838,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "134": {
+        "width": 0.838,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "135": {
+        "width": 0.838,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "136": {
+        "width": 0.838,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 0.838,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "138": {
+        "width": 0.838,
+        "height": 1.309,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 0.791,
+        "height": 1.141,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "5": {
+        "width": 0.709,
+        "height": 1.196,
+        "offsetX": 0
+      },
+      "6": {
+        "width": 1.289,
+        "height": 1.067,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.181,
+        "height": 1.012,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 0.988,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 1.23501,
+        "height": 1.23501,
+        "offsetX": 0,
+        "voxelScaleX": 1.24418,
+        "voxelScaleY": 0.83994
+      }
+    },
+    "cmd:f+1": {
+      "9": {
+        "width": 1.181,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "10": {
+        "width": 1.095,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "11": {
+        "width": 1.074,
+        "height": 1.012,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 1.01,
+        "height": 0.975,
+        "offsetX": 0
+      },
+      "140": {
+        "width": 1.085,
+        "height": 1.085,
+        "offsetX": 0
+      },
+      "141": {
+        "width": 0.745,
+        "height": 1.216,
+        "offsetX": 0
+      },
+      "142": {
+        "width": 0.745,
+        "height": 1.216,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 0.698,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 0.954,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 1.071,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 0.396,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 0.442,
+        "height": 1.253,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 0.745,
+        "height": 1.235,
+        "offsetX": 0
+      },
+      "149": {
+        "width": 0.605,
+        "height": 1.235,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 1.234,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 1.164,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "152": {
+        "width": 0.722,
+        "height": 1.44,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.745,
+        "height": 1.347,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 1.047,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 0.698,
+        "height": 0.954,
+        "offsetX": 0
+      },
+      "156": {
+        "width": 1.001,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.094,
+        "height": 1.216,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 1.373,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "159": {
+        "width": 0.991,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "160": {
+        "width": 0.722,
+        "height": 1.235,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 0.745,
+        "height": 1.216,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "13": {
+        "width": 1.21,
+        "height": 1.085,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 0.973,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 1.117,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 1.14,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.047,
+        "height": 1.085,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "19": {
+        "width": 1.21,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "20": {
+        "width": 0.838,
+        "height": 0.804,
+        "offsetX": 0
+      },
+      "21": {
+        "width": 0.838,
+        "height": 0.692,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "22": {
+        "width": 0.838,
+        "height": 0.692,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.838,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "24": {
+        "width": 0.838,
+        "height": 1.16,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "25": {
+        "width": 1.257,
+        "height": 1.235,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 1.257,
+        "height": 1.235,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "27": {
+        "width": 1.49,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 1.49,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 1.024,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "30": {
+        "width": 1.024,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 0.978,
+        "height": 1.066,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "32": {
+        "width": 0.815,
+        "height": 1.141,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 0.884,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 0.791,
+        "height": 1.253,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 1.029,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "40": {
+        "width": 0.861,
+        "height": 1.684,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 1.071,
+        "height": 1.197,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 0.861,
+        "height": 1.684,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.861,
+        "height": 1.684,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "49": {
+        "width": 1.048,
+        "height": 1.048,
+        "offsetX": 0
+      },
+      "50": {
+        "width": 0.973,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1.327,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1.291,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.164,
+        "height": 0.954,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 1.21,
+        "height": 0.954,
+        "offsetX": 0
+      },
+      "56": {
+        "width": 1.094,
+        "height": 0.917,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 1.047,
+        "height": 0.861,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "49": {
+        "width": 1.048,
+        "height": 1.048,
+        "offsetX": 0
+      },
+      "50": {
+        "width": 0.973,
+        "height": 0.973,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 1.327,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1.291,
+        "height": 1.291,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.164,
+        "height": 0.954,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 1.21,
+        "height": 0.954,
+        "offsetX": 0
+      },
+      "56": {
+        "width": 1.094,
+        "height": 0.917,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 1.047,
+        "height": 0.861,
+        "offsetX": 0
+      },
+      "59": {
+        "width": 0.772,
+        "height": 0.773,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "60": {
+        "width": 1.164,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 1.071,
+        "height": 1.179,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "62": {
+        "width": 0.838,
+        "height": 1.197,
+        "offsetX": 0
+      },
+      "63": {
+        "width": 0.931,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "64": {
+        "width": 0.861,
+        "height": 1.066,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 0.954,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 1.071,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 1.094,
+        "height": 1.216,
+        "offsetX": 0
+      },
+      "68": {
+        "width": 1.001,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "69": {
+        "width": 1.373,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "70": {
+        "width": 0.991,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 1.164,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 1.094,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 0.752,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "163": {
+        "width": 0.73,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 0.687,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 0.816,
+        "height": 1.306,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 0.773,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 0.902,
+        "height": 1.269,
+        "offsetX": 0
+      },
+      "168": {
+        "width": 1.138,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "169": {
+        "width": 0.795,
+        "height": 1.251,
+        "offsetX": 0
+      },
+      "170": {
+        "width": 1.181,
+        "height": 1.214,
+        "offsetX": 0
+      },
+      "171": {
+        "width": 0.773,
+        "height": 1.398,
+        "offsetX": 0
+      },
+      "172": {
+        "width": 0.709,
+        "height": 1.269,
+        "offsetX": 0
+      },
+      "173": {
+        "width": 0.838,
+        "height": 1.177,
+        "offsetX": 0
+      },
+      "174": {
+        "width": 0.988,
+        "height": 1.196,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "65": {
+        "width": 0.954,
+        "height": 1.122,
+        "offsetX": 0
+      },
+      "66": {
+        "width": 1.071,
+        "height": 1.01,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 1.094,
+        "height": 1.216,
+        "offsetX": 0
+      },
+      "68": {
+        "width": 1.001,
+        "height": 1.272,
+        "offsetX": 0
+      },
+      "69": {
+        "width": 1.373,
+        "height": 1.16,
+        "offsetX": 0
+      },
+      "70": {
+        "width": 0.991,
+        "height": 0.991,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 1.164,
+        "height": 1.029,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 1.094,
+        "height": 0.991,
+        "offsetX": 0
+      }
+    }
+  },
+  "modelScale": {
+    "width": 0.92,
+    "height": 0.92
+  }
+}

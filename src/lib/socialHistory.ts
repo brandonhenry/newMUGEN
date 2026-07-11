@@ -4,7 +4,7 @@ export const MATCH_HISTORY_STORAGE_KEY = 'kore.social.matchHistory.v1';
 export const FRIENDS_STORAGE_KEY = 'kore.social.friends.v1';
 export const RECORDINGS_STORAGE_KEY = 'kore.social.recordings.v1';
 
-export type SocialMatchMode = 'online' | 'ranked' | 'trainingOnline' | 'private';
+export type SocialMatchMode = 'online' | 'ranked' | 'trainingOnline' | 'private' | 'custom';
 
 export type MatchHistoryOpponent = {
   playerId?: string;
@@ -167,7 +167,7 @@ function normalizeMatchHistoryEntry(value: Partial<MatchHistoryEntry> | null | u
   const id = typeof value.id === 'string' && value.id.length > 0 ? value.id.slice(0, 180) : '';
   const mode = value.mode;
   const opponent = normalizeOpponent(value.opponent);
-  if (!profileId || !id || !opponent || (mode !== 'online' && mode !== 'ranked' && mode !== 'trainingOnline' && mode !== 'private')) return null;
+  if (!profileId || !id || !opponent || (mode !== 'online' && mode !== 'ranked' && mode !== 'trainingOnline' && mode !== 'private' && mode !== 'custom')) return null;
   return {
     id,
     profileId,

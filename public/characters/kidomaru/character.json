@@ -1,0 +1,2668 @@
+{
+  "id": "kidomaru",
+  "displayName": "Kidomaru",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/kidomaru/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://kidomaru",
+  "spriteSheetPath": "/characters/kidomaru/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "main",
+      "name": "Main Sheet",
+      "path": "/characters/kidomaru/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 270
+    }
+  ],
+  "spriteFrameCount": 270,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/kidomaru/frames/frame-000.png",
+      "/characters/kidomaru/frames/frame-001.png",
+      "/characters/kidomaru/frames/frame-002.png",
+      "/characters/kidomaru/frames/frame-003.png"
+    ],
+    "walkForward": [
+      "/characters/kidomaru/frames/frame-001.png",
+      "/characters/kidomaru/frames/frame-002.png",
+      "/characters/kidomaru/frames/frame-003.png",
+      "/characters/kidomaru/frames/frame-004.png",
+      "/characters/kidomaru/frames/frame-005.png",
+      "/characters/kidomaru/frames/frame-006.png",
+      "/characters/kidomaru/frames/frame-007.png"
+    ],
+    "walkBack": [
+      "/characters/kidomaru/frames/frame-007.png",
+      "/characters/kidomaru/frames/frame-006.png",
+      "/characters/kidomaru/frames/frame-005.png",
+      "/characters/kidomaru/frames/frame-004.png",
+      "/characters/kidomaru/frames/frame-003.png",
+      "/characters/kidomaru/frames/frame-002.png",
+      "/characters/kidomaru/frames/frame-001.png"
+    ],
+    "sprint": [
+      "/characters/kidomaru/frames/frame-010.png"
+    ],
+    "backHop": [
+      "/characters/kidomaru/frames/frame-011.png"
+    ],
+    "sidestepLeft": [
+      "/characters/kidomaru/frames/frame-013.png"
+    ],
+    "sidestepRight": [
+      "/characters/kidomaru/frames/frame-013.png"
+    ],
+    "jump": [
+      "/characters/kidomaru/frames/frame-031.png",
+      "/characters/kidomaru/frames/frame-032.png",
+      "/characters/kidomaru/frames/frame-033.png",
+      "/characters/kidomaru/frames/frame-034.png"
+    ],
+    "crouch": [
+      "/characters/kidomaru/frames/frame-044.png"
+    ],
+    "crouchBlock": [
+      "/characters/kidomaru/frames/frame-044.png"
+    ],
+    "block": [
+      "/characters/kidomaru/frames/frame-052.png"
+    ],
+    "chargeKi": [
+      "/characters/kidomaru/frames/frame-000.png",
+      "/characters/kidomaru/frames/frame-001.png",
+      "/characters/kidomaru/frames/frame-002.png",
+      "/characters/kidomaru/frames/frame-003.png"
+    ],
+    "jableft": [
+      "/characters/kidomaru/frames/frame-070.png",
+      "/characters/kidomaru/frames/frame-071.png",
+      "/characters/kidomaru/frames/frame-072.png",
+      "/characters/kidomaru/frames/frame-073.png"
+    ],
+    "jabright": [
+      "/characters/kidomaru/frames/frame-060.png",
+      "/characters/kidomaru/frames/frame-061.png",
+      "/characters/kidomaru/frames/frame-062.png",
+      "/characters/kidomaru/frames/frame-063.png",
+      "/characters/kidomaru/frames/frame-064.png",
+      "/characters/kidomaru/frames/frame-065.png"
+    ],
+    "kickleft": [
+      "/characters/kidomaru/frames/frame-066.png",
+      "/characters/kidomaru/frames/frame-067.png",
+      "/characters/kidomaru/frames/frame-068.png",
+      "/characters/kidomaru/frames/frame-069.png"
+    ],
+    "kickright": [
+      "/characters/kidomaru/frames/frame-070.png",
+      "/characters/kidomaru/frames/frame-071.png",
+      "/characters/kidomaru/frames/frame-072.png",
+      "/characters/kidomaru/frames/frame-073.png"
+    ],
+    "hitLight": [
+      "/characters/kidomaru/frames/frame-031.png"
+    ],
+    "hitHeavy": [
+      "/characters/kidomaru/frames/frame-032.png"
+    ],
+    "juggle": [
+      "/characters/kidomaru/frames/frame-031.png"
+    ],
+    "knockdown": [
+      "/characters/kidomaru/frames/frame-031.png",
+      "/characters/kidomaru/frames/frame-032.png",
+      "/characters/kidomaru/frames/frame-033.png",
+      "/characters/kidomaru/frames/frame-034.png"
+    ],
+    "getupStand": [
+      "/characters/kidomaru/frames/frame-034.png",
+      "/characters/kidomaru/frames/frame-033.png",
+      "/characters/kidomaru/frames/frame-032.png",
+      "/characters/kidomaru/frames/frame-031.png",
+      "/characters/kidomaru/frames/frame-030.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/kidomaru/frames/frame-239.png",
+      "/characters/kidomaru/frames/frame-240.png",
+      "/characters/kidomaru/frames/frame-241.png"
+    ],
+    "lose": [
+      "/characters/kidomaru/frames/frame-034.png"
+    ],
+    "cmd:f+1": [
+      "/characters/kidomaru/frames/frame-141.png",
+      "/characters/kidomaru/frames/frame-142.png",
+      "/characters/kidomaru/frames/frame-143.png",
+      "/characters/kidomaru/frames/frame-144.png",
+      "/characters/kidomaru/frames/frame-145.png",
+      "/characters/kidomaru/frames/frame-146.png",
+      "/characters/kidomaru/frames/frame-147.png",
+      "/characters/kidomaru/frames/frame-148.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/kidomaru/frames/frame-149.png",
+      "/characters/kidomaru/frames/frame-150.png",
+      "/characters/kidomaru/frames/frame-151.png",
+      "/characters/kidomaru/frames/frame-153.png",
+      "/characters/kidomaru/frames/frame-154.png",
+      "/characters/kidomaru/frames/frame-155.png",
+      "/characters/kidomaru/frames/frame-157.png",
+      "/characters/kidomaru/frames/frame-158.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/kidomaru/frames/frame-160.png",
+      "/characters/kidomaru/frames/frame-161.png",
+      "/characters/kidomaru/frames/frame-162.png",
+      "/characters/kidomaru/frames/frame-163.png",
+      "/characters/kidomaru/frames/frame-164.png",
+      "/characters/kidomaru/frames/frame-165.png",
+      "/characters/kidomaru/frames/frame-166.png",
+      "/characters/kidomaru/frames/frame-167.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/kidomaru/frames/frame-168.png",
+      "/characters/kidomaru/frames/frame-169.png",
+      "/characters/kidomaru/frames/frame-170.png",
+      "/characters/kidomaru/frames/frame-171.png",
+      "/characters/kidomaru/frames/frame-173.png",
+      "/characters/kidomaru/frames/frame-174.png",
+      "/characters/kidomaru/frames/frame-175.png",
+      "/characters/kidomaru/frames/frame-176.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/kidomaru/frames/frame-178.png",
+      "/characters/kidomaru/frames/frame-179.png",
+      "/characters/kidomaru/frames/frame-180.png",
+      "/characters/kidomaru/frames/frame-181.png",
+      "/characters/kidomaru/frames/frame-182.png",
+      "/characters/kidomaru/frames/frame-183.png",
+      "/characters/kidomaru/frames/frame-184.png",
+      "/characters/kidomaru/frames/frame-185.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/kidomaru/frames/frame-187.png",
+      "/characters/kidomaru/frames/frame-188.png",
+      "/characters/kidomaru/frames/frame-189.png",
+      "/characters/kidomaru/frames/frame-190.png",
+      "/characters/kidomaru/frames/frame-191.png",
+      "/characters/kidomaru/frames/frame-192.png",
+      "/characters/kidomaru/frames/frame-193.png",
+      "/characters/kidomaru/frames/frame-194.png"
+    ],
+    "cmd:1+2": [
+      "/characters/kidomaru/frames/frame-195.png",
+      "/characters/kidomaru/frames/frame-196.png",
+      "/characters/kidomaru/frames/frame-197.png",
+      "/characters/kidomaru/frames/frame-198.png",
+      "/characters/kidomaru/frames/frame-200.png",
+      "/characters/kidomaru/frames/frame-201.png",
+      "/characters/kidomaru/frames/frame-202.png",
+      "/characters/kidomaru/frames/frame-203.png"
+    ],
+    "cmd:1+3": [
+      "/characters/kidomaru/frames/frame-205.png",
+      "/characters/kidomaru/frames/frame-206.png",
+      "/characters/kidomaru/frames/frame-207.png",
+      "/characters/kidomaru/frames/frame-208.png",
+      "/characters/kidomaru/frames/frame-209.png",
+      "/characters/kidomaru/frames/frame-210.png",
+      "/characters/kidomaru/frames/frame-211.png",
+      "/characters/kidomaru/frames/frame-212.png"
+    ],
+    "cmd:2+3": [
+      "/characters/kidomaru/frames/frame-214.png",
+      "/characters/kidomaru/frames/frame-215.png",
+      "/characters/kidomaru/frames/frame-216.png",
+      "/characters/kidomaru/frames/frame-217.png",
+      "/characters/kidomaru/frames/frame-218.png",
+      "/characters/kidomaru/frames/frame-219.png",
+      "/characters/kidomaru/frames/frame-220.png",
+      "/characters/kidomaru/frames/frame-221.png"
+    ],
+    "cmd:2+4": [
+      "/characters/kidomaru/frames/frame-060.png",
+      "/characters/kidomaru/frames/frame-061.png",
+      "/characters/kidomaru/frames/frame-062.png",
+      "/characters/kidomaru/frames/frame-063.png",
+      "/characters/kidomaru/frames/frame-064.png",
+      "/characters/kidomaru/frames/frame-065.png"
+    ],
+    "cmd:3+4": [
+      "/characters/kidomaru/frames/frame-066.png",
+      "/characters/kidomaru/frames/frame-067.png",
+      "/characters/kidomaru/frames/frame-068.png",
+      "/characters/kidomaru/frames/frame-069.png"
+    ],
+    "cmd:O+2": [
+      "/characters/kidomaru/frames/frame-195.png",
+      "/characters/kidomaru/frames/frame-196.png",
+      "/characters/kidomaru/frames/frame-197.png",
+      "/characters/kidomaru/frames/frame-198.png",
+      "/characters/kidomaru/frames/frame-199.png",
+      "/characters/kidomaru/frames/frame-200.png",
+      "/characters/kidomaru/frames/frame-201.png",
+      "/characters/kidomaru/frames/frame-202.png",
+      "/characters/kidomaru/frames/frame-203.png",
+      "/characters/kidomaru/frames/frame-204.png",
+      "/characters/kidomaru/frames/frame-205.png",
+      "/characters/kidomaru/frames/frame-206.png",
+      "/characters/kidomaru/frames/frame-207.png",
+      "/characters/kidomaru/frames/frame-208.png",
+      "/characters/kidomaru/frames/frame-209.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 100,
+    "speed": 4.91,
+    "sidestepSpeed": 4.29,
+    "jumpForce": 8.11,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Kidomaru Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Kidomaru Left Kick",
+      "input": "kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Kidomaru Right Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Kidomaru Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#4126d2",
+    "secondary": "#4170d8",
+    "accent": "#3ed594"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "label": "Kidomaru Left Check",
+      "startupFrames": 9,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "range": 1.42,
+      "whiffRecoveryFrames": 4
+    },
+    "jabright": {
+      "label": "Kidomaru Right Check",
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "hitLevel": "mid",
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "range": 1.5,
+      "whiffRecoveryFrames": 5
+    },
+    "kickleft": {
+      "label": "Kidomaru Left Kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "range": 1.62,
+      "whiffRecoveryFrames": 7
+    },
+    "kickright": {
+      "label": "Kidomaru Right Kick",
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 12,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "range": 1.7,
+      "whiffRecoveryFrames": 7
+    },
+    "cmd:f+1": {
+      "label": "Kidomaru Rush",
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "hitLevel": "mid",
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "whiffRecoveryFrames": 8
+    },
+    "cmd:d/f+2": {
+      "label": "Kidomaru Launcher",
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "hitLevel": "mid",
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "range": 1.68,
+      "whiffRecoveryFrames": 12
+    },
+    "cmd:qcf+4": {
+      "label": "Kidomaru Burst",
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 17,
+      "hitLevel": "mid",
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "knockdown": true,
+      "range": 2.05,
+      "whiffRecoveryFrames": 13
+    },
+    "cmd:WS+4": {
+      "label": "Kidomaru Rising Strike",
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "hitLevel": "mid",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "range": 1.62,
+      "whiffRecoveryFrames": 8
+    },
+    "cmd:FC+1": {
+      "label": "Kidomaru Crouch Jab",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "hitLevel": "mid",
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "range": 1.34,
+      "whiffRecoveryFrames": 5
+    },
+    "cmd:FC+2": {
+      "label": "Kidomaru Crouch Launcher",
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "hitLevel": "mid",
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "launchHeight": 2,
+      "range": 1.48,
+      "whiffRecoveryFrames": 12
+    },
+    "cmd:1+2": {
+      "label": "Kidomaru Twin Assault",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "hitLevel": "mid",
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "range": 1.72,
+      "whiffRecoveryFrames": 9
+    },
+    "cmd:1+3": {
+      "label": "Kidomaru Cross Launcher",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 15,
+      "hitLevel": "mid",
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "launchHeight": 2.2,
+      "range": 1.65,
+      "whiffRecoveryFrames": 13
+    },
+    "cmd:2+3": {
+      "label": "Kidomaru Low Feint",
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "hitLevel": "low",
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "range": 1.58,
+      "whiffRecoveryFrames": 8
+    },
+    "cmd:2+4": {
+      "label": "Kidomaru Driving Kick",
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "hitLevel": "low",
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "knockdown": true,
+      "range": 1.74,
+      "whiffRecoveryFrames": 12
+    },
+    "cmd:3+4": {
+      "label": "Kidomaru Power Crush",
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "hitLevel": "mid",
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "knockdown": true,
+      "range": 1.9,
+      "whiffRecoveryFrames": 13
+    },
+    "cmd:O+2": {
+      "label": "Kidomaru Aura Drive",
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 22,
+      "hitLevel": "special",
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "knockdown": true,
+      "usesKi": true,
+      "kiCost": 35,
+      "range": 2.1,
+      "whiffRecoveryFrames": 15
+    },
+    "neutral:jab-jab": {
+      "label": "Kidomaru Second Beat"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Kidomaru Body Blow"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Kidomaru Low Changeup"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Kidomaru Pressure Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Kidomaru Drive"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Kidomaru Barrage"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Kidomaru Finisher"
+    },
+    "neutral:jab-kick": {
+      "label": "Kidomaru Step Kick"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Kidomaru Palm String"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Kidomaru Rising Chain"
+    },
+    "neutral:jab-special": {
+      "label": "Kidomaru Special Setup"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Kidomaru Break Art"
+    },
+    "neutral:heavy-jab": {
+      "label": "Kidomaru Check Hook"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Kidomaru Heavy Break"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Kidomaru Charged Follow"
+    },
+    "neutral:heavy-kick": {
+      "label": "Kidomaru Drop Kick"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Kidomaru Arc Finisher"
+    },
+    "neutral:heavy-special": {
+      "label": "Kidomaru Focus Stance"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Kidomaru Mode Shift"
+    },
+    "neutral:kick-jab": {
+      "label": "Kidomaru Heel Feint"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Kidomaru Summon Strike"
+    },
+    "neutral:kick-heavy": {
+      "label": "Kidomaru Guard Snare"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Kidomaru Armor Break"
+    },
+    "neutral:kick-special": {
+      "label": "Kidomaru Power Setup"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Kidomaru Switch Strike"
+    },
+    "neutral:special-jab": {
+      "label": "Kidomaru Spark Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Kidomaru Binding Blow"
+    },
+    "neutral:special-heavy": {
+      "label": "Kidomaru Heavy Draw"
+    },
+    "neutral:special-kick": {
+      "label": "Kidomaru Kick Ender"
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.64,
+    "guard": 0.47,
+    "spacing": 1.48,
+    "specialChance": 0.19
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 1.125,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 1.153,
+        "height": 1.132,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.096,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.038,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "223": {
+        "width": 0.987,
+        "height": 1.15,
+        "offsetX": 0
+      },
+      "224": {
+        "width": 0.94,
+        "height": 1.128,
+        "offsetX": 0
+      },
+      "225": {
+        "width": 1.199,
+        "height": 1.106,
+        "offsetX": 0
+      },
+      "226": {
+        "width": 1.387,
+        "height": 1.084,
+        "offsetX": 0
+      },
+      "227": {
+        "width": 0.87,
+        "height": 1.106,
+        "offsetX": 0
+      },
+      "228": {
+        "width": 0.964,
+        "height": 1.171,
+        "offsetX": 0
+      },
+      "229": {
+        "width": 1.058,
+        "height": 1.106,
+        "offsetX": 0
+      },
+      "230": {
+        "width": 1.316,
+        "height": 1.084,
+        "offsetX": 0
+      },
+      "231": {
+        "width": 1.063,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "232": {
+        "width": 1.269,
+        "height": 1.041,
+        "offsetX": 0
+      },
+      "233": {
+        "width": 1.034,
+        "height": 1.171,
+        "offsetX": 0
+      },
+      "234": {
+        "width": 0.917,
+        "height": 1.128,
+        "offsetX": 0
+      },
+      "235": {
+        "width": 0.846,
+        "height": 1.128,
+        "offsetX": 0
+      },
+      "236": {
+        "width": 1.222,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "237": {
+        "width": 1.063,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "238": {
+        "width": 1.316,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "239": {
+        "width": 0.799,
+        "height": 1.388,
+        "offsetX": 0
+      },
+      "240": {
+        "width": 1.034,
+        "height": 1.345,
+        "offsetX": 0
+      },
+      "241": {
+        "width": 0.846,
+        "height": 1.215,
+        "offsetX": 0
+      },
+      "242": {
+        "width": 1.246,
+        "height": 0.976,
+        "offsetX": 0
+      },
+      "243": {
+        "width": 0.911,
+        "height": 0.911,
+        "offsetX": 0
+      },
+      "244": {
+        "width": 0.987,
+        "height": 1.15,
+        "offsetX": 0
+      },
+      "245": {
+        "width": 1.152,
+        "height": 1.15,
+        "offsetX": 0
+      },
+      "246": {
+        "width": 1.199,
+        "height": 1.106,
+        "offsetX": 0
+      },
+      "247": {
+        "width": 0.987,
+        "height": 1.128,
+        "offsetX": 0
+      },
+      "248": {
+        "width": 0.94,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "249": {
+        "width": 1.152,
+        "height": 0.998,
+        "offsetX": 0
+      },
+      "250": {
+        "width": 0.917,
+        "height": 0.976,
+        "offsetX": 0
+      }
+    },
+    "walkForward": {
+      "1": {
+        "width": 1.153,
+        "height": 1.132,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.096,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.038,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.096,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 1.096,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "6": {
+        "width": 1.182,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.326,
+        "height": 0.849,
+        "offsetX": 0
+      }
+    },
+    "walkBack": {
+      "1": {
+        "width": 1.153,
+        "height": 1.132,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.096,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.038,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 1.096,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 1.096,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "6": {
+        "width": 1.182,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.326,
+        "height": 0.849,
+        "offsetX": 0
+      },
+      "8": {
+        "width": 0.987,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 0.893,
+        "height": 0.781,
+        "offsetX": 0
+      }
+    },
+    "sprint": {
+      "10": {
+        "width": 0.679,
+        "height": 0.679,
+        "offsetX": 0
+      }
+    },
+    "backHop": {
+      "11": {
+        "width": 1.038,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "12": {
+        "width": 0.846,
+        "height": 1.388,
+        "offsetX": 0
+      }
+    },
+    "sidestepLeft": {
+      "13": {
+        "width": 1.24,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "14": {
+        "width": 1.011,
+        "height": 1.106,
+        "offsetX": 0
+      },
+      "15": {
+        "width": 0.917,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "16": {
+        "width": 1.199,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "17": {
+        "width": 1.152,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "18": {
+        "width": 1.152,
+        "height": 0.998,
+        "offsetX": 0
+      }
+    },
+    "sidestepRight": {
+      "13": {
+        "width": 1.24,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "19": {
+        "width": 1.222,
+        "height": 1.366,
+        "offsetX": 0
+      },
+      "20": {
+        "width": 1.011,
+        "height": 1.366,
+        "offsetX": 0
+      },
+      "22": {
+        "width": 0.729,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "23": {
+        "width": 0.823,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 0.799,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 0.823,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "28": {
+        "width": 0.893,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "29": {
+        "width": 0.846,
+        "height": 1.41,
+        "offsetX": 0
+      }
+    },
+    "jump": {
+      "31": {
+        "width": 1.557,
+        "height": 0.679,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1.557,
+        "height": 0.755,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 1.499,
+        "height": 0.472,
+        "offsetX": 0
+      },
+      "34": {
+        "width": 1.759,
+        "height": 0.415,
+        "offsetX": 0
+      }
+    },
+    "crouch": {
+      "35": {
+        "width": 1.316,
+        "height": 3.947,
+        "offsetX": 0
+      },
+      "36": {
+        "width": 1.269,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "38": {
+        "width": 1.598,
+        "height": 1.713,
+        "offsetX": 0
+      },
+      "39": {
+        "width": 1.598,
+        "height": 1.865,
+        "offsetX": 0
+      },
+      "41": {
+        "width": 1.598,
+        "height": 1.8,
+        "offsetX": 0
+      },
+      "42": {
+        "width": 1.41,
+        "height": 1.475,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 1.211,
+        "height": 0.793,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 1.081,
+        "height": 0.889,
+        "offsetX": 0
+      }
+    },
+    "crouchBlock": {
+      "44": {
+        "width": 1.211,
+        "height": 0.793,
+        "offsetX": 0
+      },
+      "222": {
+        "width": 1.269,
+        "height": 3.947,
+        "offsetX": 0
+      }
+    },
+    "block": {
+      "49": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "50": {
+        "width": 0.893,
+        "height": 1.236,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 0.94,
+        "height": 1.215,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 1.211,
+        "height": 1.076,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 0.94,
+        "height": 1.28,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1.034,
+        "height": 1.28,
+        "offsetX": 0
+      },
+      "55": {
+        "width": 0.987,
+        "height": 1.258,
+        "offsetX": 0
+      }
+    },
+    "chargeKi": {
+      "0": {
+        "width": 1.125,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 1.153,
+        "height": 1.132,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 1.096,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 1.038,
+        "height": 1.113,
+        "offsetX": 0
+      },
+      "56": {
+        "width": 1.128,
+        "height": 1.041,
+        "offsetX": 0
+      },
+      "57": {
+        "width": 0.917,
+        "height": 0.976,
+        "offsetX": 0
+      },
+      "58": {
+        "width": 0.987,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "251": {
+        "width": 0.987,
+        "height": 1.323,
+        "offsetX": 0
+      },
+      "252": {
+        "width": 1.011,
+        "height": 1.366,
+        "offsetX": 0
+      },
+      "253": {
+        "width": 1.128,
+        "height": 1.345,
+        "offsetX": 0
+      },
+      "254": {
+        "width": 0.893,
+        "height": 1.236,
+        "offsetX": 0
+      },
+      "255": {
+        "width": 0.917,
+        "height": 1.236,
+        "offsetX": 0
+      },
+      "256": {
+        "width": 0.799,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "257": {
+        "width": 0.87,
+        "height": 1.15,
+        "offsetX": 0
+      },
+      "258": {
+        "width": 0.964,
+        "height": 1.128,
+        "offsetX": 0
+      },
+      "259": {
+        "width": 0.94,
+        "height": 1.084,
+        "offsetX": 0
+      },
+      "260": {
+        "width": 0.893,
+        "height": 0.954,
+        "offsetX": 0
+      },
+      "261": {
+        "width": 0.987,
+        "height": 1.15,
+        "offsetX": 0
+      },
+      "262": {
+        "width": 1.152,
+        "height": 1.15,
+        "offsetX": 0
+      },
+      "263": {
+        "width": 1.246,
+        "height": 1.128,
+        "offsetX": 0
+      },
+      "264": {
+        "width": 0.987,
+        "height": 1.128,
+        "offsetX": 0
+      },
+      "265": {
+        "width": 1.152,
+        "height": 0.998,
+        "offsetX": 0
+      },
+      "266": {
+        "width": 1.058,
+        "height": 1.041,
+        "offsetX": 0
+      },
+      "267": {
+        "width": 0.987,
+        "height": 0.998,
+        "offsetX": 0
+      },
+      "268": {
+        "width": 1.175,
+        "height": 0.889,
+        "offsetX": 0
+      },
+      "269": {
+        "width": 1.175,
+        "height": 0.889,
+        "offsetX": 0
+      }
+    },
+    "jableft": {
+      "59": {
+        "width": 0.894,
+        "height": 1.227,
+        "offsetX": 0
+      }
+    },
+    "jabright": {
+      "60": {
+        "width": 0.868,
+        "height": 0.868,
+        "offsetX": 0
+      },
+      "61": {
+        "width": 0.868,
+        "height": 0.868,
+        "offsetX": 0
+      },
+      "62": {
+        "width": 0.868,
+        "height": 0.868,
+        "offsetX": 0
+      },
+      "63": {
+        "width": 0.887,
+        "height": 0.887,
+        "offsetX": 0
+      },
+      "64": {
+        "width": 0.849,
+        "height": 0.849,
+        "offsetX": 0
+      },
+      "65": {
+        "width": 0.849,
+        "height": 0.849,
+        "offsetX": 0
+      }
+    },
+    "kickleft": {
+      "66": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "67": {
+        "width": 1.096,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "68": {
+        "width": 1.067,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "69": {
+        "width": 0.906,
+        "height": 0.906,
+        "offsetX": 0
+      }
+    },
+    "kickright": {
+      "70": {
+        "width": 1.153,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "71": {
+        "width": 0.792,
+        "height": 0.793,
+        "offsetX": 0
+      },
+      "72": {
+        "width": 0.887,
+        "height": 0.887,
+        "offsetX": 0
+      },
+      "73": {
+        "width": 0.811,
+        "height": 0.811,
+        "offsetX": 0
+      },
+      "74": {
+        "width": 1.41,
+        "height": 1.171,
+        "offsetX": 0
+      }
+    },
+    "hitLight": {
+      "75": {
+        "width": 1.153,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "76": {
+        "width": 1.41,
+        "height": 1.171,
+        "offsetX": 0
+      },
+      "77": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "78": {
+        "width": 1.41,
+        "height": 1.171,
+        "offsetX": 0
+      },
+      "79": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "80": {
+        "width": 1.504,
+        "height": 1.236,
+        "offsetX": 0
+      },
+      "81": {
+        "width": 1.222,
+        "height": 1.366,
+        "offsetX": 0
+      },
+      "82": {
+        "width": 1.504,
+        "height": 1.236,
+        "offsetX": 0
+      }
+    },
+    "hitHeavy": {
+      "83": {
+        "width": 1.499,
+        "height": 1.189,
+        "offsetX": 0
+      },
+      "84": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "85": {
+        "width": 1.011,
+        "height": 1.366,
+        "offsetX": 0
+      },
+      "86": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "87": {
+        "width": 0.729,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "88": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.823,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "31": {
+        "width": 1.557,
+        "height": 0.679,
+        "offsetX": 0
+      },
+      "91": {
+        "width": 0.799,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "92": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "93": {
+        "width": 0.823,
+        "height": 1.41,
+        "offsetX": 0
+      },
+      "94": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "95": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "96": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "31": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52817,
+        "voxelScaleY": 0.66655
+      },
+      "32": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52817,
+        "voxelScaleY": 0.74064
+      },
+      "33": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52817,
+        "voxelScaleY": 0.48057
+      },
+      "34": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52816,
+        "voxelScaleY": 0.36045
+      },
+      "97": {
+        "width": 0.87,
+        "height": 1.215,
+        "offsetX": 0
+      },
+      "98": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "99": {
+        "width": 0.87,
+        "height": 1.215,
+        "offsetX": 0
+      },
+      "100": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "101": {
+        "width": 0.87,
+        "height": 1.215,
+        "offsetX": 0
+      },
+      "102": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "103": {
+        "width": 0.917,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "104": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      }
+    },
+    "getupStand": {
+      "30": {
+        "width": 0.865,
+        "height": 1.189,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52817,
+        "voxelScaleY": 0.66655
+      },
+      "32": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52817,
+        "voxelScaleY": 0.74064
+      },
+      "33": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52817,
+        "voxelScaleY": 0.48057
+      },
+      "34": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52816,
+        "voxelScaleY": 0.36045
+      },
+      "105": {
+        "width": 1.105,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "106": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "107": {
+        "width": 1.105,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "108": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "109": {
+        "width": 1.199,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "110": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "111": {
+        "width": 1.199,
+        "height": 1.084,
+        "offsetX": 0
+      },
+      "112": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      }
+    },
+    "getupRollUp": {
+      "113": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "114": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "115": {
+        "width": 1.011,
+        "height": 1.106,
+        "offsetX": 0
+      },
+      "116": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "117": {
+        "width": 0.917,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "118": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "119": {
+        "width": 1.199,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "120": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      }
+    },
+    "win": {
+      "121": {
+        "width": 1.199,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "122": {
+        "width": 0.423,
+        "height": 0.13,
+        "offsetX": 0
+      },
+      "124": {
+        "width": 1.222,
+        "height": 0.998,
+        "offsetX": 0
+      },
+      "125": {
+        "width": 0.423,
+        "height": 0.13,
+        "offsetX": 0
+      },
+      "127": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "128": {
+        "width": 0.423,
+        "height": 0.13,
+        "offsetX": 0
+      },
+      "130": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "131": {
+        "width": 0.423,
+        "height": 0.13,
+        "offsetX": 0
+      },
+      "239": {
+        "width": 0.98,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "240": {
+        "width": 1.269,
+        "height": 1.17,
+        "offsetX": 0
+      },
+      "241": {
+        "width": 1.038,
+        "height": 1.057,
+        "offsetX": 0
+      }
+    },
+    "lose": {
+      "34": {
+        "width": 1.113,
+        "height": 1.113,
+        "offsetX": 0,
+        "voxelScaleX": 1.52816,
+        "voxelScaleY": 0.36045
+      },
+      "133": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "134": {
+        "width": 1.363,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "135": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "136": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "137": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "138": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "139": {
+        "width": 1.034,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "140": {
+        "width": 1.316,
+        "height": 1.193,
+        "offsetX": 0
+      }
+    },
+    "cmd:f+1": {
+      "141": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "142": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "143": {
+        "width": 0.962,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "144": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "145": {
+        "width": 1.125,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "146": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "147": {
+        "width": 0.887,
+        "height": 0.887,
+        "offsetX": 0
+      },
+      "148": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      }
+    },
+    "cmd:d/f+2": {
+      "149": {
+        "width": 0.887,
+        "height": 0.887,
+        "offsetX": 0
+      },
+      "150": {
+        "width": 0.264,
+        "height": 0.264,
+        "offsetX": 0
+      },
+      "151": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "153": {
+        "width": 0.264,
+        "height": 0.264,
+        "offsetX": 0
+      },
+      "154": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "155": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "157": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "158": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      }
+    },
+    "cmd:qcf+4": {
+      "160": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "161": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "162": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "163": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "164": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "165": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "166": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "167": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      }
+    },
+    "cmd:WS+4": {
+      "168": {
+        "width": 1.067,
+        "height": 1.132,
+        "offsetX": 0
+      },
+      "169": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "170": {
+        "width": 0.962,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "171": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "173": {
+        "width": 0.566,
+        "height": 0.566,
+        "offsetX": 0
+      },
+      "174": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "175": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "176": {
+        "width": 0.566,
+        "height": 0.566,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+1": {
+      "178": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "179": {
+        "width": 0.566,
+        "height": 0.566,
+        "offsetX": 0
+      },
+      "180": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "181": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "182": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "183": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "184": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "185": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      }
+    },
+    "cmd:FC+2": {
+      "187": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "188": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "189": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "190": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "191": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "192": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "193": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "194": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+2": {
+      "195": {
+        "width": 1.067,
+        "height": 1.132,
+        "offsetX": 0
+      },
+      "196": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 0.962,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "198": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "200": {
+        "width": 0.75,
+        "height": 0.717,
+        "offsetX": 0
+      },
+      "201": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "202": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "203": {
+        "width": 0.75,
+        "height": 0.736,
+        "offsetX": 0
+      }
+    },
+    "cmd:1+3": {
+      "205": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 0.75,
+        "height": 0.717,
+        "offsetX": 0
+      },
+      "207": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "208": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "210": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "211": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "212": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+3": {
+      "214": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "215": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "216": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "217": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "218": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "219": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "220": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "221": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      }
+    },
+    "cmd:2+4": {
+      "0": {
+        "width": 0.917,
+        "height": 1.193,
+        "offsetX": 0
+      },
+      "223": {
+        "width": 1.211,
+        "height": 1,
+        "offsetX": 0
+      },
+      "224": {
+        "width": 1.153,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "225": {
+        "width": 0.962,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "226": {
+        "width": 0.943,
+        "height": 0.943,
+        "offsetX": 0
+      },
+      "227": {
+        "width": 1.067,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "228": {
+        "width": 1.182,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "229": {
+        "width": 0.962,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "230": {
+        "width": 0.943,
+        "height": 0.943,
+        "offsetX": 0
+      },
+      "231": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "232": {
+        "width": 0.906,
+        "height": 0.906,
+        "offsetX": 0
+      },
+      "233": {
+        "width": 1.269,
+        "height": 1.019,
+        "offsetX": 0
+      },
+      "234": {
+        "width": 1.125,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "235": {
+        "width": 1.038,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "236": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "237": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "238": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "239": {
+        "width": 0.98,
+        "height": 1.208,
+        "offsetX": 0
+      },
+      "240": {
+        "width": 1.269,
+        "height": 1.17,
+        "offsetX": 0
+      },
+      "241": {
+        "width": 1.038,
+        "height": 1.057,
+        "offsetX": 0
+      },
+      "242": {
+        "width": 0.849,
+        "height": 0.849,
+        "offsetX": 0
+      },
+      "243": {
+        "width": 0.792,
+        "height": 0.793,
+        "offsetX": 0
+      },
+      "244": {
+        "width": 1.298,
+        "height": 1.057,
+        "offsetX": 0
+      },
+      "245": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "246": {
+        "width": 0.962,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "247": {
+        "width": 1.211,
+        "height": 1,
+        "offsetX": 0
+      },
+      "248": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "249": {
+        "width": 0.868,
+        "height": 0.868,
+        "offsetX": 0
+      },
+      "250": {
+        "width": 0.849,
+        "height": 0.849,
+        "offsetX": 0
+      }
+    },
+    "cmd:3+4": {
+      "1": {
+        "width": 0.94,
+        "height": 1.301,
+        "offsetX": 0
+      },
+      "2": {
+        "width": 0.893,
+        "height": 1.28,
+        "offsetX": 0
+      },
+      "3": {
+        "width": 0.846,
+        "height": 1.28,
+        "offsetX": 0
+      },
+      "4": {
+        "width": 0.893,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "5": {
+        "width": 0.893,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "6": {
+        "width": 0.964,
+        "height": 1.258,
+        "offsetX": 0
+      },
+      "7": {
+        "width": 1.081,
+        "height": 0.976,
+        "offsetX": 0
+      },
+      "251": {
+        "width": 1.211,
+        "height": 1.151,
+        "offsetX": 0
+      },
+      "252": {
+        "width": 1.24,
+        "height": 1.189,
+        "offsetX": 0
+      },
+      "253": {
+        "width": 1.384,
+        "height": 1.17,
+        "offsetX": 0
+      },
+      "254": {
+        "width": 1.153,
+        "height": 1.076,
+        "offsetX": 0
+      },
+      "255": {
+        "width": 1.125,
+        "height": 1.076,
+        "offsetX": 0
+      },
+      "256": {
+        "width": 0.98,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "257": {
+        "width": 1.067,
+        "height": 1,
+        "offsetX": 0
+      },
+      "258": {
+        "width": 1.182,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "259": {
+        "width": 1.153,
+        "height": 0.943,
+        "offsetX": 0
+      },
+      "260": {
+        "width": 0.83,
+        "height": 0.83,
+        "offsetX": 0
+      },
+      "261": {
+        "width": 1.211,
+        "height": 1,
+        "offsetX": 0
+      },
+      "262": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "263": {
+        "width": 0.981,
+        "height": 0.981,
+        "offsetX": 0
+      },
+      "264": {
+        "width": 1.211,
+        "height": 1,
+        "offsetX": 0
+      },
+      "265": {
+        "width": 0.868,
+        "height": 0.868,
+        "offsetX": 0
+      },
+      "266": {
+        "width": 0.906,
+        "height": 0.906,
+        "offsetX": 0
+      },
+      "267": {
+        "width": 0.868,
+        "height": 0.868,
+        "offsetX": 0
+      },
+      "268": {
+        "width": 0.792,
+        "height": 0.793,
+        "offsetX": 0
+      },
+      "269": {
+        "width": 0.792,
+        "height": 0.793,
+        "offsetX": 0
+      }
+    },
+    "cmd:O+2": {
+      "8": {
+        "width": 0.987,
+        "height": 1.063,
+        "offsetX": 0
+      },
+      "9": {
+        "width": 0.893,
+        "height": 0.781,
+        "offsetX": 0
+      },
+      "195": {
+        "width": 1.067,
+        "height": 1.132,
+        "offsetX": 0
+      },
+      "196": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "197": {
+        "width": 0.962,
+        "height": 0.962,
+        "offsetX": 0
+      },
+      "198": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "199": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "200": {
+        "width": 0.75,
+        "height": 0.717,
+        "offsetX": 0
+      },
+      "201": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "202": {
+        "width": 0.925,
+        "height": 0.925,
+        "offsetX": 0
+      },
+      "203": {
+        "width": 0.75,
+        "height": 0.736,
+        "offsetX": 0
+      },
+      "204": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "205": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "206": {
+        "width": 0.75,
+        "height": 0.717,
+        "offsetX": 0
+      },
+      "207": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      },
+      "208": {
+        "width": 1.269,
+        "height": 1.094,
+        "offsetX": 0
+      },
+      "209": {
+        "width": 1.038,
+        "height": 1.038,
+        "offsetX": 0
+      }
+    }
+  },
+  "modelScale": {
+    "width": 1.01,
+    "height": 1.01
+  }
+}

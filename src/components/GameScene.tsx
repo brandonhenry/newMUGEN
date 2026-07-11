@@ -54,7 +54,16 @@ import { installVoxelFreezeMonitor, loadHdVoxelFrameInWorker } from '../lib/voxe
 import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
 import { KORE_APP_VERSION } from '../appVersion';
+import { normalizedVoxelPixelSize, resolveMovementSmokeAxes, type MovementSmokeKind } from '../lib/voxelEffects';
+import hitEffectVoxelPackJson from '../assets/hit-effect-01.voxels.json';
+import movementSmokeVoxelPackJson from '../assets/movement-smoke.voxels.json';
 import { makePreviewInput, previewScriptLength, type TrainingPreviewFrame } from '../lib/trainingTrials';
+import {
+  BLAST_ELECTRICITY_MAX_VERTICES,
+  getBlastElectricityProfile,
+  writeBlastElectricitySegments,
+  type BlastElectricityMode
+} from '../lib/blastElectricity';
 import {
   MODEL_STAGE_IDS,
   STAGE_BASIS_TRANSCODER_PATH,
@@ -72,8 +81,10 @@ import {
 
 type GameSceneProps = {
   match: MatchSnapshot;
+  presentationMirrored?: boolean;
   cameraSettings?: GameSettings['camera'];
   sparkSettings?: GameSettings['display']['impactSparks'];
+  movementSmokeStyle?: GameSettings['display']['movementSmokeStyle'];
   audioSettings?: GameSettings['audio'];
   reducedMotion?: boolean;
   onAssetLoadingChange?: (state: AssetLoadingState) => void;
@@ -594,12 +605,14 @@ function inspectModelObjectTree(root: THREE.Object3D) {
 const defaultSparkSettings: GameSettings['display']['impactSparks'] = {
   enabled: true,
   cinematic: true,
-  shape: 'burst',
-  hitColor: '#ffb33f',
+  shape: 'voxel-burst',
+  hitColor: '#ffe600',
+  hitAccentColor: '#ff9d00',
   blockColor: '#9eeeff',
   size: 1,
   intensity: 1
 };
+const defaultMovementSmokeStyle: GameSettings['display']['movementSmokeStyle'] = 'speed-trail';
 
 const LOCAL_HDRI_ENVIRONMENT_PATH = '/hdri/';
 const LOCAL_HDRI_ENVIRONMENT_FILE = 'potsdamer_platz_1k.hdr';
@@ -655,7 +668,7 @@ function GameEnvironment({ background = false }: { background?: boolean }) {
 
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
-export function GameScene({ match, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, audioSettings, reducedMotion = false, onAssetLoadingChange }: GameSceneProps) {
+export function GameScene({ match, presentationMirrored = false, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, movementSmokeStyle = defaultMovementSmokeStyle, audioSettings, reducedMotion = false, onAssetLoadingChange }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   const fighterRenderStyles = useMemo(() => ([
     makeFightFighterRenderStyle(match, 1),
@@ -681,20 +694,20 @@ export function GameScene({ match, cameraSettings = defaultCameraSettings, spark
         <GameEnvironment />
         {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
         <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
-        <CameraRig match={match} settings={cameraSettings} reducedMotion={reducedMotion} impactFeedbackEnabled={sparkSettings.enabled && sparkSettings.cinematic} />
+        <CameraRig match={match} settings={cameraSettings} presentationMirrored={presentationMirrored} reducedMotion={reducedMotion} impactFeedbackEnabled={sparkSettings.enabled && sparkSettings.cinematic} />
         <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
         <StageCameraOcclusionFader />
         <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
         <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
-        <MovementFootSmokeLayer fighter={match.fighters[0]} />
-        <MovementFootSmokeLayer fighter={match.fighters[1]} />
+        <MovementFootSmokeLayer fighter={match.fighters[0]} style={movementSmokeStyle} />
+        <MovementFootSmokeLayer fighter={match.fighters[1]} style={movementSmokeStyle} />
         <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
         <TransformEffectLayer fighter={match.fighters[0]} />
         <TransformEffectLayer fighter={match.fighters[1]} />
         <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
         <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
         <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
-        <ProjectileLayer match={match} stage={match.stage} />
+        <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} />
         <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
       </StageCameraCollisionContext.Provider>
     </Canvas>
@@ -931,7 +944,7 @@ export function MoveDemoCanvas({
         <FighterRig fighter={previewMatch.fighters[1]} timeScale={previewMatch.visualTimeScale} stage={stage} renderStyle={fighterRenderStyles[1]} />
         <TornadoRibbonLayer events={previewMatch.impactEvents} fighters={previewMatch.fighters} reducedMotion />
         <EffectLayer match={previewMatch} reducedMotion />
-        <ProjectileLayer match={previewMatch} stage={stage} />
+        <ProjectileLayer match={previewMatch} stage={stage} reducedMotion />
         <ImpactSparkLayer events={previewMatch.impactEvents} settings={defaultSparkSettings} reducedMotion />
         <MoveDemoPlayback
           initialMatch={initialMatch}
@@ -1499,6 +1512,21 @@ const SHADOW_CLONE_SMOKE_TOTAL_FRAMES = SHADOW_CLONE_SMOKE_COLUMNS * SHADOW_CLON
 const SHADOW_CLONE_SMOKE_MAX_RUNTIME_FRAMES = 24;
 const DASH_FORWARD_SMOKE_RUNTIME_FRAMES = 24;
 const BACK_HOP_SMOKE_RUNTIME_FRAMES = 24;
+type MovementSmokeVoxelRecord = [number, number, number];
+type MovementSmokeVoxelStyle = {
+  id: GameSettings['display']['movementSmokeStyle'];
+  frameWidth: number;
+  frameHeight: number;
+  palette: [number, number, number, number][];
+  frames: MovementSmokeVoxelRecord[][];
+  frameBounds: ([number, number, number, number] | null)[];
+};
+type MovementSmokeVoxelPack = {
+  version: number;
+  normalization: { coordinateSpace: 'full-frame'; pixelAspect: number };
+  styles: MovementSmokeVoxelStyle[];
+};
+const MOVEMENT_SMOKE_VOXEL_PACK = movementSmokeVoxelPackJson as unknown as MovementSmokeVoxelPack;
 type MovementFootSmokeSpec = {
   offsetX: number;
   offsetZ: number;
@@ -1517,33 +1545,94 @@ const PROJECTILE_REVEAL_FRAMES = 10;
 const PROJECTILE_REVEAL_MIN_SCALE = 0.16;
 const PROJECTILE_REVEAL_FORWARD_OFFSET = 0.42;
 
-type MovementFootSmokeKind = 'backHop' | 'sprint';
+type MovementFootSmokeKind = MovementSmokeKind;
 
-function MovementFootSmokeLayer({ fighter }: { fighter: FighterRuntime }) {
-  const backHopActive = fighter.backHopTotalFrames > 0;
-  const sprintActive = !backHopActive && fighter.dashForwardFrames > 0;
-  if (!backHopActive && !sprintActive) return null;
+function MovementFootSmokeLayer({ fighter, style }: { fighter: FighterRuntime; style: GameSettings['display']['movementSmokeStyle'] }) {
+  const nextIdRef = useRef(1);
+  const lastDashFramesRef = useRef(0);
+  const lastBackHopTotalFramesRef = useRef(0);
+  const [bursts, setBursts] = useState<Array<{
+    id: number;
+    kind: MovementFootSmokeKind;
+    position: Vec3Tuple;
+    trail: [number, number];
+    side: [number, number];
+    style: GameSettings['display']['movementSmokeStyle'];
+  }>>([]);
 
-  const kind: MovementFootSmokeKind = backHopActive ? 'backHop' : 'sprint';
-  const duration = kind === 'backHop' ? BACK_HOP_SMOKE_RUNTIME_FRAMES : DASH_FORWARD_SMOKE_RUNTIME_FRAMES;
-  const age = kind === 'backHop'
-    ? Math.max(0, fighter.backHopTotalFrames - fighter.backHopFrames)
-    : Math.max(0, 18 - fighter.dashForwardFrames);
-  if (age > duration) return null;
+  useEffect(() => {
+    const dashStarted = fighter.dashForwardFrames > lastDashFramesRef.current && fighter.dashForwardFrames > 0;
+    const backHopStarted = fighter.backHopTotalFrames > lastBackHopTotalFramesRef.current && fighter.backHopTotalFrames > 0;
+    lastDashFramesRef.current = fighter.dashForwardFrames;
+    lastBackHopTotalFramesRef.current = fighter.backHopTotalFrames;
+    if (!dashStarted && !backHopStarted) return;
+    const kind: MovementFootSmokeKind = backHopStarted ? 'backHop' : 'sprint';
+    const { trail, side } = resolveMovementSmokeAxes(fighter.facingYaw, kind);
+    const id = nextIdRef.current;
+    nextIdRef.current += 1;
+    setBursts((current) => [...current.slice(-5), {
+      id,
+      kind,
+      position: [fighter.position.x, 0.08, fighter.position.z],
+      trail,
+      side,
+      style
+    }]);
+  }, [fighter.backHopTotalFrames, fighter.dashForwardFrames, fighter.facing, fighter.position.x, fighter.position.z, style]);
 
-  const direction: 1 | -1 = kind === 'backHop' ? fighter.facing : fighter.facing === 1 ? -1 : 1;
-  const spread = kind === 'backHop' ? 1.1 : 0.82;
+  const removeBurst = useCallback((id: number) => {
+    setBursts((current) => current.filter((burst) => burst.id !== id));
+  }, []);
+
   return (
-    <group position={[fighter.position.x, 0.08, fighter.position.z]} renderOrder={11}>
+    <group renderOrder={11}>
+      {bursts.map((burst) => (
+        <MovementFootSmokeBurst key={`${fighter.slot}-movement-smoke-${burst.id}`} burst={burst} onComplete={removeBurst} />
+      ))}
+    </group>
+  );
+}
+
+function MovementFootSmokeBurst({
+  burst,
+  onComplete
+}: {
+  burst: {
+    id: number;
+    kind: MovementFootSmokeKind;
+    position: Vec3Tuple;
+    trail: [number, number];
+    side: [number, number];
+    style: GameSettings['display']['movementSmokeStyle'];
+  };
+  onComplete: (id: number) => void;
+}) {
+  const [age, setAge] = useState(0);
+  const completedRef = useRef(false);
+  const duration = burst.kind === 'backHop' ? BACK_HOP_SMOKE_RUNTIME_FRAMES : DASH_FORWARD_SMOKE_RUNTIME_FRAMES;
+  const spread = burst.kind === 'backHop' ? 1.1 : 0.82;
+  useFrame((_, delta) => {
+    setAge((current) => Math.min(duration + 1, current + delta * 60));
+  });
+  useEffect(() => {
+    if (age <= duration || completedRef.current) return;
+    completedRef.current = true;
+    onComplete(burst.id);
+  }, [age, burst.id, duration, onComplete]);
+
+  return (
+    <group position={burst.position} renderOrder={11}>
       {MOVEMENT_FOOT_SMOKE_SPECS
         .filter((spec) => age >= spec.delayFrames)
         .map((spec, index) => (
           <MovementFootSmokeQuad
-            key={`${fighter.slot}-${kind}-foot-smoke-${index}`}
+            key={`${burst.id}-foot-smoke-${index}`}
             age={age - spec.delayFrames}
             duration={Math.max(1, duration - spec.delayFrames)}
-            direction={direction}
-            kind={kind}
+            trail={burst.trail}
+            side={burst.side}
+            kind={burst.kind}
+            style={burst.style}
             spec={{ ...spec, offsetX: spec.offsetX * spread, offsetZ: spec.offsetZ * spread }}
           />
         ))}
@@ -1554,65 +1643,117 @@ function MovementFootSmokeLayer({ fighter }: { fighter: FighterRuntime }) {
 function MovementFootSmokeQuad({
   age,
   duration,
-  direction,
+  trail,
+  side,
   kind,
+  style,
   spec
 }: {
   age: number;
   duration: number;
-  direction: 1 | -1;
+  trail: [number, number];
+  side: [number, number];
   kind: MovementFootSmokeKind;
+  style: GameSettings['display']['movementSmokeStyle'];
   spec: MovementFootSmokeSpec;
 }) {
-  const sourceTexture = useLoader(THREE.TextureLoader, SHADOW_CLONE_SMOKE_PATH);
-  const texture = useMemo(() => sourceTexture.clone(), [sourceTexture]);
-  const materialRef = useRef<THREE.MeshBasicMaterial>(null);
   const progress = THREE.MathUtils.clamp(age / Math.max(1, duration), 0, 1);
-  const frameIndex = Math.max(0, Math.min(SHADOW_CLONE_SMOKE_TOTAL_FRAMES - 1, Math.floor(progress * SHADOW_CLONE_SMOKE_TOTAL_FRAMES)));
+  const voxelStyle = useMemo(() => MOVEMENT_SMOKE_VOXEL_PACK.styles.find((candidate) => candidate.id === style) ?? MOVEMENT_SMOKE_VOXEL_PACK.styles[0], [style]);
+  const frameIndex = Math.max(0, Math.min((voxelStyle?.frames.length ?? 1) - 1, Math.floor(progress * (voxelStyle?.frames.length ?? 1))));
   const puffStrength = kind === 'backHop' ? 0.95 : 0.78;
   const opacity = spec.opacity * puffStrength * Math.max(0.16, Math.max(0, 1 - progress) ** 1.15);
   const scale = spec.scale * (kind === 'backHop' ? 1.36 : 1.08) * (0.84 + progress * 0.72);
   const rise = 0.06 + progress * (kind === 'backHop' ? 0.22 : 0.16);
-  const drift = progress * (kind === 'backHop' ? 0.16 : 0.11) * direction;
+  const drift = progress * (kind === 'backHop' ? 0.16 : 0.11);
+  const trailOffset = Math.max(0.06, 0.24 + spec.offsetX) + drift;
+  const positionX = trail[0] * trailOffset + side[0] * spec.offsetZ;
+  const positionZ = trail[1] * trailOffset + side[1] * spec.offsetZ;
+  const trailYaw = Math.atan2(trail[0], trail[1]);
+  const mesh = useMemo(() => voxelStyle ? buildMovementSmokeVoxelMesh(voxelStyle, frameIndex, spec.rotation) : null, [frameIndex, spec.rotation, voxelStyle]);
 
   useEffect(() => {
-    texture.magFilter = THREE.LinearFilter;
-    texture.minFilter = THREE.LinearMipmapLinearFilter;
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(1 / SHADOW_CLONE_SMOKE_COLUMNS, 1 / SHADOW_CLONE_SMOKE_ROWS);
-  }, [texture]);
+    mesh?.traverse((child) => {
+      const childMesh = child as THREE.Mesh;
+      const materials = Array.isArray(childMesh.material) ? childMesh.material : childMesh.material ? [childMesh.material] : [];
+      materials.forEach((material) => {
+        const smokeMaterial = material as THREE.MeshBasicMaterial;
+        smokeMaterial.opacity = (smokeMaterial.userData.sourceOpacity ?? 1) * opacity;
+      });
+    });
+  }, [mesh, opacity]);
 
-  useEffect(() => {
-    const column = frameIndex % SHADOW_CLONE_SMOKE_COLUMNS;
-    const row = Math.floor(frameIndex / SHADOW_CLONE_SMOKE_COLUMNS);
-    texture.offset.set(column / SHADOW_CLONE_SMOKE_COLUMNS, 1 - (row + 1) / SHADOW_CLONE_SMOKE_ROWS);
-    texture.needsUpdate = true;
-    if (materialRef.current) materialRef.current.opacity = opacity;
-  }, [frameIndex, opacity, texture]);
+  useEffect(() => () => {
+    if (!mesh) return;
+    mesh.traverse((child) => {
+      const childMesh = child as THREE.Mesh;
+      childMesh.geometry?.dispose();
+      const materials = Array.isArray(childMesh.material) ? childMesh.material : childMesh.material ? [childMesh.material] : [];
+      materials.forEach((material) => material.dispose());
+    });
+  }, [mesh]);
 
   return (
-    <mesh
-      position={[spec.offsetX * direction + drift, 0.22 + rise, spec.offsetZ]}
-      rotation={[0, direction * 0.18, spec.rotation * direction]}
+    <group
+      position={[positionX, 0.22 + rise, positionZ]}
+      rotation={[style === 'dust-ring' ? -Math.PI / 2 : 0, trailYaw, spec.rotation]}
       scale={[scale, scale, 1]}
       renderOrder={11}
     >
-      <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial
-        ref={materialRef}
-        map={texture}
-        color="#6f665d"
-        transparent
-        opacity={opacity}
-        depthTest={false}
-        depthWrite={false}
-        toneMapped={false}
-        side={THREE.DoubleSide}
-      />
-    </mesh>
+      {mesh && <primitive object={mesh} />}
+    </group>
   );
+}
+
+function buildMovementSmokeVoxelMesh(style: MovementSmokeVoxelStyle, frameIndex: number, seed: number) {
+  const frame = style.frames[frameIndex] ?? [];
+  const group = new THREE.Group();
+  const matrix = new THREE.Matrix4();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  const rotation = new THREE.Quaternion();
+  const pixelSize = normalizedVoxelPixelSize(style.frameWidth, style.frameHeight, 1.6);
+  const frameProgress = frameIndex / Math.max(1, style.frames.length - 1);
+  const recordsByPalette = new Map<number, MovementSmokeVoxelRecord[]>();
+  frame.forEach((record) => {
+    const records = recordsByPalette.get(record[2]) ?? [];
+    records.push(record);
+    recordsByPalette.set(record[2], records);
+  });
+
+  recordsByPalette.forEach((records, paletteIndex) => {
+    const [red, green, blue, alpha] = style.palette[paletteIndex] ?? [235, 225, 205, 255];
+    const normalizedAlpha = alpha / 255;
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({
+      color: new THREE.Color().setRGB(red / 255, green / 255, blue / 255),
+      transparent: true,
+      opacity: normalizedAlpha,
+      depthTest: false,
+      depthWrite: false,
+      blending: THREE.NormalBlending,
+      toneMapped: false
+    });
+    material.userData.sourceOpacity = normalizedAlpha;
+    const mesh = new THREE.InstancedMesh(geometry, material, records.length);
+    records.forEach(([pixelX, pixelY], index) => {
+      const depthScatter = (seededUnit(Math.round(seed * 1000) + pixelX * 13, pixelY * 19 + index) - 0.5) * (0.04 + frameProgress * 0.18);
+      position.set(
+        (pixelX - (style.frameWidth - 1) * 0.5) * pixelSize,
+        ((style.frameHeight - 1) * 0.5 - pixelY) * pixelSize,
+        depthScatter
+      );
+      const voxelSize = pixelSize * (0.88 + normalizedAlpha * 0.16);
+      scale.set(voxelSize, voxelSize, 0.035 + normalizedAlpha * 0.065);
+      matrix.compose(position, rotation, scale);
+      mesh.setMatrixAt(index, matrix);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.renderOrder = 11;
+    mesh.frustumCulled = false;
+    group.add(mesh);
+  });
+  group.renderOrder = 11;
+  return group;
 }
 
 function TransformEffectLayer({ fighter }: { fighter: FighterRuntime }) {
@@ -2046,6 +2187,322 @@ function makeTornadoRibbonGeometry(radius: number, height: number, turns: number
   return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), segments, 0.012, 6, false);
 }
 
+const PROCEDURAL_IMPACT_SPARK_SHAPES = ['sharp-spark', 'heavy-burst', 'white-ink'] as const;
+
+const IMPACT_SPARK_VERTEX_SHADER = `
+  varying vec2 vUv;
+
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const IMPACT_SPARK_FRAGMENT_SHADER = `
+  precision highp float;
+
+  varying vec2 vUv;
+
+  uniform float uProgress;
+  uniform float uSeed;
+  uniform float uStyle;
+  uniform float uReducedMotion;
+  uniform vec3 uPrimary;
+  uniform vec3 uAccent;
+
+  #define TAU 6.28318530718
+
+  float hash11(float value) {
+    value = fract(value * 0.1031);
+    value *= value + 33.33;
+    value *= value + value;
+    return fract(value);
+  }
+
+  mat2 rotate2d(float angle) {
+    float cosine = cos(angle);
+    float sine = sin(angle);
+    return mat2(cosine, -sine, sine, cosine);
+  }
+
+  float band(float distanceValue, float width, float feather) {
+    return 1.0 - smoothstep(width, width + feather, abs(distanceValue));
+  }
+
+  void main() {
+    float t = clamp(uProgress, 0.0, 1.0);
+    float heavyStyle = step(0.5, uStyle) * (1.0 - step(1.5, uStyle));
+    float inkStyle = step(1.5, uStyle);
+    float sharpStyle = 1.0 - max(heavyStyle, inkStyle);
+    float reduced = step(0.5, uReducedMotion);
+
+    float snap = 1.0 - pow(1.0 - min(t * 5.8, 1.0), 3.0);
+    float overshoot = sin(min(t * 4.2, 1.0) * 3.14159265) * 0.12 * (1.0 - reduced);
+    float grow = max(0.045, snap + overshoot);
+    vec2 point = (vUv - 0.5) * 2.0 / grow;
+    float radius = length(point);
+    float angle = atan(point.y, point.x);
+
+    float rayMask = 0.0;
+    float accentRayMask = 0.0;
+    float glowMask = 0.0;
+    float fragmentMask = 0.0;
+
+    for (int index = 0; index < 34; index++) {
+      float fi = float(index);
+      float enabledRay = 1.0 - step(mix(33.5, 17.5, reduced), fi);
+      float h0 = hash11(fi * 7.17 + uSeed * 11.3);
+      float h1 = hash11(fi * 13.71 + uSeed * 3.9);
+      float h2 = hash11(fi * 19.31 + uSeed * 21.7);
+      float h3 = hash11(fi * 2.41 + uSeed * 41.1);
+      float direction = (fi / 34.0) * TAU + (h0 - 0.5) * mix(0.2, 0.36, inkStyle);
+      vec2 rayPoint = rotate2d(-direction) * point;
+
+      float rayStart = mix(0.055, 0.18, h1);
+      float rayLength = mix(0.42, 1.08, pow(h2, 0.68));
+      rayLength *= mix(1.14, 0.82, heavyStyle);
+      rayLength *= mix(1.0, 0.76, inkStyle);
+      float rayWidth = mix(0.012, 0.05, h3);
+      rayWidth *= mix(0.64, 1.8, heavyStyle);
+      rayWidth *= mix(1.0, 1.18, inkStyle);
+      rayWidth *= mix(1.0, 1.34, reduced);
+
+      float along = (rayPoint.x - rayStart) / max(0.001, rayLength - rayStart);
+      float inside = step(0.0, along) * step(along, 1.0);
+      float taper = pow(max(0.0, 1.0 - along), mix(0.72, 1.7, h0));
+      float jagged = 1.0 + 0.2 * sin(rayPoint.x * (38.0 + h2 * 30.0) + h3 * 18.0);
+      float halfWidth = max(0.002, rayWidth * taper * jagged);
+      float wedge = band(rayPoint.y, halfWidth, 0.009) * inside * enabledRay;
+      float softWedge = band(rayPoint.y, halfWidth * 3.2, 0.035) * inside * enabledRay;
+
+      float breakup = step(0.2 + h1 * 0.28, fract(along * mix(2.2, 3.8, inkStyle) + h2 + t * 0.72));
+      float breakupAmount = smoothstep(0.34, 0.68, t) * (1.0 - reduced);
+      wedge *= mix(1.0, breakup, breakupAmount);
+
+      float accentPick = step(mix(0.7, 0.52, heavyStyle), h0);
+      rayMask = max(rayMask, wedge * (1.0 - accentPick));
+      accentRayMask = max(accentRayMask, wedge * accentPick);
+      glowMask = max(glowMask, softWedge * 0.34);
+
+      float fragmentWindow = smoothstep(0.28, 0.46, t) * (1.0 - smoothstep(0.72, 0.94, t));
+      float fragmentAlong = band(along - (0.36 + h2 * 0.42), 0.045 + h3 * 0.05, 0.018);
+      fragmentMask = max(fragmentMask, wedge * fragmentAlong * fragmentWindow * (1.0 - reduced));
+    }
+
+    float starRadius = mix(0.115, 0.17, heavyStyle)
+      + 0.065 * pow(abs(sin(angle * mix(7.0, 5.0, heavyStyle) + uSeed)), 12.0)
+      + 0.04 * pow(abs(sin(angle * 11.0 - uSeed * 1.7)), 20.0);
+    starRadius *= mix(1.0, 1.12, inkStyle);
+    float core = 1.0 - smoothstep(starRadius, starRadius + 0.018, radius);
+    float coreGlow = 1.0 - smoothstep(0.07, mix(0.34, 0.42, heavyStyle), radius);
+
+    float ringProgress = smoothstep(0.04, 0.72, t);
+    float ringRadius = mix(0.14, 0.73, ringProgress);
+    float ring = band(radius - ringRadius, mix(0.012, 0.025, heavyStyle), 0.014);
+    ring *= (1.0 - reduced) * (1.0 - smoothstep(0.48, 0.82, t));
+
+    float flashIn = smoothstep(0.0, 0.035, t);
+    float fadeOut = 1.0 - smoothstep(0.52, 1.0, t);
+    float longRayFade = 1.0 - smoothstep(0.56, 0.93, t);
+    rayMask *= longRayFade;
+    accentRayMask *= longRayFade;
+
+    vec3 color = uPrimary * rayMask;
+    color = max(color, uAccent * accentRayMask);
+    color = max(color, mix(uAccent, vec3(1.0), 0.5) * fragmentMask);
+    color = max(color, uPrimary * ring * 1.15);
+    color = max(color, vec3(1.0) * core * 1.5);
+    color += mix(uAccent, vec3(1.0), inkStyle * 0.82) * glowMask * 0.5;
+    color += vec3(1.0) * coreGlow * mix(0.28, 0.42, heavyStyle);
+
+    float coloredMask = max(max(rayMask, accentRayMask), max(fragmentMask, ring));
+    color = mix(color, vec3(1.0) * max(coloredMask, core), inkStyle * 0.78);
+
+    float alpha = max(max(coloredMask, core), max(glowMask * 0.38, coreGlow * 0.22));
+    alpha *= flashIn * fadeOut;
+    alpha *= 1.0 - smoothstep(1.02, 1.18, radius);
+
+    if (alpha < 0.005) discard;
+    gl_FragColor = vec4(color, alpha);
+  }
+`;
+
+function isProceduralImpactSparkShape(shape: GameSettings['display']['impactSparks']['shape']): shape is typeof PROCEDURAL_IMPACT_SPARK_SHAPES[number] {
+  return (PROCEDURAL_IMPACT_SPARK_SHAPES as readonly string[]).includes(shape);
+}
+
+function proceduralImpactSparkStyle(shape: typeof PROCEDURAL_IMPACT_SPARK_SHAPES[number]) {
+  return shape === 'heavy-burst' ? 1 : shape === 'white-ink' ? 2 : 0;
+}
+
+type VoxelImpactPaletteColor = [number, number, number, number];
+type VoxelImpactRecord = [number, number, number];
+type VoxelImpactVariant = {
+  id: 'orange' | 'blue' | 'green';
+  palette: VoxelImpactPaletteColor[];
+  frames: VoxelImpactRecord[][];
+  frameBounds: ([number, number, number, number] | null)[];
+};
+type VoxelImpactPack = {
+  version: number;
+  frameWidth: number;
+  frameHeight: number;
+  fps: number;
+  normalization: { coordinateSpace: 'full-frame'; pixelAspect: number; maxFrameSpan: number };
+  variants: VoxelImpactVariant[];
+};
+
+const HIT_EFFECT_VOXEL_PACK = hitEffectVoxelPackJson as unknown as VoxelImpactPack;
+const VOXEL_IMPACT_REFERENCE_HUES: Record<VoxelImpactVariant['id'], number> = {
+  orange: 0.09,
+  green: 0.32,
+  blue: 0.58
+};
+
+function circularHueDistance(a: number, b: number) {
+  const distance = Math.abs(a - b);
+  return Math.min(distance, 1 - distance);
+}
+
+function resolveVoxelImpactVariant(color: string) {
+  const hsl = { h: 0, s: 0, l: 0 };
+  new THREE.Color(color).getHSL(hsl);
+  const fallback = HIT_EFFECT_VOXEL_PACK.variants[0];
+  if (!fallback || hsl.s < 0.08) return fallback;
+  return HIT_EFFECT_VOXEL_PACK.variants.reduce((closest, variant) => (
+    circularHueDistance(hsl.h, VOXEL_IMPACT_REFERENCE_HUES[variant.id])
+      < circularHueDistance(hsl.h, VOXEL_IMPACT_REFERENCE_HUES[closest.id])
+      ? variant
+      : closest
+  ), fallback);
+}
+
+function voxelImpactDepth(seed: number, x: number, y: number) {
+  return seededUnit(seed + x * 31 + y * 17, x + y * 48) - 0.5;
+}
+
+function buildVoxelImpactFrameMesh(
+  variant: VoxelImpactVariant,
+  frameIndex: number,
+  seed: number,
+  frameWidth: number,
+  frameHeight: number
+) {
+  const frame = variant.frames[frameIndex] ?? [];
+  const group = new THREE.Group();
+  const matrix = new THREE.Matrix4();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  const rotation = new THREE.Quaternion();
+  const pixelSize = normalizedVoxelPixelSize(frameWidth, frameHeight, 4);
+  const fragmentProgress = frameIndex / Math.max(1, variant.frames.length - 1);
+  const recordsByPalette = new Map<number, VoxelImpactRecord[]>();
+  frame.forEach((record) => {
+    const records = recordsByPalette.get(record[2]) ?? [];
+    records.push(record);
+    recordsByPalette.set(record[2], records);
+  });
+
+  recordsByPalette.forEach((records, paletteIndex) => {
+    const [red, green, blue, alpha] = variant.palette[paletteIndex] ?? [255, 255, 255, 255];
+    const normalizedAlpha = alpha / 255;
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({
+      color: new THREE.Color().setRGB(red / 255, green / 255, blue / 255),
+      transparent: normalizedAlpha < 1,
+      opacity: normalizedAlpha,
+      blending: THREE.NormalBlending,
+      depthTest: false,
+      depthWrite: false,
+      toneMapped: false
+    });
+    material.userData.ignoreImpactFade = true;
+    const mesh = new THREE.InstancedMesh(geometry, material, records.length);
+    records.forEach(([pixelX, pixelY], index) => {
+      const depthScatter = voxelImpactDepth(seed, pixelX, pixelY) * fragmentProgress * 0.42;
+      position.set(
+        (pixelX - (frameWidth - 1) * 0.5) * pixelSize,
+        ((frameHeight - 1) * 0.5 - pixelY) * pixelSize,
+        depthScatter
+      );
+      const voxelScale = pixelSize * (0.84 + normalizedAlpha * 0.18);
+      scale.set(voxelScale, voxelScale, 0.075 + normalizedAlpha * 0.105);
+      matrix.compose(position, rotation, scale);
+      mesh.setMatrixAt(index, matrix);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.renderOrder = 60;
+    mesh.frustumCulled = false;
+    group.add(mesh);
+  });
+  group.renderOrder = 60;
+  return group;
+}
+
+function VoxelImpactBurst({
+  color,
+  duration,
+  seed,
+  reducedMotion,
+  direction
+}: {
+  color: string;
+  duration: number;
+  seed: number;
+  reducedMotion: boolean;
+  direction: 1 | -1;
+}) {
+  const ageRef = useRef(0);
+  const groupRef = useRef<THREE.Group>(null);
+  const [frameIndex, setFrameIndex] = useState(0);
+  const variant = useMemo(() => resolveVoxelImpactVariant(color), [color]);
+  const visibleFrameIndices = useMemo(() => variant?.frames
+    .map((frame, index) => ({ index, count: frame.length }))
+    .filter(({ count }) => count > 0)
+    .map(({ index }) => index) ?? [], [variant]);
+  const playbackFrameIndices = useMemo(() => {
+    if (visibleFrameIndices.length <= 1) return visibleFrameIndices;
+    // The source's 21-pixel anticipation frame is too brief to read at game speed.
+    // Begin on the first fully formed voxel sprite and never schedule its empty tail frame.
+    return visibleFrameIndices.slice(1);
+  }, [visibleFrameIndices]);
+  const sourceFrameIndex = playbackFrameIndices[frameIndex] ?? playbackFrameIndices[0] ?? 0;
+  const mesh = useMemo(() => variant ? buildVoxelImpactFrameMesh(
+    variant,
+    sourceFrameIndex,
+    seed,
+    HIT_EFFECT_VOXEL_PACK.frameWidth,
+    HIT_EFFECT_VOXEL_PACK.frameHeight
+  ) : null, [seed, sourceFrameIndex, variant]);
+
+  useEffect(() => () => {
+    if (!mesh) return;
+    mesh.traverse((child) => {
+      const childMesh = child as THREE.Mesh;
+      childMesh.geometry?.dispose();
+      const materials = Array.isArray(childMesh.material) ? childMesh.material : childMesh.material ? [childMesh.material] : [];
+      materials.forEach((material) => material.dispose());
+    });
+  }, [mesh]);
+
+  useFrame((_, delta) => {
+    ageRef.current += delta;
+    const progress = THREE.MathUtils.clamp(ageRef.current / duration, 0, 1);
+    const availableFrames = reducedMotion ? Math.min(4, playbackFrameIndices.length) : playbackFrameIndices.length;
+    const nextFrame = Math.min(Math.max(0, availableFrames - 1), Math.floor(progress * availableFrames));
+    if (nextFrame !== frameIndex) setFrameIndex(nextFrame);
+    if (groupRef.current) {
+      const kick = Math.sin(progress * Math.PI);
+      groupRef.current.position.z = 0.08 + kick * (reducedMotion ? 0.025 : 0.085);
+      groupRef.current.rotation.z = (seededUnit(seed, 7) - 0.5) * 0.16 * (1 - progress);
+      const animatedScale = 0.92 + kick * 0.16;
+      groupRef.current.scale.set(direction * animatedScale, animatedScale, animatedScale);
+    }
+  });
+
+  return mesh ? <group ref={groupRef} renderOrder={60}><primitive object={mesh} /></group> : null;
+}
+
 function ImpactSpark({
   event,
   settings,
@@ -2061,6 +2518,7 @@ function ImpactSpark({
   const ringRef = useRef<THREE.Group>(null);
   const shardRef = useRef<THREE.Group>(null);
   const lightRef = useRef<THREE.PointLight>(null);
+  const proceduralMaterialRef = useRef<THREE.ShaderMaterial>(null);
   const ageRef = useRef(0);
   const isBlock = event.kind === 'block';
   const isLauncher = Boolean(event.launched || event.juggled || event.tornado);
@@ -2069,21 +2527,35 @@ function ImpactSpark({
   const profile = useMemo(() => resolveImpactSparkProfile(event), [event]);
   const seed = event.id * 17 + event.attackerSlot * 101 + event.defenderSlot * 211;
   const cinematic = settings.cinematic && !shieldOnly;
-  const duration = reducedMotion ? profile.reducedDuration : profile.duration;
-  const showRings = !shieldOnly && (settings.shape === 'burst' || settings.shape === 'ring' || isBlock || isLauncher || isClash);
-  const showShards = cinematic && settings.shape === 'shards';
-  const showSlashes = cinematic && settings.shape === 'shards';
-  const showParticles = cinematic && (settings.shape !== 'ring' || isBlock || isLauncher || isClash);
-  const showAfterimage = cinematic && settings.shape === 'burst' && profile.ghost && !reducedMotion;
+  const voxelShape = !isBlock && !isClash && settings.shape === 'voxel-burst';
+  const proceduralShape = !isBlock && !isClash && isProceduralImpactSparkShape(settings.shape) ? settings.shape : null;
+  const isStrongProceduralHit = isLauncher || event.kind === 'counterHit' || event.kind === 'punish' || event.kind === 'whiffPunish' || Boolean(event.kiBurst);
+  const duration = voxelShape ? (reducedMotion ? 0.14 : 0.23) : proceduralShape ? (reducedMotion ? 0.12 : isStrongProceduralHit ? 0.21 : 0.18) : reducedMotion ? profile.reducedDuration : profile.duration;
+  const customHitShape = voxelShape || Boolean(proceduralShape);
+  const legacyShape = isClash ? 'burst' : settings.shape;
+  const showRings = !customHitShape && !shieldOnly && (legacyShape === 'burst' || legacyShape === 'ring' || isBlock || isLauncher || isClash);
+  const showShards = !customHitShape && cinematic && !isBlock && legacyShape === 'shards';
+  const showSlashes = !customHitShape && cinematic && !isBlock && legacyShape === 'shards';
+  const showParticles = !customHitShape && cinematic && (isBlock || legacyShape !== 'ring' || isLauncher || isClash);
+  const showAfterimage = !customHitShape && cinematic && legacyShape === 'burst' && profile.ghost && !reducedMotion;
+  const proceduralUniforms = useMemo(() => ({
+    uProgress: { value: 0 },
+    uSeed: { value: seed * 0.013 },
+    uStyle: { value: proceduralShape ? proceduralImpactSparkStyle(proceduralShape) : 0 },
+    uReducedMotion: { value: reducedMotion ? 1 : 0 },
+    uPrimary: { value: new THREE.Color(settings.hitColor) },
+    uAccent: { value: new THREE.Color(settings.hitAccentColor) }
+  }), [proceduralShape, reducedMotion, seed, settings.hitAccentColor, settings.hitColor]);
 
   useFrame(({ camera }, delta) => {
     ageRef.current += delta;
     const progress = THREE.MathUtils.clamp(ageRef.current / duration, 0, 1);
+    if (proceduralMaterialRef.current) proceduralMaterialRef.current.uniforms.uProgress.value = progress;
     const root = groupRef.current;
     if (!root) return;
     root.visible = progress < 1;
     root.lookAt(camera.position);
-    const expansion = 1 + progress * (reducedMotion ? 0.42 : profile.expansion);
+    const expansion = customHitShape ? 1 : 1 + progress * (reducedMotion ? 0.42 : profile.expansion);
     const baseScale = settings.size * profile.scale * 0.4;
     root.scale.setScalar(baseScale * expansion);
     const sparkEase = Math.sin(progress * Math.PI);
@@ -2092,7 +2564,8 @@ function ImpactSpark({
       const materials = Array.isArray(mesh.material) ? mesh.material : mesh.material ? [mesh.material] : [];
       materials.forEach((rawMaterial) => {
         if (!('opacity' in rawMaterial)) return;
-        const material = rawMaterial as THREE.Material & { opacity: number; userData: { baseOpacity?: number; fadeBias?: number } };
+        const material = rawMaterial as THREE.Material & { opacity: number; userData: { baseOpacity?: number; fadeBias?: number; ignoreImpactFade?: boolean } };
+        if (material.userData.ignoreImpactFade) return;
         if (material.userData.baseOpacity === undefined) material.userData.baseOpacity = material.opacity;
         const fadeBias = material.userData.fadeBias ?? 1;
         material.opacity = THREE.MathUtils.clamp(material.userData.baseOpacity * Math.pow(1 - progress, fadeBias) * settings.intensity, 0, 1);
@@ -2111,11 +2584,29 @@ function ImpactSpark({
       {cinematic && <pointLight ref={lightRef} color={colors.light} intensity={0} distance={4.4} />}
       {isBlock && <ImpactBlockShield event={event} colors={colors} profile={profile} />}
       {showAfterimage && <ImpactAfterimage event={event} colors={colors} profile={profile} />}
-      {showRings && <ImpactEnergyRings refGroup={ringRef} event={event} colors={colors} profile={profile} ringOnly={settings.shape === 'ring'} />}
+      {showRings && <ImpactEnergyRings refGroup={ringRef} event={event} colors={colors} profile={profile} ringOnly={!isBlock && legacyShape === 'ring'} />}
       {showSlashes && !reducedMotion && <ImpactSlashStreaks event={event} colors={colors} profile={profile} seed={seed + 37} />}
       {showParticles && <ImpactSphereParticles event={event} colors={colors} profile={profile} seed={seed + 53} reducedMotion={reducedMotion} />}
       {showShards && <ImpactShardBurst refGroup={shardRef} event={event} colors={colors} profile={profile} seed={seed + 71} reducedMotion={reducedMotion} />}
-      {!shieldOnly && <ImpactCore colors={colors} profile={profile} />}
+      {voxelShape && <VoxelImpactBurst color={settings.hitColor} duration={duration} seed={seed + 89} reducedMotion={reducedMotion} direction={impactDirectionSign(event)} />}
+      {proceduralShape && (
+        <mesh renderOrder={39} scale={[1.06, 1.06, 1]}>
+          <planeGeometry args={[3.4, 3.4]} />
+          <shaderMaterial
+            ref={proceduralMaterialRef}
+            uniforms={proceduralUniforms}
+            vertexShader={IMPACT_SPARK_VERTEX_SHADER}
+            fragmentShader={IMPACT_SPARK_FRAGMENT_SHADER}
+            transparent
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+            depthTest
+            toneMapped={false}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      )}
+      {!shieldOnly && !customHitShape && <ImpactCore colors={colors} profile={profile} />}
     </group>
   );
 }
@@ -2369,7 +2860,7 @@ function resolveImpactSparkColors(event: ImpactSparkEvent, settings: GameSetting
       light: settings.blockColor
     };
   }
-  if (event.kind === 'clash' || event.kiBurst) {
+  if (event.kind === 'clash') {
     return {
       base: '#7fdfff',
       edge: settings.hitColor,
@@ -2379,25 +2870,25 @@ function resolveImpactSparkColors(event: ImpactSparkEvent, settings: GameSetting
   }
   if (event.kind === 'counterHit') {
     return {
-      base: '#ffe96a',
-      edge: '#ff3159',
+      base: settings.hitColor,
+      edge: settings.hitAccentColor,
       core: '#ffffff',
-      light: '#ff3159'
+      light: settings.hitAccentColor
     };
   }
   if (event.kind === 'punish' || event.kind === 'whiffPunish') {
     return {
       base: settings.hitColor,
-      edge: '#ff5f45',
-      core: '#fff5d6',
-      light: '#ff7a45'
+      edge: settings.hitAccentColor,
+      core: '#ffffff',
+      light: settings.hitAccentColor
     };
   }
   return {
     base: settings.hitColor,
-    edge: '#ffd875',
+    edge: settings.hitAccentColor,
     core: '#ffffff',
-    light: settings.hitColor
+    light: settings.hitAccentColor
   };
 }
 
@@ -2427,7 +2918,7 @@ function resolveImpactSparkProfile(event: ImpactSparkEvent): ImpactSparkProfile 
 }
 
 function impactDirectionSign(event: ImpactSparkEvent) {
-  return event.attackerSlot <= event.defenderSlot ? 1 : -1;
+  return event.direction ?? (event.attackerSlot <= event.defenderSlot ? 1 : -1);
 }
 
 function makeSparkDirections(seed: number, count: number) {
@@ -2488,7 +2979,7 @@ function EffectLayer({
   );
 }
 
-function ProjectileLayer({ match, stage, renderTick }: { match: MatchSnapshot; stage: StageDefinition; renderTick?: number }) {
+function ProjectileLayer({ match, stage, reducedMotion, renderTick }: { match: MatchSnapshot; stage: StageDefinition; reducedMotion: boolean; renderTick?: number }) {
   void renderTick;
   const projectiles = match.projectiles ?? [];
   const chargeBindings = getActiveBlastChargeBindings(match);
@@ -2499,6 +2990,7 @@ function ProjectileLayer({ match, stage, renderTick }: { match: MatchSnapshot; s
         <BlastChargeVisual
           key={`blast-charge-${binding.fighter.slot}-${binding.fighter.moveInstanceId}-${binding.instance.id}`}
           binding={binding}
+          reducedMotion={reducedMotion}
         />
       ))}
       {projectiles.map((projectile) => {
@@ -2510,6 +3002,7 @@ function ProjectileLayer({ match, stage, renderTick }: { match: MatchSnapshot; s
             key={`${projectile.id}-${projectile.projectileId}`}
             projectile={projectile}
             definition={definition}
+            reducedMotion={reducedMotion}
           />
         ) : (
           <ProjectileVisual
@@ -2587,7 +3080,7 @@ function getMoveProjectileSpawnFrame(instance: MoveProjectileInstance, move: Mov
   return Math.max(0, Math.round(instance.spawnFrame ?? move.startupFrames));
 }
 
-function BlastChargeVisual({ binding }: { binding: ActiveBlastChargeBinding }) {
+function BlastChargeVisual({ binding, reducedMotion }: { binding: ActiveBlastChargeBinding; reducedMotion: boolean }) {
   const camera = useThree((state) => state.camera);
   const groupRef = useRef<THREE.Group>(null);
   const move = binding.fighter.currentMove;
@@ -2598,6 +3091,7 @@ function BlastChargeVisual({ binding }: { binding: ActiveBlastChargeBinding }) {
   const pulse = 1 + Math.sin((binding.fighter.moveFrame + binding.fighter.slot * 17) * 0.22) * (0.08 + chargeProgress * 0.08);
   const color = visual?.glowColor ?? binding.definition.color ?? '#62d8ff';
   const coreColor = visual?.coreColor ?? '#ffffff';
+  const electricity = getBlastElectricityProfile(binding.definition, reducedMotion);
   const position = resolveEffectWorldPosition(binding.fighter, {
     position: [0, 0, 0],
     rotation: [0, 0, 0],
@@ -2623,6 +3117,18 @@ function BlastChargeVisual({ binding }: { binding: ActiveBlastChargeBinding }) {
         <ringGeometry args={[0.78, 0.9, 64]} />
         <meshBasicMaterial color={color} transparent opacity={0.38 + chargeProgress * 0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
       </mesh>
+      <BlastElectricityField
+        mode="orb"
+        length={radius * 2}
+        radius={radius * pulse * 1.18 * electricity.size}
+        color={electricity.color}
+        intensity={electricity.intensity * (0.58 + chargeProgress * 0.62)}
+        opacity={0.48 + chargeProgress * 0.28}
+        arcCount={Math.min(8, Math.max(1, Math.round(electricity.count * (0.55 + chargeProgress * 0.7))))}
+        seed={binding.fighter.slot * 1009 + binding.fighter.moveInstanceId * 31 + binding.instance.id.length}
+        ageFrames={binding.fighter.moveFrame}
+        refreshFrames={electricity.refreshFrames}
+      />
       <pointLight color={color} intensity={1.1 + chargeProgress * 2.4} distance={3.6 + chargeProgress * 2.4} />
     </group>
   );
@@ -2630,10 +3136,12 @@ function BlastChargeVisual({ binding }: { binding: ActiveBlastChargeBinding }) {
 
 function BlastProjectileVisual({
   projectile,
-  definition
+  definition,
+  reducedMotion
 }: {
   projectile: ProjectileRuntime;
   definition: CharacterProjectileDefinition;
+  reducedMotion: boolean;
 }) {
   const visual = definition.blastVisual;
   const length = Math.max(0.1, projectile.hitbox.size[2]);
@@ -2652,6 +3160,7 @@ function BlastProjectileVisual({
   const glowColor = visual?.glowColor ?? definition.color ?? '#62d8ff';
   const outerColor = visual?.outerColor ?? glowColor;
   const impactColor = visual?.impactColor ?? coreColor;
+  const electricity = getBlastElectricityProfile(definition, reducedMotion);
   const opacity = fade * (0.82 + Math.min(0.18, (chargeBoost - 1) * 0.18));
   return (
     <group renderOrder={46}>
@@ -2680,6 +3189,20 @@ function BlastProjectileVisual({
           <meshBasicMaterial color={glowColor} transparent opacity={fade * (0.07 + index * 0.01)} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
         </mesh>
       ))}
+      <group position={[centerX, projectile.position.y, projectile.position.z]} scale={[projectile.facing, 1, 1]}>
+        <BlastElectricityField
+          mode="beam"
+          length={currentLength}
+          radius={radius * pulse * 1.08 * electricity.size}
+          color={electricity.color}
+          intensity={electricity.intensity * (0.82 + (chargeBoost - 1) * 0.32)}
+          opacity={fade * 0.7}
+          arcCount={electricity.count}
+          seed={projectile.trailSeed}
+          ageFrames={projectile.ageFrames}
+          refreshFrames={electricity.refreshFrames}
+        />
+      </group>
       <group position={[endX, projectile.position.y, projectile.position.z]} rotation={[0, Math.PI / 2, 0]}>
         <mesh scale={[radius * 1.2, radius * 1.2, radius * 1.2]}>
           <sphereGeometry args={[1, 28, 16]} />
@@ -2689,9 +3212,82 @@ function BlastProjectileVisual({
           <ringGeometry args={[0.82, 1, 72]} />
           <meshBasicMaterial color={glowColor} transparent opacity={fade * 0.42} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
         </mesh>
+        <BlastElectricityField
+          mode="orb"
+          length={radius * 2}
+          radius={radius * (1.28 + (chargeBoost - 1) * 0.18) * electricity.size}
+          color={electricity.color}
+          intensity={electricity.intensity * 1.08}
+          opacity={fade * 0.76}
+          arcCount={Math.max(1, Math.ceil(electricity.count * 0.62))}
+          seed={projectile.trailSeed + 503}
+          ageFrames={projectile.ageFrames}
+          refreshFrames={electricity.refreshFrames}
+        />
       </group>
       <pointLight color={glowColor} intensity={fade * (visual?.shake ?? 0.18) * 7} distance={5.5} position={[projectile.position.x, projectile.position.y, projectile.position.z]} />
     </group>
+  );
+}
+
+function BlastElectricityField({
+  mode,
+  length,
+  radius,
+  color,
+  intensity,
+  opacity,
+  arcCount,
+  seed,
+  ageFrames,
+  refreshFrames
+}: {
+  mode: BlastElectricityMode;
+  length: number;
+  radius: number;
+  color: string;
+  intensity: number;
+  opacity: number;
+  arcCount: number;
+  seed: number;
+  ageFrames: number;
+  refreshFrames: number;
+}) {
+  const geometryRef = useRef<THREE.BufferGeometry>(null);
+  const positions = useMemo(() => new Float32Array(BLAST_ELECTRICITY_MAX_VERTICES * 3), []);
+  const phase = Math.floor(ageFrames / Math.max(1, refreshFrames));
+
+  useEffect(() => {
+    const vertexCount = writeBlastElectricitySegments(positions, {
+      mode,
+      length,
+      radius,
+      arcCount,
+      seed,
+      phase
+    });
+    const geometry = geometryRef.current;
+    const attribute = geometry?.getAttribute('position') as THREE.BufferAttribute | undefined;
+    if (!geometry || !attribute) return;
+    geometry.setDrawRange(0, vertexCount);
+    attribute.needsUpdate = true;
+  }, [arcCount, intensity, length, mode, phase, positions, radius, seed]);
+
+  if (intensity <= 0 || opacity <= 0 || arcCount <= 0) return null;
+  return (
+    <lineSegments frustumCulled={false} renderOrder={48}>
+      <bufferGeometry ref={geometryRef}>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} usage={THREE.DynamicDrawUsage} />
+      </bufferGeometry>
+      <lineBasicMaterial
+        color={color}
+        transparent
+        opacity={THREE.MathUtils.clamp(opacity * intensity, 0, 1)}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        toneMapped={false}
+      />
+    </lineSegments>
   );
 }
 
@@ -3524,7 +4120,7 @@ export function MenuAttractScene({
         {stableScene}
         {!snappy && <>
           <EffectLayer match={match} reducedMotion={reducedMotion} renderTick={renderTick} />
-          <ProjectileLayer match={match} stage={match.stage} renderTick={renderTick} />
+          <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} renderTick={renderTick} />
           <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
         </>}
       </StageCameraCollisionContext.Provider>
@@ -4551,7 +5147,7 @@ type ImpactCameraPulse = {
   phase: number;
 };
 
-function CameraRig({ match, settings, reducedMotion = false, impactFeedbackEnabled = true }: { match: MatchSnapshot; settings: GameSettings['camera']; reducedMotion?: boolean; impactFeedbackEnabled?: boolean }) {
+function CameraRig({ match, settings, presentationMirrored = false, reducedMotion = false, impactFeedbackEnabled = true }: { match: MatchSnapshot; settings: GameSettings['camera']; presentationMirrored?: boolean; reducedMotion?: boolean; impactFeedbackEnabled?: boolean }) {
   const { camera, size } = useThree();
   const cameraCollisionRegistry = useContext(StageCameraCollisionContext);
   const modelStageCamera = isModelStage(match.stage);
@@ -4570,6 +5166,7 @@ function CameraRig({ match, settings, reducedMotion = false, impactFeedbackEnabl
   const collisionAdjustedDesired = useMemo(() => new THREE.Vector3(), []);
   const visibilityPoints = useMemo(() => Array.from({ length: 5 }, () => new THREE.Vector3()), []);
   const initializedRef = useRef(false);
+  const initializedRoundRef = useRef(match.round);
   const cameraDistanceRef = useRef(6.4);
   const cameraHeightRef = useRef(2.8);
   const lastImpactCameraEventIdRef = useRef(0);
@@ -4581,6 +5178,10 @@ function CameraRig({ match, settings, reducedMotion = false, impactFeedbackEnabl
     };
   }, [cameraCollisionRegistry]);
   useFrame((_, delta) => {
+    if (initializedRoundRef.current !== match.round) {
+      initializedRoundRef.current = match.round;
+      initializedRef.current = false;
+    }
     camera.near = 0.05;
     camera.far = modelStageCamera ? 1400 : 300;
     camera.updateProjectionMatrix();
@@ -4609,6 +5210,7 @@ function CameraRig({ match, settings, reducedMotion = false, impactFeedbackEnabl
       rawSide.set(cameraX, 0, cameraZ).normalize();
       if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
       if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
+      if (presentationMirrored) rawSide.multiplyScalar(-1);
 
       const perspective = camera as THREE.PerspectiveCamera;
       const aspect = size.width / Math.max(1, size.height);
@@ -4690,6 +5292,7 @@ function CameraRig({ match, settings, reducedMotion = false, impactFeedbackEnabl
       rawSide.set(computedCameraX, 0, computedCameraZ).normalize();
       if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
       if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
+      if (presentationMirrored) rawSide.multiplyScalar(-1);
       const cameraX = rawSide.x;
       const cameraZ = rawSide.z;
       const cameraDistance = THREE.MathUtils.clamp(
@@ -4741,6 +5344,7 @@ function CameraRig({ match, settings, reducedMotion = false, impactFeedbackEnabl
     rawSide.set(cameraX, 0, cameraZ).normalize();
     if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
     if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
+    if (presentationMirrored) rawSide.multiplyScalar(-1);
     logFightCameraInputDebug({
       mode: 'normal',
       rawSideX: Number(rawSide.x.toFixed(3)),
@@ -6379,9 +6983,11 @@ function ImageVoxelFighter({
     if (root.current) {
       root.current.position.x = THREE.MathUtils.lerp(root.current.position.x, 0, smooth);
       root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, (crouch ? -0.28 : 0) + blockBreath * 0.014, smooth);
-      root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, animationScale.width, smooth);
-      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, animationScale.height * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
-      root.current.scale.z = THREE.MathUtils.lerp(root.current.scale.z, animationScale.width, smooth);
+      const signedWidth = animationScale.width * animationScale.voxelScaleX * (animationScale.flipX ? -1 : 1);
+      const signedHeight = animationScale.height * animationScale.voxelScaleY * (animationScale.flipY ? -1 : 1);
+      root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, signedWidth, smooth);
+      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, signedHeight * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
+      root.current.scale.z = THREE.MathUtils.lerp(root.current.scale.z, animationScale.width * animationScale.voxelScaleX, smooth);
     }
     if (torso.current) {
       torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.26 - crouch * 0.18 + hit * 0.2 - blockBreathUp * 0.025, smooth);
@@ -6440,13 +7046,17 @@ function getCharacterAnimationScale(character: CharacterDefinition, animationKey
   return {
     width: THREE.MathUtils.clamp(Number(size?.width) || 1, 0.1, 10),
     height: THREE.MathUtils.clamp(Number(size?.height) || 1, 0.1, 10),
-    offsetX: THREE.MathUtils.clamp(Number(size?.offsetX) || 0, -6, 6)
+    voxelScaleX: THREE.MathUtils.clamp(Number(size?.voxelScaleX) || 1, 0.1, 10),
+    voxelScaleY: THREE.MathUtils.clamp(Number(size?.voxelScaleY) || 1, 0.1, 10),
+    offsetX: THREE.MathUtils.clamp(Number(size?.offsetX) || 0, -6, 6),
+    flipX: Boolean(size?.flipX),
+    flipY: Boolean(size?.flipY)
   };
 }
 
 function getActiveImageVoxelAnimationScale(fighter: FighterRuntime) {
   if (fighter.character.voxelProfile !== 'image-source' && fighter.character.voxelProfile !== 'hd-image-source') {
-    return { width: 1, height: 1, offsetX: 0 };
+    return { width: 1, height: 1, offsetX: 0, flipX: false, flipY: false };
   }
   const frameSelection = getImageVoxelFrameSelection(fighter, getFighterRenderProgress(fighter), 0);
   return getCharacterAnimationScale(fighter.character, frameSelection.animationKey, frameSelection.frameSource);
@@ -7533,11 +8143,16 @@ function VoxelSpriteFighter({
     const blockBreathUp = block ? (blockBreath + 1) * 0.5 : 0;
     const hit = 0;
     const jump = fighter.state === 'jump' ? 1 : 0;
+    const animationScale = getActiveImageVoxelAnimationScale(fighter);
 
     const smooth = 1 - Math.pow(0.001, delta);
     if (root.current) {
       root.current.position.y = THREE.MathUtils.lerp(root.current.position.y, (crouch ? -0.28 : 0) + blockBreath * 0.014, smooth);
-      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
+      const signedWidth = animationScale.width * (animationScale.flipX ? -1 : 1);
+      const signedHeight = animationScale.height * (animationScale.flipY ? -1 : 1);
+      root.current.scale.x = THREE.MathUtils.lerp(root.current.scale.x, signedWidth, smooth);
+      root.current.scale.y = THREE.MathUtils.lerp(root.current.scale.y, signedHeight * (crouch ? 0.84 : jump ? 1.04 : 1) * (1 + blockBreathUp * 0.012), smooth);
+      root.current.scale.z = THREE.MathUtils.lerp(root.current.scale.z, animationScale.width, smooth);
     }
     if (torso.current) {
       torso.current.rotation.x = THREE.MathUtils.lerp(torso.current.rotation.x, -block * 0.28 - crouch * 0.18 + hit * 0.2 - blockBreathUp * 0.025, smooth);

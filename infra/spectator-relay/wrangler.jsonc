@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kore-spectator-relay",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-06-20",
+  "durable_objects": {
+    "bindings": [
+      { "name": "MATCH_STREAM", "class_name": "MatchStream" },
+      { "name": "TOURNAMENT_DIRECTORY", "class_name": "TournamentDirectory" },
+      { "name": "CUSTOM_DIRECTORY", "class_name": "CustomRoomDirectory" },
+      { "name": "CUSTOM_ROOM", "class_name": "CustomRoom" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["MatchStream", "TournamentDirectory"] },
+    { "tag": "v2", "new_sqlite_classes": ["CustomRoomDirectory", "CustomRoom"] }
+  ],
+  "vars": {
+    "ALLOWED_ORIGINS": "https://playkore.com,http://localhost:5173,http://127.0.0.1:5173"
+  }
+}

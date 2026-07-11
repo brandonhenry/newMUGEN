@@ -1,0 +1,1668 @@
+{
+  "source": "Hivolt.png",
+  "count": 100,
+  "excluded": [
+    {
+      "sourceName": "Hivolt.png",
+      "box": [
+        9,
+        1264,
+        403,
+        1298
+      ],
+      "row": 11,
+      "reason": "footer-text"
+    },
+    {
+      "sourceName": "Hivolt.png",
+      "box": [
+        449,
+        1259,
+        690,
+        1298
+      ],
+      "row": 11,
+      "reason": "footer-text"
+    }
+  ],
+  "sheets": [
+    {
+      "id": "generated",
+      "name": "Generated Frame Atlas",
+      "path": "/characters/hivolt/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 100
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/hivolt/frames/frame-000.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        44,
+        39,
+        88,
+        116
+      ],
+      "width": 44,
+      "height": 77,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/hivolt/frames/frame-001.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        177,
+        39,
+        221,
+        116
+      ],
+      "width": 44,
+      "height": 77,
+      "row": 0
+    },
+    {
+      "index": 2,
+      "path": "/characters/hivolt/frames/frame-002.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        310,
+        39,
+        354,
+        116
+      ],
+      "width": 44,
+      "height": 77,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/hivolt/frames/frame-003.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        439,
+        50,
+        491,
+        116
+      ],
+      "width": 52,
+      "height": 66,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/hivolt/frames/frame-004.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        585,
+        48,
+        611,
+        116
+      ],
+      "width": 26,
+      "height": 68,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/hivolt/frames/frame-005.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        690,
+        73,
+        772,
+        116
+      ],
+      "width": 82,
+      "height": 43,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/hivolt/frames/frame-006.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        823,
+        74,
+        905,
+        116
+      ],
+      "width": 82,
+      "height": 42,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/hivolt/frames/frame-007.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        969,
+        15,
+        1026,
+        116
+      ],
+      "width": 57,
+      "height": 101,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/hivolt/frames/frame-008.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1092,
+        31,
+        1168,
+        116
+      ],
+      "width": 76,
+      "height": 85,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/hivolt/frames/frame-009.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1225,
+        31,
+        1301,
+        116
+      ],
+      "width": 76,
+      "height": 85,
+      "row": 0
+    },
+    {
+      "index": 10,
+      "path": "/characters/hivolt/frames/frame-010.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        27,
+        152,
+        105,
+        236
+      ],
+      "width": 78,
+      "height": 84,
+      "row": 0
+    },
+    {
+      "index": 11,
+      "path": "/characters/hivolt/frames/frame-011.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        160,
+        152,
+        238,
+        236
+      ],
+      "width": 78,
+      "height": 84,
+      "row": 0
+    },
+    {
+      "index": 12,
+      "path": "/characters/hivolt/frames/frame-012.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        293,
+        152,
+        371,
+        236
+      ],
+      "width": 78,
+      "height": 84,
+      "row": 0
+    },
+    {
+      "index": 13,
+      "path": "/characters/hivolt/frames/frame-013.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        426,
+        152,
+        504,
+        236
+      ],
+      "width": 78,
+      "height": 84,
+      "row": 0
+    },
+    {
+      "index": 14,
+      "path": "/characters/hivolt/frames/frame-014.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        583,
+        137,
+        613,
+        236
+      ],
+      "width": 30,
+      "height": 99,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/hivolt/frames/frame-015.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        716,
+        212,
+        746,
+        236
+      ],
+      "width": 30,
+      "height": 24,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/hivolt/frames/frame-016.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        837,
+        181,
+        892,
+        236
+      ],
+      "width": 55,
+      "height": 55,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/hivolt/frames/frame-017.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        959,
+        168,
+        1036,
+        236
+      ],
+      "width": 77,
+      "height": 68,
+      "row": 1
+    },
+    {
+      "index": 18,
+      "path": "/characters/hivolt/frames/frame-018.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1093,
+        168,
+        1168,
+        236
+      ],
+      "width": 75,
+      "height": 68,
+      "row": 1
+    },
+    {
+      "index": 19,
+      "path": "/characters/hivolt/frames/frame-019.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1226,
+        167,
+        1301,
+        236
+      ],
+      "width": 75,
+      "height": 69,
+      "row": 1
+    },
+    {
+      "index": 20,
+      "path": "/characters/hivolt/frames/frame-020.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        28,
+        288,
+        105,
+        356
+      ],
+      "width": 77,
+      "height": 68,
+      "row": 1
+    },
+    {
+      "index": 21,
+      "path": "/characters/hivolt/frames/frame-021.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        162,
+        289,
+        237,
+        356
+      ],
+      "width": 75,
+      "height": 67,
+      "row": 1
+    },
+    {
+      "index": 22,
+      "path": "/characters/hivolt/frames/frame-022.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        294,
+        288,
+        371,
+        356
+      ],
+      "width": 77,
+      "height": 68,
+      "row": 1
+    },
+    {
+      "index": 23,
+      "path": "/characters/hivolt/frames/frame-023.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        428,
+        289,
+        503,
+        356
+      ],
+      "width": 75,
+      "height": 67,
+      "row": 1
+    },
+    {
+      "index": 24,
+      "path": "/characters/hivolt/frames/frame-024.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        560,
+        288,
+        637,
+        356
+      ],
+      "width": 77,
+      "height": 68,
+      "row": 1
+    },
+    {
+      "index": 25,
+      "path": "/characters/hivolt/frames/frame-025.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        694,
+        289,
+        769,
+        356
+      ],
+      "width": 75,
+      "height": 67,
+      "row": 1
+    },
+    {
+      "index": 26,
+      "path": "/characters/hivolt/frames/frame-026.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        826,
+        288,
+        902,
+        356
+      ],
+      "width": 76,
+      "height": 68,
+      "row": 1
+    },
+    {
+      "index": 27,
+      "path": "/characters/hivolt/frames/frame-027.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        959,
+        275,
+        1035,
+        356
+      ],
+      "width": 76,
+      "height": 81,
+      "row": 1
+    },
+    {
+      "index": 28,
+      "path": "/characters/hivolt/frames/frame-028.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1090,
+        287,
+        1170,
+        356
+      ],
+      "width": 80,
+      "height": 69,
+      "row": 1
+    },
+    {
+      "index": 29,
+      "path": "/characters/hivolt/frames/frame-029.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1249,
+        300,
+        1277,
+        356
+      ],
+      "width": 28,
+      "height": 56,
+      "row": 2
+    },
+    {
+      "index": 30,
+      "path": "/characters/hivolt/frames/frame-030.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        53,
+        420,
+        80,
+        476
+      ],
+      "width": 27,
+      "height": 56,
+      "row": 2
+    },
+    {
+      "index": 31,
+      "path": "/characters/hivolt/frames/frame-031.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        177,
+        406,
+        221,
+        476
+      ],
+      "width": 44,
+      "height": 70,
+      "row": 2
+    },
+    {
+      "index": 32,
+      "path": "/characters/hivolt/frames/frame-032.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        307,
+        402,
+        357,
+        476
+      ],
+      "width": 50,
+      "height": 74,
+      "row": 2
+    },
+    {
+      "index": 33,
+      "path": "/characters/hivolt/frames/frame-033.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        439,
+        401,
+        491,
+        476
+      ],
+      "width": 52,
+      "height": 75,
+      "row": 2
+    },
+    {
+      "index": 34,
+      "path": "/characters/hivolt/frames/frame-034.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        570,
+        407,
+        627,
+        476
+      ],
+      "width": 57,
+      "height": 69,
+      "row": 2
+    },
+    {
+      "index": 35,
+      "path": "/characters/hivolt/frames/frame-035.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        701,
+        406,
+        761,
+        476
+      ],
+      "width": 60,
+      "height": 70,
+      "row": 2
+    },
+    {
+      "index": 36,
+      "path": "/characters/hivolt/frames/frame-036.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        832,
+        407,
+        896,
+        476
+      ],
+      "width": 64,
+      "height": 69,
+      "row": 2
+    },
+    {
+      "index": 37,
+      "path": "/characters/hivolt/frames/frame-037.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        960,
+        403,
+        1035,
+        476
+      ],
+      "width": 75,
+      "height": 73,
+      "row": 2
+    },
+    {
+      "index": 38,
+      "path": "/characters/hivolt/frames/frame-038.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1098,
+        406,
+        1162,
+        476
+      ],
+      "width": 64,
+      "height": 70,
+      "row": 2
+    },
+    {
+      "index": 39,
+      "path": "/characters/hivolt/frames/frame-039.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1226,
+        402,
+        1301,
+        476
+      ],
+      "width": 75,
+      "height": 74,
+      "row": 2
+    },
+    {
+      "index": 40,
+      "path": "/characters/hivolt/frames/frame-040.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        25,
+        510,
+        107,
+        596
+      ],
+      "width": 82,
+      "height": 86,
+      "row": 2
+    },
+    {
+      "index": 41,
+      "path": "/characters/hivolt/frames/frame-041.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        162,
+        525,
+        237,
+        596
+      ],
+      "width": 75,
+      "height": 71,
+      "row": 2
+    },
+    {
+      "index": 42,
+      "path": "/characters/hivolt/frames/frame-042.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        295,
+        532,
+        369,
+        596
+      ],
+      "width": 74,
+      "height": 64,
+      "row": 2
+    },
+    {
+      "index": 43,
+      "path": "/characters/hivolt/frames/frame-043.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        434,
+        512,
+        497,
+        596
+      ],
+      "width": 63,
+      "height": 84,
+      "row": 2
+    },
+    {
+      "index": 44,
+      "path": "/characters/hivolt/frames/frame-044.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        566,
+        513,
+        631,
+        596
+      ],
+      "width": 65,
+      "height": 83,
+      "row": 2
+    },
+    {
+      "index": 45,
+      "path": "/characters/hivolt/frames/frame-045.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        701,
+        524,
+        762,
+        596
+      ],
+      "width": 61,
+      "height": 72,
+      "row": 2
+    },
+    {
+      "index": 46,
+      "path": "/characters/hivolt/frames/frame-046.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        828,
+        524,
+        900,
+        596
+      ],
+      "width": 72,
+      "height": 72,
+      "row": 2
+    },
+    {
+      "index": 47,
+      "path": "/characters/hivolt/frames/frame-047.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        968,
+        524,
+        1027,
+        596
+      ],
+      "width": 59,
+      "height": 72,
+      "row": 2
+    },
+    {
+      "index": 48,
+      "path": "/characters/hivolt/frames/frame-048.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1068,
+        534,
+        1193,
+        596
+      ],
+      "width": 125,
+      "height": 62,
+      "row": 3
+    },
+    {
+      "index": 49,
+      "path": "/characters/hivolt/frames/frame-049.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1206,
+        534,
+        1320,
+        596
+      ],
+      "width": 114,
+      "height": 62,
+      "row": 3
+    },
+    {
+      "index": 50,
+      "path": "/characters/hivolt/frames/frame-050.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        9,
+        652,
+        124,
+        716
+      ],
+      "width": 115,
+      "height": 64,
+      "row": 4
+    },
+    {
+      "index": 51,
+      "path": "/characters/hivolt/frames/frame-051.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        141,
+        651,
+        258,
+        716
+      ],
+      "width": 117,
+      "height": 65,
+      "row": 4
+    },
+    {
+      "index": 52,
+      "path": "/characters/hivolt/frames/frame-052.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        290,
+        643,
+        375,
+        716
+      ],
+      "width": 85,
+      "height": 73,
+      "row": 4
+    },
+    {
+      "index": 53,
+      "path": "/characters/hivolt/frames/frame-053.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        418,
+        604,
+        513,
+        716
+      ],
+      "width": 95,
+      "height": 112,
+      "row": 5
+    },
+    {
+      "index": 54,
+      "path": "/characters/hivolt/frames/frame-054.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        559,
+        604,
+        637,
+        716
+      ],
+      "width": 78,
+      "height": 112,
+      "row": 5
+    },
+    {
+      "index": 55,
+      "path": "/characters/hivolt/frames/frame-055.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        678,
+        652,
+        785,
+        716
+      ],
+      "width": 107,
+      "height": 64,
+      "row": 6
+    },
+    {
+      "index": 56,
+      "path": "/characters/hivolt/frames/frame-056.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        811,
+        652,
+        918,
+        716
+      ],
+      "width": 107,
+      "height": 64,
+      "row": 6
+    },
+    {
+      "index": 57,
+      "path": "/characters/hivolt/frames/frame-057.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        944,
+        652,
+        1051,
+        716
+      ],
+      "width": 107,
+      "height": 64,
+      "row": 6
+    },
+    {
+      "index": 58,
+      "path": "/characters/hivolt/frames/frame-058.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1077,
+        652,
+        1184,
+        716
+      ],
+      "width": 107,
+      "height": 64,
+      "row": 6
+    },
+    {
+      "index": 59,
+      "path": "/characters/hivolt/frames/frame-059.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1204,
+        669,
+        1323,
+        716
+      ],
+      "width": 119,
+      "height": 47,
+      "row": 7
+    },
+    {
+      "index": 60,
+      "path": "/characters/hivolt/frames/frame-060.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        7,
+        789,
+        126,
+        836
+      ],
+      "width": 119,
+      "height": 47,
+      "row": 7
+    },
+    {
+      "index": 61,
+      "path": "/characters/hivolt/frames/frame-061.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        140,
+        789,
+        259,
+        836
+      ],
+      "width": 119,
+      "height": 47,
+      "row": 7
+    },
+    {
+      "index": 62,
+      "path": "/characters/hivolt/frames/frame-062.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        273,
+        789,
+        392,
+        836
+      ],
+      "width": 119,
+      "height": 47,
+      "row": 7
+    },
+    {
+      "index": 63,
+      "path": "/characters/hivolt/frames/frame-063.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        406,
+        788,
+        525,
+        836
+      ],
+      "width": 119,
+      "height": 48,
+      "row": 7
+    },
+    {
+      "index": 64,
+      "path": "/characters/hivolt/frames/frame-064.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        539,
+        789,
+        658,
+        836
+      ],
+      "width": 119,
+      "height": 47,
+      "row": 7
+    },
+    {
+      "index": 65,
+      "path": "/characters/hivolt/frames/frame-065.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        672,
+        789,
+        791,
+        836
+      ],
+      "width": 119,
+      "height": 47,
+      "row": 8
+    },
+    {
+      "index": 66,
+      "path": "/characters/hivolt/frames/frame-066.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        832,
+        775,
+        897,
+        836
+      ],
+      "width": 65,
+      "height": 61,
+      "row": 8
+    },
+    {
+      "index": 67,
+      "path": "/characters/hivolt/frames/frame-067.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        965,
+        776,
+        1030,
+        836
+      ],
+      "width": 65,
+      "height": 60,
+      "row": 8
+    },
+    {
+      "index": 68,
+      "path": "/characters/hivolt/frames/frame-068.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1072,
+        779,
+        1189,
+        836
+      ],
+      "width": 117,
+      "height": 57,
+      "row": 8
+    },
+    {
+      "index": 69,
+      "path": "/characters/hivolt/frames/frame-069.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1234,
+        768,
+        1293,
+        836
+      ],
+      "width": 59,
+      "height": 68,
+      "row": 8
+    },
+    {
+      "index": 70,
+      "path": "/characters/hivolt/frames/frame-070.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        38,
+        854,
+        95,
+        956
+      ],
+      "width": 57,
+      "height": 102,
+      "row": 9
+    },
+    {
+      "index": 71,
+      "path": "/characters/hivolt/frames/frame-071.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        170,
+        855,
+        229,
+        956
+      ],
+      "width": 59,
+      "height": 101,
+      "row": 9
+    },
+    {
+      "index": 72,
+      "path": "/characters/hivolt/frames/frame-072.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        278,
+        876,
+        386,
+        956
+      ],
+      "width": 108,
+      "height": 80,
+      "row": 9
+    },
+    {
+      "index": 73,
+      "path": "/characters/hivolt/frames/frame-073.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        411,
+        890,
+        519,
+        956
+      ],
+      "width": 108,
+      "height": 66,
+      "row": 9
+    },
+    {
+      "index": 74,
+      "path": "/characters/hivolt/frames/frame-074.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        572,
+        876,
+        625,
+        956
+      ],
+      "width": 53,
+      "height": 80,
+      "row": 9
+    },
+    {
+      "index": 75,
+      "path": "/characters/hivolt/frames/frame-075.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        701,
+        926,
+        762,
+        956
+      ],
+      "width": 61,
+      "height": 30,
+      "row": 9
+    },
+    {
+      "index": 76,
+      "path": "/characters/hivolt/frames/frame-076.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        838,
+        890,
+        891,
+        956
+      ],
+      "width": 53,
+      "height": 66,
+      "row": 9
+    },
+    {
+      "index": 77,
+      "path": "/characters/hivolt/frames/frame-077.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        989,
+        932,
+        1006,
+        956
+      ],
+      "width": 17,
+      "height": 24,
+      "row": 10
+    },
+    {
+      "index": 78,
+      "path": "/characters/hivolt/frames/frame-078.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1123,
+        931,
+        1138,
+        956
+      ],
+      "width": 15,
+      "height": 25,
+      "row": 10
+    },
+    {
+      "index": 79,
+      "path": "/characters/hivolt/frames/frame-079.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1253,
+        932,
+        1273,
+        956
+      ],
+      "width": 20,
+      "height": 24,
+      "row": 10
+    },
+    {
+      "index": 80,
+      "path": "/characters/hivolt/frames/frame-080.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        53,
+        1054,
+        80,
+        1076
+      ],
+      "width": 27,
+      "height": 22,
+      "row": 10
+    },
+    {
+      "index": 81,
+      "path": "/characters/hivolt/frames/frame-081.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        185,
+        1056,
+        214,
+        1076
+      ],
+      "width": 29,
+      "height": 20,
+      "row": 10
+    },
+    {
+      "index": 82,
+      "path": "/characters/hivolt/frames/frame-082.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        317,
+        1054,
+        348,
+        1076
+      ],
+      "width": 31,
+      "height": 22,
+      "row": 10
+    },
+    {
+      "index": 83,
+      "path": "/characters/hivolt/frames/frame-083.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        450,
+        1054,
+        481,
+        1076
+      ],
+      "width": 31,
+      "height": 22,
+      "row": 10
+    },
+    {
+      "index": 84,
+      "path": "/characters/hivolt/frames/frame-084.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        583,
+        1054,
+        614,
+        1076
+      ],
+      "width": 31,
+      "height": 22,
+      "row": 10
+    },
+    {
+      "index": 85,
+      "path": "/characters/hivolt/frames/frame-085.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        716,
+        1054,
+        747,
+        1076
+      ],
+      "width": 31,
+      "height": 22,
+      "row": 10
+    },
+    {
+      "index": 86,
+      "path": "/characters/hivolt/frames/frame-086.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        842,
+        1030,
+        886,
+        1076
+      ],
+      "width": 44,
+      "height": 46,
+      "row": 10
+    },
+    {
+      "index": 87,
+      "path": "/characters/hivolt/frames/frame-087.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        975,
+        1030,
+        1019,
+        1076
+      ],
+      "width": 44,
+      "height": 46,
+      "row": 10
+    },
+    {
+      "index": 88,
+      "path": "/characters/hivolt/frames/frame-088.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1110,
+        1044,
+        1150,
+        1076
+      ],
+      "width": 40,
+      "height": 32,
+      "row": 10
+    },
+    {
+      "index": 89,
+      "path": "/characters/hivolt/frames/frame-089.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1245,
+        1054,
+        1281,
+        1076
+      ],
+      "width": 36,
+      "height": 22,
+      "row": 10
+    },
+    {
+      "index": 90,
+      "path": "/characters/hivolt/frames/frame-090.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        50,
+        1178,
+        82,
+        1196
+      ],
+      "width": 32,
+      "height": 18,
+      "row": 11
+    },
+    {
+      "index": 91,
+      "path": "/characters/hivolt/frames/frame-091.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        197,
+        1192,
+        201,
+        1196
+      ],
+      "width": 4,
+      "height": 4,
+      "row": 11
+    },
+    {
+      "index": 92,
+      "path": "/characters/hivolt/frames/frame-092.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        329,
+        1185,
+        335,
+        1196
+      ],
+      "width": 6,
+      "height": 11,
+      "row": 11
+    },
+    {
+      "index": 93,
+      "path": "/characters/hivolt/frames/frame-093.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        462,
+        1180,
+        468,
+        1196
+      ],
+      "width": 6,
+      "height": 16,
+      "row": 11
+    },
+    {
+      "index": 94,
+      "path": "/characters/hivolt/frames/frame-094.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        598,
+        1195,
+        599,
+        1196
+      ],
+      "width": 1,
+      "height": 1,
+      "row": 11,
+      "sourceRepair": {
+        "type": "quarantined-non-character-ui",
+        "originalFrame": 94
+      }
+    },
+    {
+      "index": 95,
+      "path": "/characters/hivolt/frames/frame-095.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        731,
+        1195,
+        732,
+        1196
+      ],
+      "width": 1,
+      "height": 1,
+      "row": 11,
+      "sourceRepair": {
+        "type": "quarantined-non-character-ui",
+        "originalFrame": 95
+      }
+    },
+    {
+      "index": 96,
+      "path": "/characters/hivolt/frames/frame-096.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        864,
+        1195,
+        865,
+        1196
+      ],
+      "width": 1,
+      "height": 1,
+      "row": 11,
+      "sourceRepair": {
+        "type": "quarantined-non-character-ui",
+        "originalFrame": 96
+      }
+    },
+    {
+      "index": 97,
+      "path": "/characters/hivolt/frames/frame-097.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        997,
+        1195,
+        998,
+        1196
+      ],
+      "width": 1,
+      "height": 1,
+      "row": 11,
+      "sourceRepair": {
+        "type": "quarantined-non-character-ui",
+        "originalFrame": 97
+      }
+    },
+    {
+      "index": 98,
+      "path": "/characters/hivolt/frames/frame-098.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png",
+      "sourceName": "Hivolt.png",
+      "box": [
+        1097,
+        1146,
+        1163,
+        1196
+      ],
+      "width": 66,
+      "height": 50,
+      "row": 11
+    },
+    {
+      "index": 99,
+      "path": "/characters/hivolt/frames/frame-099.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 114,
+      "replacementHeight": 45,
+      "box": [
+        1206,
+        1151,
+        1320,
+        1196
+      ],
+      "width": 114,
+      "height": 45,
+      "row": -1,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/hivolt/frames/frame-065.png|widthScale=0.96",
+      "generatedSources": {
+        "crouch": "/characters/hivolt/frames/frame-065.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.96
+      },
+      "sheetId": "generated",
+      "sheetPath": "/characters/hivolt/animation-sheet.png"
+    }
+  ]
+}

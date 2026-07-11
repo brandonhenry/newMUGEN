@@ -10,6 +10,8 @@ export type OnlinePlayerIdentity = {
 
 export type OnlinePlayerRegisterResult = OnlinePlayerIdentity & {
   created: boolean;
+  customSessionToken?: string;
+  customSessionExpiresAt?: number;
 };
 
 const LOCAL_PLAYER_DIRECTORY_KEY = 'kore.online.playerDirectory.v1';
@@ -21,10 +23,18 @@ export async function registerOnlinePlayer(
   characterId?: string
 ): Promise<OnlinePlayerRegisterResult> {
   const body = normalizeRegisterRequest(profile, posthogDeviceId, characterId);
-  return postJson<OnlinePlayerRegisterResult>('/.netlify/functions/online-player-register', body).catch((error) => {
+  return postJson<OnlinePlayerRegisterResult>('/.netlify/functions/online-player-register', body).then(storeCustomSessionToken).catch((error) => {
     if (isLocalFallbackAllowed()) return localRegisterOnlinePlayer(body);
     throw error;
   });
+}
+
+function storeCustomSessionToken(result: OnlinePlayerRegisterResult) {
+  if (typeof sessionStorage !== 'undefined' && result.customSessionToken) {
+    sessionStorage.setItem('kore.custom.identityToken.v1', result.customSessionToken);
+    sessionStorage.setItem('kore.custom.identityExpiresAt.v1', String(result.customSessionExpiresAt ?? 0));
+  }
+  return result;
 }
 
 export async function lookupOnlinePlayer(playerId: string): Promise<OnlinePlayerIdentity | null> {

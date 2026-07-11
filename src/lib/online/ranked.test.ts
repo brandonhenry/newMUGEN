@@ -108,9 +108,10 @@ describe('ranked local fallback', () => {
   afterEach(() => vi.unstubAllGlobals());
 
   it('creates a default profile at 1200 KP', async () => {
-    const profile = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' });
+    const profile = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' }, 'astra');
 
     expect(profile.kp).toBe(1200);
+    expect(profile.characterId).toBe('astra');
     expect(profile.rank.name).toBe('Unranked');
     expect(profile.placement.complete).toBe(false);
     expect(profile.placement.matchesPlayed).toBe(0);
@@ -143,10 +144,64 @@ describe('ranked local fallback', () => {
   it('applies a match report once by idempotent room/winner/player key', async () => {
     const first = await submitRankedMatchReport(report());
     const second = await submitRankedMatchReport(report());
-    const profile = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' });
+    const profile = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' }, 'astra');
 
     expect(second.players[0].afterKp).toBe(first.players[0].afterKp);
     expect(profile.totals.matches).toBe(1);
+  });
+
+  it('keeps ranked profiles independent per character for the same player', async () => {
+    await submitRankedMatchReport(report({
+      reportId: 'room-astra:p1:p2',
+      roomId: 'room-astra'
+    }));
+    await submitRankedMatchReport(report({
+      reportId: 'room-dax:p1:p2',
+      roomId: 'room-dax',
+      players: [
+        { profile: { playerId: 'p1', displayName: 'ONE' }, characterId: 'dax', stats: stats({ damageDealt: 40, damageTaken: 92, cleanHits: 4, roundsWon: 1 }), roundsWon: 1 },
+        { profile: { playerId: 'p2', displayName: 'TWO' }, characterId: 'astra', stats: stats(), roundsWon: 3 }
+      ],
+      winnerPlayerId: 'p2'
+    }));
+
+    const astra = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' }, 'astra');
+    const dax = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' }, 'dax');
+
+    expect(astra.characterId).toBe('astra');
+    expect(dax.characterId).toBe('dax');
+    expect(astra.totals.matches).toBe(1);
+    expect(dax.totals.matches).toBe(1);
+    expect(astra.kp).not.toBe(dax.kp);
+  });
+
+  it('seeds only the first character-specific ranked profile from a legacy profile', async () => {
+    const storage = installLocalRankedEnvironment();
+    const legacy = normalizeRankedProfile({
+      playerId: 'p1',
+      displayName: 'ONE',
+      kp: 1540,
+      totals: {
+        matches: 3,
+        wins: 2,
+        losses: 1,
+        damageDealt: 300,
+        damageTaken: 200,
+        cleanHits: 20,
+        attacksAttempted: 40,
+        blocks: 6,
+        maxComboHits: 8
+      }
+    });
+    storage.set('kore.online.rankedProfile', JSON.stringify({ profiles: { p1: legacy }, reports: {} }));
+
+    const astra = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' }, 'astra');
+    const dax = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' }, 'dax');
+
+    expect(astra.kp).toBe(1540);
+    expect(astra.characterId).toBe('astra');
+    expect(dax.kp).toBe(1200);
+    expect(dax.characterId).toBe('dax');
   });
 
   it('caps ranked rewards against bots and does not persist bot profiles', async () => {
@@ -172,7 +227,7 @@ describe('ranked local fallback', () => {
 
     expect(playerResult?.kpDelta).toBeLessThanOrEqual(12);
     expect(playerResult?.profile.history[0].right.displayName).toBe('MIRA KANE');
-    expect(saved.profiles['p1']).toBeTruthy();
+    expect(saved.profiles['p1:astra']).toBeTruthy();
     expect(saved.profiles['bot-rival']).toBeUndefined();
   });
 
@@ -201,7 +256,7 @@ describe('ranked local fallback', () => {
       ]
     }));
     const player = result.players[0];
-    const saved = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' });
+    const saved = await fetchRankedProfile({ playerId: 'p1', displayName: 'ONE' }, 'astra');
 
     expect(player.placement?.afterMatchesPlayed).toBe(1);
     expect(player.placement?.complete).toBe(false);

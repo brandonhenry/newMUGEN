@@ -1095,6 +1095,15 @@ test('opens controls and character viewer', async ({ page }) => {
   await page.getByRole('button', { name: 'Back' }).click();
   await page.getByRole('button', { name: 'Characters' }).click();
   await expect(page.getByTestId('character-viewer-canvas')).toBeVisible();
+  const hideUnplayableToggle = page.getByTestId('hide-unplayable-toggle');
+  await expect(hideUnplayableToggle).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.viewer-character-card[data-unplayable="true"]')).toHaveCount(0);
+  await hideUnplayableToggle.click();
+  await expect(hideUnplayableToggle).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.viewer-character-card[data-unplayable="true"]').first()).toBeVisible();
+  await hideUnplayableToggle.click();
+  await expect(hideUnplayableToggle).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.viewer-character-card[data-unplayable="true"]')).toHaveCount(0);
   await expectNoHdProceduralFallback(page);
   await expect(page.getByTestId('change-character-view')).toHaveText('Change View: Compact');
   await page.getByTestId('change-character-view').click();

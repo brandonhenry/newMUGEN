@@ -4,7 +4,7 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 9;
+const settingsVersion = 13;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -99,11 +99,13 @@ export const defaultGameSettings: GameSettings = {
     touchControls: 'auto',
     reducedMotion: false,
     debugOverlay: true,
+    movementSmokeStyle: 'speed-trail',
     impactSparks: {
       enabled: true,
       cinematic: true,
-      shape: 'burst',
-      hitColor: '#ffb33f',
+      shape: 'voxel-burst',
+      hitColor: '#ffe600',
+      hitAccentColor: '#ff9d00',
       blockColor: '#9eeeff',
       size: 1,
       intensity: 1
@@ -204,11 +206,13 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       touchControls: display.touchControls === 'on' || display.touchControls === 'off' ? display.touchControls : defaults.display.touchControls,
       reducedMotion: booleanOr(display.reducedMotion, defaults.display.reducedMotion),
       debugOverlay: booleanOr(display.debugOverlay, defaults.display.debugOverlay),
+      movementSmokeStyle: display.movementSmokeStyle === 'speed-trail' || display.movementSmokeStyle === 'soft-puff' || display.movementSmokeStyle === 'burst-puff' || display.movementSmokeStyle === 'dust-ring' ? display.movementSmokeStyle : defaults.display.movementSmokeStyle,
       impactSparks: {
         enabled: booleanOr(impactSparks.enabled, defaults.display.impactSparks.enabled),
         cinematic: booleanOr(impactSparks.cinematic, defaults.display.impactSparks.cinematic),
-        shape: impactSparks.shape === 'ring' || impactSparks.shape === 'shards' ? impactSparks.shape : defaults.display.impactSparks.shape,
+        shape: impactSparks.shape === 'voxel-burst' || impactSparks.shape === 'sharp-spark' || impactSparks.shape === 'heavy-burst' || impactSparks.shape === 'white-ink' || impactSparks.shape === 'burst' || impactSparks.shape === 'ring' || impactSparks.shape === 'shards' ? impactSparks.shape : defaults.display.impactSparks.shape,
         hitColor: sanitizeHexColor(impactSparks.hitColor, defaults.display.impactSparks.hitColor),
+        hitAccentColor: sanitizeHexColor(impactSparks.hitAccentColor, defaults.display.impactSparks.hitAccentColor),
         blockColor: sanitizeHexColor(impactSparks.blockColor, defaults.display.impactSparks.blockColor),
         size: clampNumber(impactSparks.size, 0.5, 1.8, defaults.display.impactSparks.size),
         intensity: clampNumber(impactSparks.intensity, 0.35, 2, defaults.display.impactSparks.intensity)
@@ -266,7 +270,7 @@ function unwrapStoredSettings(raw: unknown) {
   if (isRecord(raw) && isRecord(raw.settings)) {
     return migrateStoredSettings(raw.settings, Number.isFinite(raw.version) ? Number(raw.version) : 1);
   }
-  return migrateStoredSettings(raw, 1);
+  return raw;
 }
 
 function migrateStoredSettings(settings: unknown, version: number) {
@@ -274,6 +278,22 @@ function migrateStoredSettings(settings: unknown, version: number) {
   if (version >= settingsVersion) return settings;
   const game = isRecord(settings.game) ? settings.game : {};
   const display = isRecord(settings.display) ? settings.display : {};
+  const cursorMigratedDisplay = version === 3 && display.cursorId === legacySmallDefaultCursorId
+    ? {
+        ...display,
+        cursorId: defaultGameSettings.display.cursorId
+      }
+    : display;
+  const impactSparks = isRecord(cursorMigratedDisplay.impactSparks) ? cursorMigratedDisplay.impactSparks : {};
+  const impactMigratedDisplay = version < 13
+    ? {
+        ...cursorMigratedDisplay,
+        impactSparks: {
+          ...impactSparks,
+          shape: 'voxel-burst'
+        }
+      }
+    : cursorMigratedDisplay;
   const migrated = {
     ...settings,
     game: game.maxHealth === 100
@@ -282,12 +302,12 @@ function migrateStoredSettings(settings: unknown, version: number) {
           maxHealth: defaultGameSettings.game.maxHealth
         }
       : game,
-    display: version === 3 && display.cursorId === legacySmallDefaultCursorId
+    display: version < 13
       ? {
-          ...display,
-          cursorId: defaultGameSettings.display.cursorId
+          ...impactMigratedDisplay,
+          movementSmokeStyle: 'speed-trail'
         }
-      : display
+      : impactMigratedDisplay
   };
   return version < 8 ? migrateDedicatedJumpBindings(version < 5 ? migrateKeyboardSpaceJump(migrated) : migrated) : migrated;
 }

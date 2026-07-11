@@ -1,6 +1,34 @@
 export const TOURNAMENT_ROOM_SLOT_MS = 60 * 60 * 1000;
 
-const DEFAULT_TOURNAMENT_STAGE_POOL = ['the-chamber', 'the-chamber-green', 'metro-ring', 'forge-yard'];
+const DEFAULT_TOURNAMENT_STAGE_POOL = [
+  'the-chamber',
+  'the-chamber-green',
+  'grasslands',
+  'dust-arena',
+  'footstep-grid',
+  'petal-courtyard',
+  'snowfield',
+  'rain-puddles',
+  'ripple-basin',
+  'energy-floor',
+  'fog-marsh',
+  'heat-haze',
+  'wind-plain',
+  'cherry-burst-stage',
+  'shimmer-tiles',
+  'bleach-bleach-soul-reaper-karakura-town-intersection',
+  'bleach-soul-society-courtyard-battle-scene',
+  'bleach-urahara-secret-training-ground',
+  'dbz-galactic-arena-stage',
+  'dbz-hell-stage',
+  'dbz-other-world-tournament',
+  'dbz-planet-namek',
+  'dbz-tournament-of-power-damaged',
+  'dbz-wasteland-stage',
+  'dbz-world-tournament-stage',
+  'dbz-zeno-expo-arena-stage',
+  'one-punch-man-opmje-combat-experimentation-room-2'
+];
 
 export function attachTournamentRoomsToReadyMatches(bracket, now = Date.now(), stagePool = DEFAULT_TOURNAMENT_STAGE_POOL) {
   return {

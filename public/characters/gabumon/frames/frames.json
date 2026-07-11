@@ -1,0 +1,3884 @@
+{
+  "source": "Gabumon.png",
+  "count": 237,
+  "excluded": [],
+  "sheets": [
+    {
+      "id": "generated",
+      "name": "Generated Frame Atlas",
+      "path": "/characters/gabumon/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 237
+    }
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "path": "/characters/gabumon/frames/frame-000.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        43,
+        72,
+        69,
+        102
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 0
+    },
+    {
+      "index": 1,
+      "path": "/characters/gabumon/frames/frame-001.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        153,
+        72,
+        182,
+        102
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 0,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 1,
+        "originalSize": [
+          38,
+          56
+        ],
+        "cropBox": [
+          9,
+          26,
+          38,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          22,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 2,
+      "path": "/characters/gabumon/frames/frame-002.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        267,
+        71,
+        293,
+        102
+      ],
+      "width": 26,
+      "height": 31,
+      "row": 0
+    },
+    {
+      "index": 3,
+      "path": "/characters/gabumon/frames/frame-003.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        378,
+        74,
+        406,
+        102
+      ],
+      "width": 28,
+      "height": 28,
+      "row": 0
+    },
+    {
+      "index": 4,
+      "path": "/characters/gabumon/frames/frame-004.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        490,
+        70,
+        517,
+        102
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 0
+    },
+    {
+      "index": 5,
+      "path": "/characters/gabumon/frames/frame-005.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        600,
+        65,
+        632,
+        102
+      ],
+      "width": 32,
+      "height": 37,
+      "row": 0
+    },
+    {
+      "index": 6,
+      "path": "/characters/gabumon/frames/frame-006.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        676,
+        4,
+        780,
+        102
+      ],
+      "width": 104,
+      "height": 98,
+      "row": 0
+    },
+    {
+      "index": 7,
+      "path": "/characters/gabumon/frames/frame-007.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        825,
+        71,
+        854,
+        102
+      ],
+      "width": 29,
+      "height": 31,
+      "row": 0
+    },
+    {
+      "index": 8,
+      "path": "/characters/gabumon/frames/frame-008.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        935,
+        66,
+        969,
+        102
+      ],
+      "width": 34,
+      "height": 36,
+      "row": 0
+    },
+    {
+      "index": 9,
+      "path": "/characters/gabumon/frames/frame-009.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1050,
+        72,
+        1077,
+        102
+      ],
+      "width": 27,
+      "height": 30,
+      "row": 0
+    },
+    {
+      "index": 10,
+      "path": "/characters/gabumon/frames/frame-010.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1161,
+        66,
+        1191,
+        102
+      ],
+      "width": 30,
+      "height": 36,
+      "row": 0
+    },
+    {
+      "index": 11,
+      "path": "/characters/gabumon/frames/frame-011.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1275,
+        72,
+        1301,
+        102
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 0
+    },
+    {
+      "index": 12,
+      "path": "/characters/gabumon/frames/frame-012.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        42,
+        174,
+        69,
+        208
+      ],
+      "width": 27,
+      "height": 34,
+      "row": 1
+    },
+    {
+      "index": 13,
+      "path": "/characters/gabumon/frames/frame-013.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        155,
+        177,
+        181,
+        208
+      ],
+      "width": 26,
+      "height": 31,
+      "row": 1
+    },
+    {
+      "index": 14,
+      "path": "/characters/gabumon/frames/frame-014.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        266,
+        174,
+        294,
+        208
+      ],
+      "width": 28,
+      "height": 34,
+      "row": 1
+    },
+    {
+      "index": 15,
+      "path": "/characters/gabumon/frames/frame-015.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        378,
+        176,
+        405,
+        208
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 1
+    },
+    {
+      "index": 16,
+      "path": "/characters/gabumon/frames/frame-016.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        489,
+        177,
+        518,
+        208
+      ],
+      "width": 29,
+      "height": 31,
+      "row": 1
+    },
+    {
+      "index": 17,
+      "path": "/characters/gabumon/frames/frame-017.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        603,
+        178,
+        629,
+        208
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 1
+    },
+    {
+      "index": 18,
+      "path": "/characters/gabumon/frames/frame-018.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        714,
+        178,
+        741,
+        208
+      ],
+      "width": 27,
+      "height": 30,
+      "row": 1
+    },
+    {
+      "index": 19,
+      "path": "/characters/gabumon/frames/frame-019.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        823,
+        178,
+        857,
+        208
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 1
+    },
+    {
+      "index": 20,
+      "path": "/characters/gabumon/frames/frame-020.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        934,
+        176,
+        969,
+        208
+      ],
+      "width": 35,
+      "height": 32,
+      "row": 1,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 20,
+        "originalSize": [
+          41,
+          56
+        ],
+        "cropBox": [
+          6,
+          24,
+          41,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          19,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 21,
+      "path": "/characters/gabumon/frames/frame-021.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1047,
+        179,
+        1081,
+        208
+      ],
+      "width": 34,
+      "height": 29,
+      "row": 1
+    },
+    {
+      "index": 22,
+      "path": "/characters/gabumon/frames/frame-022.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1158,
+        177,
+        1193,
+        208
+      ],
+      "width": 35,
+      "height": 31,
+      "row": 1
+    },
+    {
+      "index": 23,
+      "path": "/characters/gabumon/frames/frame-023.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1271,
+        177,
+        1305,
+        208
+      ],
+      "width": 34,
+      "height": 31,
+      "row": 1
+    },
+    {
+      "index": 24,
+      "path": "/characters/gabumon/frames/frame-024.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        42,
+        279,
+        69,
+        314
+      ],
+      "width": 27,
+      "height": 35,
+      "row": 2
+    },
+    {
+      "index": 25,
+      "path": "/characters/gabumon/frames/frame-025.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        151,
+        284,
+        185,
+        314
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 2
+    },
+    {
+      "index": 26,
+      "path": "/characters/gabumon/frames/frame-026.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        262,
+        278,
+        297,
+        314
+      ],
+      "width": 35,
+      "height": 36,
+      "row": 2
+    },
+    {
+      "index": 27,
+      "path": "/characters/gabumon/frames/frame-027.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        375,
+        284,
+        409,
+        314
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 2
+    },
+    {
+      "index": 28,
+      "path": "/characters/gabumon/frames/frame-028.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        490,
+        280,
+        518,
+        314
+      ],
+      "width": 28,
+      "height": 34,
+      "row": 2
+    },
+    {
+      "index": 29,
+      "path": "/characters/gabumon/frames/frame-029.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        599,
+        286,
+        632,
+        314
+      ],
+      "width": 33,
+      "height": 28,
+      "row": 2
+    },
+    {
+      "index": 30,
+      "path": "/characters/gabumon/frames/frame-030.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        711,
+        284,
+        745,
+        314
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 2
+    },
+    {
+      "index": 31,
+      "path": "/characters/gabumon/frames/frame-031.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        823,
+        284,
+        857,
+        314
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 2
+    },
+    {
+      "index": 32,
+      "path": "/characters/gabumon/frames/frame-032.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        938,
+        286,
+        966,
+        314
+      ],
+      "width": 28,
+      "height": 28,
+      "row": 2
+    },
+    {
+      "index": 33,
+      "path": "/characters/gabumon/frames/frame-033.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1049,
+        283,
+        1079,
+        314
+      ],
+      "width": 30,
+      "height": 31,
+      "row": 2
+    },
+    {
+      "index": 34,
+      "path": "/characters/gabumon/frames/frame-034.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1163,
+        282,
+        1189,
+        314
+      ],
+      "width": 26,
+      "height": 32,
+      "row": 2
+    },
+    {
+      "index": 35,
+      "path": "/characters/gabumon/frames/frame-035.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1273,
+        281,
+        1303,
+        314
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 2
+    },
+    {
+      "index": 36,
+      "path": "/characters/gabumon/frames/frame-036.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        39,
+        390,
+        72,
+        420
+      ],
+      "width": 33,
+      "height": 30,
+      "row": 3
+    },
+    {
+      "index": 37,
+      "path": "/characters/gabumon/frames/frame-037.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        151,
+        395,
+        184,
+        420
+      ],
+      "width": 33,
+      "height": 25,
+      "row": 3
+    },
+    {
+      "index": 38,
+      "path": "/characters/gabumon/frames/frame-038.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        264,
+        400,
+        296,
+        420
+      ],
+      "width": 32,
+      "height": 20,
+      "row": 3
+    },
+    {
+      "index": 39,
+      "path": "/characters/gabumon/frames/frame-039.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        378,
+        386,
+        406,
+        420
+      ],
+      "width": 28,
+      "height": 34,
+      "row": 3
+    },
+    {
+      "index": 40,
+      "path": "/characters/gabumon/frames/frame-040.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        489,
+        387,
+        518,
+        420
+      ],
+      "width": 29,
+      "height": 33,
+      "row": 3
+    },
+    {
+      "index": 41,
+      "path": "/characters/gabumon/frames/frame-041.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        602,
+        389,
+        629,
+        420
+      ],
+      "width": 27,
+      "height": 31,
+      "row": 3
+    },
+    {
+      "index": 42,
+      "path": "/characters/gabumon/frames/frame-042.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        714,
+        388,
+        741,
+        420
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 3
+    },
+    {
+      "index": 43,
+      "path": "/characters/gabumon/frames/frame-043.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        827,
+        385,
+        853,
+        420
+      ],
+      "width": 26,
+      "height": 35,
+      "row": 3
+    },
+    {
+      "index": 44,
+      "path": "/characters/gabumon/frames/frame-044.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        939,
+        385,
+        965,
+        420
+      ],
+      "width": 26,
+      "height": 35,
+      "row": 3
+    },
+    {
+      "index": 45,
+      "path": "/characters/gabumon/frames/frame-045.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1051,
+        384,
+        1077,
+        420
+      ],
+      "width": 26,
+      "height": 36,
+      "row": 3
+    },
+    {
+      "index": 46,
+      "path": "/characters/gabumon/frames/frame-046.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1162,
+        383,
+        1189,
+        420
+      ],
+      "width": 27,
+      "height": 37,
+      "row": 3
+    },
+    {
+      "index": 47,
+      "path": "/characters/gabumon/frames/frame-047.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1274,
+        384,
+        1301,
+        420
+      ],
+      "width": 27,
+      "height": 36,
+      "row": 3
+    },
+    {
+      "index": 48,
+      "path": "/characters/gabumon/frames/frame-048.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        42,
+        491,
+        70,
+        526
+      ],
+      "width": 28,
+      "height": 35,
+      "row": 4
+    },
+    {
+      "index": 49,
+      "path": "/characters/gabumon/frames/frame-049.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        155,
+        491,
+        181,
+        526
+      ],
+      "width": 26,
+      "height": 35,
+      "row": 4
+    },
+    {
+      "index": 50,
+      "path": "/characters/gabumon/frames/frame-050.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        267,
+        490,
+        293,
+        526
+      ],
+      "width": 26,
+      "height": 36,
+      "row": 4
+    },
+    {
+      "index": 51,
+      "path": "/characters/gabumon/frames/frame-051.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        377,
+        493,
+        407,
+        526
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 4
+    },
+    {
+      "index": 52,
+      "path": "/characters/gabumon/frames/frame-052.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        491,
+        492,
+        517,
+        526
+      ],
+      "width": 26,
+      "height": 34,
+      "row": 4
+    },
+    {
+      "index": 53,
+      "path": "/characters/gabumon/frames/frame-053.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        598,
+        496,
+        634,
+        526
+      ],
+      "width": 36,
+      "height": 30,
+      "row": 4
+    },
+    {
+      "index": 54,
+      "path": "/characters/gabumon/frames/frame-054.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        713,
+        497,
+        742,
+        526
+      ],
+      "width": 29,
+      "height": 29,
+      "row": 4
+    },
+    {
+      "index": 55,
+      "path": "/characters/gabumon/frames/frame-055.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        825,
+        493,
+        855,
+        526
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 4
+    },
+    {
+      "index": 56,
+      "path": "/characters/gabumon/frames/frame-056.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        939,
+        498,
+        965,
+        526
+      ],
+      "width": 26,
+      "height": 28,
+      "row": 4
+    },
+    {
+      "index": 57,
+      "path": "/characters/gabumon/frames/frame-057.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1049,
+        496,
+        1078,
+        526
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 4
+    },
+    {
+      "index": 58,
+      "path": "/characters/gabumon/frames/frame-058.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1160,
+        495,
+        1192,
+        526
+      ],
+      "width": 32,
+      "height": 31,
+      "row": 4
+    },
+    {
+      "index": 59,
+      "path": "/characters/gabumon/frames/frame-059.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1273,
+        490,
+        1302,
+        526
+      ],
+      "width": 29,
+      "height": 36,
+      "row": 4
+    },
+    {
+      "index": 60,
+      "path": "/characters/gabumon/frames/frame-060.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        43,
+        597,
+        68,
+        632
+      ],
+      "width": 25,
+      "height": 35,
+      "row": 5
+    },
+    {
+      "index": 61,
+      "path": "/characters/gabumon/frames/frame-061.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        155,
+        598,
+        181,
+        632
+      ],
+      "width": 26,
+      "height": 34,
+      "row": 5
+    },
+    {
+      "index": 62,
+      "path": "/characters/gabumon/frames/frame-062.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        266,
+        597,
+        294,
+        632
+      ],
+      "width": 28,
+      "height": 35,
+      "row": 5
+    },
+    {
+      "index": 63,
+      "path": "/characters/gabumon/frames/frame-063.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        377,
+        595,
+        406,
+        632
+      ],
+      "width": 29,
+      "height": 37,
+      "row": 5
+    },
+    {
+      "index": 64,
+      "path": "/characters/gabumon/frames/frame-064.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        491,
+        597,
+        516,
+        632
+      ],
+      "width": 25,
+      "height": 35,
+      "row": 5
+    },
+    {
+      "index": 65,
+      "path": "/characters/gabumon/frames/frame-065.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        604,
+        598,
+        627,
+        632
+      ],
+      "width": 23,
+      "height": 34,
+      "row": 5
+    },
+    {
+      "index": 66,
+      "path": "/characters/gabumon/frames/frame-066.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        714,
+        597,
+        742,
+        632
+      ],
+      "width": 28,
+      "height": 35,
+      "row": 5
+    },
+    {
+      "index": 67,
+      "path": "/characters/gabumon/frames/frame-067.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        824,
+        597,
+        855,
+        632
+      ],
+      "width": 31,
+      "height": 35,
+      "row": 5
+    },
+    {
+      "index": 68,
+      "path": "/characters/gabumon/frames/frame-068.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        936,
+        597,
+        968,
+        632
+      ],
+      "width": 32,
+      "height": 35,
+      "row": 5
+    },
+    {
+      "index": 69,
+      "path": "/characters/gabumon/frames/frame-069.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1050,
+        601,
+        1077,
+        632
+      ],
+      "width": 27,
+      "height": 31,
+      "row": 5
+    },
+    {
+      "index": 70,
+      "path": "/characters/gabumon/frames/frame-070.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1160,
+        602,
+        1191,
+        632
+      ],
+      "width": 31,
+      "height": 30,
+      "row": 5
+    },
+    {
+      "index": 71,
+      "path": "/characters/gabumon/frames/frame-071.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1275,
+        599,
+        1301,
+        632
+      ],
+      "width": 26,
+      "height": 33,
+      "row": 5,
+      "sourceRepair": {
+        "type": "crop-remove-attached-text",
+        "originalFrame": 71,
+        "originalSize": [
+          44,
+          56
+        ],
+        "cropBox": [
+          9,
+          23,
+          35,
+          56
+        ],
+        "removedTextBox": [
+          0,
+          0,
+          44,
+          8
+        ],
+        "previousRepair": null
+      }
+    },
+    {
+      "index": 72,
+      "path": "/characters/gabumon/frames/frame-072.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        42,
+        707,
+        69,
+        738
+      ],
+      "width": 27,
+      "height": 31,
+      "row": 6
+    },
+    {
+      "index": 73,
+      "path": "/characters/gabumon/frames/frame-073.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        156,
+        701,
+        179,
+        738
+      ],
+      "width": 23,
+      "height": 37,
+      "row": 6
+    },
+    {
+      "index": 74,
+      "path": "/characters/gabumon/frames/frame-074.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        264,
+        703,
+        295,
+        738
+      ],
+      "width": 31,
+      "height": 35,
+      "row": 6
+    },
+    {
+      "index": 75,
+      "path": "/characters/gabumon/frames/frame-075.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        375,
+        703,
+        408,
+        738
+      ],
+      "width": 33,
+      "height": 35,
+      "row": 6
+    },
+    {
+      "index": 76,
+      "path": "/characters/gabumon/frames/frame-076.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        488,
+        703,
+        519,
+        738
+      ],
+      "width": 31,
+      "height": 35,
+      "row": 6
+    },
+    {
+      "index": 77,
+      "path": "/characters/gabumon/frames/frame-077.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        601,
+        705,
+        631,
+        738
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 6
+    },
+    {
+      "index": 78,
+      "path": "/characters/gabumon/frames/frame-078.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        713,
+        705,
+        743,
+        738
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 6
+    },
+    {
+      "index": 79,
+      "path": "/characters/gabumon/frames/frame-079.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        827,
+        706,
+        853,
+        738
+      ],
+      "width": 26,
+      "height": 32,
+      "row": 6
+    },
+    {
+      "index": 80,
+      "path": "/characters/gabumon/frames/frame-080.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        937,
+        705,
+        967,
+        738
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 6
+    },
+    {
+      "index": 81,
+      "path": "/characters/gabumon/frames/frame-081.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1049,
+        704,
+        1078,
+        738
+      ],
+      "width": 29,
+      "height": 34,
+      "row": 6
+    },
+    {
+      "index": 82,
+      "path": "/characters/gabumon/frames/frame-082.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1160,
+        705,
+        1191,
+        738
+      ],
+      "width": 31,
+      "height": 33,
+      "row": 6
+    },
+    {
+      "index": 83,
+      "path": "/characters/gabumon/frames/frame-083.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1270,
+        710,
+        1306,
+        738
+      ],
+      "width": 36,
+      "height": 28,
+      "row": 6
+    },
+    {
+      "index": 84,
+      "path": "/characters/gabumon/frames/frame-084.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        37,
+        819,
+        75,
+        844
+      ],
+      "width": 38,
+      "height": 25,
+      "row": 7
+    },
+    {
+      "index": 85,
+      "path": "/characters/gabumon/frames/frame-085.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        149,
+        819,
+        187,
+        844
+      ],
+      "width": 38,
+      "height": 25,
+      "row": 7
+    },
+    {
+      "index": 86,
+      "path": "/characters/gabumon/frames/frame-086.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        262,
+        819,
+        297,
+        844
+      ],
+      "width": 35,
+      "height": 25,
+      "row": 7
+    },
+    {
+      "index": 87,
+      "path": "/characters/gabumon/frames/frame-087.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        378,
+        805,
+        406,
+        844
+      ],
+      "width": 28,
+      "height": 39,
+      "row": 7
+    },
+    {
+      "index": 88,
+      "path": "/characters/gabumon/frames/frame-088.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        485,
+        814,
+        523,
+        844
+      ],
+      "width": 38,
+      "height": 30,
+      "row": 7
+    },
+    {
+      "index": 89,
+      "path": "/characters/gabumon/frames/frame-089.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        604,
+        807,
+        627,
+        844
+      ],
+      "width": 23,
+      "height": 37,
+      "row": 7
+    },
+    {
+      "index": 90,
+      "path": "/characters/gabumon/frames/frame-090.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        716,
+        808,
+        739,
+        844
+      ],
+      "width": 23,
+      "height": 36,
+      "row": 7
+    },
+    {
+      "index": 91,
+      "path": "/characters/gabumon/frames/frame-091.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        827,
+        808,
+        852,
+        844
+      ],
+      "width": 25,
+      "height": 36,
+      "row": 7
+    },
+    {
+      "index": 92,
+      "path": "/characters/gabumon/frames/frame-092.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        938,
+        813,
+        965,
+        844
+      ],
+      "width": 27,
+      "height": 31,
+      "row": 7
+    },
+    {
+      "index": 93,
+      "path": "/characters/gabumon/frames/frame-093.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1051,
+        811,
+        1077,
+        844
+      ],
+      "width": 26,
+      "height": 33,
+      "row": 7
+    },
+    {
+      "index": 94,
+      "path": "/characters/gabumon/frames/frame-094.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1154,
+        821,
+        1197,
+        844
+      ],
+      "width": 43,
+      "height": 23,
+      "row": 7
+    },
+    {
+      "index": 95,
+      "path": "/characters/gabumon/frames/frame-095.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1268,
+        818,
+        1308,
+        844
+      ],
+      "width": 40,
+      "height": 26,
+      "row": 7
+    },
+    {
+      "index": 96,
+      "path": "/characters/gabumon/frames/frame-096.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        38,
+        925,
+        73,
+        950
+      ],
+      "width": 35,
+      "height": 25,
+      "row": 8
+    },
+    {
+      "index": 97,
+      "path": "/characters/gabumon/frames/frame-097.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        152,
+        925,
+        183,
+        950
+      ],
+      "width": 31,
+      "height": 25,
+      "row": 8
+    },
+    {
+      "index": 98,
+      "path": "/characters/gabumon/frames/frame-098.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        263,
+        928,
+        297,
+        950
+      ],
+      "width": 34,
+      "height": 22,
+      "row": 8
+    },
+    {
+      "index": 99,
+      "path": "/characters/gabumon/frames/frame-099.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        372,
+        924,
+        412,
+        950
+      ],
+      "width": 40,
+      "height": 26,
+      "row": 8
+    },
+    {
+      "index": 100,
+      "path": "/characters/gabumon/frames/frame-100.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        486,
+        930,
+        521,
+        950
+      ],
+      "width": 35,
+      "height": 20,
+      "row": 8
+    },
+    {
+      "index": 101,
+      "path": "/characters/gabumon/frames/frame-101.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        595,
+        928,
+        637,
+        950
+      ],
+      "width": 42,
+      "height": 22,
+      "row": 8
+    },
+    {
+      "index": 102,
+      "path": "/characters/gabumon/frames/frame-102.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        708,
+        927,
+        748,
+        950
+      ],
+      "width": 40,
+      "height": 23,
+      "row": 8
+    },
+    {
+      "index": 103,
+      "path": "/characters/gabumon/frames/frame-103.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        825,
+        924,
+        855,
+        950
+      ],
+      "width": 30,
+      "height": 26,
+      "row": 8
+    },
+    {
+      "index": 104,
+      "path": "/characters/gabumon/frames/frame-104.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        939,
+        916,
+        965,
+        950
+      ],
+      "width": 26,
+      "height": 34,
+      "row": 8
+    },
+    {
+      "index": 105,
+      "path": "/characters/gabumon/frames/frame-105.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1047,
+        918,
+        1081,
+        950
+      ],
+      "width": 34,
+      "height": 32,
+      "row": 8
+    },
+    {
+      "index": 106,
+      "path": "/characters/gabumon/frames/frame-106.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1159,
+        914,
+        1192,
+        950
+      ],
+      "width": 33,
+      "height": 36,
+      "row": 8
+    },
+    {
+      "index": 107,
+      "path": "/characters/gabumon/frames/frame-107.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1271,
+        913,
+        1305,
+        950
+      ],
+      "width": 34,
+      "height": 37,
+      "row": 8
+    },
+    {
+      "index": 108,
+      "path": "/characters/gabumon/frames/frame-108.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        40,
+        1020,
+        71,
+        1056
+      ],
+      "width": 31,
+      "height": 36,
+      "row": 9
+    },
+    {
+      "index": 109,
+      "path": "/characters/gabumon/frames/frame-109.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        152,
+        1025,
+        184,
+        1056
+      ],
+      "width": 32,
+      "height": 31,
+      "row": 9
+    },
+    {
+      "index": 110,
+      "path": "/characters/gabumon/frames/frame-110.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        259,
+        1029,
+        300,
+        1056
+      ],
+      "width": 41,
+      "height": 27,
+      "row": 9
+    },
+    {
+      "index": 111,
+      "path": "/characters/gabumon/frames/frame-111.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        372,
+        1029,
+        411,
+        1056
+      ],
+      "width": 39,
+      "height": 27,
+      "row": 9
+    },
+    {
+      "index": 112,
+      "path": "/characters/gabumon/frames/frame-112.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        492,
+        1029,
+        515,
+        1056
+      ],
+      "width": 23,
+      "height": 27,
+      "row": 9
+    },
+    {
+      "index": 113,
+      "path": "/characters/gabumon/frames/frame-113.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        601,
+        1026,
+        630,
+        1056
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 9
+    },
+    {
+      "index": 114,
+      "path": "/characters/gabumon/frames/frame-114.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        713,
+        1026,
+        742,
+        1056
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 9
+    },
+    {
+      "index": 115,
+      "path": "/characters/gabumon/frames/frame-115.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        825,
+        1024,
+        854,
+        1056
+      ],
+      "width": 29,
+      "height": 32,
+      "row": 9
+    },
+    {
+      "index": 116,
+      "path": "/characters/gabumon/frames/frame-116.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        936,
+        1029,
+        968,
+        1056
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 9
+    },
+    {
+      "index": 117,
+      "path": "/characters/gabumon/frames/frame-117.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1047,
+        1028,
+        1081,
+        1056
+      ],
+      "width": 34,
+      "height": 28,
+      "row": 9
+    },
+    {
+      "index": 118,
+      "path": "/characters/gabumon/frames/frame-118.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1158,
+        1022,
+        1193,
+        1056
+      ],
+      "width": 35,
+      "height": 34,
+      "row": 9
+    },
+    {
+      "index": 119,
+      "path": "/characters/gabumon/frames/frame-119.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1270,
+        1025,
+        1306,
+        1056
+      ],
+      "width": 36,
+      "height": 31,
+      "row": 9
+    },
+    {
+      "index": 120,
+      "path": "/characters/gabumon/frames/frame-120.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        40,
+        1135,
+        72,
+        1162
+      ],
+      "width": 32,
+      "height": 27,
+      "row": 10
+    },
+    {
+      "index": 121,
+      "path": "/characters/gabumon/frames/frame-121.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        151,
+        1132,
+        185,
+        1162
+      ],
+      "width": 34,
+      "height": 30,
+      "row": 10
+    },
+    {
+      "index": 122,
+      "path": "/characters/gabumon/frames/frame-122.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        261,
+        1131,
+        298,
+        1162
+      ],
+      "width": 37,
+      "height": 31,
+      "row": 10
+    },
+    {
+      "index": 123,
+      "path": "/characters/gabumon/frames/frame-123.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        374,
+        1128,
+        410,
+        1162
+      ],
+      "width": 36,
+      "height": 34,
+      "row": 10
+    },
+    {
+      "index": 124,
+      "path": "/characters/gabumon/frames/frame-124.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        482,
+        1136,
+        525,
+        1162
+      ],
+      "width": 43,
+      "height": 26,
+      "row": 10
+    },
+    {
+      "index": 125,
+      "path": "/characters/gabumon/frames/frame-125.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        600,
+        1129,
+        632,
+        1162
+      ],
+      "width": 32,
+      "height": 33,
+      "row": 10
+    },
+    {
+      "index": 126,
+      "path": "/characters/gabumon/frames/frame-126.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        710,
+        1131,
+        745,
+        1162
+      ],
+      "width": 35,
+      "height": 31,
+      "row": 10
+    },
+    {
+      "index": 127,
+      "path": "/characters/gabumon/frames/frame-127.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        823,
+        1128,
+        857,
+        1162
+      ],
+      "width": 34,
+      "height": 34,
+      "row": 10
+    },
+    {
+      "index": 128,
+      "path": "/characters/gabumon/frames/frame-128.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        936,
+        1135,
+        967,
+        1162
+      ],
+      "width": 31,
+      "height": 27,
+      "row": 10
+    },
+    {
+      "index": 129,
+      "path": "/characters/gabumon/frames/frame-129.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1044,
+        1138,
+        1083,
+        1162
+      ],
+      "width": 39,
+      "height": 24,
+      "row": 10
+    },
+    {
+      "index": 130,
+      "path": "/characters/gabumon/frames/frame-130.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1156,
+        1137,
+        1196,
+        1162
+      ],
+      "width": 40,
+      "height": 25,
+      "row": 10
+    },
+    {
+      "index": 131,
+      "path": "/characters/gabumon/frames/frame-131.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1267,
+        1139,
+        1308,
+        1162
+      ],
+      "width": 41,
+      "height": 23,
+      "row": 10
+    },
+    {
+      "index": 132,
+      "path": "/characters/gabumon/frames/frame-132.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        35,
+        1243,
+        77,
+        1268
+      ],
+      "width": 42,
+      "height": 25,
+      "row": 11
+    },
+    {
+      "index": 133,
+      "path": "/characters/gabumon/frames/frame-133.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        148,
+        1245,
+        188,
+        1268
+      ],
+      "width": 40,
+      "height": 23,
+      "row": 11
+    },
+    {
+      "index": 134,
+      "path": "/characters/gabumon/frames/frame-134.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        262,
+        1237,
+        298,
+        1268
+      ],
+      "width": 36,
+      "height": 31,
+      "row": 11
+    },
+    {
+      "index": 135,
+      "path": "/characters/gabumon/frames/frame-135.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        375,
+        1241,
+        409,
+        1268
+      ],
+      "width": 34,
+      "height": 27,
+      "row": 11
+    },
+    {
+      "index": 136,
+      "path": "/characters/gabumon/frames/frame-136.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        486,
+        1234,
+        521,
+        1268
+      ],
+      "width": 35,
+      "height": 34,
+      "row": 11
+    },
+    {
+      "index": 137,
+      "path": "/characters/gabumon/frames/frame-137.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        600,
+        1238,
+        632,
+        1268
+      ],
+      "width": 32,
+      "height": 30,
+      "row": 11
+    },
+    {
+      "index": 138,
+      "path": "/characters/gabumon/frames/frame-138.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        713,
+        1237,
+        742,
+        1268
+      ],
+      "width": 29,
+      "height": 31,
+      "row": 11
+    },
+    {
+      "index": 139,
+      "path": "/characters/gabumon/frames/frame-139.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        826,
+        1241,
+        853,
+        1268
+      ],
+      "width": 27,
+      "height": 27,
+      "row": 11
+    },
+    {
+      "index": 140,
+      "path": "/characters/gabumon/frames/frame-140.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        935,
+        1238,
+        968,
+        1268
+      ],
+      "width": 33,
+      "height": 30,
+      "row": 11
+    },
+    {
+      "index": 141,
+      "path": "/characters/gabumon/frames/frame-141.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1044,
+        1241,
+        1083,
+        1268
+      ],
+      "width": 39,
+      "height": 27,
+      "row": 11
+    },
+    {
+      "index": 142,
+      "path": "/characters/gabumon/frames/frame-142.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1158,
+        1244,
+        1194,
+        1268
+      ],
+      "width": 36,
+      "height": 24,
+      "row": 11
+    },
+    {
+      "index": 143,
+      "path": "/characters/gabumon/frames/frame-143.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1270,
+        1249,
+        1306,
+        1268
+      ],
+      "width": 36,
+      "height": 19,
+      "row": 11
+    },
+    {
+      "index": 144,
+      "path": "/characters/gabumon/frames/frame-144.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        38,
+        1352,
+        74,
+        1374
+      ],
+      "width": 36,
+      "height": 22,
+      "row": 12
+    },
+    {
+      "index": 145,
+      "path": "/characters/gabumon/frames/frame-145.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        150,
+        1356,
+        186,
+        1374
+      ],
+      "width": 36,
+      "height": 18,
+      "row": 12
+    },
+    {
+      "index": 146,
+      "path": "/characters/gabumon/frames/frame-146.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        264,
+        1348,
+        296,
+        1374
+      ],
+      "width": 32,
+      "height": 26,
+      "row": 12
+    },
+    {
+      "index": 147,
+      "path": "/characters/gabumon/frames/frame-147.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        375,
+        1347,
+        408,
+        1374
+      ],
+      "width": 33,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 148,
+      "path": "/characters/gabumon/frames/frame-148.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        490,
+        1347,
+        518,
+        1374
+      ],
+      "width": 28,
+      "height": 27,
+      "row": 12
+    },
+    {
+      "index": 149,
+      "path": "/characters/gabumon/frames/frame-149.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        602,
+        1346,
+        630,
+        1374
+      ],
+      "width": 28,
+      "height": 28,
+      "row": 12
+    },
+    {
+      "index": 150,
+      "path": "/characters/gabumon/frames/frame-150.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        709,
+        1334,
+        747,
+        1374
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 12
+    },
+    {
+      "index": 151,
+      "path": "/characters/gabumon/frames/frame-151.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        821,
+        1334,
+        859,
+        1374
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 12
+    },
+    {
+      "index": 152,
+      "path": "/characters/gabumon/frames/frame-152.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        933,
+        1334,
+        971,
+        1374
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 12
+    },
+    {
+      "index": 153,
+      "path": "/characters/gabumon/frames/frame-153.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1045,
+        1334,
+        1083,
+        1374
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 12
+    },
+    {
+      "index": 154,
+      "path": "/characters/gabumon/frames/frame-154.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1157,
+        1334,
+        1195,
+        1374
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 12
+    },
+    {
+      "index": 155,
+      "path": "/characters/gabumon/frames/frame-155.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1271,
+        1339,
+        1304,
+        1374
+      ],
+      "width": 33,
+      "height": 35,
+      "row": 12
+    },
+    {
+      "index": 156,
+      "path": "/characters/gabumon/frames/frame-156.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        37,
+        1440,
+        75,
+        1480
+      ],
+      "width": 38,
+      "height": 40,
+      "row": 13
+    },
+    {
+      "index": 157,
+      "path": "/characters/gabumon/frames/frame-157.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        154,
+        1450,
+        181,
+        1480
+      ],
+      "width": 27,
+      "height": 30,
+      "row": 13
+    },
+    {
+      "index": 158,
+      "path": "/characters/gabumon/frames/frame-158.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        264,
+        1448,
+        295,
+        1480
+      ],
+      "width": 31,
+      "height": 32,
+      "row": 13
+    },
+    {
+      "index": 159,
+      "path": "/characters/gabumon/frames/frame-159.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        373,
+        1448,
+        410,
+        1480
+      ],
+      "width": 37,
+      "height": 32,
+      "row": 13
+    },
+    {
+      "index": 160,
+      "path": "/characters/gabumon/frames/frame-160.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        486,
+        1446,
+        521,
+        1480
+      ],
+      "width": 35,
+      "height": 34,
+      "row": 13
+    },
+    {
+      "index": 161,
+      "path": "/characters/gabumon/frames/frame-161.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        600,
+        1450,
+        631,
+        1480
+      ],
+      "width": 31,
+      "height": 30,
+      "row": 13
+    },
+    {
+      "index": 162,
+      "path": "/characters/gabumon/frames/frame-162.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        712,
+        1454,
+        744,
+        1480
+      ],
+      "width": 32,
+      "height": 26,
+      "row": 13
+    },
+    {
+      "index": 163,
+      "path": "/characters/gabumon/frames/frame-163.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        822,
+        1446,
+        857,
+        1480
+      ],
+      "width": 35,
+      "height": 34,
+      "row": 13
+    },
+    {
+      "index": 164,
+      "path": "/characters/gabumon/frames/frame-164.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        931,
+        1449,
+        972,
+        1480
+      ],
+      "width": 41,
+      "height": 31,
+      "row": 13
+    },
+    {
+      "index": 165,
+      "path": "/characters/gabumon/frames/frame-165.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1047,
+        1446,
+        1081,
+        1480
+      ],
+      "width": 34,
+      "height": 34,
+      "row": 13
+    },
+    {
+      "index": 166,
+      "path": "/characters/gabumon/frames/frame-166.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1155,
+        1448,
+        1197,
+        1480
+      ],
+      "width": 42,
+      "height": 32,
+      "row": 13
+    },
+    {
+      "index": 167,
+      "path": "/characters/gabumon/frames/frame-167.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1273,
+        1447,
+        1303,
+        1480
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 13
+    },
+    {
+      "index": 168,
+      "path": "/characters/gabumon/frames/frame-168.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        41,
+        1554,
+        70,
+        1586
+      ],
+      "width": 29,
+      "height": 32,
+      "row": 14
+    },
+    {
+      "index": 169,
+      "path": "/characters/gabumon/frames/frame-169.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        152,
+        1556,
+        183,
+        1586
+      ],
+      "width": 31,
+      "height": 30,
+      "row": 14
+    },
+    {
+      "index": 170,
+      "path": "/characters/gabumon/frames/frame-170.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        265,
+        1556,
+        295,
+        1586
+      ],
+      "width": 30,
+      "height": 30,
+      "row": 14
+    },
+    {
+      "index": 171,
+      "path": "/characters/gabumon/frames/frame-171.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        379,
+        1552,
+        405,
+        1586
+      ],
+      "width": 26,
+      "height": 34,
+      "row": 14
+    },
+    {
+      "index": 172,
+      "path": "/characters/gabumon/frames/frame-172.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        491,
+        1556,
+        517,
+        1586
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 14
+    },
+    {
+      "index": 173,
+      "path": "/characters/gabumon/frames/frame-173.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        604,
+        1555,
+        627,
+        1586
+      ],
+      "width": 23,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 174,
+      "path": "/characters/gabumon/frames/frame-174.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        714,
+        1554,
+        741,
+        1586
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 14
+    },
+    {
+      "index": 175,
+      "path": "/characters/gabumon/frames/frame-175.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        826,
+        1556,
+        854,
+        1586
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 14
+    },
+    {
+      "index": 176,
+      "path": "/characters/gabumon/frames/frame-176.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        936,
+        1555,
+        968,
+        1586
+      ],
+      "width": 32,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 177,
+      "path": "/characters/gabumon/frames/frame-177.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1048,
+        1552,
+        1080,
+        1586
+      ],
+      "width": 32,
+      "height": 34,
+      "row": 14
+    },
+    {
+      "index": 178,
+      "path": "/characters/gabumon/frames/frame-178.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1157,
+        1555,
+        1195,
+        1586
+      ],
+      "width": 38,
+      "height": 31,
+      "row": 14
+    },
+    {
+      "index": 179,
+      "path": "/characters/gabumon/frames/frame-179.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1270,
+        1552,
+        1305,
+        1586
+      ],
+      "width": 35,
+      "height": 34,
+      "row": 14
+    },
+    {
+      "index": 180,
+      "path": "/characters/gabumon/frames/frame-180.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        41,
+        1660,
+        71,
+        1692
+      ],
+      "width": 30,
+      "height": 32,
+      "row": 15
+    },
+    {
+      "index": 181,
+      "path": "/characters/gabumon/frames/frame-181.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        152,
+        1661,
+        183,
+        1692
+      ],
+      "width": 31,
+      "height": 31,
+      "row": 15
+    },
+    {
+      "index": 182,
+      "path": "/characters/gabumon/frames/frame-182.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        266,
+        1660,
+        294,
+        1692
+      ],
+      "width": 28,
+      "height": 32,
+      "row": 15
+    },
+    {
+      "index": 183,
+      "path": "/characters/gabumon/frames/frame-183.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        379,
+        1662,
+        404,
+        1692
+      ],
+      "width": 25,
+      "height": 30,
+      "row": 15
+    },
+    {
+      "index": 184,
+      "path": "/characters/gabumon/frames/frame-184.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        486,
+        1661,
+        521,
+        1692
+      ],
+      "width": 35,
+      "height": 31,
+      "row": 15
+    },
+    {
+      "index": 185,
+      "path": "/characters/gabumon/frames/frame-185.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        597,
+        1662,
+        634,
+        1692
+      ],
+      "width": 37,
+      "height": 30,
+      "row": 15
+    },
+    {
+      "index": 186,
+      "path": "/characters/gabumon/frames/frame-186.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        709,
+        1656,
+        747,
+        1692
+      ],
+      "width": 38,
+      "height": 36,
+      "row": 15
+    },
+    {
+      "index": 187,
+      "path": "/characters/gabumon/frames/frame-187.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        820,
+        1659,
+        860,
+        1692
+      ],
+      "width": 40,
+      "height": 33,
+      "row": 15
+    },
+    {
+      "index": 188,
+      "path": "/characters/gabumon/frames/frame-188.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        938,
+        1662,
+        966,
+        1692
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 15
+    },
+    {
+      "index": 189,
+      "path": "/characters/gabumon/frames/frame-189.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1049,
+        1659,
+        1079,
+        1692
+      ],
+      "width": 30,
+      "height": 33,
+      "row": 15
+    },
+    {
+      "index": 190,
+      "path": "/characters/gabumon/frames/frame-190.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1156,
+        1648,
+        1195,
+        1692
+      ],
+      "width": 39,
+      "height": 44,
+      "row": 15
+    },
+    {
+      "index": 191,
+      "path": "/characters/gabumon/frames/frame-191.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1270,
+        1647,
+        1305,
+        1692
+      ],
+      "width": 35,
+      "height": 45,
+      "row": 15
+    },
+    {
+      "index": 192,
+      "path": "/characters/gabumon/frames/frame-192.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        38,
+        1757,
+        74,
+        1798
+      ],
+      "width": 36,
+      "height": 41,
+      "row": 16
+    },
+    {
+      "index": 193,
+      "path": "/characters/gabumon/frames/frame-193.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        154,
+        1770,
+        181,
+        1798
+      ],
+      "width": 27,
+      "height": 28,
+      "row": 16
+    },
+    {
+      "index": 194,
+      "path": "/characters/gabumon/frames/frame-194.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        267,
+        1771,
+        292,
+        1798
+      ],
+      "width": 25,
+      "height": 27,
+      "row": 16
+    },
+    {
+      "index": 195,
+      "path": "/characters/gabumon/frames/frame-195.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        381,
+        1770,
+        402,
+        1798
+      ],
+      "width": 21,
+      "height": 28,
+      "row": 16
+    },
+    {
+      "index": 196,
+      "path": "/characters/gabumon/frames/frame-196.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        490,
+        1769,
+        517,
+        1798
+      ],
+      "width": 27,
+      "height": 29,
+      "row": 16
+    },
+    {
+      "index": 197,
+      "path": "/characters/gabumon/frames/frame-197.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        603,
+        1770,
+        629,
+        1798
+      ],
+      "width": 26,
+      "height": 28,
+      "row": 16
+    },
+    {
+      "index": 198,
+      "path": "/characters/gabumon/frames/frame-198.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        714,
+        1767,
+        742,
+        1798
+      ],
+      "width": 28,
+      "height": 31,
+      "row": 16
+    },
+    {
+      "index": 199,
+      "path": "/characters/gabumon/frames/frame-199.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        824,
+        1753,
+        855,
+        1798
+      ],
+      "width": 31,
+      "height": 45,
+      "row": 16
+    },
+    {
+      "index": 200,
+      "path": "/characters/gabumon/frames/frame-200.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        938,
+        1766,
+        965,
+        1798
+      ],
+      "width": 27,
+      "height": 32,
+      "row": 16
+    },
+    {
+      "index": 201,
+      "path": "/characters/gabumon/frames/frame-201.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1046,
+        1761,
+        1081,
+        1798
+      ],
+      "width": 35,
+      "height": 37,
+      "row": 16
+    },
+    {
+      "index": 202,
+      "path": "/characters/gabumon/frames/frame-202.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1158,
+        1759,
+        1194,
+        1798
+      ],
+      "width": 36,
+      "height": 39,
+      "row": 16
+    },
+    {
+      "index": 203,
+      "path": "/characters/gabumon/frames/frame-203.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1274,
+        1767,
+        1302,
+        1798
+      ],
+      "width": 28,
+      "height": 31,
+      "row": 16
+    },
+    {
+      "index": 204,
+      "path": "/characters/gabumon/frames/frame-204.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        40,
+        1869,
+        72,
+        1904
+      ],
+      "width": 32,
+      "height": 35,
+      "row": 17
+    },
+    {
+      "index": 205,
+      "path": "/characters/gabumon/frames/frame-205.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        151,
+        1871,
+        184,
+        1904
+      ],
+      "width": 33,
+      "height": 33,
+      "row": 17
+    },
+    {
+      "index": 206,
+      "path": "/characters/gabumon/frames/frame-206.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        257,
+        1873,
+        302,
+        1904
+      ],
+      "width": 45,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 207,
+      "path": "/characters/gabumon/frames/frame-207.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        361,
+        1873,
+        423,
+        1904
+      ],
+      "width": 62,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 208,
+      "path": "/characters/gabumon/frames/frame-208.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        473,
+        1873,
+        534,
+        1904
+      ],
+      "width": 61,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 209,
+      "path": "/characters/gabumon/frames/frame-209.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        580,
+        1873,
+        651,
+        1904
+      ],
+      "width": 71,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 210,
+      "path": "/characters/gabumon/frames/frame-210.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        692,
+        1873,
+        763,
+        1904
+      ],
+      "width": 71,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 211,
+      "path": "/characters/gabumon/frames/frame-211.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        804,
+        1873,
+        875,
+        1904
+      ],
+      "width": 71,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 212,
+      "path": "/characters/gabumon/frames/frame-212.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        917,
+        1873,
+        987,
+        1904
+      ],
+      "width": 70,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 213,
+      "path": "/characters/gabumon/frames/frame-213.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1037,
+        1873,
+        1091,
+        1904
+      ],
+      "width": 54,
+      "height": 31,
+      "row": 17
+    },
+    {
+      "index": 214,
+      "path": "/characters/gabumon/frames/frame-214.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1156,
+        1875,
+        1196,
+        1904
+      ],
+      "width": 40,
+      "height": 29,
+      "row": 17
+    },
+    {
+      "index": 215,
+      "path": "/characters/gabumon/frames/frame-215.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1275,
+        1874,
+        1301,
+        1904
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 17
+    },
+    {
+      "index": 216,
+      "path": "/characters/gabumon/frames/frame-216.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        43,
+        1980,
+        69,
+        2010
+      ],
+      "width": 26,
+      "height": 30,
+      "row": 18
+    },
+    {
+      "index": 217,
+      "path": "/characters/gabumon/frames/frame-217.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        153,
+        1980,
+        182,
+        2010
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 18
+    },
+    {
+      "index": 218,
+      "path": "/characters/gabumon/frames/frame-218.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        264,
+        1982,
+        296,
+        2010
+      ],
+      "width": 32,
+      "height": 28,
+      "row": 18
+    },
+    {
+      "index": 219,
+      "path": "/characters/gabumon/frames/frame-219.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        380,
+        1973,
+        403,
+        2010
+      ],
+      "width": 23,
+      "height": 37,
+      "row": 18
+    },
+    {
+      "index": 220,
+      "path": "/characters/gabumon/frames/frame-220.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        489,
+        1973,
+        518,
+        2010
+      ],
+      "width": 29,
+      "height": 37,
+      "row": 18
+    },
+    {
+      "index": 221,
+      "path": "/characters/gabumon/frames/frame-221.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        599,
+        1969,
+        633,
+        2010
+      ],
+      "width": 34,
+      "height": 41,
+      "row": 18
+    },
+    {
+      "index": 222,
+      "path": "/characters/gabumon/frames/frame-222.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        711,
+        1968,
+        745,
+        2010
+      ],
+      "width": 34,
+      "height": 42,
+      "row": 18
+    },
+    {
+      "index": 223,
+      "path": "/characters/gabumon/frames/frame-223.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        824,
+        1980,
+        856,
+        2010
+      ],
+      "width": 32,
+      "height": 30,
+      "row": 18
+    },
+    {
+      "index": 224,
+      "path": "/characters/gabumon/frames/frame-224.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        935,
+        1980,
+        968,
+        2010
+      ],
+      "width": 33,
+      "height": 30,
+      "row": 18
+    },
+    {
+      "index": 225,
+      "path": "/characters/gabumon/frames/frame-225.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1049,
+        1979,
+        1079,
+        2010
+      ],
+      "width": 30,
+      "height": 31,
+      "row": 18
+    },
+    {
+      "index": 226,
+      "path": "/characters/gabumon/frames/frame-226.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1161,
+        1980,
+        1190,
+        2010
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 18
+    },
+    {
+      "index": 227,
+      "path": "/characters/gabumon/frames/frame-227.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        1274,
+        1979,
+        1302,
+        2010
+      ],
+      "width": 28,
+      "height": 31,
+      "row": 18
+    },
+    {
+      "index": 228,
+      "path": "/characters/gabumon/frames/frame-228.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        41,
+        2086,
+        70,
+        2116
+      ],
+      "width": 29,
+      "height": 30,
+      "row": 19
+    },
+    {
+      "index": 229,
+      "path": "/characters/gabumon/frames/frame-229.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        154,
+        2086,
+        182,
+        2116
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 19
+    },
+    {
+      "index": 230,
+      "path": "/characters/gabumon/frames/frame-230.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        266,
+        2086,
+        294,
+        2116
+      ],
+      "width": 28,
+      "height": 30,
+      "row": 19
+    },
+    {
+      "index": 231,
+      "path": "/characters/gabumon/frames/frame-231.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        378,
+        2085,
+        406,
+        2116
+      ],
+      "width": 28,
+      "height": 31,
+      "row": 19
+    },
+    {
+      "index": 232,
+      "path": "/characters/gabumon/frames/frame-232.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        489,
+        2085,
+        518,
+        2116
+      ],
+      "width": 29,
+      "height": 31,
+      "row": 19
+    },
+    {
+      "index": 233,
+      "path": "/characters/gabumon/frames/frame-233.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        600,
+        2085,
+        631,
+        2116
+      ],
+      "width": 31,
+      "height": 31,
+      "row": 19
+    },
+    {
+      "index": 234,
+      "path": "/characters/gabumon/frames/frame-234.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        713,
+        2085,
+        743,
+        2116
+      ],
+      "width": 30,
+      "height": 31,
+      "row": 19
+    },
+    {
+      "index": 235,
+      "path": "/characters/gabumon/frames/frame-235.png",
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png",
+      "sourceName": "Gabumon.png",
+      "box": [
+        826,
+        2085,
+        853,
+        2116
+      ],
+      "width": 27,
+      "height": 31,
+      "row": 19
+    },
+    {
+      "index": 236,
+      "path": "/characters/gabumon/frames/frame-236.png",
+      "sourceMode": "replacement",
+      "sourceName": "Generated Crouch Composite",
+      "replacementName": "crouchBlock.png",
+      "replacementWidth": 46,
+      "replacementHeight": 48,
+      "box": [
+        935,
+        2085,
+        968,
+        2116
+      ],
+      "width": 33,
+      "height": 31,
+      "row": 19,
+      "generatedComposite": true,
+      "generatedCompositeRole": "crouchBlock",
+      "generatedCompositeKey": "crouchBlock|crouch=/characters/gabumon/frames/frame-127.png|widthScale=0.96",
+      "generatedSources": {
+        "crouch": "/characters/gabumon/frames/frame-127.png"
+      },
+      "generatedTransform": {
+        "widthScale": 0.96
+      },
+      "sheetId": "generated",
+      "sheetPath": "/characters/gabumon/animation-sheet.png"
+    }
+  ]
+}

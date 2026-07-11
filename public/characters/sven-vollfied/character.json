@@ -43,8 +43,16 @@
     "walkBack": [
       "/characters/sven-vollfied/frames/frame-015.png"
     ],
-    "sprint": [],
-    "backHop": [],
+    "sprint": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "backHop": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
     "sidestepLeft": [
       "/characters/sven-vollfied/frames/frame-016.png",
       "/characters/sven-vollfied/frames/frame-018.png",
@@ -55,17 +63,14 @@
     "sidestepRight": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "jump": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "crouch": [
       "/characters/sven-vollfied/frames/frame-004.png",
@@ -78,151 +83,187 @@
       "/characters/sven-vollfied/frames/frame-015.png"
     ],
     "chargeKi": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
-    "jableft": [],
-    "jabright": [],
+    "jableft": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "jabright": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
     "kickleft": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "kickright": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
-    "hitLight": [],
-    "hitHeavy": [],
-    "juggle": [],
-    "knockdown": [],
-    "getupStand": [],
+    "hitLight": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "hitHeavy": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "juggle": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "knockdown": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "getupStand": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
     "getupRollUp": [],
     "win": [
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-012.png"
     ],
-    "lose": [],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
+    "lose": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "cmd:f+1": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
     "cmd:qcf+4": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:WS+4": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
-    "cmd:1+2": [],
+    "cmd:FC+1": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
+    "cmd:1+2": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
     "cmd:1+3": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:2+3": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:2+4": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:3+4": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ],
     "cmd:1+4": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:f+3": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:d+3": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:d/f+3": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:qcf+3": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:SS+3": [
       "/characters/sven-vollfied/frames/frame-024.png",
       "/characters/sven-vollfied/frames/frame-025.png",
-      "/characters/sven-vollfied/frames/frame-026.png",
-      "/characters/sven-vollfied/frames/frame-027.png",
-      "/characters/sven-vollfied/frames/frame-028.png",
-      "/characters/sven-vollfied/frames/frame-029.png"
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:SS+4": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
     "cmd:O+4": [
-      "/characters/sven-vollfied/frames/frame-030.png",
-      "/characters/sven-vollfied/frames/frame-031.png",
-      "/characters/sven-vollfied/frames/frame-032.png",
-      "/characters/sven-vollfied/frames/frame-033.png",
-      "/characters/sven-vollfied/frames/frame-034.png"
+      "/characters/sven-vollfied/frames/frame-022.png",
+      "/characters/sven-vollfied/frames/frame-023.png",
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
     ],
-    "crouchBlock": []
+    "crouchBlock": [
+      "/characters/sven-vollfied/frames/frame-024.png",
+      "/characters/sven-vollfied/frames/frame-025.png",
+      "/characters/sven-vollfied/frames/frame-026.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -2149,6 +2190,40 @@
       "34": {
         "width": 0.309,
         "height": 0.544,
+        "offsetX": 0
+      }
+    },
+    "juggle": {
+      "24": {
+        "width": 1.593,
+        "height": 0.945,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 1.593,
+        "height": 0.945,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 1.085,
+        "height": 0.964,
+        "offsetX": 0
+      }
+    },
+    "knockdown": {
+      "24": {
+        "width": 1.593,
+        "height": 0.945,
+        "offsetX": 0
+      },
+      "25": {
+        "width": 1.593,
+        "height": 0.945,
+        "offsetX": 0
+      },
+      "26": {
+        "width": 1.085,
+        "height": 0.964,
         "offsetX": 0
       }
     }

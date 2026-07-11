@@ -45,6 +45,7 @@ const rawButtonCommandToBaseAnimationKey: Record<string, string> = {
 };
 
 export function normalizeCharacter(character: CharacterDefinition): CharacterDefinition {
+  const animationFrames = normalizeAnimationFrameMap(character.id, character.animationFrames ?? {});
   return {
     ...character,
     displayName: normalizeCharacterDisplayName(character.displayName),
@@ -56,7 +57,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     transformCharacterId: character.hasTransform && typeof character.transformCharacterId === 'string' ? character.transformCharacterId : undefined,
     faceCardPath: typeof character.faceCardPath === 'string' ? character.faceCardPath : undefined,
     stats: normalizeCharacterStats(character.stats),
-    animationFrames: canonicalizeBaseButtonRecord(character.animationFrames ?? {}),
+    animationFrames,
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),
     animationFrameScales: sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {}),
@@ -81,6 +82,33 @@ function normalizeCharacterDisplayName(displayName: string) {
   return displayName.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
+export function normalizeAnimationFrameMap(characterId: string, frames: CharacterDefinition['animationFrames']) {
+  const canonicalFrames = canonicalizeBaseButtonRecord(frames ?? {});
+  return Object.fromEntries(
+    Object.entries(canonicalFrames)
+      .filter(([key, value]) => key.length > 0 && Array.isArray(value))
+      .map(([key, value]) => [
+        key,
+        value
+          .filter((frame): frame is string => typeof frame === 'string')
+          .map((frame) => normalizeCharacterFramePath(characterId, frame))
+      ])
+  );
+}
+
+export function normalizeCharacterFramePath(characterId: string, frame: string) {
+  const trimmed = frame.trim();
+  if (!trimmed || /^(?:https?:|data:|blob:)/i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith('/characters/')) return trimmed;
+  if (trimmed.startsWith(`characters/${characterId}/`)) return `/${trimmed}`;
+  if (trimmed.startsWith('/frames/')) return `/characters/${characterId}${trimmed}`;
+  if (trimmed.startsWith('./frames/')) return `/characters/${characterId}/${trimmed.slice(2)}`;
+  if (trimmed.startsWith('frames/')) return `/characters/${characterId}/${trimmed}`;
+  if (/^frame-\d+\.png$/i.test(trimmed)) return `/characters/${characterId}/frames/${trimmed}`;
+  if (!trimmed.startsWith('/') && !trimmed.startsWith('../')) return `/characters/${characterId}/${trimmed}`;
+  return trimmed;
+}
+
 function normalizeCharacterStats(stats: CharacterDefinition['stats']): CharacterDefinition['stats'] {
   return {
     ...stats,
@@ -102,7 +130,11 @@ function sanitizeAnimationScaleMap(scales: CharacterDefinition['animationScales'
         {
           width: clamp(finiteOr(value.width, 1), 0.1, 10),
           height: clamp(finiteOr(value.height, 1), 0.1, 10),
-          offsetX: clamp(finiteOr(value.offsetX, 0), -6, 6)
+          voxelScaleX: clamp(finiteOr(value.voxelScaleX, 1), 0.1, 10),
+          voxelScaleY: clamp(finiteOr(value.voxelScaleY, 1), 0.1, 10),
+          offsetX: clamp(finiteOr(value.offsetX, 0), -6, 6),
+          flipX: Boolean(value.flipX),
+          flipY: Boolean(value.flipY)
         }
       ])
   ));
@@ -122,7 +154,11 @@ function sanitizeAnimationFrameScaleMap(scales: CharacterDefinition['animationFr
               {
                 width: clamp(finiteOr(frameScale.width, 1), 0.1, 10),
                 height: clamp(finiteOr(frameScale.height, 1), 0.1, 10),
-                offsetX: clamp(finiteOr(frameScale.offsetX, 0), -6, 6)
+                voxelScaleX: clamp(finiteOr(frameScale.voxelScaleX, 1), 0.1, 10),
+                voxelScaleY: clamp(finiteOr(frameScale.voxelScaleY, 1), 0.1, 10),
+                offsetX: clamp(finiteOr(frameScale.offsetX, 0), -6, 6),
+                flipX: Boolean(frameScale.flipX),
+                flipY: Boolean(frameScale.flipY)
               }
             ])
         )

@@ -1,0 +1,2841 @@
+{
+  "id": "danny-phantom",
+  "displayName": "Danny Phantom",
+  "locked": true,
+  "variant": false,
+  "faceCardPath": "/characters/danny-phantom/face-card.png",
+  "renderMode": "spriteVoxel",
+  "modelPath": "spritevoxel://danny-phantom",
+  "spriteSheetPath": "/characters/danny-phantom/animation-sheet.png",
+  "spriteSheets": [
+    {
+      "id": "generated",
+      "name": "Generated Frame Atlas",
+      "path": "/characters/danny-phantom/animation-sheet.png",
+      "frameStart": 0,
+      "frameCount": 102
+    }
+  ],
+  "spriteFrameCount": 102,
+  "voxelProfile": "hd-image-source",
+  "voxelFidelity": {
+    "resolutionScale": 2,
+    "maxRows": 64,
+    "depth": 0.24,
+    "alphaThreshold": 24,
+    "paletteSnap": 1,
+    "mergeRuns": true,
+    "lod": {
+      "mobileStep": 2,
+      "farStep": 2
+    }
+  },
+  "animationFrames": {
+    "idle": [
+      "/characters/danny-phantom/frames/frame-000.png",
+      "/characters/danny-phantom/frames/frame-001.png",
+      "/characters/danny-phantom/frames/frame-002.png",
+      "/characters/danny-phantom/frames/frame-003.png",
+      "/characters/danny-phantom/frames/frame-004.png"
+    ],
+    "walkForward": [
+      "/characters/danny-phantom/frames/frame-013.png",
+      "/characters/danny-phantom/frames/frame-014.png",
+      "/characters/danny-phantom/frames/frame-015.png",
+      "/characters/danny-phantom/frames/frame-016.png",
+      "/characters/danny-phantom/frames/frame-017.png",
+      "/characters/danny-phantom/frames/frame-018.png",
+      "/characters/danny-phantom/frames/frame-019.png",
+      "/characters/danny-phantom/frames/frame-020.png"
+    ],
+    "walkBack": [
+      "/characters/danny-phantom/frames/frame-020.png",
+      "/characters/danny-phantom/frames/frame-019.png",
+      "/characters/danny-phantom/frames/frame-018.png",
+      "/characters/danny-phantom/frames/frame-017.png",
+      "/characters/danny-phantom/frames/frame-016.png",
+      "/characters/danny-phantom/frames/frame-015.png",
+      "/characters/danny-phantom/frames/frame-014.png",
+      "/characters/danny-phantom/frames/frame-013.png"
+    ],
+    "sprint": [
+      "/characters/danny-phantom/frames/frame-013.png",
+      "/characters/danny-phantom/frames/frame-014.png",
+      "/characters/danny-phantom/frames/frame-015.png",
+      "/characters/danny-phantom/frames/frame-016.png",
+      "/characters/danny-phantom/frames/frame-017.png",
+      "/characters/danny-phantom/frames/frame-018.png",
+      "/characters/danny-phantom/frames/frame-019.png",
+      "/characters/danny-phantom/frames/frame-020.png"
+    ],
+    "backHop": [
+      "/characters/danny-phantom/frames/frame-026.png"
+    ],
+    "sidestepLeft": [
+      "/characters/danny-phantom/frames/frame-026.png"
+    ],
+    "sidestepRight": [
+      "/characters/danny-phantom/frames/frame-026.png"
+    ],
+    "jump": [
+      "/characters/danny-phantom/frames/frame-026.png"
+    ],
+    "crouch": [
+      "/characters/danny-phantom/frames/frame-060.png"
+    ],
+    "crouchBlock": [
+      "/characters/danny-phantom/frames/frame-061.png"
+    ],
+    "block": [
+      "/characters/danny-phantom/frames/frame-023.png"
+    ],
+    "chargeKi": [
+      "/characters/danny-phantom/frames/frame-070.png",
+      "/characters/danny-phantom/frames/frame-071.png"
+    ],
+    "jableft": [
+      "/characters/danny-phantom/frames/frame-028.png",
+      "/characters/danny-phantom/frames/frame-029.png",
+      "/characters/danny-phantom/frames/frame-030.png",
+      "/characters/danny-phantom/frames/frame-031.png",
+      "/characters/danny-phantom/frames/frame-032.png"
+    ],
+    "jabright": [
+      "/characters/danny-phantom/frames/frame-032.png",
+      "/characters/danny-phantom/frames/frame-033.png",
+      "/characters/danny-phantom/frames/frame-034.png",
+      "/characters/danny-phantom/frames/frame-035.png",
+      "/characters/danny-phantom/frames/frame-036.png"
+    ],
+    "kickleft": [
+      "/characters/danny-phantom/frames/frame-037.png",
+      "/characters/danny-phantom/frames/frame-038.png",
+      "/characters/danny-phantom/frames/frame-039.png",
+      "/characters/danny-phantom/frames/frame-040.png",
+      "/characters/danny-phantom/frames/frame-041.png",
+      "/characters/danny-phantom/frames/frame-042.png",
+      "/characters/danny-phantom/frames/frame-043.png"
+    ],
+    "kickright": [
+      "/characters/danny-phantom/frames/frame-044.png",
+      "/characters/danny-phantom/frames/frame-045.png",
+      "/characters/danny-phantom/frames/frame-046.png",
+      "/characters/danny-phantom/frames/frame-047.png",
+      "/characters/danny-phantom/frames/frame-048.png",
+      "/characters/danny-phantom/frames/frame-049.png",
+      "/characters/danny-phantom/frames/frame-050.png",
+      "/characters/danny-phantom/frames/frame-051.png",
+      "/characters/danny-phantom/frames/frame-052.png",
+      "/characters/danny-phantom/frames/frame-053.png",
+      "/characters/danny-phantom/frames/frame-054.png"
+    ],
+    "hitLight": [
+      "/characters/danny-phantom/frames/frame-096.png"
+    ],
+    "hitHeavy": [
+      "/characters/danny-phantom/frames/frame-093.png"
+    ],
+    "juggle": [
+      "/characters/danny-phantom/frames/frame-093.png"
+    ],
+    "knockdown": [
+      "/characters/danny-phantom/frames/frame-093.png"
+    ],
+    "getupStand": [
+      "/characters/danny-phantom/frames/frame-093.png",
+      "/characters/danny-phantom/frames/frame-094.png",
+      "/characters/danny-phantom/frames/frame-096.png",
+      "/characters/danny-phantom/frames/frame-097.png",
+      "/characters/danny-phantom/frames/frame-098.png",
+      "/characters/danny-phantom/frames/frame-099.png",
+      "/characters/danny-phantom/frames/frame-100.png"
+    ],
+    "getupRollUp": [],
+    "win": [
+      "/characters/danny-phantom/frames/frame-070.png",
+      "/characters/danny-phantom/frames/frame-071.png"
+    ],
+    "lose": [
+      "/characters/danny-phantom/frames/frame-093.png"
+    ],
+    "cmd:f+1": [
+      "/characters/danny-phantom/frames/frame-055.png",
+      "/characters/danny-phantom/frames/frame-056.png",
+      "/characters/danny-phantom/frames/frame-057.png",
+      "/characters/danny-phantom/frames/frame-058.png",
+      "/characters/danny-phantom/frames/frame-059.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/danny-phantom/frames/frame-060.png",
+      "/characters/danny-phantom/frames/frame-061.png",
+      "/characters/danny-phantom/frames/frame-062.png",
+      "/characters/danny-phantom/frames/frame-063.png",
+      "/characters/danny-phantom/frames/frame-065.png",
+      "/characters/danny-phantom/frames/frame-066.png",
+      "/characters/danny-phantom/frames/frame-067.png",
+      "/characters/danny-phantom/frames/frame-068.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/danny-phantom/frames/frame-070.png",
+      "/characters/danny-phantom/frames/frame-071.png",
+      "/characters/danny-phantom/frames/frame-072.png",
+      "/characters/danny-phantom/frames/frame-073.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/danny-phantom/frames/frame-028.png",
+      "/characters/danny-phantom/frames/frame-029.png",
+      "/characters/danny-phantom/frames/frame-030.png",
+      "/characters/danny-phantom/frames/frame-031.png",
+      "/characters/danny-phantom/frames/frame-032.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/danny-phantom/frames/frame-078.png",
+      "/characters/danny-phantom/frames/frame-079.png",
+      "/characters/danny-phantom/frames/frame-080.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/danny-phantom/frames/frame-037.png",
+      "/characters/danny-phantom/frames/frame-038.png",
+      "/characters/danny-phantom/frames/frame-039.png",
+      "/characters/danny-phantom/frames/frame-040.png",
+      "/characters/danny-phantom/frames/frame-041.png",
+      "/characters/danny-phantom/frames/frame-042.png",
+      "/characters/danny-phantom/frames/frame-043.png"
+    ],
+    "cmd:1+2": [],
+    "cmd:1+3": [],
+    "cmd:2+3": [
+      "/characters/danny-phantom/frames/frame-055.png",
+      "/characters/danny-phantom/frames/frame-056.png",
+      "/characters/danny-phantom/frames/frame-057.png",
+      "/characters/danny-phantom/frames/frame-058.png",
+      "/characters/danny-phantom/frames/frame-059.png"
+    ],
+    "cmd:2+4": [],
+    "cmd:3+4": [],
+    "cmd:O+2": [
+      "/characters/danny-phantom/frames/frame-021.png",
+      "/characters/danny-phantom/frames/frame-022.png",
+      "/characters/danny-phantom/frames/frame-023.png",
+      "/characters/danny-phantom/frames/frame-024.png",
+      "/characters/danny-phantom/frames/frame-025.png",
+      "/characters/danny-phantom/frames/frame-026.png",
+      "/characters/danny-phantom/frames/frame-027.png",
+      "/characters/danny-phantom/frames/frame-028.png"
+    ]
+  },
+  "animationFrameRates": {
+    "idle": 5,
+    "walkForward": 10,
+    "walkBack": 8,
+    "sprint": 12,
+    "backHop": 10,
+    "sidestepLeft": 10,
+    "sidestepRight": 10,
+    "jump": 8,
+    "crouch": 5,
+    "crouchBlock": 5,
+    "block": 5,
+    "chargeKi": 6,
+    "jableft": 10,
+    "jabright": 10,
+    "kickleft": 9,
+    "kickright": 9,
+    "hitLight": 8,
+    "hitHeavy": 8,
+    "juggle": 8,
+    "knockdown": 8,
+    "getupStand": 7,
+    "getupRollUp": 7,
+    "win": 5,
+    "lose": 4,
+    "cmd:f+1": 10,
+    "cmd:d/f+2": 9,
+    "cmd:qcf+4": 9,
+    "cmd:WS+4": 9,
+    "cmd:FC+1": 8,
+    "cmd:FC+2": 8,
+    "cmd:1+2": 8,
+    "cmd:1+3": 8,
+    "cmd:2+3": 8,
+    "cmd:2+4": 8,
+    "cmd:3+4": 8,
+    "cmd:O+2": 8
+  },
+  "animationFps": 6,
+  "scale": 1.08,
+  "cameraOffset": [
+    0,
+    1.22,
+    0
+  ],
+  "stats": {
+    "health": 99,
+    "speed": 5.2,
+    "sidestepSpeed": 4.58,
+    "jumpForce": 7.82,
+    "gravity": 18
+  },
+  "animations": {
+    "idle": "idle",
+    "walkForward": "walkForward",
+    "walkBack": "walkBack",
+    "sprint": "sprint",
+    "backHop": "backHop",
+    "sidestepLeft": "sidestepLeft",
+    "sidestepRight": "sidestepRight",
+    "crouch": "crouch",
+    "crouchBlock": "crouchBlock",
+    "jump": "jump",
+    "block": "block",
+    "chargeKi": "chargeKi",
+    "jab": "jableft",
+    "heavy": "jabright",
+    "kick": "kickleft",
+    "special": "kickright",
+    "jableft": "jableft",
+    "jabright": "jabright",
+    "kickleft": "kickleft",
+    "kickright": "kickright",
+    "hitLight": "hitLight",
+    "hitHeavy": "hitHeavy",
+    "juggle": "juggle",
+    "knockdown": "knockdown",
+    "getupStand": "getupStand",
+    "getupRollUp": "getupRollUp",
+    "win": "win",
+    "lose": "lose"
+  },
+  "moves": [
+    {
+      "id": "jab",
+      "label": "Danny Phantom Left Check",
+      "input": "jab",
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 14,
+      "damage": 6,
+      "blockDamage": 0,
+      "hitLevel": "high",
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 5,
+      "range": 1.42,
+      "pushback": 0.93,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7736000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.6936
+        ]
+      }
+    },
+    {
+      "id": "kick",
+      "label": "Danny Phantom Left Kick",
+      "input": "kick",
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "blockDamage": 0,
+      "hitLevel": "low",
+      "onBlockFrames": -11,
+      "onHitFrames": 5,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "pushback": 0.96,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          0.86,
+          0.7896000000000001
+        ],
+        "size": [
+          0.72,
+          0.42,
+          0.7096
+        ]
+      }
+    },
+    {
+      "id": "heavy",
+      "label": "Danny Phantom Right Check",
+      "input": "heavy",
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
+      "damage": 8,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.5,
+      "pushback": 0.94,
+      "blockPushback": 0.43,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.78
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7
+        ]
+      }
+    },
+    {
+      "id": "special",
+      "label": "Danny Phantom Right Kick",
+      "input": "special",
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "blockDamage": 0,
+      "hitLevel": "mid",
+      "onBlockFrames": -7,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 12,
+      "whiffRecoveryFrames": 7,
+      "range": 1.72,
+      "pushback": 0.98,
+      "blockPushback": 0.44,
+      "tracking": "medium",
+      "knockdown": false,
+      "hitbox": {
+        "offset": [
+          0,
+          1.12,
+          0.7976000000000001
+        ],
+        "size": [
+          0.72,
+          0.5,
+          0.7176
+        ]
+      }
+    }
+  ],
+  "hurtboxes": [
+    {
+      "offset": [
+        0,
+        1,
+        0
+      ],
+      "size": [
+        0.86,
+        1.9,
+        0.58
+      ]
+    }
+  ],
+  "inputMap": {
+    "jab": "J",
+    "kick": "K",
+    "heavy": "L",
+    "special": "U",
+    "block": "I"
+  },
+  "colors": {
+    "primary": "#b641e6",
+    "secondary": "#da7d1f",
+    "accent": "#62e347"
+  },
+  "moveOverrides": {
+    "jableft": {
+      "startupFrames": 10,
+      "activeFrames": 2,
+      "recoveryFrames": 13,
+      "damage": 6,
+      "onBlockFrames": -2,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 4,
+      "range": 1.42,
+      "label": "Danny Phantom Left Check",
+      "hitLevel": "high"
+    },
+    "jabright": {
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
+      "damage": 8,
+      "onBlockFrames": -5,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.5,
+      "label": "Danny Phantom Right Check",
+      "hitLevel": "mid"
+    },
+    "kickleft": {
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 7,
+      "range": 1.62,
+      "label": "Danny Phantom Left Kick",
+      "hitLevel": "low"
+    },
+    "kickright": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
+      "damage": 12,
+      "onBlockFrames": -7,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 13,
+      "whiffRecoveryFrames": 7,
+      "range": 1.7,
+      "label": "Danny Phantom Right Kick",
+      "hitLevel": "mid"
+    },
+    "cmd:f+1": {
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 11,
+      "onBlockFrames": -6,
+      "onHitFrames": 7,
+      "onCounterHitFrames": 11,
+      "whiffRecoveryFrames": 8,
+      "range": 1.72,
+      "forwardForce": 0.6,
+      "label": "Danny Phantom Rush",
+      "hitLevel": "mid"
+    },
+    "cmd:d/f+2": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -13,
+      "onHitFrames": 25,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 12,
+      "range": 1.68,
+      "launchHeight": 2.1,
+      "launchVelocity": 5.9,
+      "juggleRefloatVelocity": 4.25,
+      "juggleGravityScale": 0.54,
+      "label": "Danny Phantom Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:qcf+4": {
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
+      "damage": 17,
+      "onBlockFrames": -9,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 2.05,
+      "label": "Danny Phantom Burst",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:WS+4": {
+      "startupFrames": 13,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 12,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 25,
+      "whiffRecoveryFrames": 8,
+      "range": 1.62,
+      "label": "Danny Phantom Rising Strike",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+1": {
+      "startupFrames": 12,
+      "activeFrames": 2,
+      "recoveryFrames": 15,
+      "damage": 7,
+      "onBlockFrames": -4,
+      "onHitFrames": 6,
+      "onCounterHitFrames": 9,
+      "whiffRecoveryFrames": 5,
+      "range": 1.34,
+      "label": "Danny Phantom Crouch Jab",
+      "hitLevel": "mid"
+    },
+    "cmd:FC+2": {
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 13,
+      "onBlockFrames": -13,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 30,
+      "whiffRecoveryFrames": 12,
+      "range": 1.48,
+      "launchHeight": 2,
+      "label": "Danny Phantom Crouch Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:1+2": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
+      "damage": 14,
+      "onBlockFrames": -8,
+      "onHitFrames": 10,
+      "onCounterHitFrames": 16,
+      "whiffRecoveryFrames": 9,
+      "range": 1.72,
+      "label": "Danny Phantom Twin Assault",
+      "hitLevel": "mid"
+    },
+    "cmd:1+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
+      "damage": 15,
+      "onBlockFrames": -14,
+      "onHitFrames": 24,
+      "onCounterHitFrames": 31,
+      "whiffRecoveryFrames": 13,
+      "range": 1.65,
+      "launchHeight": 2.2,
+      "label": "Danny Phantom Cross Launcher",
+      "hitLevel": "mid"
+    },
+    "cmd:2+3": {
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
+      "damage": 10,
+      "onBlockFrames": -12,
+      "onHitFrames": 4,
+      "onCounterHitFrames": 8,
+      "whiffRecoveryFrames": 8,
+      "range": 1.58,
+      "label": "Danny Phantom Low Feint",
+      "hitLevel": "low"
+    },
+    "cmd:2+4": {
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
+      "damage": 15,
+      "onBlockFrames": -16,
+      "onHitFrames": 8,
+      "onCounterHitFrames": 14,
+      "whiffRecoveryFrames": 12,
+      "range": 1.74,
+      "label": "Danny Phantom Driving Kick",
+      "hitLevel": "low",
+      "knockdown": true
+    },
+    "cmd:3+4": {
+      "startupFrames": 22,
+      "activeFrames": 4,
+      "recoveryFrames": 28,
+      "damage": 18,
+      "onBlockFrames": -10,
+      "onHitFrames": 18,
+      "onCounterHitFrames": 26,
+      "whiffRecoveryFrames": 13,
+      "range": 1.9,
+      "label": "Danny Phantom Power Crush",
+      "hitLevel": "mid",
+      "knockdown": true
+    },
+    "cmd:O+2": {
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
+      "damage": 22,
+      "onBlockFrames": -12,
+      "onHitFrames": 22,
+      "onCounterHitFrames": 32,
+      "whiffRecoveryFrames": 15,
+      "range": 2.1,
+      "kiCost": 35,
+      "label": "Danny Phantom Aura Drive",
+      "hitLevel": "special",
+      "knockdown": true,
+      "usesKi": true
+    },
+    "neutral:jab-jab": {
+      "label": "Danny Phantom Second Beat"
+    },
+    "neutral:jab-jab-heavy": {
+      "label": "Danny Phantom Body Blow"
+    },
+    "neutral:jab-jab-kick": {
+      "label": "Danny Phantom Low Changeup"
+    },
+    "neutral:jab-jab-special": {
+      "label": "Danny Phantom Pressure Feint"
+    },
+    "neutral:jab-heavy": {
+      "label": "Danny Phantom Drive"
+    },
+    "neutral:jab-heavy-kick": {
+      "label": "Danny Phantom Barrage"
+    },
+    "neutral:jab-heavy-special": {
+      "label": "Danny Phantom Finisher"
+    },
+    "neutral:jab-kick": {
+      "label": "Danny Phantom Step Kick"
+    },
+    "neutral:jab-kick-heavy": {
+      "label": "Danny Phantom Palm String"
+    },
+    "neutral:jab-kick-special": {
+      "label": "Danny Phantom Rising Chain"
+    },
+    "neutral:jab-special": {
+      "label": "Danny Phantom Special Setup"
+    },
+    "neutral:jab-special-heavy": {
+      "label": "Danny Phantom Break Art"
+    },
+    "neutral:heavy-jab": {
+      "label": "Danny Phantom Check Hook"
+    },
+    "neutral:heavy-jab-heavy": {
+      "label": "Danny Phantom Heavy Break"
+    },
+    "neutral:heavy-jab-special": {
+      "label": "Danny Phantom Charged Follow"
+    },
+    "neutral:heavy-kick": {
+      "label": "Danny Phantom Drop Kick"
+    },
+    "neutral:heavy-kick-special": {
+      "label": "Danny Phantom Arc Finisher"
+    },
+    "neutral:heavy-special": {
+      "label": "Danny Phantom Focus Stance"
+    },
+    "neutral:heavy-special-kick": {
+      "label": "Danny Phantom Mode Shift"
+    },
+    "neutral:kick-jab": {
+      "label": "Danny Phantom Heel Feint"
+    },
+    "neutral:kick-jab-special": {
+      "label": "Danny Phantom Summon Strike"
+    },
+    "neutral:kick-heavy": {
+      "label": "Danny Phantom Guard Snare"
+    },
+    "neutral:kick-heavy-special": {
+      "label": "Danny Phantom Armor Break"
+    },
+    "neutral:kick-special": {
+      "label": "Danny Phantom Power Setup"
+    },
+    "neutral:kick-special-heavy": {
+      "label": "Danny Phantom Switch Strike"
+    },
+    "neutral:special-jab": {
+      "label": "Danny Phantom Spark Jab"
+    },
+    "neutral:special-jab-heavy": {
+      "label": "Danny Phantom Binding Blow"
+    },
+    "neutral:special-heavy": {
+      "label": "Danny Phantom Heavy Draw"
+    },
+    "neutral:special-kick": {
+      "label": "Danny Phantom Kick Ender"
+    }
+  },
+  "effects": [],
+  "moveEffects": {},
+  "spriteFrameEdits": {},
+  "aiProfile": {
+    "aggression": 0.77,
+    "guard": 0.47,
+    "spacing": 1.53,
+    "specialChance": 0.29
+  },
+  "animationFrameScales": {
+    "idle": {
+      "0": {
+        "width": 1.45,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 1.48,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 1.48,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 1.48,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 1.45,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkForward": {
+      "5": {
+        "width": 1.19,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 1.31,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 1.09,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 1.16,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 1.16,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 1.16,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "11": {
+        "width": 1.31,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "12": {
+        "width": 1.14,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "13": {
+        "width": 1.29,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 1.63,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 1.51,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 1.23,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 1.29,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.66,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.51,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.2,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "walkBack": {
+      "13": {
+        "width": 1.29,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 1.63,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 1.51,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 1.23,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 1.29,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.66,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.51,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.2,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sprint": {
+      "13": {
+        "width": 1.29,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 1.63,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 1.51,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 1.23,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 1.29,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.66,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.51,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.2,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "21": {
+        "width": 1.06,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 1.02,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "23": {
+        "width": 0.87,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "24": {
+        "width": 0.75,
+        "height": 1.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "25": {
+        "width": 1.19,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 1.09,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.92,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "28": {
+        "width": 1.02,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "backHop": {
+      "26": {
+        "width": 1.38,
+        "height": 1.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "29": {
+        "width": 1.11,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 1.28,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "31": {
+        "width": 1.31,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 1.14,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepLeft": {
+      "26": {
+        "width": 1.38,
+        "height": 1.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 1.21,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "34": {
+        "width": 1.38,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 1.35,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 1.19,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "sidestepRight": {
+      "26": {
+        "width": 1.38,
+        "height": 1.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "37": {
+        "width": 0.97,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 1.11,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 1.09,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 1.48,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 1.43,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "42": {
+        "width": 1.4,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "43": {
+        "width": 0.99,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "44": {
+        "width": 0.9,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jump": {
+      "26": {
+        "width": 1.38,
+        "height": 1.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 1.28,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 1.28,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 1.28,
+        "height": 1.12,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 1.21,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "50": {
+        "width": 0.77,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 0.68,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 0.8,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 0.9,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouch": {
+      "55": {
+        "width": 0.85,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 1.09,
+        "height": 1.12,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 1.45,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 1.45,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 1.4,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "60": {
+        "width": 1.17,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "crouchBlock": {
+      "61": {
+        "width": 1.01,
+        "height": 0.98,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "101": {
+        "width": 0.82,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "block": {
+      "23": {
+        "width": 1.11,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 1.09,
+        "height": 1.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 1.09,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 1.09,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 1.09,
+        "height": 1.34,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "chargeKi": {
+      "70": {
+        "width": 1.38,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 1.38,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "74": {
+        "width": 0.8,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 0.8,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "76": {
+        "width": 0.8,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "77": {
+        "width": 0.8,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jableft": {
+      "28": {
+        "width": 1.29,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "29": {
+        "width": 1.41,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 1.63,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "31": {
+        "width": 1.66,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 1.45,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "78": {
+        "width": 0.65,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.7,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 0.7,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "jabright": {
+      "32": {
+        "width": 1.45,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "33": {
+        "width": 1.54,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "34": {
+        "width": 1.75,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 1.72,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 1.51,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "81": {
+        "width": 0.68,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 0.99,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.77,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.68,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.65,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 0.68,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.65,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "88": {
+        "width": 0.68,
+        "height": 1.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickleft": {
+      "37": {
+        "width": 1.23,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 1.41,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 1.38,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 1.88,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 1.81,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "42": {
+        "width": 1.78,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "43": {
+        "width": 1.26,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 1.04,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 1.04,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 0.89,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "92": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 0.43,
+        "height": 0.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "kickright": {
+      "44": {
+        "width": 1.14,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "45": {
+        "width": 1.63,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 1.63,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 1.63,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 1.54,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "49": {
+        "width": 0.8,
+        "height": 1.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "50": {
+        "width": 0.98,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 0.86,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 1.01,
+        "height": 1.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 1.14,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "54": {
+        "width": 1.29,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 0.87,
+        "height": 0.84,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 0.8,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 0.89,
+        "height": 0.89,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 1.21,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 0.97,
+        "height": 1.12,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 1.06,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitLight": {
+      "0": {
+        "width": 1.14,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 1.16,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 1.16,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 1.16,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 1.14,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "89": {
+        "width": 1.32,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "hitHeavy": {
+      "5": {
+        "width": 1.19,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 1.31,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 1.09,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 1.48,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 1.16,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 1.16,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "11": {
+        "width": 1.31,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "12": {
+        "width": 1.14,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "juggle": {
+      "13": {
+        "width": 1.02,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 1.28,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 1.19,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 0.97,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 1.02,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.31,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.19,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 0.94,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 0.55,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "knockdown": {
+      "21": {
+        "width": 1.06,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 1.02,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "23": {
+        "width": 0.87,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "24": {
+        "width": 0.75,
+        "height": 1.62,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "25": {
+        "width": 1.19,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 1.09,
+        "height": 1.53,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 0.92,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "28": {
+        "width": 1.02,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.03,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupStand": {
+      "29": {
+        "width": 1.11,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "30": {
+        "width": 1.28,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "31": {
+        "width": 1.31,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "32": {
+        "width": 1.14,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.03,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "94": {
+        "width": 0.95,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 1.01,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 1.13,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 1.54,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 1.23,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 1.35,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "getupRollUp": {
+      "33": {
+        "width": 1.21,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "34": {
+        "width": 1.38,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 1.35,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 1.19,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "win": {
+      "37": {
+        "width": 0.97,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "38": {
+        "width": 1.11,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "39": {
+        "width": 1.09,
+        "height": 1.32,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "40": {
+        "width": 1.48,
+        "height": 1.09,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "41": {
+        "width": 1.43,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "42": {
+        "width": 1.4,
+        "height": 1.05,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "43": {
+        "width": 0.99,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "44": {
+        "width": 0.9,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "70": {
+        "width": 1.38,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 1.38,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "lose": {
+      "45": {
+        "width": 1.28,
+        "height": 1.27,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "46": {
+        "width": 1.28,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "47": {
+        "width": 1.28,
+        "height": 1.12,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "48": {
+        "width": 1.21,
+        "height": 1.14,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "50": {
+        "width": 0.77,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "51": {
+        "width": 0.68,
+        "height": 1.37,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "52": {
+        "width": 0.8,
+        "height": 1.39,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "53": {
+        "width": 0.9,
+        "height": 1.41,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 1.03,
+        "height": 1.03,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:f+1": {
+      "55": {
+        "width": 1.08,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "56": {
+        "width": 1.38,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "57": {
+        "width": 1.84,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "58": {
+        "width": 1.84,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "59": {
+        "width": 1.78,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:d/f+2": {
+      "60": {
+        "width": 1.17,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "61": {
+        "width": 1.01,
+        "height": 0.98,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "62": {
+        "width": 1.81,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "63": {
+        "width": 1.84,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "65": {
+        "width": 1.91,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "66": {
+        "width": 1.91,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "67": {
+        "width": 1.91,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "68": {
+        "width": 1.84,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:qcf+4": {
+      "70": {
+        "width": 1.38,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "71": {
+        "width": 1.38,
+        "height": 1.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "72": {
+        "width": 1.38,
+        "height": 1.43,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "73": {
+        "width": 1.38,
+        "height": 1.45,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:WS+4": {
+      "74": {
+        "width": 1.01,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "75": {
+        "width": 1.01,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "76": {
+        "width": 1.01,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "77": {
+        "width": 1.01,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+1": {
+      "78": {
+        "width": 0.83,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "79": {
+        "width": 0.89,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "80": {
+        "width": 0.89,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:FC+2": {
+      "81": {
+        "width": 0.86,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "82": {
+        "width": 1.26,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "83": {
+        "width": 0.98,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "84": {
+        "width": 0.86,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "85": {
+        "width": 0.83,
+        "height": 1.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "86": {
+        "width": 0.86,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "87": {
+        "width": 0.83,
+        "height": 1.67,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "88": {
+        "width": 0.86,
+        "height": 1.55,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+2": {
+      "89": {
+        "width": 1.32,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "90": {
+        "width": 1.32,
+        "height": 1.18,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "91": {
+        "width": 1.13,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "92": {
+        "width": 1.1,
+        "height": 0.94,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "93": {
+        "width": 0.55,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:1+3": {
+      "94": {
+        "width": 0.95,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "95": {
+        "width": 1.11,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "96": {
+        "width": 1.01,
+        "height": 0.81,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "97": {
+        "width": 1.13,
+        "height": 0.96,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "98": {
+        "width": 1.54,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "99": {
+        "width": 1.23,
+        "height": 1.21,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "100": {
+        "width": 1.35,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+3": {
+      "0": {
+        "width": 1.45,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "1": {
+        "width": 1.48,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "2": {
+        "width": 1.48,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "3": {
+        "width": 1.48,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "4": {
+        "width": 1.45,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:2+4": {
+      "5": {
+        "width": 1.51,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "6": {
+        "width": 1.66,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "7": {
+        "width": 1.38,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "8": {
+        "width": 1.48,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "9": {
+        "width": 1.48,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "10": {
+        "width": 1.48,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "11": {
+        "width": 1.66,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "12": {
+        "width": 1.45,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:3+4": {
+      "13": {
+        "width": 1.29,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "14": {
+        "width": 1.63,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "15": {
+        "width": 1.51,
+        "height": 1.3,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "16": {
+        "width": 1.23,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "17": {
+        "width": 1.29,
+        "height": 1.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "18": {
+        "width": 1.66,
+        "height": 1.25,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "19": {
+        "width": 1.51,
+        "height": 1.28,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "20": {
+        "width": 1.2,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "cmd:O+2": {
+      "21": {
+        "width": 1.35,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "22": {
+        "width": 1.29,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "23": {
+        "width": 1.11,
+        "height": 1.48,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "24": {
+        "width": 0.95,
+        "height": 1.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "25": {
+        "width": 1.51,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "26": {
+        "width": 1.38,
+        "height": 1.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "27": {
+        "width": 1.17,
+        "height": 1.52,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "28": {
+        "width": 1.29,
+        "height": 1.38,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    }
+  },
+  "unplayable": false,
+  "hasTransform": false,
+  "modelScale": {
+    "width": 0.86,
+    "height": 1.01
+  },
+  "animationScales": {},
+  "projectiles": [],
+  "moveProjectiles": {}
+}

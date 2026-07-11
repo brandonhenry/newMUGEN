@@ -55,7 +55,8 @@ export type HitLevel = 'high' | 'mid' | 'low' | 'throw' | 'special';
 export type MoveTracking = 'none' | 'weakLeft' | 'weakRight' | 'medium' | 'strong' | 'homing';
 export type CombatPopupKind = 'combo' | 'punish' | 'whiffPunish' | 'counterHit' | 'clashWin' | 'clashDraw' | 'clashPerfect';
 export type ImpactSparkKind = 'hit' | 'block' | 'punish' | 'whiffPunish' | 'counterHit' | 'clash';
-export type ImpactSparkShape = 'burst' | 'ring' | 'shards';
+export type ImpactSparkShape = 'voxel-burst' | 'sharp-spark' | 'heavy-burst' | 'white-ink' | 'burst' | 'ring' | 'shards';
+export type MovementSmokeStyle = 'speed-trail' | 'soft-puff' | 'burst-puff' | 'dust-ring';
 
 export type ClashParticipantState = {
   progress: number;
@@ -178,6 +179,7 @@ export type ImpactSparkEvent = {
   position: Vec3Tuple;
   attackerSlot: 1 | 2;
   defenderSlot: 1 | 2;
+  direction?: 1 | -1;
   hitLevel: HitLevel;
   damage: number;
   moveLabel: string;
@@ -221,6 +223,8 @@ export type SpriteFrameEdit = {
   height: number;
   row?: number;
   rotation?: number;
+  flipX?: boolean;
+  flipY?: boolean;
   offset?: [number, number];
   scale?: number;
   hidden?: boolean;
@@ -416,7 +420,13 @@ export type VoxelFidelitySettings = {
 export type AnimationScale = {
   width?: number;
   height?: number;
+  /** Prone-only correction for legacy HD voxels shared with non-prone animations. */
+  voxelScaleX?: number;
+  /** Prone-only correction for legacy HD voxels shared with non-prone animations. */
+  voxelScaleY?: number;
   offsetX?: number;
+  flipX?: boolean;
+  flipY?: boolean;
 };
 
 export type CharacterModelScale = {
@@ -497,6 +507,7 @@ export type StageDefinition = {
   visualStylePreset?: StageVisualStylePreset;
   visualStyle?: StageVisualStyle;
   hidden?: boolean;
+  tournamentEligible?: boolean;
   music?: {
     path?: string;
     trackIndex?: number;
@@ -1028,7 +1039,7 @@ export type BufferedMoveIntent = {
   beginnerForcedCommand?: string;
 };
 
-export type MatchMode = 'ai' | 'cpuArcade' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
+export type MatchMode = 'ai' | 'cpuArcade' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'custom' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
 export type CpuDifficulty = 1 | 2 | 3 | 4 | 5;
 export type ControlScheme = 'kore' | 'beginner';
 export type MenuAttractPerformanceMode = 'full' | 'snappy';
@@ -1079,11 +1090,13 @@ export type GameSettings = {
     touchControls: 'auto' | 'on' | 'off';
     reducedMotion: boolean;
     debugOverlay: boolean;
+    movementSmokeStyle: MovementSmokeStyle;
     impactSparks: {
       enabled: boolean;
       cinematic: boolean;
       shape: ImpactSparkShape;
       hitColor: string;
+      hitAccentColor: string;
       blockColor: string;
       size: number;
       intensity: number;
@@ -1174,6 +1187,7 @@ export type ProjectileRuntime = {
 
 export type MatchOptions = {
   roundTime?: number;
+  roundsToWin?: number;
   maxHealth?: number;
   trainingInfiniteHealth?: boolean;
   controlScheme?: ControlScheme;
@@ -1306,6 +1320,7 @@ export type MatchSnapshot = {
   aiSeed: number;
   roundAiSeed: number;
   roundTime: number;
+  roundsToWin: number;
   maxHealth?: number;
   trainingInfiniteHealth: boolean;
   controlScheme: ControlScheme;

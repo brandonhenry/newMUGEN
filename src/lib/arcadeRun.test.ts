@@ -79,10 +79,16 @@ describe('arcade run scoring', () => {
       }
     });
     const profile = { playerId: 'p1', displayName: 'Astra' };
-    expect(writeLocalArcadeRunHighScore(profile, 1000)).toBe(1000);
-    expect(writeLocalArcadeRunHighScore(profile, 800)).toBe(1000);
-    expect(readLocalArcadeRunHighScore(profile)).toBe(1000);
-    expect(JSON.parse(store[ARCADE_RUN_HIGH_SCORE_STORAGE_KEY])[0]).toMatchObject({ playerId: 'p1', displayName: 'Astra', score: 1000 });
+    expect(writeLocalArcadeRunHighScore(profile, 'astra', 1000)).toBe(1000);
+    expect(writeLocalArcadeRunHighScore(profile, 'astra', 800)).toBe(1000);
+    expect(readLocalArcadeRunHighScore(profile, 'dax')).toBe(0);
+    expect(writeLocalArcadeRunHighScore(profile, 'dax', 1200)).toBe(1200);
+    expect(readLocalArcadeRunHighScore(profile, 'astra')).toBe(1000);
+    expect(readLocalArcadeRunHighScore(profile, 'dax')).toBe(1200);
+    expect(JSON.parse(store[ARCADE_RUN_HIGH_SCORE_STORAGE_KEY])).toEqual([
+      expect.objectContaining({ playerId: 'p1', displayName: 'ASTRA', characterId: 'dax', score: 1200 }),
+      expect.objectContaining({ playerId: 'p1', displayName: 'ASTRA', characterId: 'astra', score: 1000 })
+    ]);
   });
 });
 

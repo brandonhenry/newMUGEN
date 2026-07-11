@@ -30,6 +30,7 @@ import {
   Ruler,
   Save,
   Send,
+  Share2,
   Settings,
   Shuffle,
   Swords,
@@ -49,6 +50,8 @@ import {
 import { QRCodeSVG } from 'qrcode.react';
 import { type CSSProperties, type Dispatch, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, type SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AdminDashboard } from './AdminDashboard';
+import { CustomMatchSpectator, CustomRoomsExperience, type CustomMatchLaunch } from './CustomRoomsExperience';
+import { SpectatorExperience, parseSpectatorRoute, shareSpectatorLink } from './SpectatorExperience';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmActiveFighterVoxels, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
@@ -58,18 +61,20 @@ import { KORE_CURSOR_OPTIONS, getKoreCursorOption, isKoreCursorId, type KoreCurs
 import { cloneMatchSnapshot, createMatch, stepMatch } from './engine/fightEngine';
 import { useAnyInputActivation } from './hooks/useAnyInputActivation';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
-import { type CharacterLoadResult, loadCharacterRoster } from './lib/characterLoader';
+import { type CharacterLoadResult, loadCharacterRoster, normalizeAnimationFrameMap } from './lib/characterLoader';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
+import { addFrameRangeToSelection } from './lib/frameSelection';
 import { sanitizeMoveProjectiles, sanitizeProjectiles } from './lib/projectiles';
 import { cloneSettings, defaultGameSettings, readGameSettings, sanitizeGameSettings, writeGameSettings } from './lib/gameSettings';
 import { getTabShortcutPrompts, type InputPromptMode } from './lib/inputPrompts';
 import { type StageLoadResult, loadStageRoster, normalizeStage } from './lib/stageLoader';
 import { getStageAssetStatus, isModelStage, prefetchStageModelDecoders, preloadStageModel, subscribeStageAssetStatus, type StageAssetStatus } from './lib/stageAssets';
+import { getTournamentStagePool } from './lib/tournamentStages';
 import { emptyStageAssetLibrary, loadStageAssetLibrary } from './lib/stageAssetLibrary';
 import { loadStagePropLibrary } from './lib/stagePropLibrary';
 import { detectGameplaySupport, getGameplaySupportChecks, type SupportCheck, type SupportWarning } from './lib/gameplaySupport';
-import { MENU_FRIEND_LIST_GAMEPAD_BUTTON, getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readModeGamepadState, readPageGamepadState } from './lib/gamepads';
+import { MENU_FRIEND_LIST_GAMEPAD_BUTTON, MENU_GAMEPAD_SELECT_BUTTON, getPrimaryGamepad, hasActiveGamepadInput, readMenuGamepadState, readModeGamepadState, readPageGamepadState } from './lib/gamepads';
 import { MENU_LAG_DETECTOR_VERSION, clearMenuLagPromptDismissed, getMenuLagPromptDismissed, sampleMenuLandingLag, setMenuLagPromptDismissed, type MenuLagReport } from './lib/menuLagDetector';
 import { parseMugenDef } from './lib/mugenStage';
 import { keybindableButtonComboDefinitions as buttonComboHotkeys, getButtonComboDefinition } from './lib/buttonCombos';
@@ -83,9 +88,14 @@ import { addFriendByPlayerId, registerOnlinePlayer, sanitizePublicPlayerId } fro
 import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/peerSession';
 import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
+import { createCustomRoom, customMatchWebSocketUrl, fetchCustomRoom, findFriendCustomRooms, joinCustomRoom, sendCustomRoomCommand, storeCustomRoomSession } from './lib/online/customRoomClient';
+import type { CustomRoomSession } from './lib/online/customRooms';
 import { emptyRankedKrScores, fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedKrScores, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
 import type { OnlineAssetWarmupReadyMessage, OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import { checksumMatch, createRollbackSession, type RollbackSession } from './lib/online/rollback';
+import { spectatorMatchWebSocketUrl, parseSpectatorMessage } from './lib/spectator/client';
+import { SPECTATOR_PROTOCOL_VERSION, type SpectatorInputBatch, type SpectatorSnapshot } from './lib/spectator/protocol';
+import { mirrorHorizontalInput, readStartSide, shouldMirrorStartSide, writeStartSide, type StartSide } from './lib/startSide';
 import {
   ROUNDS_TO_WIN,
   emptyInputFrame,
@@ -114,6 +124,7 @@ import {
   type EnemyRushMiniGameSnapshot,
   type HitLevel,
   type ImpactSparkEvent,
+  type ImpactSparkShape,
   type InputFrame,
   type MatchMode,
   type MatchSnapshot,
@@ -124,6 +135,7 @@ import {
   type MoveInput,
   type MoveOverride,
   type MoveTracking,
+  type MovementSmokeStyle,
   type SpriteFrameEdit,
   type StageDefinition,
   type StageAssetLibraryManifest,
@@ -241,7 +253,24 @@ import {
   type TournamentSummary
 } from './lib/tournament';
 
-type Screen = 'boot' | 'title' | 'menu' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
+const IMPACT_SPARK_SHAPE_OPTIONS: ReadonlyArray<{ value: ImpactSparkShape; label: string }> = [
+  { value: 'voxel-burst', label: 'Voxel Burst' },
+  { value: 'sharp-spark', label: 'Sharp Spark' },
+  { value: 'heavy-burst', label: 'Heavy Burst' },
+  { value: 'white-ink', label: 'White Ink' },
+  { value: 'burst', label: 'Burst' },
+  { value: 'ring', label: 'Ring' },
+  { value: 'shards', label: 'Shards' }
+];
+
+const MOVEMENT_SMOKE_STYLE_OPTIONS: ReadonlyArray<{ value: MovementSmokeStyle; label: string }> = [
+  { value: 'speed-trail', label: 'Speed Trail' },
+  { value: 'soft-puff', label: 'Soft Puff' },
+  { value: 'burst-puff', label: 'Burst Puff' },
+  { value: 'dust-ring', label: 'Dust Ring' }
+];
+
+type Screen = 'boot' | 'title' | 'menu' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'customRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'tournamentAdvancement' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
 type E2EAuditScreen = Exclude<Screen, 'boot'> | 'tournamentLobbyLocal' | 'tournamentLobbyFreeOnline' | 'tournamentLobbyPrizepool' | 'tournamentLobbyPrizepoolCheckout' | 'tournamentLobbyPrizepoolClaim' | 'tournamentLobbyPrizepoolReview' | 'tournamentLobbyPaidRecovery' | 'tournamentBracketLocal' | 'tournamentBracketOnline' | 'tournamentFightResult';
 
 function isFullBleedScreen(screen: Screen) {
@@ -253,7 +282,9 @@ function isFullBleedScreen(screen: Screen) {
     screen === 'miniGameResult' ||
     screen === 'arcadeGameOver' ||
     screen === 'unlockReveal' ||
-    screen === 'tournamentBracket'
+    screen === 'customRooms' ||
+    screen === 'tournamentBracket' ||
+    screen === 'tournamentAdvancement'
   );
 }
 
@@ -268,6 +299,19 @@ type AssetWarmupIntent = {
   p1: CharacterDefinition;
   p2: CharacterDefinition;
   matchOptions?: Partial<AssetWarmupMatchOptions>;
+};
+type TournamentAdvancementNextAction =
+  | { kind: 'localNext'; nextMatchId: string }
+  | { kind: 'localLobby'; localWinner: boolean; statusText: string; tournamentMode: 'free' | 'custom' }
+  | { kind: 'infiniteNext' }
+  | { kind: 'infiniteRestart'; statusText: string }
+  | { kind: 'onlineLobby'; statusText: string };
+type TournamentAdvancementState = {
+  beforeBracket: TournamentBracket;
+  bracket: TournamentBracket;
+  completedMatchId: string;
+  winnerEntryId: string;
+  nextAction: TournamentAdvancementNextAction;
 };
 const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 type E2EFightPosition = { x?: number; y?: number; z?: number };
@@ -497,6 +541,7 @@ type AnimationSlot = {
 };
 type MoveListTab = 'raw' | 'direction' | 'motion' | 'state' | 'special' | 'combo';
 const CHARACTER_SELECT_PAGE_SIZE = 12;
+const CHARACTER_SELECT_MAX_PAGE_SIZE = 48;
 
 type HdVoxelRun = {
   part: 'head' | 'torso' | 'leadArm' | 'rearArm' | 'leadLeg' | 'rearLeg';
@@ -554,6 +599,7 @@ type HdVoxelPayload = {
       maxScale: number;
       wideException?: boolean;
       wideExpansion?: number;
+      proneException?: boolean;
     };
   };
 };
@@ -611,6 +657,7 @@ const ROUND_ANNOUNCER_SFX = [
   '/sounds/announcer/rounds/round-4.wav',
   '/sounds/announcer/rounds/round-5.wav'
 ] as const;
+const CHOOSE_YOUR_FIGHTER_SFX = '/sounds/announcer/choose-your-fighter.wav';
 const TRAINING_GREAT_SFX = '/sounds/announcer/great.wav';
 const KI_CHARGE_SFX = '/sounds/ki/charge.wav';
 const KI_MAX_CHARGE_SFX = '/sounds/ki/max-charge.wav';
@@ -622,6 +669,7 @@ const CRITICAL_GAME_SFX_URLS = [...new Set([
   HIT_SFX.punch1,
   HIT_SFX.heavy2,
   ROUND_ANNOUNCER_SFX[0],
+  CHOOSE_YOUR_FIGHTER_SFX,
   TRAINING_GREAT_SFX
 ])];
 const SFX_POOL_SIZE = 2;
@@ -1030,7 +1078,7 @@ function getFightActorTypes(mode: MatchMode, onlineRole: OnlineRole | null, cpuS
       2: cpuSlots.includes(2) ? 'cpu' : 'human'
     };
   }
-  if (mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'trainingOnline' || mode === 'tournamentOnline') {
+  if (mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'custom' || mode === 'trainingOnline' || mode === 'tournamentOnline') {
     if (onlineRole === 'guest') return { 1: 'remote_human', 2: 'human' };
     return { 1: 'human', 2: 'remote_human' };
   }
@@ -1038,7 +1086,7 @@ function getFightActorTypes(mode: MatchMode, onlineRole: OnlineRole | null, cpuS
 }
 
 function requiresOnlineProfileForMode(mode: MatchMode) {
-  return mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'trainingOnline' || mode === 'tournamentOnline';
+  return mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'custom' || mode === 'trainingOnline' || mode === 'tournamentOnline';
 }
 
 function requiresOnlineProfileForTournamentMode(mode: TournamentSelectMode) {
@@ -1158,12 +1206,13 @@ function sanitizeAnimationOverrides(overrides: AnimationOverrideMap): AnimationO
   const next: AnimationOverrideMap = {};
   for (const [characterId, override] of Object.entries(overrides)) {
     const sanitized: CharacterAnimationOverride = {
-      frames: canonicalizeRawButtonRecord({ ...(override.frames ?? {}) }),
+      frames: normalizeAnimationFrameMap(characterId, override.frames ?? {}),
       speeds: canonicalizeRawButtonRecord({ ...(override.speeds ?? {}) }),
       sizes: sanitizeAnimationScaleMap(override.sizes ?? {}),
       frameSizes: sanitizeAnimationFrameScaleMap(override.frameSizes ?? {}),
       modelScale: override.modelScale ? normalizeCharacterModelScale(override.modelScale) : undefined,
       moves: sanitizeMoveOverrideMap(override.moves ?? {}),
+      getupFrames: sanitizeGetupFrameOverrides(override.getupFrames ?? {}),
       sprites: sanitizeSpriteFrameEditMap(override.sprites ?? {})
     };
     if (override.effects) sanitized.effects = sanitizeEffects(override.effects);
@@ -1230,7 +1279,11 @@ function normalizeAnimationScale(size?: AnimationScale): Required<AnimationScale
   return {
     width: Number(clamp(Number(size?.width) || 1, 0.1, 10).toFixed(3)),
     height: Number(clamp(Number(size?.height) || 1, 0.1, 10).toFixed(3)),
-    offsetX: Number(clamp(Number(size?.offsetX) || 0, -6, 6).toFixed(3))
+    voxelScaleX: Number(clamp(Number(size?.voxelScaleX) || 1, 0.1, 10).toFixed(5)),
+    voxelScaleY: Number(clamp(Number(size?.voxelScaleY) || 1, 0.1, 10).toFixed(5)),
+    offsetX: Number(clamp(Number(size?.offsetX) || 0, -6, 6).toFixed(3)),
+    flipX: Boolean(size?.flipX),
+    flipY: Boolean(size?.flipY)
   };
 }
 
@@ -1345,6 +1398,8 @@ function sanitizeSpriteFrameEdit(edit: SpriteFrameEdit): SpriteFrameEdit {
     height: Math.max(1, Math.round(Number(edit.height) || y2 - y1)),
     row: Number.isFinite(edit.row) ? Math.round(Number(edit.row)) : undefined,
     rotation,
+    flipX: Boolean(edit.flipX),
+    flipY: Boolean(edit.flipY),
     offset,
     scale: Math.max(0.25, Math.min(4, Number(edit.scale) || 1)),
     hidden: Boolean(edit.hidden),
@@ -2302,6 +2357,8 @@ function normalizeHdVoxelFramesToIdleReference(
   const reference = getIdleVisualReference(character, byFrame);
   if (!reference) return frames;
   const wideCandidates = getWideVisualCandidateFrames(character);
+  const proneCandidates = getProneVisualCandidateFrames(character);
+  const globalScale = getCharacterGlobalScale(character);
 
   return frames.map(({ frameIndex, payload }) => {
     const bounds = getHdVoxelPayloadBounds(payload);
@@ -2316,8 +2373,20 @@ function normalizeHdVoxelFramesToIdleReference(
     const scaleY = clamp(rawScaleY, minScale, maxScale);
     const wideExpansion = scaleX > 0 ? scaleY / scaleX : 1;
     const wideException = wideCandidates.has(frameIndex) && wideExpansion > 1.28;
-    const fittedPayload = scaleHdVoxelPayloadToIdleReference(payload, bounds.minY, scaleX, scaleY);
-    const nextPayload = wideException ? widenHdVoxelPayloadAroundBody(fittedPayload, wideExpansion) : fittedPayload;
+    const proneException = proneCandidates.has(frameIndex);
+    const proneIsHorizontal = currentWidth > currentHeight;
+    const proneReferenceSize = proneIsHorizontal ? currentWidth : currentHeight;
+    const proneTargetSize = proneIsHorizontal
+      ? reference.targetHeight * (globalScale.height / Math.max(0.001, globalScale.width))
+      : reference.targetHeight;
+    const proneScale = proneReferenceSize > 0 ? clamp(proneTargetSize / proneReferenceSize, 0.1, maxScale) : 1;
+    const fittedPayload = scaleHdVoxelPayloadToIdleReference(
+      payload,
+      bounds.minY,
+      proneException ? proneScale : scaleX,
+      proneException ? proneScale : scaleY
+    );
+    const nextPayload = wideException && !proneException ? widenHdVoxelPayloadAroundBody(fittedPayload, wideExpansion) : fittedPayload;
     const nextBounds = getHdVoxelPayloadBounds(nextPayload);
     return {
       frameIndex,
@@ -2340,12 +2409,29 @@ function normalizeHdVoxelFramesToIdleReference(
             minScale,
             maxScale,
             wideException,
-            wideExpansion: roundVoxelNumber(wideExpansion)
+            wideExpansion: roundVoxelNumber(wideExpansion),
+            proneException
           }
         }
       }
     };
   });
+}
+
+function getProneVisualCandidateFrames(character: CharacterDefinition) {
+  const proneKeys = new Set(['knockdown', 'getupStand', 'getupRollUp', 'getupRollDown', 'getupRollBack', 'lose']);
+  const eligibleIndices = new Set<number>();
+  const protectedIndices = new Set<number>();
+  Object.entries(character.animationFrames ?? {}).forEach(([animationKey, paths]) => {
+    paths.forEach((path) => {
+      const frameIndex = getFrameIndex(path);
+      if (!Number.isFinite(frameIndex)) return;
+      if (proneKeys.has(animationKey)) eligibleIndices.add(frameIndex);
+      else protectedIndices.add(frameIndex);
+    });
+  });
+  protectedIndices.forEach((frameIndex) => eligibleIndices.delete(frameIndex));
+  return eligibleIndices;
 }
 
 function isWideVisualAnimationKey(animationKey: string) {
@@ -2993,6 +3079,8 @@ export default function App() {
   if (typeof window !== 'undefined' && window.location.pathname === '/admin') {
     return <AdminDashboard />;
   }
+  const spectatorRoute = typeof window !== 'undefined' ? parseSpectatorRoute(window.location.pathname) : null;
+  if (spectatorRoute) return <SpectatorExperience route={spectatorRoute} />;
 
   const [screen, setScreen] = useState<Screen>('boot');
   const [versusReturnScreen, setVersusReturnScreen] = useState<'stage' | 'privateRooms'>('stage');
@@ -3024,9 +3112,12 @@ export default function App() {
   const [onlineTournamentStatus, setOnlineTournamentStatus] = useState<TournamentStatusResult | null>(null);
   const [e2eSimulateOnlineTournament, setE2eSimulateOnlineTournament] = useState(false);
   const [activeTournamentMatchId, setActiveTournamentMatchId] = useState('');
+  const [tournamentAdvancement, setTournamentAdvancement] = useState<TournamentAdvancementState | null>(null);
   const [tournamentStatusText, setTournamentStatusText] = useState('');
   const [cpuDifficulty, setCpuDifficulty] = useState<CpuDifficulty>(3);
   const [settings, setSettings] = useState<GameSettings>(() => readGameSettings());
+  const [startSide, setStartSide] = useState<StartSide>(() => readStartSide());
+  const [changeSideRequest, setChangeSideRequest] = useState<{ source: string } | null>(null);
   const [inputPromptMode, setInputPromptMode] = useState<InputPromptMode>('keyboardShortcut');
   const [onlineProfile, setOnlineProfile] = useState<OnlinePlayerProfile | null>(() => readOnlineProfile());
   const [friendPresence, setFriendPresence] = useState<Record<string, FriendPresence>>({});
@@ -3038,6 +3129,9 @@ export default function App() {
   const [unlockedCharacterIds, setUnlockedCharacterIds] = useState<Set<string>>(() => readUnlockedCharacterIds());
   const [privateRoomIntent, setPrivateRoomIntent] = useState<PrivateRoomIntent | null>(null);
   const [pendingPrivateInviteFriend, setPendingPrivateInviteFriend] = useState<FriendEntry | null>(null);
+  const [customRoomSession, setCustomRoomSession] = useState<CustomRoomSession | null>(null);
+  const [customMatchLaunch, setCustomMatchLaunch] = useState<CustomMatchLaunch | null>(null);
+  const [customSpectatorLaunch, setCustomSpectatorLaunch] = useState<CustomMatchLaunch | null>(null);
   const [pendingUnlockCharacterId, setPendingUnlockCharacterId] = useState('');
   const [activeArcadeMiniGame, setActiveArcadeMiniGame] = useState<ArcadeMiniGameLaunch | null>(null);
   const [arcadeTransition, setArcadeTransition] = useState<ArcadeTransitionIntent | null>(null);
@@ -3052,6 +3146,7 @@ export default function App() {
   const audioUnlockedRef = useRef(false);
   const assetReadyContinuationRef = useRef<(() => void) | null>(null);
   const menuHoverLastPlayedAtRef = useRef(0);
+  const announcedCharacterSelectScreenRef = useRef<Screen | null>(null);
   const infiniteTournamentRestartTimerRef = useRef(0);
   const friendPresencePeerIdRef = useRef('');
   const friendPresenceOnlineRef = useRef<Record<string, boolean>>({});
@@ -3258,6 +3353,25 @@ export default function App() {
     captureAppAnalytics('navigation_clicked', { source, destination: 'starter_guide' });
   }, [captureAppAnalytics]);
 
+  const openChangeSide = useCallback((source: string, promptMode: InputPromptMode) => {
+    if (!isCharacterSelectScreen(screen)) return;
+    setInputPromptMode(promptMode);
+    setChangeSideRequest({ source });
+  }, [screen]);
+
+  const confirmChangeSide = useCallback((nextSide: StartSide) => {
+    const previousSide = startSide;
+    writeStartSide(nextSide);
+    setStartSide(nextSide);
+    setChangeSideRequest(null);
+    captureAppAnalytics('setting_changed', {
+      setting: 'start_side',
+      previous_value: previousSide,
+      value: nextSide,
+      source: changeSideRequest?.source ?? 'character_select'
+    });
+  }, [captureAppAnalytics, changeSideRequest?.source, startSide]);
+
   const dismissStarterGuide = useCallback(() => {
     setStarterGuideDismissed();
     setStarterGuideOpen(false);
@@ -3319,11 +3433,13 @@ export default function App() {
     return { p1Id: nextP1Id, p2Id: nextP2Id };
   }, [effectiveUnlockedCharacterIds, mode, p1Id, p2Id, randomCharacterSlots, roster]);
   const resolveRandomStageSelection = useCallback(() => {
+    const tournamentMatch = isTournamentMatchMode(mode);
+    const stagePool = getTournamentStagePool(playableStageRoster, tournamentMatch);
     const currentStage = playableStageRoster.find((stage) => stage.id === stageId) ?? playableStageRoster[0] ?? stages[0];
-    const nextStage = randomStageSelected ? pickRandomStage(playableStageRoster) : currentStage;
+    const nextStage = tournamentMatch || randomStageSelected ? pickRandomStage(stagePool) : currentStage;
     if (nextStage && nextStage.id !== stageId) setStageId(nextStage.id);
     return nextStage;
-  }, [playableStageRoster, randomStageSelected, stageId]);
+  }, [mode, playableStageRoster, randomStageSelected, stageId]);
 
   const setupLocalTournamentMatch = useCallback((bracket: TournamentBracket, match: TournamentMatch) => {
     const entryA = getTournamentEntry(bracket, match.entryAId);
@@ -4024,7 +4140,7 @@ export default function App() {
         setScreen('fight');
         return;
       }
-      setMode(targetScreen === 'training' ? 'training' : targetScreen === 'privateRooms' ? 'online' : targetScreen === 'fight' ? 'local2p' : 'ai');
+      setMode(targetScreen === 'training' ? 'training' : targetScreen === 'customRooms' ? 'custom' : targetScreen === 'privateRooms' ? 'online' : targetScreen === 'fight' ? 'local2p' : 'ai');
       setOnlineProfile((current) => current ?? { playerId: 'audit-player', displayName: 'AUDIT PLAYER' });
       setActiveArcadeMiniGame(targetScreen === 'miniGame' ? auditMiniGame : null);
       setLastMiniGameResult(targetScreen === 'miniGameResult' ? auditMiniGameResult : null);
@@ -4092,6 +4208,47 @@ export default function App() {
     };
   }, [playableStageRoster, roster]);
 
+  const finishTournamentAdvancement = useCallback(() => {
+    const advancement = tournamentAdvancement;
+    if (!advancement) return;
+    const nextAction = advancement.nextAction;
+    setTournamentAdvancement(null);
+    if (nextAction.kind === 'localNext') {
+      const nextMatch = advancement.bracket.matches.find((candidate) => candidate.id === nextAction.nextMatchId);
+      if (!nextMatch || !setupLocalTournamentMatch(advancement.bracket, nextMatch)) {
+        setLocalTournamentBracket(advancement.bracket);
+        setTournamentStatusText('Local bracket waiting for match');
+        setScreen('tournamentLobby');
+      }
+      return;
+    }
+    if (nextAction.kind === 'localLobby') {
+      setLocalTournamentBracket(advancement.bracket);
+      setTournamentStatusText(nextAction.statusText);
+      setLocalTournamentCpuSlots([]);
+      setLocalTournamentSlotEntryIds({});
+      setScreen('tournamentLobby');
+      return;
+    }
+    if (nextAction.kind === 'infiniteNext') {
+      startInfiniteTournamentMatch(advancement.bracket);
+      return;
+    }
+    if (nextAction.kind === 'infiniteRestart') {
+      setLocalTournamentBracket(advancement.bracket);
+      setTournamentStatusText(nextAction.statusText);
+      setScreen('tournamentLobby');
+      window.clearTimeout(infiniteTournamentRestartTimerRef.current);
+      infiniteTournamentRestartTimerRef.current = window.setTimeout(() => {
+        const nextBracket = makeInfiniteTournamentBracket();
+        startInfiniteTournamentMatch(nextBracket);
+      }, 3200);
+      return;
+    }
+    setTournamentStatusText(nextAction.statusText);
+    setScreen('tournamentLobby');
+  }, [makeInfiniteTournamentBracket, setupLocalTournamentMatch, startInfiniteTournamentMatch, tournamentAdvancement]);
+
   const handleTournamentMatchComplete = useCallback((result: { winnerSlot: 1 | 2 }) => {
     if (!activeTournamentMatchId) return;
     if (mode === 'tournamentInfinite' && localTournamentBracket) {
@@ -4099,11 +4256,9 @@ export default function App() {
       if (!match?.entryAId || !match.entryBId) return;
       const winnerEntryId = result.winnerSlot === 1 ? match.entryAId : match.entryBId;
       const advanced = advanceTournamentBracket(localTournamentBracket, activeTournamentMatchId, winnerEntryId);
-      setLocalTournamentBracket(advanced);
       if (advanced.status === 'completed') {
         const winnerEntry = getTournamentEntry(advanced, winnerEntryId);
-        setTournamentStatusText(`Infinite winner: ${winnerEntry?.displayName ?? 'Player'}. Restarting bracket...`);
-        setScreen('tournamentLobby');
+        const statusText = `Infinite winner: ${winnerEntry?.displayName ?? 'Player'}. Restarting bracket...`;
         captureAppAnalytics('tournament_completed', {
           tournament_mode: 'infinite',
           result: 'completed',
@@ -4115,14 +4270,24 @@ export default function App() {
           tournament_id: advanced.id,
           winner_entry_id: winnerEntryId
         });
-        window.clearTimeout(infiniteTournamentRestartTimerRef.current);
-        infiniteTournamentRestartTimerRef.current = window.setTimeout(() => {
-          const nextBracket = makeInfiniteTournamentBracket();
-          startInfiniteTournamentMatch(nextBracket);
-        }, 3200);
+        setTournamentAdvancement({
+          beforeBracket: localTournamentBracket,
+          bracket: advanced,
+          completedMatchId: activeTournamentMatchId,
+          winnerEntryId,
+          nextAction: { kind: 'infiniteRestart', statusText }
+        });
+        setScreen('tournamentAdvancement');
         return;
       }
-      startInfiniteTournamentMatch(advanced);
+      setTournamentAdvancement({
+        beforeBracket: localTournamentBracket,
+        bracket: advanced,
+        completedMatchId: activeTournamentMatchId,
+        winnerEntryId,
+        nextAction: { kind: 'infiniteNext' }
+      });
+      setScreen('tournamentAdvancement');
       return;
     }
     if (mode === 'tournamentLocal' && localTournamentBracket) {
@@ -4131,16 +4296,12 @@ export default function App() {
       const winnerEntryId = localTournamentSlotEntryIds[result.winnerSlot] ?? (result.winnerSlot === 1 ? match.entryAId : match.entryBId);
       if (!winnerEntryId) return;
       const advanced = simulateCpuTournamentMatches(advanceTournamentBracket(localTournamentBracket, activeTournamentMatchId, winnerEntryId));
-      setLocalTournamentBracket(advanced);
       const winnerEntry = getTournamentEntry(advanced, winnerEntryId);
       const nextMatch = getNextPlayableLocalTournamentMatch(advanced);
       const localTournamentMode = localTournamentBracket.id.startsWith('custom-') ? 'custom' : 'free';
       if (advanced.status === 'completed' || !nextMatch) {
         const localWinner = Boolean(winnerEntry?.isLocalPlayer && advanced.status === 'completed');
-        setTournamentStatusText(localWinner ? `${winnerEntry?.displayName ?? 'Local player'} won the tournament` : localTournamentMode === 'custom' ? 'Custom tournament complete' : 'Local players eliminated');
-        setLocalTournamentCpuSlots([]);
-        setLocalTournamentSlotEntryIds({});
-        setScreen('tournamentLobby');
+        const statusText = localWinner ? `${winnerEntry?.displayName ?? 'Local player'} won the tournament` : localTournamentMode === 'custom' ? 'Custom tournament complete' : 'Local players eliminated';
         captureAppAnalytics('tournament_completed', {
           tournament_mode: localTournamentMode,
           result: localWinner ? 'won' : 'eliminated',
@@ -4153,12 +4314,24 @@ export default function App() {
             winner_entry_id: winnerEntryId
           });
         }
+        setTournamentAdvancement({
+          beforeBracket: localTournamentBracket,
+          bracket: advanced,
+          completedMatchId: activeTournamentMatchId,
+          winnerEntryId,
+          nextAction: { kind: 'localLobby', localWinner, statusText, tournamentMode: localTournamentMode }
+        });
+        setScreen('tournamentAdvancement');
         return;
       }
-      if (!setupLocalTournamentMatch(advanced, nextMatch)) {
-        setTournamentStatusText('Local bracket waiting for match');
-        setScreen('tournamentLobby');
-      }
+      setTournamentAdvancement({
+        beforeBracket: localTournamentBracket,
+        bracket: advanced,
+        completedMatchId: activeTournamentMatchId,
+        winnerEntryId,
+        nextAction: { kind: 'localNext', nextMatchId: nextMatch.id }
+      });
+      setScreen('tournamentAdvancement');
       return;
     }
     if (mode === 'tournamentOnline' && onlineTournamentStatus && onlineProfile) {
@@ -4184,8 +4357,7 @@ export default function App() {
       void reportTournamentMatch(pendingReport).then((status) => {
         clearPendingTournamentResult(pendingReport.tournamentId, pendingReport.matchId, pendingReport.reporterPlayerId);
         setOnlineTournamentStatus(status);
-        setTournamentStatusText(tournamentStatusDisplayText(status));
-        setScreen('tournamentLobby');
+        const statusText = tournamentStatusDisplayText(status);
         captureAppAnalytics('tournament_match_reported', {
           status: 'success',
           tournament_id: onlineTournamentStatus.bracket.id,
@@ -4208,6 +4380,14 @@ export default function App() {
             });
           }
         }
+        setTournamentAdvancement({
+          beforeBracket: onlineTournamentStatus.bracket,
+          bracket: status.bracket,
+          completedMatchId: activeTournamentMatchId,
+          winnerEntryId,
+          nextAction: { kind: 'onlineLobby', statusText }
+        });
+        setScreen('tournamentAdvancement');
       }).catch((error) => {
         console.error('Failed to report tournament match', error);
         setTournamentStatusText('Tournament report failed');
@@ -4219,7 +4399,7 @@ export default function App() {
         });
       });
     }
-  }, [activeTournamentMatchId, captureAppAnalytics, capturePositiveMilestone, e2eSimulateOnlineTournament, localTournamentBracket, localTournamentSlotEntryIds, makeInfiniteTournamentBracket, mode, onlineProfile, onlineTournamentStatus, setupLocalTournamentMatch, startInfiniteTournamentMatch]);
+  }, [activeTournamentMatchId, captureAppAnalytics, capturePositiveMilestone, e2eSimulateOnlineTournament, localTournamentBracket, localTournamentSlotEntryIds, mode, onlineProfile, onlineTournamentStatus]);
 
   useEffect(() => {
     const onError = (event: ErrorEvent) => {
@@ -4439,6 +4619,17 @@ export default function App() {
     audio.currentTime = 0;
     audio.play().catch(() => undefined);
   }, [settings.audio.master, settings.audio.muted, settings.audio.sfx, unlockGameAudio]);
+
+  useEffect(() => {
+    if (!isCharacterSelectScreen(screen)) {
+      announcedCharacterSelectScreenRef.current = null;
+      return;
+    }
+    if (announcedCharacterSelectScreenRef.current === screen) return;
+    announcedCharacterSelectScreenRef.current = screen;
+    unlockGameAudio();
+    playChooseYourFighterSfx(settings.audio);
+  }, [screen, settings.audio, unlockGameAudio]);
 
   useEffect(() => {
     const onUiClick = (event: MouseEvent) => {
@@ -4666,7 +4857,7 @@ export default function App() {
       return undefined;
     }
     let cancelled = false;
-    void fetchRankedProfile(onlineProfile)
+    void fetchRankedProfile(onlineProfile, p1Id)
       .then((profile) => {
         if (!cancelled) setRankedProfile(profile);
       })
@@ -4677,7 +4868,7 @@ export default function App() {
     return () => {
       cancelled = true;
     };
-  }, [onlineProfile]);
+  }, [onlineProfile, p1Id]);
 
   useEffect(() => {
     if (!onlineProfile) return undefined;
@@ -4814,14 +5005,16 @@ export default function App() {
   }, [assetWarmupIntent?.previousScreen]);
 
   const startFriendInvite = useCallback((friend: FriendEntry) => {
-    const password = generatePrivateRoomPassword();
-    setPendingPrivateInviteFriend(friend);
-    setMode('private');
-    setPrivateRoomIntent({ kind: 'host', roomName: cleanPrivateRoomName(`${p1.displayName} VS ${friend.displayName}`), password });
-    setVersusReturnScreen('privateRooms');
-    captureAppAnalytics('game_start_clicked', { source: 'friend_list_invite', selected_mode: 'private', friend_id: friend.playerId });
-    continueWhenAssetsReady(selectedStage, 'versus', () => setScreen('versus'), 'friends');
-  }, [captureAppAnalytics, continueWhenAssetsReady, p1.displayName, selectedStage]);
+    if (!onlineProfile) return;
+    captureAppAnalytics('game_start_clicked', { source: 'friend_list_invite', selected_mode: 'custom', friend_id: friend.playerId });
+    void createCustomRoom({ profile: onlineProfile, appVersion: KORE_APP_VERSION, roomName: `${onlineProfile.displayName} VS ${friend.displayName}` }).then(async (session) => {
+      storeCustomRoomSession(session);
+      setCustomRoomSession(session);
+      await sendFriendInvite(onlineProfile, friend.playerId, session.room.roomName, 'CUSTOM', session.room.roomId, 'custom');
+      setMode('custom');
+      setScreen('customRooms');
+    }).catch((error) => console.warn('Failed to create Custom friend room', error));
+  }, [captureAppAnalytics, onlineProfile]);
 
   const joinFriendInvite = useCallback((invite: FriendInvite) => {
     if (!onlineProfile) return;
@@ -4829,6 +5022,21 @@ export default function App() {
       console.warn('Failed to accept friend invite', error);
     });
     dismissFriendNotification(`invite:${invite.inviteId}`);
+    if (invite.roomKind === 'custom') {
+      const friendIds = readFriends(onlineProfile).map((friend) => friend.playerId);
+      void findFriendCustomRooms(onlineProfile, KORE_APP_VERSION, friendIds).then(() => joinCustomRoom({
+        profile: onlineProfile,
+        appVersion: KORE_APP_VERSION,
+        roomId: invite.roomId,
+        friendPlayerId: invite.fromPlayerId
+      })).then((session) => {
+        storeCustomRoomSession(session);
+        setCustomRoomSession(session);
+        setMode('custom');
+        setScreen('customRooms');
+      }).catch((error) => console.warn('Failed to join Custom invite', error));
+      return;
+    }
     setMode('private');
     setPrivateRoomIntent({ kind: 'guest', roomId: invite.roomId, password: invite.password });
     setPendingPrivateInviteFriend(null);
@@ -4954,23 +5162,49 @@ export default function App() {
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
-  useMenuNavigation(screen, () => openStarterGuide('gamepad_l1'), (source: string) => openFriendList(source), setInputPromptMode);
+  const playDirectionalMenuNavigateSound = useCallback((activeScreen: Screen) => {
+    if (activeScreen === 'select') playInnerMenuSelectSound();
+  }, [playInnerMenuSelectSound]);
+  useMenuNavigation(
+    screen,
+    () => openStarterGuide('gamepad_l1'),
+    (source: string) => openFriendList(source),
+    () => openChangeSide('gamepad_select', 'gamepad'),
+    setInputPromptMode,
+    playDirectionalMenuNavigateSound
+  );
   useStarterGuideKeyboardShortcut(screen, () => {
     setInputPromptMode('keyboardShortcut');
     openStarterGuide('keyboard_f1');
   });
   const handleAppMenuKeyDown = useCallback((event: ReactKeyboardEvent<HTMLElement>) => {
-    if (handleMenuNavigationKeyEvent(event.nativeEvent, screen, setInputPromptMode)) {
+    if (
+      isCharacterSelectScreen(screen) &&
+      !changeSideRequest &&
+      !document.querySelector('[aria-modal="true"]') &&
+      !event.nativeEvent.repeat &&
+      !event.nativeEvent.metaKey &&
+      !event.nativeEvent.ctrlKey &&
+      !event.nativeEvent.altKey &&
+      !isTextEntryElement(event.nativeEvent.target) &&
+      (event.nativeEvent.code === 'Slash' || event.nativeEvent.key === '/')
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+      openChangeSide('keyboard_slash', 'keyboardShortcut');
+      return;
+    }
+    if (handleMenuNavigationKeyEvent(event.nativeEvent, screen, setInputPromptMode, playDirectionalMenuNavigateSound)) {
       event.stopPropagation();
     }
-  }, [screen]);
+  }, [changeSideRequest, openChangeSide, playDirectionalMenuNavigateSound, screen]);
 	  const appCursorStyle = useMemo(
 	    () => createCursorStyle(getKoreCursorOption(settings.display.cursorId)),
 	    [settings.display.cursorId]
 	  );
 	  useEffect(() => {
-	    setArcadeRunBestScore(readLocalArcadeRunHighScore(onlineProfile));
-	  }, [onlineProfile]);
+	    setArcadeRunBestScore(readLocalArcadeRunHighScore(onlineProfile, p1Id));
+	  }, [onlineProfile, p1Id]);
 	  const resetArcadeRun = useCallback(() => {
 	    setArcadeRun(createArcadeRunState());
 	    setLastMiniGameResult(null);
@@ -4978,7 +5212,7 @@ export default function App() {
 	    setArcadeTransition(null);
 	  }, []);
 	  const finishArcadeRun = useCallback((run: ArcadeRunState) => {
-	    const previousBest = readLocalArcadeRunHighScore(onlineProfile);
+	    const previousBest = readLocalArcadeRunHighScore(onlineProfile, p1Id);
 	    const best = Math.max(previousBest, run.score);
 	    setArcadeRunBestScore(best);
 	    if (run.score > previousBest) {
@@ -4990,15 +5224,15 @@ export default function App() {
 	        unlocks_count: run.unlockedThisRun.length
 	      });
 	    }
-	    void submitArcadeRunScore(onlineProfile, run.score)
+	    void submitArcadeRunScore(onlineProfile, p1Id, run.score)
 	      .then((result) => {
-	        const submittedBest = result.entries.find((entry) => entry.playerId === (onlineProfile?.playerId ?? 'local-player'))?.score ?? best;
+	        const submittedBest = result.entries.find((entry) => entry.playerId === (onlineProfile?.playerId ?? 'local-player') && entry.characterId === p1Id)?.score ?? best;
 	        setArcadeRunBestScore(Math.max(best, submittedBest));
 	      })
 	      .catch((error) => {
 	        console.error('Failed to submit arcade run score', error);
 	      });
-	  }, [capturePositiveMilestone, onlineProfile]);
+	  }, [capturePositiveMilestone, onlineProfile, p1Id]);
 	  const makeArcadeMiniGameLaunch = useCallback((level = arcadeRun.level): ArcadeMiniGameLaunch | null => {
 	    if (!shouldStartArcadeMiniGame()) return null;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
@@ -5336,6 +5570,13 @@ export default function App() {
             }}
           />
         )}
+        {screen === 'tournamentAdvancement' && tournamentAdvancement && (
+          <TournamentAdvancementScreen
+            advancement={tournamentAdvancement}
+            roster={roster}
+            onComplete={finishTournamentAdvancement}
+          />
+        )}
         {screen === 'leaderboard' && (
           <LeaderboardScreen
             profile={onlineProfile}
@@ -5390,17 +5631,46 @@ export default function App() {
             onAnalytics={captureAppAnalytics}
           />
         )}
+        {screen === 'customRooms' && onlineProfile && customSpectatorLaunch && (
+          <CustomMatchSpectator launch={customSpectatorLaunch} roster={roster} stages={playableStageRoster} onBack={() => setCustomSpectatorLaunch(null)} />
+        )}
+        {screen === 'customRooms' && onlineProfile && !customSpectatorLaunch && (
+          <CustomRoomsExperience
+            profile={onlineProfile}
+            roster={roster}
+            stages={playableStageRoster}
+            appVersion={KORE_APP_VERSION}
+            session={customRoomSession}
+            setSession={setCustomRoomSession}
+            onBack={() => {
+              setCustomSpectatorLaunch(null);
+              setMode('online');
+              setScreen('select');
+            }}
+            onLaunchMatch={(launch) => {
+              const characterIds = launch.match.characterIds;
+              const stage = playableStageRoster.find((candidate) => candidate.id === launch.match.stageId);
+              const fighterOne = characterIds ? roster.find((candidate) => candidate.id === characterIds[0]) : undefined;
+              const fighterTwo = characterIds ? roster.find((candidate) => candidate.id === characterIds[1]) : undefined;
+              if (!stage || !fighterOne || !fighterTwo) return;
+              setCustomMatchLaunch(launch);
+              setCustomSpectatorLaunch(null);
+              setP1Id(fighterOne.id);
+              setP2Id(fighterTwo.id);
+              setStageId(stage.id);
+              setMode('custom');
+              continueWhenAssetsReady(stage, 'fight', () => setScreen('fight'), 'customRooms', { roster }, { p1: fighterOne, p2: fighterTwo }, 'custom');
+            }}
+            onWatchMatch={(launch) => setCustomSpectatorLaunch(launch)}
+          />
+        )}
         {screen === 'matchHistory' && (
           <MatchHistoryScreen
             profile={onlineProfile}
             roster={roster}
             stages={playableStageRoster}
             onBack={() => setScreen('training')}
-            onInviteFriend={(friend) => {
-              setPendingPrivateInviteFriend(friend);
-              setMode('private');
-              setScreen('privateRooms');
-            }}
+            onInviteFriend={startFriendInvite}
             onAnalytics={captureAppAnalytics}
           />
         )}
@@ -5493,33 +5763,15 @@ export default function App() {
               captureAppAnalytics('navigation_clicked', { destination: 'leaderboard', source: 'character_select' });
               setScreen('leaderboard');
             }}
-            onPrivateRooms={() => {
-              if (!onlineProfile) {
-                promptForUsername({
-                  source: 'private_rooms',
-                  body: 'Choose the name private room opponents will see.',
-                  onConfirm: () => {
-                    captureAppAnalytics('navigation_clicked', { destination: 'private_rooms', source: 'character_select' });
-                    resolveRandomCharacterSelection('private');
-                    resolveRandomStageSelection();
-                    setScreen('privateRooms');
-                  },
-                  onBack: () => {
-                    setMode('ai');
-                    setPrivateRoomIntent(null);
-                    setScreen('select');
-                  }
-                });
-                return;
-              }
-              captureAppAnalytics('navigation_clicked', { destination: 'private_rooms', source: 'character_select' });
-              resolveRandomCharacterSelection('private');
-              resolveRandomStageSelection();
-              setScreen('privateRooms');
-            }}
             onUiNavigate={playInnerMenuSelectSound}
             onBack={() => setScreen('menu')}
             onNext={() => {
+              if (mode === 'custom') {
+                captureAppAnalytics('navigation_clicked', { destination: 'custom_rooms', source: 'create_custom_room_button' });
+                if (onlineProfile) setScreen('customRooms');
+                else promptForUsername({ source: 'custom_rooms', body: 'Choose the name players will see in Custom rooms.', onConfirm: () => setScreen('customRooms'), onBack: () => setScreen('select') });
+                return;
+              }
               const continueToStage = () => {
                 const resolvedCharacters = resolveRandomCharacterSelection(mode);
                 if (mode === 'training') {
@@ -5860,6 +6112,7 @@ export default function App() {
             mode={mode}
             cpuDifficulty={effectiveCpuDifficulty}
             cpuSlots={mode === 'tournamentLocal' ? localTournamentCpuSlots : undefined}
+            preferredStartSide={startSide}
             settings={settings}
             inputPromptMode={inputPromptMode}
             onInputPromptModeChange={setInputPromptMode}
@@ -5882,6 +6135,7 @@ export default function App() {
               setScreen('tournamentLobby');
             }}
             onRankedProfileChange={setRankedProfile}
+            customRoomContext={mode === 'custom' ? customMatchLaunch : null}
             privateRoomIntent={privateRoomIntent}
             pendingPrivateInviteFriend={pendingPrivateInviteFriend}
             onFriendInviteSent={(invite, friend) => {
@@ -5895,10 +6149,18 @@ export default function App() {
             }}
             arcadeRun={arcadeRun}
             onPausedChange={setFightPaused}
-            onMenu={() => setScreen('menu')}
+            onMenu={() => setScreen(mode === 'custom' ? 'customRooms' : 'menu')}
             initialTrainingMode={selectedTrainingMode}
             initialPauseMenuView={selectedTrainingMode === 'basics' || selectedTrainingMode === 'combos' ? 'trainingTrials' : undefined}
-            onCharacterSelect={() => setScreen(mode === 'training' || mode === 'trainingOnline' ? 'training' : 'select')}
+            onCharacterSelect={() => setScreen(mode === 'custom' ? 'customRooms' : mode === 'training' || mode === 'trainingOnline' ? 'training' : 'select')}
+            onCustomMatchComplete={(winnerPlayerId) => {
+              const launch = customMatchLaunch;
+              if (!launch) return;
+              void sendCustomRoomCommand(launch.roomId, launch.memberToken, { type: 'reportResult', stationId: launch.stationId, winnerPlayerId }).finally(() => {
+                setCustomMatchLaunch(null);
+                setScreen('customRooms');
+              });
+            }}
             onTournamentMatchComplete={handleTournamentMatchComplete}
             onArcadeAdvance={({ winnerSlot, defeatedCharacterId, playerHealth, playerMaxHealth }) => {
               const effectiveUnlocks = new Set(effectiveUnlockedCharacterIds);
@@ -5991,6 +6253,29 @@ export default function App() {
           />
         )}
       </section>
+      {isCharacterSelectScreen(screen) && !usernameGate && !emailReminderPrompt && !starterGuideOpen && (
+        <button
+          className="change-side-hint"
+          type="button"
+          aria-label="Change starting side"
+          title="Change starting side"
+          onClick={() => openChangeSide(
+            'character_select_button',
+            inputPromptMode === 'touch' ? 'touch' : inputPromptMode === 'gamepad' ? 'gamepad' : 'pointer'
+          )}
+        >
+          <Rotate3D size={16} />
+          {getChangeSidePrompt(inputPromptMode) && <span>{getChangeSidePrompt(inputPromptMode)}</span>}
+          <strong>Change Side</strong>
+        </button>
+      )}
+      {changeSideRequest && (
+        <ChangeSideDialog
+          currentSide={startSide}
+          onCancel={() => setChangeSideRequest(null)}
+          onConfirm={confirmChangeSide}
+        />
+      )}
       {screen !== 'fight' && friendNotifications.length > 0 && (
         <FriendNotificationStack
           notifications={friendNotifications}
@@ -6038,6 +6323,10 @@ const EMAIL_LOCAL_MAX_LENGTH = 64;
 const EMAIL_DOMAIN_MAX_LENGTH = 190;
 const EMAIL_LOCAL_CONTROLLER_CHARACTERS = ' .abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-+'.split('');
 const EMAIL_DOMAIN_CONTROLLER_CHARACTERS = ' .abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'.split('');
+
+function isCharacterSelectScreen(screen: Screen) {
+  return screen === 'select' || screen === 'training' || screen === 'tournament';
+}
 
 const MAIN_MENU_FRIEND_LIST_KEY = 'KeyF';
 const MAIN_MENU_FRIEND_LIST_KEY_LABEL = 'F';
@@ -6094,11 +6383,20 @@ const menuFocusableSelector = [
   '[tabindex]:not([tabindex="-1"])'
 ].join(',');
 
-function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMenuFriends: (source: string) => void, onInputPromptModeChange: (mode: InputPromptMode) => void) {
+function useMenuNavigation(
+  screen: Screen,
+  onMainMenuHelp: () => void,
+  onMainMenuFriends: (source: string) => void,
+  onCharacterSelectSide: () => void,
+  onInputPromptModeChange: (mode: InputPromptMode) => void,
+  onDirectionalNavigate?: (screen: Screen) => void
+) {
   const screenRef = useRef(screen);
   const onMainMenuHelpRef = useRef(onMainMenuHelp);
   const onMainMenuFriendsRef = useRef(onMainMenuFriends);
+  const onCharacterSelectSideRef = useRef(onCharacterSelectSide);
   const onInputPromptModeChangeRef = useRef(onInputPromptModeChange);
+  const onDirectionalNavigateRef = useRef(onDirectionalNavigate);
   const previousPadStateRef = useRef({
     up: false,
     down: false,
@@ -6127,8 +6425,16 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
   }, [onMainMenuFriends]);
 
   useEffect(() => {
+    onCharacterSelectSideRef.current = onCharacterSelectSide;
+  }, [onCharacterSelectSide]);
+
+  useEffect(() => {
     onInputPromptModeChangeRef.current = onInputPromptModeChange;
   }, [onInputPromptModeChange]);
+
+  useEffect(() => {
+    onDirectionalNavigateRef.current = onDirectionalNavigate;
+  }, [onDirectionalNavigate]);
 
   useEffect(() => {
     if (!isMenuNavigationActive(screen)) return undefined;
@@ -6139,7 +6445,7 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (handleMainMenuFriendListKeyEvent(event, screenRef.current, onMainMenuFriendsRef.current, onInputPromptModeChangeRef.current)) return;
-      handleMenuNavigationKeyEvent(event, screenRef.current, onInputPromptModeChangeRef.current);
+      handleMenuNavigationKeyEvent(event, screenRef.current, onInputPromptModeChangeRef.current, onDirectionalNavigateRef.current);
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -6198,6 +6504,8 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
           }
           if (document.querySelector('.starter-guide-overlay') && (edge.help || edge.helpNext)) {
             activateStarterGuideStep(edge.helpNext ? 1 : -1);
+          } else if (isCharacterSelectScreen(screenRef.current) && edge.select && !isChangeSideDialogOpen()) {
+            onCharacterSelectSideRef.current();
           } else if (screenRef.current === 'menu' && edge.friendList) {
             onMainMenuFriendsRef.current('gamepad_friend_list');
           } else if (screenRef.current === 'menu' && edge.previous) {
@@ -6205,7 +6513,9 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
           } else if (screenRef.current === 'settings' && (edge.previous || edge.next)) {
             dispatchSettingsTabCycle(edge.next ? 1 : -1);
           } else if (!hasScreenSpecificPageGamepadHandler(screenRef.current) && (edge.previous || edge.next)) {
-            moveMenuFocus(edge.next ? 'right' : 'left');
+            if (moveMenuFocus(edge.next ? 'right' : 'left')) {
+              onDirectionalNavigateRef.current?.(screenRef.current);
+            }
             lastMoveAt = now;
           } else if (screenRef.current === 'menu' && edge.select) {
             window.dispatchEvent(new CustomEvent(MAIN_MENU_CHROME_TOGGLE_EVENT));
@@ -6216,7 +6526,9 @@ function useMenuNavigation(screen: Screen, onMainMenuHelp: () => void, onMainMen
           } else if (edge.up || edge.down || edge.left || edge.right || (heldDirection && repeatedMove)) {
             const direction = edge.up ? 'up' : edge.down ? 'down' : edge.left ? 'left' : edge.right ? 'right' : heldDirection;
             if (direction) {
-              moveMenuFocus(direction);
+              if (moveMenuFocus(direction)) {
+                onDirectionalNavigateRef.current?.(screenRef.current);
+              }
               lastMoveAt = now;
             }
           }
@@ -6257,7 +6569,7 @@ function dispatchSettingsTabCycle(direction: -1 | 1) {
 }
 
 function hasScreenSpecificPageGamepadHandler(screen: Screen) {
-  return screen === 'select' || screen === 'training' || screen === 'tournament' || screen === 'stage';
+  return isCharacterSelectScreen(screen) || screen === 'stage';
 }
 
 function useStarterGuideKeyboardShortcut(screen: Screen, onOpen: () => void) {
@@ -6287,7 +6599,12 @@ function useStarterGuideKeyboardShortcut(screen: Screen, onOpen: () => void) {
   }, []);
 }
 
-function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen, onInputPromptModeChange?: (mode: InputPromptMode) => void) {
+function handleMenuNavigationKeyEvent(
+  event: KeyboardEvent,
+  screen: Screen,
+  onInputPromptModeChange?: (mode: InputPromptMode) => void,
+  onDirectionalNavigate?: (screen: Screen) => void
+) {
   if (!isMenuNavigationActive(screen)) return false;
   if (document.querySelector('.capture')) return false;
   if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return false;
@@ -6305,7 +6622,7 @@ function handleMenuNavigationKeyEvent(event: KeyboardEvent, screen: Screen, onIn
     return true;
   }
   if ((command === 'left' || command === 'right') && activateFocusedDirectionalControl(command)) return true;
-  moveMenuFocus(command);
+  if (moveMenuFocus(command)) onDirectionalNavigate?.(screen);
   return true;
 }
 
@@ -6338,11 +6655,17 @@ function isTextEntryElement(target: EventTarget | null) {
 }
 
 function getMenuRoot() {
+  const changeSide = document.querySelector<HTMLElement>('.change-side-overlay');
+  if (changeSide) return changeSide;
   const starterGuide = document.querySelector<HTMLElement>('.starter-guide-overlay');
   if (starterGuide) return starterGuide;
   const overlay = document.querySelector<HTMLElement>('.pause-overlay');
   if (overlay) return overlay;
   return document.querySelector<HTMLElement>('.screen-panel');
+}
+
+function isChangeSideDialogOpen() {
+  return Boolean(document.querySelector('.change-side-overlay'));
 }
 
 function getMenuFocusableElements() {
@@ -6393,11 +6716,13 @@ function getCurrentMenuElement(elements: HTMLElement[]) {
 
 function moveMenuFocus(direction: MenuNavigationDirection) {
   const elements = getMenuFocusableElements();
-  if (elements.length === 0) return;
+  if (elements.length === 0) return false;
   const current = getCurrentMenuElement(elements);
-  if (!current) return;
+  if (!current) return false;
   const next = findNextMenuElement(elements, current, direction);
-  if (next) focusMenuElement(next);
+  if (!next || next === current) return false;
+  focusMenuElement(next);
+  return true;
 }
 
 function findNextMenuElement(elements: HTMLElement[], current: HTMLElement, direction: MenuNavigationDirection) {
@@ -7082,6 +7407,70 @@ function getMainMenuFriendListPrompt(inputPromptMode: InputPromptMode) {
   if (/(nintendo|switch|joy-con|joycon|pro controller)/i.test(id)) return 'ZL';
   if (/(dualsense|dualshock|wireless controller|playstation)/i.test(id)) return 'L2';
   return gamepadButtonPrompts[MENU_FRIEND_LIST_GAMEPAD_BUTTON]?.label ?? 'L2';
+}
+
+function getChangeSidePrompt(inputPromptMode: InputPromptMode) {
+  if (inputPromptMode === 'touch' || inputPromptMode === 'pointer') return '';
+  if (inputPromptMode === 'keyboardShortcut' || inputPromptMode === 'keyboardDirectional') return '/';
+  const pad = getPrimaryGamepad();
+  const id = pad?.id.toLowerCase() ?? '';
+  if (/(xbox|xinput|steam virtual|steam input)/i.test(id)) return 'View';
+  if (/(nintendo|switch|joy-con|joycon|pro controller)/i.test(id)) return '−';
+  if (/(dualsense|dualshock|wireless controller|playstation)/i.test(id)) return 'Create';
+  return gamepadButtonPrompts[MENU_GAMEPAD_SELECT_BUTTON]?.label ?? 'Select';
+}
+
+export function ChangeSideDialog({
+  currentSide,
+  onCancel,
+  onConfirm
+}: {
+  currentSide: StartSide;
+  onCancel: () => void;
+  onConfirm: (side: StartSide) => void;
+}) {
+  const [draftSide, setDraftSide] = useState<StartSide>(currentSide);
+  const selectedRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => selectedRef.current?.focus({ preventScroll: true }));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  return (
+    <div className="change-side-overlay" role="presentation">
+      <section className="change-side-dialog" role="dialog" aria-modal="true" aria-labelledby="change-side-title">
+        <header>
+          <span>Player Preference</span>
+          <h2 id="change-side-title">Change Side</h2>
+          <p>Choose where your fighter starts each round.</p>
+        </header>
+        <div className="change-side-options" role="radiogroup" aria-label="Starting side">
+          {(['left', 'right'] as const).map((side) => {
+            const selected = draftSide === side;
+            return (
+              <button
+                key={side}
+                ref={selected ? selectedRef : undefined}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                className={selected ? 'is-selected' : ''}
+                onClick={() => setDraftSide(side)}
+              >
+                <span>{side}</span>
+                {selected && <CheckCircle2 size={22} aria-hidden="true" />}
+              </button>
+            );
+          })}
+        </div>
+        <div className="change-side-actions">
+          <button type="button" className="secondary-button" onClick={onCancel}>Back</button>
+          <button type="button" className="primary-button" onClick={() => onConfirm(draftSide)}>Confirm</button>
+        </div>
+      </section>
+    </div>
+  );
 }
 
 function MenuScreen({
@@ -7789,9 +8178,9 @@ function LeaderboardScreen({
             {entries.map((entry, index) => {
               const current = profile?.playerId === entry.playerId;
               return (
-                <div key={entry.playerId} className={`leaderboard-row ${current ? 'is-you' : ''}`}>
+                <div key={`${entry.playerId}:${entry.characterId}`} className={`leaderboard-row ${current ? 'is-you' : ''}`}>
                   <span className="rank">{index + 1}</span>
-                  <strong>{entry.displayName}</strong>
+                  <strong>{entry.displayName}<small>{entry.characterId}</small></strong>
                   <span>{entry.points.toLocaleString()} PTS</span>
                 </div>
               );
@@ -8659,6 +9048,7 @@ function formatMatchHistoryMode(mode: SocialMatchMode) {
   if (mode === 'ranked') return 'Ranked Match';
   if (mode === 'trainingOnline') return 'Training Sparring';
   if (mode === 'private') return 'Private Match';
+  if (mode === 'custom') return 'Custom Match';
   return 'Online Match';
 }
 
@@ -9578,6 +9968,7 @@ function TrainingSelect({
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (isChangeSideDialogOpen()) return;
       const target = event.target as HTMLElement | null;
       if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
       if (event.repeat) return;
@@ -9607,7 +9998,7 @@ function TrainingSelect({
     let frame = 0;
     const tick = () => {
       const pad = getPrimaryGamepad();
-      if (!pad || isTextEntryElement(document.activeElement)) {
+      if (!pad || isTextEntryElement(document.activeElement) || isChangeSideDialogOpen()) {
         pageGamepadStateRef.current = { previous: false, next: false };
         modeGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
@@ -9949,6 +10340,7 @@ function TournamentSelect({
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (isChangeSideDialogOpen()) return;
       const target = event.target as HTMLElement | null;
       if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
       if (event.repeat) return;
@@ -9978,7 +10370,7 @@ function TournamentSelect({
     let frame = 0;
     const tick = () => {
       const pad = getPrimaryGamepad();
-      if (!pad || isTextEntryElement(document.activeElement)) {
+      if (!pad || isTextEntryElement(document.activeElement) || isChangeSideDialogOpen()) {
         pageGamepadStateRef.current = { previous: false, next: false };
         modeGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
@@ -10449,6 +10841,26 @@ function TournamentLobbyScreen({
             Refresh
           </button>
         )}
+        {onlineStatus?.bracket && (
+          <button className="secondary-button" type="button" onClick={() => {
+            const slug = onlineStatus.bracket.slug || onlineStatus.bracket.id;
+            const url = `${window.location.origin}/tournaments/${encodeURIComponent(slug)}`;
+            void shareSpectatorLink(onlineStatus.bracket.name || 'K.O.R.E Tournament', 'Watch this K.O.R.E tournament live.', url);
+          }}>
+            <Share2 size={18} />
+            Share Tournament
+          </button>
+        )}
+        {onlineStatus?.bracket && assignedMatch && (
+          <button className="secondary-button" type="button" onClick={() => {
+            const slug = onlineStatus.bracket.slug || onlineStatus.bracket.id;
+            const url = `${window.location.origin}/tournaments/${encodeURIComponent(slug)}/matches/${encodeURIComponent(assignedMatch.id)}`;
+            void shareSpectatorLink('K.O.R.E Tournament Match', 'Watch this tournament match live.', url);
+          }}>
+            <Copy size={18} />
+            Share Match
+          </button>
+        )}
         {onlineStatus && (
           <button className="primary-button" type="button" onClick={onStartOnlineMatch} disabled={!canStartOnlineMatch}>
             <Swords size={18} />
@@ -10661,6 +11073,75 @@ function TournamentBracketIntroScreen({
   );
 }
 
+function TournamentAdvancementScreen({
+  advancement,
+  roster,
+  onComplete
+}: {
+  advancement: TournamentAdvancementState;
+  roster: CharacterDefinition[];
+  onComplete: () => void;
+}) {
+  const screenRef = useRef<HTMLDivElement | null>(null);
+  const completedRef = useRef(false);
+  const complete = useCallback(() => {
+    if (completedRef.current) return;
+    completedRef.current = true;
+    onComplete();
+  }, [onComplete]);
+  const acceptAdvancementInput = useAnyInputActivation({ onAccept: complete, onBack: complete });
+  const match = advancement.bracket.matches.find((candidate) => candidate.id === advancement.completedMatchId);
+  const previousMatch = advancement.beforeBracket.matches.find((candidate) => candidate.id === advancement.completedMatchId) ?? match;
+  const winnerEntry = getTournamentEntry(advancement.bracket, advancement.winnerEntryId);
+  const loserEntries = [previousMatch?.entryAId, previousMatch?.entryBId]
+    .filter((entryId): entryId is string => Boolean(entryId && entryId !== advancement.winnerEntryId))
+    .map((entryId) => getTournamentEntry(advancement.beforeBracket, entryId))
+    .filter((entry): entry is TournamentEntry => Boolean(entry));
+  const totalRounds = getTournamentTotalRounds(advancement.bracket);
+
+  useEffect(() => {
+    screenRef.current?.focus();
+    const timeout = window.setTimeout(complete, 2050);
+    return () => window.clearTimeout(timeout);
+  }, [complete]);
+
+  return (
+    <div
+      ref={screenRef}
+      className="tournament-advancement-screen any-input-screen"
+      tabIndex={-1}
+      onClick={complete}
+      onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptAdvancementInput, complete)}
+      aria-label="Tournament bracket advancement. Press any key to continue."
+    >
+      <section className="tournament-advancement-copy">
+        <span>{match ? getTournamentRoundLabel(match.round, totalRounds) : 'Tournament'}</span>
+        <h2>{winnerEntry?.displayName ?? 'Winner'} Advances</h2>
+        <small>Winner path moving up</small>
+      </section>
+      <section className="tournament-advancement-stage" aria-label="Tournament advancement cutscene">
+        <div className="tournament-advancement-light" aria-hidden="true" />
+        <div className="tournament-advancement-losers" aria-hidden="true">
+          {loserEntries.map((entry) => (
+            <TournamentEntrantRow key={entry.id} entry={entry} roster={roster} loser />
+          ))}
+        </div>
+        <div className="tournament-advancement-runner" aria-hidden="true">
+          <span />
+        </div>
+        <TournamentBracketBoard
+          bracket={advancement.bracket}
+          roster={roster}
+          focusMatchId={advancement.completedMatchId}
+          advancingWinnerEntryId={advancement.winnerEntryId}
+          compact
+        />
+      </section>
+      <div className="fight-versus-hint">Press any key to continue</div>
+    </div>
+  );
+}
+
 function TournamentPreviewBracket() {
   return (
     <div className="tournament-preview-bracket" aria-hidden="true">
@@ -10675,33 +11156,55 @@ function TournamentBracketBoard({
   bracket,
   roster,
   focusMatchId,
-  compact = false
+  compact = false,
+  advancingWinnerEntryId
 }: {
   bracket: TournamentBracket;
   roster: CharacterDefinition[];
   focusMatchId?: string;
   compact?: boolean;
+  advancingWinnerEntryId?: string;
 }) {
   const totalRounds = getTournamentTotalRounds(bracket);
   const rounds = bracket.matches.length
     ? [...new Set(bracket.matches.map((match) => match.round))].sort((a, b) => a - b)
     : Array.from({ length: totalRounds }, (_, index) => index + 1);
+  const visualRounds = [...rounds].sort((a, b) => b - a);
+  const finalWinnerEntryId = bracket.matches.find((match) => match.round === totalRounds && match.winnerEntryId)?.winnerEntryId;
+  const finalWinnerEntry = getTournamentEntry(bracket, finalWinnerEntryId);
   return (
     <div className={`tournament-bracket-board ${compact ? 'is-compact' : ''}`} style={{ '--tournament-rounds': rounds.length } as CSSProperties}>
-      {rounds.map((round) => (
-        <section key={round} className="tournament-bracket-round">
-          <h3>{getTournamentRoundLabel(round, totalRounds)}</h3>
-          {bracket.matches.filter((match) => match.round === round).map((match) => (
-            <TournamentMatchCard
-              key={match.id}
-              bracket={bracket}
-              match={match}
-              roster={roster}
-              focused={match.id === focusMatchId}
-            />
-          ))}
-        </section>
-      ))}
+      <section className={`tournament-winner-slot ${finalWinnerEntry ? 'has-champion' : ''}`}>
+        <span>WINNER</span>
+        {finalWinnerEntry && (
+          <TournamentEntrantRow
+            entry={finalWinnerEntry}
+            roster={roster}
+            winner
+            advancing={finalWinnerEntry.id === advancingWinnerEntryId}
+            champion
+          />
+        )}
+      </section>
+      <div className="tournament-bracket-rounds">
+        {visualRounds.map((round, index) => (
+          <section key={round} className="tournament-bracket-round" style={{ '--round-delay': `${index * 70}ms` } as CSSProperties}>
+            <h3>{getTournamentRoundLabel(round, totalRounds)}</h3>
+            <div className="tournament-bracket-matches">
+              {bracket.matches.filter((match) => match.round === round).map((match) => (
+                <TournamentMatchCard
+                  key={match.id}
+                  bracket={bracket}
+                  match={match}
+                  roster={roster}
+                  focused={match.id === focusMatchId}
+                  advancingWinnerEntryId={advancingWinnerEntryId}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   );
 }
@@ -10710,19 +11213,34 @@ function TournamentMatchCard({
   bracket,
   match,
   roster,
-  focused
+  focused,
+  advancingWinnerEntryId
 }: {
   bracket: TournamentBracket;
   match: TournamentMatch;
   roster: CharacterDefinition[];
   focused?: boolean;
+  advancingWinnerEntryId?: string;
 }) {
   const entryA = getTournamentEntry(bracket, match.entryAId);
   const entryB = getTournamentEntry(bracket, match.entryBId);
+  const complete = match.status === 'completed';
   return (
-    <article className={`tournament-match-card ${focused ? 'is-focused' : ''} ${match.status === 'completed' ? 'is-complete' : ''}`}>
-      <TournamentEntrantRow entry={entryA} roster={roster} winner={match.winnerEntryId === entryA?.id} />
-      <TournamentEntrantRow entry={entryB} roster={roster} winner={match.winnerEntryId === entryB?.id} />
+    <article className={`tournament-match-card ${focused ? 'is-focused' : ''} ${complete ? 'is-complete' : ''} ${focused && complete ? 'is-advancing' : ''}`}>
+      <TournamentEntrantRow
+        entry={entryA}
+        roster={roster}
+        winner={match.winnerEntryId === entryA?.id}
+        loser={complete && Boolean(entryA) && match.winnerEntryId !== entryA?.id}
+        advancing={advancingWinnerEntryId === entryA?.id}
+      />
+      <TournamentEntrantRow
+        entry={entryB}
+        roster={roster}
+        winner={match.winnerEntryId === entryB?.id}
+        loser={complete && Boolean(entryB) && match.winnerEntryId !== entryB?.id}
+        advancing={advancingWinnerEntryId === entryB?.id}
+      />
       <small>{match.status === 'ready' ? 'Ready' : match.status === 'completed' ? 'Complete' : 'Pending'}</small>
     </article>
   );
@@ -10731,15 +11249,21 @@ function TournamentMatchCard({
 function TournamentEntrantRow({
   entry,
   roster,
-  winner
+  winner,
+  loser,
+  advancing,
+  champion
 }: {
   entry?: TournamentEntry;
   roster: CharacterDefinition[];
   winner?: boolean;
+  loser?: boolean;
+  advancing?: boolean;
+  champion?: boolean;
 }) {
   const character = tournamentEntryCharacter(roster, entry);
   return (
-    <div className={`tournament-entrant-row ${winner ? 'is-winner' : ''}`}>
+    <div className={`tournament-entrant-row ${winner ? 'is-winner' : ''} ${loser ? 'is-loser' : ''} ${advancing ? 'is-advancing' : ''} ${champion ? 'is-champion' : ''}`}>
       {character ? <img src={characterPortraitPath(character)} alt="" /> : <span className="tournament-empty-seed" />}
       <strong>{entry?.displayName ?? 'TBD'}</strong>
     </div>
@@ -11033,7 +11557,7 @@ const characterSelectModeOptions: Array<{ mode: MatchMode; label: string; icon: 
   { mode: 'versusCpu', label: '1P vs CPU', icon: <Gamepad2 size={18} /> },
   { mode: 'online', label: 'Online', icon: <Wifi size={18} /> },
   { mode: 'ranked', label: 'Ranked', icon: <Award size={18} /> },
-  { mode: 'private', label: 'Private', icon: <KeyRound size={18} /> },
+  { mode: 'custom', label: 'Custom', icon: <KeyRound size={18} /> },
   { mode: 'cpu', label: 'CPU vs CPU', icon: <Swords size={18} /> }
 ];
 
@@ -11063,7 +11587,6 @@ function CharacterSelect({
   onlineProfile,
   rankedProfile,
   onLeaderboards,
-  onPrivateRooms,
   onUiNavigate,
   onBack,
   onNext,
@@ -11084,7 +11607,6 @@ function CharacterSelect({
   onlineProfile?: OnlinePlayerProfile | null;
   rankedProfile?: RankedProfile | null;
   onLeaderboards?: () => void;
-  onPrivateRooms?: () => void;
   onUiNavigate: () => void;
   onBack: () => void;
   onNext: () => void;
@@ -11094,6 +11616,8 @@ function CharacterSelect({
   const [rankedProfileOpen, setRankedProfileOpen] = useState(false);
   const [hoveredBaseId, setHoveredBaseId] = useState('');
   const [rosterPage, setRosterPage] = useState(0);
+  const [characterPageSize, setCharacterPageSize] = useState(CHARACTER_SELECT_PAGE_SIZE);
+  const rosterScrollRef = useRef<HTMLDivElement | null>(null);
   const pageGamepadStateRef = useRef({ previous: false, next: false });
   const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
@@ -11101,10 +11625,10 @@ function CharacterSelect({
   const baseRoster = useMemo(() => (
     sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
   ), [roster, unlockedCharacterIds]);
-  const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
+  const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / characterPageSize));
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
-  const rosterPageStart = visibleRosterPage * CHARACTER_SELECT_PAGE_SIZE;
-  const pagedBaseRoster = baseRoster.slice(rosterPageStart, rosterPageStart + CHARACTER_SELECT_PAGE_SIZE);
+  const rosterPageStart = visibleRosterPage * characterPageSize;
+  const pagedBaseRoster = baseRoster.slice(rosterPageStart, rosterPageStart + characterPageSize);
   const isArcadeMode = isArcadeMatchMode(mode);
   const targetLabel = getSlotLabel(mode, selectTarget).toUpperCase();
   const targetIsRandom = randomCharacterSlots[selectTarget];
@@ -11161,6 +11685,43 @@ function CharacterSelect({
   }, [totalRosterPages]);
 
   useEffect(() => {
+    const scroll = rosterScrollRef.current;
+    if (!scroll || typeof ResizeObserver === 'undefined') return;
+    let frame = 0;
+    const updatePageSize = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const grid = scroll.querySelector<HTMLElement>('.versus-roster-grid');
+        if (!grid) return;
+        const gridStyle = window.getComputedStyle(grid);
+        const columns = gridStyle.gridTemplateColumns
+          .split(' ')
+          .filter((column) => column.trim() && column !== 'none').length;
+        const firstTile = grid.querySelector<HTMLElement>('.versus-roster-tile');
+        const tileHeight = firstTile?.getBoundingClientRect().height || 96;
+        const rowGap = Number.parseFloat(gridStyle.rowGap) || 0;
+        const availableHeight = Math.max(0, scroll.getBoundingClientRect().bottom - grid.getBoundingClientRect().top - 2);
+        const rows = Math.max(1, Math.floor((availableHeight + rowGap) / Math.max(1, tileHeight + rowGap)));
+        const firstPageRandomSlot = 1;
+        const nextPageSize = Math.max(
+          CHARACTER_SELECT_PAGE_SIZE,
+          Math.min(CHARACTER_SELECT_MAX_PAGE_SIZE, Math.max(1, columns * rows - firstPageRandomSlot))
+        );
+        setCharacterPageSize((current) => current === nextPageSize ? current : nextPageSize);
+      });
+    };
+    const observer = new ResizeObserver(updatePageSize);
+    observer.observe(scroll);
+    updatePageSize();
+    window.addEventListener('resize', updatePageSize);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('resize', updatePageSize);
+    };
+  }, [baseRoster.length, mode, selectTarget]);
+
+  useEffect(() => {
     if (randomCharacterSlots[selectTarget]) {
       setRosterPage(0);
       return;
@@ -11168,8 +11729,8 @@ function CharacterSelect({
     const selected = selectTarget === 1 ? p1Character : p2Character;
     const selectedBaseId = getCharacterBaseId(selected);
     const selectedIndex = Math.max(0, baseRoster.findIndex((character) => character.id === selectedBaseId));
-    setRosterPage(Math.min(totalRosterPages - 1, Math.floor(selectedIndex / CHARACTER_SELECT_PAGE_SIZE)));
-  }, [baseRoster, p1Character, p2Character, randomCharacterSlots, selectTarget, totalRosterPages]);
+    setRosterPage(Math.min(totalRosterPages - 1, Math.floor(selectedIndex / characterPageSize)));
+  }, [baseRoster, characterPageSize, p1Character, p2Character, randomCharacterSlots, selectTarget, totalRosterPages]);
 
   useEffect(() => {
     if (isArcadeMode && selectTarget === 2) setSelectTarget(1);
@@ -11191,6 +11752,7 @@ function CharacterSelect({
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (isChangeSideDialogOpen()) return;
       const target = event.target as HTMLElement | null;
       if (target?.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target?.tagName ?? '')) return;
       if (event.repeat) return;
@@ -11220,7 +11782,7 @@ function CharacterSelect({
     let frame = 0;
     const tick = () => {
       const pad = getPrimaryGamepad();
-      if (!pad || isTextEntryElement(document.activeElement)) {
+      if (!pad || isTextEntryElement(document.activeElement) || isChangeSideDialogOpen()) {
         pageGamepadStateRef.current = { previous: false, next: false };
         modeGamepadStateRef.current = { previous: false, next: false };
         frame = window.requestAnimationFrame(tick);
@@ -11310,7 +11872,7 @@ function CharacterSelect({
           </div>
         </div>
 
-        <div className="versus-roster-scroll" data-testid="select-roster-scroll">
+        <div className="versus-roster-scroll" ref={rosterScrollRef} data-testid="select-roster-scroll">
           <div className={`versus-target-tabs ${isArcadeMode ? 'is-arcade-targets' : ''}`} aria-label="Choose selection target">
             <button className={selectTarget === 1 ? 'active' : ''} onClick={() => {
               setSelectTarget(1);
@@ -11430,16 +11992,10 @@ function CharacterSelect({
                 icon: <Trophy size={18} />,
                 onClick: onLeaderboards
               }
-              : mode === 'private' && onPrivateRooms
-                ? {
-                  label: 'Rooms',
-                  icon: <KeyRound size={18} />,
-                  onClick: onPrivateRooms
-                }
-                : undefined
+              : undefined
           }
           onNext={onNext}
-          nextLabel="Stage"
+          nextLabel={mode === 'custom' ? 'Create Custom Room' : 'Stage'}
           nextDisabled={trainingSelectionLocked}
         />
       </section>
@@ -11501,7 +12057,7 @@ function RankedProfileCard({
           <Award size={28} />
         </div>
         <div>
-          <span>Ranked Profile</span>
+          <span>{ranked?.characterId ? `Ranked Profile - ${ranked.characterId}` : 'Ranked Profile'}</span>
           <h3>{onlineProfile.displayName}</h3>
           <p>
             {ranked
@@ -11809,6 +12365,7 @@ function getSlotLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'tournamentOnline') return slot === 1 ? 'You' : 'Tournament Opponent';
   if (mode === 'tournamentLocal') return slot === 1 ? 'You' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'You' : 'Private Guest';
+  if (mode === 'custom') return slot === 1 ? 'You' : 'Custom Rival';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && (isArcadeMatchMode(mode) || mode === 'versusCpu')) return 'CPU';
   return slot === 1 ? 'Player 1' : 'Player 2';
@@ -11824,6 +12381,7 @@ function getSlotShortLabel(mode: MatchMode, slot: 1 | 2) {
   if (mode === 'tournamentOnline') return slot === 1 ? 'YOU' : 'BRACKET';
   if (mode === 'tournamentLocal') return slot === 1 ? 'YOU' : 'CPU';
   if (mode === 'private') return slot === 1 ? 'YOU' : 'GUEST';
+  if (mode === 'custom') return slot === 1 ? 'YOU' : 'RIVAL';
   if (slot === 2 && mode === 'training') return 'Dummy';
   if (slot === 2 && (isArcadeMatchMode(mode) || mode === 'versusCpu')) return 'CPU';
   return slot === 1 ? 'P1' : 'P2';
@@ -13059,6 +13617,14 @@ function StageEditor({
                   {editableStage.hidden ? <Eye size={14} /> : <EyeOff size={14} />}
                   {editableStage.hidden ? 'Show Stage' : 'Hide Stage'}
                 </button>
+                <button
+                  className={`secondary-button compact-button ${editableStage.tournamentEligible ? 'is-active' : ''}`}
+                  aria-pressed={editableStage.tournamentEligible === true}
+                  onClick={() => setEditableStage((current) => ({ ...current, tournamentEligible: !current.tournamentEligible }))}
+                >
+                  <Trophy size={14} />
+                  {editableStage.tournamentEligible ? 'Tournament Stage' : 'Mark Tournament'}
+                </button>
                 <button className="secondary-button compact-button" onClick={() => setShowStageControls((current) => !current)}>
                   {showStageControls ? <EyeOff size={14} /> : <Eye size={14} />}
                   {showStageControls ? 'Hide Controls' : 'Show Controls'}
@@ -14119,8 +14685,12 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('display', 'impact_sparks_enabled', previous.display.impactSparks.enabled, next.display.impactSparks.enabled);
   add('display', 'impact_sparks_cinematic', previous.display.impactSparks.cinematic, next.display.impactSparks.cinematic);
   add('display', 'impact_sparks_shape', previous.display.impactSparks.shape, next.display.impactSparks.shape);
+  add('display', 'impact_sparks_hit_color', previous.display.impactSparks.hitColor, next.display.impactSparks.hitColor);
+  add('display', 'impact_sparks_hit_accent_color', previous.display.impactSparks.hitAccentColor, next.display.impactSparks.hitAccentColor);
+  add('display', 'impact_sparks_block_color', previous.display.impactSparks.blockColor, next.display.impactSparks.blockColor);
   add('display', 'impact_sparks_size', previous.display.impactSparks.size, next.display.impactSparks.size);
   add('display', 'impact_sparks_intensity', previous.display.impactSparks.intensity, next.display.impactSparks.intensity);
+  add('display', 'movement_smoke_style', previous.display.movementSmokeStyle, next.display.movementSmokeStyle);
   add('display', 'touch_controls', previous.display.touchControls, next.display.touchControls);
   add('display', 'cursor_id', previous.display.cursorId, next.display.cursorId);
   add('display', 'reduced_motion', previous.display.reducedMotion, next.display.reducedMotion);
@@ -14374,7 +14944,7 @@ function SettingsScreen({
 
   const renderEditor = () => {
     if (activeTab === 'game') {
-      const usesOnlineStandardRules = mode === 'online' || mode === 'ranked' || mode === 'private';
+      const usesOnlineStandardRules = mode === 'online' || mode === 'ranked' || mode === 'private' || mode === 'custom';
       const visibleRoundTimer = usesOnlineStandardRules ? 60 : settings.game.roundTimer;
       const visibleMaxHealth = usesOnlineStandardRules ? defaultGameSettings.game.maxHealth : settings.game.maxHealth;
       return (
@@ -14628,15 +15198,18 @@ function SettingsScreen({
             <SettingSlider label="HUD Scale" value={settings.display.hudScale} min={0.78} max={1.25} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, display: { ...current.display, hudScale: value } }))} />
             <SettingToggle label="Impact Sparks" checked={settings.display.impactSparks.enabled} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, enabled: checked } } }))} />
             <SettingToggle label="Cinematic Impact FX" checked={settings.display.impactSparks.cinematic} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, cinematic: checked } } }))} />
-            <SettingRow label="Spark Shape" value={settings.display.impactSparks.shape.toUpperCase()}>
-              <div className="mini-segmented">
-                {(['burst', 'ring', 'shards'] as const).map((value) => (
-                  <button key={value} className={settings.display.impactSparks.shape === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, shape: value } } }))}>{value}</button>
+            <SettingRow label="Spark Shape" value={IMPACT_SPARK_SHAPE_OPTIONS.find((option) => option.value === settings.display.impactSparks.shape)?.label ?? 'Voxel Burst'}>
+              <div className="mini-segmented impact-spark-shape-picker">
+                {IMPACT_SPARK_SHAPE_OPTIONS.map(({ value, label }) => (
+                  <button key={value} className={settings.display.impactSparks.shape === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, shape: value } } }))}>{label}</button>
                 ))}
               </div>
             </SettingRow>
-            <SettingRow label="Hit Spark" value={settings.display.impactSparks.hitColor.toUpperCase()}>
+            <SettingRow label="Hit Spark Primary" value={settings.display.impactSparks.hitColor.toUpperCase()}>
               <input type="color" value={settings.display.impactSparks.hitColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, hitColor: event.target.value } } }))} />
+            </SettingRow>
+            <SettingRow label="Hit Spark Accent" value={settings.display.impactSparks.hitAccentColor.toUpperCase()}>
+              <input type="color" value={settings.display.impactSparks.hitAccentColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, hitAccentColor: event.target.value } } }))} />
             </SettingRow>
             <SettingRow label="Block Spark" value={settings.display.impactSparks.blockColor.toUpperCase()}>
               <input type="color" value={settings.display.impactSparks.blockColor} onChange={(event) => updateSettings((current) => ({ ...current, display: { ...current.display, impactSparks: { ...current.display.impactSparks, blockColor: event.target.value } } }))} />
@@ -14665,6 +15238,13 @@ function SettingsScreen({
           </SettingsSection>
           <SettingsSection index={3} title="Motion" active={activeSectionIndex === 3}>
             <SettingToggle label="Reduced Motion" checked={settings.display.reducedMotion} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, reducedMotion: checked } }))} />
+            <SettingRow label="Movement Smoke" value={MOVEMENT_SMOKE_STYLE_OPTIONS.find((option) => option.value === settings.display.movementSmokeStyle)?.label ?? 'Speed Trail'}>
+              <div className="mini-segmented movement-smoke-style-picker">
+                {MOVEMENT_SMOKE_STYLE_OPTIONS.map(({ value, label }) => (
+                  <button key={value} className={settings.display.movementSmokeStyle === value ? 'active' : ''} onClick={() => updateSettings((current) => ({ ...current, display: { ...current.display, movementSmokeStyle: value } }))}>{label}</button>
+                ))}
+              </div>
+            </SettingRow>
           </SettingsSection>
           <SettingsSection index={4} title="Debug" active={activeSectionIndex === 4}>
             <SettingToggle label="Debug Overlay" checked={settings.display.debugOverlay} onChange={(checked) => updateSettings((current) => ({ ...current, display: { ...current.display, debugOverlay: checked } }))} />
@@ -15600,6 +16180,7 @@ function modeLabel(mode: MatchMode) {
   if (mode === 'online') return 'Online';
   if (mode === 'ranked') return 'Ranked';
   if (mode === 'private') return 'Private';
+  if (mode === 'custom') return 'Custom';
   if (mode === 'tournamentLocal') return 'Tournament';
   if (mode === 'tournamentOnline') return 'Online Tournament';
   if (mode === 'tournamentInfinite') return 'Infinite Tournament';
@@ -15727,6 +16308,12 @@ function playRoundAnnouncerSfx(round: number, audioSettings: GameSettings['audio
   if (!url) return false;
   const volume = clamp(audioSettings.master * audioSettings.voices * 0.92, 0, 1);
   playPooledSfx(url, volume, 1);
+  return true;
+}
+
+function playChooseYourFighterSfx(audioSettings: GameSettings['audio']) {
+  if (typeof window === 'undefined' || audioSettings.muted || audioSettings.master <= 0 || audioSettings.voices <= 0) return false;
+  playPooledSfx(CHOOSE_YOUR_FIGHTER_SFX, clamp(audioSettings.master * audioSettings.voices * 0.92, 0, 1), 1);
   return true;
 }
 
@@ -15978,11 +16565,13 @@ function CharacterViewer({
   const [slotSearch, setSlotSearch] = useState('');
   const [rotationTurn, setRotationTurn] = useState(0);
   const [viewMode, setViewMode] = useState<CharacterViewerViewMode>(() => readCharacterViewerViewMode());
+  const [hideUnplayable, setHideUnplayable] = useState(true);
   const [zoom, setZoom] = useState(0.28);
   const [editorMode, setEditorMode] = useState<'browse' | 'animation' | 'sprite' | 'effectsLibrary' | 'moveEffects'>('browse');
   const [showImporter, setShowImporter] = useState(false);
   const [showSpriteSheetPreview, setShowSpriteSheetPreview] = useState(false);
   const [frameScaleMode, setFrameScaleMode] = useState(false);
+  const frameRangeAnchorRef = useRef<number | null>(null);
   const [selectedSpriteFrameIndex, setSelectedSpriteFrameIndex] = useState(0);
   const [spriteFrameMeta, setSpriteFrameMeta] = useState<Record<string, SpriteFrameEdit>>({});
   const [spriteFrameMetaRefresh, setSpriteFrameMetaRefresh] = useState(0);
@@ -16009,7 +16598,11 @@ function CharacterViewer({
   const [hdVoxelStatus, setHdVoxelStatus] = useState<'idle' | 'building' | 'saved' | 'error'>('idle');
   const [hdVoxelProgress, setHdVoxelProgress] = useState({ completed: 0, total: 0 });
   const [previewHdVoxels, setPreviewHdVoxels] = useState(false);
-  const active = roster.find((character) => character.id === activeId) ?? roster[0];
+  const visibleRoster = useMemo(
+    () => hideUnplayable ? roster.filter((character) => !character.unplayable) : roster,
+    [hideUnplayable, roster]
+  );
+  const active = visibleRoster.find((character) => character.id === activeId) ?? visibleRoster[0] ?? roster[0];
   const sourceActive = sourceRoster.find((character) => character.id === active.id) ?? active;
   const isLocalDev = isLocalDevHost();
   const isEditingAnimation = editorMode === 'animation';
@@ -16044,13 +16637,6 @@ function CharacterViewer({
   const selectedSpeed = active.animationFrameRates?.[selectedSlotDataKey] ?? active.animationFps ?? 8;
   const defaultSpeed = sourceActive.animationFrameRates?.[selectedSlotDataKey] ?? sourceActive.animationFps ?? active.animationFps ?? 8;
   const selectedAnimationScale = normalizeAnimationScale(active.animationScales?.[selectedSlotDataKey]);
-  const selectedAnimationFrameScale = normalizeAnimationScale(
-    active.animationFrameScales?.[selectedSlotDataKey]?.[String(selectedSpriteFrameIndex)] ?? selectedAnimationScale
-  );
-  const selectedSizeScale = frameScaleMode ? selectedAnimationFrameScale : selectedAnimationScale;
-  const selectedScaleRatioKey = `${active.id}:${selectedSlotDataKey}:${frameScaleMode ? selectedSpriteFrameIndex : 'animation'}`;
-  const selectedScaleRatiosMatch = Math.abs(selectedSizeScale.width - selectedSizeScale.height) < 0.005;
-  const selectedScaleRatioLocked = frameScaleMode && selectedScaleRatiosMatch && !unlockedScaleRatioKeys.has(selectedScaleRatioKey);
   const selectedCharacterScale = getCharacterGlobalScale(active);
   const defaultCharacterScale = normalizeCharacterModelScale(undefined, sourceActive.scale ?? active.scale);
   const selectedFrameSet = new Set(selectedFrames);
@@ -16075,6 +16661,16 @@ function CharacterViewer({
   const activeAnimationSequenceIndex = selectedPreviewFrames.length > 0
     ? Math.min(selectedPreviewFrames.length - 1, Math.floor((clampedAnimationPreviewFrame / Math.max(1, selectedAnimationPreviewTotalFrames)) * selectedPreviewFrames.length))
     : -1;
+  const activePreviewFrameIndex = getFrameIndex(selectedPreviewFrames[activeAnimationSequenceIndex] ?? selectedFrames[0] ?? '');
+  const selectedFrameModeIndex = activePreviewFrameIndex >= 0 ? activePreviewFrameIndex : selectedSpriteFrameIndex;
+  const selectedFrameModeAnimationKey = selectedPreviewAnimationKey || selectedSlotDataKey;
+  const selectedAnimationFrameScale = normalizeAnimationScale(
+    active.animationFrameScales?.[selectedFrameModeAnimationKey]?.[String(selectedFrameModeIndex)] ?? selectedAnimationScale
+  );
+  const selectedSizeScale = frameScaleMode ? selectedAnimationFrameScale : selectedAnimationScale;
+  const selectedScaleRatioKey = `${active.id}:${frameScaleMode ? selectedFrameModeAnimationKey : selectedSlotDataKey}:${frameScaleMode ? selectedFrameModeIndex : 'animation'}`;
+  const selectedScaleRatiosMatch = Math.abs(selectedSizeScale.width - selectedSizeScale.height) < 0.005;
+  const selectedScaleRatioLocked = frameScaleMode && selectedScaleRatiosMatch && !unlockedScaleRatioKeys.has(selectedScaleRatioKey);
   const idleGhostFrame = active.animationFrames?.idle?.[0] ?? '';
   const sideViewCurrentFrame = selectedPreviewFrames[activeAnimationSequenceIndex] ?? selectedPreviewFrames[0] ?? selectedFrames[0] ?? '';
   const sideViewCurrentFrameIndex = getFrameIndex(sideViewCurrentFrame);
@@ -16161,12 +16757,17 @@ function CharacterViewer({
   };
 
   const cycleActiveCharacter = useCallback((direction: -1 | 1) => {
-    if (roster.length <= 1) return;
-    const currentIndex = Math.max(0, roster.findIndex((character) => character.id === active.id));
-    const nextIndex = (currentIndex + direction + roster.length) % roster.length;
-    const next = roster[nextIndex];
+    if (visibleRoster.length <= 1) return;
+    const currentIndex = Math.max(0, visibleRoster.findIndex((character) => character.id === active.id));
+    const nextIndex = (currentIndex + direction + visibleRoster.length) % visibleRoster.length;
+    const next = visibleRoster[nextIndex];
     if (next) setActiveId(next.id);
-  }, [active.id, roster]);
+  }, [active.id, visibleRoster]);
+
+  useEffect(() => {
+    if (visibleRoster.some((character) => character.id === activeId)) return;
+    if (visibleRoster[0]) setActiveId(visibleRoster[0].id);
+  }, [activeId, visibleRoster]);
 
   const selectVisibleSlotAt = (index: number) => {
     const next = visibleSlots[index];
@@ -16258,6 +16859,10 @@ function CharacterViewer({
   }, [editorMode, selectedAnimationKey, active.id]);
 
   useEffect(() => {
+    frameRangeAnchorRef.current = null;
+  }, [active.id, editorMode, selectedSlotDataKey]);
+
+  useEffect(() => {
     debugLog(6, 'viewer active character and slot', {
       activeId: active.id,
       displayName: active.displayName,
@@ -16290,7 +16895,7 @@ function CharacterViewer({
 
   const updateSelectedAnimationScale = (patch: AnimationScale) => {
     if (frameScaleMode) {
-      onAnimationFrameScaleChange(active.id, selectedSlotDataKey, selectedSpriteFrameIndex, normalizeAnimationScale({
+      onAnimationFrameScaleChange(active.id, selectedFrameModeAnimationKey, selectedFrameModeIndex, normalizeAnimationScale({
         ...selectedAnimationFrameScale,
         ...patch
       }));
@@ -16312,7 +16917,7 @@ function CharacterViewer({
 
   const resetSelectedAnimationScale = () => {
     if (frameScaleMode) {
-      onAnimationFrameScaleChange(active.id, selectedSlotDataKey, selectedSpriteFrameIndex, selectedAnimationScale);
+      onAnimationFrameScaleChange(active.id, selectedFrameModeAnimationKey, selectedFrameModeIndex, selectedAnimationScale);
       return;
     }
     onAnimationScaleChange(active.id, selectedSlotDataKey, { width: 1, height: 1 });
@@ -17066,6 +17671,19 @@ function CharacterViewer({
     updateSelectedFrames([...selectedFrames, path]);
   };
 
+  const selectFrameFromBank = (path: string, bankIndex: number, event: ReactMouseEvent<HTMLButtonElement>) => {
+    setSelectedSpriteFrameIndex(getFrameIndex(path));
+    const anchorIndex = frameRangeAnchorRef.current;
+
+    if (event.shiftKey && anchorIndex !== null) {
+      updateSelectedFrames(addFrameRangeToSelection(selectedFrames, frameBank, anchorIndex, bankIndex));
+    } else {
+      toggleFrame(path);
+    }
+
+    frameRangeAnchorRef.current = bankIndex;
+  };
+
   const removeSelectedFrameAt = (index: number) => {
     updateSelectedFrames(selectedFrames.filter((_, frameIndex) => frameIndex !== index));
   };
@@ -17362,6 +17980,15 @@ function CharacterViewer({
         <Target size={18} />
         {hdVoxelStatus === 'building' ? 'Building HD' : 'Rebuild HD Voxels'}
       </button>
+      <button
+        className={`secondary-button ${hideUnplayable ? 'active-tool' : ''}`}
+        onClick={() => setHideUnplayable((current) => !current)}
+        aria-pressed={hideUnplayable}
+        data-testid="hide-unplayable-toggle"
+      >
+        <EyeOff size={18} />
+        Hide Unplayable
+      </button>
     </>
   ) : null;
 
@@ -17453,16 +18080,9 @@ function CharacterViewer({
 
   return (
     <div className="viewer-screen">
-      <header className="section-header">
-        <div>
-          <span>Character Select</span>
-          <h2>Characters</h2>
-          <small className="viewer-shortcut-hint">O / P to change character</small>
-        </div>
-      </header>
       <div className="viewer-layout">
-        <div className="roster-list compact loader-bar">
-          {roster.map((character) => (
+        <div className="roster-list compact loader-bar" aria-label="Character roster">
+          {visibleRoster.map((character) => (
             <button
               key={character.id}
               className={`fighter-card viewer-character-card ${active.id === character.id ? 'is-selected' : ''}`}
@@ -17470,6 +18090,7 @@ function CharacterViewer({
               onClick={() => setActiveId(character.id)}
               aria-label={character.displayName}
               title={character.displayName}
+              data-unplayable={Boolean(character.unplayable)}
             >
               <img src={characterPortraitPath(character)} alt="" />
             </button>
@@ -17748,6 +18369,24 @@ function CharacterViewer({
                       <button className="secondary-button compact-button" onClick={resetSelectedAnimationScale}>
                         {frameScaleMode ? 'Reset Frame Size' : 'Reset Size'}
                       </button>
+                      {frameScaleMode ? (
+                        <>
+                          <button
+                            className={`secondary-button compact-button ${selectedSizeScale.flipX ? 'active-tool' : ''}`}
+                            onClick={() => updateSelectedAnimationScale({ flipX: !selectedSizeScale.flipX })}
+                            data-testid="animation-frame-flip-x"
+                          >
+                            Flip X
+                          </button>
+                          <button
+                            className={`secondary-button compact-button ${selectedSizeScale.flipY ? 'active-tool' : ''}`}
+                            onClick={() => updateSelectedAnimationScale({ flipY: !selectedSizeScale.flipY })}
+                            data-testid="animation-frame-flip-y"
+                          >
+                            Flip Y
+                          </button>
+                        </>
+                      ) : null}
                       <label className="sprite-sheet-toggle frame-mode-toggle">
                         <input
                           type="checkbox"
@@ -17939,17 +18578,17 @@ function CharacterViewer({
                   </div>
                 ))}
               </div>
+              <small className="frame-bank-hint">Click to toggle one frame. Shift-click to add a range.</small>
               <div className="frame-bank" aria-label="All extracted frames">
-                {frameBank.map((frame) => (
+                {frameBank.map((frame, bankIndex) => (
                   <button
                     key={frame}
                     className={selectedFrameSet.has(frame) ? 'active' : ''}
-                    onClick={() => {
-                      setSelectedSpriteFrameIndex(getFrameIndex(frame));
-                      toggleFrame(frame);
-                    }}
+                    onClick={(event) => selectFrameFromBank(frame, bankIndex, event)}
                     onContextMenu={(event) => appendDuplicateFrame(frame, event)}
-                    title={`Frame ${getFrameIndex(frame)}. Click to add/remove. Right-click to append a duplicate.`}
+                    data-testid={`animation-frame-bank-${getFrameIndex(frame)}`}
+                    aria-label={`Frame ${getFrameIndex(frame)}${selectedFrameSet.has(frame) ? ', selected' : ''}`}
+                    title={`Frame ${getFrameIndex(frame)}. Click to add/remove. Shift-click to add a range. Right-click to append a duplicate.`}
                   >
                     <img src={frame} alt={`Frame ${getFrameIndex(frame)}`} loading="lazy" />
                     <span>{getFrameIndex(frame)}</span>
@@ -20953,6 +21592,8 @@ function createDefaultSpriteFrameEdit(character: CharacterDefinition, frameIndex
     width: 64,
     height: 64,
     rotation: 0,
+    flipX: false,
+    flipY: false,
     offset: [0, 0],
     scale: 1,
     hidden: false
@@ -21046,6 +21687,8 @@ function fitSpriteFrameToVisiblePixels(sheet: HTMLImageElement | null, edit: Spr
     width: nextBox[2] - nextBox[0],
     height: nextBox[3] - nextBox[1],
     offset: [0, 0],
+    flipX: edit.flipX ?? false,
+    flipY: edit.flipY ?? false,
     scale: edit.scale ?? 1
   }, { width: sheet.naturalWidth, height: sheet.naturalHeight });
 }
@@ -21070,7 +21713,7 @@ function renderSpriteFrameCanvas(sheet: HTMLImageElement | null, canvas: HTMLCan
   context.save();
   context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
   context.rotate((rotation * Math.PI) / 180);
-  context.scale(scale, scale);
+  context.scale((edit.flipX ? -1 : 1) * scale, (edit.flipY ? -1 : 1) * scale);
   context.drawImage(sheet, x1, y1, sourceWidth, sourceHeight, -sourceWidth / 2, -sourceHeight / 2, sourceWidth, sourceHeight);
   context.restore();
   keySpriteSheetBackgroundToTransparent(sheet, canvas);
@@ -21095,7 +21738,7 @@ function renderReplacementFrameCanvas(image: HTMLImageElement, canvas: HTMLCanva
   context.save();
   context.translate(canvas.width / 2 + offsetX, canvas.height / 2 + offsetY);
   context.rotate((rotation * Math.PI) / 180);
-  context.scale(scale, scale);
+  context.scale((edit.flipX ? -1 : 1) * scale, (edit.flipY ? -1 : 1) * scale);
   context.drawImage(image, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight);
   context.restore();
   keyCanvasCornerBackgroundToTransparent(canvas);
@@ -21474,6 +22117,8 @@ function SpriteSheetFrameEditor({
       height: Math.max(1, nextBox[3] - nextBox[1]),
       row: undefined,
       rotation: 0,
+      flipX: false,
+      flipY: false,
       offset: [0, 0],
       scale: 1,
       hidden: false
@@ -21495,6 +22140,8 @@ function SpriteSheetFrameEditor({
       height: image.naturalHeight,
       scale: 1,
       rotation: 0,
+      flipX: false,
+      flipY: false,
       offset: [0, 0]
     });
   };
@@ -21510,6 +22157,8 @@ function SpriteSheetFrameEditor({
       width,
       height,
       rotation: 0,
+      flipX: false,
+      flipY: false,
       offset: [0, 0],
       scale: 1
     });
@@ -21750,6 +22399,8 @@ function SpriteSheetFrameEditor({
           <button className="secondary-button compact-button" onClick={() => patchEdit({ scale: Math.min(4, Number(((edit.scale ?? 1) + 0.05).toFixed(2))) })}>Grow Sprite</button>
           <button className="secondary-button compact-button" onClick={() => patchEdit({ rotation: normalizeRotation((edit.rotation ?? 0) - 90) })}>Rotate -90</button>
           <button className="secondary-button compact-button" onClick={() => patchEdit({ rotation: normalizeRotation((edit.rotation ?? 0) + 90) })}>Rotate +90</button>
+          <button className={`secondary-button compact-button ${edit.flipX ? 'active-tool' : ''}`} onClick={() => patchEdit({ flipX: !edit.flipX })}>Flip X</button>
+          <button className={`secondary-button compact-button ${edit.flipY ? 'active-tool' : ''}`} onClick={() => patchEdit({ flipY: !edit.flipY })}>Flip Y</button>
           <button className="secondary-button compact-button" onClick={() => patchEdit({ hidden: !edit.hidden })}>{edit.hidden ? 'Add / Restore' : 'Remove Frame'}</button>
           <button className="secondary-button compact-button" onClick={() => onToggleFrame(selectedFramePath)}>{selectedInMove ? 'Remove From Move' : 'Add To Move'}</button>
           <button className="secondary-button compact-button" onClick={fitVisibleCrop} disabled={isReplacementFrame}>Fit Visible</button>
@@ -22992,6 +23643,7 @@ function FightScreen({
   mode,
   cpuDifficulty,
   cpuSlots,
+  preferredStartSide,
   settings,
   inputPromptMode,
   onInputPromptModeChange,
@@ -23009,6 +23661,7 @@ function FightScreen({
   onOnlineTournamentStatusChange,
   onTournamentRoomFailure,
   onRankedProfileChange,
+  customRoomContext,
   privateRoomIntent,
   pendingPrivateInviteFriend,
   onFriendInviteSent,
@@ -23019,6 +23672,7 @@ function FightScreen({
   onMenu,
   onCharacterSelect,
   onTournamentMatchComplete,
+  onCustomMatchComplete,
   onArcadeAdvance
 }: {
   p1: CharacterDefinition;
@@ -23029,6 +23683,7 @@ function FightScreen({
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   cpuSlots?: Array<1 | 2>;
+  preferredStartSide: StartSide;
   settings: GameSettings;
   inputPromptMode: InputPromptMode;
   onInputPromptModeChange: (mode: InputPromptMode) => void;
@@ -23046,6 +23701,7 @@ function FightScreen({
   onOnlineTournamentStatusChange?: (status: TournamentStatusResult) => void;
   onTournamentRoomFailure?: (message: string) => void;
   onRankedProfileChange: (profile: RankedProfile) => void;
+  customRoomContext?: CustomMatchLaunch | null;
   privateRoomIntent: PrivateRoomIntent | null;
   pendingPrivateInviteFriend?: FriendEntry | null;
   onFriendInviteSent?: (invite: FriendInvite, friend: FriendEntry) => void;
@@ -23056,6 +23712,7 @@ function FightScreen({
   onMenu: () => void;
   onCharacterSelect: () => void;
   onTournamentMatchComplete?: (result: { winnerSlot: 1 | 2 }) => void;
+  onCustomMatchComplete?: (winnerPlayerId: string) => void;
   onArcadeAdvance?: (result: { winnerSlot: 1 | 2; defeatedCharacterId: string; playerHealth: number; playerMaxHealth: number }) => void;
 }) {
   const [paused, setPaused] = useState(() => Boolean(initialPauseMenuView));
@@ -23083,12 +23740,14 @@ function FightScreen({
   const trainingTrialAttemptCountsRef = useRef<Record<string, number>>({});
   const isTrainingOnline = mode === 'trainingOnline';
   const isRanked = mode === 'ranked';
-  const isOnline = mode === 'online' || isTrainingOnline || mode === 'ranked' || mode === 'private' || mode === 'tournamentOnline';
+  const isCustom = mode === 'custom';
+  const isOnline = mode === 'online' || isTrainingOnline || mode === 'ranked' || mode === 'private' || isCustom || mode === 'tournamentOnline';
   const isPrivate = mode === 'private';
   const gameplayAudioEnabled = mode !== 'cpu';
   const matchOptions = useMemo(
     () => ({
-      roundTime: isTrainingOnline ? 0 : isOnline ? 60 : settings.game.roundTimer,
+      roundTime: isTrainingOnline ? 0 : isCustom ? customRoomContext?.match.rules.roundTimer ?? 60 : isOnline ? 60 : settings.game.roundTimer,
+      roundsToWin: isCustom ? customRoomContext?.match.rules.roundsToWin ?? ROUNDS_TO_WIN : ROUNDS_TO_WIN,
       maxHealth: isOnline ? defaultGameSettings.game.maxHealth : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
       controlScheme: settings.game.controlScheme,
@@ -23096,7 +23755,7 @@ function FightScreen({
       roster,
       cpuSlots
     }),
-    [cpuSlots, isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [cpuSlots, customRoomContext?.match.rules.roundTimer, customRoomContext?.match.rules.roundsToWin, isCustom, isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
   );
   const initialTrialStage = useMemo(() => {
     const trial = activeTrainingTrials.find((t) => t.id === activeTrainingTrialId) ?? activeTrainingTrials[0] ?? null;
@@ -23136,7 +23795,12 @@ function FightScreen({
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
-  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isPrivate ? 'PRIVATE ROOM' : isRanked ? rankedPlacementStatus(rankedProfile) : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH') : '');
+  const localPresentationSlot: 1 | 2 = isOnline && onlineRole === 'guest' ? 2 : 1;
+  const presentationMirrored = useMemo(
+    () => shouldMirrorStartSide(match.stage, localPresentationSlot, preferredStartSide),
+    [localPresentationSlot, match.stage, preferredStartSide]
+  );
+  const [onlineStatusText, setOnlineStatusText] = useState(isOnline ? (isCustom ? 'CUSTOM MATCH' : isPrivate ? 'PRIVATE ROOM' : isRanked ? rankedPlacementStatus(rankedProfile) : isTrainingOnline ? 'LOOKING FOR SPARRING PARTNER' : 'LOOKING FOR MATCH') : '');
   const onlineStatusTextRef = useRef(onlineStatusText);
   const [privateRoomPassword, setPrivateRoomPassword] = useState('');
   const [privateRoomName, setPrivateRoomName] = useState('');
@@ -23147,6 +23811,11 @@ function FightScreen({
   const onlineRoleRef = useRef<OnlineRole | null>(null);
   const onlineStateRef = useRef<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const onlineRollbackRef = useRef<RollbackSession | null>(null);
+  const spectatorPublisherSocketRef = useRef<WebSocket | null>(null);
+  const spectatorPublisherActiveRef = useRef(false);
+  const spectatorNextInputFrameRef = useRef(0);
+  const spectatorLastSnapshotFrameRef = useRef(-120);
+  const spectatorLastCheckpointFrameRef = useRef(-60);
   const onlineAssetGateRef = useRef<OnlineAssetGate | null>(null);
   const onlineAssetGateTimeoutRef = useRef(0);
   const pendingOnlineAssetReadyRef = useRef<OnlineAssetWarmupReadyMessage | null>(null);
@@ -23438,10 +24107,11 @@ function FightScreen({
           displayName: 'E2E REMOTE'
         };
         onlineResultSubmitCountsRef.current.leaderboardAttempts += 1;
+        const snapshot = matchRef.current;
         void submitLeaderboardResult({
           players: [
-            { profile: localProfile, points: 1 },
-            { profile: remoteProfile, points: 1 }
+            { profile: localProfile, characterId: snapshot.fighters[0].baseCharacter.id, points: 1 },
+            { profile: remoteProfile, characterId: snapshot.fighters[1].baseCharacter.id, points: 1 }
           ]
         }).then(() => {
           onlineResultSubmitCountsRef.current.leaderboardSuccesses += 1;
@@ -23481,7 +24151,7 @@ function FightScreen({
       const next = cloneMatchSnapshot(matchRef.current);
       const winner = winnerSlot === 2 ? next.fighters[1] : next.fighters[0];
       const loser = winnerSlot === 2 ? next.fighters[0] : next.fighters[1];
-      winner.roundsWon = ROUNDS_TO_WIN;
+      winner.roundsWon = matchRef.current.roundsToWin;
       loser.roundsWon = 0;
       next.phase = 'matchOver';
       next.winnerSlot = winner.slot;
@@ -23499,6 +24169,7 @@ function FightScreen({
       });
       matchRef.current = next;
       setMatch(next);
+      arcadeAdvanceRef.current = false;
     };
     testWindow.__koreE2EOnlineDiagnostics = () => ({
       mode,
@@ -24193,9 +24864,10 @@ function FightScreen({
       decodeInput: decodeInputFrame,
       localFrameDelay: 0,
       maxPredictionFrames: 12,
-      maxRollbackFrames: 12
+      maxRollbackFrames: 12,
+      historyLimit: mode === 'tournamentOnline' ? 1_200 : undefined
     });
-  }, []);
+  }, [mode]);
 
   const publishOnlineSnapshot = useCallback((force = false, reason: 'start' | 'rematch' | 'resync' | 'result' = 'resync') => {
     if (onlineRoleRef.current !== 'host' || onlineStateRef.current !== 'connected') return;
@@ -24207,6 +24879,101 @@ function FightScreen({
       reason
     });
   }, []);
+
+  const publishSpectatorFrames = useCallback(() => {
+    const socket = spectatorPublisherSocketRef.current;
+    const rollback = onlineRollbackRef.current;
+    if (!socket || socket.readyState !== WebSocket.OPEN || !spectatorPublisherActiveRef.current || !rollback) return;
+    const confirmedFrame = rollback.getConfirmedFrame();
+    if (confirmedFrame < 0) return;
+    const snapshotFrame = spectatorLastSnapshotFrameRef.current < 0
+      ? Math.max(0, Math.floor(confirmedFrame / 120) * 120)
+      : Math.floor(confirmedFrame / 120) * 120;
+    if (snapshotFrame > spectatorLastSnapshotFrameRef.current) {
+      const saved = rollback.getSavedState(snapshotFrame);
+      if (saved) {
+        const message: SpectatorSnapshot = {
+          type: 'snapshot', protocol: SPECTATOR_PROTOCOL_VERSION, frame: saved.frame,
+          checksum: saved.checksum,
+          snapshot: compactMatchSnapshot(saved.match, onlineSnapshotSequenceRef.current += 1),
+          wins: onlineWinsRef.current
+        };
+        socket.send(JSON.stringify(message));
+        spectatorLastSnapshotFrameRef.current = snapshotFrame;
+      }
+    }
+    while (spectatorNextInputFrameRef.current <= confirmedFrame) {
+      const batch = rollback.makeConfirmedInputBatch(spectatorNextInputFrameRef.current, 6);
+      if (batch.p1Masks.length === 0) break;
+      const message: SpectatorInputBatch = { type: 'inputBatch', protocol: SPECTATOR_PROTOCOL_VERSION, ...batch };
+      socket.send(JSON.stringify(message));
+      spectatorNextInputFrameRef.current += batch.p1Masks.length;
+    }
+    const checkpointFrame = Math.floor(confirmedFrame / 60) * 60;
+    if (checkpointFrame > spectatorLastCheckpointFrameRef.current) {
+      const saved = rollback.getSavedState(checkpointFrame);
+      if (saved) {
+        socket.send(JSON.stringify({ type: 'checkpoint', protocol: SPECTATOR_PROTOCOL_VERSION, frame: saved.frame, checksum: saved.checksum }));
+        spectatorLastCheckpointFrameRef.current = checkpointFrame;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const room = onlineTournamentStatus?.matchRoom;
+    const tournamentMatch = onlineTournamentStatus?.assignedMatch;
+    const customRole = customRoomContext ? (customRoomContext.match.fighterPlayerIds[0] === customRoomContext.localPlayerId ? 'primary' : 'standby') : undefined;
+    const tournamentReady = mode === 'tournamentOnline' && Boolean(room?.spectatorPublishToken && room.spectatorRelayUrl && room.spectatorRole && tournamentMatch);
+    const customReady = mode === 'custom' && Boolean(customRoomContext && customRole);
+    if (!tournamentReady && !customReady) return undefined;
+    const url = customReady && customRoomContext
+      ? customMatchWebSocketUrl(customRoomContext.roomId, customRoomContext.match.id, customRoomContext.memberToken, true)
+      : spectatorMatchWebSocketUrl(onlineTournamentStatus!.bracket.id, tournamentMatch!.id, room!.spectatorPublishToken, room!.spectatorRelayUrl);
+    if (!url) return undefined;
+    const publisherRole = customReady ? customRole! : room!.spectatorRole!;
+    const streamOwnerId = customReady && customRoomContext ? `custom:${customRoomContext.roomId}` : onlineTournamentStatus!.bracket.id;
+    const streamMatchId = customReady && customRoomContext ? customRoomContext.match.id : tournamentMatch!.id;
+    const token = customReady && customRoomContext ? customRoomContext.memberToken : room!.spectatorPublishToken!;
+    const socket = new WebSocket(url);
+    spectatorPublisherSocketRef.current = socket;
+    spectatorPublisherActiveRef.current = publisherRole === 'primary';
+    spectatorNextInputFrameRef.current = 0;
+    spectatorLastSnapshotFrameRef.current = -120;
+    spectatorLastCheckpointFrameRef.current = -60;
+    socket.onopen = () => socket.send(JSON.stringify({
+      type: 'publisherHello', protocol: SPECTATOR_PROTOCOL_VERSION, gameVersion: KORE_APP_VERSION,
+      token,
+      tournamentId: streamOwnerId,
+      matchId: streamMatchId,
+      role: publisherRole
+    }));
+    socket.onmessage = (event) => {
+      const message = parseSpectatorMessage(event.data);
+      if (message?.type !== 'streamState') return;
+      const becameActive = message.activePublisherRole === publisherRole;
+      if (becameActive && !spectatorPublisherActiveRef.current) {
+        const confirmed = onlineRollbackRef.current?.getConfirmedFrame() ?? -1;
+        spectatorNextInputFrameRef.current = Math.max(0, Math.min(confirmed, message.latestConfirmedFrame + 1));
+        spectatorLastSnapshotFrameRef.current = -120;
+        spectatorLastCheckpointFrameRef.current = -60;
+      }
+      spectatorPublisherActiveRef.current = becameActive;
+    };
+    return () => {
+      spectatorPublisherActiveRef.current = false;
+      if (spectatorPublisherSocketRef.current === socket) spectatorPublisherSocketRef.current = null;
+      socket.close();
+    };
+  }, [customRoomContext, mode, onlineTournamentStatus?.assignedMatch?.id, onlineTournamentStatus?.bracket.id, onlineTournamentStatus?.matchRoom?.spectatorPublishToken, onlineTournamentStatus?.matchRoom?.spectatorRelayUrl, onlineTournamentStatus?.matchRoom?.spectatorRole]);
+
+  useEffect(() => {
+    if ((mode !== 'tournamentOnline' && mode !== 'custom') || match.phase !== 'matchOver') return;
+    const socket = spectatorPublisherSocketRef.current;
+    if (socket?.readyState === WebSocket.OPEN && spectatorPublisherActiveRef.current) {
+      publishSpectatorFrames();
+      socket.send(JSON.stringify({ type: 'streamEnd', protocol: SPECTATOR_PROTOCOL_VERSION, reason: 'completed' }));
+    }
+  }, [match.phase, mode, publishSpectatorFrames]);
 
   const setOnlineAssetGateState = useCallback((next: OnlineAssetGate | null) => {
     onlineAssetGateRef.current = next;
@@ -24254,11 +25021,12 @@ function FightScreen({
       onlineStateRef.current = 'connected';
       setOnlineState('connected');
       setOnlineStatusText('CONNECTED');
+      if (isCustom && customRoomContext) void sendCustomRoomCommand(customRoomContext.roomId, customRoomContext.memberToken, { type: 'setMatchLive', stationId: customRoomContext.stationId }).catch(() => undefined);
       publishOnlineSnapshot(true, gate.reason);
       return;
     }
     setOnlineStatusText('WAITING FOR HOST START');
-  }, [clearOnlineAssetGate, publishOnlineSnapshot, startOnlineRollback]);
+  }, [clearOnlineAssetGate, customRoomContext, isCustom, publishOnlineSnapshot, startOnlineRollback]);
 
   const abortOnlineAssetWarmup = useCallback((reason: string, notifyOpponent = true) => {
     const gate = onlineAssetGateRef.current;
@@ -24288,11 +25056,11 @@ function FightScreen({
     setOnlineState('searching');
     onlineStateRef.current = 'searching';
     setOnlineStatusText(reason);
-    if (room || session?.peerId) {
+    if (!isCustom && (room || session?.peerId)) {
       const leaveRequest = { roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId };
       void (isPrivate ? leavePrivateRoom(leaveRequest) : leaveOnlineRoom(leaveRequest)).catch(() => undefined);
     }
-  }, [clearOnlineAssetGate, isPrivate]);
+  }, [clearOnlineAssetGate, isCustom, isPrivate]);
 
   const applyRemoteOnlineAssetReady = useCallback((message: OnlineAssetWarmupReadyMessage) => {
     const gate = onlineAssetGateRef.current;
@@ -24554,17 +25322,17 @@ function FightScreen({
     setOnlineTrainingChatMessages([]);
     seenImpactScoreEventIds.current.clear();
     seenImpactAudioEventIds.current.clear();
-    if (room || session?.peerId) {
+    if (!isCustom && (room || session?.peerId)) {
       const leaveRequest = { roomId: room?.roomId, ownerToken: room?.ownerToken, peerId: session?.peerId };
       void (isPrivate ? leavePrivateRoom(leaveRequest) : leaveOnlineRoom(leaveRequest)).catch(() => undefined);
     }
     setPrivateRoomPassword('');
     setPrivateRoomName('');
-  }, [clearBotRematchTimers, clearOnlineAssetGate, isOnline, isPrivate]);
+  }, [clearBotRematchTimers, clearOnlineAssetGate, isCustom, isOnline, isPrivate]);
 
   const recordSocialMatchHistory = useCallback((candidate: MatchSnapshot) => {
     if (!isOnline || candidate.phase !== 'matchOver' || !candidate.winnerSlot) return;
-    if (mode !== 'online' && mode !== 'ranked' && mode !== 'trainingOnline' && mode !== 'private') return;
+    if (mode !== 'online' && mode !== 'ranked' && mode !== 'trainingOnline' && mode !== 'private' && mode !== 'custom') return;
     const localProfile = onlineLocalProfileRef.current;
     if (!localProfile) return;
     const room = onlineRoomRef.current;
@@ -24620,7 +25388,7 @@ function FightScreen({
     const localIndex = onlineRoleRef.current === 'guest' ? 1 : 0;
     const opponentIndex = localIndex === 0 ? 1 : 0;
     const localDidWin = candidate.winnerSlot === localIndex + 1;
-    if ((mode === 'online' || mode === 'private' || mode === 'trainingOnline') && localDidWin) {
+    if ((mode === 'online' || mode === 'private' || mode === 'custom' || mode === 'trainingOnline') && localDidWin) {
       captureFightPositiveMilestone('online_match_won', {
         opponent_character_id: candidate.fighters[opponentIndex].baseCharacter.id,
         opponent_kind: bot ? 'bot' : 'human',
@@ -24631,6 +25399,17 @@ function FightScreen({
       });
     }
     setOnlineStatusText(mode === 'tournamentOnline' ? 'TOURNAMENT RESULT' : isPlacementMatch ? 'PLACEMENT RESULT' : rematchLimitReached ? 'RANKED SET COMPLETE' : 'REMATCH?');
+    if (mode === 'custom' && customRoomContext) {
+      const winnerPlayerId = customRoomContext.match.fighterPlayerIds[candidate.winnerSlot - 1];
+      publishOnlineSnapshot(true, 'result');
+      const spectatorSocket = spectatorPublisherSocketRef.current;
+      if (spectatorSocket?.readyState === WebSocket.OPEN && spectatorPublisherActiveRef.current) {
+        publishSpectatorFrames();
+        spectatorSocket.send(JSON.stringify({ type: 'streamEnd', protocol: SPECTATOR_PROTOCOL_VERSION, reason: 'completed' }));
+      }
+      if (winnerPlayerId) onCustomMatchComplete?.(winnerPlayerId);
+      return;
+    }
     if (bot && !isPlacementMatch && (mode === 'online' || mode === 'ranked')) {
       recordOnlineBotMatchOutcome(bot, {
         queue: mode === 'ranked' ? 'ranked' : 'casual',
@@ -24661,10 +25440,10 @@ function FightScreen({
         onlineResultSubmitCountsRef.current.leaderboardAttempts += 1;
         void submitLeaderboardResult({
           players: bot
-            ? [{ profile: localProfile, points: Math.max(1, Math.round(p1Points * 0.5)) }]
+            ? [{ profile: localProfile, characterId: candidate.fighters[0].baseCharacter.id, points: Math.max(1, Math.round(p1Points * 0.5)) }]
             : [
-              { profile: localProfile, points: p1Points },
-              { profile: remoteProfile, points: p2Points }
+              { profile: localProfile, characterId: candidate.fighters[0].baseCharacter.id, points: p1Points },
+              { profile: remoteProfile, characterId: candidate.fighters[1].baseCharacter.id, points: p2Points }
             ]
         }).then(() => {
           onlineResultSubmitCountsRef.current.leaderboardSuccesses += 1;
@@ -24767,7 +25546,7 @@ function FightScreen({
       }
     }
     publishOnlineSnapshot(true, 'result');
-  }, [captureFightAnalytics, captureFightPositiveMilestone, clearBotRematchTimers, markOnlineDisconnected, mode, onRankedProfileChange, publishOnlineSnapshot, rankedRematchLimitReached, startOnlineRematch]);
+  }, [captureFightAnalytics, captureFightPositiveMilestone, clearBotRematchTimers, customRoomContext, markOnlineDisconnected, mode, onCustomMatchComplete, onRankedProfileChange, publishOnlineSnapshot, publishSpectatorFrames, rankedRematchLimitReached, startOnlineRematch]);
 
   const handleOnlineMessage = useCallback((message: OnlineMessage) => {
     if (message.type === 'hello') {
@@ -24855,6 +25634,7 @@ function FightScreen({
       onlineStateRef.current = 'connected';
       setOnlineState('connected');
       setOnlineStatusText('CONNECTED');
+      if (message.reason === 'result') window.setTimeout(() => recordOnlineMatchWin(matchRef.current), 0);
       return;
     }
     if (message.type === 'rematchReady') {
@@ -24955,7 +25735,7 @@ function FightScreen({
         }
       ].slice(-8));
     }
-  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, beginOnlineAssetWarmup, captureFightAnalytics, captureFightPositiveMilestone, clearOnlineAssetGate, incrementOnlineRematchCount, installFreshMatch, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, rankedRematchLimitReached, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
+  }, [abortOnlineAssetWarmup, applyRemoteOnlineAssetReady, beginOnlineAssetWarmup, captureFightAnalytics, captureFightPositiveMilestone, clearOnlineAssetGate, incrementOnlineRematchCount, installFreshMatch, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, onRankedProfileChange, p1.id, rankedRematchLimitReached, recordOnlineMatchWin, resetTrackedMatchAnalytics, stage.id, startOnlineRematch, startOnlineRollback]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -25093,6 +25873,59 @@ function FightScreen({
           return;
         }
         onlineSessionRef.current = session;
+
+        if (isCustom && customRoomContext) {
+          const fighterIndex = customRoomContext.match.fighterPlayerIds.indexOf(customRoomContext.localPlayerId);
+          if (fighterIndex < 0) throw new Error('Custom fighter assignment expired');
+          const role: OnlineRole = fighterIndex === 0 ? 'host' : 'guest';
+          await sendCustomRoomCommand(customRoomContext.roomId, customRoomContext.memberToken, { type: 'heartbeat', peerId: session.peerId });
+          const syncCustomPeers = async () => {
+            const customRoom = await fetchCustomRoom(customRoomContext.roomId, customRoomContext.memberToken);
+            const [hostPlayerId, guestPlayerId] = customRoomContext.match.fighterPlayerIds;
+            const hostPeerId = customRoom.members.find((member) => member.playerId === hostPlayerId)?.peerId;
+            const guestPeerId = customRoom.members.find((member) => member.playerId === guestPlayerId)?.peerId;
+            const result: OnlineMatchResult = {
+              roomId: customRoomContext.match.id,
+              ownerToken: '',
+              role,
+              status: hostPeerId && guestPeerId ? 'matched' : 'waiting',
+              hostPeerId: hostPeerId ?? '',
+              guestPeerId,
+              hostCharacterId: p1.id,
+              guestCharacterId: p2.id,
+              stageId: stage.id,
+              queue: 'casual',
+              opponentKind: hostPeerId && guestPeerId ? 'human' : undefined
+            };
+            onlineRoomRef.current = result;
+            onlineRoleRef.current = role;
+            setOnlineRole(role);
+            if (!hostPeerId || !guestPeerId) {
+              onlineStateRef.current = 'searching';
+              setOnlineState('searching');
+              setOnlineStatusText('WAITING FOR CUSTOM FIGHTER');
+              return;
+            }
+            if (role === 'guest' && onlineStateRef.current !== 'connecting' && onlineStateRef.current !== 'connected') {
+              onlineStateRef.current = 'connecting';
+              setOnlineState('connecting');
+              setOnlineStatusText('CUSTOM MATCH CONNECTING');
+              session.connect(hostPeerId);
+            } else if (role === 'host') {
+              onlineStateRef.current = 'searching';
+              setOnlineState('searching');
+              setOnlineStatusText('WAITING FOR CHALLENGER CONNECTION');
+            }
+          };
+          await syncCustomPeers();
+          matchmakingTimer = window.setInterval(() => {
+            if (cancelled || onlineStateRef.current === 'connected' || onlineAssetGateRef.current) return;
+            void sendCustomRoomCommand(customRoomContext.roomId, customRoomContext.memberToken, { type: 'heartbeat', peerId: session.peerId })
+              .then(syncCustomPeers)
+              .catch((error) => setOnlineStatusText(error instanceof Error ? error.message : 'CUSTOM ROOM ERROR'));
+          }, 1_000);
+          return;
+        }
 
         if (mode === 'tournamentOnline' && onlineTournamentStatus?.assignedMatch && onlineTournamentStatus.entry) {
           const paidTournamentRoom = onlineTournamentStatus.bracket.kind === 'paidOnline';
@@ -25285,7 +26118,7 @@ function FightScreen({
       window.clearInterval(matchmakingTimer);
       cleanupOnline(true);
     };
-  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, e2eSimulateOnlineTournament, handleOnlineMessage, installFreshMatch, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, onFriendInviteSent, onOnlineTournamentStatusChange, onTournamentRoomFailure, onlineProfile, onlineProfile?.playerId, onlineTournamentStatus, p1.displayName, p1.id, p2.id, pendingPrivateInviteFriend, posthogDeviceId, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent, tournamentRoomToOnlineResult]);
+  }, [abortOnlineAssetWarmup, beginOnlineAssetWarmup, captureFightAnalytics, cleanupOnline, clearBotRematchTimers, clearOnlineAssetGate, customRoomContext, e2eSimulateOnlineTournament, handleOnlineMessage, installFreshMatch, isCustom, isOnline, isPrivate, isRanked, isTrainingOnline, makeOnlineMatch, markOnlineDisconnected, mode, onFriendInviteSent, onOnlineTournamentStatusChange, onTournamentRoomFailure, onlineProfile, onlineProfile?.playerId, onlineTournamentStatus, p1.displayName, p1.id, p2.id, pendingPrivateInviteFriend, posthogDeviceId, privateRoomIntent, roster, stage.id, startOnlineBotMatch, tournamentBotOpponent, tournamentRoomToOnlineResult]);
 
   useEffect(() => {
     if (!isOnline) return undefined;
@@ -25376,7 +26209,9 @@ function FightScreen({
       if (!paused) {
         accumulator += delta;
         while (accumulator >= fixedStep) {
-          const [p1Input, p2Input] = readInputsForStep();
+          const [rawP1Input, rawP2Input] = readInputsForStep();
+          const p1Input = presentationMirrored ? mirrorHorizontalInput(rawP1Input) : rawP1Input;
+          const p2Input = presentationMirrored ? mirrorHorizontalInput(rawP2Input) : rawP2Input;
           const localOnlineInput = mergeInputFrames(p1Input, p2Input);
           if (isOnline && onlineStateRef.current === 'connected') {
             if (onlineBotOpponentRef.current) {
@@ -25410,6 +26245,7 @@ function FightScreen({
                 trackOnlinePerformanceFrame(matchRef.current);
                 recordOnlineMatchWin(matchRef.current);
               }
+              if ((mode === 'tournamentOnline' || mode === 'custom') && result.advanced && result.executionMode === 'normal') publishSpectatorFrames();
               }
             }
           } else if (isOnline && !onlineAssetGateRef.current) {
@@ -25492,7 +26328,7 @@ function FightScreen({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, installFreshMatch, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, publishOnlineSnapshot, readInputsForStep, recordOnlineMatchWin, recordTrainingButtonHistoryInput, stage, trackOnlinePerformanceFrame]);
+  }, [activeTrainingTrial, clearMenuInputs, cpuDifficulty, cycleMoveListTab, installFreshMatch, isOnline, isTrainingOnline, matchOptions, mode, p1, p2, pauseMenuView, paused, peekInputs, presentationMirrored, publishOnlineSnapshot, publishSpectatorFrames, readInputsForStep, recordOnlineMatchWin, recordTrainingButtonHistoryInput, stage, trackOnlinePerformanceFrame]);
 
   const requestOnlineRematch = () => {
     if (isTournamentMatchMode(mode)) {
@@ -25956,8 +26792,10 @@ function FightScreen({
       <GameScene
         key={fightSessionId}
         match={match}
+        presentationMirrored={presentationMirrored}
         cameraSettings={settings.camera}
         sparkSettings={settings.display.impactSparks}
+        movementSmokeStyle={settings.display.movementSmokeStyle}
         audioSettings={gameplayAudioEnabled ? settings.audio : undefined}
         reducedMotion={settings.display.reducedMotion}
         onAssetLoadingChange={setAssetLoadingState}
@@ -25968,7 +26806,17 @@ function FightScreen({
           <ImpactCalloutLayer events={match.impactEvents} enabled={settings.display.impactSparks.enabled && settings.display.impactSparks.cinematic} reducedMotion={settings.display.reducedMotion} />
         </>
       )}
-      {!onlineAssetGateActive && <FightHud match={match} hudScale={settings.display.hudScale} onlineWins={isOnline ? onlineWins : undefined} />}
+      {!onlineAssetGateActive && <FightHud
+        match={match}
+        hudScale={settings.display.hudScale}
+        onlineWins={isOnline ? onlineWins : undefined}
+        playerNames={isOnline ? (
+          onlineRole === 'guest'
+            ? [onlineRemoteProfileRef.current?.displayName, onlineLocalProfileRef.current?.displayName]
+            : [onlineLocalProfileRef.current?.displayName, onlineRemoteProfileRef.current?.displayName]
+        ) : undefined}
+        presentationMirrored={presentationMirrored}
+      />}
       {trainingButtonHistoryVisible && <TrainingButtonHistory entries={trainingButtonHistory} />}
       {!onlineAssetGateActive && <CombatPopupLayer popups={combatPopups} />}
       {!onlineAssetGateActive && <ClashOverlay match={match} />}
@@ -26234,6 +27082,11 @@ function FightScreen({
                   {tournamentAdvanceRequested ? 'Reporting' : 'Next Round'}
                 </button>
               </>
+            ) : (mode === 'tournamentLocal' || mode === 'tournamentInfinite') && match.winnerSlot ? (
+              <button className="primary-button" onClick={() => onTournamentMatchComplete?.({ winnerSlot: match.winnerSlot! })}>
+                <ChevronRight size={18} />
+                Next Round
+              </button>
             ) : (
               <>
                 <button className="secondary-button" onClick={leaveToCharacterSelect} disabled={Boolean(isRanked && rankedPlayerResult?.promoted && !rankedPromotionAccepted)}>
@@ -28056,16 +28909,36 @@ function ClashProgress({ name, progress, total, failed }: { name: string; progre
   );
 }
 
-function FightHud({ match, hudScale, onlineWins }: { match: MatchSnapshot; hudScale: number; onlineWins?: OnlineWins }) {
+export function FightHud({ match, hudScale, onlineWins, playerNames, presentationMirrored = false }: { match: MatchSnapshot; hudScale: number; onlineWins?: OnlineWins; playerNames?: readonly [string | undefined, string | undefined]; presentationMirrored?: boolean }) {
   const [p1, p2] = match.fighters;
+  const leftFighter = presentationMirrored ? p2 : p1;
+  const rightFighter = presentationMirrored ? p1 : p2;
+  const leftWins = presentationMirrored ? onlineWins?.[1] : onlineWins?.[0];
+  const rightWins = presentationMirrored ? onlineWins?.[0] : onlineWins?.[1];
+  const leftName = (presentationMirrored ? playerNames?.[1] : playerNames?.[0]) || leftFighter.character.displayName;
+  const rightName = (presentationMirrored ? playerNames?.[0] : playerNames?.[1]) || rightFighter.character.displayName;
   const timerText = formatFightTimer(match, true);
+  const timerDigits = /^\d+$/.test(timerText) ? timerText.split('') : null;
   return (
     <div className="fight-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
-      <HealthBar fighter={p1} align="left" onlineWins={onlineWins?.[0]} />
-      <div className="round-box">
-        <strong>{timerText}</strong>
+      <HealthBar fighter={leftFighter} align="left" displayName={leftName} onlineWins={leftWins} roundsToWin={match.roundsToWin} />
+      <div className="round-box" data-testid="fight-hud-timer" aria-label={`Time ${timerText}`}>
+        <div className="round-box-value">
+          {timerDigits ? timerDigits.map((digit, index) => (
+            <img
+              key={`${digit}-${index}`}
+              className="round-box-digit"
+              src={`/ui/fight-hud/timer-digits/${digit}.png`}
+              alt=""
+              aria-hidden="true"
+              data-testid={`fight-hud-timer-digit-${index}`}
+            />
+          )) : <strong>{timerText}</strong>}
+        </div>
+        <img className="round-box-frame" src="/ui/fight-hud/timer-frame.png" alt="" aria-hidden="true" />
+        <span className="visually-hidden">{timerText}</span>
       </div>
-      <HealthBar fighter={p2} align="right" onlineWins={onlineWins?.[1]} />
+      <HealthBar fighter={rightFighter} align="right" displayName={rightName} onlineWins={rightWins} roundsToWin={match.roundsToWin} />
     </div>
   );
 }
@@ -28179,7 +29052,7 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
   );
 }
 
-function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; onlineWins?: number }) {
+function HealthBar({ fighter, align, displayName, onlineWins, roundsToWin }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; displayName: string; onlineWins?: number; roundsToWin: number }) {
   const isInfiniteHealth = fighter.maxHp >= 999_999;
   const percent = isInfiniteHealth ? 100 : Math.max(0, Math.min(100, (fighter.hp / Math.max(1, fighter.maxHp)) * 100));
   const recoverablePercent = isInfiniteHealth ? 0 : Math.max(0, Math.min(100, ((fighter.hp + fighter.displayRecoverableHp) / Math.max(1, fighter.maxHp)) * 100));
@@ -28188,27 +29061,43 @@ function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fig
   const transformReady = fighter.transformReadyTimer > 0 && transformPercent > 0;
   const isDanger = percent <= 25;
   const hasRecoverable = recoverablePercent > percent + 0.1;
-  const portraitPath = getHudPortraitPath(fighter.character);
+  const portrait = getHudPortraitSource(fighter.character);
   return (
-    <div className={`health ${align} ${isDanger ? 'danger' : ''} ${hasRecoverable ? 'has-recoverable' : ''} ${fighter.recoverableFlashFrames > 0 ? 'recoverable-flash' : ''}`}>
-      <div className="health-identity">
+    <div
+      className={`health ${align} ${isDanger ? 'danger' : ''} ${hasRecoverable ? 'has-recoverable' : ''} ${fighter.recoverableFlashFrames > 0 ? 'recoverable-flash' : ''}`}
+      data-testid={`fighter-hud-${align}`}
+    >
+      <div className="health-surface">
         <div className="hud-portrait" aria-hidden="true">
-          {portraitPath ? <img src={portraitPath} alt="" /> : <span>{fighter.character.displayName.slice(0, 2).toUpperCase()}</span>}
+          {portrait.path ? (
+            <img
+              className={`hud-portrait-image ${portrait.kind}`}
+              src={portrait.path}
+              alt=""
+              data-testid={`fighter-portrait-${align}`}
+              data-portrait-source={portrait.kind}
+            />
+          ) : <span>{fighter.character.displayName.slice(0, 2).toUpperCase()}</span>}
         </div>
         <div className="health-label">
-          <strong>{fighter.character.displayName}</strong>
+          <strong data-testid={`fighter-name-${align}`}>{displayName}</strong>
         </div>
-      </div>
-      <div className="health-track">
-        <span className="recoverable-health-fill" style={{ width: `${recoverablePercent}%` }} />
-        <span className="current-health-fill" style={{ width: `${percent}%`, background: isDanger ? 'linear-gradient(90deg, #ff1f32, #ff5b2f 60%, #fff0a5)' : fighter.character.colors.primary }} />
-      </div>
-      <div className={`ki-track ${transformPercent > 0 ? 'has-transform-charge' : ''} ${transformReady ? 'transform-ready' : ''}`} aria-label={`${fighter.character.displayName} ki`}>
-        <span className="ki-fill" style={{ width: `${kiPercent}%` }} />
-        <span className="ki-transform-fill" style={{ width: `${transformPercent}%` }} />
+        <div className="health-track" data-testid={`fighter-health-${align}`}>
+          <span className="recoverable-health-fill" style={{ width: `${recoverablePercent}%` }} />
+          <span className="current-health-fill" style={{ width: `${percent}%` }} />
+        </div>
+        <div
+          className={`ki-track ${transformPercent > 0 ? 'has-transform-charge' : ''} ${transformReady ? 'transform-ready' : ''}`}
+          aria-label={`${fighter.character.displayName} ki`}
+          data-testid={`fighter-ki-${align}`}
+        >
+          <span className="ki-fill" style={{ width: `${kiPercent}%` }} />
+          <span className="ki-transform-fill" style={{ width: `${transformPercent}%` }} />
+        </div>
+        <img className="health-shell-art" src="/ui/fight-hud/fighter-shell.png" alt="" aria-hidden="true" />
       </div>
       <div className="round-pips" aria-label={`${fighter.character.displayName} rounds won`}>
-        {Array.from({ length: ROUNDS_TO_WIN }, (_, pip) => (
+        {Array.from({ length: roundsToWin }, (_, pip) => (
           <span key={pip} className={pip < fighter.roundsWon ? 'won' : ''} />
         ))}
       </div>
@@ -28217,8 +29106,12 @@ function HealthBar({ fighter, align, onlineWins }: { fighter: MatchSnapshot['fig
   );
 }
 
-function getHudPortraitPath(character: MatchSnapshot['fighters'][number]['character']) {
-  return character.animationFrames?.idle?.[0] || character.animationFrames?.walkForward?.[0] || character.spriteSheetPath || '';
+function getHudPortraitSource(character: MatchSnapshot['fighters'][number]['character']) {
+  const framePath = character.animationFrames?.idle?.[0] || character.animationFrames?.walkForward?.[0];
+  if (framePath) return { path: framePath, kind: 'frame' as const };
+  if (character.faceCardPath) return { path: character.faceCardPath, kind: 'face-card' as const };
+  if (character.spriteSheetPath) return { path: character.spriteSheetPath, kind: 'sprite-sheet' as const };
+  return { path: '', kind: 'initials' as const };
 }
 
 function FooterActions({

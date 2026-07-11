@@ -5,6 +5,7 @@ export const RANKED_PLACEMENT_START_BOT_KP = 650;
 const HISTORY_LIMIT = 25;
 const RANKED_PLACEMENT_MIN_KP = 650;
 const RANKED_PLACEMENT_MAX_KP = 2200;
+export const LEGACY_SCORE_CHARACTER_ID = 'legacy';
 
 export const RANKED_TIERS = [
   { id: 'unranked', name: 'Unranked', badgeId: 'badge-unranked', minKp: 0, maxKp: 1299 },
@@ -31,11 +32,12 @@ export function getRankedTier(kp) {
   return [...RANKED_TIERS].reverse().find((tier) => normalized >= tier.minKp) || RANKED_TIERS[0];
 }
 
-export function makeDefaultRankedProfile(profile, now = Date.now()) {
+export function makeDefaultRankedProfile(profile, characterId = LEGACY_SCORE_CHARACTER_ID, now = Date.now()) {
   const tier = getRankedTier(RANKED_STARTING_KP);
   return {
     playerId: profile.playerId,
     displayName: profile.displayName,
+    characterId: cleanCharacterId(characterId) || LEGACY_SCORE_CHARACTER_ID,
     kp: RANKED_STARTING_KP,
     rank: tier,
     badgeId: tier.badgeId,
@@ -70,7 +72,8 @@ export function makeDefaultRankedPlacement() {
 export function normalizeRankedProfile(value, now = Date.now()) {
   const profile = cleanProfile(value);
   if (!profile) return null;
-  const base = makeDefaultRankedProfile(profile, now);
+  const characterId = cleanCharacterId(value?.characterId) || LEGACY_SCORE_CHARACTER_ID;
+  const base = makeDefaultRankedProfile(profile, characterId, now);
   const kp = cleanKp(value?.kp || base.kp);
   const tier = getRankedTier(kp);
   const totals = {
@@ -91,6 +94,7 @@ export function normalizeRankedProfile(value, now = Date.now()) {
     ...base,
     ...value,
     ...profile,
+    characterId,
     kp,
     rank: tier,
     badgeId: tier.badgeId,
@@ -107,7 +111,8 @@ export function applyRankedMatchReport(sourceProfiles, report, now = Date.now())
   const beforeProfiles = sourceProfiles.map((profile, index) => normalizeRankedProfile({
     ...profile,
     ...report.players[index].profile,
-    displayName: report.players[index].profile.displayName
+    displayName: report.players[index].profile.displayName,
+    characterId: report.players[index].characterId
   }, now));
   const perfScores = report.players.map((player, index) => calculateMechanicScores(player.stats, player.profile.playerId === report.winnerPlayerId, report.players[index].roundsWon));
   const deltas = report.players.map((player, index) => {
@@ -223,7 +228,7 @@ export function cleanRankedReport(value) {
   const placement = cleanPlacementReport(value?.placement, players);
   if (value?.placement && !placement) return null;
   return {
-    reportId: cleanId(value?.reportId) || [roomId, winnerPlayerId, ...players.map((player) => player.profile.playerId).sort()].join(':'),
+    reportId: cleanId(value?.reportId) || normalizeReportId({ roomId, winnerPlayerId, players }),
     roomId,
     stageId,
     winnerPlayerId,
@@ -250,7 +255,7 @@ function cleanPlacementReport(value, players) {
 
 function cleanPlayerReport(value) {
   const profile = cleanProfile(value?.profile);
-  const characterId = cleanId(value?.characterId);
+  const characterId = cleanCharacterId(value?.characterId);
   if (!profile || !characterId) return null;
   return {
     profile,
@@ -414,7 +419,7 @@ function tierIndex(tier) {
 }
 
 function normalizeReportId(report) {
-  return [report.roomId, report.winnerPlayerId, ...report.players.map((player) => player.profile.playerId).sort()].join(':');
+  return [report.roomId, report.winnerPlayerId, ...report.players.map((player) => rankedProfileKey(player.profile.playerId, player.characterId)).sort()].join(':');
 }
 
 function cleanId(value) {
@@ -425,6 +430,15 @@ function cleanId(value) {
 function cleanName(value) {
   if (typeof value !== 'string') return '';
   return value.toUpperCase().replace(/[^A-Z0-9 _-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 12);
+}
+
+export function cleanCharacterId(value) {
+  if (typeof value !== 'string') return '';
+  return value.toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 96);
+}
+
+export function rankedProfileKey(playerId, characterId) {
+  return `${cleanId(playerId)}:${cleanCharacterId(characterId) || LEGACY_SCORE_CHARACTER_ID}`;
 }
 
 function cleanKp(value) {

@@ -1,4 +1,4 @@
-import type { OnlinePlayerProfile } from './leaderboard';
+import { LEGACY_SCORE_CHARACTER_ID, sanitizeCharacterId, type OnlinePlayerProfile } from './leaderboard';
 import type { OnlinePerformanceStats } from './performanceScoring';
 
 export const RANKED_STARTING_KP = 1200;
@@ -31,6 +31,7 @@ export type RankedPlacementState = {
 };
 
 export type RankedProfile = OnlinePlayerProfile & {
+  characterId: string;
   kp: number;
   rank: RankedTier;
   badgeId: string;
@@ -191,11 +192,12 @@ export function makeDefaultRankedPlacement(): RankedPlacementState {
   };
 }
 
-export function makeDefaultRankedProfile(profile: OnlinePlayerProfile, now = Date.now()): RankedProfile {
+export function makeDefaultRankedProfile(profile: OnlinePlayerProfile, characterId = LEGACY_SCORE_CHARACTER_ID, now = Date.now()): RankedProfile {
   const tier = getRankedTier(RANKED_STARTING_KP);
   return {
     playerId: profile.playerId,
     displayName: profile.displayName,
+    characterId: normalizeCharacterId(characterId),
     kp: RANKED_STARTING_KP,
     rank: tier,
     badgeId: tier.badgeId,
@@ -217,9 +219,10 @@ export function makeDefaultRankedProfile(profile: OnlinePlayerProfile, now = Dat
   };
 }
 
-export async function fetchRankedProfile(profile: OnlinePlayerProfile): Promise<RankedProfile> {
-  return postJson<RankedProfile>('/.netlify/functions/online-ranked-profile', { profile }).catch((error) => {
-    if (isLocalFallbackAllowed()) return localFetchRankedProfile(profile);
+export async function fetchRankedProfile(profile: OnlinePlayerProfile, characterId: string): Promise<RankedProfile> {
+  const safeCharacterId = normalizeCharacterId(characterId);
+  return postJson<RankedProfile>('/.netlify/functions/online-ranked-profile', { profile, characterId: safeCharacterId }).catch((error) => {
+    if (isLocalFallbackAllowed()) return localFetchRankedProfile(profile, safeCharacterId);
     throw error;
   });
 }
@@ -240,7 +243,8 @@ export function applyRankedMatchReport(
   const beforeProfiles = sourceProfiles.map((profile, index) => normalizeRankedProfile({
     ...profile,
     ...report.players[index].profile,
-    displayName: report.players[index].profile.displayName
+    displayName: report.players[index].profile.displayName,
+    characterId: report.players[index].characterId
   }, now)) as [RankedProfile, RankedProfile];
   const perfScores = report.players.map((player, index) => calculateMechanicScores(player.stats, player.profile.playerId === report.winnerPlayerId, report.players[index].roundsWon));
   const deltas = report.players.map((player, index) => {
@@ -375,7 +379,8 @@ export function calculateMechanicScores(stats: OnlinePerformanceStats, didWin: b
 }
 
 export function normalizeRankedProfile(value: Partial<RankedProfile> & OnlinePlayerProfile, now = Date.now()): RankedProfile {
-  const base = makeDefaultRankedProfile(value, now);
+  const characterId = normalizeCharacterId(value.characterId);
+  const base = makeDefaultRankedProfile(value, characterId, now);
   const kp = normalizeKp(value.kp ?? base.kp);
   const tier = getRankedTier(kp);
   const totals = {
@@ -397,6 +402,7 @@ export function normalizeRankedProfile(value: Partial<RankedProfile> & OnlinePla
     ...value,
     playerId: value.playerId,
     displayName: value.displayName,
+    characterId,
     kp,
     rank: tier,
     badgeId: tier.badgeId,
@@ -535,7 +541,7 @@ function tierIndex(tier: RankedTier) {
 }
 
 function normalizeReportId(report: RankedMatchReport) {
-  return [report.roomId, report.winnerPlayerId, ...report.players.map((player) => player.profile.playerId).sort()].join(':');
+  return [report.roomId, report.winnerPlayerId, ...report.players.map((player) => rankedProfileKey(player.profile.playerId, player.characterId)).sort()].join(':');
 }
 
 async function postJson<T = unknown>(url: string, body: unknown): Promise<T> {
@@ -552,11 +558,18 @@ function isLocalFallbackAllowed() {
   return typeof window !== 'undefined' && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
 }
 
-function localFetchRankedProfile(profile: OnlinePlayerProfile): RankedProfile {
+function localFetchRankedProfile(profile: OnlinePlayerProfile, characterId: string): RankedProfile {
   const store = readLocalRankedStore();
-  const existing = store.profiles[profile.playerId];
-  const next = normalizeRankedProfile(existing ? { ...existing, displayName: profile.displayName } : makeDefaultRankedProfile(profile));
-  store.profiles[profile.playerId] = next;
+  const key = rankedProfileKey(profile.playerId, characterId);
+  const existing = store.profiles[key];
+  const legacySeed = !existing && !hasCharacterRankedProfile(store, profile.playerId) ? store.profiles[profile.playerId] : undefined;
+  const source = existing
+    ? { ...existing, displayName: profile.displayName, characterId }
+    : legacySeed
+      ? { ...legacySeed, playerId: profile.playerId, displayName: profile.displayName, characterId }
+      : makeDefaultRankedProfile(profile, characterId);
+  const next = normalizeRankedProfile(source);
+  store.profiles[key] = next;
   writeLocalRankedStore(store);
   return next;
 }
@@ -569,7 +582,7 @@ function localSubmitRankedMatchReport(report: RankedMatchReport): RankedSubmitRe
   const profiles = report.players.map((player) => (
     player.isBot
       ? normalizeRankedProfile({
-        ...makeDefaultRankedProfile(player.profile),
+        ...makeDefaultRankedProfile(player.profile, player.characterId),
         kp: player.botKp,
         kr: normalizeKrScores(player.botKr),
         placement: {
@@ -581,13 +594,11 @@ function localSubmitRankedMatchReport(report: RankedMatchReport): RankedSubmitRe
         }
       })
       :
-    store.profiles[player.profile.playerId]
-      ? normalizeRankedProfile({ ...store.profiles[player.profile.playerId], displayName: player.profile.displayName })
-      : makeDefaultRankedProfile(player.profile)
+    readLocalPlayerRankedProfile(store, player.profile, player.characterId)
   )) as [RankedProfile, RankedProfile];
   const result = applyRankedMatchReport(profiles, report);
   result.players.forEach((player, index) => {
-    if (!report.players[index].isBot) store.profiles[player.playerId] = player.profile;
+    if (!report.players[index].isBot) store.profiles[rankedProfileKey(player.playerId, report.players[index].characterId)] = player.profile;
   });
   store.reports[reportId] = result;
   writeLocalRankedStore(store);
@@ -619,6 +630,28 @@ function writeLocalRankedStore(store: RankedLocalStore) {
 
 function normalizeKp(value: unknown) {
   return Math.max(0, Math.round(Number(value) || 0));
+}
+
+function normalizeCharacterId(value: unknown) {
+  return sanitizeCharacterId(value) || LEGACY_SCORE_CHARACTER_ID;
+}
+
+function rankedProfileKey(playerId: string, characterId: string) {
+  return `${playerId}:${normalizeCharacterId(characterId)}`;
+}
+
+function hasCharacterRankedProfile(store: RankedLocalStore, playerId: string) {
+  return Object.keys(store.profiles).some((key) => key.startsWith(`${playerId}:`));
+}
+
+function readLocalPlayerRankedProfile(store: RankedLocalStore, profile: OnlinePlayerProfile, characterId: string) {
+  const key = rankedProfileKey(profile.playerId, characterId);
+  const existing = store.profiles[key];
+  if (existing) return normalizeRankedProfile({ ...existing, displayName: profile.displayName, characterId });
+  const legacySeed = !hasCharacterRankedProfile(store, profile.playerId) ? store.profiles[profile.playerId] : undefined;
+  return legacySeed
+    ? normalizeRankedProfile({ ...legacySeed, playerId: profile.playerId, displayName: profile.displayName, characterId })
+    : makeDefaultRankedProfile(profile, characterId);
 }
 
 function normalizeCount(value: unknown) {

@@ -30,6 +30,8 @@ import {
   writeTournamentMatchRoomRecord
 } from './_tournament-rooms.mjs';
 import { getTournamentEmailStore, notifyTournamentAdminReview, notifyTournamentReady, readTournamentEmailSubscription, sendTournamentEmail } from './_tournament-email.mjs';
+import { withSpectatorCredentials } from './_spectator-token.mjs';
+import { withTournamentPublicMetadata } from './_tournament-public.mjs';
 
 export const PAID_LIGHTNING_TOURNAMENT_ID = 'paid-lightning-beta';
 const TOURNAMENT_STORE_NAME = 'kore-paid-tournaments';
@@ -147,7 +149,7 @@ export async function getOrCreatePaidTournament(stores, now = Date.now()) {
 
 export function makeOpenPaidTournament(now = Date.now()) {
   const config = paidTournamentConfig();
-  return {
+  return withTournamentPublicMetadata({
     id: `${PAID_LIGHTNING_TOURNAMENT_ID}-${now}`,
     seriesId: PAID_SERIES_ID,
     kind: 'paidOnline',
@@ -164,7 +166,7 @@ export function makeOpenPaidTournament(now = Date.now()) {
     createdAt: now,
     updatedAt: now,
     reward: { kind: 'lightningPending', label: `$${formatUsd(config.prizeUsd[1])} / $${formatUsd(config.prizeUsd[2])} / $${formatUsd(config.prizeUsd[3])} Lightning rewards`, state: 'locked' }
-  };
+  });
 }
 
 export async function enterPaidTournament(stores, entryRequest, now = Date.now()) {
@@ -650,7 +652,7 @@ export async function joinPaidTournamentRoom(stores, { tournamentId, matchId, pl
     bracket,
     entry,
     assignedMatch: assignment.match,
-    matchRoom: room,
+    matchRoom: withSpectatorCredentials(room, bracket, assignment.match, entry, now),
     payment: paidPaymentSummary(entry),
     confirmedEntries: timing.confirmedEntries,
     entriesNeeded: timing.entriesNeeded,
@@ -679,7 +681,7 @@ export async function getPaidTournamentRoomStatus(stores, { tournamentId, matchI
     bracket,
     entry,
     assignedMatch: match,
-    matchRoom: room,
+    matchRoom: withSpectatorCredentials(room, bracket, match, entry, now),
     payment: paidPaymentSummary(entry),
     confirmedEntries: timing.confirmedEntries,
     entriesNeeded: timing.entriesNeeded,
@@ -836,7 +838,7 @@ async function writeLedgerEvent(stores, type, payload, now = Date.now()) {
 
 function sanitizePaidBracket(value) {
   const config = paidTournamentConfig();
-  return {
+  return withTournamentPublicMetadata({
     ...value,
     kind: 'paidOnline',
     entries: Array.isArray(value.entries) ? value.entries : [],
@@ -847,7 +849,7 @@ function sanitizePaidBracket(value) {
     entryUsd: Number(value.entryUsd) || config.entryUsd,
     prizeUsd: value.prizeUsd || config.prizeUsd,
     prizeSats: value.prizeSats || {}
-  };
+  });
 }
 
 function findEntryByPlayer(bracket, playerId) {
