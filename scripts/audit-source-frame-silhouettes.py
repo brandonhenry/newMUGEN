@@ -15,6 +15,23 @@ from PIL import Image, ImageDraw
 
 RGB = tuple[int, int, int]
 
+EXACT_KEYS_BY_CHARACTER: dict[str, set[RGB]] = {
+    "choji-akimichi": {(48, 200, 152)},
+    "gaara": {(0, 0, 248), (0, 200, 120)},
+    "ino-yamanaka": {(56, 192, 48)},
+    "kiba-inuzuka": {(248, 0, 0), (0, 0, 248)},
+    "kimimaro": {(32, 192, 32)},
+    "sakon-curse-mark": {(0, 160, 0), (0, 255, 255)},
+    "temari": {(72, 176, 56), (0, 128, 128)},
+    "tsunade": {(0, 136, 0)},
+}
+
+
+def is_dark_outline(color: RGB) -> bool:
+    maximum = max(color)
+    minimum = min(color)
+    return maximum <= 34 and maximum - minimum <= 18
+
 
 def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text())
@@ -262,6 +279,7 @@ def expected_silhouette(
     current: Image.Image,
     authored_colors: set[RGB],
     dominant_colors: set[RGB],
+    excluded_colors: set[RGB],
 ) -> tuple[Image.Image, bytearray, Counter[RGB], list[dict[str, Any]]]:
     width, height = current.size
     # This mask is deliberately immutable for the whole decision. Newly added
@@ -275,7 +293,12 @@ def expected_silhouette(
     if not any(anchor):
         return current.convert("RGBA").copy(), expected, missing_colors, decisions
     for color, component, touches_border in color_components(source_crop):
-        if color in dominant_colors:
+        dark_outline = is_dark_outline(color)
+        if color in excluded_colors:
+            continue
+        # Dark outlines are often also the cell matte. They may still be
+        # recovered through the conservative silhouette-span gate below.
+        if color in dominant_colors and not (dark_outline and color in authored_colors):
             continue
         overlap = sum(anchor[key] for key in component)
         overlap_ratio = overlap / len(component)
@@ -286,15 +309,21 @@ def expected_silhouette(
         if authored and overlap:
             keep = not touches_border or overlap_ratio >= 0.60 or (len(component) <= 16 and overlap_ratio >= 0.25)
             confidence = "authored-overlap"
-        elif authored and not touches_border and len(component) <= 64 and adjacent:
+        elif authored and adjacent and (not touches_border or dark_outline):
             keep = True
-            confidence = "authored-adjacent"
+            # An authored outline color can be connected to a same-colored
+            # sheet background when the sprite touches its source-cell edge.
+            # The per-pixel primary-span gate below still limits restoration
+            # to holes bracketed by the existing body silhouette, so accepting
+            # the component here cannot grow into the surrounding matte.
+            confidence = "authored-adjacent-silhouette"
         elif not authored and not touches_border and len(component) <= 24 and adjacent:
             keep = True
             confidence = "new-color-small-interior"
         if not keep:
             continue
         accepted: list[int] = []
+        span_mask = existing if dark_outline else anchor
         for key in component:
             if existing[key]:
                 continue
@@ -302,7 +331,7 @@ def expected_silhouette(
             # Automatic repair is interior-only. Source-confirmed pixels must be
             # bracketed by the primary body on a row or column; outer-contour
             # expansion is review work because it can belong to the next cell.
-            if not inside_primary_span(anchor, width, height, x, y):
+            if not inside_primary_span(span_mask, width, height, x, y):
                 continue
             accepted.append(key)
             missing_colors[color] += 1
@@ -481,7 +510,13 @@ def audit_character(
             canvas = Image.new("RGBA", crop.size, (0, 0, 0, 0))
             canvas.alpha_composite(current_visible, (offset_x, offset_y))
             proof_current = canvas
-            candidate, expected, missing, decisions = expected_silhouette(crop, canvas, authored, dominant)
+            candidate, expected, missing, decisions = expected_silhouette(
+                crop,
+                canvas,
+                authored,
+                dominant,
+                EXACT_KEYS_BY_CHARACTER.get(character_id, set()),
+            )
             bounds = alpha_bounds(candidate)
             if bounds is None:
                 unaligned.append(index)
@@ -495,7 +530,13 @@ def audit_character(
             ]
             alignment = {"offset": [offset_x, offset_y], "score": score, "secondScore": second_score}
         else:
-            candidate, expected, missing, decisions = expected_silhouette(crop, current, authored, dominant)
+            candidate, expected, missing, decisions = expected_silhouette(
+                crop,
+                current,
+                authored,
+                dominant,
+                EXACT_KEYS_BY_CHARACTER.get(character_id, set()),
+            )
         if not missing:
             continue
         missing_total = sum(missing.values())
