@@ -10313,11 +10313,11 @@ button {
 
 .health-track {
   position: absolute;
-  top: 6%;
-  left: 4%;
+  top: 3.5%;
+  left: 2.5%;
   z-index: 1;
-  width: 92%;
-  height: 17%;
+  width: 95%;
+  height: 22%;
   overflow: hidden;
   border-radius: 2px;
   background:
@@ -10329,16 +10329,16 @@ button {
 }
 
 .health.right .health-track {
-  right: 4%;
+  right: 2.5%;
   left: auto;
 }
 
 .health-track span {
   position: absolute;
-  top: 0;
+  top: -2px;
   right: 0;
   display: block;
-  height: 100%;
+  height: calc(100% + 4px);
   border-radius: inherit;
   transition-property: width;
   transition-duration: 140ms;
@@ -10401,11 +10401,11 @@ button {
 
 .ki-track {
   position: absolute;
-  top: 57%;
-  left: 72%;
+  top: 49%;
+  left: 68%;
   z-index: 1;
-  width: 23%;
-  height: 20%;
+  width: 29.5%;
+  height: 39%;
   overflow: hidden;
   border-radius: 1px;
   background: #03080d;
@@ -10415,7 +10415,7 @@ button {
 }
 
 .health.right .ki-track {
-  right: 72%;
+  right: 68%;
   left: auto;
   transform: scaleX(-1);
 }
@@ -10423,9 +10423,9 @@ button {
 .ki-track span {
   position: absolute;
   left: 0;
-  top: 0;
+  top: -2px;
   display: block;
-  height: 100%;
+  height: calc(100% + 4px);
   border-radius: inherit;
   transition-property: width, opacity;
   transition-duration: 140ms;
@@ -10459,28 +10459,29 @@ button {
 
 .round-pips {
   position: absolute;
-  top: calc(100% + 6px);
-  right: 1.5%;
+  top: calc(100% + 4px);
+  right: auto;
+  left: 1.5%;
   z-index: 5;
   display: flex;
   align-items: center;
-  gap: clamp(4px, 0.6vw, 9px);
-  min-height: 22px;
+  gap: clamp(3px, 0.4vw, 6px);
+  min-height: 16px;
 }
 
 .health.right .round-pips {
-  right: auto;
-  left: 1.5%;
+  right: 1.5%;
+  left: auto;
 }
 
 .round-pips span {
   display: block;
-  width: clamp(22px, 2vw, 32px);
+  width: clamp(15px, 1.35vw, 21px);
   aspect-ratio: 1;
   border: clamp(1px, 0.12vw, 2px) solid #281116;
   clip-path: polygon(29% 0, 71% 0, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0 71%, 0 29%);
   background:
-    radial-gradient(circle at 42% 38%, #292d31 0 24%, #090a0b 25% 39%, transparent 40%),
+    radial-gradient(circle at center, #292d31 0 24%, #090a0b 25% 39%, transparent 40%),
     radial-gradient(circle, #8e9499 0 49%, #f1f3f2 50% 64%, #777d83 65% 78%, #2b2f34 79% 100%);
   box-shadow:
     inset 0 0 0 clamp(1px, 0.1vw, 2px) rgba(255, 255, 255, 0.38),
@@ -10490,7 +10491,7 @@ button {
 .round-pips span.won {
   border-color: #4b1906;
   background:
-    radial-gradient(circle at 38% 32%, #fffbd0 0 10%, #ffe95b 11% 38%, #ffb20d 39% 55%, transparent 56%),
+    radial-gradient(circle at center, #fffbd0 0 10%, #ffe95b 11% 38%, #ffb20d 39% 55%, transparent 56%),
     radial-gradient(circle, #f08b00 0 49%, #fff2a0 50% 64%, #d97800 65% 78%, #5c2100 79% 100%);
   box-shadow:
     inset 0 0 0 clamp(1px, 0.1vw, 2px) rgba(255, 255, 255, 0.58),

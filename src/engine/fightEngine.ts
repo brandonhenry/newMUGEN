@@ -1558,6 +1558,10 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
 }
 
 function canBufferFreshMoveInput(fighter: FighterRuntime) {
+  // Recovery is a committed state: non-cancelable follow-ups must be pressed
+  // after the current attack has fully completed. Authored hit-cancels still
+  // use the fresh intent directly in the attack branch below.
+  if (fighter.state === 'attack') return false;
   if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'transform' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
   if (fighter.state === 'chargeKi' && (fighter.chargePhase === 'startup' || fighter.chargePhase === 'recovery')) return false;
   return true;

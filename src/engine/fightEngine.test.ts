@@ -6115,7 +6115,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.damage).toBe(8);
   });
 
-  it('buffers early player attack inputs during non-cancelable recovery after a confirmed hit', () => {
+  it('discards early player attack inputs during non-cancelable recovery after a confirmed hit', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -6138,7 +6138,7 @@ describe('fight engine', () => {
     match = stepMatch(match, three, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.comboStep).toBe(1);
     expect(match.fighters[0].currentMove?.input).toBe('jab');
-    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
   });
 
   it('does not buffer early attack inputs if no chain window opens', () => {
@@ -6154,7 +6154,7 @@ describe('fight engine', () => {
     const earlyKick = emptyInputFrame();
     earlyKick.kick = true;
     match = stepMatch(match, earlyKick, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
 
     for (let i = 0; i < 20; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
@@ -6164,7 +6164,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.input).toBe('jab');
   });
 
-  it('starts a buffered follow-up after non-cancelable recovery when hit advantage remains', () => {
+  it('requires a fresh follow-up after non-cancelable recovery even when hit advantage remains', () => {
     const plusCharacter: CharacterDefinition = {
       ...starterCharacters[0],
       moves: starterCharacters[0].moves.map((move) =>
@@ -6200,10 +6200,16 @@ describe('fight engine', () => {
     earlyKick.kick = true;
     match = stepMatch(match, earlyKick, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('jab');
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
 
-    for (let i = 0; i < 20 && match.fighters[0].currentMove?.input !== 'kick'; i += 1) {
+    for (let i = 0; i < 20 && match.fighters[0].currentMove; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
+
+    expect(match.fighters[0].currentMove).toBeNull();
+    const freshKick = emptyInputFrame();
+    freshKick.kick = true;
+    match = stepMatch(match, freshKick, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.input).toBe('kick');
     expect(match.fighters[0].currentMove?.comboStep).toBe(2);
   });
@@ -6436,7 +6442,7 @@ describe('fight engine', () => {
 
     expect(match.fighters[0].currentMove?.comboStep).toBe(1);
     expect(match.fighters[0].currentMove?.comboKey).toBe('neutral:kick');
-    expect(match.fighters[0].bufferedMoveInput).toBe('kick');
+    expect(match.fighters[0].bufferedMoveInput).toBeNull();
   });
 
   it('allows the same attack again after recovery when hit advantage keeps the defender stuck', () => {
@@ -7603,7 +7609,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].currentMove?.input).toBe('heavy');
   });
 
-  it('preserves a buffered command snapshot after the player releases before recovery ends', () => {
+  it('discards a command pressed before recovery ends and requires a fresh command', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -7619,13 +7625,14 @@ describe('fight engine', () => {
 
     const forwardOne = { ...emptyInputFrame(), right: true, jab: true };
     match = stepMatch(match, forwardOne, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].bufferedMoveIntent?.inputSnapshot.right).toBe(true);
-    expect(match.fighters[0].bufferedMoveIntent?.inputSnapshot.jab).toBe(true);
+    expect(match.fighters[0].bufferedMoveIntent).toBeNull();
 
-    for (let frame = 0; frame < 40 && match.fighters[0].currentMove?.command !== 'f+1'; frame += 1) {
+    for (let frame = 0; frame < 40 && match.fighters[0].currentMove; frame += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
 
+    expect(match.fighters[0].currentMove).toBeNull();
+    match = stepMatch(match, forwardOne, emptyInputFrame(), 1 / 60);
     expect(match.fighters[0].currentMove?.command).toBe('f+1');
     expect(match.fighters[0].currentMove?.animationKey).toBe('cmd:f+1');
   });

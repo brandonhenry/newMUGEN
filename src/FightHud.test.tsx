@@ -48,8 +48,9 @@ describe('FightHud', () => {
     expect((screen.getByTestId('fighter-health-left').querySelector('.current-health-fill') as HTMLElement).style.width).toBe('24%');
     expect((screen.getByTestId('fighter-health-left').querySelector('.recoverable-health-fill') as HTMLElement).style.width).toBe('42%');
     expect((screen.getByTestId('fighter-ki-left').querySelector('.ki-fill') as HTMLElement).style.width).toBe('55%');
-    expect(within(leftHud).getByLabelText('Naruto rounds won').querySelectorAll('span')).toHaveLength(5);
+    expect(within(leftHud).getByLabelText('Naruto rounds won').querySelectorAll('span')).toHaveLength(2);
     expect(within(leftHud).getByLabelText('Naruto rounds won').querySelectorAll('span.won')).toHaveLength(2);
+    expect(screen.getByLabelText('Sasuke rounds won').querySelectorAll('span')).toHaveLength(0);
   });
 
   it.each([

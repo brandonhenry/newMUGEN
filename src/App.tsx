@@ -29268,7 +29268,7 @@ export function FightHud({ match, hudScale, onlineWins, playerNames, presentatio
   const timerDigits = /^\d+$/.test(timerText) ? timerText.split('') : null;
   return (
     <div className="fight-hud" style={{ '--hud-scale': hudScale } as CSSProperties}>
-      <HealthBar fighter={leftFighter} align="left" displayName={leftName} onlineWins={leftWins} roundsToWin={match.roundsToWin} />
+      <HealthBar fighter={leftFighter} align="left" displayName={leftName} onlineWins={leftWins} />
       <div className="round-box" data-testid="fight-hud-timer" aria-label={`Time ${timerText}`}>
         <div className="round-box-value">
           {timerDigits ? timerDigits.map((digit, index) => (
@@ -29293,7 +29293,7 @@ export function FightHud({ match, hudScale, onlineWins, playerNames, presentatio
         <img className="round-box-frame" src="/ui/fight-hud/timer-frame.png" alt="" aria-hidden="true" />
         <span className="visually-hidden">{timerText}</span>
       </div>
-      <HealthBar fighter={rightFighter} align="right" displayName={rightName} onlineWins={rightWins} roundsToWin={match.roundsToWin} />
+      <HealthBar fighter={rightFighter} align="right" displayName={rightName} onlineWins={rightWins} />
     </div>
   );
 }
@@ -29407,7 +29407,7 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
   );
 }
 
-function HealthBar({ fighter, align, displayName, onlineWins, roundsToWin }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; displayName: string; onlineWins?: number; roundsToWin: number }) {
+function HealthBar({ fighter, align, displayName, onlineWins }: { fighter: MatchSnapshot['fighters'][number]; align: 'left' | 'right'; displayName: string; onlineWins?: number }) {
   const isInfiniteHealth = fighter.maxHp >= 999_999;
   const percent = isInfiniteHealth ? 100 : Math.max(0, Math.min(100, (fighter.hp / Math.max(1, fighter.maxHp)) * 100));
   const recoverablePercent = isInfiniteHealth ? 0 : Math.max(0, Math.min(100, ((fighter.hp + fighter.displayRecoverableHp) / Math.max(1, fighter.maxHp)) * 100));
@@ -29446,8 +29446,8 @@ function HealthBar({ fighter, align, displayName, onlineWins, roundsToWin }: { f
         <img className="health-shell-art" src="/ui/fight-hud/fighter-shell.png" alt="" aria-hidden="true" />
       </div>
       <div className="round-pips" aria-label={`${fighter.character.displayName} rounds won`}>
-        {Array.from({ length: roundsToWin }, (_, pip) => (
-          <span key={pip} className={pip < fighter.roundsWon ? 'won' : ''} />
+        {Array.from({ length: fighter.roundsWon }, (_, pip) => (
+          <span key={pip} className="won" />
         ))}
       </div>
       {onlineWins !== undefined && onlineWins > 0 && <div className="online-wins">WINS: {onlineWins}</div>}

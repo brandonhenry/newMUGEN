@@ -192,8 +192,21 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:qcf+4": [
+      "/characters/rouge-the-bat/frames/frame-195.png",
+      "/characters/rouge-the-bat/frames/frame-196.png",
+      "/characters/rouge-the-bat/frames/frame-197.png",
+      "/characters/rouge-the-bat/frames/frame-198.png",
+      "/characters/rouge-the-bat/frames/frame-199.png",
+      "/characters/rouge-the-bat/frames/frame-200.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/rouge-the-bat/frames/frame-202.png",
+      "/characters/rouge-the-bat/frames/frame-203.png",
+      "/characters/rouge-the-bat/frames/frame-204.png",
+      "/characters/rouge-the-bat/frames/frame-205.png",
+      "/characters/rouge-the-bat/frames/frame-206.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -526,9 +539,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 24,
-      "activeFrames": 6,
-      "recoveryFrames": 32,
+      "startupFrames": 11,
+      "activeFrames": 41,
+      "recoveryFrames": 10,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -540,9 +553,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 0,
+      "activeFrames": 22,
+      "recoveryFrames": 14,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
