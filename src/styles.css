@@ -10090,13 +10090,18 @@ button {
   min-width: 0;
   place-items: center;
   overflow: hidden;
-  padding: 0 4%;
-  color: #f7f8f0;
+  padding: 0 5%;
+  color: #fff;
+  background-color: #070809;
+  background-image: url('/ui/fight-hud/player-name-texture.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.92) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.08) inset;
   font-variant-numeric: tabular-nums;
   text-align: center;
-  text-shadow:
-    0 2px 0 #000,
-    0 0 7px rgba(255, 255, 255, 0.26);
 }
 
 .health.right .health-label {
@@ -10108,11 +10113,18 @@ button {
   display: block;
   max-width: 100%;
   overflow: hidden;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
-  font-size: clamp(0.56rem, 1.12vw, 1rem);
-  font-weight: 950;
-  letter-spacing: 0.04em;
-  line-height: 1;
+  font-family: Impact, Haettenschweiler, 'Arial Black', sans-serif;
+  font-size: clamp(0.64rem, 1.32vw, 1.2rem);
+  font-stretch: condensed;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  line-height: 0.94;
+  -webkit-text-stroke: clamp(0.5px, 0.08vw, 1.15px) #050505;
+  paint-order: stroke fill;
+  text-shadow:
+    0 2px 0 #000,
+    1px 0 0 #000,
+    -1px 0 0 #000;
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
