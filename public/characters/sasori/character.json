@@ -116,13 +116,21 @@
       "/characters/sasori/frames/frame-125.png"
     ],
     "jableft": [
-      "/characters/sasori/frames/frame-180.png",
-      "/characters/sasori/frames/frame-181.png",
-      "/characters/sasori/frames/frame-182.png",
-      "/characters/sasori/frames/frame-183.png",
-      "/characters/sasori/frames/frame-184.png",
-      "/characters/sasori/frames/frame-185.png",
-      "/characters/sasori/frames/frame-186.png"
+      "/characters/sasori/frames/frame-041.png",
+      "/characters/sasori/frames/frame-043.png",
+      "/characters/sasori/frames/frame-047.png",
+      "/characters/sasori/frames/frame-050.png",
+      "/characters/sasori/frames/frame-053.png",
+      "/characters/sasori/frames/frame-055.png",
+      "/characters/sasori/frames/frame-056.png",
+      "/characters/sasori/frames/frame-058.png",
+      "/characters/sasori/frames/frame-059.png",
+      "/characters/sasori/frames/frame-060.png",
+      "/characters/sasori/frames/frame-061.png",
+      "/characters/sasori/frames/frame-062.png",
+      "/characters/sasori/frames/frame-063.png",
+      "/characters/sasori/frames/frame-045.png",
+      "/characters/sasori/frames/frame-064.png"
     ],
     "jabright": [
       "/characters/sasori/frames/frame-003.png",
@@ -160,16 +168,10 @@
       "/characters/sasori/frames/frame-111.png"
     ],
     "juggle": [
-      "/characters/sasori/frames/frame-249.png"
+      "/characters/sasori/frames/frame-094.png"
     ],
     "knockdown": [
-      "/characters/sasori/frames/frame-257.png",
-      "/characters/sasori/frames/frame-258.png",
-      "/characters/sasori/frames/frame-259.png",
-      "/characters/sasori/frames/frame-260.png",
-      "/characters/sasori/frames/frame-261.png",
-      "/characters/sasori/frames/frame-262.png",
-      "/characters/sasori/frames/frame-263.png"
+      "/characters/sasori/frames/frame-104.png"
     ],
     "getupStand": [],
     "getupRollUp": [
@@ -458,7 +460,8 @@
       "whiffRecoveryFrames": 4,
       "range": 1.42,
       "label": "Sasori Left Check",
-      "hitLevel": "high"
+      "hitLevel": "high",
+      "endsInCrouch": true
     },
     "jabright": {
       "startupFrames": 13,

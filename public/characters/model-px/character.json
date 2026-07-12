@@ -153,21 +153,11 @@
       "/characters/model-px/frames/frame-120.png"
     ],
     "kickright": [
-      "/characters/model-px/frames/frame-121.png",
-      "/characters/model-px/frames/frame-122.png",
-      "/characters/model-px/frames/frame-123.png",
-      "/characters/model-px/frames/frame-124.png",
-      "/characters/model-px/frames/frame-125.png",
-      "/characters/model-px/frames/frame-126.png",
-      "/characters/model-px/frames/frame-127.png",
-      "/characters/model-px/frames/frame-128.png",
-      "/characters/model-px/frames/frame-129.png",
-      "/characters/model-px/frames/frame-130.png",
-      "/characters/model-px/frames/frame-131.png",
-      "/characters/model-px/frames/frame-132.png",
-      "/characters/model-px/frames/frame-133.png",
-      "/characters/model-px/frames/frame-134.png",
-      "/characters/model-px/frames/frame-135.png"
+      "/characters/model-px/frames/frame-245.png",
+      "/characters/model-px/frames/frame-246.png",
+      "/characters/model-px/frames/frame-247.png",
+      "/characters/model-px/frames/frame-248.png",
+      "/characters/model-px/frames/frame-249.png"
     ],
     "hitLight": [
       "/characters/model-px/frames/frame-289.png"
@@ -685,178 +675,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Model PX Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Model PX Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Model PX Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Model PX Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Model PX Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Model PX Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Model PX Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Model PX Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Model PX Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Model PX Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Model PX Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Model PX Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Model PX Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Model PX Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Model PX Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Model PX Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Model PX Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Model PX Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Model PX Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Model PX Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Model PX Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Model PX Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Model PX Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Model PX Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Model PX Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Model PX Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Model PX Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Model PX Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Model PX Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Model PX Kick Ender"
     }
   },
   "effects": [],

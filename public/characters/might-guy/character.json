@@ -90,8 +90,7 @@
       "/characters/might-guy/frames/frame-170.png",
       "/characters/might-guy/frames/frame-171.png",
       "/characters/might-guy/frames/frame-172.png",
-      "/characters/might-guy/frames/frame-173.png",
-      "/characters/might-guy/frames/frame-174.png"
+      "/characters/might-guy/frames/frame-173.png"
     ],
     "jabright": [
       "/characters/might-guy/frames/frame-065.png",
@@ -104,10 +103,8 @@
       "/characters/might-guy/frames/frame-072.png"
     ],
     "kickleft": [
-      "/characters/might-guy/frames/frame-073.png",
-      "/characters/might-guy/frames/frame-074.png",
-      "/characters/might-guy/frames/frame-075.png",
-      "/characters/might-guy/frames/frame-076.png"
+      "/characters/might-guy/frames/frame-009.png",
+      "/characters/might-guy/frames/frame-011.png"
     ],
     "kickright": [
       "/characters/might-guy/frames/frame-049.png",
@@ -629,178 +626,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Might Guy Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Might Guy Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Might Guy Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Might Guy Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Might Guy Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Might Guy Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Might Guy Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Might Guy Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Might Guy Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Might Guy Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Might Guy Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Might Guy Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Might Guy Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Might Guy Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Might Guy Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Might Guy Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Might Guy Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Might Guy Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Might Guy Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Might Guy Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Might Guy Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Might Guy Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Might Guy Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Might Guy Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Might Guy Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Might Guy Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Might Guy Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Might Guy Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Might Guy Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Might Guy Kick Ender"
     }
   },
   "effects": [],
@@ -1388,35 +1385,35 @@
         "width": 1.02,
         "height": 1.29,
         "offsetX": 0,
-        "flipX": false,
+        "flipX": true,
         "flipY": false
       },
       "168": {
         "width": 1.23,
         "height": 1.27,
         "offsetX": 0,
-        "flipX": false,
+        "flipX": true,
         "flipY": false
       },
       "169": {
         "width": 0.88,
         "height": 1.27,
         "offsetX": 0,
-        "flipX": false,
+        "flipX": true,
         "flipY": false
       },
       "170": {
         "width": 1.28,
         "height": 1.24,
         "offsetX": 0,
-        "flipX": false,
+        "flipX": true,
         "flipY": false
       },
       "171": {
         "width": 0.84,
         "height": 1.42,
         "offsetX": 0,
-        "flipX": false,
+        "flipX": true,
         "flipY": false
       },
       "172": {
@@ -1430,7 +1427,7 @@
         "width": 0.91,
         "height": 1.2,
         "offsetX": 0,
-        "flipX": false,
+        "flipX": true,
         "flipY": false
       },
       "174": {
