@@ -1774,11 +1774,13 @@
     },
     "knockdown": {
       "59": {
-        "width": 1.24,
-        "height": 1.24,
+        "width": 1.24021,
+        "height": 1.24021,
         "offsetX": 0,
         "flipX": true,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 0.83994,
+        "voxelScaleY": 0.83994
       },
       "107": {
         "width": 0.97,
@@ -2160,11 +2162,13 @@
         "flipY": false
       },
       "59": {
-        "width": 1.24,
-        "height": 1.24,
+        "width": 1.24021,
+        "height": 1.24021,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 0.83994,
+        "voxelScaleY": 0.83994
       }
     },
     "cmd:f+1": {
