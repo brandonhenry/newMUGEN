@@ -1398,6 +1398,14 @@
       }
     },
     "block": {
+      "29": {
+        "width": 1.33,
+        "height": 1.33,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.06015
+      },
       "23": {
         "width": 1.11,
         "height": 1.48,
@@ -1943,6 +1951,15 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "93": {
+        "width": 1.02682,
+        "height": 1.02682,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 0.3013,
+        "voxelScaleY": 0.2568
       }
     },
     "juggle": {
@@ -2068,11 +2085,13 @@
         "flipY": false
       },
       "93": {
-        "width": 1.03,
-        "height": 1.03,
+        "width": 1.02682,
+        "height": 1.02682,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 0.3013,
+        "voxelScaleY": 0.2568
       }
     },
     "getupStand": {
@@ -2105,11 +2124,13 @@
         "flipY": false
       },
       "93": {
-        "width": 1.03,
-        "height": 1.03,
+        "width": 1.02682,
+        "height": 1.02682,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 0.3013,
+        "voxelScaleY": 0.2568
       },
       "94": {
         "width": 0.95,
@@ -2117,6 +2138,14 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "95": {
+        "width": 0.91,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 1.27568
       },
       "96": {
         "width": 1.01,
@@ -2314,11 +2343,13 @@
         "flipY": false
       },
       "93": {
-        "width": 1.03,
-        "height": 1.03,
+        "width": 1.02682,
+        "height": 1.02682,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 0.3013,
+        "voxelScaleY": 0.2568
       }
     },
     "cmd:f+1": {

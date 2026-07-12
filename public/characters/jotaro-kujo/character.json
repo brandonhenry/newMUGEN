@@ -1900,28 +1900,28 @@
         "height": 1.01899,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.66
       },
       "34": {
         "width": 1.01899,
         "height": 1.01899,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.59
       },
       "35": {
-        "width": 1.019,
-        "height": 1.019,
-        "offsetX": 0,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
-      },
-      "36": {
         "width": 1.01899,
         "height": 1.01899,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 3.22
+      },
+      "36": {
+        "width": 1.019,
+        "height": 1.019,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.14
       }
     },
     "getupStand": {
@@ -1930,28 +1930,28 @@
         "height": 1.01899,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.66
       },
       "34": {
         "width": 1.01899,
         "height": 1.01899,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.59
       },
       "35": {
-        "width": 1.019,
-        "height": 1.019,
-        "offsetX": 0,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
-      },
-      "36": {
         "width": 1.01899,
         "height": 1.01899,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 3.22
+      },
+      "36": {
+        "width": 1.019,
+        "height": 1.019,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.14
       },
       "54": {
         "width": 1.791,
@@ -2038,9 +2038,11 @@
     },
     "lose": {
       "32": {
-        "width": 1.849,
-        "height": 0.34,
-        "offsetX": 0
+        "width": 0.324,
+        "height": 0.324,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1.05
       }
     },
     "walkForward": {

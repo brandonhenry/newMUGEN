@@ -1658,11 +1658,11 @@
         "voxelScaleY": 1
       },
       "30": {
-        "width": 0.98349,
-        "height": 0.98349,
+        "width": 0.9835,
+        "height": 0.9835,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.81
       },
       "31": {
         "width": 0.9835,
@@ -1676,7 +1676,7 @@
         "height": 0.9835,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.46
       }
     },
     "getupStand": {
@@ -1692,7 +1692,7 @@
         "height": 0.9835,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.46
       },
       "57": {
         "width": 0.893,
@@ -1720,9 +1720,11 @@
         "offsetX": 0
       },
       "62": {
-        "width": 0.653,
-        "height": 0.661,
-        "offsetX": 0
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "voxelScaleX": 0.98,
+        "voxelScaleY": 0.99
       }
     },
     "sprint": {
@@ -1970,9 +1972,11 @@
         "offsetX": 0
       },
       "163": {
-        "width": 0.676,
-        "height": 0.708,
-        "offsetX": 0
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "voxelScaleX": 0.96,
+        "voxelScaleY": 1
       }
     },
     "block": {
@@ -2441,9 +2445,11 @@
     },
     "crouchBlock": {
       "163": {
-        "width": 0.676,
-        "height": 0.708,
-        "offsetX": 0
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "voxelScaleX": 0.96,
+        "voxelScaleY": 1
       }
     },
     "jableft": {

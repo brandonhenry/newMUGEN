@@ -1540,6 +1540,15 @@
       }
     },
     "block": {
+      "55": {
+        "width": 0.85616,
+        "height": 0.85616,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScaleX": 0.93492,
+        "voxelScaleY": 1
+      },
       "61": {
         "width": 1.11,
         "height": 0.96,
@@ -2242,7 +2251,9 @@
         "height": 0.89,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
       }
     },
     "getupStand": {
@@ -2405,11 +2416,13 @@
         "flipY": false
       },
       "133": {
-        "width": 1.51,
-        "height": 1.64,
+        "width": 1.23216,
+        "height": 1.23216,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1.04021,
+        "voxelScaleY": 1
       },
       "134": {
         "width": 1.11,
@@ -2432,7 +2445,9 @@
         "height": 0.89,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
       },
       "136": {
         "width": 0.76,

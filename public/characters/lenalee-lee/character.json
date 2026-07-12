@@ -1921,32 +1921,32 @@
   "animationFrameScales": {
     "knockdown": {
       "32": {
-        "width": 0.98549,
-        "height": 0.98549,
+        "width": 0.9855,
+        "height": 0.9855,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.6
       },
       "33": {
         "width": 0.98549,
         "height": 0.98549,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.38
       },
       "34": {
         "width": 0.98549,
         "height": 0.98549,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.71
       },
       "35": {
-        "width": 0.98549,
-        "height": 0.98549,
+        "width": 0.9855,
+        "height": 0.9855,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.09
       }
     },
     "getupStand": {
@@ -1955,21 +1955,21 @@
         "height": 0.98549,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.38
       },
       "34": {
         "width": 0.98549,
         "height": 0.98549,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.71
       },
       "35": {
-        "width": 0.98549,
-        "height": 0.98549,
+        "width": 0.9855,
+        "height": 0.9855,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.09
       },
       "54": {
         "width": 1.225,
@@ -2056,9 +2056,11 @@
     },
     "lose": {
       "31": {
-        "width": 1.251,
-        "height": 0.362,
-        "offsetX": 0
+        "width": 0.34,
+        "height": 0.34,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1.06
       }
     },
     "cmd:2+4": {

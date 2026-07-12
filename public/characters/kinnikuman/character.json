@@ -1530,28 +1530,36 @@
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.25
       },
       "36": {
         "width": 0.98,
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.15
       },
       "37": {
         "width": 0.98,
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.44
       },
       "38": {
         "width": 0.98,
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1.86
       }
     },
     "getupStand": {
@@ -1560,28 +1568,36 @@
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.25
       },
       "36": {
         "width": 0.98,
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.15
       },
       "37": {
         "width": 0.98,
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.44
       },
       "38": {
         "width": 0.98,
         "height": 0.98,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1.86
       },
       "52": {
         "width": 1.22,
@@ -1693,11 +1709,13 @@
     },
     "lose": {
       "32": {
-        "width": 1.58,
-        "height": 0.27,
+        "width": 0.212,
+        "height": 0.212,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1.27
       }
     },
     "cmd:1+2": {
@@ -2485,6 +2503,11 @@
       }
     },
     "idle": {
+      "0": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "1": {
         "width": 1,
         "height": 0.98,

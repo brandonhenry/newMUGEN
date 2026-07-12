@@ -1992,9 +1992,11 @@
     },
     "lose": {
       "33": {
-        "width": 1.185,
-        "height": 0.311,
-        "offsetX": 0
+        "width": 0.812,
+        "height": 0.812,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 0.383
       }
     },
     "walkForward": {

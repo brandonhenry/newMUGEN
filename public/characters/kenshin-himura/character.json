@@ -1604,6 +1604,34 @@
   },
   "animationFrameScales": {
     "getupStand": {
+      "30": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 3.86,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 4.91,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 3.66,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.99999,
+        "height": 0.99999,
+        "voxelScaleX": 1,
+        "voxelScaleY": 4.22,
+        "offsetX": 0
+      },
       "52": {
         "width": 1.65,
         "height": 0.6,
@@ -1740,6 +1768,16 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "77": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "78": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
       },
       "160": {
         "width": 0.92,
@@ -3526,6 +3564,11 @@
         "flipX": false,
         "flipY": false
       },
+      "133": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "134": {
         "width": 0.98,
         "height": 0.98,
@@ -3604,6 +3647,11 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "251": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
       },
       "252": {
         "width": 0.92,
@@ -4054,6 +4102,48 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      }
+    },
+    "knockdown": {
+      "30": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 3.86,
+        "offsetX": 0
+      },
+      "31": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 4.91,
+        "offsetX": 0
+      },
+      "32": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 3.66,
+        "offsetX": 0
+      },
+      "33": {
+        "width": 0.99999,
+        "height": 0.99999,
+        "voxelScaleX": 1,
+        "voxelScaleY": 4.22,
+        "offsetX": 0
+      }
+    },
+    "idle": {
+      "0": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "1": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
       }
     }
   },

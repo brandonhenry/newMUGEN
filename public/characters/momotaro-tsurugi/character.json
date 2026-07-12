@@ -1717,62 +1717,62 @@
   "animationFrameScales": {
     "knockdown": {
       "35": {
-        "width": 1.0265,
-        "height": 1.0265,
+        "width": 1.02649,
+        "height": 1.02649,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.99
       },
       "36": {
-        "width": 1.0265,
-        "height": 1.0265,
+        "width": 1.02649,
+        "height": 1.02649,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.19
       },
       "37": {
         "width": 1.0265,
         "height": 1.0265,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.39
       },
       "38": {
         "width": 1.0265,
         "height": 1.0265,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.36
       }
     },
     "getupStand": {
       "35": {
-        "width": 1.0265,
-        "height": 1.0265,
+        "width": 1.02649,
+        "height": 1.02649,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.99
       },
       "36": {
-        "width": 1.0265,
-        "height": 1.0265,
+        "width": 1.02649,
+        "height": 1.02649,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.19
       },
       "37": {
         "width": 1.0265,
         "height": 1.0265,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.39
       },
       "38": {
         "width": 1.0265,
         "height": 1.0265,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.36
       },
       "53": {
         "width": 0.939,
@@ -1859,9 +1859,11 @@
     },
     "lose": {
       "30": {
-        "width": 0.837,
-        "height": 0.201,
-        "offsetX": 0
+        "width": 0.22,
+        "height": 0.22,
+        "offsetX": 0,
+        "voxelScaleX": 0.99,
+        "voxelScaleY": 1.6
       }
     },
     "walkForward": {
