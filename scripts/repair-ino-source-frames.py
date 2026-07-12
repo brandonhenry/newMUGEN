@@ -25,7 +25,6 @@ def alpha_bounds(image: Image.Image) -> tuple[int, int, int, int] | None:
 def rebuild_frame(source: Image.Image, box: list[int], index: int, current: Image.Image) -> Image.Image:
     crop = source.crop(tuple(box)).convert("RGBA")
     pixels = crop.load()
-    current_pixels = current.convert("RGBA").load()
 
     if index <= 131:
         matte_colors = {STANDARD_MATTE, TEAL_MATTE}
@@ -41,12 +40,32 @@ def rebuild_frame(source: Image.Image, box: list[int], index: int, current: Imag
             alpha = 255
             if color in matte_colors:
                 alpha = 0
-            elif index <= 131 and color == (0, 0, 0):
-                # The tight source boxes sometimes include a black row divider.
-                # Keep black sprite outlines exactly where the prior mask proves
-                # they are authored, while dropping divider pixels.
-                alpha = current_pixels[x, y][3]
             pixels[x, y] = (red, green, blue, alpha)
+
+    # The old repair trusted the already-damaged alpha mask for every black
+    # source pixel, which permanently preserved its missing-outline holes.
+    # Source dividers are straight, nearly solid rows/columns; remove only
+    # those geometric dividers and keep all other authored black artwork.
+    dense_rows = {
+        y
+        for y in range(crop.height)
+        if sum(pixels[x, y][:3] == (0, 0, 0) for x in range(crop.width))
+        >= max(2, math.ceil(crop.width * 0.95))
+    }
+    dense_columns = {
+        x
+        for x in range(crop.width)
+        if sum(pixels[x, y][:3] == (0, 0, 0) for y in range(crop.height))
+        >= max(2, math.ceil(crop.height * 0.95))
+    }
+    for y in dense_rows:
+        for x in range(crop.width):
+            red, green, blue, _ = pixels[x, y]
+            pixels[x, y] = (red, green, blue, 0)
+    for x in dense_columns:
+        for y in range(crop.height):
+            red, green, blue, _ = pixels[x, y]
+            pixels[x, y] = (red, green, blue, 0)
 
     bounds = alpha_bounds(crop)
     if bounds is None:
