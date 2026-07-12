@@ -91,19 +91,19 @@
       "/characters/sonic-the-hedgehog/frames/frame-041.png"
     ],
     "crouch": [
-      "/characters/sonic-the-hedgehog/frames/frame-042.png"
+      "/characters/sonic-the-hedgehog/frames/frame-098.png"
     ],
     "crouchBlock": [
-      "/characters/sonic-the-hedgehog/frames/frame-042.png"
+      "/characters/sonic-the-hedgehog/frames/frame-161.png"
     ],
     "block": [
-      "/characters/sonic-the-hedgehog/frames/frame-238.png"
+      "/characters/sonic-the-hedgehog/frames/frame-221.png"
     ],
     "chargeKi": [
-      "/characters/sonic-the-hedgehog/frames/frame-009.png",
-      "/characters/sonic-the-hedgehog/frames/frame-010.png",
-      "/characters/sonic-the-hedgehog/frames/frame-011.png",
-      "/characters/sonic-the-hedgehog/frames/frame-012.png"
+      "/characters/sonic-the-hedgehog/frames/frame-161.png",
+      "/characters/sonic-the-hedgehog/frames/frame-162.png",
+      "/characters/sonic-the-hedgehog/frames/frame-163.png",
+      "/characters/sonic-the-hedgehog/frames/frame-164.png"
     ],
     "jableft": [
       "/characters/sonic-the-hedgehog/frames/frame-061.png",
@@ -1856,20 +1856,6 @@
         "flipX": false,
         "flipY": false
       },
-      "122": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
-      },
-      "123": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 0.94711,
-        "voxelScaleY": 0.85708,
-        "offsetX": 0
-      },
       "125": {
         "width": 0.25,
         "height": 0.28,
@@ -1878,18 +1864,18 @@
         "flipY": false
       },
       "126": {
-        "width": 0.99299,
-        "height": 0.99299,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "127": {
-        "width": 0.99299,
-        "height": 0.99299,
-        "voxelScaleX": 0.87494,
-        "voxelScaleY": 0.90904,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "128": {
         "width": 0.45,

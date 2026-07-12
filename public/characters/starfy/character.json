@@ -116,13 +116,13 @@
       "/characters/starfy/frames/frame-121.png"
     ],
     "crouch": [
-      "/characters/starfy/frames/frame-123.png"
+      "/characters/starfy/frames/frame-020.png"
     ],
     "crouchBlock": [
-      "/characters/starfy/frames/frame-123.png"
+      "/characters/starfy/frames/frame-096.png"
     ],
     "block": [
-      "/characters/starfy/frames/frame-123.png"
+      "/characters/starfy/frames/frame-096.png"
     ],
     "chargeKi": [
       "/characters/starfy/frames/frame-171.png",
@@ -1507,6 +1507,13 @@
       }
     },
     "crouch": {
+      "20": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
       "123": {
         "width": 0.35,
         "height": 0.34,
@@ -1565,6 +1572,13 @@
       }
     },
     "crouchBlock": {
+      "96": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
       "383": {
         "width": 0.33,
         "height": 0.34,
@@ -1574,6 +1588,13 @@
       }
     },
     "block": {
+      "96": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
       "155": {
         "width": 0.38,
         "height": 0.29,
@@ -2162,9 +2183,9 @@
       "344": {
         "width": 0.37,
         "height": 0.37,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "getupStand": {
