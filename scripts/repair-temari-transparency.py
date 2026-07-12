@@ -79,7 +79,15 @@ def main() -> None:
         index = int(entry["index"])
         current = Image.open(FRAMES_DIR / f"frame-{index:03d}.png").convert("RGBA")
         source_box = entry.get("sourceBox")
-        replacement = extract_frame(source, source_box) if source_box else current
+        repair = entry.get("sourceRepair")
+        quarantined = (
+            isinstance(repair, dict)
+            and repair.get("type") == "quarantined-non-character-ui"
+        )
+        if quarantined:
+            replacement = Image.new("RGBA", (1, 1))
+        else:
+            replacement = extract_frame(source, source_box) if source_box else current
         current_opaque = current.width * current.height - current.getchannel("A").histogram()[0]
         replacement_opaque = (
             replacement.width * replacement.height

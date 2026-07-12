@@ -45,7 +45,7 @@ import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
-import { cameraScreenRightStageAlignment, stableControlAlignedFightCameraSide } from '../lib/fightCamera';
+import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, stableControlAlignedFightCameraSide } from '../lib/fightCamera';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
@@ -5471,10 +5471,9 @@ function CameraRig({ match, settings, presentationMirrored = false, reducedMotio
     const sidestepping = isFighterLaneOrbitCameraActive(p1) || isFighterLaneOrbitCameraActive(p2);
     const sidestepCameraBoost = sidestepping ? 4.5 : 1;
     const sidestepRigBoost = sidestepping ? 2.4 : 1;
-    const sideFollowScale = sidestepping ? 0.82 : 1;
     focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing * sidestepCameraBoost));
     lookFocus.lerp(rawLookFocus, cameraDamp(delta, 5.2 * smoothing * sidestepCameraBoost));
-    side.lerp(rawSide, cameraDamp(delta, 2.15 * smoothing * sideFollowScale)).normalize();
+    side.lerp(rawSide, fightCameraSideFollowAlpha(delta, smoothing, sidestepping)).normalize();
     cameraDistanceRef.current = THREE.MathUtils.lerp(cameraDistanceRef.current, cameraDistance, cameraDamp(delta, 2.35 * smoothing * sidestepRigBoost));
     cameraHeightRef.current = THREE.MathUtils.lerp(cameraHeightRef.current, cameraHeight, cameraDamp(delta, 2.75 * smoothing * sidestepRigBoost));
 
