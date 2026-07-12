@@ -34,6 +34,9 @@ EXACT_KEYS_BY_CHARACTER: dict[str, set[tuple[int, int, int]]] = {
     "ino-yamanaka": {(56, 192, 48)},
     "kiba-inuzuka": {(248, 0, 0), (0, 0, 248)},
     "kimimaro": {(32, 192, 32)},
+    # Pain's sheet alternates between a blue-gray matte and this exact
+    # magenta matte. The latter was left opaque by the original import.
+    "pain": {(248, 0, 248)},
     "sakon-curse-mark": {(0, 160, 0), (0, 255, 255)},
     "temari": {(24, 144, 0), (72, 176, 56), (0, 128, 128)},
     "tsunade": {(0, 136, 0)},
