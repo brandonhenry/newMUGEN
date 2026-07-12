@@ -1,6 +1,6 @@
 {
   "source": "Kabuto.png",
-  "count": 281,
+  "count": 273,
   "excluded": [],
   "sheets": [
     {
@@ -8,7 +8,7 @@
       "name": "Generated Frame Atlas",
       "path": "/characters/kabuto/animation-sheet.png",
       "frameStart": 0,
-      "frameCount": 281
+      "frameCount": 273
     }
   ],
   "frames": [
@@ -19,9 +19,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        32,
+        36,
         37,
-        61,
+        65,
         93
       ],
       "width": 29,
@@ -41,9 +41,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        119,
+        129,
         37,
-        163,
+        173,
         93
       ],
       "width": 44,
@@ -63,9 +63,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        204,
+        222,
         38,
-        265,
+        283,
         93
       ],
       "width": 61,
@@ -85,9 +85,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        299,
+        324,
         39,
-        358,
+        383,
         93
       ],
       "width": 59,
@@ -107,20 +107,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        406,
-        48,
-        440,
+        435,
+        42,
+        473,
         93
       ],
-      "width": 34,
-      "height": 45,
+      "width": 38,
+      "height": 51,
       "row": 0,
       "sourceBox": [
-        12,
+        0,
         69,
-        46,
-        114
-      ]
+        71,
+        125
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          69,
+          71,
+          125
+        ]
+      }
     },
     {
       "index": 5,
@@ -129,20 +138,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        508,
-        66,
-        526,
+        536,
+        42,
+        574,
         93
       ],
-      "width": 18,
-      "height": 27,
+      "width": 38,
+      "height": 51,
       "row": 0,
       "sourceBox": [
-        10,
-        87,
-        28,
-        114
-      ]
+        0,
+        69,
+        71,
+        125
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          69,
+          71,
+          125
+        ]
+      }
     },
     {
       "index": 6,
@@ -151,9 +169,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        588,
+        633,
         46,
-        634,
+        679,
         93
       ],
       "width": 46,
@@ -173,9 +191,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        673,
+        725,
         45,
-        737,
+        789,
         93
       ],
       "width": 64,
@@ -195,9 +213,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        769,
+        828,
         46,
-        829,
+        888,
         93
       ],
       "width": 60,
@@ -217,9 +235,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        869,
+        935,
         48,
-        917,
+        983,
         93
       ],
       "width": 48,
@@ -239,9 +257,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        968,
+        1041,
         36,
-        1006,
+        1079,
         93
       ],
       "width": 38,
@@ -261,9 +279,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1063,
+        1143,
         36,
-        1099,
+        1179,
         93
       ],
       "width": 36,
@@ -283,9 +301,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        21,
+        24,
         142,
-        73,
+        76,
         190
       ],
       "width": 52,
@@ -305,9 +323,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        112,
+        123,
         144,
-        169,
+        180,
         190
       ],
       "width": 57,
@@ -327,9 +345,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        206,
+        224,
         147,
-        263,
+        281,
         190
       ],
       "width": 57,
@@ -349,9 +367,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        311,
+        336,
         146,
-        346,
+        371,
         190
       ],
       "width": 35,
@@ -371,9 +389,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        404,
+        435,
         139,
-        442,
+        473,
         190
       ],
       "width": 38,
@@ -393,9 +411,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        499,
+        537,
         139,
-        535,
+        573,
         190
       ],
       "width": 36,
@@ -415,9 +433,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        590,
+        636,
         129,
-        631,
+        677,
         190
       ],
       "width": 41,
@@ -437,9 +455,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        685,
+        738,
         128,
-        724,
+        777,
         190
       ],
       "width": 39,
@@ -459,9 +477,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        778,
+        837,
         129,
-        820,
+        879,
         190
       ],
       "width": 42,
@@ -481,9 +499,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        879,
+        945,
         128,
-        907,
+        973,
         190
       ],
       "width": 28,
@@ -503,9 +521,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        961,
+        1035,
         125,
-        1012,
+        1086,
         190
       ],
       "width": 51,
@@ -525,9 +543,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1053,
+        1133,
         145,
-        1109,
+        1189,
         190
       ],
       "width": 56,
@@ -547,9 +565,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        21,
+        24,
         241,
-        73,
+        76,
         287
       ],
       "width": 52,
@@ -569,9 +587,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        123,
+        133,
         244,
-        159,
+        169,
         287
       ],
       "width": 36,
@@ -591,9 +609,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        218,
+        236,
         239,
-        251,
+        269,
         287
       ],
       "width": 33,
@@ -613,9 +631,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        305,
+        330,
         249,
-        352,
+        377,
         287
       ],
       "width": 47,
@@ -635,9 +653,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        404,
+        435,
         245,
-        442,
+        473,
         287
       ],
       "width": 38,
@@ -657,9 +675,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        502,
+        540,
         242,
-        532,
+        570,
         287
       ],
       "width": 30,
@@ -679,9 +697,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        597,
+        642,
         244,
-        625,
+        670,
         287
       ],
       "width": 28,
@@ -701,20 +719,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        688,
-        241,
-        722,
+        734,
+        240,
+        781,
         287
       ],
-      "width": 34,
-      "height": 46,
+      "width": 47,
+      "height": 47,
       "row": 2,
       "sourceBox": [
-        281,
-        400,
-        315,
-        446
-      ]
+        264,
+        397,
+        328,
+        453
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          264,
+          397,
+          328,
+          453
+        ]
+      }
     },
     {
       "index": 32,
@@ -723,20 +750,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        786,
-        264,
-        811,
+        835,
+        240,
+        882,
         287
       ],
-      "width": 25,
-      "height": 23,
+      "width": 47,
+      "height": 47,
       "row": 2,
       "sourceBox": [
-        302,
-        398,
-        327,
-        421
-      ]
+        264,
+        397,
+        328,
+        453
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          264,
+          397,
+          328,
+          453
+        ]
+      }
     },
     {
       "index": 33,
@@ -745,9 +781,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        865,
+        932,
         241,
-        920,
+        987,
         287
       ],
       "width": 55,
@@ -767,20 +803,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        963,
-        241,
-        1010,
+        1030,
+        239,
+        1090,
         287
       ],
-      "width": 47,
-      "height": 46,
+      "width": 60,
+      "height": 48,
       "row": 2,
       "sourceBox": [
-        400,
-        399,
-        447,
-        445
-      ]
+        396,
+        397,
+        460,
+        453
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          396,
+          397,
+          460,
+          453
+        ]
+      }
     },
     {
       "index": 35,
@@ -789,20 +834,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1071,
-        266,
-        1091,
+        1131,
+        239,
+        1191,
         287
       ],
-      "width": 20,
-      "height": 21,
+      "width": 60,
+      "height": 48,
       "row": 2,
       "sourceBox": [
-        439,
+        396,
         397,
-        459,
-        418
-      ]
+        460,
+        453
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          396,
+          397,
+          460,
+          453
+        ]
+      }
     },
     {
       "index": 36,
@@ -811,9 +865,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        30,
+        33,
         331,
-        64,
+        67,
         384
       ],
       "width": 34,
@@ -833,9 +887,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        117,
+        128,
         341,
-        164,
+        175,
         384
       ],
       "width": 47,
@@ -855,9 +909,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        212,
+        229,
         344,
-        258,
+        275,
         384
       ],
       "width": 46,
@@ -877,9 +931,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        309,
+        333,
         334,
-        349,
+        373,
         384
       ],
       "width": 40,
@@ -899,9 +953,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        404,
+        436,
         334,
-        441,
+        473,
         384
       ],
       "width": 37,
@@ -921,9 +975,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        493,
+        532,
         314,
-        540,
+        579,
         384
       ],
       "width": 47,
@@ -943,9 +997,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        587,
+        633,
         314,
-        634,
+        680,
         384
       ],
       "width": 47,
@@ -965,9 +1019,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        684,
+        736,
         345,
-        726,
+        778,
         384
       ],
       "width": 42,
@@ -987,9 +1041,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        778,
+        837,
         347,
-        820,
+        879,
         384
       ],
       "width": 42,
@@ -1009,9 +1063,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        867,
+        934,
         330,
-        918,
+        985,
         384
       ],
       "width": 51,
@@ -1031,9 +1085,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        961,
+        1035,
         330,
-        1012,
+        1086,
         384
       ],
       "width": 51,
@@ -1053,9 +1107,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1067,
+        1147,
         325,
-        1095,
+        1175,
         384
       ],
       "width": 28,
@@ -1075,9 +1129,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        28,
+        31,
         425,
-        66,
+        69,
         481
       ],
       "width": 38,
@@ -1097,9 +1151,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        117,
+        127,
         424,
-        165,
+        175,
         481
       ],
       "width": 48,
@@ -1119,9 +1173,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        211,
+        228,
         425,
-        259,
+        276,
         481
       ],
       "width": 48,
@@ -1141,20 +1195,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        312,
-        447,
-        346,
+        334,
+        429,
+        373,
         481
       ],
-      "width": 34,
-      "height": 34,
+      "width": 39,
+      "height": 52,
       "row": 4,
       "sourceBox": [
-        154,
-        895,
-        188,
-        929
-      ]
+        150,
+        879,
+        198,
+        935
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          150,
+          879,
+          198,
+          935
+        ]
+      }
     },
     {
       "index": 52,
@@ -1163,20 +1226,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        412,
-        460,
-        433,
+        435,
+        429,
+        474,
         481
       ],
-      "width": 21,
-      "height": 21,
+      "width": 39,
+      "height": 52,
       "row": 4,
       "sourceBox": [
-        169,
-        883,
-        190,
-        904
-      ]
+        150,
+        879,
+        198,
+        935
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          150,
+          879,
+          198,
+          935
+        ]
+      }
     },
     {
       "index": 53,
@@ -1185,9 +1257,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        503,
+        542,
         414,
-        530,
+        569,
         481
       ],
       "width": 27,
@@ -1207,9 +1279,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        597,
+        643,
         414,
-        624,
+        670,
         481
       ],
       "width": 27,
@@ -1229,9 +1301,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        692,
+        745,
         414,
-        717,
+        770,
         481
       ],
       "width": 25,
@@ -1251,20 +1323,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        787,
-        448,
-        810,
+        847,
+        416,
+        870,
         481
       ],
       "width": 23,
-      "height": 33,
+      "height": 65,
       "row": 4,
       "sourceBox": [
-        107,
-        944,
-        130,
-        977
-      ]
+        102,
+        937,
+        134,
+        1009
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          102,
+          937,
+          134,
+          1009
+        ]
+      }
     },
     {
       "index": 57,
@@ -1273,20 +1354,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        882,
-        443,
-        903,
+        948,
+        416,
+        971,
         481
       ],
-      "width": 21,
-      "height": 38,
+      "width": 23,
+      "height": 65,
       "row": 4,
       "sourceBox": [
-        108,
-        971,
-        129,
+        102,
+        937,
+        134,
         1009
-      ]
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          102,
+          937,
+          134,
+          1009
+        ]
+      }
     },
     {
       "index": 58,
@@ -1295,20 +1385,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        975,
-        448,
-        998,
+        1049,
+        417,
+        1072,
         481
       ],
       "width": 23,
-      "height": 33,
+      "height": 64,
       "row": 4,
       "sourceBox": [
-        141,
-        945,
-        164,
-        978
-      ]
+        136,
+        937,
+        168,
+        1009
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          136,
+          937,
+          168,
+          1009
+        ]
+      }
     },
     {
       "index": 59,
@@ -1317,20 +1416,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1070,
-        444,
-        1091,
+        1150,
+        417,
+        1173,
         481
       ],
-      "width": 21,
-      "height": 37,
+      "width": 23,
+      "height": 64,
       "row": 4,
       "sourceBox": [
-        142,
-        972,
-        163,
+        136,
+        937,
+        168,
         1009
-      ]
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          136,
+          937,
+          168,
+          1009
+        ]
+      }
     },
     {
       "index": 60,
@@ -1339,20 +1447,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        35,
-        545,
-        58,
+        39,
+        514,
+        62,
         578
       ],
       "width": 23,
-      "height": 33,
+      "height": 64,
       "row": 5,
       "sourceBox": [
-        175,
-        945,
-        198,
-        978
-      ]
+        170,
+        937,
+        202,
+        1009
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          170,
+          937,
+          202,
+          1009
+        ]
+      }
     },
     {
       "index": 61,
@@ -1361,20 +1478,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        130,
-        541,
-        151,
+        140,
+        514,
+        163,
         578
       ],
-      "width": 21,
-      "height": 37,
+      "width": 23,
+      "height": 64,
       "row": 5,
       "sourceBox": [
-        176,
-        972,
-        197,
+        170,
+        937,
+        202,
         1009
-      ]
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          170,
+          937,
+          202,
+          1009
+        ]
+      }
     },
     {
       "index": 62,
@@ -1383,9 +1509,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        222,
+        240,
         511,
-        247,
+        265,
         578
       ],
       "width": 25,
@@ -1405,9 +1531,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        316,
+        340,
         511,
-        342,
+        366,
         578
       ],
       "width": 26,
@@ -1427,9 +1553,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        409,
+        441,
         511,
-        436,
+        468,
         578
       ],
       "width": 27,
@@ -1449,9 +1575,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        494,
+        532,
         560,
-        540,
+        578,
         578
       ],
       "width": 46,
@@ -1471,9 +1597,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        588,
+        634,
         564,
-        633,
+        679,
         578
       ],
       "width": 45,
@@ -1493,9 +1619,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        682,
+        734,
         560,
-        728,
+        780,
         578
       ],
       "width": 46,
@@ -1515,9 +1641,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        776,
+        835,
         560,
-        822,
+        881,
         578
       ],
       "width": 46,
@@ -1537,20 +1663,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        879,
-        556,
-        906,
+        940,
+        536,
+        978,
         578
       ],
-      "width": 27,
-      "height": 22,
+      "width": 38,
+      "height": 42,
       "row": 5,
       "sourceBox": [
-        6,
-        1058,
-        33,
-        1080
-      ]
+        0,
+        1044,
+        40,
+        1092
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          1044,
+          40,
+          1092
+        ]
+      }
     },
     {
       "index": 70,
@@ -1559,20 +1694,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        977,
-        557,
-        997,
+        1041,
+        536,
+        1079,
         578
       ],
-      "width": 20,
-      "height": 21,
+      "width": 38,
+      "height": 42,
       "row": 5,
       "sourceBox": [
-        20,
-        1050,
+        0,
+        1044,
         40,
-        1071
-      ]
+        1092
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          1044,
+          40,
+          1092
+        ]
+      }
     },
     {
       "index": 71,
@@ -1581,20 +1725,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1070,
-        552,
-        1092,
+        1142,
+        536,
+        1180,
         578
       ],
-      "width": 22,
-      "height": 26,
+      "width": 38,
+      "height": 42,
       "row": 5,
       "sourceBox": [
-        3,
-        1066,
-        25,
+        0,
+        1044,
+        40,
         1092
-      ]
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          1044,
+          40,
+          1092
+        ]
+      }
     },
     {
       "index": 72,
@@ -1603,20 +1756,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        39,
-        656,
-        55,
+        31,
+        633,
+        69,
         675
       ],
-      "width": 16,
-      "height": 19,
+      "width": 38,
+      "height": 42,
       "row": 6,
       "sourceBox": [
-        22,
-        1068,
-        38,
-        1087
-      ]
+        0,
+        1044,
+        40,
+        1092
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          1044,
+          40,
+          1092
+        ]
+      }
     },
     {
       "index": 73,
@@ -1625,9 +1787,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        127,
+        137,
         605,
-        155,
+        165,
         675
       ],
       "width": 28,
@@ -1647,9 +1809,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        216,
+        234,
         620,
-        253,
+        271,
         675
       ],
       "width": 37,
@@ -1669,9 +1831,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        308,
+        332,
         623,
-        350,
+        374,
         675
       ],
       "width": 42,
@@ -1691,9 +1853,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        401,
+        432,
         625,
-        445,
+        476,
         675
       ],
       "width": 44,
@@ -1713,20 +1875,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        498,
-        606,
-        536,
+        514,
+        607,
+        597,
         675
       ],
-      "width": 38,
-      "height": 69,
+      "width": 83,
+      "height": 68,
       "row": 6,
       "sourceBox": [
-        385,
-        1100,
-        423,
-        1169
-      ]
+        380,
+        1094,
+        473,
+        1196
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          380,
+          1094,
+          473,
+          1196
+        ]
+      }
     },
     {
       "index": 78,
@@ -1735,20 +1906,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        600,
-        639,
-        622,
+        615,
+        607,
+        698,
         675
       ],
-      "width": 22,
-      "height": 36,
+      "width": 83,
+      "height": 68,
       "row": 6,
       "sourceBox": [
-        416,
-        1110,
-        438,
-        1146
-      ]
+        380,
+        1094,
+        473,
+        1196
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          380,
+          1094,
+          473,
+          1196
+        ]
+      }
     },
     {
       "index": 79,
@@ -1757,20 +1937,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        685,
-        611,
-        724,
+        716,
+        607,
+        799,
         675
       ],
-      "width": 39,
-      "height": 64,
+      "width": 83,
+      "height": 68,
       "row": 6,
       "sourceBox": [
-        431,
-        1105,
-        470,
-        1169
-      ]
+        380,
+        1094,
+        473,
+        1196
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          380,
+          1094,
+          473,
+          1196
+        ]
+      }
     },
     {
       "index": 80,
@@ -1779,20 +1968,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        772,
-        620,
-        826,
+        816,
+        591,
+        901,
         675
       ],
-      "width": 54,
-      "height": 55,
+      "width": 85,
+      "height": 84,
       "row": 6,
       "sourceBox": [
-        479,
-        1130,
-        533,
-        1185
-      ]
+        475,
+        1094,
+        568,
+        1196
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          475,
+          1094,
+          568,
+          1196
+        ]
+      }
     },
     {
       "index": 81,
@@ -1801,20 +1999,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        875,
-        626,
-        910,
+        917,
+        591,
+        1002,
         675
       ],
-      "width": 35,
-      "height": 49,
+      "width": 85,
+      "height": 84,
       "row": 6,
       "sourceBox": [
-        531,
-        1134,
-        566,
-        1183
-      ]
+        475,
+        1094,
+        568,
+        1196
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          475,
+          1094,
+          568,
+          1196
+        ]
+      }
     },
     {
       "index": 82,
@@ -1823,9 +2030,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        944,
+        1017,
         621,
-        1030,
+        1103,
         675
       ],
       "width": 86,
@@ -1845,9 +2052,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1041,
-        631,
         1121,
+        631,
+        1201,
         675
       ],
       "width": 80,
@@ -1867,9 +2074,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        4,
+        8,
         683,
-        89,
+        93,
         772
       ],
       "width": 85,
@@ -1889,9 +2096,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        99,
+        109,
         715,
-        183,
+        193,
         772
       ],
       "width": 84,
@@ -1911,9 +2118,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        212,
+        229,
         734,
-        258,
+        275,
         772
       ],
       "width": 46,
@@ -1933,9 +2140,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        316,
-        739,
         341,
+        739,
+        366,
         772
       ],
       "width": 25,
@@ -1955,9 +2162,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        395,
+        427,
         733,
-        450,
+        482,
         772
       ],
       "width": 55,
@@ -1977,9 +2184,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        497,
+        535,
         728,
-        537,
+        575,
         772
       ],
       "width": 40,
@@ -1999,20 +2206,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        595,
-        741,
-        627,
+        639,
+        723,
+        674,
         772
       ],
-      "width": 32,
-      "height": 31,
+      "width": 35,
+      "height": 49,
       "row": 7,
       "sourceBox": [
-        2,
-        1355,
-        34,
-        1386
-      ]
+        0,
+        1354,
+        48,
+        1410
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          1354,
+          48,
+          1410
+        ]
+      }
     },
     {
       "index": 91,
@@ -2021,20 +2237,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        690,
-        751,
-        719,
+        740,
+        723,
+        775,
         772
       ],
-      "width": 29,
-      "height": 21,
+      "width": 35,
+      "height": 49,
       "row": 7,
       "sourceBox": [
-        5,
-        1377,
-        34,
-        1398
-      ]
+        0,
+        1354,
+        48,
+        1410
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          1354,
+          48,
+          1410
+        ]
+      }
     },
     {
       "index": 92,
@@ -2043,9 +2268,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        775,
+        835,
         720,
-        822,
+        882,
         772
       ],
       "width": 47,
@@ -2065,9 +2290,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        880,
+        946,
         705,
-        906,
+        972,
         772
       ],
       "width": 26,
@@ -2087,9 +2312,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        974,
+        1047,
         705,
-        1000,
+        1073,
         772
       ],
       "width": 26,
@@ -2109,9 +2334,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1068,
+        1148,
         705,
-        1094,
+        1174,
         772
       ],
       "width": 26,
@@ -2131,9 +2356,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        34,
+        37,
         802,
-        60,
+        63,
         869
       ],
       "width": 26,
@@ -2153,9 +2378,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        127,
+        137,
         802,
-        155,
+        165,
         869
       ],
       "width": 28,
@@ -2175,9 +2400,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        220,
+        238,
         802,
-        249,
+        267,
         869
       ],
       "width": 29,
@@ -2197,9 +2422,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        315,
+        339,
         803,
-        343,
+        367,
         869
       ],
       "width": 28,
@@ -2219,9 +2444,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        409,
+        440,
         803,
-        437,
+        468,
         869
       ],
       "width": 28,
@@ -2241,9 +2466,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        503,
+        542,
         817,
-        530,
+        569,
         869
       ],
       "width": 27,
@@ -2263,9 +2488,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        593,
+        639,
         813,
-        628,
+        674,
         869
       ],
       "width": 35,
@@ -2285,9 +2510,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        677,
+        729,
         820,
-        733,
+        785,
         869
       ],
       "width": 56,
@@ -2307,9 +2532,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        777,
+        837,
         822,
-        820,
+        880,
         869
       ],
       "width": 43,
@@ -2329,9 +2554,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        864,
+        930,
         810,
-        922,
+        988,
         869
       ],
       "width": 58,
@@ -2351,9 +2576,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        967,
+        1040,
         808,
-        1007,
+        1080,
         869
       ],
       "width": 40,
@@ -2373,9 +2598,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1063,
+        1144,
         816,
-        1098,
+        1179,
         869
       ],
       "width": 35,
@@ -2395,20 +2620,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        35,
-        936,
-        58,
+        34,
+        913,
+        67,
         966
       ],
-      "width": 23,
-      "height": 30,
+      "width": 33,
+      "height": 53,
       "row": 9,
       "sourceBox": [
-        52,
-        1623,
-        75,
-        1653
-      ]
+        50,
+        1618,
+        98,
+        1690
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          50,
+          1618,
+          98,
+          1690
+        ]
+      }
     },
     {
       "index": 109,
@@ -2417,20 +2651,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        124,
-        933,
-        158,
+        135,
+        913,
+        168,
         966
       ],
-      "width": 34,
-      "height": 33,
+      "width": 33,
+      "height": 53,
       "row": 9,
       "sourceBox": [
-        51,
-        1643,
-        85,
-        1676
-      ]
+        50,
+        1618,
+        98,
+        1690
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          50,
+          1618,
+          98,
+          1690
+        ]
+      }
     },
     {
       "index": 110,
@@ -2439,9 +2682,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        213,
+        230,
         902,
-        257,
+        274,
         966
       ],
       "width": 44,
@@ -2461,9 +2704,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        310,
+        335,
         915,
-        347,
+        372,
         966
       ],
       "width": 37,
@@ -2483,9 +2726,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        404,
+        435,
         921,
-        442,
+        473,
         966
       ],
       "width": 38,
@@ -2505,9 +2748,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        495,
+        534,
         896,
-        538,
+        577,
         966
       ],
       "width": 43,
@@ -2527,9 +2770,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        583,
+        629,
         899,
-        638,
+        684,
         966
       ],
       "width": 55,
@@ -2549,9 +2792,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        677,
+        729,
         921,
-        733,
+        785,
         966
       ],
       "width": 56,
@@ -2571,9 +2814,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        773,
+        832,
         920,
-        825,
+        884,
         966
       ],
       "width": 52,
@@ -2593,9 +2836,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        879,
+        946,
         899,
-        906,
+        973,
         966
       ],
       "width": 27,
@@ -2615,9 +2858,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        968,
+        1041,
         927,
-        1006,
+        1079,
         966
       ],
       "width": 38,
@@ -2637,9 +2880,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1052,
+        1133,
         922,
-        1109,
+        1190,
         966
       ],
       "width": 57,
@@ -2659,9 +2902,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        19,
+        23,
         1021,
-        74,
+        78,
         1063
       ],
       "width": 55,
@@ -2681,20 +2924,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        127,
-        1020,
-        155,
+        121,
+        1017,
+        181,
         1063
       ],
-      "width": 28,
-      "height": 43,
+      "width": 60,
+      "height": 46,
       "row": 10,
       "sourceBox": [
-        222,
-        1944,
-        250,
-        1987
-      ]
+        198,
+        1940,
+        262,
+        1996
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          198,
+          1940,
+          262,
+          1996
+        ]
+      }
     },
     {
       "index": 122,
@@ -2703,20 +2955,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        225,
-        1042,
-        245,
+        222,
+        1017,
+        282,
         1063
       ],
-      "width": 20,
-      "height": 21,
+      "width": 60,
+      "height": 46,
       "row": 10,
       "sourceBox": [
-        242,
-        1942,
+        198,
+        1940,
         262,
-        1963
-      ]
+        1996
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          198,
+          1940,
+          262,
+          1996
+        ]
+      }
     },
     {
       "index": 123,
@@ -2725,20 +2986,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        312,
-        1017,
-        346,
+        330,
+        1016,
+        377,
         1063
       ],
-      "width": 34,
-      "height": 46,
+      "width": 47,
+      "height": 47,
       "row": 10,
       "sourceBox": [
-        281,
-        1943,
-        315,
-        1989
-      ]
+        264,
+        1940,
+        328,
+        1996
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          264,
+          1940,
+          328,
+          1996
+        ]
+      }
     },
     {
       "index": 124,
@@ -2747,20 +3017,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        410,
-        1040,
-        435,
+        431,
+        1016,
+        478,
         1063
       ],
-      "width": 25,
-      "height": 23,
+      "width": 47,
+      "height": 47,
       "row": 10,
       "sourceBox": [
-        302,
-        1941,
-        327,
-        1964
-      ]
+        264,
+        1940,
+        328,
+        1996
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          264,
+          1940,
+          328,
+          1996
+        ]
+      }
     },
     {
       "index": 125,
@@ -2769,9 +3048,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        489,
+        528,
         1017,
-        544,
+        583,
         1063
       ],
       "width": 55,
@@ -2791,20 +3070,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        587,
-        1017,
-        634,
+        626,
+        1015,
+        686,
         1063
       ],
-      "width": 47,
-      "height": 46,
+      "width": 60,
+      "height": 48,
       "row": 10,
       "sourceBox": [
-        400,
-        1942,
-        447,
-        1988
-      ]
+        396,
+        1940,
+        460,
+        1996
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          396,
+          1940,
+          460,
+          1996
+        ]
+      }
     },
     {
       "index": 127,
@@ -2813,20 +3101,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        695,
-        1042,
-        715,
+        727,
+        1015,
+        787,
         1063
       ],
-      "width": 20,
-      "height": 21,
+      "width": 60,
+      "height": 48,
       "row": 10,
       "sourceBox": [
-        439,
+        396,
         1940,
-        459,
-        1961
-      ]
+        460,
+        1996
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          396,
+          1940,
+          460,
+          1996
+        ]
+      }
     },
     {
       "index": 128,
@@ -2835,9 +3132,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        785,
+        844,
         997,
-        813,
+        872,
         1063
       ],
       "width": 28,
@@ -2857,9 +3154,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        879,
+        945,
         997,
-        907,
+        973,
         1063
       ],
       "width": 28,
@@ -2879,9 +3176,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        972,
+        1046,
         997,
-        1001,
+        1075,
         1063
       ],
       "width": 29,
@@ -2901,9 +3198,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1067,
+        1147,
         997,
-        1095,
+        1175,
         1063
       ],
       "width": 28,
@@ -2923,9 +3220,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        31,
+        35,
         1094,
-        62,
+        66,
         1160
       ],
       "width": 31,
@@ -2945,9 +3242,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        128,
+        138,
         1094,
-        154,
+        164,
         1160
       ],
       "width": 26,
@@ -2967,9 +3264,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        222,
+        240,
         1093,
-        247,
+        265,
         1160
       ],
       "width": 25,
@@ -2989,9 +3286,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        316,
-        1093,
         341,
+        1093,
+        366,
         1160
       ],
       "width": 25,
@@ -3011,9 +3308,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        410,
+        441,
         1094,
-        436,
+        467,
         1160
       ],
       "width": 26,
@@ -3033,9 +3330,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        504,
+        543,
         1093,
-        529,
+        568,
         1160
       ],
       "width": 25,
@@ -3055,9 +3352,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        598,
+        644,
         1093,
-        623,
+        669,
         1160
       ],
       "width": 25,
@@ -3077,9 +3374,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        690,
+        742,
         1100,
-        720,
+        772,
         1160
       ],
       "width": 30,
@@ -3099,20 +3396,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        787,
-        1121,
-        810,
+        844,
+        1104,
+        872,
         1160
       ],
-      "width": 23,
-      "height": 39,
+      "width": 28,
+      "height": 56,
       "row": 11,
       "sourceBox": [
-        721,
-        2105,
-        744,
-        2144
-      ]
+        710,
+        2079,
+        850,
+        2158
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          710,
+          2079,
+          850,
+          2158
+        ]
+      }
     },
     {
       "index": 141,
@@ -3121,20 +3427,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        882,
-        1134,
-        904,
+        945,
+        1104,
+        973,
         1160
       ],
-      "width": 22,
-      "height": 26,
+      "width": 28,
+      "height": 56,
       "row": 11,
       "sourceBox": [
-        725,
-        2095,
-        747,
-        2121
-      ]
+        710,
+        2079,
+        850,
+        2158
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          710,
+          2079,
+          850,
+          2158
+        ]
+      }
     },
     {
       "index": 142,
@@ -3143,20 +3458,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        978,
-        1130,
-        996,
+        1046,
+        1104,
+        1075,
         1160
       ],
-      "width": 18,
-      "height": 30,
+      "width": 29,
+      "height": 56,
       "row": 11,
       "sourceBox": [
-        865,
-        2111,
-        883,
-        2141
-      ]
+        852,
+        2079,
+        992,
+        2158
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          852,
+          2079,
+          992,
+          2158
+        ]
+      }
     },
     {
       "index": 143,
@@ -3165,20 +3489,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1070,
-        1140,
-        1092,
+        1147,
+        1104,
+        1176,
         1160
       ],
-      "width": 22,
-      "height": 20,
+      "width": 29,
+      "height": 56,
       "row": 11,
       "sourceBox": [
-        867,
-        2095,
-        889,
-        2115
-      ]
+        852,
+        2079,
+        992,
+        2158
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          852,
+          2079,
+          992,
+          2158
+        ]
+      }
     },
     {
       "index": 144,
@@ -3187,9 +3520,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        32,
+        35,
         1197,
-        62,
+        65,
         1257
       ],
       "width": 30,
@@ -3209,20 +3542,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        129,
-        1218,
-        152,
+        138,
+        1201,
+        164,
         1257
       ],
-      "width": 23,
-      "height": 39,
+      "width": 26,
+      "height": 56,
       "row": 12,
       "sourceBox": [
-        153,
-        2186,
-        176,
-        2225
-      ]
+        142,
+        2160,
+        282,
+        2239
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          142,
+          2160,
+          282,
+          2239
+        ]
+      }
     },
     {
       "index": 146,
@@ -3231,20 +3573,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        225,
-        1227,
-        245,
+        239,
+        1201,
+        265,
         1257
       ],
-      "width": 20,
-      "height": 30,
+      "width": 26,
+      "height": 56,
       "row": 12,
       "sourceBox": [
-        157,
-        2176,
-        177,
-        2206
-      ]
+        142,
+        2160,
+        282,
+        2239
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          142,
+          2160,
+          282,
+          2239
+        ]
+      }
     },
     {
       "index": 147,
@@ -3253,9 +3604,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        314,
+        339,
         1201,
-        343,
+        368,
         1257
       ],
       "width": 29,
@@ -3275,9 +3626,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        400,
+        432,
         1205,
-        445,
+        477,
         1257
       ],
       "width": 45,
@@ -3297,20 +3648,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        499,
-        1218,
-        534,
+        535,
+        1207,
+        575,
         1257
       ],
-      "width": 35,
-      "height": 39,
+      "width": 40,
+      "height": 50,
       "row": 12,
       "sourceBox": [
-        574,
-        2187,
-        609,
-        2226
-      ]
+        568,
+        2160,
+        708,
+        2239
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          568,
+          2160,
+          708,
+          2239
+        ]
+      }
     },
     {
       "index": 150,
@@ -3319,20 +3679,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        599,
-        1238,
-        622,
+        636,
+        1207,
+        676,
         1257
       ],
-      "width": 23,
-      "height": 19,
+      "width": 40,
+      "height": 50,
       "row": 12,
       "sourceBox": [
-        585,
-        2182,
-        608,
-        2201
-      ]
+        568,
+        2160,
+        708,
+        2239
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          568,
+          2160,
+          708,
+          2239
+        ]
+      }
     },
     {
       "index": 151,
@@ -3341,20 +3710,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        686,
-        1202,
-        723,
+        740,
+        1204,
+        775,
         1257
       ],
-      "width": 37,
-      "height": 55,
+      "width": 35,
+      "height": 53,
       "row": 12,
       "sourceBox": [
-        717,
-        2178,
-        754,
-        2233
-      ]
+        710,
+        2160,
+        850,
+        2239
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          710,
+          2160,
+          850,
+          2239
+        ]
+      }
     },
     {
       "index": 152,
@@ -3363,9 +3741,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        780,
+        839,
         1204,
-        818,
+        877,
         1257
       ],
       "width": 38,
@@ -3385,9 +3763,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        873,
+        939,
         1205,
-        913,
+        979,
         1257
       ],
       "width": 40,
@@ -3407,9 +3785,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        966,
+        1039,
         1205,
-        1008,
+        1081,
         1257
       ],
       "width": 42,
@@ -3429,9 +3807,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1060,
+        1140,
         1205,
-        1102,
+        1182,
         1257
       ],
       "width": 42,
@@ -3451,9 +3829,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        26,
+        29,
         1302,
-        68,
+        71,
         1354
       ],
       "width": 42,
@@ -3473,9 +3851,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        120,
+        130,
         1302,
-        162,
+        172,
         1354
       ],
       "width": 42,
@@ -3495,9 +3873,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        216,
+        234,
         1303,
-        253,
+        271,
         1354
       ],
       "width": 37,
@@ -3517,9 +3895,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        310,
+        334,
         1304,
-        348,
+        372,
         1354
       ],
       "width": 38,
@@ -3539,9 +3917,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        404,
+        435,
         1305,
-        442,
+        473,
         1354
       ],
       "width": 38,
@@ -3561,9 +3939,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        498,
+        537,
         1306,
-        535,
+        574,
         1354
       ],
       "width": 37,
@@ -3583,9 +3961,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        592,
+        637,
         1305,
-        630,
+        675,
         1354
       ],
       "width": 38,
@@ -3605,9 +3983,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        686,
+        739,
         1306,
-        723,
+        776,
         1354
       ],
       "width": 37,
@@ -3627,9 +4005,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        780,
+        839,
         1305,
-        818,
+        877,
         1354
       ],
       "width": 38,
@@ -3649,9 +4027,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        874,
+        940,
         1304,
-        912,
+        978,
         1354
       ],
       "width": 38,
@@ -3671,9 +4049,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        968,
+        1042,
         1303,
-        1005,
+        1079,
         1354
       ],
       "width": 37,
@@ -3693,9 +4071,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1061,
+        1141,
         1304,
-        1101,
+        1181,
         1354
       ],
       "width": 40,
@@ -3715,9 +4093,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        26,
+        30,
         1408,
-        67,
+        71,
         1451
       ],
       "width": 41,
@@ -3737,9 +4115,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        120,
+        131,
         1407,
-        161,
+        172,
         1451
       ],
       "width": 41,
@@ -3759,9 +4137,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        215,
+        233,
         1407,
-        254,
+        272,
         1451
       ],
       "width": 39,
@@ -3781,9 +4159,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        309,
+        333,
         1401,
-        349,
+        373,
         1451
       ],
       "width": 40,
@@ -3803,9 +4181,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        401,
+        432,
         1401,
-        445,
+        476,
         1451
       ],
       "width": 44,
@@ -3825,9 +4203,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        478,
+        516,
         1400,
-        556,
+        594,
         1451
       ],
       "width": 78,
@@ -3847,9 +4225,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        568,
+        614,
         1399,
-        653,
+        699,
         1451
       ],
       "width": 85,
@@ -3869,9 +4247,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        666,
+        718,
         1400,
-        744,
+        796,
         1451
       ],
       "width": 78,
@@ -3891,9 +4269,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        760,
+        819,
         1400,
-        838,
+        897,
         1451
       ],
       "width": 78,
@@ -3913,9 +4291,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        854,
+        920,
         1400,
-        932,
+        998,
         1451
       ],
       "width": 78,
@@ -3935,9 +4313,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        948,
+        1021,
         1400,
-        1026,
+        1099,
         1451
       ],
       "width": 78,
@@ -3957,9 +4335,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1038,
+        1119,
         1399,
-        1123,
+        1204,
         1451
       ],
       "width": 85,
@@ -3979,9 +4357,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        4,
+        8,
         1496,
-        89,
+        93,
         1548
       ],
       "width": 85,
@@ -4001,9 +4379,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        98,
+        109,
         1496,
-        183,
+        194,
         1548
       ],
       "width": 85,
@@ -4023,9 +4401,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        192,
+        210,
         1496,
-        277,
+        295,
         1548
       ],
       "width": 85,
@@ -4045,20 +4423,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        303,
-        1508,
-        355,
+        307,
+        1499,
+        400,
         1548
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        49,
-        2716,
-        101,
-        2756
-      ]
+        0,
+        2704,
+        219,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          2704,
+          219,
+          2768
+        ]
+      }
     },
     {
       "index": 184,
@@ -4067,20 +4454,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        406,
-        1511,
-        439,
+        408,
+        1499,
+        501,
         1548
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        84,
-        2710,
-        117,
-        2747
-      ]
+        0,
+        2704,
+        219,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          2704,
+          219,
+          2768
+        ]
+      }
     },
     {
       "index": 185,
@@ -4089,20 +4485,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        491,
-        1508,
-        543,
+        509,
+        1499,
+        602,
         1548
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        272,
-        2716,
-        324,
-        2756
-      ]
+        221,
+        2704,
+        440,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          2704,
+          440,
+          2768
+        ]
+      }
     },
     {
       "index": 186,
@@ -4111,20 +4516,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        594,
-        1511,
-        627,
+        610,
+        1499,
+        703,
         1548
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        307,
-        2710,
-        340,
-        2747
-      ]
+        221,
+        2704,
+        440,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          2704,
+          440,
+          2768
+        ]
+      }
     },
     {
       "index": 187,
@@ -4133,20 +4547,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        679,
-        1508,
-        731,
+        711,
+        1499,
+        804,
         1548
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        495,
-        2716,
-        547,
-        2756
-      ]
+        442,
+        2704,
+        661,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          2704,
+          661,
+          2768
+        ]
+      }
     },
     {
       "index": 188,
@@ -4155,20 +4578,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        782,
-        1511,
-        815,
+        812,
+        1499,
+        905,
         1548
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        530,
-        2710,
-        563,
-        2747
-      ]
+        442,
+        2704,
+        661,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          2704,
+          661,
+          2768
+        ]
+      }
     },
     {
       "index": 189,
@@ -4177,20 +4609,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        867,
-        1508,
-        919,
+        913,
+        1499,
+        1006,
         1548
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        718,
-        2716,
-        770,
-        2756
-      ]
+        663,
+        2704,
+        882,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          2704,
+          882,
+          2768
+        ]
+      }
     },
     {
       "index": 190,
@@ -4199,20 +4640,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        970,
-        1511,
-        1003,
+        1014,
+        1499,
+        1107,
         1548
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 15,
       "sourceBox": [
-        753,
-        2710,
-        786,
-        2747
-      ]
+        663,
+        2704,
+        882,
+        2768
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          2704,
+          882,
+          2768
+        ]
+      }
     },
     {
       "index": 191,
@@ -4221,9 +4671,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1042,
+        1122,
         1497,
-        1120,
+        1200,
         1548
       ],
       "width": 78,
@@ -4243,9 +4693,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        8,
+        11,
         1594,
-        86,
+        89,
         1645
       ],
       "width": 78,
@@ -4265,9 +4715,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        102,
+        112,
         1594,
-        180,
+        190,
         1645
       ],
       "width": 78,
@@ -4287,9 +4737,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        196,
+        213,
         1594,
-        274,
+        291,
         1645
       ],
       "width": 78,
@@ -4309,9 +4759,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        286,
+        311,
         1593,
-        371,
+        396,
         1645
       ],
       "width": 85,
@@ -4331,9 +4781,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        380,
+        412,
         1593,
-        465,
+        497,
         1645
       ],
       "width": 85,
@@ -4353,9 +4803,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        474,
+        513,
         1593,
-        559,
+        598,
         1645
       ],
       "width": 85,
@@ -4375,9 +4825,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        568,
+        614,
         1593,
-        653,
+        699,
         1645
       ],
       "width": 85,
@@ -4397,20 +4847,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        679,
-        1605,
-        731,
+        711,
+        1596,
+        804,
         1645
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 16,
       "sourceBox": [
-        73,
-        2914,
-        125,
-        2954
-      ]
+        0,
+        2902,
+        219,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          2902,
+          219,
+          2966
+        ]
+      }
     },
     {
       "index": 200,
@@ -4419,20 +4878,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        782,
-        1608,
-        815,
+        812,
+        1596,
+        905,
         1645
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 16,
       "sourceBox": [
-        108,
-        2908,
-        141,
-        2945
-      ]
+        0,
+        2902,
+        219,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          2902,
+          219,
+          2966
+        ]
+      }
     },
     {
       "index": 201,
@@ -4441,20 +4909,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        867,
-        1605,
-        919,
+        913,
+        1596,
+        1006,
         1645
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 16,
       "sourceBox": [
-        296,
-        2914,
-        348,
-        2954
-      ]
+        221,
+        2902,
+        440,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          2902,
+          440,
+          2966
+        ]
+      }
     },
     {
       "index": 202,
@@ -4463,20 +4940,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        970,
-        1608,
-        1003,
+        1014,
+        1596,
+        1107,
         1645
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 16,
       "sourceBox": [
-        331,
-        2908,
-        364,
-        2945
-      ]
+        221,
+        2902,
+        440,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          2902,
+          440,
+          2966
+        ]
+      }
     },
     {
       "index": 203,
@@ -4485,20 +4971,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1055,
-        1605,
-        1107,
+        1115,
+        1596,
+        1208,
         1645
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 16,
       "sourceBox": [
-        519,
-        2914,
-        571,
-        2954
-      ]
+        442,
+        2902,
+        661,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          2902,
+          661,
+          2966
+        ]
+      }
     },
     {
       "index": 204,
@@ -4507,20 +5002,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        30,
-        1705,
-        63,
+        4,
+        1693,
+        97,
         1742
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 17,
       "sourceBox": [
-        554,
-        2908,
-        587,
-        2945
-      ]
+        442,
+        2902,
+        661,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          2902,
+          661,
+          2966
+        ]
+      }
     },
     {
       "index": 205,
@@ -4529,20 +5033,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        115,
-        1702,
-        167,
+        105,
+        1693,
+        198,
         1742
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 17,
       "sourceBox": [
-        742,
-        2914,
-        794,
-        2954
-      ]
+        663,
+        2902,
+        882,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          2902,
+          882,
+          2966
+        ]
+      }
     },
     {
       "index": 206,
@@ -4551,20 +5064,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        218,
-        1705,
-        251,
+        206,
+        1693,
+        299,
         1742
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 17,
       "sourceBox": [
-        777,
-        2908,
-        810,
-        2945
-      ]
+        663,
+        2902,
+        882,
+        2966
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          2902,
+          882,
+          2966
+        ]
+      }
     },
     {
       "index": 207,
@@ -4573,9 +5095,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        290,
+        314,
         1691,
-        368,
+        392,
         1742
       ],
       "width": 78,
@@ -4595,9 +5117,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        384,
+        415,
         1691,
-        462,
+        493,
         1742
       ],
       "width": 78,
@@ -4617,9 +5139,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        478,
+        516,
         1691,
-        556,
+        594,
         1742
       ],
       "width": 78,
@@ -4639,9 +5161,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        572,
+        617,
         1691,
-        650,
+        695,
         1742
       ],
       "width": 78,
@@ -4661,9 +5183,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        662,
+        715,
         1690,
-        747,
+        800,
         1742
       ],
       "width": 85,
@@ -4683,9 +5205,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        756,
+        816,
         1690,
-        841,
+        901,
         1742
       ],
       "width": 85,
@@ -4705,9 +5227,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        850,
+        917,
         1690,
-        935,
+        1002,
         1742
       ],
       "width": 85,
@@ -4727,9 +5249,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        944,
+        1018,
         1690,
-        1029,
+        1103,
         1742
       ],
       "width": 85,
@@ -4749,20 +5271,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1055,
-        1702,
-        1107,
+        1115,
+        1693,
+        1208,
         1742
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 17,
       "sourceBox": [
-        97,
-        3112,
-        149,
-        3152
-      ]
+        0,
+        3100,
+        219,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3100,
+          219,
+          3164
+        ]
+      }
     },
     {
       "index": 216,
@@ -4771,20 +5302,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        30,
-        1802,
-        63,
+        4,
+        1790,
+        97,
         1839
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 18,
       "sourceBox": [
-        132,
-        3106,
-        165,
-        3143
-      ]
+        0,
+        3100,
+        219,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3100,
+          219,
+          3164
+        ]
+      }
     },
     {
       "index": 217,
@@ -4793,20 +5333,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        115,
-        1799,
-        167,
+        105,
+        1790,
+        198,
         1839
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 18,
       "sourceBox": [
-        320,
-        3112,
-        372,
-        3152
-      ]
+        221,
+        3100,
+        440,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3100,
+          440,
+          3164
+        ]
+      }
     },
     {
       "index": 218,
@@ -4815,20 +5364,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        218,
-        1802,
-        251,
+        206,
+        1790,
+        299,
         1839
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 18,
       "sourceBox": [
-        355,
-        3106,
-        388,
-        3143
-      ]
+        221,
+        3100,
+        440,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3100,
+          440,
+          3164
+        ]
+      }
     },
     {
       "index": 219,
@@ -4837,20 +5395,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        303,
-        1799,
-        355,
+        307,
+        1790,
+        400,
         1839
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 18,
       "sourceBox": [
-        543,
-        3112,
-        595,
-        3152
-      ]
+        442,
+        3100,
+        661,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3100,
+          661,
+          3164
+        ]
+      }
     },
     {
       "index": 220,
@@ -4859,20 +5426,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        406,
-        1802,
-        439,
+        408,
+        1790,
+        501,
         1839
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 18,
       "sourceBox": [
-        578,
-        3106,
-        611,
-        3143
-      ]
+        442,
+        3100,
+        661,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3100,
+          661,
+          3164
+        ]
+      }
     },
     {
       "index": 221,
@@ -4881,20 +5457,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        491,
-        1799,
-        543,
+        509,
+        1790,
+        602,
         1839
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 18,
       "sourceBox": [
-        766,
-        3112,
-        818,
-        3152
-      ]
+        663,
+        3100,
+        882,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          3100,
+          882,
+          3164
+        ]
+      }
     },
     {
       "index": 222,
@@ -4903,20 +5488,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        594,
-        1802,
-        627,
+        610,
+        1790,
+        703,
         1839
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 18,
       "sourceBox": [
-        801,
-        3106,
-        834,
-        3143
-      ]
+        663,
+        3100,
+        882,
+        3164
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          3100,
+          882,
+          3164
+        ]
+      }
     },
     {
       "index": 223,
@@ -4925,9 +5519,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        666,
+        718,
         1788,
-        744,
+        796,
         1839
       ],
       "width": 78,
@@ -4947,9 +5541,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        760,
+        819,
         1788,
-        838,
+        897,
         1839
       ],
       "width": 78,
@@ -4969,9 +5563,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        854,
+        920,
         1788,
-        932,
+        998,
         1839
       ],
       "width": 78,
@@ -4991,9 +5585,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        948,
+        1021,
         1788,
-        1026,
+        1099,
         1839
       ],
       "width": 78,
@@ -5013,9 +5607,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1038,
+        1119,
         1787,
-        1123,
+        1204,
         1839
       ],
       "width": 85,
@@ -5035,9 +5629,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        4,
+        8,
         1884,
-        89,
+        93,
         1936
       ],
       "width": 85,
@@ -5057,9 +5651,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        98,
+        109,
         1884,
-        183,
+        194,
         1936
       ],
       "width": 85,
@@ -5079,9 +5673,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        192,
+        210,
         1884,
-        277,
+        295,
         1936
       ],
       "width": 85,
@@ -5101,20 +5695,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        303,
-        1896,
-        355,
+        307,
+        1887,
+        400,
         1936
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        121,
-        3310,
-        173,
-        3350
-      ]
+        0,
+        3298,
+        219,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3298,
+          219,
+          3362
+        ]
+      }
     },
     {
       "index": 232,
@@ -5123,20 +5726,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        406,
-        1899,
-        439,
+        408,
+        1887,
+        501,
         1936
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        156,
-        3304,
-        189,
-        3341
-      ]
+        0,
+        3298,
+        219,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3298,
+          219,
+          3362
+        ]
+      }
     },
     {
       "index": 233,
@@ -5145,20 +5757,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        491,
-        1896,
-        543,
+        509,
+        1887,
+        602,
         1936
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        344,
-        3310,
-        396,
-        3350
-      ]
+        221,
+        3298,
+        440,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3298,
+          440,
+          3362
+        ]
+      }
     },
     {
       "index": 234,
@@ -5167,20 +5788,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        594,
-        1899,
-        627,
+        610,
+        1887,
+        703,
         1936
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        379,
-        3304,
-        412,
-        3341
-      ]
+        221,
+        3298,
+        440,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3298,
+          440,
+          3362
+        ]
+      }
     },
     {
       "index": 235,
@@ -5189,20 +5819,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        679,
-        1896,
-        731,
+        711,
+        1887,
+        804,
         1936
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        567,
-        3310,
-        619,
-        3350
-      ]
+        442,
+        3298,
+        661,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3298,
+          661,
+          3362
+        ]
+      }
     },
     {
       "index": 236,
@@ -5211,20 +5850,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        782,
-        1899,
-        815,
+        812,
+        1887,
+        905,
         1936
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        602,
-        3304,
-        635,
-        3341
-      ]
+        442,
+        3298,
+        661,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3298,
+          661,
+          3362
+        ]
+      }
     },
     {
       "index": 237,
@@ -5233,20 +5881,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        867,
-        1896,
-        919,
+        913,
+        1887,
+        1006,
         1936
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        790,
-        3310,
-        842,
-        3350
-      ]
+        663,
+        3298,
+        882,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          3298,
+          882,
+          3362
+        ]
+      }
     },
     {
       "index": 238,
@@ -5255,20 +5912,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        970,
-        1899,
-        1003,
+        1014,
+        1887,
+        1107,
         1936
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 19,
       "sourceBox": [
-        825,
-        3304,
-        858,
-        3341
-      ]
+        663,
+        3298,
+        882,
+        3362
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          3298,
+          882,
+          3362
+        ]
+      }
     },
     {
       "index": 239,
@@ -5277,9 +5943,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1042,
+        1122,
         1885,
-        1120,
+        1200,
         1936
       ],
       "width": 78,
@@ -5299,9 +5965,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        8,
+        11,
         1982,
-        86,
+        89,
         2033
       ],
       "width": 78,
@@ -5321,9 +5987,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        102,
+        112,
         1982,
-        180,
+        190,
         2033
       ],
       "width": 78,
@@ -5343,9 +6009,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        196,
+        213,
         1982,
-        274,
+        291,
         2033
       ],
       "width": 78,
@@ -5365,9 +6031,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        286,
+        311,
         1981,
-        371,
+        396,
         2033
       ],
       "width": 85,
@@ -5387,9 +6053,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        380,
+        412,
         1981,
-        465,
+        497,
         2033
       ],
       "width": 85,
@@ -5409,9 +6075,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        474,
+        513,
         1981,
-        559,
+        598,
         2033
       ],
       "width": 85,
@@ -5431,9 +6097,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        568,
+        614,
         1981,
-        653,
+        699,
         2033
       ],
       "width": 85,
@@ -5453,20 +6119,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        679,
-        1993,
-        731,
+        711,
+        1984,
+        804,
         2033
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 20,
       "sourceBox": [
-        145,
-        3508,
-        197,
-        3548
-      ]
+        0,
+        3496,
+        219,
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3496,
+          219,
+          3560
+        ]
+      }
     },
     {
       "index": 248,
@@ -5475,20 +6150,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        782,
-        1996,
-        815,
+        812,
+        1984,
+        905,
         2033
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 20,
       "sourceBox": [
-        180,
-        3502,
-        213,
-        3539
-      ]
+        0,
+        3496,
+        219,
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3496,
+          219,
+          3560
+        ]
+      }
     },
     {
       "index": 249,
@@ -5497,20 +6181,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        867,
-        1993,
-        919,
+        913,
+        1984,
+        1006,
         2033
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 20,
       "sourceBox": [
-        368,
-        3508,
-        420,
-        3548
-      ]
+        221,
+        3496,
+        440,
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3496,
+          440,
+          3560
+        ]
+      }
     },
     {
       "index": 250,
@@ -5519,20 +6212,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        970,
-        1996,
-        1003,
+        1014,
+        1984,
+        1107,
         2033
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 20,
       "sourceBox": [
-        403,
-        3502,
-        436,
-        3539
-      ]
+        221,
+        3496,
+        440,
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3496,
+          440,
+          3560
+        ]
+      }
     },
     {
       "index": 251,
@@ -5541,20 +6243,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1055,
-        1993,
-        1107,
+        1115,
+        1984,
+        1208,
         2033
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 20,
       "sourceBox": [
-        591,
-        3508,
-        643,
-        3548
-      ]
+        442,
+        3496,
+        661,
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3496,
+          661,
+          3560
+        ]
+      }
     },
     {
       "index": 252,
@@ -5563,20 +6274,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        30,
-        2093,
-        63,
+        4,
+        2081,
+        97,
         2130
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 21,
       "sourceBox": [
-        626,
-        3502,
-        659,
-        3539
-      ]
+        442,
+        3496,
+        661,
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3496,
+          661,
+          3560
+        ]
+      }
     },
     {
       "index": 253,
@@ -5585,20 +6305,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        115,
-        2090,
-        167,
+        105,
+        2081,
+        198,
         2130
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 21,
       "sourceBox": [
-        814,
-        3508,
-        866,
-        3548
-      ]
+        663,
+        3496,
+        882,
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          3496,
+          882,
+          3560
+        ]
+      }
     },
     {
       "index": 254,
@@ -5607,20 +6336,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        218,
-        2093,
-        251,
+        206,
+        2081,
+        299,
         2130
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 21,
       "sourceBox": [
-        849,
-        3502,
+        663,
+        3496,
         882,
-        3539
-      ]
+        3560
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          663,
+          3496,
+          882,
+          3560
+        ]
+      }
     },
     {
       "index": 255,
@@ -5629,20 +6367,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        303,
-        2090,
-        355,
+        307,
+        2081,
+        400,
         2130
       ],
-      "width": 52,
-      "height": 40,
+      "width": 93,
+      "height": 49,
       "row": 21,
       "sourceBox": [
-        151,
-        3574,
-        203,
-        3614
-      ]
+        0,
+        3562,
+        219,
+        3626
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3562,
+          219,
+          3626
+        ]
+      }
     },
     {
       "index": 256,
@@ -5651,20 +6398,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        406,
-        2093,
-        439,
+        408,
+        2081,
+        501,
         2130
       ],
-      "width": 33,
-      "height": 37,
+      "width": 93,
+      "height": 49,
       "row": 21,
       "sourceBox": [
-        186,
-        3568,
+        0,
+        3562,
         219,
-        3605
-      ]
+        3626
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          0,
+          3562,
+          219,
+          3626
+        ]
+      }
     },
     {
       "index": 257,
@@ -5673,20 +6429,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        514,
-        2119,
-        520,
+        511,
+        2082,
+        600,
         2130
       ],
-      "width": 6,
-      "height": 11,
+      "width": 89,
+      "height": 48,
       "row": 21,
       "sourceBox": [
-        350,
-        3582,
-        356,
-        3593
-      ]
+        221,
+        3562,
+        440,
+        3626
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3562,
+          440,
+          3626
+        ]
+      }
     },
     {
       "index": 258,
@@ -5695,20 +6460,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        585,
-        2091,
-        637,
+        612,
+        2082,
+        701,
         2130
       ],
-      "width": 52,
-      "height": 39,
+      "width": 89,
+      "height": 48,
       "row": 21,
       "sourceBox": [
-        372,
-        3575,
-        424,
-        3614
-      ]
+        221,
+        3562,
+        440,
+        3626
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3562,
+          440,
+          3626
+        ]
+      }
     },
     {
       "index": 259,
@@ -5717,20 +6491,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        694,
-        2103,
-        715,
+        713,
+        2082,
+        802,
         2130
       ],
-      "width": 21,
-      "height": 27,
+      "width": 89,
+      "height": 48,
       "row": 21,
       "sourceBox": [
-        419,
-        3573,
+        221,
+        3562,
         440,
-        3600
-      ]
+        3626
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          221,
+          3562,
+          440,
+          3626
+        ]
+      }
     },
     {
       "index": 260,
@@ -5739,20 +6522,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        773,
-        2091,
-        825,
+        823,
+        2085,
+        894,
         2130
       ],
-      "width": 52,
-      "height": 39,
+      "width": 71,
+      "height": 45,
       "row": 21,
       "sourceBox": [
-        593,
-        3575,
-        645,
-        3614
-      ]
+        442,
+        3562,
+        661,
+        3626
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3562,
+          661,
+          3626
+        ]
+      }
     },
     {
       "index": 261,
@@ -5761,20 +6553,29 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        882,
-        2108,
-        903,
+        924,
+        2085,
+        995,
         2130
       ],
-      "width": 21,
-      "height": 22,
+      "width": 71,
+      "height": 45,
       "row": 21,
       "sourceBox": [
-        640,
-        3574,
+        442,
+        3562,
         661,
-        3596
-      ]
+        3626
+      ],
+      "sourceRepair": {
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          442,
+          3562,
+          661,
+          3626
+        ]
+      }
     },
     {
       "index": 262,
@@ -5783,9 +6584,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        951,
+        1024,
         2085,
-        1023,
+        1096,
         2130
       ],
       "width": 72,
@@ -5805,9 +6606,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        1046,
+        1127,
         2085,
-        1115,
+        1196,
         2130
       ],
       "width": 69,
@@ -5827,9 +6628,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        12,
+        16,
         2182,
-        81,
+        85,
         2227
       ],
       "width": 69,
@@ -5849,9 +6650,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        106,
+        117,
         2182,
-        175,
+        186,
         2227
       ],
       "width": 69,
@@ -5871,9 +6672,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        200,
+        218,
         2182,
-        269,
+        287,
         2227
       ],
       "width": 69,
@@ -5893,9 +6694,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        294,
+        319,
         2182,
-        363,
+        388,
         2227
       ],
       "width": 69,
@@ -5915,9 +6716,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        388,
+        420,
         2182,
-        457,
+        489,
         2227
       ],
       "width": 69,
@@ -5937,9 +6738,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        482,
+        521,
         2182,
-        551,
+        590,
         2227
       ],
       "width": 69,
@@ -5959,9 +6760,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        576,
+        622,
         2182,
-        645,
+        691,
         2227
       ],
       "width": 69,
@@ -5981,9 +6782,9 @@
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceName": "Kabuto.png",
       "box": [
-        685,
+        738,
         2177,
-        724,
+        777,
         2227
       ],
       "width": 39,
@@ -6005,13 +6806,13 @@
       "replacementWidth": 39,
       "replacementHeight": 38,
       "box": [
-        779,
-        2189,
-        818,
+        841,
+        2174,
+        876,
         2227
       ],
-      "width": 39,
-      "height": 38,
+      "width": 35,
+      "height": 53,
       "row": 22,
       "generatedComposite": true,
       "generatedCompositeRole": "crouchBlock",
@@ -6025,275 +6826,20 @@
       "sheetId": "generated",
       "sheetPath": "/characters/kabuto/animation-sheet.png",
       "sourceBox": [
-        781,
-        2194,
-        817,
-        2227
-      ]
-    },
-    {
-      "index": 273,
-      "path": "/characters/kabuto/frames/frame-273.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        882,
-        2205,
-        904,
-        2227
+        710,
+        2160,
+        850,
+        2239
       ],
-      "width": 22,
-      "height": 22,
-      "row": 22,
       "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 1,
-        "componentBox": [
-          25,
-          5,
-          41,
-          23
+        "type": "rebuild-complete-source-cell",
+        "cell": [
+          710,
+          2160,
+          850,
+          2239
         ]
-      },
-      "sourceBox": [
-        23,
-        1707,
-        45,
-        1729
-      ]
-    },
-    {
-      "index": 274,
-      "path": "/characters/kabuto/frames/frame-274.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        976,
-        2205,
-        997,
-        2227
-      ],
-      "width": 21,
-      "height": 22,
-      "row": 22,
-      "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 2,
-        "componentBox": [
-          19,
-          19,
-          34,
-          35
-        ]
-      },
-      "sourceBox": [
-        17,
-        1719,
-        38,
-        1741
-      ]
-    },
-    {
-      "index": 275,
-      "path": "/characters/kabuto/frames/frame-275.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        1069,
-        2198,
-        1093,
-        2227
-      ],
-      "width": 24,
-      "height": 29,
-      "row": 22,
-      "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 3,
-        "componentBox": [
-          98,
-          33,
-          116,
-          57
-        ]
-      },
-      "sourceBox": [
-        96,
-        1733,
-        120,
-        1762
-      ]
-    },
-    {
-      "index": 276,
-      "path": "/characters/kabuto/frames/frame-276.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        36,
-        2302,
-        57,
-        2324
-      ],
-      "width": 21,
-      "height": 22,
-      "row": 23,
-      "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 4,
-        "componentBox": [
-          4,
-          83,
-          21,
-          99
-        ]
-      },
-      "sourceBox": [
-        4,
-        1783,
-        25,
-        1805
-      ]
-    },
-    {
-      "index": 277,
-      "path": "/characters/kabuto/frames/frame-277.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        130,
-        2302,
-        151,
-        2324
-      ],
-      "width": 21,
-      "height": 22,
-      "row": 23,
-      "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 5,
-        "componentBox": [
-          59,
-          83,
-          76,
-          99
-        ]
-      },
-      "sourceBox": [
-        59,
-        1783,
-        80,
-        1805
-      ]
-    },
-    {
-      "index": 278,
-      "path": "/characters/kabuto/frames/frame-278.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        224,
-        2303,
-        246,
-        2324
-      ],
-      "width": 22,
-      "height": 21,
-      "row": 23,
-      "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 6,
-        "componentBox": [
-          36,
-          115,
-          52,
-          132
-        ]
-      },
-      "sourceBox": [
-        34,
-        1817,
-        56,
-        1838
-      ]
-    },
-    {
-      "index": 279,
-      "path": "/characters/kabuto/frames/frame-279.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        318,
-        2303,
-        340,
-        2324
-      ],
-      "width": 22,
-      "height": 21,
-      "row": 23,
-      "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 7,
-        "componentBox": [
-          94,
-          115,
-          110,
-          132
-        ]
-      },
-      "sourceBox": [
-        92,
-        1817,
-        114,
-        1838
-      ]
-    },
-    {
-      "index": 280,
-      "path": "/characters/kabuto/frames/frame-280.png",
-      "sheetId": "generated",
-      "sheetPath": "/characters/kabuto/animation-sheet.png",
-      "sourceName": "Kabuto.png",
-      "box": [
-        410,
-        2303,
-        435,
-        2324
-      ],
-      "width": 25,
-      "height": 21,
-      "row": 23,
-      "sourceRepair": {
-        "type": "split-contact-frame",
-        "originalFrame": 112,
-        "componentIndex": 8,
-        "componentBox": [
-          20,
-          141,
-          39,
-          157
-        ]
-      },
-      "sourceBox": [
-        18,
-        1841,
-        43,
-        1862
-      ]
+      }
     }
   ]
 }

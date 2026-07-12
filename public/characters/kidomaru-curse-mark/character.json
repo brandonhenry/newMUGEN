@@ -2,7 +2,7 @@
   "id": "kidomaru-curse-mark",
   "displayName": "Kidomaru Curse Mark",
   "locked": true,
-  "variant": false,
+  "variant": true,
   "faceCardPath": "/characters/kidomaru-curse-mark/face-card.png",
   "renderMode": "spriteVoxel",
   "modelPath": "spritevoxel://kidomaru-curse-mark",
@@ -3247,5 +3247,6 @@
   "hasTransform": false,
   "animationScales": {},
   "projectiles": [],
-  "moveProjectiles": {}
+  "moveProjectiles": {},
+  "variantOf": "kidomaru"
 }
