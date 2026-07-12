@@ -1365,28 +1365,28 @@
         "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 2.39
+        "voxelScaleY": 1
       },
       "31": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 2.41
+        "voxelScaleY": 1
       },
       "32": {
         "width": 1.051,
         "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1.89
+        "voxelScaleY": 1
       },
       "33": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1.93
+        "voxelScaleY": 1
       }
     },
     "getupStand": {
@@ -1395,28 +1395,28 @@
         "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 2.39
+        "voxelScaleY": 1
       },
       "31": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 2.41
+        "voxelScaleY": 1
       },
       "32": {
         "width": 1.051,
         "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1.89
+        "voxelScaleY": 1
       },
       "33": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1.93
+        "voxelScaleY": 1
       },
       "49": {
         "width": 0.62,
@@ -1446,13 +1446,17 @@
     },
     "sprint": {
       "8": {
-        "width": 0.673,
-        "height": 0.718,
+        "width": 0.92624,
+        "height": 0.92624,
+        "voxelScaleX": 1.29046,
+        "voxelScaleY": 0.77492,
         "offsetX": 0
       },
       "9": {
-        "width": 0.721,
-        "height": 0.769,
+        "width": 0.95875,
+        "height": 0.95875,
+        "voxelScaleX": 1.24671,
+        "voxelScaleY": 0.80211,
         "offsetX": 0
       },
       "30": {
@@ -2136,8 +2140,10 @@
     },
     "crouchBlock": {
       "209": {
-        "width": 0.67,
-        "height": 1.117,
+        "width": 1.08178,
+        "height": 1.08178,
+        "voxelScaleX": 0.96861,
+        "voxelScaleY": 1.0324,
         "offsetX": 0
       }
     },

@@ -1695,34 +1695,36 @@
         "height": 1.017,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 5.45
+        "voxelScaleY": 1
       },
       "34": {
         "width": 1.017,
         "height": 1.017,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 3.72
+        "voxelScaleY": 1
       },
       "35": {
         "width": 1.017,
         "height": 1.017,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 4.22
+        "voxelScaleY": 1
       },
       "36": {
         "width": 1.017,
         "height": 1.017,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 4.36
+        "voxelScaleY": 1
       }
     },
     "sprint": {
       "12": {
-        "width": 0.696,
-        "height": 0.71,
+        "width": 1.20329,
+        "height": 1.20329,
+        "voxelScaleX": 1.69483,
+        "voxelScaleY": 0.59003,
         "offsetX": 0
       },
       "30": {
@@ -1922,23 +1924,31 @@
         "offsetX": 0
       },
       "95": {
-        "width": 1.11,
-        "height": 1.132,
+        "width": 1.62873,
+        "height": 1.62873,
+        "voxelScaleX": 1.43864,
+        "voxelScaleY": 0.6951,
         "offsetX": 0
       },
       "96": {
-        "width": 1.091,
-        "height": 1.112,
+        "width": 1.79877,
+        "height": 1.79877,
+        "voxelScaleX": 1.61623,
+        "voxelScaleY": 0.61873,
         "offsetX": 0
       },
       "97": {
-        "width": 1.091,
-        "height": 1.112,
+        "width": 2.11923,
+        "height": 2.11923,
+        "voxelScaleX": 1.90416,
+        "voxelScaleY": 0.52517,
         "offsetX": 0
       },
       "98": {
-        "width": 0.997,
-        "height": 1.017,
+        "width": 1.57201,
+        "height": 1.57201,
+        "voxelScaleX": 1.54574,
+        "voxelScaleY": 0.64694,
         "offsetX": 0
       },
       "99": {
@@ -2087,18 +2097,24 @@
         "offsetX": 0
       },
       "72": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.2191,
+        "height": 1.2191,
+        "voxelScaleX": 1.24573,
+        "voxelScaleY": 0.80274,
         "offsetX": 0
       },
       "73": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.21912,
+        "height": 1.21912,
+        "voxelScaleX": 1.24575,
+        "voxelScaleY": 0.80273,
         "offsetX": 0
       },
       "74": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.20157,
+        "height": 1.20157,
+        "voxelScaleX": 1.22782,
+        "voxelScaleY": 0.81445,
         "offsetX": 0
       }
     },
@@ -2109,18 +2125,24 @@
         "offsetX": 0
       },
       "72": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.2191,
+        "height": 1.2191,
+        "voxelScaleX": 1.24573,
+        "voxelScaleY": 0.80274,
         "offsetX": 0
       },
       "73": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.21912,
+        "height": 1.21912,
+        "voxelScaleX": 1.24575,
+        "voxelScaleY": 0.80273,
         "offsetX": 0
       },
       "74": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.20157,
+        "height": 1.20157,
+        "voxelScaleX": 1.22782,
+        "voxelScaleY": 0.81445,
         "offsetX": 0
       }
     },
@@ -2148,8 +2170,10 @@
         "offsetX": 0
       },
       "255": {
-        "width": 1.648,
-        "height": 0.767,
+        "width": 0.77754,
+        "height": 0.77754,
+        "voxelScaleX": 0.99038,
+        "voxelScaleY": 1.00971,
         "offsetX": 0
       }
     },
@@ -2652,67 +2676,91 @@
     },
     "crouchBlock": {
       "255": {
-        "width": 1.648,
-        "height": 0.767,
+        "width": 0.77754,
+        "height": 0.77754,
+        "voxelScaleX": 0.99038,
+        "voxelScaleY": 1.00971,
         "offsetX": 0
       }
     },
     "cmd:d/f+2": {
       "212": {
-        "width": 0.922,
-        "height": 0.94,
+        "width": 1.1246,
+        "height": 1.1246,
+        "voxelScaleX": 1.19608,
+        "voxelScaleY": 0.83606,
         "offsetX": 0
       },
       "213": {
-        "width": 0.828,
-        "height": 0.844,
+        "width": 1.3122,
+        "height": 1.3122,
+        "voxelScaleX": 1.55419,
+        "voxelScaleY": 0.64342,
         "offsetX": 0
       },
       "214": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.13969,
+        "height": 1.13969,
+        "voxelScaleX": 1.48484,
+        "voxelScaleY": 0.67347,
         "offsetX": 0
       },
       "215": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.18271,
+        "height": 1.18271,
+        "voxelScaleX": 1.5409,
+        "voxelScaleY": 0.64897,
         "offsetX": 0
       },
       "216": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.16854,
+        "height": 1.16854,
+        "voxelScaleX": 1.52243,
+        "voxelScaleY": 0.65684,
         "offsetX": 0
       },
       "217": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.06413,
+        "height": 1.06413,
+        "voxelScaleX": 1.38641,
+        "voxelScaleY": 0.72129,
         "offsetX": 0
       },
       "218": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.06413,
+        "height": 1.06413,
+        "voxelScaleX": 1.38641,
+        "voxelScaleY": 0.72129,
         "offsetX": 0
       },
       "219": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.06413,
+        "height": 1.06413,
+        "voxelScaleX": 1.38641,
+        "voxelScaleY": 0.72129,
         "offsetX": 0
       },
       "220": {
-        "width": 0.715,
-        "height": 0.729,
+        "width": 1.03718,
+        "height": 1.03718,
+        "voxelScaleX": 1.42241,
+        "voxelScaleY": 0.70303,
         "offsetX": 0
       },
       "221": {
-        "width": 0.715,
-        "height": 0.729,
+        "width": 1.03718,
+        "height": 1.03718,
+        "voxelScaleX": 1.42241,
+        "voxelScaleY": 0.70303,
         "offsetX": 0
       }
     },
     "cmd:qcf+4": {
       "222": {
-        "width": 0.978,
-        "height": 0.997,
+        "width": 1.29944,
+        "height": 1.29944,
+        "voxelScaleX": 1.3023,
+        "voxelScaleY": 0.76788,
         "offsetX": 0
       },
       "223": {
@@ -2721,33 +2769,45 @@
         "offsetX": 0
       },
       "224": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.33547,
+        "height": 1.33547,
+        "voxelScaleX": 1.36464,
+        "voxelScaleY": 0.73279,
         "offsetX": 0
       },
       "225": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.38234,
+        "height": 1.38234,
+        "voxelScaleX": 1.41253,
+        "voxelScaleY": 0.70795,
         "offsetX": 0
       },
       "226": {
-        "width": 0.997,
-        "height": 1.017,
+        "width": 2.38592,
+        "height": 2.38592,
+        "voxelScaleX": 2.34604,
+        "voxelScaleY": 0.42625,
         "offsetX": 0
       },
       "227": {
-        "width": 0.997,
-        "height": 1.017,
+        "width": 2.95592,
+        "height": 2.95592,
+        "voxelScaleX": 2.90653,
+        "voxelScaleY": 0.34405,
         "offsetX": 0
       },
       "228": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.3669,
+        "height": 1.3669,
+        "voxelScaleX": 1.39675,
+        "voxelScaleY": 0.71595,
         "offsetX": 0
       },
       "229": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.20157,
+        "height": 1.20157,
+        "voxelScaleX": 1.22782,
+        "voxelScaleY": 0.81445,
         "offsetX": 0
       },
       "230": {
@@ -2763,85 +2823,117 @@
         "offsetX": 0
       },
       "200": {
-        "width": 1.035,
-        "height": 1.055,
+        "width": 1.46709,
+        "height": 1.46709,
+        "voxelScaleX": 1.39011,
+        "voxelScaleY": 0.71937,
         "offsetX": 0
       },
       "201": {
-        "width": 1.148,
-        "height": 1.17,
+        "width": 1.57757,
+        "height": 1.57757,
+        "voxelScaleX": 1.34775,
+        "voxelScaleY": 0.74197,
         "offsetX": 0
       },
       "202": {
-        "width": 0.922,
-        "height": 0.94,
+        "width": 1.1246,
+        "height": 1.1246,
+        "voxelScaleX": 1.19608,
+        "voxelScaleY": 0.83606,
         "offsetX": 0
       },
       "203": {
-        "width": 0.828,
-        "height": 0.844,
+        "width": 1.3122,
+        "height": 1.3122,
+        "voxelScaleX": 1.55419,
+        "voxelScaleY": 0.64342,
         "offsetX": 0
       },
       "204": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.13969,
+        "height": 1.13969,
+        "voxelScaleX": 1.48484,
+        "voxelScaleY": 0.67347,
         "offsetX": 0
       },
       "205": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.18271,
+        "height": 1.18271,
+        "voxelScaleX": 1.5409,
+        "voxelScaleY": 0.64897,
         "offsetX": 0
       },
       "206": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.16854,
+        "height": 1.16854,
+        "voxelScaleX": 1.52243,
+        "voxelScaleY": 0.65684,
         "offsetX": 0
       },
       "207": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.06413,
+        "height": 1.06413,
+        "voxelScaleX": 1.38641,
+        "voxelScaleY": 0.72129,
         "offsetX": 0
       },
       "208": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.06413,
+        "height": 1.06413,
+        "voxelScaleX": 1.38641,
+        "voxelScaleY": 0.72129,
         "offsetX": 0
       }
     },
     "cmd:FC+1": {
       "60": {
-        "width": 0.809,
-        "height": 0.825,
+        "width": 0.98319,
+        "height": 0.98319,
+        "voxelScaleX": 1.19158,
+        "voxelScaleY": 0.83922,
         "offsetX": 0
       },
       "61": {
-        "width": 0.809,
-        "height": 0.825,
+        "width": 0.98319,
+        "height": 0.98319,
+        "voxelScaleX": 1.19158,
+        "voxelScaleY": 0.83922,
         "offsetX": 0
       },
       "62": {
-        "width": 0.809,
-        "height": 0.825,
+        "width": 0.98319,
+        "height": 0.98319,
+        "voxelScaleX": 1.19158,
+        "voxelScaleY": 0.83922,
         "offsetX": 0
       },
       "63": {
-        "width": 0.809,
-        "height": 0.825,
+        "width": 0.98319,
+        "height": 0.98319,
+        "voxelScaleX": 1.19158,
+        "voxelScaleY": 0.83922,
         "offsetX": 0
       },
       "64": {
-        "width": 0.979,
-        "height": 0.997,
+        "width": 1.24848,
+        "height": 1.24848,
+        "voxelScaleX": 1.25121,
+        "voxelScaleY": 0.79923,
         "offsetX": 0
       },
       "65": {
-        "width": 0.979,
-        "height": 0.997,
+        "width": 1.24847,
+        "height": 1.24847,
+        "voxelScaleX": 1.25121,
+        "voxelScaleY": 0.79922,
         "offsetX": 0
       },
       "66": {
-        "width": 0.997,
-        "height": 1.017,
+        "width": 1.34509,
+        "height": 1.34509,
+        "voxelScaleX": 1.3226,
+        "voxelScaleY": 0.75608,
         "offsetX": 0
       },
       "67": {
@@ -2867,8 +2959,10 @@
     },
     "cmd:FC+2": {
       "172": {
-        "width": 0.997,
-        "height": 1.017,
+        "width": 1.3614,
+        "height": 1.3614,
+        "voxelScaleX": 1.33865,
+        "voxelScaleY": 0.74702,
         "offsetX": 0
       },
       "173": {
@@ -2892,8 +2986,10 @@
         "offsetX": 0
       },
       "177": {
-        "width": 1.016,
-        "height": 1.036,
+        "width": 1.2898,
+        "height": 1.2898,
+        "voxelScaleX": 1.24476,
+        "voxelScaleY": 0.80337,
         "offsetX": 0
       },
       "178": {
@@ -2902,35 +2998,47 @@
         "offsetX": 0
       },
       "179": {
-        "width": 1.11,
-        "height": 1.132,
+        "width": 1.62873,
+        "height": 1.62873,
+        "voxelScaleX": 1.43864,
+        "voxelScaleY": 0.6951,
         "offsetX": 0
       }
     },
     "cmd:O+2": {
       "180": {
-        "width": 1.091,
-        "height": 1.112,
+        "width": 1.79877,
+        "height": 1.79877,
+        "voxelScaleX": 1.61623,
+        "voxelScaleY": 0.61873,
         "offsetX": 0
       },
       "181": {
-        "width": 1.091,
-        "height": 1.112,
+        "width": 2.11923,
+        "height": 2.11923,
+        "voxelScaleX": 1.90416,
+        "voxelScaleY": 0.52517,
         "offsetX": 0
       },
       "182": {
-        "width": 0.997,
-        "height": 1.017,
+        "width": 1.57201,
+        "height": 1.57201,
+        "voxelScaleX": 1.54574,
+        "voxelScaleY": 0.64694,
         "offsetX": 0
       },
       "183": {
-        "width": 0.997,
-        "height": 1.017,
+        "width": 1.50019,
+        "height": 1.50019,
+        "voxelScaleX": 1.47512,
+        "voxelScaleY": 0.67791,
         "offsetX": 0
       },
       "184": {
-        "width": 0.979,
-        "height": 0.997,
+        "width": 1.21328,
+        "height": 1.21328,
+        "voxelScaleX": 1.21595,
+        "voxelScaleY": 0.82241,
         "offsetX": 0
       },
       "185": {
@@ -2956,18 +3064,24 @@
     },
     "jabright": {
       "209": {
-        "width": 0.753,
-        "height": 0.767,
+        "width": 1.06413,
+        "height": 1.06413,
+        "voxelScaleX": 1.38641,
+        "voxelScaleY": 0.72129,
         "offsetX": 0
       },
       "210": {
-        "width": 0.715,
-        "height": 0.729,
+        "width": 1.03718,
+        "height": 1.03718,
+        "voxelScaleX": 1.42241,
+        "voxelScaleY": 0.70303,
         "offsetX": 0
       },
       "211": {
-        "width": 0.715,
-        "height": 0.729,
+        "width": 1.03718,
+        "height": 1.03718,
+        "voxelScaleX": 1.42241,
+        "voxelScaleY": 0.70303,
         "offsetX": 0
       }
     },
@@ -2979,18 +3093,24 @@
         "offsetX": 0
       },
       "72": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.2191,
+        "height": 1.2191,
+        "voxelScaleX": 1.24573,
+        "voxelScaleY": 0.80274,
         "offsetX": 0
       },
       "73": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.21912,
+        "height": 1.21912,
+        "voxelScaleX": 1.24575,
+        "voxelScaleY": 0.80273,
         "offsetX": 0
       },
       "74": {
-        "width": 0.96,
-        "height": 0.978,
+        "width": 1.20157,
+        "height": 1.20157,
+        "voxelScaleX": 1.22782,
+        "voxelScaleY": 0.81445,
         "offsetX": 0
       }
     },
