@@ -136,6 +136,15 @@ def clear_border_matte(image: Image.Image) -> Image.Image:
             if 0 <= nx < width and 0 <= ny < height:
                 queue.append((nx, ny))
 
+    # Energy rings can fully enclose islands of Kabuto's exact green cell
+    # matte. Green is not part of his authored palette, so remove those
+    # enclosed islands too. Cyan remains border-connected only because it is
+    # also used by the authored energy effects.
+    for y in range(height):
+        for x in range(width):
+            if pixels[x, y][:3] == GREEN:
+                pixels[x, y] = (*pixels[x, y][:3], 0)
+
     alpha_box = rgba.getchannel("A").getbbox()
     return rgba.crop(alpha_box) if alpha_box else Image.new("RGBA", (1, 1))
 
@@ -176,6 +185,11 @@ def update_manifest_count(count: int) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument(
+        "--rebuild-all",
+        action="store_true",
+        help="Rebuild every mapped source cell, preserving authored black pixels.",
+    )
     args = parser.parse_args()
 
     data = json.loads(FRAMES_JSON.read_text())
@@ -196,7 +210,11 @@ def main() -> None:
         by_cell.setdefault(cell, []).append(index)
 
     repair_groups = {cell: indices for cell, indices in by_cell.items() if len(indices) > 1}
-    repaired = sorted(index for indices in repair_groups.values() for index in indices)
+    repaired = (
+        sorted(mapped)
+        if args.rebuild_all
+        else sorted(index for indices in repair_groups.values() for index in indices)
+    )
     print(f"source cells: {len(cells)}")
     print(f"duplicate-cell groups: {len(repair_groups)}")
     print(f"frames to rebuild: {repaired}")
