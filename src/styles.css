@@ -10168,7 +10168,7 @@ button {
   position: relative;
   z-index: 12;
   width: calc(100% + clamp(10px, 1vw, 18px));
-  height: clamp(72px, 7.4vw, 112px);
+  height: clamp(58px, 5.8vw, 88px);
   margin-top: clamp(7px, 0.65vw, 12px);
   --health-glow: rgba(255, 255, 255, 0.22);
   filter:
@@ -10212,11 +10212,11 @@ button {
 
 .hud-portrait {
   position: absolute;
-  top: 14%;
+  top: 33%;
   left: 4%;
   z-index: 1;
-  width: 16.5%;
-  height: 70%;
+  width: 17%;
+  height: 52%;
   overflow: hidden;
   background:
     radial-gradient(circle at 50% 38%, rgba(48, 67, 82, 0.66), transparent 54%),
@@ -10271,31 +10271,25 @@ button {
 
 .health-label {
   position: absolute;
-  top: 60%;
-  left: 24.2%;
-  z-index: 2;
+  top: 57%;
+  left: 27%;
+  z-index: 5;
   display: grid;
-  width: 39.2%;
-  height: 25%;
+  width: 38%;
+  height: 22%;
   min-width: 0;
   place-items: center;
   overflow: hidden;
   padding: 0 5%;
-  color: #fff;
-  background-color: #070809;
-  background-image: url('/ui/fight-hud/player-name-texture.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.92) inset,
-    0 -1px 0 rgba(255, 255, 255, 0.08) inset;
+  color: #08090a;
+  background: transparent;
+  box-shadow: none;
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
 
 .health.right .health-label {
-  right: 24.2%;
+  right: 27%;
   left: auto;
 }
 
@@ -10309,12 +10303,9 @@ button {
   font-weight: 900;
   letter-spacing: 0.09em;
   line-height: 0.94;
-  -webkit-text-stroke: clamp(0.5px, 0.08vw, 1.15px) #050505;
+  -webkit-text-stroke: clamp(0.6px, 0.09vw, 1.25px) #fff;
   paint-order: stroke fill;
-  text-shadow:
-    0 2px 0 #000,
-    1px 0 0 #000,
-    -1px 0 0 #000;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
@@ -10322,11 +10313,11 @@ button {
 
 .health-track {
   position: absolute;
-  top: 9.5%;
-  left: 24.2%;
+  top: 6%;
+  left: 4%;
   z-index: 1;
-  width: 71.2%;
-  height: 27.5%;
+  width: 92%;
+  height: 17%;
   overflow: hidden;
   border-radius: 2px;
   background:
@@ -10338,7 +10329,7 @@ button {
 }
 
 .health.right .health-track {
-  right: 24.2%;
+  right: 4%;
   left: auto;
 }
 
@@ -10410,11 +10401,11 @@ button {
 
 .ki-track {
   position: absolute;
-  top: 64%;
-  left: 66.5%;
+  top: 57%;
+  left: 72%;
   z-index: 1;
-  width: 30.5%;
-  height: 15%;
+  width: 23%;
+  height: 20%;
   overflow: hidden;
   border-radius: 1px;
   background: #03080d;
@@ -10424,7 +10415,7 @@ button {
 }
 
 .health.right .ki-track {
-  right: 66.5%;
+  right: 72%;
   left: auto;
   transform: scaleX(-1);
 }
@@ -10486,13 +10477,25 @@ button {
   display: block;
   width: clamp(22px, 2vw, 32px);
   aspect-ratio: 1;
-  background: url('/ui/fight-hud/round-empty.png') center / contain no-repeat;
-  image-rendering: pixelated;
+  border: clamp(1px, 0.12vw, 2px) solid #281116;
+  clip-path: polygon(29% 0, 71% 0, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0 71%, 0 29%);
+  background:
+    radial-gradient(circle at 42% 38%, #292d31 0 24%, #090a0b 25% 39%, transparent 40%),
+    radial-gradient(circle, #8e9499 0 49%, #f1f3f2 50% 64%, #777d83 65% 78%, #2b2f34 79% 100%);
+  box-shadow:
+    inset 0 0 0 clamp(1px, 0.1vw, 2px) rgba(255, 255, 255, 0.38),
+    0 clamp(2px, 0.15vw, 3px) 0 rgba(16, 5, 8, 0.78);
 }
 
 .round-pips span.won {
-  background-image: url('/ui/fight-hud/round-win.png');
-  filter: drop-shadow(0 0 5px rgba(255, 210, 55, 0.78));
+  border-color: #4b1906;
+  background:
+    radial-gradient(circle at 38% 32%, #fffbd0 0 10%, #ffe95b 11% 38%, #ffb20d 39% 55%, transparent 56%),
+    radial-gradient(circle, #f08b00 0 49%, #fff2a0 50% 64%, #d97800 65% 78%, #5c2100 79% 100%);
+  box-shadow:
+    inset 0 0 0 clamp(1px, 0.1vw, 2px) rgba(255, 255, 255, 0.58),
+    0 clamp(2px, 0.15vw, 3px) 0 rgba(64, 15, 0, 0.82),
+    0 0 clamp(5px, 0.45vw, 8px) rgba(255, 201, 34, 0.78);
 }
 
 .online-wins {
@@ -10535,30 +10538,24 @@ button {
 
 .round-box-value {
   position: absolute;
-  top: 13%;
-  right: 16%;
-  bottom: 12%;
-  left: 16%;
+  top: 20%;
+  right: 18%;
+  bottom: 20%;
+  left: 18%;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1px;
   overflow: hidden;
-  background-color: #070809;
-  background-image: url('/ui/fight-hud/player-name-texture.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.92) inset,
-    0 -1px 0 rgba(255, 255, 255, 0.07) inset;
+  background: transparent;
+  box-shadow: none;
 }
 
 .round-box-frame {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -10573,7 +10570,12 @@ button {
   height: 76%;
   object-fit: contain;
   image-rendering: pixelated;
-  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.72));
+  filter:
+    brightness(0)
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff);
 }
 
 .round-box-infinity {
@@ -10586,7 +10588,12 @@ button {
   object-fit: contain;
   object-position: center;
   image-rendering: pixelated;
-  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.78));
+  filter:
+    brightness(0)
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff);
   transform: translate(-50%, -50%);
 }
 
@@ -14188,7 +14195,7 @@ button {
 
   .fight-hud .health {
     width: calc(100% + 10px);
-    height: clamp(52px, 10vw, 76px);
+    height: clamp(44px, 8vw, 62px);
     margin-top: 6px;
   }
 
