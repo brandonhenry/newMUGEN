@@ -105,6 +105,7 @@ async function loadFrameFromRange(characterId: string, frame: string, timings: V
 
   const rangeStartedAt = now();
   const response = await fetch(`/characters/${characterId}/voxels-hd/${manifest.binary}`, {
+    cache: 'no-cache',
     headers: { Range: `bytes=${range.start}-${range.end}` }
   });
   timings.rangeMs = roundMs(now() - rangeStartedAt);
@@ -137,7 +138,7 @@ async function loadFrameFromJson(frameSource: string, timings: VoxelFrameWorkerT
 async function getManifest(characterId: string) {
   const cached = manifestCache.get(characterId);
   if (cached) return cached;
-  const request = fetch(`/characters/${characterId}/voxels-hd/voxel-pack-v1.json`)
+  const request = fetch(`/characters/${characterId}/voxels-hd/voxel-pack-v1.json`, { cache: 'no-cache' })
     .then((response) => response.ok ? response.json() as Promise<VoxelPackManifest> : null)
     .catch(() => null);
   manifestCache.set(characterId, request);
