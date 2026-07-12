@@ -77,7 +77,7 @@
       "/characters/temari/frames/frame-015.png"
     ],
     "crouchBlock": [
-      "/characters/temari/frames/frame-015.png"
+      "/characters/temari/frames/frame-103.png"
     ],
     "block": [
       "/characters/temari/frames/frame-033.png"
@@ -473,9 +473,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 7,
-      "activeFrames": 13,
-      "recoveryFrames": 12,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -504,9 +504,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 15,
-      "activeFrames": 49,
-      "recoveryFrames": 1,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,

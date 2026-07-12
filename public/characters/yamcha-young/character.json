@@ -355,9 +355,9 @@
       "id": "special",
       "label": "Yamcha Young Right Kick",
       "input": "special",
-      "startupFrames": 15,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 19,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -451,9 +451,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 15,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 19,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -549,9 +549,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 24,
+      "activeFrames": 5,
+      "recoveryFrames": 33,
       "damage": 14,
       "onBlockFrames": -8,
       "onHitFrames": 10,

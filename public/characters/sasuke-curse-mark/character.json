@@ -499,9 +499,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 0,
-      "activeFrames": 11,
-      "recoveryFrames": 25,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -530,9 +530,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 12,
-      "activeFrames": 36,
-      "recoveryFrames": 5,
+      "startupFrames": 28,
+      "activeFrames": 7,
+      "recoveryFrames": 36,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -544,9 +544,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 6,
-      "activeFrames": 25,
-      "recoveryFrames": 5,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,

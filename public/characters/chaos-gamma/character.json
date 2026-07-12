@@ -529,9 +529,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 8,
-      "activeFrames": 30,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -543,9 +543,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 0,
-      "activeFrames": 41,
-      "recoveryFrames": 6,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 27,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -560,9 +560,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 7,
-      "activeFrames": 39,
-      "recoveryFrames": 6,
+      "startupFrames": 27,
+      "activeFrames": 7,
+      "recoveryFrames": 34,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -574,9 +574,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 8,
-      "activeFrames": 30,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -600,9 +600,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "startupFrames": 20,
-      "activeFrames": 24,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 4,
+      "recoveryFrames": 30,
       "damage": 13,
       "onBlockFrames": -13,
       "onHitFrames": 24,
@@ -682,9 +682,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 12,
-      "activeFrames": 45,
-      "recoveryFrames": 1,
+      "startupFrames": 21,
+      "activeFrames": 4,
+      "recoveryFrames": 29,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

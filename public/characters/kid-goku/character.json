@@ -728,9 +728,9 @@
       "knockdown": false
     },
     "cmd:f+1": {
-      "startupFrames": 0,
-      "activeFrames": 37,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -750,9 +750,9 @@
       "knockdown": false
     },
     "cmd:f+3": {
-      "startupFrames": 0,
-      "activeFrames": 45,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -774,9 +774,9 @@
       "counterHit": true
     },
     "cmd:d+3": {
-      "startupFrames": 0,
-      "activeFrames": 41,
-      "recoveryFrames": 1,
+      "startupFrames": 19,
+      "activeFrames": 3,
+      "recoveryFrames": 22,
       "damage": 11,
       "blockDamage": 0,
       "onBlockFrames": -13,
@@ -794,9 +794,9 @@
       "endsInCrouch": true
     },
     "cmd:d/f+2": {
-      "startupFrames": 0,
-      "activeFrames": 46,
-      "recoveryFrames": 6,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -820,9 +820,9 @@
       "knockdown": false
     },
     "cmd:d/f+3": {
-      "startupFrames": 0,
-      "activeFrames": 49,
-      "recoveryFrames": 1,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -846,9 +846,9 @@
       "jumpBeforeMove": true
     },
     "cmd:qcf+3": {
-      "startupFrames": 0,
-      "activeFrames": 51,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -868,9 +868,9 @@
       "knockdown": false
     },
     "cmd:qcf+4": {
-      "startupFrames": 0,
-      "activeFrames": 51,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -890,9 +890,9 @@
       "knockdown": false
     },
     "cmd:WS+4": {
-      "startupFrames": 0,
-      "activeFrames": 42,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 3,
+      "recoveryFrames": 25,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -913,9 +913,9 @@
       "knockdown": false
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 30,
-      "recoveryFrames": 1,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 7,
       "blockDamage": 0,
       "onBlockFrames": -3,
@@ -933,9 +933,9 @@
       "endsInCrouch": true
     },
     "cmd:FC+2": {
-      "startupFrames": 0,
-      "activeFrames": 50,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -957,9 +957,9 @@
       "endsInCrouch": true
     },
     "cmd:1+2": {
-      "startupFrames": 18,
+      "startupFrames": 22,
       "activeFrames": 4,
-      "recoveryFrames": 25,
+      "recoveryFrames": 30,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -7,
@@ -980,9 +980,9 @@
       "throwCapture": true
     },
     "cmd:1+3": {
-      "startupFrames": 21,
-      "activeFrames": 4,
-      "recoveryFrames": 34,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 24,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -1004,9 +1004,9 @@
       "tornado": true
     },
     "cmd:2+3": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 0,
       "onBlockFrames": -12,
@@ -1026,9 +1026,9 @@
       "counterHit": true
     },
     "cmd:2+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 27,
+      "activeFrames": 3,
+      "recoveryFrames": 31,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -16,
@@ -1046,8 +1046,8 @@
       "endsInCrouch": true
     },
     "cmd:3+4": {
-      "startupFrames": 24,
-      "activeFrames": 4,
+      "startupFrames": 25,
+      "activeFrames": 5,
       "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
@@ -1115,9 +1115,9 @@
       "usesKi": true
     },
     "cmd:O+2": {
-      "startupFrames": 0,
-      "activeFrames": 73,
-      "recoveryFrames": 1,
+      "startupFrames": 25,
+      "activeFrames": 6,
+      "recoveryFrames": 32,
       "damage": 24,
       "blockDamage": 1,
       "onBlockFrames": -16,
@@ -1346,9 +1346,9 @@
       "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
     },
     "cmd:b+1": {
-      "startupFrames": 0,
-      "activeFrames": 37,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -1368,9 +1368,9 @@
       "knockdown": false
     },
     "cmd:WR+3": {
-      "startupFrames": 7,
-      "activeFrames": 43,
-      "recoveryFrames": 6,
+      "startupFrames": 29,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -16,
@@ -1388,9 +1388,9 @@
       "endsInCrouch": true
     },
     "cmd:f,f+1": {
-      "startupFrames": 0,
-      "activeFrames": 37,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -1410,9 +1410,9 @@
       "knockdown": false
     },
     "cmd:dp+3": {
-      "startupFrames": 0,
-      "activeFrames": 42,
-      "recoveryFrames": 1,
+      "startupFrames": 18,
+      "activeFrames": 3,
+      "recoveryFrames": 28,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -1433,9 +1433,9 @@
       "knockdown": false
     },
     "cmd:qcb+1": {
-      "startupFrames": 0,
-      "activeFrames": 51,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -1478,8 +1478,8 @@
     },
     "cmd:1+4": {
       "startupFrames": 18,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "activeFrames": 3,
+      "recoveryFrames": 24,
       "damage": 13,
       "blockDamage": 1,
       "onBlockFrames": -8,

@@ -575,9 +575,9 @@
       "tracking": "medium"
     },
     "cmd:qcf+4": {
-      "startupFrames": 26,
-      "activeFrames": 24,
-      "recoveryFrames": 1,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "damage": 15,
       "blockDamage": 2,
       "onBlockFrames": -12,
@@ -659,9 +659,9 @@
       "endsInCrouch": true
     },
     "cmd:1+2": {
-      "startupFrames": 21,
+      "startupFrames": 22,
       "activeFrames": 4,
-      "recoveryFrames": 28,
+      "recoveryFrames": 30,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -679,7 +679,7 @@
       "counterHit": true
     },
     "cmd:1+3": {
-      "startupFrames": 16,
+      "startupFrames": 17,
       "activeFrames": 3,
       "recoveryFrames": 27,
       "damage": 14,
@@ -704,9 +704,9 @@
       "tracking": "medium"
     },
     "cmd:2+3": {
-      "startupFrames": 16,
-      "activeFrames": 2,
-      "recoveryFrames": 18,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "onBlockFrames": -14,
@@ -723,9 +723,9 @@
       "endsInCrouch": true
     },
     "cmd:2+4": {
-      "startupFrames": 28,
+      "startupFrames": 27,
       "activeFrames": 3,
-      "recoveryFrames": 33,
+      "recoveryFrames": 31,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -18,

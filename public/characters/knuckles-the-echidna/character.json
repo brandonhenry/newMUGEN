@@ -392,7 +392,7 @@
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 1,
-      "recoveryFrames": 12,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -422,9 +422,9 @@
       "id": "kick",
       "label": "Knuckles the Echidna Left Kick",
       "input": "kick",
-      "startupFrames": 18,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -486,9 +486,9 @@
       "id": "special",
       "label": "Knuckles the Echidna Right Kick",
       "input": "special",
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -545,7 +545,7 @@
     "jableft": {
       "startupFrames": 9,
       "activeFrames": 1,
-      "recoveryFrames": 12,
+      "recoveryFrames": 13,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -574,9 +574,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 2,
-      "recoveryFrames": 20,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -587,9 +587,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -600,9 +600,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 0,
-      "activeFrames": 37,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -614,9 +614,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 0,
-      "activeFrames": 43,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -631,9 +631,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 0,
-      "activeFrames": 52,
-      "recoveryFrames": 1,
+      "startupFrames": 23,
+      "activeFrames": 5,
+      "recoveryFrames": 31,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -645,9 +645,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 0,
-      "activeFrames": 38,
-      "recoveryFrames": 1,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -658,9 +658,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 0,
-      "activeFrames": 30,
-      "recoveryFrames": 1,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -671,9 +671,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "startupFrames": 0,
-      "activeFrames": 44,
-      "recoveryFrames": 1,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 23,
       "damage": 13,
       "onBlockFrames": -13,
       "onHitFrames": 24,
@@ -685,9 +685,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 0,
-      "activeFrames": 44,
-      "recoveryFrames": 1,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 14,
       "onBlockFrames": -8,
       "onHitFrames": 10,
@@ -698,9 +698,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 0,
-      "activeFrames": 46,
-      "recoveryFrames": 1,
+      "startupFrames": 19,
+      "activeFrames": 4,
+      "recoveryFrames": 31,
       "damage": 15,
       "onBlockFrames": -14,
       "onHitFrames": 24,
@@ -712,9 +712,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 0,
-      "activeFrames": 42,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -725,9 +725,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 0,
-      "activeFrames": 49,
-      "recoveryFrames": 1,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 15,
       "onBlockFrames": -16,
       "onHitFrames": 8,
@@ -739,9 +739,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 0,
-      "activeFrames": 53,
-      "recoveryFrames": 1,
+      "startupFrames": 25,
+      "activeFrames": 5,
+      "recoveryFrames": 34,
       "damage": 18,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -753,9 +753,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 0,
-      "activeFrames": 57,
-      "recoveryFrames": 1,
+      "startupFrames": 20,
+      "activeFrames": 4,
+      "recoveryFrames": 27,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,
