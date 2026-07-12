@@ -94,9 +94,9 @@
       "/characters/huntsclan-female/frames/frame-061.png"
     ],
     "chargeKi": [
-      "/characters/huntsclan-female/frames/frame-091.png",
-      "/characters/huntsclan-female/frames/frame-092.png",
-      "/characters/huntsclan-female/frames/frame-093.png"
+      "/characters/huntsclan-female/frames/frame-023.png",
+      "/characters/huntsclan-female/frames/frame-024.png",
+      "/characters/huntsclan-female/frames/frame-035.png"
     ],
     "jableft": [
       "/characters/huntsclan-female/frames/frame-041.png",
@@ -105,36 +105,23 @@
       "/characters/huntsclan-female/frames/frame-046.png"
     ],
     "jabright": [
-      "/characters/huntsclan-female/frames/frame-128.png",
-      "/characters/huntsclan-female/frames/frame-129.png",
-      "/characters/huntsclan-female/frames/frame-130.png",
-      "/characters/huntsclan-female/frames/frame-132.png",
-      "/characters/huntsclan-female/frames/frame-133.png",
-      "/characters/huntsclan-female/frames/frame-135.png",
-      "/characters/huntsclan-female/frames/frame-137.png",
-      "/characters/huntsclan-female/frames/frame-139.png",
-      "/characters/huntsclan-female/frames/frame-140.png"
+      "/characters/huntsclan-female/frames/frame-041.png",
+      "/characters/huntsclan-female/frames/frame-044.png",
+      "/characters/huntsclan-female/frames/frame-045.png",
+      "/characters/huntsclan-female/frames/frame-046.png"
     ],
     "kickleft": [
-      "/characters/huntsclan-female/frames/frame-128.png",
-      "/characters/huntsclan-female/frames/frame-129.png",
-      "/characters/huntsclan-female/frames/frame-130.png",
-      "/characters/huntsclan-female/frames/frame-132.png",
-      "/characters/huntsclan-female/frames/frame-133.png",
-      "/characters/huntsclan-female/frames/frame-135.png",
-      "/characters/huntsclan-female/frames/frame-137.png",
-      "/characters/huntsclan-female/frames/frame-139.png",
-      "/characters/huntsclan-female/frames/frame-140.png"
+      "/characters/huntsclan-female/frames/frame-049.png",
+      "/characters/huntsclan-female/frames/frame-050.png",
+      "/characters/huntsclan-female/frames/frame-051.png",
+      "/characters/huntsclan-female/frames/frame-052.png",
+      "/characters/huntsclan-female/frames/frame-053.png",
+      "/characters/huntsclan-female/frames/frame-054.png"
     ],
     "kickright": [
-      "/characters/huntsclan-female/frames/frame-118.png",
-      "/characters/huntsclan-female/frames/frame-119.png",
-      "/characters/huntsclan-female/frames/frame-120.png",
-      "/characters/huntsclan-female/frames/frame-121.png",
-      "/characters/huntsclan-female/frames/frame-123.png",
-      "/characters/huntsclan-female/frames/frame-124.png",
-      "/characters/huntsclan-female/frames/frame-125.png",
-      "/characters/huntsclan-female/frames/frame-126.png"
+      "/characters/huntsclan-female/frames/frame-088.png",
+      "/characters/huntsclan-female/frames/frame-089.png",
+      "/characters/huntsclan-female/frames/frame-090.png"
     ],
     "hitLight": [
       "/characters/huntsclan-female/frames/frame-079.png"
@@ -151,9 +138,10 @@
     "getupStand": [],
     "getupRollUp": [],
     "win": [
-      "/characters/huntsclan-female/frames/frame-125.png",
-      "/characters/huntsclan-female/frames/frame-126.png",
-      "/characters/huntsclan-female/frames/frame-127.png"
+      "/characters/huntsclan-female/frames/frame-066.png",
+      "/characters/huntsclan-female/frames/frame-067.png",
+      "/characters/huntsclan-female/frames/frame-075.png",
+      "/characters/huntsclan-female/frames/frame-076.png"
     ],
     "lose": [
       "/characters/huntsclan-female/frames/frame-073.png"
@@ -1501,6 +1489,21 @@
       }
     },
     "chargeKi": {
+      "23": {
+        "width": 1.07,
+        "height": 1.12,
+        "offsetX": 0
+      },
+      "24": {
+        "width": 1.15,
+        "height": 1.03,
+        "offsetX": 0
+      },
+      "35": {
+        "width": 1.07,
+        "height": 1.12,
+        "offsetX": 0
+      },
       "91": {
         "width": 0.94,
         "height": 1.1,
@@ -1701,6 +1704,26 @@
       }
     },
     "jabright": {
+      "41": {
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0
+      },
+      "44": {
+        "width": 0.88,
+        "height": 0.88,
+        "offsetX": 0
+      },
+      "45": {
+        "width": 0.84,
+        "height": 0.84,
+        "offsetX": 0
+      },
+      "46": {
+        "width": 0.86,
+        "height": 0.86,
+        "offsetX": 0
+      },
       "118": {
         "width": 1.07,
         "height": 1.16,
@@ -1822,6 +1845,48 @@
       }
     },
     "kickleft": {
+      "49": {
+        "width": 0.71826,
+        "height": 0.71826,
+        "voxelScaleX": 1.00671,
+        "voxelScaleY": 0.99333,
+        "offsetX": 0
+      },
+      "50": {
+        "width": 0.73599,
+        "height": 0.73599,
+        "voxelScaleX": 1.03157,
+        "voxelScaleY": 0.96939,
+        "offsetX": 0
+      },
+      "51": {
+        "width": 0.70874,
+        "height": 0.70874,
+        "voxelScaleX": 1.02023,
+        "voxelScaleY": 0.98017,
+        "offsetX": 0
+      },
+      "52": {
+        "width": 0.70923,
+        "height": 0.70923,
+        "voxelScaleX": 0.96856,
+        "voxelScaleY": 1.03246,
+        "offsetX": 0
+      },
+      "53": {
+        "width": 1.02838,
+        "height": 1.02838,
+        "voxelScaleX": 1.33593,
+        "voxelScaleY": 0.74854,
+        "offsetX": 0
+      },
+      "54": {
+        "width": 1,
+        "height": 1,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1,
+        "offsetX": 0
+      },
       "128": {
         "width": 1.18,
         "height": 1.33,
@@ -1908,6 +1973,27 @@
       }
     },
     "kickright": {
+      "88": {
+        "width": 0.56917,
+        "height": 0.56917,
+        "voxelScaleX": 1.01047,
+        "voxelScaleY": 0.98963,
+        "offsetX": 0
+      },
+      "89": {
+        "width": 0.58815,
+        "height": 0.58815,
+        "voxelScaleX": 1.01049,
+        "voxelScaleY": 0.98962,
+        "offsetX": 0
+      },
+      "90": {
+        "width": 0.58814,
+        "height": 0.58814,
+        "voxelScaleX": 1.01048,
+        "voxelScaleY": 0.98963,
+        "offsetX": 0
+      },
       "118": {
         "width": 0.91,
         "height": 1.03,
