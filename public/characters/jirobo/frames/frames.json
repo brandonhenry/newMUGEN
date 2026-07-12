@@ -2065,20 +2065,18 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        778,
-        1048,
-        837,
+        782,
+        1074,
+        833,
         1132
       ],
-      "width": 59,
-      "height": 84,
+      "width": 51,
+      "height": 58,
       "row": 7,
-      "sourceBox": [
-        4,
-        2051,
-        63,
-        2135
-      ]
+      "sourceRepair": {
+        "type": "remove-stray-component",
+        "kept": "largest"
+      }
     },
     {
       "index": 94,
@@ -2285,20 +2283,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        629,
-        1227,
-        645,
+        608,
+        1214,
+        666,
         1274
       ],
-      "width": 16,
-      "height": 47,
+      "width": 58,
+      "height": 60,
       "row": 8,
-      "sourceBox": [
-        534,
-        2115,
-        550,
-        2162
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          2111,
+          793,
+          2182
+        ],
+        "wrapCutX": 122,
+        "mergedFrames": [
+          103,
+          104
+        ]
+      }
     },
     {
       "index": 104,
@@ -2307,20 +2313,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        705,
-        1215,
-        740,
+        693,
+        1214,
+        751,
         1274
       ],
-      "width": 35,
-      "height": 59,
+      "width": 58,
+      "height": 60,
       "row": 8,
-      "sourceBox": [
-        755,
-        2116,
-        790,
-        2175
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          2111,
+          793,
+          2182
+        ],
+        "wrapCutX": 122,
+        "mergedFrames": [
+          103,
+          104
+        ]
+      }
     },
     {
       "index": 105,
@@ -2329,20 +2343,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        799,
-        1227,
-        815,
+        778,
+        1214,
+        836,
         1274
       ],
-      "width": 16,
-      "height": 47,
+      "width": 58,
+      "height": 60,
       "row": 8,
-      "sourceBox": [
-        6,
-        2188,
-        22,
-        2235
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          2184,
+          263,
+          2255
+        ],
+        "wrapCutX": 124,
+        "mergedFrames": [
+          105,
+          106
+        ]
+      }
     },
     {
       "index": 106,
@@ -2351,20 +2373,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        875,
-        1215,
-        910,
+        863,
+        1214,
+        921,
         1274
       ],
-      "width": 35,
-      "height": 59,
+      "width": 58,
+      "height": 60,
       "row": 8,
-      "sourceBox": [
-        227,
-        2189,
-        262,
-        2248
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          2184,
+          263,
+          2255
+        ],
+        "wrapCutX": 124,
+        "mergedFrames": [
+          105,
+          106
+        ]
+      }
     },
     {
       "index": 107,
@@ -2373,20 +2403,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        966,
+        944,
         1219,
-        988,
+        1011,
         1274
       ],
-      "width": 22,
+      "width": 67,
       "height": 55,
       "row": 8,
-      "sourceBox": [
-        268,
-        2193,
-        290,
-        2248
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          2184,
+          528,
+          2255
+        ],
+        "wrapCutX": 123,
+        "mergedFrames": [
+          107,
+          108
+        ]
+      }
     },
     {
       "index": 108,
@@ -2395,20 +2433,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        23,
-        1369,
-        61,
+        9,
+        1361,
+        76,
         1416
       ],
-      "width": 38,
-      "height": 47,
+      "width": 67,
+      "height": 55,
       "row": 9,
-      "sourceBox": [
-        486,
-        2195,
-        524,
-        2242
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          2184,
+          528,
+          2255
+        ],
+        "wrapCutX": 123,
+        "mergedFrames": [
+          107,
+          108
+        ]
+      }
     },
     {
       "index": 109,
@@ -2417,20 +2463,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        116,
+        94,
         1361,
-        138,
+        161,
         1416
       ],
-      "width": 22,
+      "width": 67,
       "height": 55,
       "row": 9,
-      "sourceBox": [
-        537,
-        2193,
-        559,
-        2248
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          2184,
+          793,
+          2255
+        ],
+        "wrapCutX": 127,
+        "mergedFrames": [
+          109,
+          110
+        ]
+      }
     },
     {
       "index": 110,
@@ -2439,20 +2493,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        193,
-        1369,
-        231,
+        179,
+        1361,
+        246,
         1416
       ],
-      "width": 38,
-      "height": 47,
+      "width": 67,
+      "height": 55,
       "row": 9,
-      "sourceBox": [
-        755,
-        2195,
-        793,
-        2242
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          2184,
+          793,
+          2255
+        ],
+        "wrapCutX": 127,
+        "mergedFrames": [
+          109,
+          110
+        ]
+      }
     },
     {
       "index": 111,
@@ -2461,20 +2523,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        282,
+        265,
         1357,
-        312,
+        330,
         1416
       ],
-      "width": 30,
+      "width": 65,
       "height": 59,
       "row": 9,
-      "sourceBox": [
-        4,
-        2262,
-        34,
-        2321
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          2257,
+          263,
+          2328
+        ],
+        "wrapCutX": 133,
+        "mergedFrames": [
+          111,
+          112
+        ]
+      }
     },
     {
       "index": 112,
@@ -2483,20 +2553,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        368,
-        1378,
-        396,
+        350,
+        1357,
+        415,
         1416
       ],
-      "width": 28,
-      "height": 38,
+      "width": 65,
+      "height": 59,
       "row": 9,
-      "sourceBox": [
-        232,
-        2264,
-        260,
-        2302
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          2257,
+          263,
+          2328
+        ],
+        "wrapCutX": 133,
+        "mergedFrames": [
+          111,
+          112
+        ]
+      }
     },
     {
       "index": 113,
@@ -2505,20 +2583,29 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        450,
+        439,
         1358,
-        485,
+        496,
         1416
       ],
-      "width": 35,
+      "width": 57,
       "height": 58,
       "row": 9,
-      "sourceBox": [
-        269,
-        2263,
-        304,
-        2321
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          2257,
+          528,
+          2328
+        ],
+        "wrapCutX": 142,
+        "mergedFrames": [
+          113,
+          114,
+          115
+        ]
+      }
     },
     {
       "index": 114,
@@ -2527,20 +2614,29 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        545,
-        1404,
-        560,
+        524,
+        1358,
+        581,
         1416
       ],
-      "width": 15,
-      "height": 12,
+      "width": 57,
+      "height": 58,
       "row": 9,
-      "sourceBox": [
-        510,
-        2270,
-        525,
-        2282
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          2257,
+          528,
+          2328
+        ],
+        "wrapCutX": 142,
+        "mergedFrames": [
+          113,
+          114,
+          115
+        ]
+      }
     },
     {
       "index": 115,
@@ -2549,20 +2645,29 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        629,
-        1385,
-        646,
+        609,
+        1358,
+        666,
         1416
       ],
-      "width": 17,
-      "height": 31,
+      "width": 57,
+      "height": 58,
       "row": 9,
-      "sourceBox": [
-        509,
-        2278,
-        526,
-        2309
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          2257,
+          528,
+          2328
+        ],
+        "wrapCutX": 142,
+        "mergedFrames": [
+          113,
+          114,
+          115
+        ]
+      }
     },
     {
       "index": 116,
@@ -2571,20 +2676,29 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        705,
+        694,
         1358,
-        740,
+        751,
         1416
       ],
-      "width": 35,
+      "width": 57,
       "height": 58,
       "row": 9,
-      "sourceBox": [
-        536,
-        2263,
-        571,
-        2321
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          2257,
+          793,
+          2328
+        ],
+        "wrapCutX": 144,
+        "mergedFrames": [
+          116,
+          117,
+          118
+        ]
+      }
     },
     {
       "index": 117,
@@ -2593,20 +2707,29 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        800,
-        1404,
-        815,
+        779,
+        1358,
+        836,
         1416
       ],
-      "width": 15,
-      "height": 12,
+      "width": 57,
+      "height": 58,
       "row": 9,
-      "sourceBox": [
-        777,
-        2270,
-        792,
-        2282
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          2257,
+          793,
+          2328
+        ],
+        "wrapCutX": 144,
+        "mergedFrames": [
+          116,
+          117,
+          118
+        ]
+      }
     },
     {
       "index": 118,
@@ -2615,20 +2738,29 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        884,
-        1384,
-        901,
+        864,
+        1358,
+        921,
         1416
       ],
-      "width": 17,
-      "height": 32,
+      "width": 57,
+      "height": 58,
       "row": 9,
-      "sourceBox": [
-        776,
-        2277,
-        793,
-        2309
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          2257,
+          793,
+          2328
+        ],
+        "wrapCutX": 144,
+        "mergedFrames": [
+          116,
+          117,
+          118
+        ]
+      }
     },
     {
       "index": 119,
@@ -2637,20 +2769,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        956,
+        948,
         1357,
-        999,
+        1006,
         1416
       ],
-      "width": 43,
+      "width": 58,
       "height": 59,
       "row": 9,
-      "sourceBox": [
-        4,
-        2335,
-        47,
-        2394
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          2330,
+          263,
+          2401
+        ],
+        "wrapCutX": 149,
+        "mergedFrames": [
+          119,
+          120
+        ]
+      }
     },
     {
       "index": 120,
@@ -2659,20 +2799,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        38,
-        1507,
-        46,
+        13,
+        1499,
+        71,
         1558
       ],
-      "width": 8,
-      "height": 51,
+      "width": 58,
+      "height": 59,
       "row": 10,
-      "sourceBox": [
-        252,
-        2343,
-        260,
-        2394
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          2330,
+          263,
+          2401
+        ],
+        "wrapCutX": 149,
+        "mergedFrames": [
+          119,
+          120
+        ]
+      }
     },
     {
       "index": 121,
@@ -2681,20 +2829,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        106,
+        98,
         1499,
-        149,
+        156,
         1558
       ],
-      "width": 43,
+      "width": 58,
       "height": 59,
       "row": 10,
-      "sourceBox": [
-        271,
-        2335,
-        314,
-        2394
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          2330,
+          528,
+          2401
+        ],
+        "wrapCutX": 151,
+        "mergedFrames": [
+          121,
+          122
+        ]
+      }
     },
     {
       "index": 122,
@@ -2703,20 +2859,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        208,
-        1507,
-        216,
+        183,
+        1499,
+        241,
         1558
       ],
-      "width": 8,
-      "height": 51,
+      "width": 58,
+      "height": 59,
       "row": 10,
-      "sourceBox": [
-        519,
-        2343,
-        527,
-        2394
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          2330,
+          528,
+          2401
+        ],
+        "wrapCutX": 151,
+        "mergedFrames": [
+          121,
+          122
+        ]
+      }
     },
     {
       "index": 123,
@@ -3341,20 +3505,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        631,
-        1804,
-        643,
+        607,
+        1798,
+        668,
         1842
       ],
-      "width": 12,
-      "height": 38,
+      "width": 61,
+      "height": 44,
       "row": 12,
-      "sourceBox": [
-        0,
-        3074,
-        12,
-        3112
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3060,
+          263,
+          3131
+        ],
+        "wrapCutX": 113,
+        "mergedFrames": [
+          151,
+          152
+        ]
+      }
     },
     {
       "index": 152,
@@ -3363,20 +3535,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        701,
-        1799,
-        743,
+        692,
+        1798,
+        753,
         1842
       ],
-      "width": 42,
-      "height": 43,
+      "width": 61,
+      "height": 44,
       "row": 12,
-      "sourceBox": [
-        214,
-        3075,
-        256,
-        3118
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3060,
+          263,
+          3131
+        ],
+        "wrapCutX": 113,
+        "mergedFrames": [
+          151,
+          152
+        ]
+      }
     },
     {
       "index": 153,
@@ -3385,20 +3565,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        797,
-        1804,
-        817,
+        777,
+        1798,
+        838,
         1842
       ],
-      "width": 20,
-      "height": 38,
+      "width": 61,
+      "height": 44,
       "row": 12,
-      "sourceBox": [
-        269,
-        3074,
-        289,
-        3112
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3060,
+          528,
+          3131
+        ],
+        "wrapCutX": 125,
+        "mergedFrames": [
+          153,
+          154
+        ]
+      }
     },
     {
       "index": 154,
@@ -3407,20 +3595,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        875,
-        1799,
-        909,
+        862,
+        1798,
+        923,
         1842
       ],
-      "width": 34,
-      "height": 43,
+      "width": 61,
+      "height": 44,
       "row": 12,
-      "sourceBox": [
-        491,
-        3075,
-        525,
-        3118
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3060,
+          528,
+          3131
+        ],
+        "wrapCutX": 125,
+        "mergedFrames": [
+          153,
+          154
+        ]
+      }
     },
     {
       "index": 155,
@@ -3429,20 +3625,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        959,
+        947,
         1798,
-        995,
+        1008,
         1842
       ],
-      "width": 36,
+      "width": 61,
       "height": 44,
       "row": 12,
-      "sourceBox": [
-        534,
-        3074,
-        570,
-        3118
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3060,
+          793,
+          3131
+        ],
+        "wrapCutX": 141,
+        "mergedFrames": [
+          155,
+          156
+        ]
+      }
     },
     {
       "index": 156,
@@ -3451,20 +3655,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        33,
-        1943,
-        51,
+        12,
+        1940,
+        73,
         1984
       ],
-      "width": 18,
-      "height": 41,
+      "width": 61,
+      "height": 44,
       "row": 13,
-      "sourceBox": [
-        772,
-        3077,
-        790,
-        3118
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3060,
+          793,
+          3131
+        ],
+        "wrapCutX": 141,
+        "mergedFrames": [
+          155,
+          156
+        ]
+      }
     },
     {
       "index": 157,
@@ -3517,20 +3729,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        275,
-        1927,
-        320,
+        268,
+        1926,
+        326,
         1984
       ],
-      "width": 45,
-      "height": 57,
+      "width": 58,
+      "height": 58,
       "row": 13,
-      "sourceBox": [
-        4,
-        3366,
-        49,
-        3423
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3352,
+          263,
+          3430
+        ],
+        "wrapCutX": 151,
+        "mergedFrames": [
+          159,
+          160
+        ]
+      }
     },
     {
       "index": 160,
@@ -3539,20 +3759,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        379,
-        1966,
-        385,
+        353,
+        1926,
+        411,
         1984
       ],
-      "width": 6,
-      "height": 18,
+      "width": 58,
+      "height": 58,
       "row": 13,
-      "sourceBox": [
-        254,
-        3365,
-        260,
-        3383
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3352,
+          263,
+          3430
+        ],
+        "wrapCutX": 151,
+        "mergedFrames": [
+          159,
+          160
+        ]
+      }
     },
     {
       "index": 161,
@@ -3561,20 +3789,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        445,
-        1927,
-        490,
+        438,
+        1926,
+        496,
         1984
       ],
-      "width": 45,
-      "height": 57,
+      "width": 58,
+      "height": 58,
       "row": 13,
-      "sourceBox": [
-        267,
-        3366,
-        312,
-        3423
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3352,
+          528,
+          3430
+        ],
+        "wrapCutX": 149,
+        "mergedFrames": [
+          161,
+          162
+        ]
+      }
     },
     {
       "index": 162,
@@ -3583,20 +3819,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        549,
-        1966,
-        555,
+        523,
+        1926,
+        581,
         1984
       ],
-      "width": 6,
-      "height": 18,
+      "width": 58,
+      "height": 58,
       "row": 13,
-      "sourceBox": [
-        517,
-        3365,
-        523,
-        3383
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3352,
+          528,
+          3430
+        ],
+        "wrapCutX": 149,
+        "mergedFrames": [
+          161,
+          162
+        ]
+      }
     },
     {
       "index": 163,
@@ -3605,20 +3849,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        616,
-        1925,
-        659,
+        608,
+        1924,
+        666,
         1984
       ],
-      "width": 43,
-      "height": 59,
+      "width": 58,
+      "height": 60,
       "row": 13,
-      "sourceBox": [
-        530,
-        3364,
-        573,
-        3423
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3352,
+          793,
+          3430
+        ],
+        "wrapCutX": 145,
+        "mergedFrames": [
+          163,
+          164
+        ]
+      }
     },
     {
       "index": 164,
@@ -3627,20 +3879,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        718,
-        1964,
-        726,
+        693,
+        1924,
+        751,
         1984
       ],
-      "width": 8,
-      "height": 20,
+      "width": 58,
+      "height": 60,
       "row": 13,
-      "sourceBox": [
-        778,
-        3363,
-        786,
-        3383
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3352,
+          793,
+          3430
+        ],
+        "wrapCutX": 145,
+        "mergedFrames": [
+          163,
+          164
+        ]
+      }
     },
     {
       "index": 165,
@@ -3649,20 +3909,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        790,
-        1925,
-        825,
+        778,
+        1924,
+        836,
         1984
       ],
-      "width": 35,
-      "height": 59,
+      "width": 58,
+      "height": 60,
       "row": 13,
-      "sourceBox": [
-        4,
-        3444,
-        39,
-        3503
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3432,
+          263,
+          3510
+        ],
+        "wrapCutX": 141,
+        "mergedFrames": [
+          165,
+          166
+        ]
+      }
     },
     {
       "index": 166,
@@ -3671,20 +3939,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        884,
-        1937,
-        900,
+        863,
+        1924,
+        921,
         1984
       ],
-      "width": 16,
-      "height": 47,
+      "width": 58,
+      "height": 60,
       "row": 13,
-      "sourceBox": [
-        244,
-        3443,
-        260,
-        3490
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3432,
+          263,
+          3510
+        ],
+        "wrapCutX": 141,
+        "mergedFrames": [
+          165,
+          166
+        ]
+      }
     },
     {
       "index": 167,
@@ -3693,20 +3969,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        954,
-        1931,
-        1000,
+        944,
+        1929,
+        1011,
         1984
       ],
-      "width": 46,
-      "height": 53,
+      "width": 67,
+      "height": 55,
       "row": 13,
-      "sourceBox": [
-        265,
-        3450,
-        311,
-        3503
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3432,
+          528,
+          3510
+        ],
+        "wrapCutX": 144,
+        "mergedFrames": [
+          167,
+          168
+        ]
+      }
     },
     {
       "index": 168,
@@ -3715,20 +3999,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        35,
+        9,
         2071,
-        49,
+        76,
         2126
       ],
-      "width": 14,
+      "width": 67,
       "height": 55,
       "row": 14,
-      "sourceBox": [
-        507,
-        3448,
-        521,
-        3503
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3432,
+          528,
+          3510
+        ],
+        "wrapCutX": 144,
+        "mergedFrames": [
+          167,
+          168
+        ]
+      }
     },
     {
       "index": 169,
@@ -3737,20 +4029,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        108,
-        2079,
-        146,
+        94,
+        2071,
+        161,
         2126
       ],
-      "width": 38,
-      "height": 47,
+      "width": 67,
+      "height": 55,
       "row": 14,
-      "sourceBox": [
-        536,
-        3450,
-        574,
-        3497
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3432,
+          793,
+          3510
+        ],
+        "wrapCutX": 142,
+        "mergedFrames": [
+          169,
+          170
+        ]
+      }
     },
     {
       "index": 170,
@@ -3759,20 +4059,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        201,
+        179,
         2071,
-        223,
+        246,
         2126
       ],
-      "width": 22,
+      "width": 67,
       "height": 55,
       "row": 14,
-      "sourceBox": [
-        770,
-        3448,
-        792,
-        3503
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3432,
+          793,
+          3510
+        ],
+        "wrapCutX": 142,
+        "mergedFrames": [
+          169,
+          170
+        ]
+      }
     },
     {
       "index": 171,
@@ -3781,20 +4089,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        279,
-        2069,
-        315,
+        265,
+        2067,
+        330,
         2126
       ],
-      "width": 36,
-      "height": 57,
+      "width": 65,
+      "height": 59,
       "row": 14,
-      "sourceBox": [
-        2,
-        3526,
-        38,
-        3583
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3512,
+          263,
+          3590
+        ],
+        "wrapCutX": 137,
+        "mergedFrames": [
+          171,
+          172
+        ]
+      }
     },
     {
       "index": 172,
@@ -3803,20 +4119,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        371,
+        350,
         2067,
-        393,
+        415,
         2126
       ],
-      "width": 22,
+      "width": 65,
       "height": 59,
       "row": 14,
-      "sourceBox": [
-        236,
-        3524,
-        258,
-        3583
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3512,
+          263,
+          3590
+        ],
+        "wrapCutX": 137,
+        "mergedFrames": [
+          171,
+          172
+        ]
+      }
     },
     {
       "index": 173,
@@ -3825,20 +4149,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        453,
-        2088,
-        481,
+        435,
+        2067,
+        500,
         2126
       ],
-      "width": 28,
-      "height": 38,
+      "width": 65,
+      "height": 59,
       "row": 14,
-      "sourceBox": [
-        272,
-        3526,
-        300,
-        3564
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3512,
+          528,
+          3590
+        ],
+        "wrapCutX": 134,
+        "mergedFrames": [
+          173,
+          174
+        ]
+      }
     },
     {
       "index": 174,
@@ -3847,20 +4179,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        537,
+        520,
         2067,
-        567,
+        585,
         2126
       ],
-      "width": 30,
+      "width": 65,
       "height": 59,
       "row": 14,
-      "sourceBox": [
-        498,
-        3524,
-        528,
-        3583
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          265,
+          3512,
+          528,
+          3590
+        ],
+        "wrapCutX": 134,
+        "mergedFrames": [
+          173,
+          174
+        ]
+      }
     },
     {
       "index": 175,
@@ -3869,20 +4209,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        629,
-        2069,
-        645,
+        608,
+        2067,
+        666,
         2126
       ],
-      "width": 16,
-      "height": 57,
+      "width": 58,
+      "height": 59,
       "row": 14,
-      "sourceBox": [
-        535,
-        3526,
-        551,
-        3583
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3512,
+          793,
+          3590
+        ],
+        "wrapCutX": 123,
+        "mergedFrames": [
+          175,
+          176
+        ]
+      }
     },
     {
       "index": 176,
@@ -3891,20 +4239,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        705,
-        2076,
-        740,
+        693,
+        2067,
+        751,
         2126
       ],
-      "width": 35,
-      "height": 50,
+      "width": 58,
+      "height": 59,
       "row": 14,
-      "sourceBox": [
-        756,
-        3524,
-        791,
-        3574
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          530,
+          3512,
+          793,
+          3590
+        ],
+        "wrapCutX": 123,
+        "mergedFrames": [
+          175,
+          176
+        ]
+      }
     },
     {
       "index": 177,
@@ -3913,20 +4269,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        799,
-        2069,
-        815,
+        778,
+        2067,
+        836,
         2126
       ],
-      "width": 16,
-      "height": 57,
+      "width": 58,
+      "height": 59,
       "row": 14,
-      "sourceBox": [
-        2,
-        3606,
-        18,
-        3663
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3592,
+          263,
+          3670
+        ],
+        "wrapCutX": 120,
+        "mergedFrames": [
+          177,
+          178
+        ]
+      }
     },
     {
       "index": 178,
@@ -3935,20 +4299,28 @@
       "sheetPath": "/characters/jirobo/animation-sheet.png",
       "sourceName": "Jirobo.png",
       "box": [
-        875,
-        2076,
-        910,
+        863,
+        2067,
+        921,
         2126
       ],
-      "width": 35,
-      "height": 50,
+      "width": 58,
+      "height": 59,
       "row": 14,
-      "sourceBox": [
-        223,
-        3604,
-        258,
-        3654
-      ]
+      "sourceRepair": {
+        "type": "wrapped-source-cell",
+        "sourceCell": [
+          0,
+          3592,
+          263,
+          3670
+        ],
+        "wrapCutX": 120,
+        "mergedFrames": [
+          177,
+          178
+        ]
+      }
     },
     {
       "index": 179,

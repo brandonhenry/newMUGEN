@@ -83,6 +83,7 @@ class TransparencyRepairTests(unittest.TestCase):
 
     def test_naruto_matte_keys_are_scoped_away_from_authored_effect_palettes(self) -> None:
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["choji-akimichi"], {(48, 200, 152)})
+        self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["gaara"], {(0, 0, 248), (0, 200, 120), (0, 216, 0)})
         self.assertEqual(repair.EXACT_KEYS_BY_CHARACTER["kiba-inuzuka"], {(248, 0, 0), (0, 0, 248)})
         self.assertNotIn("pain", repair.EXACT_KEYS_BY_CHARACTER)
         self.assertNotIn("sai", repair.EXACT_KEYS_BY_CHARACTER)

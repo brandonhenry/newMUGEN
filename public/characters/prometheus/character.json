@@ -9,8 +9,8 @@
   "spriteSheetPath": "/characters/prometheus/animation-sheet.png",
   "spriteSheets": [
     {
-      "id": "main",
-      "name": "Main Sheet",
+      "id": "generated",
+      "name": "Generated Frame Atlas",
       "path": "/characters/prometheus/animation-sheet.png",
       "frameStart": 0,
       "frameCount": 110
@@ -908,22 +908,26 @@
       "0": {
         "width": 0.58,
         "height": 0.887,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "3": {
         "width": 0.828,
         "height": 0.887,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "6": {
         "width": 0.891,
         "height": 0.941,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "10": {
         "width": 0.932,
         "height": 1.104,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "13": {
         "width": 0.787,
@@ -954,6 +958,33 @@
         "width": 0.706,
         "height": 0.706,
         "offsetX": 0
+      },
+      "1": {
+        "flipX": true
+      },
+      "2": {
+        "flipX": true
+      },
+      "4": {
+        "flipX": true
+      },
+      "5": {
+        "flipX": true
+      },
+      "7": {
+        "flipX": true
+      },
+      "8": {
+        "flipX": true
+      },
+      "9": {
+        "flipX": true
+      },
+      "11": {
+        "flipX": true
+      },
+      "12": {
+        "flipX": true
       }
     },
     "walkForward": {
@@ -1006,6 +1037,21 @@
         "width": 0.207,
         "height": 0.669,
         "offsetX": 0
+      },
+      "0": {
+        "flipX": true
+      },
+      "1": {
+        "flipX": true
+      },
+      "2": {
+        "flipX": true
+      },
+      "3": {
+        "flipX": true
+      },
+      "4": {
+        "flipX": true
       }
     },
     "walkBack": {
@@ -1038,6 +1084,21 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "4": {
+        "flipX": true
+      },
+      "3": {
+        "flipX": true
+      },
+      "2": {
+        "flipX": true
+      },
+      "1": {
+        "flipX": true
+      },
+      "0": {
+        "flipX": true
       }
     },
     "sprint": {
@@ -1089,7 +1150,47 @@
       "30": {
         "width": 0.706,
         "height": 0.706,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
+      },
+      "29": {
+        "flipX": true
+      },
+      "31": {
+        "flipX": true
+      },
+      "32": {
+        "flipX": true
+      },
+      "33": {
+        "flipX": true
+      },
+      "34": {
+        "flipX": true
+      },
+      "35": {
+        "flipX": true
+      },
+      "36": {
+        "flipX": true
+      },
+      "37": {
+        "flipX": true
+      },
+      "38": {
+        "flipX": true
+      },
+      "39": {
+        "flipX": true
+      },
+      "40": {
+        "flipX": true
+      },
+      "41": {
+        "flipX": true
+      },
+      "42": {
+        "flipX": true
       }
     },
     "backHop": {
@@ -1132,6 +1233,9 @@
         "width": 0.373,
         "height": 0.253,
         "offsetX": 0
+      },
+      "29": {
+        "flipX": true
       }
     },
     "sidestepLeft": {
@@ -1159,6 +1263,9 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "76": {
+        "flipX": true
       }
     },
     "sidestepRight": {
@@ -1201,6 +1308,9 @@
         "width": 0.597,
         "height": 0.597,
         "offsetX": 0
+      },
+      "76": {
+        "flipX": true
       }
     },
     "jump": {
@@ -1243,6 +1353,30 @@
         "width": 0.373,
         "height": 0.253,
         "offsetX": 0
+      },
+      "23": {
+        "flipX": true
+      },
+      "24": {
+        "flipX": true
+      },
+      "25": {
+        "flipX": true
+      },
+      "26": {
+        "flipX": true
+      },
+      "27": {
+        "flipX": true
+      },
+      "28": {
+        "flipX": true
+      },
+      "29": {
+        "flipX": true
+      },
+      "30": {
+        "flipX": true
       }
     },
     "crouch": {
@@ -1319,6 +1453,9 @@
         "width": 0.373,
         "height": 0.253,
         "offsetX": 0
+      },
+      "76": {
+        "flipX": true
       }
     },
     "chargeKi": {
@@ -1346,6 +1483,9 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "76": {
+        "flipX": true
       }
     },
     "jableft": {
@@ -1372,12 +1512,14 @@
       "17": {
         "width": 1.194,
         "height": 1.194,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "21": {
         "width": 0.814,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "25": {
         "width": 0.849,
@@ -1388,18 +1530,44 @@
         "width": 0.597,
         "height": 0.597,
         "offsetX": 0
+      },
+      "13": {
+        "flipX": true
+      },
+      "14": {
+        "flipX": true
+      },
+      "15": {
+        "flipX": true
+      },
+      "16": {
+        "flipX": true
+      },
+      "18": {
+        "flipX": true
+      },
+      "19": {
+        "flipX": true
+      },
+      "20": {
+        "flipX": true
+      },
+      "22": {
+        "flipX": true
       }
     },
     "jabright": {
       "34": {
         "width": 1.491,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "42": {
         "width": 0.87,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "50": {
         "width": 1.222,
@@ -1430,6 +1598,42 @@
         "width": 0.373,
         "height": 0.253,
         "offsetX": 0
+      },
+      "29": {
+        "flipX": true
+      },
+      "30": {
+        "flipX": true
+      },
+      "31": {
+        "flipX": true
+      },
+      "32": {
+        "flipX": true
+      },
+      "33": {
+        "flipX": true
+      },
+      "35": {
+        "flipX": true
+      },
+      "36": {
+        "flipX": true
+      },
+      "37": {
+        "flipX": true
+      },
+      "38": {
+        "flipX": true
+      },
+      "39": {
+        "flipX": true
+      },
+      "40": {
+        "flipX": true
+      },
+      "41": {
+        "flipX": true
       }
     },
     "kickleft": {
@@ -1457,6 +1661,63 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "43": {
+        "flipX": true
+      },
+      "44": {
+        "flipX": true
+      },
+      "45": {
+        "flipX": true
+      },
+      "46": {
+        "flipX": true
+      },
+      "47": {
+        "flipX": true
+      },
+      "48": {
+        "flipX": true
+      },
+      "49": {
+        "flipX": true
+      },
+      "50": {
+        "flipX": true
+      },
+      "51": {
+        "flipX": true
+      },
+      "52": {
+        "flipX": true
+      },
+      "53": {
+        "flipX": true
+      },
+      "54": {
+        "flipX": true
+      },
+      "55": {
+        "flipX": true
+      },
+      "56": {
+        "flipX": true
+      },
+      "57": {
+        "flipX": true
+      },
+      "58": {
+        "flipX": true
+      },
+      "59": {
+        "flipX": true
+      },
+      "60": {
+        "flipX": true
+      },
+      "61": {
+        "flipX": true
       }
     },
     "kickright": {
@@ -1609,7 +1870,8 @@
       "29": {
         "width": 0.597,
         "height": 0.597,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       }
     },
     "knockdown": {
@@ -1679,6 +1941,12 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "76": {
+        "flipX": true
+      },
+      "77": {
+        "flipX": true
       }
     },
     "getupRollUp": {
@@ -1816,12 +2084,14 @@
       "17": {
         "width": 1.194,
         "height": 1.194,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "21": {
         "width": 0.814,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "25": {
         "width": 0.849,
@@ -1832,18 +2102,44 @@
         "width": 0.597,
         "height": 0.597,
         "offsetX": 0
+      },
+      "13": {
+        "flipX": true
+      },
+      "14": {
+        "flipX": true
+      },
+      "15": {
+        "flipX": true
+      },
+      "16": {
+        "flipX": true
+      },
+      "18": {
+        "flipX": true
+      },
+      "19": {
+        "flipX": true
+      },
+      "20": {
+        "flipX": true
+      },
+      "22": {
+        "flipX": true
       }
     },
     "cmd:d/f+2": {
       "34": {
         "width": 1.491,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "42": {
         "width": 0.87,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "50": {
         "width": 1.222,
@@ -1874,6 +2170,42 @@
         "width": 0.373,
         "height": 0.253,
         "offsetX": 0
+      },
+      "29": {
+        "flipX": true
+      },
+      "30": {
+        "flipX": true
+      },
+      "31": {
+        "flipX": true
+      },
+      "32": {
+        "flipX": true
+      },
+      "33": {
+        "flipX": true
+      },
+      "35": {
+        "flipX": true
+      },
+      "36": {
+        "flipX": true
+      },
+      "37": {
+        "flipX": true
+      },
+      "38": {
+        "flipX": true
+      },
+      "39": {
+        "flipX": true
+      },
+      "40": {
+        "flipX": true
+      },
+      "41": {
+        "flipX": true
       }
     },
     "cmd:qcf+4": {
@@ -1901,6 +2233,63 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "43": {
+        "flipX": true
+      },
+      "44": {
+        "flipX": true
+      },
+      "45": {
+        "flipX": true
+      },
+      "46": {
+        "flipX": true
+      },
+      "47": {
+        "flipX": true
+      },
+      "48": {
+        "flipX": true
+      },
+      "49": {
+        "flipX": true
+      },
+      "50": {
+        "flipX": true
+      },
+      "51": {
+        "flipX": true
+      },
+      "52": {
+        "flipX": true
+      },
+      "53": {
+        "flipX": true
+      },
+      "54": {
+        "flipX": true
+      },
+      "55": {
+        "flipX": true
+      },
+      "56": {
+        "flipX": true
+      },
+      "57": {
+        "flipX": true
+      },
+      "58": {
+        "flipX": true
+      },
+      "59": {
+        "flipX": true
+      },
+      "60": {
+        "flipX": true
+      },
+      "61": {
+        "flipX": true
       }
     },
     "cmd:WS+4": {
@@ -1985,6 +2374,30 @@
         "width": 0.373,
         "height": 0.253,
         "offsetX": 0
+      },
+      "23": {
+        "flipX": true
+      },
+      "24": {
+        "flipX": true
+      },
+      "25": {
+        "flipX": true
+      },
+      "26": {
+        "flipX": true
+      },
+      "27": {
+        "flipX": true
+      },
+      "28": {
+        "flipX": true
+      },
+      "29": {
+        "flipX": true
+      },
+      "30": {
+        "flipX": true
       }
     },
     "cmd:FC+2": {
@@ -2012,6 +2425,33 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "34": {
+        "flipX": true
+      },
+      "35": {
+        "flipX": true
+      },
+      "36": {
+        "flipX": true
+      },
+      "37": {
+        "flipX": true
+      },
+      "38": {
+        "flipX": true
+      },
+      "39": {
+        "flipX": true
+      },
+      "40": {
+        "flipX": true
+      },
+      "41": {
+        "flipX": true
+      },
+      "42": {
+        "flipX": true
       }
     },
     "cmd:1+2": {
@@ -2054,6 +2494,63 @@
         "width": 0.597,
         "height": 0.597,
         "offsetX": 0
+      },
+      "43": {
+        "flipX": true
+      },
+      "44": {
+        "flipX": true
+      },
+      "45": {
+        "flipX": true
+      },
+      "46": {
+        "flipX": true
+      },
+      "47": {
+        "flipX": true
+      },
+      "48": {
+        "flipX": true
+      },
+      "49": {
+        "flipX": true
+      },
+      "50": {
+        "flipX": true
+      },
+      "51": {
+        "flipX": true
+      },
+      "52": {
+        "flipX": true
+      },
+      "53": {
+        "flipX": true
+      },
+      "54": {
+        "flipX": true
+      },
+      "55": {
+        "flipX": true
+      },
+      "56": {
+        "flipX": true
+      },
+      "57": {
+        "flipX": true
+      },
+      "58": {
+        "flipX": true
+      },
+      "59": {
+        "flipX": true
+      },
+      "60": {
+        "flipX": true
+      },
+      "61": {
+        "flipX": true
       }
     },
     "cmd:1+3": {
@@ -2149,12 +2646,14 @@
       "17": {
         "width": 1.194,
         "height": 1.194,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "21": {
         "width": 0.814,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "25": {
         "width": 0.849,
@@ -2165,18 +2664,44 @@
         "width": 0.597,
         "height": 0.597,
         "offsetX": 0
+      },
+      "13": {
+        "flipX": true
+      },
+      "14": {
+        "flipX": true
+      },
+      "15": {
+        "flipX": true
+      },
+      "16": {
+        "flipX": true
+      },
+      "18": {
+        "flipX": true
+      },
+      "19": {
+        "flipX": true
+      },
+      "20": {
+        "flipX": true
+      },
+      "22": {
+        "flipX": true
       }
     },
     "cmd:3+4": {
       "34": {
         "width": 1.491,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "42": {
         "width": 0.87,
         "height": 0.814,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": true
       },
       "50": {
         "width": 1.222,
@@ -2207,6 +2732,42 @@
         "width": 0.373,
         "height": 0.253,
         "offsetX": 0
+      },
+      "29": {
+        "flipX": true
+      },
+      "30": {
+        "flipX": true
+      },
+      "31": {
+        "flipX": true
+      },
+      "32": {
+        "flipX": true
+      },
+      "33": {
+        "flipX": true
+      },
+      "35": {
+        "flipX": true
+      },
+      "36": {
+        "flipX": true
+      },
+      "37": {
+        "flipX": true
+      },
+      "38": {
+        "flipX": true
+      },
+      "39": {
+        "flipX": true
+      },
+      "40": {
+        "flipX": true
+      },
+      "41": {
+        "flipX": true
       }
     },
     "cmd:O+2": {
@@ -2234,6 +2795,12 @@
         "width": 0.228,
         "height": 0.235,
         "offsetX": 0
+      },
+      "76": {
+        "flipX": true
+      },
+      "77": {
+        "flipX": true
       }
     }
   }

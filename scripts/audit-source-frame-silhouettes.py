@@ -17,7 +17,7 @@ RGB = tuple[int, int, int]
 
 EXACT_KEYS_BY_CHARACTER: dict[str, set[RGB]] = {
     "choji-akimichi": {(48, 200, 152)},
-    "gaara": {(0, 0, 248), (0, 200, 120)},
+    "gaara": {(0, 0, 248), (0, 200, 120), (0, 216, 0)},
     "ino-yamanaka": {(56, 192, 48)},
     "kiba-inuzuka": {(248, 0, 0), (0, 0, 248)},
     "kimimaro": {(32, 192, 32)},

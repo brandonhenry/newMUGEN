@@ -30,7 +30,7 @@ EXACT_KEYS_BY_CHARACTER: dict[str, set[tuple[int, int, int]]] = {
     # Exact chroma colors present in the source sheets.  These are scoped to
     # characters whose sheets use the color as a matte, never as authored art.
     "choji-akimichi": {(48, 200, 152)},
-    "gaara": {(0, 0, 248), (0, 200, 120)},
+    "gaara": {(0, 0, 248), (0, 200, 120), (0, 216, 0)},
     "ino-yamanaka": {(56, 192, 48)},
     "kiba-inuzuka": {(248, 0, 0), (0, 0, 248)},
     "kimimaro": {(32, 192, 32)},
@@ -552,6 +552,43 @@ def playable_character_ids(repo: Path, selected: list[str]) -> list[str]:
     return ids
 
 
+def repair_known_key_colors(
+    repo: Path,
+    character_id: str,
+    apply: bool,
+    preview_dir: Path,
+) -> dict[str, Any]:
+    character_dir = repo / "public" / "characters" / character_id
+    frames_path = character_dir / "frames" / "frames.json"
+    if not frames_path.exists():
+        return {"character": character_id, "status": "missing-frame-metadata", "changes": []}
+    metadata = read_json(frames_path)
+    keys = EXACT_KEYS_BY_CHARACTER.get(character_id, set())
+    changes: list[dict[str, Any]] = []
+    for frame in metadata.get("frames", []):
+        index = int(frame["index"])
+        frame_path = character_dir / "frames" / f"frame-{index:03d}.png"
+        if not frame_path.exists():
+            continue
+        current = Image.open(frame_path).convert("RGBA")
+        candidate, removed = clear_exact_keys(current, keys)
+        if removed <= 0:
+            continue
+        changes.append({"frame": index, "removedKeyPixels": removed, "action": "repair"})
+        save_comparison(preview_dir / character_id / "known-keys" / f"frame-{index:03d}.png", current, candidate)
+        if apply:
+            candidate.save(frame_path)
+    if apply and changes:
+        regenerate_animation_sheet(character_dir, character_id, metadata)
+        write_json(frames_path, metadata)
+    return {
+        "character": character_id,
+        "status": "repaired" if apply and changes else "candidates" if changes else "clean",
+        "acceptedFrames": [change["frame"] for change in changes],
+        "changes": changes,
+    }
+
+
 def repair_character(
     repo: Path,
     character_id: str,
@@ -684,6 +721,7 @@ def main() -> None:
     parser.add_argument("--border-tolerance", type=int, default=24)
     parser.add_argument("--restore-distance", type=int, default=18)
     parser.add_argument("--preview-dir", type=Path, default=Path("tmp/transparency-crop-repair/previews"))
+    parser.add_argument("--clear-known-keys-only", action="store_true")
     args = parser.parse_args()
     if args.apply and args.dry_run:
         parser.error("--apply and --dry-run are mutually exclusive")
@@ -694,16 +732,20 @@ def main() -> None:
     preview_dir = args.preview_dir if args.preview_dir.is_absolute() else repo / args.preview_dir
     reports = []
     for character_id in playable_character_ids(repo, args.character):
-        report = repair_character(
-            repo,
-            character_id,
-            source_index,
-            detector,
-            args.apply,
-            args.padding,
-            args.border_tolerance,
-            args.restore_distance,
-            preview_dir,
+        report = (
+            repair_known_key_colors(repo, character_id, args.apply, preview_dir)
+            if args.clear_known_keys_only
+            else repair_character(
+                repo,
+                character_id,
+                source_index,
+                detector,
+                args.apply,
+                args.padding,
+                args.border_tolerance,
+                args.restore_distance,
+                preview_dir,
+            )
         )
         reports.append(report)
         accepted = len(report.get("acceptedFrames", []))
