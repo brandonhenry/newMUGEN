@@ -10122,14 +10122,13 @@ function TrainingSelect({
               const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
               const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
               const isP1 = getCharacterBaseId(p1Character) === baseId;
-              const isP2 = getCharacterBaseId(p2Character) === baseId;
               const isLocked = family.length === 0;
               const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
               return (
                 <button
                   key={character.id}
                   type="button"
-                  className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isP2 ? 'is-p2' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
+                  className={`versus-roster-tile ${isP1 ? 'is-p1' : ''} ${isLocked ? 'is-locked' : ''} ${variantCount > 0 ? 'has-variants' : ''}`}
                   style={{ '--fighter-color': displayedCharacter.colors.primary } as CSSProperties}
                   onClick={() => assignCharacter(assignId)}
                   onMouseEnter={() => setHoveredBaseId(baseId)}
@@ -10138,10 +10137,11 @@ function TrainingSelect({
                   aria-disabled={isLocked}
                 >
                   <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                  {isP1 && <em className="character-player-marker is-p1" aria-hidden="true">1P</em>}
                   {isLocked && <em className="character-lock-badge">Locked</em>}
                   {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
                   <span>{displayedCharacter.displayName}</span>
-                  <small>{isP1 ? 'P1' : ''}{isP1 && isP2 ? ' / ' : ''}{isP2 ? 'Dummy' : ''}</small>
+                  <small>{isP1 ? 'P1' : ''}</small>
                 </button>
               );
             })}
@@ -10568,6 +10568,8 @@ function TournamentSelect({
                   aria-disabled={isLocked}
                 >
                   <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                  {isP1 && <em className="character-player-marker is-p1" aria-hidden="true">1P</em>}
+                  {isP2 && <em className="character-player-marker is-p2" aria-hidden="true">2P</em>}
                   {isLocked && <em className="character-lock-badge">Locked</em>}
                   {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
                   <span>{displayedCharacter.displayName}</span>
@@ -11940,8 +11942,8 @@ function CharacterSelect({
               const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
               const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
               const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
-              const isP1 = !randomCharacterSlots[1] && getCharacterBaseId(p1Character) === baseId;
-              const isP2 = !randomCharacterSlots[2] && getCharacterBaseId(p2Character) === baseId;
+              const isP1 = mode !== 'cpu' && mode !== 'cpuArcade' && !randomCharacterSlots[1] && getCharacterBaseId(p1Character) === baseId;
+              const isP2 = mode === 'local2p' && !randomCharacterSlots[2] && getCharacterBaseId(p2Character) === baseId;
               const isLocked = family.length === 0;
               const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
               return (
@@ -11957,6 +11959,8 @@ function CharacterSelect({
                   aria-disabled={isLocked}
                 >
                   <img src={characterPortraitPath(displayedCharacter)} alt="" />
+                  {isP1 && <em className="character-player-marker is-p1" aria-hidden="true">1P</em>}
+                  {isP2 && <em className="character-player-marker is-p2" aria-hidden="true">2P</em>}
                   {isLocked && <em className="character-lock-badge">Locked</em>}
                   {variantCount > 0 && <em className="character-variant-badge">{variantCount + 1} Styles</em>}
                   <span>{displayedCharacter.displayName}</span>

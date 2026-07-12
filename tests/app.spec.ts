@@ -882,6 +882,26 @@ test('controller shoulders page character select and cycle stages', async ({ pag
   await page.waitForTimeout(120);
 });
 
+test('marks human character selections with 1P and 2P grid badges', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Versus' }).click();
+
+  const rosterGrid = page.locator('.versus-roster-grid');
+  await rosterGrid.getByRole('button', { name: 'Select Naruto' }).click();
+  await page.getByRole('button', { name: 'P2', exact: true }).click();
+  await rosterGrid.getByRole('button', { name: 'Select Sasuke' }).click();
+
+  const p1Marker = rosterGrid.locator('.character-player-marker.is-p1');
+  const p2Marker = rosterGrid.locator('.character-player-marker.is-p2');
+  await expect(p1Marker).toHaveText('1P');
+  await expect(p2Marker).toHaveText('2P');
+
+  await page.getByRole('button', { name: 'Next match mode' }).click();
+  await expect(page.getByRole('group', { name: 'Match mode' }).locator('.mode-carousel-current strong')).toHaveText('1P vs CPU');
+  await expect(p1Marker).toHaveText('1P');
+  await expect(p2Marker).toHaveCount(0);
+});
+
 test('starts a playable match from the menu', async ({ page }) => {
   await startFight(page);
   await expect(page.getByTestId('fight-canvas')).toBeVisible();

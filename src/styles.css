@@ -3534,6 +3534,40 @@ button {
   text-transform: uppercase;
 }
 
+.character-player-marker {
+  position: absolute;
+  top: clamp(5px, 0.8vh, 8px);
+  z-index: 4;
+  color: #f0474f;
+  font-size: clamp(14px, 2.1vh, 19px);
+  font-style: normal;
+  font-weight: 1000;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  -webkit-text-stroke: 1.5px #fff;
+  paint-order: stroke fill;
+  text-shadow:
+    0 2px 0 #67131a,
+    0 4px 8px rgba(0, 0, 0, 0.72);
+  pointer-events: none;
+}
+
+.character-player-marker.is-p1 {
+  left: clamp(6px, 0.8vw, 9px);
+}
+
+.character-player-marker.is-p2 {
+  right: clamp(6px, 0.8vw, 9px);
+  color: #3d7dff;
+  text-shadow:
+    0 2px 0 #123781,
+    0 4px 8px rgba(0, 0, 0, 0.72);
+}
+
+.character-player-marker.is-p1 ~ .character-variant-badge {
+  top: clamp(28px, 4.2vh, 36px);
+}
+
 .versus-roster-tile.is-p1 {
   box-shadow:
     0 0 0 3px #e4474d inset,
