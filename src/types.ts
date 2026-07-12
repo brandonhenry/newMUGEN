@@ -861,12 +861,15 @@ export type InputFrameMetadata = {
 
 export type InputFrameWithMetadata = InputFrame & InputFrameMetadata;
 
-export type MiniGameKind = 'break-target' | 'enemy-rush' | 'fighter-rush';
+export type MiniGameKind = 'break-target' | 'enemy-rush' | 'fighter-rush' | 'tag';
+export type TagRole = 'player-it' | 'cpu-it';
+export type TagCompletedReason = 'tagged-player' | 'tagged-cpu' | 'survived' | 'escaped';
 export type BreakTargetTier = 10 | 20 | 30;
 
 export type MiniGameHighScoreKey = {
   gameId: MiniGameKind;
   stageId: string;
+  tagRole?: TagRole;
 };
 
 export type BreakTargetRuntime = {
@@ -997,6 +1000,26 @@ export type EnemyRushMiniGameSnapshot = {
   completedReason: 'all-clear' | 'player-death' | null;
 };
 
+export type TagMiniGameSnapshot = {
+  kind: 'tag';
+  gameId: 'tag';
+  stage: StageDefinition;
+  match: MatchSnapshot;
+  seed: number;
+  role: TagRole;
+  level: number;
+  difficulty: CpuDifficulty;
+  roundTime: number;
+  timer: number;
+  elapsed: number;
+  score: number;
+  introTimer: number;
+  outcomeTimer: number;
+  phase: 'intro-role' | 'intro-objective' | 'playing' | 'tagged' | 'victory' | 'complete';
+  completedReason: TagCompletedReason | null;
+  lastProcessedImpactId: number;
+};
+
 export type ArcadeRunState = {
   score: number;
   livesRemaining: number;
@@ -1027,7 +1050,10 @@ export type MiniGameResult = {
   coinsCollected?: number;
   timeRemaining: number;
   allClear: boolean;
-  completedReason: 'all-clear' | 'time-up' | 'player-death';
+  completedReason: 'all-clear' | 'time-up' | 'player-death' | TagCompletedReason;
+  tagRole?: TagRole;
+  survivalTime?: number;
+  timeToTag?: number;
 };
 
 export type BufferedMoveIntent = {
@@ -1185,6 +1211,8 @@ export type ProjectileRuntime = {
   chargeDamageScale?: number;
 };
 
+export type AiObjective = 'standard' | 'tagger' | 'runner';
+
 export type MatchOptions = {
   roundTime?: number;
   roundsToWin?: number;
@@ -1195,6 +1223,7 @@ export type MatchOptions = {
   aiSeed?: number;
   roster?: CharacterDefinition[];
   cpuSlots?: Array<1 | 2>;
+  aiObjective?: AiObjective;
 };
 
 export type FighterRuntime = {
@@ -1317,6 +1346,7 @@ export type MatchSnapshot = {
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   cpuSlots?: Array<1 | 2>;
+  aiObjective: AiObjective;
   aiSeed: number;
   roundAiSeed: number;
   roundTime: number;

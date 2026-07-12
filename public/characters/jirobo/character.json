@@ -167,10 +167,35 @@
     "lose": [
       "/characters/jirobo/frames/frame-180.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:f+1": [
+      "/characters/jirobo/frames/frame-088.png",
+      "/characters/jirobo/frames/frame-089.png",
+      "/characters/jirobo/frames/frame-090.png",
+      "/characters/jirobo/frames/frame-091.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/jirobo/frames/frame-093.png",
+      "/characters/jirobo/frames/frame-094.png",
+      "/characters/jirobo/frames/frame-095.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/jirobo/frames/frame-067.png",
+      "/characters/jirobo/frames/frame-068.png",
+      "/characters/jirobo/frames/frame-069.png",
+      "/characters/jirobo/frames/frame-070.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/jirobo/frames/frame-220.png",
+      "/characters/jirobo/frames/frame-221.png",
+      "/characters/jirobo/frames/frame-222.png",
+      "/characters/jirobo/frames/frame-223.png",
+      "/characters/jirobo/frames/frame-224.png",
+      "/characters/jirobo/frames/frame-225.png",
+      "/characters/jirobo/frames/frame-226.png",
+      "/characters/jirobo/frames/frame-227.png",
+      "/characters/jirobo/frames/frame-228.png",
+      "/characters/jirobo/frames/frame-229.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -473,9 +498,9 @@
       "throwCapture": true
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 29,
+      "recoveryFrames": 9,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -487,9 +512,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 43,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -504,9 +529,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 12,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -518,9 +543,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 13,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 34,
+      "recoveryFrames": 3,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,

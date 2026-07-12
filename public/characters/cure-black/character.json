@@ -137,10 +137,38 @@
     "lose": [
       "/characters/cure-black/frames/frame-105.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:f+1": [
+      "/characters/cure-black/frames/frame-066.png",
+      "/characters/cure-black/frames/frame-067.png",
+      "/characters/cure-black/frames/frame-068.png",
+      "/characters/cure-black/frames/frame-069.png",
+      "/characters/cure-black/frames/frame-070.png",
+      "/characters/cure-black/frames/frame-071.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/cure-black/frames/frame-036.png",
+      "/characters/cure-black/frames/frame-037.png",
+      "/characters/cure-black/frames/frame-038.png",
+      "/characters/cure-black/frames/frame-039.png",
+      "/characters/cure-black/frames/frame-040.png",
+      "/characters/cure-black/frames/frame-041.png",
+      "/characters/cure-black/frames/frame-042.png",
+      "/characters/cure-black/frames/frame-043.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/cure-black/frames/frame-024.png",
+      "/characters/cure-black/frames/frame-025.png",
+      "/characters/cure-black/frames/frame-026.png",
+      "/characters/cure-black/frames/frame-027.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/cure-black/frames/frame-072.png",
+      "/characters/cure-black/frames/frame-073.png",
+      "/characters/cure-black/frames/frame-074.png",
+      "/characters/cure-black/frames/frame-075.png",
+      "/characters/cure-black/frames/frame-076.png",
+      "/characters/cure-black/frames/frame-077.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -148,7 +176,12 @@
     "cmd:2+3": [],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/cure-black/frames/frame-200.png",
+      "/characters/cure-black/frames/frame-201.png",
+      "/characters/cure-black/frames/frame-202.png",
+      "/characters/cure-black/frames/frame-203.png"
+    ],
     "cmd:b+1": [],
     "cmd:f,f+1": [],
     "cmd:qcb+4": [],
@@ -460,9 +493,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -474,9 +507,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 40,
+      "recoveryFrames": 5,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -491,9 +524,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 0,
+      "activeFrames": 52,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -505,9 +538,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 33,
+      "recoveryFrames": 6,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -613,9 +646,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 15,
+      "activeFrames": 42,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

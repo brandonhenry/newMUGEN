@@ -4,6 +4,8 @@ import type {
   BreakTargetRuntime,
   BreakTargetTier,
   CharacterDefinition,
+  ControlScheme,
+  CpuDifficulty,
   EnemyRushEnemyKind,
   EnemyRushLaneIndex,
   EnemyRushLaneTransition,
@@ -15,17 +17,29 @@ import type {
   MiniGameKind,
   MiniGameResult,
   MoveInput,
-  StageDefinition
+  StageDefinition,
+  TagMiniGameSnapshot,
+  TagRole
 } from '../types';
 import { emptyInputFrame } from '../types';
+import { createMatch, KO_SLOWMO_SECONDS, KO_SLOWMO_TIME_SCALE, stepMatch } from '../engine/fightEngine';
 import { getCharacterCombatScale } from './characterScale';
 
 export const BREAK_TARGET_GAME_ID = 'break-target' satisfies MiniGameKind;
 export const ENEMY_RUSH_GAME_ID = 'enemy-rush' satisfies MiniGameKind;
 export const FIGHTER_RUSH_GAME_ID = 'fighter-rush' satisfies MiniGameKind;
+export const TAG_GAME_ID = 'tag' satisfies MiniGameKind;
 export const BREAK_TARGET_HIGH_SCORE_STORAGE_KEY = 'kore.arcadeMiniGameHighScores.v1';
 export const BREAK_TARGET_ROUND_TIME = 45;
 export const ARCADE_MINI_GAME_CHANCE = 0.35;
+export const TAG_ROUND_TIME = 60;
+export const TAG_MAX_SCORE = 3000;
+export const TAG_POINTS_PER_SECOND = 50;
+export const TAG_MINI_GAME_WEIGHT = 0.25;
+
+const TAG_ROLE_INTRO_SECONDS = 1;
+const TAG_OBJECTIVE_INTRO_SECONDS = 1.2;
+const TAG_VICTORY_SECONDS = 0.8;
 
 const FRAMES_PER_SECOND = 60;
 const TARGET_COUNT = 12;
@@ -131,18 +145,201 @@ export function pickArcadeMiniGameKind(arcadeLevel = 1, random = Math.random()):
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const forced = params.get('forceMiniGameKind');
-    if (forced === BREAK_TARGET_GAME_ID || forced === ENEMY_RUSH_GAME_ID || forced === FIGHTER_RUSH_GAME_ID) return forced;
+    if (forced === BREAK_TARGET_GAME_ID || forced === ENEMY_RUSH_GAME_ID || forced === FIGHTER_RUSH_GAME_ID || forced === TAG_GAME_ID) return forced;
   }
+  if (random < TAG_MINI_GAME_WEIGHT) return TAG_GAME_ID;
+  const legacyRandom = (random - TAG_MINI_GAME_WEIGHT) / (1 - TAG_MINI_GAME_WEIGHT);
   const safeLevel = Math.max(1, Math.round(arcadeLevel));
   if (safeLevel >= 2) {
     const fighterRushChance = Math.min(0.4, 0.16 + (safeLevel - 2) * 0.06);
-    if (random < fighterRushChance) return FIGHTER_RUSH_GAME_ID;
-    const adjustedRandom = (random - fighterRushChance) / Math.max(0.001, 1 - fighterRushChance);
+    if (legacyRandom < fighterRushChance) return FIGHTER_RUSH_GAME_ID;
+    const adjustedRandom = (legacyRandom - fighterRushChance) / Math.max(0.001, 1 - fighterRushChance);
     const enemyRushChance = Math.min(0.72, 0.28 + Math.max(0, safeLevel - 1) * 0.11);
     return adjustedRandom < enemyRushChance ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
   }
   const enemyRushChance = Math.min(0.72, 0.28 + Math.max(0, arcadeLevel - 1) * 0.11);
-  return random < enemyRushChance ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
+  return legacyRandom < enemyRushChance ? ENEMY_RUSH_GAME_ID : BREAK_TARGET_GAME_ID;
+}
+
+export function pickTagRole(seed = Date.now()): TagRole {
+  if (typeof window !== 'undefined') {
+    const forced = new URLSearchParams(window.location.search).get('forceTagRole');
+    if (forced === 'player-it' || forced === 'cpu-it') return forced;
+  }
+  return Math.abs(Math.trunc(seed)) % 2 === 0 ? 'player-it' : 'cpu-it';
+}
+
+export function pickTagOpponent(
+  roster: CharacterDefinition[],
+  playerId: string,
+  unlockedIds: Set<string>,
+  seed = Date.now()
+) {
+  const candidates = roster.filter((character) => !character.unplayable && character.id !== playerId);
+  if (candidates.length === 0) return null;
+  const locked = candidates.filter((character) => Boolean(character.locked) && !unlockedIds.has(character.id));
+  const pool = locked.length > 0 ? locked : candidates;
+  return pool[Math.floor(seededRandom(seed ^ 0x5f3759df)() * pool.length)] ?? pool[0] ?? null;
+}
+
+export function createTagMiniGame(
+  player: CharacterDefinition,
+  opponent: CharacterDefinition,
+  stage: StageDefinition,
+  seed = Date.now(),
+  arcadeLevel = 1,
+  role: TagRole = pickTagRole(seed),
+  durationSeconds = TAG_ROUND_TIME,
+  controlScheme: ControlScheme = 'kore',
+  roster: CharacterDefinition[] = [player, opponent]
+): TagMiniGameSnapshot {
+  const roundTime = Math.max(1, Math.min(TAG_ROUND_TIME, durationSeconds));
+  const difficulty = Math.max(1, Math.min(5, Math.round(arcadeLevel))) as CpuDifficulty;
+  const match = createMatch(player, opponent, stage, 'ai', difficulty, {
+    roundTime: TAG_ROUND_TIME,
+    roundsToWin: 1,
+    maxHealth: 0,
+    controlScheme,
+    playIntro: false,
+    aiSeed: seed,
+    roster,
+    aiObjective: role === 'cpu-it' ? 'tagger' : 'runner'
+  });
+  match.timer = roundTime;
+  return {
+    kind: TAG_GAME_ID,
+    gameId: TAG_GAME_ID,
+    stage,
+    match,
+    seed,
+    role,
+    level: Math.max(1, Math.round(arcadeLevel)),
+    difficulty,
+    roundTime,
+    timer: roundTime,
+    elapsed: 0,
+    score: role === 'player-it' ? TAG_MAX_SCORE : 0,
+    introTimer: TAG_ROLE_INTRO_SECONDS,
+    outcomeTimer: 0,
+    phase: 'intro-role',
+    completedReason: null,
+    lastProcessedImpactId: match.lastHitId
+  };
+}
+
+export function stepTagMiniGame(snapshot: TagMiniGameSnapshot, input: InputFrame, dt: number): TagMiniGameSnapshot {
+  if (snapshot.phase === 'complete') return snapshot;
+  const next: TagMiniGameSnapshot = { ...snapshot };
+  if (next.phase === 'intro-role' || next.phase === 'intro-objective') {
+    next.introTimer = Math.max(0, next.introTimer - dt);
+    if (next.introTimer <= 0) {
+      if (next.phase === 'intro-role') {
+        next.phase = 'intro-objective';
+        next.introTimer = TAG_OBJECTIVE_INTRO_SECONDS;
+      } else {
+        next.phase = 'playing';
+        next.match = { ...next.match, message: '' };
+      }
+    }
+    return next;
+  }
+  if (next.phase === 'tagged' || next.phase === 'victory') {
+    next.outcomeTimer = Math.max(0, next.outcomeTimer - dt);
+    if (next.outcomeTimer <= 0) {
+      if (next.phase === 'tagged' && next.completedReason === 'tagged-cpu') {
+        next.phase = 'victory';
+        next.outcomeTimer = TAG_VICTORY_SECONDS;
+        next.match = setTagOutcomePresentation(next.match, 'YOU WIN!', true);
+      } else {
+        next.phase = 'complete';
+      }
+    }
+    return next;
+  }
+
+  const stepped = stepMatch(next.match, input, emptyInputFrame(), dt);
+  const newImpacts = stepped.impactEvents.filter((event) => event.id > next.lastProcessedImpactId);
+  next.lastProcessedImpactId = Math.max(next.lastProcessedImpactId, ...newImpacts.map((event) => event.id));
+  next.elapsed = Math.min(next.roundTime, next.elapsed + dt);
+  next.timer = Math.max(0, next.roundTime - next.elapsed);
+  next.score = scoreTagMiniGame(next.role, next.elapsed, next.roundTime);
+  stepped.timer = next.timer;
+  stepped.fighters.forEach((fighter) => {
+    fighter.hp = fighter.maxHp;
+    fighter.recoverableHp = 0;
+    fighter.displayRecoverableHp = 0;
+  });
+  next.match = stepped;
+
+  const runnerSlot = next.role === 'cpu-it' ? 1 : 2;
+  const taggerSlot = runnerSlot === 1 ? 2 : 1;
+  const tagged = newImpacts.some((event) => (
+    event.defenderSlot === runnerSlot &&
+    event.attackerSlot === taggerSlot &&
+    event.kind !== 'block' &&
+    event.damage > 0
+  ));
+  if (tagged) {
+    next.completedReason = next.role === 'cpu-it' ? 'tagged-player' : 'tagged-cpu';
+    next.phase = 'tagged';
+    next.outcomeTimer = KO_SLOWMO_SECONDS;
+    next.match = setTagOutcomePresentation(next.match, 'TAGGED!', false, true);
+    return next;
+  }
+  if (next.timer <= 0) {
+    if (next.role === 'cpu-it') {
+      next.score = TAG_MAX_SCORE;
+      next.completedReason = 'survived';
+      next.match = setTagOutcomePresentation(next.match, 'YOU WIN!', true);
+    } else {
+      next.score = 0;
+      next.completedReason = 'escaped';
+      next.match = setTagOutcomePresentation(next.match, 'CPU ESCAPED', false);
+    }
+    next.phase = 'victory';
+    next.outcomeTimer = TAG_VICTORY_SECONDS;
+  }
+  return next;
+}
+
+export function makeTagMiniGameResult(snapshot: TagMiniGameSnapshot, previousHighScore = 0): MiniGameResult {
+  const score = Math.max(0, Math.round(snapshot.score));
+  const cleared = snapshot.completedReason === 'survived' || snapshot.completedReason === 'tagged-cpu';
+  return {
+    kind: TAG_GAME_ID,
+    gameId: TAG_GAME_ID,
+    stageId: snapshot.stage.id,
+    stageName: snapshot.stage.name,
+    score,
+    previousHighScore,
+    highScore: Math.max(previousHighScore, score),
+    newHighScore: score > previousHighScore,
+    cleared,
+    targetsDestroyed: cleared ? 1 : 0,
+    totalTargets: 1,
+    timeRemaining: snapshot.timer,
+    allClear: cleared,
+    completedReason: snapshot.completedReason ?? (snapshot.role === 'cpu-it' ? 'tagged-player' : 'escaped'),
+    tagRole: snapshot.role,
+    survivalTime: snapshot.role === 'cpu-it' ? snapshot.elapsed : undefined,
+    timeToTag: snapshot.role === 'player-it' && snapshot.completedReason === 'tagged-cpu' ? snapshot.elapsed : undefined
+  };
+}
+
+function scoreTagMiniGame(role: TagRole, elapsed: number, _roundTime: number) {
+  if (role === 'cpu-it') return Math.min(TAG_MAX_SCORE, Math.max(0, Math.round(elapsed * TAG_POINTS_PER_SECOND)));
+  return Math.min(TAG_MAX_SCORE, Math.max(0, Math.round(TAG_MAX_SCORE - elapsed * TAG_POINTS_PER_SECOND)));
+}
+
+function setTagOutcomePresentation(match: TagMiniGameSnapshot['match'], message: string, playerWon: boolean, slowMotion = false) {
+  const next = { ...match, fighters: [{ ...match.fighters[0] }, { ...match.fighters[1] }] as typeof match.fighters };
+  next.message = message;
+  next.visualTimeScale = slowMotion ? KO_SLOWMO_TIME_SCALE : 1;
+  if (!slowMotion) {
+    next.fighters[0].state = playerWon ? 'win' : 'lose';
+    next.fighters[1].state = playerWon ? 'lose' : 'win';
+  }
+  return next;
 }
 
 export function createBreakTargetMiniGame(
@@ -508,7 +705,7 @@ export function makeEnemyRushMiniGameResult(snapshot: EnemyRushMiniGameSnapshot,
 }
 
 export function miniGameHighScoreStorageKey(key: MiniGameHighScoreKey) {
-  return `${key.gameId}:${key.stageId}`;
+  return `${key.gameId}:${key.stageId}${key.gameId === TAG_GAME_ID && key.tagRole ? `:${key.tagRole}` : ''}`;
 }
 
 export function readMiniGameHighScore(key: MiniGameHighScoreKey) {

@@ -68,6 +68,16 @@ describe('arcade run scoring', () => {
     expect(run.miniGameTotals['enemy-rush']).toBe(0);
   });
 
+  it('tracks Tag points and only costs a life on failed roles', () => {
+    const tagged = applyArcadeMiniGameResult(createArcadeRunState(), miniGameResult('tag', 1250, 'tagged-player'));
+    expect(tagged).toMatchObject({ score: 1250, livesRemaining: 2 });
+    expect(tagged.miniGameTotals.tag).toBe(1250);
+    const escaped = applyArcadeMiniGameResult(createArcadeRunState(), miniGameResult('tag', 0, 'escaped'));
+    expect(escaped.livesRemaining).toBe(2);
+    const survived = applyArcadeMiniGameResult(createArcadeRunState(), miniGameResult('tag', 3000, 'survived'));
+    expect(survived).toMatchObject({ score: 3000, livesRemaining: 3 });
+  });
+
   it('stores local best arcade run scores', () => {
     const store: Record<string, string> = {};
     vi.stubGlobal('window', {

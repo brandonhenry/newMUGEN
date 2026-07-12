@@ -122,6 +122,7 @@ import {
   type MenuMotionPerformanceMode,
   type BreakTargetMiniGameSnapshot,
   type EnemyRushMiniGameSnapshot,
+  type TagMiniGameSnapshot,
   type HitLevel,
   type ImpactSparkEvent,
   type ImpactSparkShape,
@@ -143,6 +144,7 @@ import {
   type StageFloorEffects,
   type StageFloorSoundKey,
   type StagePropAssetDefinition,
+  type TagRole,
   type StagePropDefinition,
   type StageSkyboxAssetDefinition,
   type Vec3Tuple,
@@ -194,16 +196,21 @@ import {
   BREAK_TARGET_GAME_ID,
   ENEMY_RUSH_GAME_ID,
   FIGHTER_RUSH_GAME_ID,
+  TAG_GAME_ID,
   createBreakTargetMiniGame,
   createEnemyRushMiniGame,
   createFighterRushMiniGame,
+  createTagMiniGame,
   makeEnemyRushMiniGameResult,
   makeBreakTargetMiniGameResult,
+  makeTagMiniGameResult,
   pickArcadeMiniGameKind,
+  pickTagOpponent,
   readMiniGameHighScore,
   shouldStartArcadeMiniGame,
   stepEnemyRushMiniGame,
   stepBreakTargetMiniGame,
+  stepTagMiniGame,
   writeMiniGameHighScore
 } from './lib/arcadeMiniGames';
 import {
@@ -346,6 +353,7 @@ type E2EWindow = Window & {
     privateRoomIntent?: PrivateRoomIntent;
   }) => void;
   __koreE2EEnemyRushSnapshot?: () => EnemyRushMiniGameSnapshot | null;
+  __koreE2ETagSnapshot?: () => TagMiniGameSnapshot | null;
   __koreE2ESeedOnlineTournament?: (status: TournamentStatusResult) => void;
   __koreE2ESeedPaidRecoveryPrompt?: (profile: OnlinePlayerProfile, message?: string) => void;
   __koreE2EOpenAuditScreen?: (screen: E2EAuditScreen) => void;
@@ -443,6 +451,8 @@ type ArcadeMiniGameLaunch = {
   seed: number;
   durationSeconds?: number;
   arcadeLevel?: number;
+  tagOpponent?: CharacterDefinition;
+  tagRole?: TagRole;
 };
 type ArcadeTransitionKind = 'victory' | 'life-lost' | 'bonus-stage' | 'mini-game-complete' | 'unlock-complete' | 'next-route';
 type ArcadeTransitionDestination = 'versus' | 'miniGame';
@@ -5236,13 +5246,19 @@ export default function App() {
 	  const makeArcadeMiniGameLaunch = useCallback((level = arcadeRun.level): ArcadeMiniGameLaunch | null => {
 	    if (!shouldStartArcadeMiniGame()) return null;
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
+	    const seed = freshAiSeed();
+	    const kind = pickArcadeMiniGameKind(level);
+	    const tagOpponent = kind === TAG_GAME_ID && p1
+	      ? pickTagOpponent(roster, p1.id, effectiveUnlockedCharacterIds, seed)
+	      : null;
 	    return {
-	      kind: pickArcadeMiniGameKind(level),
+	      kind: kind === TAG_GAME_ID && !tagOpponent ? BREAK_TARGET_GAME_ID : kind,
 	      stage: miniGameStage,
-	      seed: freshAiSeed(),
-	      arcadeLevel: level
+	      seed,
+	      arcadeLevel: level,
+	      tagOpponent: tagOpponent ?? undefined
 	    };
-	  }, [arcadeRun.level, playableStageRoster, selectedStage]);
+	  }, [arcadeRun.level, effectiveUnlockedCharacterIds, p1, playableStageRoster, roster, selectedStage]);
 	  const resolveNextArcadeStage = useCallback(() => {
 	    return randomStageSelected ? pickRandomStage(playableStageRoster) ?? selectedStage : selectedStage;
 	  }, [playableStageRoster, randomStageSelected, selectedStage]);
@@ -5294,7 +5310,7 @@ export default function App() {
 	    const result = lastMiniGameResult;
 	    const transition: ArcadeTransitionIntent = {
 	      id: `mini-game-${Date.now()}`,
-	      kind: result?.completedReason === 'player-death' ? 'life-lost' : 'mini-game-complete',
+	      kind: isLifeLosingMiniGameResult(result) ? 'life-lost' : 'mini-game-complete',
 	      destination: 'versus',
 	      run: arcadeRun,
 	      award: result?.arcadeScoreAward ?? result?.score ?? arcadeRun.lastAward,
@@ -5315,18 +5331,21 @@ export default function App() {
 	    const miniGameStage = pickRandomStage(playableStageRoster) ?? selectedStage;
 	    const debugDuration = Number(params.get('debugMiniGameTimer'));
 	    const forcedMiniGameKind = params.get('forceMiniGameKind');
-	    const debugKind = forcedMiniGameKind === ENEMY_RUSH_GAME_ID || forcedMiniGameKind === FIGHTER_RUSH_GAME_ID ? forcedMiniGameKind : BREAK_TARGET_GAME_ID;
+	    const debugKind = forcedMiniGameKind === ENEMY_RUSH_GAME_ID || forcedMiniGameKind === FIGHTER_RUSH_GAME_ID || forcedMiniGameKind === TAG_GAME_ID ? forcedMiniGameKind : BREAK_TARGET_GAME_ID;
+	    const seed = freshAiSeed();
+	    const tagOpponent = debugKind === TAG_GAME_ID ? pickTagOpponent(roster, p1.id, effectiveUnlockedCharacterIds, seed) : null;
 	    setMode('ai');
 	    setActiveArcadeMiniGame({
-	      kind: debugKind,
+	      kind: debugKind === TAG_GAME_ID && !tagOpponent ? BREAK_TARGET_GAME_ID : debugKind,
 	      stage: miniGameStage,
-	      seed: freshAiSeed(),
-	      durationSeconds: Number.isFinite(debugDuration) && debugDuration > 0 ? Math.min(45, debugDuration) : undefined,
-	      arcadeLevel: arcadeRun.level
+	      seed,
+	      durationSeconds: Number.isFinite(debugDuration) && debugDuration > 0 ? Math.min(debugKind === TAG_GAME_ID ? 60 : 45, debugDuration) : undefined,
+	      arcadeLevel: arcadeRun.level,
+	      tagOpponent: tagOpponent ?? undefined
 	    });
 	    setLastMiniGameResult(null);
 	    setScreen('miniGame');
-	  }, [arcadeRun.level, p1, playableStageRoster, screen, selectedStage]);
+	  }, [arcadeRun.level, effectiveUnlockedCharacterIds, p1, playableStageRoster, roster, screen, selectedStage]);
 
   if (screen === 'boot' || !p1 || !p2) {
     return (
@@ -5924,7 +5943,43 @@ export default function App() {
           />
         )}
         {screen === 'miniGame' && activeArcadeMiniGame && (
-          activeArcadeMiniGame.kind === ENEMY_RUSH_GAME_ID || activeArcadeMiniGame.kind === FIGHTER_RUSH_GAME_ID ? (
+          activeArcadeMiniGame.kind === TAG_GAME_ID && activeArcadeMiniGame.tagOpponent ? (
+            <TagMiniGameScreen
+              key={`${p1.id}-${activeArcadeMiniGame.kind}-${activeArcadeMiniGame.stage.id}-${activeArcadeMiniGame.seed}`}
+              character={p1}
+              opponent={activeArcadeMiniGame.tagOpponent}
+              roster={roster}
+              launch={activeArcadeMiniGame}
+              settings={settings}
+              arcadeRun={arcadeRun}
+              readInputsForStep={readInputsForStep}
+              setVirtualAction={setVirtualAction}
+              clearMenuInputs={clearMenuInputs}
+              onMenu={() => {
+                captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
+                finishArcadeRun(arcadeRun);
+                setActiveArcadeMiniGame(null);
+                setLastMiniGameResult(null);
+                setScreen('menu');
+              }}
+              onComplete={(result) => {
+                const resultWithAward = { ...result, arcadeScoreAward: result.score };
+                const nextArcadeRun = applyArcadeMiniGameResult(arcadeRun, resultWithAward);
+                if (nextArcadeRun.level > arcadeRun.level) {
+                  capturePositiveMilestone('arcade_level_reached', {
+                    arcade_level: nextArcadeRun.level,
+                    previous_arcade_level: arcadeRun.level,
+                    arcade_score: nextArcadeRun.score,
+                    source: 'minigame'
+                  });
+                }
+                setArcadeRun(nextArcadeRun);
+                setLastMiniGameResult(resultWithAward);
+                setScreen('miniGameResult');
+              }}
+              onAnalytics={captureAppAnalytics}
+            />
+          ) : activeArcadeMiniGame.kind === ENEMY_RUSH_GAME_ID || activeArcadeMiniGame.kind === FIGHTER_RUSH_GAME_ID ? (
             <EnemyRushMiniGameScreen
               key={`${p1.id}-${activeArcadeMiniGame.kind}-${activeArcadeMiniGame.stage.id}-${activeArcadeMiniGame.seed}`}
               character={p1}
@@ -7167,9 +7222,14 @@ function getArcadeTransitionCopy(intent: ArcadeTransitionIntent) {
 }
 
 function getArcadeMiniGameTitle(kind?: MiniGameKind) {
+  if (kind === TAG_GAME_ID) return 'Tag';
   if (kind === FIGHTER_RUSH_GAME_ID) return 'Fighter Rush';
   if (kind === ENEMY_RUSH_GAME_ID) return 'Enemy Rush';
   return 'Break The Target';
+}
+
+function isLifeLosingMiniGameResult(result?: MiniGameResult | null) {
+  return result?.completedReason === 'player-death' || result?.completedReason === 'tagged-player' || result?.completedReason === 'escaped';
 }
 
 function isRushMiniGameResult(kind?: MiniGameKind) {
@@ -7181,7 +7241,8 @@ function preloadArcadeTransitionImages(intent: ArcadeTransitionIntent, player: C
     ...getArcadeCharacterImageSources(player),
     ...(intent.nextOpponent ? getArcadeCharacterImageSources(intent.nextOpponent) : []),
     ...getArcadeStageImageSources(intent.nextStage),
-    ...(intent.nextMiniGame ? getArcadeStageImageSources(intent.nextMiniGame.stage) : [])
+    ...(intent.nextMiniGame ? getArcadeStageImageSources(intent.nextMiniGame.stage) : []),
+    ...(intent.nextMiniGame?.tagOpponent ? getArcadeCharacterImageSources(intent.nextMiniGame.tagOpponent) : [])
   ];
   return preloadImageSources(urls);
 }
@@ -28471,6 +28532,265 @@ function EnemyRushHud({ snapshot }: { snapshot: EnemyRushMiniGameSnapshot }) {
   );
 }
 
+function makeTagSnapshot(
+  character: CharacterDefinition,
+  opponent: CharacterDefinition,
+  roster: CharacterDefinition[],
+  launch: ArcadeMiniGameLaunch,
+  arcadeLevel: number,
+  controlScheme: ControlScheme
+) {
+  return createTagMiniGame(
+    character,
+    opponent,
+    launch.stage,
+    launch.seed,
+    launch.arcadeLevel ?? arcadeLevel,
+    launch.tagRole,
+    launch.durationSeconds,
+    controlScheme,
+    roster
+  );
+}
+
+function TagMiniGameScreen({
+  character,
+  opponent,
+  roster,
+  launch,
+  settings,
+  arcadeRun,
+  readInputsForStep,
+  setVirtualAction,
+  clearMenuInputs,
+  onMenu,
+  onComplete,
+  onAnalytics
+}: {
+  character: CharacterDefinition;
+  opponent: CharacterDefinition;
+  roster: CharacterDefinition[];
+  launch: ArcadeMiniGameLaunch;
+  settings: GameSettings;
+  arcadeRun: ArcadeRunState;
+  readInputsForStep: () => [InputFrame, InputFrame];
+  setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
+  clearMenuInputs: () => void;
+  onMenu: () => void;
+  onComplete: (result: MiniGameResult) => void;
+  onAnalytics: AnalyticsCapture;
+}) {
+  const [snapshot, setSnapshot] = useState<TagMiniGameSnapshot>(() => makeTagSnapshot(character, opponent, roster, launch, arcadeRun.level, settings.game.controlScheme));
+  const [paused, setPaused] = useState(false);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const snapshotRef = useRef(snapshot);
+  const pausedRef = useRef(false);
+  const pauseLatchRef = useRef(false);
+  const completedRef = useRef(false);
+  const mobileControlsTrackedRef = useRef(false);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV || typeof window === 'undefined') return undefined;
+    const testWindow = window as E2EWindow;
+    testWindow.__koreE2ETagSnapshot = () => snapshotRef.current;
+    return () => {
+      if (testWindow.__koreE2ETagSnapshot) delete testWindow.__koreE2ETagSnapshot;
+    };
+  }, []);
+
+  useEffect(() => {
+    const fresh = makeTagSnapshot(character, opponent, roster, launch, arcadeRun.level, settings.game.controlScheme);
+    snapshotRef.current = fresh;
+    setSnapshot(fresh);
+    setPaused(false);
+    pausedRef.current = false;
+    completedRef.current = false;
+    pauseLatchRef.current = false;
+    mobileControlsTrackedRef.current = false;
+    onAnalytics('minigame_started', {
+      game_id: fresh.gameId,
+      stage_id: fresh.stage.id,
+      character_id: character.id,
+      opponent_character_id: opponent.id,
+      tag_role: fresh.role,
+      arcade_level: fresh.level,
+      cpu_difficulty: fresh.difficulty,
+      seed: launch.seed
+    });
+    const focusFrame = window.requestAnimationFrame(() => screenRef.current?.focus());
+    return () => window.cancelAnimationFrame(focusFrame);
+  }, [arcadeRun.level, character, launch, onAnalytics, opponent, roster, settings.game.controlScheme]);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
+
+  useEffect(() => {
+    snapshotRef.current = snapshot;
+  }, [snapshot]);
+
+  useEffect(() => {
+    let frame = 0;
+    let last = performance.now();
+    let accumulator = 0;
+    const fixedStep = 1 / 60;
+    const tick = (now: number) => {
+      const delta = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const [p1Input] = readInputsForStep();
+      if (p1Input.pause) {
+        if (!pauseLatchRef.current) {
+          pauseLatchRef.current = true;
+          setPaused((current) => {
+            pausedRef.current = !current;
+            onAnalytics('minigame_paused', {
+              paused: !current,
+              game_id: TAG_GAME_ID,
+              stage_id: snapshotRef.current.stage.id,
+              tag_role: snapshotRef.current.role
+            });
+            return !current;
+          });
+          clearMenuInputs();
+        }
+      } else {
+        pauseLatchRef.current = false;
+      }
+      if (!pausedRef.current && !completedRef.current) {
+        accumulator += delta;
+        while (accumulator >= fixedStep) {
+          snapshotRef.current = stepTagMiniGame(snapshotRef.current, p1Input, fixedStep);
+          accumulator -= fixedStep;
+        }
+        setSnapshot(snapshotRef.current);
+        if (snapshotRef.current.phase === 'complete') {
+          completedRef.current = true;
+          const key = { gameId: TAG_GAME_ID, stageId: snapshotRef.current.stage.id, tagRole: snapshotRef.current.role } as const;
+          const previousHighScore = readMiniGameHighScore(key);
+          const result = makeTagMiniGameResult(snapshotRef.current, previousHighScore);
+          const highScore = writeMiniGameHighScore(key, result.score);
+          onAnalytics('minigame_completed', {
+            game_id: result.gameId,
+            stage_id: result.stageId,
+            score: result.score,
+            high_score: highScore,
+            new_high_score: result.score > previousHighScore,
+            tag_role: result.tagRole,
+            completed_reason: result.completedReason,
+            survival_time: result.survivalTime,
+            time_to_tag: result.timeToTag,
+            cpu_difficulty: snapshotRef.current.difficulty,
+            opponent_character_id: opponent.id
+          });
+          if (result.score > previousHighScore) {
+            onAnalytics('positive_milestone_reached', {
+              milestone_type: 'minigame_high_score',
+              game_id: result.gameId,
+              stage_id: result.stageId,
+              score: result.score,
+              high_score: highScore,
+              new_high_score: true,
+              tag_role: result.tagRole
+            });
+          }
+          onComplete({ ...result, highScore, newHighScore: result.score > previousHighScore });
+          return;
+        }
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [clearMenuInputs, onAnalytics, onComplete, opponent.id, readInputsForStep]);
+
+  const trackMobileControlsUsed = useCallback(() => {
+    if (mobileControlsTrackedRef.current) return;
+    mobileControlsTrackedRef.current = true;
+    onAnalytics('mobile_controls_used', {
+      source: 'minigame',
+      game_id: TAG_GAME_ID,
+      stage_id: snapshotRef.current.stage.id,
+      tag_role: snapshotRef.current.role
+    });
+  }, [onAnalytics]);
+
+  const introMessage = snapshot.phase === 'intro-role'
+    ? snapshot.role === 'player-it' ? 'YOU ARE IT' : 'CPU IS IT'
+    : snapshot.phase === 'intro-objective'
+      ? snapshot.role === 'player-it' ? 'TRY TO LAND A HIT' : 'DO NOT GET TOUCHED'
+      : '';
+  const outcomeMessage = snapshot.phase === 'tagged' || snapshot.phase === 'victory' ? snapshot.match.message : '';
+
+  return (
+    <div className="fight-screen mini-game-screen tag-mini-game-screen" ref={screenRef} tabIndex={-1} onPointerDown={() => screenRef.current?.focus()}>
+      <GameScene
+        match={snapshot.match}
+        cameraSettings={settings.camera}
+        sparkSettings={settings.display.impactSparks}
+        movementSmokeStyle={settings.display.movementSmokeStyle}
+        audioSettings={settings.audio}
+        reducedMotion={settings.display.reducedMotion}
+      />
+      <ImpactScreenFlashLayer events={snapshot.match.impactEvents} enabled={settings.display.impactSparks.enabled && settings.display.impactSparks.cinematic} reducedMotion={settings.display.reducedMotion} />
+      <ImpactCalloutLayer events={snapshot.match.impactEvents} enabled={settings.display.impactSparks.enabled && settings.display.impactSparks.cinematic} reducedMotion={settings.display.reducedMotion} />
+      <TagHud snapshot={snapshot} opponent={opponent} />
+      {(introMessage || outcomeMessage) && (
+        <div key={`${snapshot.phase}:${introMessage}:${outcomeMessage}`} className={`match-message tag-callout ${outcomeMessage ? 'tag-outcome-callout' : 'tag-intro-callout'}`} aria-live="assertive">
+          {introMessage || outcomeMessage}
+        </div>
+      )}
+      {settings.display.touchControls !== 'off' && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
+      {paused && (
+        <div className="pause-overlay">
+          <div className="pause-panel">
+            <h2>Tag Paused</h2>
+            <div className="pause-menu-actions">
+              <button className="primary-button" onClick={() => {
+                onAnalytics('minigame_paused', { paused: false, game_id: TAG_GAME_ID, stage_id: snapshot.stage.id, tag_role: snapshot.role });
+                setPaused(false);
+              }}>
+                <Play size={18} />
+                Resume
+              </button>
+              <button className="secondary-button" onClick={onMenu}>
+                <Home size={18} />
+                Menu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TagHud({ snapshot, opponent }: { snapshot: TagMiniGameSnapshot; opponent: CharacterDefinition }) {
+  const playing = snapshot.phase === 'playing';
+  const roleLabel = snapshot.role === 'player-it' ? 'YOU ARE IT' : 'CPU IS IT';
+  const objective = snapshot.role === 'player-it' ? 'Land a clean hit' : 'Stay untouched';
+  return (
+    <aside className={`tag-hud ${playing ? 'is-live' : ''}`} aria-label={`Tag status. ${roleLabel}. ${objective}.`}>
+      <div className="tag-hud-role">
+        <span>TAG</span>
+        <strong>{roleLabel}</strong>
+        <small>{objective}</small>
+      </div>
+      <div className="tag-hud-timer">
+        <strong>{Math.ceil(snapshot.timer)}</strong>
+        <span>seconds</span>
+      </div>
+      <div className="tag-hud-score">
+        <strong>{Math.round(snapshot.score)}</strong>
+        <span>points</span>
+      </div>
+      <div className="tag-hud-opponent">
+        <span>{opponent.displayName}</span>
+        <small>CPU · Lv {snapshot.difficulty}</small>
+      </div>
+    </aside>
+  );
+}
+
 function MiniGameResultScreen({
   result,
   cpuAutoAccept = false,
@@ -28490,6 +28810,16 @@ function MiniGameResultScreen({
     onContinue();
   }, [onContinue, ready]);
   const acceptInput = useAnyInputActivation({ enabled: ready, ready, autoAccept: cpuAutoAccept, onAccept: continueIfReady });
+  const isTagResult = result.gameId === TAG_GAME_ID;
+  const tagWon = result.completedReason === 'survived' || result.completedReason === 'tagged-cpu';
+  const tagStatus = result.completedReason === 'survived'
+    ? 'Untouched'
+    : result.completedReason === 'tagged-cpu'
+      ? 'Tagged the CPU'
+      : result.completedReason === 'escaped'
+        ? 'CPU Escaped'
+        : 'Tagged';
+  const tagTime = result.tagRole === 'player-it' ? result.timeToTag ?? 60 : result.survivalTime ?? 0;
 
   useEffect(() => {
     let frame = 0;
@@ -28522,15 +28852,27 @@ function MiniGameResultScreen({
       <section className="mini-game-result-copy" aria-live="polite">
         <span>{getArcadeMiniGameTitle(result.gameId)}</span>
         <h1>{displayScore}</h1>
-        <p>{result.stageName}</p>
-        <div className="mini-game-result-stats">
-          <strong>{result.targetsDestroyed}/{result.totalTargets}</strong>
-          <span>{isRushMiniGameResult(result.gameId) ? 'Enemies' : 'Targets'}</span>
-          <strong>{isRushMiniGameResult(result.gameId) ? (result.coinsCollected ?? 0) : Math.ceil(result.timeRemaining)}</strong>
-          <span>{isRushMiniGameResult(result.gameId) ? 'Coins' : 'Seconds'}</span>
-          <strong>{result.highScore}</strong>
-          <span>{result.newHighScore ? 'New Best' : 'Best'}</span>
-        </div>
+        <p>{isTagResult ? tagStatus : result.stageName}</p>
+        {isTagResult ? (
+          <div className="mini-game-result-stats tag-result-stats">
+            <strong>{result.tagRole === 'player-it' ? 'IT' : 'RUN'}</strong>
+            <span>Role</span>
+            <strong>{tagTime.toFixed(1)}s</strong>
+            <span>{result.tagRole === 'player-it' ? 'Tag Time' : 'Survived'}</span>
+            <strong>{result.highScore}</strong>
+            <span>{result.newHighScore ? 'New Best' : `${result.tagRole === 'player-it' ? 'IT' : 'Runner'} Best`}</span>
+          </div>
+        ) : (
+          <div className="mini-game-result-stats">
+            <strong>{result.targetsDestroyed}/{result.totalTargets}</strong>
+            <span>{isRushMiniGameResult(result.gameId) ? 'Enemies' : 'Targets'}</span>
+            <strong>{isRushMiniGameResult(result.gameId) ? (result.coinsCollected ?? 0) : Math.ceil(result.timeRemaining)}</strong>
+            <span>{isRushMiniGameResult(result.gameId) ? 'Coins' : 'Seconds'}</span>
+            <strong>{result.highScore}</strong>
+            <span>{result.newHighScore ? 'New Best' : 'Best'}</span>
+          </div>
+        )}
+        {isTagResult && <em className={`tag-result-outcome ${tagWon ? 'is-win' : 'is-loss'}`}>{tagWon ? 'YOU WIN!' : 'LIFE LOST'}</em>}
         {typeof result.arcadeScoreAward === 'number' && (
           <b className="mini-game-result-arcade-award">Arcade Score +{Math.round(result.arcadeScoreAward)}</b>
         )}
@@ -28733,6 +29075,7 @@ function ArcadeGameOverScreen({
           <span>{run.miniGameTotals['break-target']} target pts</span>
           <span>{run.miniGameTotals['enemy-rush']} rush pts</span>
           <span>{run.miniGameTotals['fighter-rush']} fighter rush pts</span>
+          <span>{run.miniGameTotals.tag} tag pts</span>
         </div>
         <div className="overlay-actions pause-menu-actions arcade-game-over-actions">
           <button className="primary-button" onClick={onStartOver}>

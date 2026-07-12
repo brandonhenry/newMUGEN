@@ -30,7 +30,8 @@ export function createArcadeRunState(now = Date.now()): ArcadeRunState {
     miniGameTotals: {
       'break-target': 0,
       'enemy-rush': 0,
-      'fighter-rush': 0
+      'fighter-rush': 0,
+      tag: 0
     }
   };
 }
@@ -62,7 +63,10 @@ export function applyArcadeMiniGameResult(run: ArcadeRunState, result: MiniGameR
       [result.gameId]: (run.miniGameTotals[result.gameId] ?? 0) + Math.max(0, Math.round(result.score))
     }
   });
-  if ((result.gameId === 'enemy-rush' || result.gameId === 'fighter-rush') && result.completedReason === 'player-death') return applyArcadeLifeLoss(next);
+  const lostLife =
+    ((result.gameId === 'enemy-rush' || result.gameId === 'fighter-rush') && result.completedReason === 'player-death') ||
+    (result.gameId === 'tag' && (result.completedReason === 'tagged-player' || result.completedReason === 'escaped'));
+  if (lostLife) return applyArcadeLifeLoss(next);
   return next;
 }
 

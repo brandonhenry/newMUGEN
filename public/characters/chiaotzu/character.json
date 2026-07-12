@@ -149,7 +149,12 @@
     ],
     "cmd:f+1": [],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/chiaotzu/frames/frame-066.png",
+      "/characters/chiaotzu/frames/frame-067.png",
+      "/characters/chiaotzu/frames/frame-068.png",
+      "/characters/chiaotzu/frames/frame-069.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -570,9 +575,9 @@
       "tracking": "medium"
     },
     "cmd:qcf+4": {
-      "startupFrames": 20,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 26,
+      "activeFrames": 24,
+      "recoveryFrames": 1,
       "damage": 15,
       "blockDamage": 2,
       "onBlockFrames": -12,

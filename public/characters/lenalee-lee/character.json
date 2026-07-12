@@ -183,7 +183,18 @@
       "/characters/lenalee-lee/frames/frame-243.png",
       "/characters/lenalee-lee/frames/frame-244.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/lenalee-lee/frames/frame-185.png",
+      "/characters/lenalee-lee/frames/frame-186.png",
+      "/characters/lenalee-lee/frames/frame-187.png",
+      "/characters/lenalee-lee/frames/frame-188.png",
+      "/characters/lenalee-lee/frames/frame-189.png",
+      "/characters/lenalee-lee/frames/frame-190.png",
+      "/characters/lenalee-lee/frames/frame-191.png",
+      "/characters/lenalee-lee/frames/frame-192.png",
+      "/characters/lenalee-lee/frames/frame-193.png",
+      "/characters/lenalee-lee/frames/frame-194.png"
+    ],
     "cmd:FC+2": [
       "/characters/lenalee-lee/frames/frame-096.png",
       "/characters/lenalee-lee/frames/frame-097.png",
@@ -836,9 +847,9 @@
       "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
-      "startupFrames": 13,
-      "activeFrames": 3,
-      "recoveryFrames": 16,
+      "startupFrames": 0,
+      "activeFrames": 31,
+      "recoveryFrames": 1,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 1,

@@ -165,10 +165,32 @@
     "lose": [
       "/characters/amy-rose/frames/frame-270.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:f+1": [
+      "/characters/amy-rose/frames/frame-112.png",
+      "/characters/amy-rose/frames/frame-113.png",
+      "/characters/amy-rose/frames/frame-114.png",
+      "/characters/amy-rose/frames/frame-115.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/amy-rose/frames/frame-098.png",
+      "/characters/amy-rose/frames/frame-099.png",
+      "/characters/amy-rose/frames/frame-100.png",
+      "/characters/amy-rose/frames/frame-101.png",
+      "/characters/amy-rose/frames/frame-102.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/amy-rose/frames/frame-094.png",
+      "/characters/amy-rose/frames/frame-095.png",
+      "/characters/amy-rose/frames/frame-096.png",
+      "/characters/amy-rose/frames/frame-097.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/amy-rose/frames/frame-130.png",
+      "/characters/amy-rose/frames/frame-131.png",
+      "/characters/amy-rose/frames/frame-132.png",
+      "/characters/amy-rose/frames/frame-133.png",
+      "/characters/amy-rose/frames/frame-134.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -470,9 +492,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 10,
+      "activeFrames": 28,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -484,9 +506,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 9,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -501,9 +523,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 21,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 26,
+      "activeFrames": 25,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -515,9 +537,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 32,
+      "recoveryFrames": 7,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,

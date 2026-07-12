@@ -159,10 +159,37 @@
     "lose": [
       "/characters/daichi/frames/frame-225.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:f+1": [
+      "/characters/daichi/frames/frame-047.png",
+      "/characters/daichi/frames/frame-048.png",
+      "/characters/daichi/frames/frame-049.png",
+      "/characters/daichi/frames/frame-050.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/daichi/frames/frame-083.png",
+      "/characters/daichi/frames/frame-084.png",
+      "/characters/daichi/frames/frame-085.png",
+      "/characters/daichi/frames/frame-086.png",
+      "/characters/daichi/frames/frame-087.png",
+      "/characters/daichi/frames/frame-088.png",
+      "/characters/daichi/frames/frame-089.png",
+      "/characters/daichi/frames/frame-090.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/daichi/frames/frame-041.png",
+      "/characters/daichi/frames/frame-042.png",
+      "/characters/daichi/frames/frame-043.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/daichi/frames/frame-091.png",
+      "/characters/daichi/frames/frame-092.png",
+      "/characters/daichi/frames/frame-093.png",
+      "/characters/daichi/frames/frame-094.png",
+      "/characters/daichi/frames/frame-095.png",
+      "/characters/daichi/frames/frame-096.png",
+      "/characters/daichi/frames/frame-097.png",
+      "/characters/daichi/frames/frame-098.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -170,7 +197,15 @@
     "cmd:2+3": [],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:O+2": [
+      "/characters/daichi/frames/frame-121.png",
+      "/characters/daichi/frames/frame-122.png",
+      "/characters/daichi/frames/frame-123.png",
+      "/characters/daichi/frames/frame-124.png",
+      "/characters/daichi/frames/frame-125.png",
+      "/characters/daichi/frames/frame-126.png",
+      "/characters/daichi/frames/frame-127.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -468,9 +503,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -482,9 +517,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 46,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -499,9 +534,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 0,
+      "activeFrames": 52,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -513,9 +548,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 35,
+      "recoveryFrames": 4,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -621,9 +656,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 17,
+      "activeFrames": 40,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

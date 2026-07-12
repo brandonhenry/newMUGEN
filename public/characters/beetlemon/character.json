@@ -154,8 +154,26 @@
       "/characters/beetlemon/frames/frame-138.png"
     ],
     "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:d/f+2": [
+      "/characters/beetlemon/frames/frame-245.png",
+      "/characters/beetlemon/frames/frame-246.png",
+      "/characters/beetlemon/frames/frame-247.png",
+      "/characters/beetlemon/frames/frame-248.png",
+      "/characters/beetlemon/frames/frame-249.png",
+      "/characters/beetlemon/frames/frame-250.png",
+      "/characters/beetlemon/frames/frame-251.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/beetlemon/frames/frame-219.png",
+      "/characters/beetlemon/frames/frame-220.png",
+      "/characters/beetlemon/frames/frame-221.png",
+      "/characters/beetlemon/frames/frame-222.png",
+      "/characters/beetlemon/frames/frame-223.png",
+      "/characters/beetlemon/frames/frame-224.png",
+      "/characters/beetlemon/frames/frame-225.png",
+      "/characters/beetlemon/frames/frame-226.png",
+      "/characters/beetlemon/frames/frame-227.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -164,7 +182,15 @@
     "cmd:2+3": [],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": [],
+    "cmd:O+2": [
+      "/characters/beetlemon/frames/frame-324.png",
+      "/characters/beetlemon/frames/frame-325.png",
+      "/characters/beetlemon/frames/frame-326.png",
+      "/characters/beetlemon/frames/frame-327.png",
+      "/characters/beetlemon/frames/frame-328.png",
+      "/characters/beetlemon/frames/frame-329.png",
+      "/characters/beetlemon/frames/frame-330.png"
+    ],
     "cmd:b+1": []
   },
   "animationFrameRates": {
@@ -475,9 +501,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 34,
+      "activeFrames": 12,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -492,9 +518,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 30,
+      "activeFrames": 22,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -614,9 +640,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 57,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

@@ -46,8 +46,8 @@ const ROUND_OVER_DELAY = 2.1;
 const ROUND_FINISHER_SECONDS = 0.72;
 const ROUND_FINISHER_TIME_SCALE = 0.28;
 const ROUND_FINISHER_CAMERA_ZOOM_SCALE = 0.78;
-const KO_SLOWMO_SECONDS = 0.8;
-const KO_SLOWMO_TIME_SCALE = 0.24;
+export const KO_SLOWMO_SECONDS = 0.8;
+export const KO_SLOWMO_TIME_SCALE = 0.24;
 type RoundFinishReason = 'ko' | 'timeout';
 const ROUND_INTRO_ENTRY_SECONDS = 1.2;
 const ROUND_ANNOUNCER_TIMINGS = [
@@ -217,6 +217,7 @@ export function createMatch(
     mode,
     cpuDifficulty,
     cpuSlots: options.cpuSlots ? [...new Set(options.cpuSlots)].filter((slot): slot is 1 | 2 => slot === 1 || slot === 2) : undefined,
+    aiObjective: options.aiObjective ?? 'standard',
     aiSeed,
     roundAiSeed: makeRoundAiSeed(aiSeed, 1),
     roundTime,
@@ -6113,7 +6114,108 @@ function clearStuckCpuAiState(ai: FighterRuntime) {
   for (const action of moveInputs) ai.previousAttackInputs[action] = false;
 }
 
+function makeObjectiveAiInput(
+  match: MatchSnapshot,
+  ai: FighterRuntime,
+  opponent: FighterRuntime,
+  timer: number,
+  difficulty: CpuDifficulty,
+  roundAiSeed: number
+): InputFrame {
+  const input = emptyInputFrame();
+  if (ai.state === 'throwHold') {
+    input.jab = true;
+    (input as InputFrameWithMetadata).__pressedActions = ['jab'];
+    return input;
+  }
+  if (ai.state === 'throwHeld') {
+    applyAiThrowEscapeInput(input, ai, opponent, difficulty, Math.max(0, match.roundTime - timer), roundAiSeed);
+    return input;
+  }
+  if (ai.state === 'getup') return input;
+  if (ai.state === 'knockdown') {
+    if (ai.actionFramesRemaining > 0 || ai.stunFramesRemaining > 0 || isAirborne(ai)) return input;
+    input.confirm = true;
+    return input;
+  }
+  if (ai.stunFramesRemaining > 0 || ai.blockstunFramesRemaining > 0 || ai.actionFramesRemaining > 0 || ai.actionTimer > 0) return input;
+
+  const dx = opponent.position.x - ai.position.x;
+  const dz = opponent.position.z - ai.position.z;
+  const distance = Math.hypot(dx, dz);
+  const laneDiff = opponent.position.z - ai.position.z;
+  const opponentSide = getOpponentSideSign(ai, opponent, match.stage);
+  const towardKey = opponentSide > 0 ? 'right' : 'left';
+  const awayKey = opponentSide > 0 ? 'left' : 'right';
+  const elapsedFrames = Math.max(0, Math.floor((match.roundTime - timer) * FRAMES_PER_SECOND));
+  const decision = positiveModulo(elapsedFrames + roundAiSeed + ai.slot * 37, 100);
+
+  if (match.aiObjective === 'runner') {
+    const opponentMove = opponent.currentMove;
+    const incoming = opponent.state === 'attack' && opponentMove && distance <= (opponentMove.range ?? 1.35) + 1.1;
+    const reactionThreshold = [0, 42, 58, 72, 86, 96][difficulty] ?? 72;
+    const reacts = Boolean(incoming) && decision < reactionThreshold;
+    if (reacts && opponentMove) {
+      if (opponentMove.hitLevel === 'throw' || opponentMove.tracking === 'none') {
+        input[decision % 2 === 0 ? 'sidestepUp' : 'sidestepDown'] = true;
+        input[awayKey] = true;
+        if (difficulty >= 3) input.dashBack = true;
+      } else if (opponentMove.hitLevel === 'low') {
+        input.down = true;
+        input.block = true;
+        input[awayKey] = true;
+      } else if (opponentMove.hitLevel === 'high' && difficulty >= 3 && decision % 3 === 0) {
+        input.down = true;
+      } else {
+        input.block = true;
+        input[awayKey] = true;
+      }
+      return input;
+    }
+    const desiredDistance = 3.2 + difficulty * 0.42;
+    if (distance < desiredDistance || difficulty >= 4) {
+      input[awayKey] = true;
+      if (difficulty >= 2 && distance < desiredDistance - 0.35) input.dashBack = true;
+    }
+    const evadePeriod = Math.max(10, 32 - difficulty * 4);
+    if (elapsedFrames % evadePeriod < 2) {
+      input[positiveModulo(Math.floor(elapsedFrames / evadePeriod) + roundAiSeed, 2) === 0 ? 'sidestepUp' : 'sidestepDown'] = true;
+    } else if (Math.abs(laneDiff) < 0.7 && difficulty >= 3) {
+      input[decision % 2 === 0 ? 'sidewalkUp' : 'sidewalkDown'] = true;
+    } else if (Math.abs(laneDiff) > 1.1) {
+      input[laneDiff < 0 ? 'sidewalkUp' : 'sidewalkDown'] = true;
+    }
+    return input;
+  }
+
+  const damagingMoves = ai.character.moves
+    .filter((move) => move.damage > 0)
+    .sort((a, b) => {
+      const aScore = a.startupFrames * (1.2 - difficulty * 0.08) - (a.range ?? 1.2) * difficulty * 2;
+      const bScore = b.startupFrames * (1.2 - difficulty * 0.08) - (b.range ?? 1.2) * difficulty * 2;
+      return aScore - bScore;
+    });
+  const moveIndex = positiveModulo(Math.floor(elapsedFrames / Math.max(12, 34 - difficulty * 4)) + roundAiSeed, Math.max(1, Math.min(damagingMoves.length, 2 + difficulty)));
+  const selectedMove = damagingMoves[moveIndex] ?? damagingMoves[0] ?? ai.character.moves[0];
+  const attackReach = (selectedMove?.range ?? 1.3) + 0.15 + difficulty * 0.08;
+  const aligned = Math.abs(laneDiff) <= attackReach * (0.6 + difficulty * 0.06);
+  const attackPeriod = Math.max(8, 30 - difficulty * 4);
+  const attackWindow = 1 + Math.floor(difficulty / 2);
+  if (selectedMove && distance <= attackReach && aligned && elapsedFrames % attackPeriod < attackWindow) {
+    input[selectedMove.input] = true;
+    (input as InputFrameWithMetadata).__pressedActions = [selectedMove.input];
+    return input;
+  }
+  input[towardKey] = true;
+  if (difficulty >= 2 && distance > attackReach + Math.max(0.25, 1.3 - difficulty * 0.18)) input.dashForward = true;
+  if (Math.abs(laneDiff) > 0.22) input[laneDiff < 0 ? 'sidewalkUp' : 'sidewalkDown'] = true;
+  return input;
+}
+
 function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: FighterRuntime, timer: number, difficulty: CpuDifficulty, cpuDuel = false, aiSeed = 0, roundAiSeed = aiSeed): InputFrame {
+  if (match.aiObjective !== 'standard') {
+    return makeObjectiveAiInput(match, ai, opponent, timer, difficulty, roundAiSeed);
+  }
   const input = emptyInputFrame();
   const dx = opponent.position.x - ai.position.x;
   const dz = opponent.position.z - ai.position.z;

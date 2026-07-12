@@ -183,7 +183,16 @@
       "/characters/kagura/frames/frame-101.png",
       "/characters/kagura/frames/frame-102.png"
     ],
-    "cmd:FC+1": [],
+    "cmd:FC+1": [
+      "/characters/kagura/frames/frame-070.png",
+      "/characters/kagura/frames/frame-071.png",
+      "/characters/kagura/frames/frame-072.png",
+      "/characters/kagura/frames/frame-073.png",
+      "/characters/kagura/frames/frame-074.png",
+      "/characters/kagura/frames/frame-075.png",
+      "/characters/kagura/frames/frame-076.png",
+      "/characters/kagura/frames/frame-077.png"
+    ],
     "cmd:FC+2": [
       "/characters/kagura/frames/frame-093.png",
       "/characters/kagura/frames/frame-094.png",
@@ -837,9 +846,9 @@
       "juggleRepeatPenaltyFrames": 6
     },
     "cmd:FC+1": {
-      "startupFrames": 13,
-      "activeFrames": 3,
-      "recoveryFrames": 16,
+      "startupFrames": 4,
+      "activeFrames": 24,
+      "recoveryFrames": 4,
       "damage": 8,
       "blockDamage": 1,
       "onBlockFrames": 1,

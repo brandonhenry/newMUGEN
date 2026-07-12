@@ -129,10 +129,34 @@
     "lose": [
       "/characters/cure-white/frames/frame-098.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:f+1": [
+      "/characters/cure-white/frames/frame-116.png",
+      "/characters/cure-white/frames/frame-117.png",
+      "/characters/cure-white/frames/frame-118.png",
+      "/characters/cure-white/frames/frame-119.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/cure-white/frames/frame-084.png",
+      "/characters/cure-white/frames/frame-085.png",
+      "/characters/cure-white/frames/frame-086.png",
+      "/characters/cure-white/frames/frame-087.png",
+      "/characters/cure-white/frames/frame-088.png",
+      "/characters/cure-white/frames/frame-089.png",
+      "/characters/cure-white/frames/frame-090.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/cure-white/frames/frame-036.png",
+      "/characters/cure-white/frames/frame-037.png",
+      "/characters/cure-white/frames/frame-038.png",
+      "/characters/cure-white/frames/frame-039.png",
+      "/characters/cure-white/frames/frame-040.png",
+      "/characters/cure-white/frames/frame-041.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/cure-white/frames/frame-162.png",
+      "/characters/cure-white/frames/frame-163.png",
+      "/characters/cure-white/frames/frame-164.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -450,9 +474,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -464,9 +488,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 39,
+      "recoveryFrames": 6,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -481,9 +505,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 0,
+      "activeFrames": 52,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -495,9 +519,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,

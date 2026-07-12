@@ -140,17 +140,113 @@
       "/characters/kidomaru/frames/frame-034.png"
     ],
     "cmd:f+1": [],
-    "cmd:d/f+2": [],
+    "cmd:d/f+2": [
+      "/characters/kidomaru/frames/frame-252.png",
+      "/characters/kidomaru/frames/frame-253.png",
+      "/characters/kidomaru/frames/frame-254.png",
+      "/characters/kidomaru/frames/frame-255.png",
+      "/characters/kidomaru/frames/frame-256.png",
+      "/characters/kidomaru/frames/frame-257.png",
+      "/characters/kidomaru/frames/frame-258.png",
+      "/characters/kidomaru/frames/frame-259.png",
+      "/characters/kidomaru/frames/frame-260.png",
+      "/characters/kidomaru/frames/frame-261.png"
+    ],
     "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:WS+4": [
+      "/characters/kidomaru/frames/frame-242.png",
+      "/characters/kidomaru/frames/frame-243.png",
+      "/characters/kidomaru/frames/frame-244.png",
+      "/characters/kidomaru/frames/frame-245.png",
+      "/characters/kidomaru/frames/frame-246.png",
+      "/characters/kidomaru/frames/frame-247.png",
+      "/characters/kidomaru/frames/frame-248.png",
+      "/characters/kidomaru/frames/frame-249.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/kidomaru/frames/frame-195.png",
+      "/characters/kidomaru/frames/frame-196.png",
+      "/characters/kidomaru/frames/frame-197.png",
+      "/characters/kidomaru/frames/frame-198.png",
+      "/characters/kidomaru/frames/frame-199.png",
+      "/characters/kidomaru/frames/frame-200.png",
+      "/characters/kidomaru/frames/frame-201.png",
+      "/characters/kidomaru/frames/frame-202.png",
+      "/characters/kidomaru/frames/frame-203.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/kidomaru/frames/frame-223.png",
+      "/characters/kidomaru/frames/frame-224.png",
+      "/characters/kidomaru/frames/frame-225.png",
+      "/characters/kidomaru/frames/frame-226.png"
+    ],
+    "cmd:1+2": [
+      "/characters/kidomaru/frames/frame-036.png",
+      "/characters/kidomaru/frames/frame-037.png",
+      "/characters/kidomaru/frames/frame-038.png",
+      "/characters/kidomaru/frames/frame-039.png",
+      "/characters/kidomaru/frames/frame-040.png",
+      "/characters/kidomaru/frames/frame-041.png",
+      "/characters/kidomaru/frames/frame-042.png",
+      "/characters/kidomaru/frames/frame-043.png"
+    ],
+    "cmd:1+3": [
+      "/characters/kidomaru/frames/frame-074.png",
+      "/characters/kidomaru/frames/frame-075.png",
+      "/characters/kidomaru/frames/frame-076.png",
+      "/characters/kidomaru/frames/frame-077.png",
+      "/characters/kidomaru/frames/frame-078.png",
+      "/characters/kidomaru/frames/frame-079.png",
+      "/characters/kidomaru/frames/frame-080.png",
+      "/characters/kidomaru/frames/frame-081.png",
+      "/characters/kidomaru/frames/frame-082.png",
+      "/characters/kidomaru/frames/frame-083.png"
+    ],
+    "cmd:2+3": [
+      "/characters/kidomaru/frames/frame-103.png",
+      "/characters/kidomaru/frames/frame-104.png",
+      "/characters/kidomaru/frames/frame-105.png",
+      "/characters/kidomaru/frames/frame-106.png",
+      "/characters/kidomaru/frames/frame-107.png",
+      "/characters/kidomaru/frames/frame-108.png",
+      "/characters/kidomaru/frames/frame-109.png",
+      "/characters/kidomaru/frames/frame-110.png",
+      "/characters/kidomaru/frames/frame-111.png"
+    ],
+    "cmd:2+4": [
+      "/characters/kidomaru/frames/frame-119.png",
+      "/characters/kidomaru/frames/frame-120.png",
+      "/characters/kidomaru/frames/frame-121.png",
+      "/characters/kidomaru/frames/frame-122.png",
+      "/characters/kidomaru/frames/frame-123.png",
+      "/characters/kidomaru/frames/frame-124.png",
+      "/characters/kidomaru/frames/frame-125.png",
+      "/characters/kidomaru/frames/frame-126.png",
+      "/characters/kidomaru/frames/frame-127.png"
+    ],
+    "cmd:3+4": [
+      "/characters/kidomaru/frames/frame-168.png",
+      "/characters/kidomaru/frames/frame-169.png",
+      "/characters/kidomaru/frames/frame-170.png",
+      "/characters/kidomaru/frames/frame-171.png",
+      "/characters/kidomaru/frames/frame-172.png",
+      "/characters/kidomaru/frames/frame-173.png",
+      "/characters/kidomaru/frames/frame-174.png",
+      "/characters/kidomaru/frames/frame-175.png",
+      "/characters/kidomaru/frames/frame-176.png"
+    ],
+    "cmd:O+2": [
+      "/characters/kidomaru/frames/frame-228.png",
+      "/characters/kidomaru/frames/frame-229.png",
+      "/characters/kidomaru/frames/frame-230.png",
+      "/characters/kidomaru/frames/frame-231.png",
+      "/characters/kidomaru/frames/frame-232.png",
+      "/characters/kidomaru/frames/frame-233.png",
+      "/characters/kidomaru/frames/frame-234.png",
+      "/characters/kidomaru/frames/frame-235.png",
+      "/characters/kidomaru/frames/frame-236.png",
+      "/characters/kidomaru/frames/frame-237.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -458,9 +554,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 46,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -489,9 +585,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -502,9 +598,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 0,
+      "activeFrames": 30,
+      "recoveryFrames": 1,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -515,9 +611,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 13,
       "onBlockFrames": -13,
       "onHitFrames": 24,
@@ -529,9 +625,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 14,
       "onBlockFrames": -8,
       "onHitFrames": 10,
@@ -542,9 +638,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 26,
+      "startupFrames": 0,
+      "activeFrames": 46,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -14,
       "onHitFrames": 24,
@@ -556,9 +652,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 0,
+      "activeFrames": 42,
+      "recoveryFrames": 1,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -569,9 +665,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 22,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 49,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -16,
       "onHitFrames": 8,
@@ -583,9 +679,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 28,
+      "startupFrames": 0,
+      "activeFrames": 53,
+      "recoveryFrames": 1,
       "damage": 18,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -597,9 +693,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 57,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

@@ -188,9 +188,34 @@
     "lose": [
       "/characters/impmon/frames/frame-181.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:f+1": [
+      "/characters/impmon/frames/frame-125.png",
+      "/characters/impmon/frames/frame-126.png",
+      "/characters/impmon/frames/frame-127.png",
+      "/characters/impmon/frames/frame-128.png",
+      "/characters/impmon/frames/frame-129.png",
+      "/characters/impmon/frames/frame-130.png",
+      "/characters/impmon/frames/frame-131.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/impmon/frames/frame-132.png",
+      "/characters/impmon/frames/frame-133.png",
+      "/characters/impmon/frames/frame-134.png",
+      "/characters/impmon/frames/frame-135.png",
+      "/characters/impmon/frames/frame-136.png",
+      "/characters/impmon/frames/frame-137.png",
+      "/characters/impmon/frames/frame-138.png",
+      "/characters/impmon/frames/frame-139.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/impmon/frames/frame-085.png",
+      "/characters/impmon/frames/frame-086.png",
+      "/characters/impmon/frames/frame-087.png",
+      "/characters/impmon/frames/frame-088.png",
+      "/characters/impmon/frames/frame-089.png",
+      "/characters/impmon/frames/frame-090.png",
+      "/characters/impmon/frames/frame-091.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -199,7 +224,18 @@
     "cmd:2+3": [],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:O+2": [
+      "/characters/impmon/frames/frame-096.png",
+      "/characters/impmon/frames/frame-097.png",
+      "/characters/impmon/frames/frame-098.png",
+      "/characters/impmon/frames/frame-099.png",
+      "/characters/impmon/frames/frame-100.png",
+      "/characters/impmon/frames/frame-101.png",
+      "/characters/impmon/frames/frame-102.png",
+      "/characters/impmon/frames/frame-103.png",
+      "/characters/impmon/frames/frame-104.png",
+      "/characters/impmon/frames/frame-105.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -493,9 +529,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 12,
+      "activeFrames": 26,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -507,9 +543,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 42,
+      "recoveryFrames": 5,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -524,9 +560,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 31,
+      "activeFrames": 21,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -647,8 +683,8 @@
     },
     "cmd:O+2": {
       "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "activeFrames": 33,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

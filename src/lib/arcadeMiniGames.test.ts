@@ -8,20 +8,26 @@ import {
   createEnemyRushMiniGame,
   createBreakTargetMiniGame,
   createFighterRushMiniGame,
+  createTagMiniGame,
   FIGHTER_RUSH_GAME_ID,
+  TAG_GAME_ID,
   generateEnemyRushEnemies,
   generateFighterRushEnemies,
   generateBreakTargets,
   makeEnemyRushMiniGameResult,
   makeBreakTargetMiniGameResult,
+  makeTagMiniGameResult,
   miniGameHighScoreStorageKey,
   readMiniGameHighScore,
   resolveEnemyRushLaneLayout,
   resolveMiniGameStageBounds,
   pickArcadeMiniGameKind,
+  pickTagOpponent,
+  pickTagRole,
   shouldStartArcadeMiniGame,
   stepEnemyRushMiniGame,
   stepBreakTargetMiniGame,
+  stepTagMiniGame,
   worldToMiniGameBoundsLocal,
   writeMiniGameHighScore
 } from './arcadeMiniGames';
@@ -151,6 +157,12 @@ describe('arcade mini games', () => {
     expect(writeMiniGameHighScore(key, 80)).toBe(100);
     expect(readMiniGameHighScore(key)).toBe(100);
     expect(JSON.parse(store[BREAK_TARGET_HIGH_SCORE_STORAGE_KEY])[miniGameHighScoreStorageKey(key)]).toBe(100);
+    const runnerKey: MiniGameHighScoreKey = { gameId: TAG_GAME_ID, stageId: 'the-chamber', tagRole: 'cpu-it' };
+    const taggerKey: MiniGameHighScoreKey = { gameId: TAG_GAME_ID, stageId: 'the-chamber', tagRole: 'player-it' };
+    expect(writeMiniGameHighScore(runnerKey, 800)).toBe(800);
+    expect(readMiniGameHighScore(taggerKey)).toBe(0);
+    expect(writeMiniGameHighScore(taggerKey, 1200)).toBe(1200);
+    expect(readMiniGameHighScore(runnerKey)).toBe(800);
   });
 
   it('supports deterministic arcade mini-game test hooks', () => {
@@ -168,8 +180,60 @@ describe('arcade mini games', () => {
     });
     expect(pickArcadeMiniGameKind(1, 0.99)).toBe(FIGHTER_RUSH_GAME_ID);
     vi.unstubAllGlobals();
-    expect(pickArcadeMiniGameKind(1, 0)).not.toBe(FIGHTER_RUSH_GAME_ID);
-    expect(pickArcadeMiniGameKind(2, 0)).toBe(FIGHTER_RUSH_GAME_ID);
+    expect(pickArcadeMiniGameKind(1, 0)).toBe(TAG_GAME_ID);
+    expect(pickArcadeMiniGameKind(1, 0.249)).toBe(TAG_GAME_ID);
+    expect(pickArcadeMiniGameKind(2, 0.25)).toBe(FIGHTER_RUSH_GAME_ID);
+  });
+
+  it('chooses Tag roles deterministically with both roles represented', () => {
+    expect(pickTagRole(12345)).toBe(pickTagRole(12345));
+    expect(new Set(Array.from({ length: 30 }, (_, index) => pickTagRole(index + 1)))).toEqual(new Set(['player-it', 'cpu-it']));
+  });
+
+  it('prefers a locked Tag opponent and falls back after all unlocks', () => {
+    const player = starterCharacters[0];
+    const unlockedOpponent = { ...starterCharacters[1], locked: false };
+    const lockedOpponent = { ...starterCharacters[2], locked: true };
+    expect(pickTagOpponent([player, unlockedOpponent, lockedOpponent], player.id, new Set(), 44)?.id).toBe(lockedOpponent.id);
+    expect([unlockedOpponent.id, lockedOpponent.id]).toContain(pickTagOpponent([player, unlockedOpponent, lockedOpponent], player.id, new Set([lockedOpponent.id]), 44)?.id);
+  });
+
+  it('scores Tag survival to 3000 and cleanly completes at 60 seconds', () => {
+    const snapshot = createTagMiniGame(character, starterCharacters[1], stage, 77, 1, 'cpu-it');
+    snapshot.phase = 'playing';
+    snapshot.elapsed = 59.99;
+    snapshot.timer = 0.01;
+    snapshot.match.fighters[0].position.x = -40;
+    snapshot.match.fighters[1].position.x = 40;
+    const next = stepTagMiniGame(snapshot, emptyInputFrame(), 0.02);
+    expect(next.completedReason).toBe('survived');
+    expect(next.score).toBe(3000);
+    next.phase = 'complete';
+    expect(makeTagMiniGameResult(next).cleared).toBe(true);
+  });
+
+  it('requires a clean Tag hit and ignores blocked contact', () => {
+    const snapshot = createTagMiniGame(character, starterCharacters[1], stage, 88, 2, 'player-it');
+    snapshot.phase = 'playing';
+    snapshot.elapsed = 10;
+    snapshot.timer = 50;
+    const baseImpact = {
+      id: 1,
+      position: [0, 1, 0] as [number, number, number],
+      attackerSlot: 1 as const,
+      defenderSlot: 2 as const,
+      hitLevel: 'mid' as const,
+      damage: 10,
+      moveLabel: 'Test hit'
+    };
+    snapshot.match.impactEvents = [{ ...baseImpact, kind: 'block' }];
+    const blocked = stepTagMiniGame(snapshot, emptyInputFrame(), 1 / 60);
+    expect(blocked.phase).toBe('playing');
+    blocked.match.impactEvents = [{ ...baseImpact, id: 2, kind: 'hit' }];
+    const tagged = stepTagMiniGame(blocked, emptyInputFrame(), 1 / 60);
+    expect(tagged.completedReason).toBe('tagged-cpu');
+    expect(tagged.phase).toBe('tagged');
+    expect(tagged.score).toBeGreaterThan(2400);
   });
 
   it('generates enemy rush spawns deterministically inside stage bounds with spacing', () => {

@@ -199,7 +199,13 @@
       "/characters/dio/frames/frame-168.png",
       "/characters/dio/frames/frame-169.png"
     ],
-    "cmd:2+3": [],
+    "cmd:2+3": [
+      "/characters/dio/frames/frame-186.png",
+      "/characters/dio/frames/frame-187.png",
+      "/characters/dio/frames/frame-188.png",
+      "/characters/dio/frames/frame-189.png",
+      "/characters/dio/frames/frame-190.png"
+    ],
     "cmd:2+4": [
       "/characters/dio/frames/frame-043.png",
       "/characters/dio/frames/frame-044.png",
@@ -735,9 +741,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 18,
+      "startupFrames": 15,
+      "activeFrames": 15,
+      "recoveryFrames": 7,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -5,

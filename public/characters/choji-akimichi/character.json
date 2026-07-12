@@ -348,9 +348,23 @@
     "lose": [
       "/characters/choji-akimichi/frames/frame-057.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:f+1": [
+      "/characters/choji-akimichi/frames/frame-043.png",
+      "/characters/choji-akimichi/frames/frame-044.png",
+      "/characters/choji-akimichi/frames/frame-045.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/choji-akimichi/frames/frame-058.png",
+      "/characters/choji-akimichi/frames/frame-059.png",
+      "/characters/choji-akimichi/frames/frame-060.png",
+      "/characters/choji-akimichi/frames/frame-061.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/choji-akimichi/frames/frame-028.png",
+      "/characters/choji-akimichi/frames/frame-029.png",
+      "/characters/choji-akimichi/frames/frame-030.png",
+      "/characters/choji-akimichi/frames/frame-031.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -653,9 +667,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 37,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -667,9 +681,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 43,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -684,9 +698,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 19,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 12,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,

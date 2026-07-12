@@ -79,7 +79,14 @@
       "/characters/arale-norimaki/frames/frame-130.png",
       "/characters/arale-norimaki/frames/frame-131.png"
     ],
-    "kickleft": [],
+    "kickleft": [
+      "/characters/arale-norimaki/frames/frame-032.png",
+      "/characters/arale-norimaki/frames/frame-033.png",
+      "/characters/arale-norimaki/frames/frame-034.png",
+      "/characters/arale-norimaki/frames/frame-035.png",
+      "/characters/arale-norimaki/frames/frame-036.png",
+      "/characters/arale-norimaki/frames/frame-037.png"
+    ],
     "kickright": [
       "/characters/arale-norimaki/frames/frame-043.png",
       "/characters/arale-norimaki/frames/frame-044.png",
@@ -575,9 +582,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 18,
+      "startupFrames": 7,
+      "activeFrames": 29,
+      "recoveryFrames": 1,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
