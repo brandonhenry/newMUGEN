@@ -4,8 +4,8 @@
   "excluded": [],
   "sheets": [
     {
-      "id": "main",
-      "name": "Main Sheet",
+      "id": "generated",
+      "name": "Generated Frame Atlas",
       "path": "/characters/cure-white/animation-sheet.png",
       "frameStart": 0,
       "frameCount": 258
@@ -15,14 +15,14 @@
     {
       "index": 0,
       "path": "/characters/cure-white/frames/frame-000.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        2,
-        51,
-        91
+        39,
+        19,
+        88,
+        108
       ],
       "width": 49,
       "height": 89,
@@ -31,14 +31,14 @@
     {
       "index": 1,
       "path": "/characters/cure-white/frames/frame-001.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        2,
-        175,
-        90
+        167,
+        20,
+        216,
+        108
       ],
       "width": 49,
       "height": 88,
@@ -47,14 +47,14 @@
     {
       "index": 2,
       "path": "/characters/cure-white/frames/frame-002.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        2,
-        299,
-        89
+        295,
+        21,
+        344,
+        108
       ],
       "width": 49,
       "height": 87,
@@ -63,14 +63,14 @@
     {
       "index": 3,
       "path": "/characters/cure-white/frames/frame-003.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        2,
         423,
-        90
+        20,
+        472,
+        108
       ],
       "width": 49,
       "height": 88,
@@ -79,14 +79,14 @@
     {
       "index": 4,
       "path": "/characters/cure-white/frames/frame-004.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        2,
-        574,
-        85
+        538,
+        25,
+        614,
+        108
       ],
       "width": 76,
       "height": 83,
@@ -95,14 +95,14 @@
     {
       "index": 5,
       "path": "/characters/cure-white/frames/frame-005.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        2,
-        678,
-        82
+        676,
+        28,
+        732,
+        108
       ],
       "width": 56,
       "height": 80,
@@ -111,14 +111,14 @@
     {
       "index": 6,
       "path": "/characters/cure-white/frames/frame-006.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        2,
-        785,
-        81
+        812,
+        29,
+        851,
+        108
       ],
       "width": 39,
       "height": 79,
@@ -127,14 +127,14 @@
     {
       "index": 7,
       "path": "/characters/cure-white/frames/frame-007.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        2,
-        926,
-        83
+        932,
+        27,
+        988,
+        108
       ],
       "width": 56,
       "height": 81,
@@ -143,14 +143,14 @@
     {
       "index": 8,
       "path": "/characters/cure-white/frames/frame-008.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        2,
-        1071,
-        83
+        1049,
+        27,
+        1126,
+        108
       ],
       "width": 77,
       "height": 81,
@@ -159,14 +159,14 @@
     {
       "index": 9,
       "path": "/characters/cure-white/frames/frame-009.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        2,
-        1175,
-        79
+        1187,
+        31,
+        1244,
+        108
       ],
       "width": 57,
       "height": 77,
@@ -175,14 +175,14 @@
     {
       "index": 10,
       "path": "/characters/cure-white/frames/frame-010.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        2,
-        1279,
-        80
+        1325,
+        30,
+        1362,
+        108
       ],
       "width": 37,
       "height": 78,
@@ -191,14 +191,14 @@
     {
       "index": 11,
       "path": "/characters/cure-white/frames/frame-011.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        2,
-        1423,
-        82
+        1443,
+        28,
+        1500,
+        108
       ],
       "width": 57,
       "height": 80,
@@ -207,14 +207,14 @@
     {
       "index": 12,
       "path": "/characters/cure-white/frames/frame-012.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        110,
-        56,
-        191
+        37,
+        139,
+        91,
+        220
       ],
       "width": 54,
       "height": 81,
@@ -223,14 +223,14 @@
     {
       "index": 13,
       "path": "/characters/cure-white/frames/frame-013.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        110,
-        179,
-        187
+        165,
+        143,
+        218,
+        220
       ],
       "width": 53,
       "height": 77,
@@ -239,14 +239,14 @@
     {
       "index": 14,
       "path": "/characters/cure-white/frames/frame-014.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        110,
-        329,
-        157
+        280,
+        173,
+        359,
+        220
       ],
       "width": 79,
       "height": 47,
@@ -255,14 +255,14 @@
     {
       "index": 15,
       "path": "/characters/cure-white/frames/frame-015.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        110,
-        460,
-        155
+        405,
+        175,
+        491,
+        220
       ],
       "width": 86,
       "height": 45,
@@ -271,14 +271,14 @@
     {
       "index": 16,
       "path": "/characters/cure-white/frames/frame-016.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        110,
-        592,
-        140
+        529,
+        190,
+        623,
+        220
       ],
       "width": 94,
       "height": 30,
@@ -287,14 +287,14 @@
     {
       "index": 17,
       "path": "/characters/cure-white/frames/frame-017.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        110,
-        706,
-        151
+        662,
+        179,
+        746,
+        220
       ],
       "width": 84,
       "height": 41,
@@ -303,14 +303,14 @@
     {
       "index": 18,
       "path": "/characters/cure-white/frames/frame-018.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        110,
-        810,
-        190
+        800,
+        140,
+        864,
+        220
       ],
       "width": 64,
       "height": 80,
@@ -319,14 +319,14 @@
     {
       "index": 19,
       "path": "/characters/cure-white/frames/frame-019.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        110,
-        956,
-        155
+        917,
+        175,
+        1003,
+        220
       ],
       "width": 86,
       "height": 45,
@@ -335,14 +335,14 @@
     {
       "index": 20,
       "path": "/characters/cure-white/frames/frame-020.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        110,
-        1042,
-        197
+        1064,
+        133,
+        1112,
+        220
       ],
       "width": 48,
       "height": 87,
@@ -351,14 +351,14 @@
     {
       "index": 21,
       "path": "/characters/cure-white/frames/frame-021.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        110,
-        1159,
-        197
+        1195,
+        133,
+        1236,
+        220
       ],
       "width": 41,
       "height": 87,
@@ -367,14 +367,14 @@
     {
       "index": 22,
       "path": "/characters/cure-white/frames/frame-022.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        110,
-        1314,
-        190
+        1308,
+        140,
+        1380,
+        220
       ],
       "width": 72,
       "height": 80,
@@ -383,14 +383,14 @@
     {
       "index": 23,
       "path": "/characters/cure-white/frames/frame-023.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        110,
-        1422,
-        195
+        1444,
+        135,
+        1500,
+        220
       ],
       "width": 56,
       "height": 85,
@@ -399,14 +399,14 @@
     {
       "index": 24,
       "path": "/characters/cure-white/frames/frame-024.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        218,
-        50,
-        305
+        40,
+        245,
+        88,
+        332
       ],
       "width": 48,
       "height": 87,
@@ -415,14 +415,14 @@
     {
       "index": 25,
       "path": "/characters/cure-white/frames/frame-025.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        218,
-        167,
-        305
+        171,
+        245,
+        212,
+        332
       ],
       "width": 41,
       "height": 87,
@@ -431,14 +431,14 @@
     {
       "index": 26,
       "path": "/characters/cure-white/frames/frame-026.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        218,
-        322,
-        298
+        284,
+        252,
+        356,
+        332
       ],
       "width": 72,
       "height": 80,
@@ -447,14 +447,14 @@
     {
       "index": 27,
       "path": "/characters/cure-white/frames/frame-027.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        218,
-        430,
-        303
+        420,
+        247,
+        476,
+        332
       ],
       "width": 56,
       "height": 85,
@@ -463,14 +463,14 @@
     {
       "index": 28,
       "path": "/characters/cure-white/frames/frame-028.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        218,
-        546,
-        305
+        552,
+        245,
+        600,
+        332
       ],
       "width": 48,
       "height": 87,
@@ -479,14 +479,14 @@
     {
       "index": 29,
       "path": "/characters/cure-white/frames/frame-029.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        218,
-        664,
-        307
+        683,
+        243,
+        725,
+        332
       ],
       "width": 42,
       "height": 89,
@@ -495,14 +495,14 @@
     {
       "index": 30,
       "path": "/characters/cure-white/frames/frame-030.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        218,
-        831,
-        307
+        789,
+        243,
+        874,
+        332
       ],
       "width": 85,
       "height": 89,
@@ -511,14 +511,14 @@
     {
       "index": 31,
       "path": "/characters/cure-white/frames/frame-031.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        218,
-        931,
-        302
+        929,
+        248,
+        990,
+        332
       ],
       "width": 61,
       "height": 84,
@@ -527,14 +527,14 @@
     {
       "index": 32,
       "path": "/characters/cure-white/frames/frame-032.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        218,
-        1057,
-        307
+        1056,
+        243,
+        1119,
+        332
       ],
       "width": 63,
       "height": 89,
@@ -543,14 +543,14 @@
     {
       "index": 33,
       "path": "/characters/cure-white/frames/frame-033.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        218,
-        1167,
-        305
+        1191,
+        245,
+        1240,
+        332
       ],
       "width": 49,
       "height": 87,
@@ -559,14 +559,14 @@
     {
       "index": 34,
       "path": "/characters/cure-white/frames/frame-034.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        218,
-        1291,
-        297
+        1319,
+        253,
+        1368,
+        332
       ],
       "width": 49,
       "height": 79,
@@ -575,14 +575,14 @@
     {
       "index": 35,
       "path": "/characters/cure-white/frames/frame-035.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        218,
-        1437,
-        299
+        1436,
+        251,
+        1507,
+        332
       ],
       "width": 71,
       "height": 81,
@@ -591,14 +591,14 @@
     {
       "index": 36,
       "path": "/characters/cure-white/frames/frame-036.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        326,
-        87,
-        402
+        21,
+        368,
+        106,
+        444
       ],
       "width": 85,
       "height": 76,
@@ -607,14 +607,14 @@
     {
       "index": 37,
       "path": "/characters/cure-white/frames/frame-037.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        326,
-        174,
-        394
+        168,
+        376,
+        216,
+        444
       ],
       "width": 48,
       "height": 68,
@@ -623,14 +623,14 @@
     {
       "index": 38,
       "path": "/characters/cure-white/frames/frame-038.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        326,
-        290,
-        399
+        300,
+        371,
+        340,
+        444
       ],
       "width": 40,
       "height": 73,
@@ -639,14 +639,14 @@
     {
       "index": 39,
       "path": "/characters/cure-white/frames/frame-039.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        326,
-        437,
-        415
+        416,
+        355,
+        479,
+        444
       ],
       "width": 63,
       "height": 89,
@@ -655,14 +655,14 @@
     {
       "index": 40,
       "path": "/characters/cure-white/frames/frame-040.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        326,
         550,
-        410
+        360,
+        602,
+        444
       ],
       "width": 52,
       "height": 84,
@@ -671,14 +671,14 @@
     {
       "index": 41,
       "path": "/characters/cure-white/frames/frame-041.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        326,
-        715,
-        412
+        657,
+        358,
+        750,
+        444
       ],
       "width": 93,
       "height": 86,
@@ -687,14 +687,14 @@
     {
       "index": 42,
       "path": "/characters/cure-white/frames/frame-042.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        326,
-        809,
-        415
+        800,
+        355,
+        863,
+        444
       ],
       "width": 63,
       "height": 89,
@@ -703,14 +703,14 @@
     {
       "index": 43,
       "path": "/characters/cure-white/frames/frame-043.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        326,
-        925,
-        416
+        932,
+        354,
+        987,
+        444
       ],
       "width": 55,
       "height": 90,
@@ -719,14 +719,14 @@
     {
       "index": 44,
       "path": "/characters/cure-white/frames/frame-044.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        326,
-        1045,
-        399
+        1062,
+        371,
+        1113,
+        444
       ],
       "width": 51,
       "height": 73,
@@ -735,14 +735,14 @@
     {
       "index": 45,
       "path": "/characters/cure-white/frames/frame-045.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        326,
-        1175,
-        412
+        1187,
+        358,
+        1244,
+        444
       ],
       "width": 57,
       "height": 86,
@@ -751,14 +751,14 @@
     {
       "index": 46,
       "path": "/characters/cure-white/frames/frame-046.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        326,
-        1303,
-        382
+        1313,
+        388,
+        1374,
+        444
       ],
       "width": 61,
       "height": 56,
@@ -767,14 +767,14 @@
     {
       "index": 47,
       "path": "/characters/cure-white/frames/frame-047.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        326,
-        1423,
-        373
+        1443,
+        397,
+        1500,
+        444
       ],
       "width": 57,
       "height": 47,
@@ -783,14 +783,14 @@
     {
       "index": 48,
       "path": "/characters/cure-white/frames/frame-048.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        434,
-        53,
-        484
+        38,
+        506,
+        89,
+        556
       ],
       "width": 51,
       "height": 50,
@@ -799,14 +799,14 @@
     {
       "index": 49,
       "path": "/characters/cure-white/frames/frame-049.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        434,
-        175,
-        486
+        167,
+        504,
+        216,
+        556
       ],
       "width": 49,
       "height": 52,
@@ -815,14 +815,14 @@
     {
       "index": 50,
       "path": "/characters/cure-white/frames/frame-050.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        434,
-        325,
-        476
+        282,
+        514,
+        357,
+        556
       ],
       "width": 75,
       "height": 42,
@@ -831,14 +831,14 @@
     {
       "index": 51,
       "path": "/characters/cure-white/frames/frame-051.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        434,
-        436,
-        518
+        417,
+        472,
+        479,
+        556
       ],
       "width": 62,
       "height": 84,
@@ -847,14 +847,14 @@
     {
       "index": 52,
       "path": "/characters/cure-white/frames/frame-052.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        434,
-        548,
-        536
+        551,
+        454,
+        601,
+        556
       ],
       "width": 50,
       "height": 102,
@@ -863,14 +863,14 @@
     {
       "index": 53,
       "path": "/characters/cure-white/frames/frame-053.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        434,
-        673,
-        507
+        678,
+        483,
+        729,
+        556
       ],
       "width": 51,
       "height": 73,
@@ -879,14 +879,14 @@
     {
       "index": 54,
       "path": "/characters/cure-white/frames/frame-054.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        434,
         803,
-        517
+        473,
+        860,
+        556
       ],
       "width": 57,
       "height": 83,
@@ -895,14 +895,14 @@
     {
       "index": 55,
       "path": "/characters/cure-white/frames/frame-055.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        434,
-        928,
-        506
+        931,
+        484,
+        989,
+        556
       ],
       "width": 58,
       "height": 72,
@@ -911,14 +911,14 @@
     {
       "index": 56,
       "path": "/characters/cure-white/frames/frame-056.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        434,
-        1044,
-        503
+        1063,
+        487,
+        1113,
+        556
       ],
       "width": 50,
       "height": 69,
@@ -927,14 +927,14 @@
     {
       "index": 57,
       "path": "/characters/cure-white/frames/frame-057.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        434,
-        1177,
-        505
+        1186,
+        485,
+        1245,
+        556
       ],
       "width": 59,
       "height": 71,
@@ -943,14 +943,14 @@
     {
       "index": 58,
       "path": "/characters/cure-white/frames/frame-058.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        434,
-        1306,
-        493
+        1312,
+        497,
+        1376,
+        556
       ],
       "width": 64,
       "height": 59,
@@ -959,14 +959,14 @@
     {
       "index": 59,
       "path": "/characters/cure-white/frames/frame-059.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        434,
-        1445,
-        491
+        1432,
+        499,
+        1511,
+        556
       ],
       "width": 79,
       "height": 57,
@@ -975,14 +975,14 @@
     {
       "index": 60,
       "path": "/characters/cure-white/frames/frame-060.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        542,
-        117,
-        599
+        6,
+        611,
+        121,
+        668
       ],
       "width": 115,
       "height": 57,
@@ -991,14 +991,14 @@
     {
       "index": 61,
       "path": "/characters/cure-white/frames/frame-061.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        542,
-        211,
-        599
+        149,
+        611,
+        234,
+        668
       ],
       "width": 85,
       "height": 57,
@@ -1007,14 +1007,14 @@
     {
       "index": 62,
       "path": "/characters/cure-white/frames/frame-062.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        542,
-        370,
-        601
+        260,
+        609,
+        380,
+        668
       ],
       "width": 120,
       "height": 59,
@@ -1023,14 +1023,14 @@
     {
       "index": 63,
       "path": "/characters/cure-white/frames/frame-063.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        542,
-        477,
-        596
+        396,
+        614,
+        499,
+        668
       ],
       "width": 103,
       "height": 54,
@@ -1039,14 +1039,14 @@
     {
       "index": 64,
       "path": "/characters/cure-white/frames/frame-064.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        542,
-        613,
-        599
+        518,
+        611,
+        633,
+        668
       ],
       "width": 115,
       "height": 57,
@@ -1055,14 +1055,14 @@
     {
       "index": 65,
       "path": "/characters/cure-white/frames/frame-065.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        542,
-        707,
-        599
+        661,
+        611,
+        746,
+        668
       ],
       "width": 85,
       "height": 57,
@@ -1071,14 +1071,14 @@
     {
       "index": 66,
       "path": "/characters/cure-white/frames/frame-066.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        542,
-        810,
-        601
+        800,
+        609,
+        864,
+        668
       ],
       "width": 64,
       "height": 59,
@@ -1087,14 +1087,14 @@
     {
       "index": 67,
       "path": "/characters/cure-white/frames/frame-067.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        542,
-        929,
-        613
+        930,
+        597,
+        989,
+        668
       ],
       "width": 59,
       "height": 71,
@@ -1103,14 +1103,14 @@
     {
       "index": 68,
       "path": "/characters/cure-white/frames/frame-068.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        542,
-        1044,
-        611
+        1063,
+        599,
+        1113,
+        668
       ],
       "width": 50,
       "height": 69,
@@ -1119,14 +1119,14 @@
     {
       "index": 69,
       "path": "/characters/cure-white/frames/frame-069.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        542,
-        1208,
-        581
+        1171,
+        629,
+        1261,
+        668
       ],
       "width": 90,
       "height": 39,
@@ -1135,14 +1135,14 @@
     {
       "index": 70,
       "path": "/characters/cure-white/frames/frame-070.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        542,
-        1316,
-        594
+        1307,
+        616,
+        1381,
+        668
       ],
       "width": 74,
       "height": 52,
@@ -1151,14 +1151,14 @@
     {
       "index": 71,
       "path": "/characters/cure-white/frames/frame-071.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        542,
-        1439,
-        590
+        1435,
+        620,
+        1508,
+        668
       ],
       "width": 73,
       "height": 48,
@@ -1167,14 +1167,14 @@
     {
       "index": 72,
       "path": "/characters/cure-white/frames/frame-072.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        650,
-        54,
-        700
+        38,
+        730,
+        90,
+        780
       ],
       "width": 52,
       "height": 50,
@@ -1183,14 +1183,14 @@
     {
       "index": 73,
       "path": "/characters/cure-white/frames/frame-073.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        650,
-        178,
-        707
+        166,
+        723,
+        218,
+        780
       ],
       "width": 52,
       "height": 57,
@@ -1199,14 +1199,14 @@
     {
       "index": 74,
       "path": "/characters/cure-white/frames/frame-074.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        650,
-        302,
-        731
+        294,
+        699,
+        346,
+        780
       ],
       "width": 52,
       "height": 81,
@@ -1215,14 +1215,14 @@
     {
       "index": 75,
       "path": "/characters/cure-white/frames/frame-075.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        650,
-        426,
-        740
+        422,
+        690,
+        474,
+        780
       ],
       "width": 52,
       "height": 90,
@@ -1231,14 +1231,14 @@
     {
       "index": 76,
       "path": "/characters/cure-white/frames/frame-076.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        650,
-        534,
-        741
+        558,
+        689,
+        594,
+        780
       ],
       "width": 36,
       "height": 91,
@@ -1247,14 +1247,14 @@
     {
       "index": 77,
       "path": "/characters/cure-white/frames/frame-077.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        650,
+        669,
         691,
-        739
+        738,
+        780
       ],
       "width": 69,
       "height": 89,
@@ -1263,14 +1263,14 @@
     {
       "index": 78,
       "path": "/characters/cure-white/frames/frame-078.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        650,
-        779,
-        745
+        815,
+        685,
+        848,
+        780
       ],
       "width": 33,
       "height": 95,
@@ -1279,14 +1279,14 @@
     {
       "index": 79,
       "path": "/characters/cure-white/frames/frame-079.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        650,
-        903,
-        742
+        943,
+        688,
+        976,
+        780
       ],
       "width": 33,
       "height": 92,
@@ -1295,14 +1295,14 @@
     {
       "index": 80,
       "path": "/characters/cure-white/frames/frame-080.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        650,
-        1042,
-        744
+        1064,
+        686,
+        1112,
+        780
       ],
       "width": 48,
       "height": 94,
@@ -1311,14 +1311,14 @@
     {
       "index": 81,
       "path": "/characters/cure-white/frames/frame-081.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        650,
-        1153,
-        715
+        1198,
+        715,
+        1233,
+        780
       ],
       "width": 35,
       "height": 65,
@@ -1327,14 +1327,14 @@
     {
       "index": 82,
       "path": "/characters/cure-white/frames/frame-082.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        650,
-        1284,
-        723
+        1323,
+        707,
+        1365,
+        780
       ],
       "width": 42,
       "height": 73,
@@ -1343,14 +1343,14 @@
     {
       "index": 83,
       "path": "/characters/cure-white/frames/frame-083.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        650,
-        1409,
-        750
+        1450,
+        680,
+        1493,
+        780
       ],
       "width": 43,
       "height": 100,
@@ -1359,14 +1359,14 @@
     {
       "index": 84,
       "path": "/characters/cure-white/frames/frame-084.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        758,
         43,
-        862
+        788,
+        84,
+        892
       ],
       "width": 41,
       "height": 104,
@@ -1375,14 +1375,14 @@
     {
       "index": 85,
       "path": "/characters/cure-white/frames/frame-085.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        758,
-        167,
-        856
+        171,
+        794,
+        212,
+        892
       ],
       "width": 41,
       "height": 98,
@@ -1391,14 +1391,14 @@
     {
       "index": 86,
       "path": "/characters/cure-white/frames/frame-086.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        758,
-        295,
-        843
+        297,
+        807,
+        342,
+        892
       ],
       "width": 45,
       "height": 85,
@@ -1407,14 +1407,14 @@
     {
       "index": 87,
       "path": "/characters/cure-white/frames/frame-087.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        758,
-        422,
-        843
+        424,
+        807,
+        472,
+        892
       ],
       "width": 48,
       "height": 85,
@@ -1423,14 +1423,14 @@
     {
       "index": 88,
       "path": "/characters/cure-white/frames/frame-088.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        758,
-        547,
-        839
+        551,
+        811,
+        600,
+        892
       ],
       "width": 49,
       "height": 81,
@@ -1439,14 +1439,14 @@
     {
       "index": 89,
       "path": "/characters/cure-white/frames/frame-089.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        758,
-        701,
-        833
+        664,
+        817,
+        743,
+        892
       ],
       "width": 79,
       "height": 75,
@@ -1455,14 +1455,14 @@
     {
       "index": 90,
       "path": "/characters/cure-white/frames/frame-090.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        758,
-        796,
-        841
+        807,
+        809,
+        857,
+        892
       ],
       "width": 50,
       "height": 83,
@@ -1471,14 +1471,14 @@
     {
       "index": 91,
       "path": "/characters/cure-white/frames/frame-091.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        758,
-        935,
-        829
+        927,
+        821,
+        992,
+        892
       ],
       "width": 65,
       "height": 71,
@@ -1487,14 +1487,14 @@
     {
       "index": 92,
       "path": "/characters/cure-white/frames/frame-092.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        758,
-        1060,
-        828
+        1055,
+        822,
+        1121,
+        892
       ],
       "width": 66,
       "height": 70,
@@ -1503,14 +1503,14 @@
     {
       "index": 93,
       "path": "/characters/cure-white/frames/frame-093.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        758,
-        1210,
-        823
+        1170,
+        827,
+        1262,
+        892
       ],
       "width": 92,
       "height": 65,
@@ -1519,14 +1519,14 @@
     {
       "index": 94,
       "path": "/characters/cure-white/frames/frame-094.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        758,
-        1299,
-        839
+        1315,
+        811,
+        1372,
+        892
       ],
       "width": 57,
       "height": 81,
@@ -1535,14 +1535,14 @@
     {
       "index": 95,
       "path": "/characters/cure-white/frames/frame-095.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        758,
-        1429,
-        835
+        1440,
+        815,
+        1503,
+        892
       ],
       "width": 63,
       "height": 77,
@@ -1551,14 +1551,14 @@
     {
       "index": 96,
       "path": "/characters/cure-white/frames/frame-096.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        866,
-        48,
-        933
+        41,
+        937,
+        87,
+        1004
       ],
       "width": 46,
       "height": 67,
@@ -1567,14 +1567,14 @@
     {
       "index": 97,
       "path": "/characters/cure-white/frames/frame-097.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        866,
-        189,
-        943
+        160,
+        927,
+        223,
+        1004
       ],
       "width": 63,
       "height": 77,
@@ -1583,14 +1583,14 @@
     {
       "index": 98,
       "path": "/characters/cure-white/frames/frame-098.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        866,
-        334,
-        907
+        278,
+        963,
+        362,
+        1004
       ],
       "width": 84,
       "height": 41,
@@ -1599,14 +1599,14 @@
     {
       "index": 99,
       "path": "/characters/cure-white/frames/frame-099.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        866,
-        452,
-        917
+        409,
+        953,
+        487,
+        1004
       ],
       "width": 78,
       "height": 51,
@@ -1615,14 +1615,14 @@
     {
       "index": 100,
       "path": "/characters/cure-white/frames/frame-100.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        866,
-        538,
-        921
+        556,
+        949,
+        596,
+        1004
       ],
       "width": 40,
       "height": 55,
@@ -1631,14 +1631,14 @@
     {
       "index": 101,
       "path": "/characters/cure-white/frames/frame-101.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        866,
-        661,
-        928
+        684,
+        942,
+        723,
+        1004
       ],
       "width": 39,
       "height": 62,
@@ -1647,14 +1647,14 @@
     {
       "index": 102,
       "path": "/characters/cure-white/frames/frame-102.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        866,
-        798,
-        947
+        806,
+        923,
+        858,
+        1004
       ],
       "width": 52,
       "height": 81,
@@ -1663,14 +1663,14 @@
     {
       "index": 103,
       "path": "/characters/cure-white/frames/frame-103.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        866,
-        922,
-        952
+        934,
+        918,
+        986,
+        1004
       ],
       "width": 52,
       "height": 86,
@@ -1679,14 +1679,14 @@
     {
       "index": 104,
       "path": "/characters/cure-white/frames/frame-104.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        866,
-        1081,
-        907
+        1044,
+        963,
+        1131,
+        1004
       ],
       "width": 87,
       "height": 41,
@@ -1695,14 +1695,14 @@
     {
       "index": 105,
       "path": "/characters/cure-white/frames/frame-105.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        866,
-        1185,
-        918
+        1182,
+        952,
+        1249,
+        1004
       ],
       "width": 67,
       "height": 52,
@@ -1711,14 +1711,14 @@
     {
       "index": 106,
       "path": "/characters/cure-white/frames/frame-106.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        866,
-        1307,
-        934
+        1311,
+        936,
+        1376,
+        1004
       ],
       "width": 65,
       "height": 68,
@@ -1727,14 +1727,14 @@
     {
       "index": 107,
       "path": "/characters/cure-white/frames/frame-107.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        866,
-        1415,
-        951
+        1447,
+        919,
+        1496,
+        1004
       ],
       "width": 49,
       "height": 85,
@@ -1743,14 +1743,14 @@
     {
       "index": 108,
       "path": "/characters/cure-white/frames/frame-108.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        974,
-        66,
-        1050
+        32,
+        1040,
+        96,
+        1116
       ],
       "width": 64,
       "height": 76,
@@ -1759,14 +1759,14 @@
     {
       "index": 109,
       "path": "/characters/cure-white/frames/frame-109.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        974,
-        178,
-        1057
+        166,
+        1033,
+        218,
+        1116
       ],
       "width": 52,
       "height": 83,
@@ -1775,14 +1775,14 @@
     {
       "index": 110,
       "path": "/characters/cure-white/frames/frame-110.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        974,
-        304,
-        1056
+        293,
+        1034,
+        347,
+        1116
       ],
       "width": 54,
       "height": 82,
@@ -1791,14 +1791,14 @@
     {
       "index": 111,
       "path": "/characters/cure-white/frames/frame-111.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        974,
-        424,
-        1058
+        423,
+        1032,
+        473,
+        1116
       ],
       "width": 50,
       "height": 84,
@@ -1807,14 +1807,14 @@
     {
       "index": 112,
       "path": "/characters/cure-white/frames/frame-112.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        974,
-        542,
-        1062
+        554,
+        1028,
+        598,
+        1116
       ],
       "width": 44,
       "height": 88,
@@ -1823,14 +1823,14 @@
     {
       "index": 113,
       "path": "/characters/cure-white/frames/frame-113.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        974,
-        666,
-        1058
+        682,
+        1032,
+        726,
+        1116
       ],
       "width": 44,
       "height": 84,
@@ -1839,14 +1839,14 @@
     {
       "index": 114,
       "path": "/characters/cure-white/frames/frame-114.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        974,
-        796,
-        1059
+        807,
+        1031,
+        857,
+        1116
       ],
       "width": 50,
       "height": 85,
@@ -1855,14 +1855,14 @@
     {
       "index": 115,
       "path": "/characters/cure-white/frames/frame-115.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        974,
         930,
-        1063
+        1027,
+        990,
+        1116
       ],
       "width": 60,
       "height": 89,
@@ -1871,14 +1871,14 @@
     {
       "index": 116,
       "path": "/characters/cure-white/frames/frame-116.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        974,
-        1051,
-        1058
+        1059,
+        1032,
+        1116,
+        1116
       ],
       "width": 57,
       "height": 84,
@@ -1887,14 +1887,14 @@
     {
       "index": 117,
       "path": "/characters/cure-white/frames/frame-117.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        974,
-        1169,
-        1042
+        1190,
+        1048,
+        1241,
+        1116
       ],
       "width": 51,
       "height": 68,
@@ -1903,14 +1903,14 @@
     {
       "index": 118,
       "path": "/characters/cure-white/frames/frame-118.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        974,
-        1289,
-        1033
+        1320,
+        1057,
+        1367,
+        1116
       ],
       "width": 47,
       "height": 59,
@@ -1919,14 +1919,14 @@
     {
       "index": 119,
       "path": "/characters/cure-white/frames/frame-119.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        974,
-        1417,
-        1042
+        1446,
+        1048,
+        1497,
+        1116
       ],
       "width": 51,
       "height": 68,
@@ -1935,14 +1935,14 @@
     {
       "index": 120,
       "path": "/characters/cure-white/frames/frame-120.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1082,
-        53,
-        1171
+        38,
+        1139,
+        89,
+        1228
       ],
       "width": 51,
       "height": 89,
@@ -1951,14 +1951,14 @@
     {
       "index": 121,
       "path": "/characters/cure-white/frames/frame-121.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1082,
-        177,
-        1171
+        166,
+        1139,
+        217,
+        1228
       ],
       "width": 51,
       "height": 89,
@@ -1967,14 +1967,14 @@
     {
       "index": 122,
       "path": "/characters/cure-white/frames/frame-122.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1082,
-        301,
-        1171
+        294,
+        1139,
+        345,
+        1228
       ],
       "width": 51,
       "height": 89,
@@ -1983,14 +1983,14 @@
     {
       "index": 123,
       "path": "/characters/cure-white/frames/frame-123.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1082,
-        425,
-        1171
+        422,
+        1139,
+        473,
+        1228
       ],
       "width": 51,
       "height": 89,
@@ -1999,14 +1999,14 @@
     {
       "index": 124,
       "path": "/characters/cure-white/frames/frame-124.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1082,
-        549,
-        1171
+        550,
+        1139,
+        601,
+        1228
       ],
       "width": 51,
       "height": 89,
@@ -2015,14 +2015,14 @@
     {
       "index": 125,
       "path": "/characters/cure-white/frames/frame-125.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1082,
-        673,
-        1165
+        678,
+        1145,
+        729,
+        1228
       ],
       "width": 51,
       "height": 83,
@@ -2031,14 +2031,14 @@
     {
       "index": 126,
       "path": "/characters/cure-white/frames/frame-126.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1082,
-        794,
-        1166
+        808,
+        1144,
+        856,
+        1228
       ],
       "width": 48,
       "height": 84,
@@ -2047,14 +2047,14 @@
     {
       "index": 127,
       "path": "/characters/cure-white/frames/frame-127.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1082,
-        921,
-        1165
+        934,
+        1145,
+        985,
+        1228
       ],
       "width": 51,
       "height": 83,
@@ -2063,14 +2063,14 @@
     {
       "index": 128,
       "path": "/characters/cure-white/frames/frame-128.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1082,
-        1045,
-        1165
+        1062,
+        1145,
+        1113,
+        1228
       ],
       "width": 51,
       "height": 83,
@@ -2079,14 +2079,14 @@
     {
       "index": 129,
       "path": "/characters/cure-white/frames/frame-129.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1082,
-        1169,
-        1165
+        1190,
+        1145,
+        1241,
+        1228
       ],
       "width": 51,
       "height": 83,
@@ -2095,14 +2095,14 @@
     {
       "index": 130,
       "path": "/characters/cure-white/frames/frame-130.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1082,
-        1293,
-        1165
+        1318,
+        1145,
+        1369,
+        1228
       ],
       "width": 51,
       "height": 83,
@@ -2111,14 +2111,14 @@
     {
       "index": 131,
       "path": "/characters/cure-white/frames/frame-131.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1082,
-        1417,
-        1165
+        1446,
+        1145,
+        1497,
+        1228
       ],
       "width": 51,
       "height": 83,
@@ -2127,14 +2127,14 @@
     {
       "index": 132,
       "path": "/characters/cure-white/frames/frame-132.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1190,
-        51,
-        1279
+        39,
+        1251,
+        88,
+        1340
       ],
       "width": 49,
       "height": 89,
@@ -2143,14 +2143,14 @@
     {
       "index": 133,
       "path": "/characters/cure-white/frames/frame-133.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1190,
-        175,
-        1278
+        167,
+        1252,
+        216,
+        1340
       ],
       "width": 49,
       "height": 88,
@@ -2159,14 +2159,14 @@
     {
       "index": 134,
       "path": "/characters/cure-white/frames/frame-134.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1190,
-        299,
-        1277
+        295,
+        1253,
+        344,
+        1340
       ],
       "width": 49,
       "height": 87,
@@ -2175,14 +2175,14 @@
     {
       "index": 135,
       "path": "/characters/cure-white/frames/frame-135.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1190,
         423,
-        1278
+        1252,
+        472,
+        1340
       ],
       "width": 49,
       "height": 88,
@@ -2191,14 +2191,14 @@
     {
       "index": 136,
       "path": "/characters/cure-white/frames/frame-136.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1190,
-        574,
-        1273
+        538,
+        1257,
+        614,
+        1340
       ],
       "width": 76,
       "height": 83,
@@ -2207,14 +2207,14 @@
     {
       "index": 137,
       "path": "/characters/cure-white/frames/frame-137.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1190,
-        678,
-        1270
+        676,
+        1260,
+        732,
+        1340
       ],
       "width": 56,
       "height": 80,
@@ -2223,14 +2223,14 @@
     {
       "index": 138,
       "path": "/characters/cure-white/frames/frame-138.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1190,
-        785,
-        1269
+        812,
+        1261,
+        851,
+        1340
       ],
       "width": 39,
       "height": 79,
@@ -2239,14 +2239,14 @@
     {
       "index": 139,
       "path": "/characters/cure-white/frames/frame-139.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1190,
-        926,
-        1271
+        932,
+        1259,
+        988,
+        1340
       ],
       "width": 56,
       "height": 81,
@@ -2255,14 +2255,14 @@
     {
       "index": 140,
       "path": "/characters/cure-white/frames/frame-140.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1190,
-        1071,
-        1271
+        1049,
+        1259,
+        1126,
+        1340
       ],
       "width": 77,
       "height": 81,
@@ -2271,14 +2271,14 @@
     {
       "index": 141,
       "path": "/characters/cure-white/frames/frame-141.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1190,
-        1175,
-        1267
+        1187,
+        1263,
+        1244,
+        1340
       ],
       "width": 57,
       "height": 77,
@@ -2287,14 +2287,14 @@
     {
       "index": 142,
       "path": "/characters/cure-white/frames/frame-142.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1190,
-        1279,
-        1268
+        1325,
+        1262,
+        1362,
+        1340
       ],
       "width": 37,
       "height": 78,
@@ -2303,14 +2303,14 @@
     {
       "index": 143,
       "path": "/characters/cure-white/frames/frame-143.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1190,
-        1423,
-        1270
+        1443,
+        1260,
+        1500,
+        1340
       ],
       "width": 57,
       "height": 80,
@@ -2319,14 +2319,14 @@
     {
       "index": 144,
       "path": "/characters/cure-white/frames/frame-144.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1298,
-        56,
-        1379
+        37,
+        1371,
+        91,
+        1452
       ],
       "width": 54,
       "height": 81,
@@ -2335,14 +2335,14 @@
     {
       "index": 145,
       "path": "/characters/cure-white/frames/frame-145.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1298,
-        179,
-        1375
+        165,
+        1375,
+        218,
+        1452
       ],
       "width": 53,
       "height": 77,
@@ -2351,14 +2351,14 @@
     {
       "index": 146,
       "path": "/characters/cure-white/frames/frame-146.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1298,
-        329,
-        1345
+        280,
+        1405,
+        359,
+        1452
       ],
       "width": 79,
       "height": 47,
@@ -2367,14 +2367,14 @@
     {
       "index": 147,
       "path": "/characters/cure-white/frames/frame-147.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1298,
-        460,
-        1343
+        405,
+        1407,
+        491,
+        1452
       ],
       "width": 86,
       "height": 45,
@@ -2383,14 +2383,14 @@
     {
       "index": 148,
       "path": "/characters/cure-white/frames/frame-148.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1298,
-        592,
-        1328
+        529,
+        1422,
+        623,
+        1452
       ],
       "width": 94,
       "height": 30,
@@ -2399,14 +2399,14 @@
     {
       "index": 149,
       "path": "/characters/cure-white/frames/frame-149.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1298,
-        706,
-        1339
+        662,
+        1411,
+        746,
+        1452
       ],
       "width": 84,
       "height": 41,
@@ -2415,14 +2415,14 @@
     {
       "index": 150,
       "path": "/characters/cure-white/frames/frame-150.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1298,
-        810,
-        1378
+        800,
+        1372,
+        864,
+        1452
       ],
       "width": 64,
       "height": 80,
@@ -2431,14 +2431,14 @@
     {
       "index": 151,
       "path": "/characters/cure-white/frames/frame-151.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1298,
-        956,
-        1343
+        917,
+        1407,
+        1003,
+        1452
       ],
       "width": 86,
       "height": 45,
@@ -2447,14 +2447,14 @@
     {
       "index": 152,
       "path": "/characters/cure-white/frames/frame-152.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1298,
-        1042,
-        1385
+        1064,
+        1365,
+        1112,
+        1452
       ],
       "width": 48,
       "height": 87,
@@ -2463,14 +2463,14 @@
     {
       "index": 153,
       "path": "/characters/cure-white/frames/frame-153.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1298,
-        1159,
-        1385
+        1195,
+        1365,
+        1236,
+        1452
       ],
       "width": 41,
       "height": 87,
@@ -2479,14 +2479,14 @@
     {
       "index": 154,
       "path": "/characters/cure-white/frames/frame-154.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1298,
-        1314,
-        1378
+        1308,
+        1372,
+        1380,
+        1452
       ],
       "width": 72,
       "height": 80,
@@ -2495,14 +2495,14 @@
     {
       "index": 155,
       "path": "/characters/cure-white/frames/frame-155.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1298,
-        1422,
-        1383
+        1444,
+        1367,
+        1500,
+        1452
       ],
       "width": 56,
       "height": 85,
@@ -2511,14 +2511,14 @@
     {
       "index": 156,
       "path": "/characters/cure-white/frames/frame-156.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1406,
-        50,
-        1493
+        40,
+        1477,
+        88,
+        1564
       ],
       "width": 48,
       "height": 87,
@@ -2527,14 +2527,14 @@
     {
       "index": 157,
       "path": "/characters/cure-white/frames/frame-157.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1406,
-        167,
-        1493
+        171,
+        1477,
+        212,
+        1564
       ],
       "width": 41,
       "height": 87,
@@ -2543,14 +2543,14 @@
     {
       "index": 158,
       "path": "/characters/cure-white/frames/frame-158.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1406,
-        322,
-        1486
+        284,
+        1484,
+        356,
+        1564
       ],
       "width": 72,
       "height": 80,
@@ -2559,14 +2559,14 @@
     {
       "index": 159,
       "path": "/characters/cure-white/frames/frame-159.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1406,
-        430,
-        1491
+        420,
+        1479,
+        476,
+        1564
       ],
       "width": 56,
       "height": 85,
@@ -2575,14 +2575,14 @@
     {
       "index": 160,
       "path": "/characters/cure-white/frames/frame-160.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1406,
-        546,
-        1493
+        552,
+        1477,
+        600,
+        1564
       ],
       "width": 48,
       "height": 87,
@@ -2591,14 +2591,14 @@
     {
       "index": 161,
       "path": "/characters/cure-white/frames/frame-161.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1406,
-        664,
-        1495
+        683,
+        1475,
+        725,
+        1564
       ],
       "width": 42,
       "height": 89,
@@ -2607,14 +2607,14 @@
     {
       "index": 162,
       "path": "/characters/cure-white/frames/frame-162.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1406,
-        831,
-        1495
+        789,
+        1475,
+        874,
+        1564
       ],
       "width": 85,
       "height": 89,
@@ -2623,14 +2623,14 @@
     {
       "index": 163,
       "path": "/characters/cure-white/frames/frame-163.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1406,
-        931,
-        1490
+        929,
+        1480,
+        990,
+        1564
       ],
       "width": 61,
       "height": 84,
@@ -2639,14 +2639,14 @@
     {
       "index": 164,
       "path": "/characters/cure-white/frames/frame-164.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1406,
-        1057,
-        1495
+        1056,
+        1475,
+        1119,
+        1564
       ],
       "width": 63,
       "height": 89,
@@ -2655,14 +2655,14 @@
     {
       "index": 165,
       "path": "/characters/cure-white/frames/frame-165.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1406,
-        1167,
-        1493
+        1191,
+        1477,
+        1240,
+        1564
       ],
       "width": 49,
       "height": 87,
@@ -2671,14 +2671,14 @@
     {
       "index": 166,
       "path": "/characters/cure-white/frames/frame-166.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1406,
-        1291,
-        1485
+        1319,
+        1485,
+        1368,
+        1564
       ],
       "width": 49,
       "height": 79,
@@ -2687,14 +2687,14 @@
     {
       "index": 167,
       "path": "/characters/cure-white/frames/frame-167.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1406,
-        1437,
-        1487
+        1436,
+        1483,
+        1507,
+        1564
       ],
       "width": 71,
       "height": 81,
@@ -2703,14 +2703,14 @@
     {
       "index": 168,
       "path": "/characters/cure-white/frames/frame-168.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1514,
-        87,
-        1590
+        21,
+        1600,
+        106,
+        1676
       ],
       "width": 85,
       "height": 76,
@@ -2719,14 +2719,14 @@
     {
       "index": 169,
       "path": "/characters/cure-white/frames/frame-169.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1514,
-        174,
-        1582
+        168,
+        1608,
+        216,
+        1676
       ],
       "width": 48,
       "height": 68,
@@ -2735,14 +2735,14 @@
     {
       "index": 170,
       "path": "/characters/cure-white/frames/frame-170.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1514,
-        290,
-        1587
+        300,
+        1603,
+        340,
+        1676
       ],
       "width": 40,
       "height": 73,
@@ -2751,14 +2751,14 @@
     {
       "index": 171,
       "path": "/characters/cure-white/frames/frame-171.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1514,
-        437,
-        1603
+        416,
+        1587,
+        479,
+        1676
       ],
       "width": 63,
       "height": 89,
@@ -2767,14 +2767,14 @@
     {
       "index": 172,
       "path": "/characters/cure-white/frames/frame-172.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1514,
         550,
-        1598
+        1592,
+        602,
+        1676
       ],
       "width": 52,
       "height": 84,
@@ -2783,14 +2783,14 @@
     {
       "index": 173,
       "path": "/characters/cure-white/frames/frame-173.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1514,
-        716,
-        1600
+        657,
+        1590,
+        751,
+        1676
       ],
       "width": 94,
       "height": 86,
@@ -2799,14 +2799,14 @@
     {
       "index": 174,
       "path": "/characters/cure-white/frames/frame-174.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1514,
-        809,
-        1603
+        800,
+        1587,
+        863,
+        1676
       ],
       "width": 63,
       "height": 89,
@@ -2815,14 +2815,14 @@
     {
       "index": 175,
       "path": "/characters/cure-white/frames/frame-175.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1514,
-        925,
-        1604
+        932,
+        1586,
+        987,
+        1676
       ],
       "width": 55,
       "height": 90,
@@ -2831,14 +2831,14 @@
     {
       "index": 176,
       "path": "/characters/cure-white/frames/frame-176.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1514,
-        1045,
-        1587
+        1062,
+        1603,
+        1113,
+        1676
       ],
       "width": 51,
       "height": 73,
@@ -2847,14 +2847,14 @@
     {
       "index": 177,
       "path": "/characters/cure-white/frames/frame-177.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1514,
-        1175,
-        1600
+        1187,
+        1590,
+        1244,
+        1676
       ],
       "width": 57,
       "height": 86,
@@ -2863,14 +2863,14 @@
     {
       "index": 178,
       "path": "/characters/cure-white/frames/frame-178.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1514,
-        1303,
-        1570
+        1313,
+        1620,
+        1374,
+        1676
       ],
       "width": 61,
       "height": 56,
@@ -2879,14 +2879,14 @@
     {
       "index": 179,
       "path": "/characters/cure-white/frames/frame-179.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1514,
-        1423,
-        1561
+        1443,
+        1629,
+        1500,
+        1676
       ],
       "width": 57,
       "height": 47,
@@ -2895,14 +2895,14 @@
     {
       "index": 180,
       "path": "/characters/cure-white/frames/frame-180.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1622,
-        53,
-        1672
+        38,
+        1738,
+        89,
+        1788
       ],
       "width": 51,
       "height": 50,
@@ -2911,14 +2911,14 @@
     {
       "index": 181,
       "path": "/characters/cure-white/frames/frame-181.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1622,
-        175,
-        1674
+        167,
+        1736,
+        216,
+        1788
       ],
       "width": 49,
       "height": 52,
@@ -2927,14 +2927,14 @@
     {
       "index": 182,
       "path": "/characters/cure-white/frames/frame-182.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1622,
-        325,
-        1664
+        282,
+        1746,
+        357,
+        1788
       ],
       "width": 75,
       "height": 42,
@@ -2943,14 +2943,14 @@
     {
       "index": 183,
       "path": "/characters/cure-white/frames/frame-183.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1622,
-        436,
-        1706
+        417,
+        1704,
+        479,
+        1788
       ],
       "width": 62,
       "height": 84,
@@ -2959,14 +2959,14 @@
     {
       "index": 184,
       "path": "/characters/cure-white/frames/frame-184.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1622,
-        548,
-        1724
+        551,
+        1686,
+        601,
+        1788
       ],
       "width": 50,
       "height": 102,
@@ -2975,14 +2975,14 @@
     {
       "index": 185,
       "path": "/characters/cure-white/frames/frame-185.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1622,
-        673,
-        1695
+        678,
+        1715,
+        729,
+        1788
       ],
       "width": 51,
       "height": 73,
@@ -2991,14 +2991,14 @@
     {
       "index": 186,
       "path": "/characters/cure-white/frames/frame-186.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1622,
         803,
-        1705
+        1705,
+        860,
+        1788
       ],
       "width": 57,
       "height": 83,
@@ -3007,14 +3007,14 @@
     {
       "index": 187,
       "path": "/characters/cure-white/frames/frame-187.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1622,
-        928,
-        1694
+        931,
+        1716,
+        989,
+        1788
       ],
       "width": 58,
       "height": 72,
@@ -3023,14 +3023,14 @@
     {
       "index": 188,
       "path": "/characters/cure-white/frames/frame-188.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1622,
-        1044,
-        1691
+        1063,
+        1719,
+        1113,
+        1788
       ],
       "width": 50,
       "height": 69,
@@ -3039,14 +3039,14 @@
     {
       "index": 189,
       "path": "/characters/cure-white/frames/frame-189.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1622,
-        1177,
-        1693
+        1186,
+        1717,
+        1245,
+        1788
       ],
       "width": 59,
       "height": 71,
@@ -3055,14 +3055,14 @@
     {
       "index": 190,
       "path": "/characters/cure-white/frames/frame-190.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1622,
-        1306,
-        1681
+        1312,
+        1729,
+        1376,
+        1788
       ],
       "width": 64,
       "height": 59,
@@ -3071,14 +3071,14 @@
     {
       "index": 191,
       "path": "/characters/cure-white/frames/frame-191.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1622,
-        1445,
-        1679
+        1432,
+        1731,
+        1511,
+        1788
       ],
       "width": 79,
       "height": 57,
@@ -3087,14 +3087,14 @@
     {
       "index": 192,
       "path": "/characters/cure-white/frames/frame-192.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1730,
-        117,
-        1787
+        6,
+        1843,
+        121,
+        1900
       ],
       "width": 115,
       "height": 57,
@@ -3103,14 +3103,14 @@
     {
       "index": 193,
       "path": "/characters/cure-white/frames/frame-193.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1730,
-        211,
-        1787
+        149,
+        1843,
+        234,
+        1900
       ],
       "width": 85,
       "height": 57,
@@ -3119,14 +3119,14 @@
     {
       "index": 194,
       "path": "/characters/cure-white/frames/frame-194.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1730,
-        370,
-        1789
+        260,
+        1841,
+        380,
+        1900
       ],
       "width": 120,
       "height": 59,
@@ -3135,14 +3135,14 @@
     {
       "index": 195,
       "path": "/characters/cure-white/frames/frame-195.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1730,
-        477,
-        1784
+        396,
+        1846,
+        499,
+        1900
       ],
       "width": 103,
       "height": 54,
@@ -3151,14 +3151,14 @@
     {
       "index": 196,
       "path": "/characters/cure-white/frames/frame-196.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1730,
-        613,
-        1787
+        518,
+        1843,
+        633,
+        1900
       ],
       "width": 115,
       "height": 57,
@@ -3167,14 +3167,14 @@
     {
       "index": 197,
       "path": "/characters/cure-white/frames/frame-197.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1730,
-        707,
-        1787
+        661,
+        1843,
+        746,
+        1900
       ],
       "width": 85,
       "height": 57,
@@ -3183,14 +3183,14 @@
     {
       "index": 198,
       "path": "/characters/cure-white/frames/frame-198.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1730,
-        810,
-        1789
+        800,
+        1841,
+        864,
+        1900
       ],
       "width": 64,
       "height": 59,
@@ -3199,14 +3199,14 @@
     {
       "index": 199,
       "path": "/characters/cure-white/frames/frame-199.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1730,
-        929,
-        1801
+        930,
+        1829,
+        989,
+        1900
       ],
       "width": 59,
       "height": 71,
@@ -3215,14 +3215,14 @@
     {
       "index": 200,
       "path": "/characters/cure-white/frames/frame-200.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1730,
-        1044,
-        1799
+        1063,
+        1831,
+        1113,
+        1900
       ],
       "width": 50,
       "height": 69,
@@ -3231,14 +3231,14 @@
     {
       "index": 201,
       "path": "/characters/cure-white/frames/frame-201.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1730,
-        1208,
-        1769
+        1171,
+        1861,
+        1261,
+        1900
       ],
       "width": 90,
       "height": 39,
@@ -3247,14 +3247,14 @@
     {
       "index": 202,
       "path": "/characters/cure-white/frames/frame-202.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1730,
-        1316,
-        1782
+        1307,
+        1848,
+        1381,
+        1900
       ],
       "width": 74,
       "height": 52,
@@ -3263,14 +3263,14 @@
     {
       "index": 203,
       "path": "/characters/cure-white/frames/frame-203.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1730,
-        1439,
-        1778
+        1435,
+        1852,
+        1508,
+        1900
       ],
       "width": 73,
       "height": 48,
@@ -3279,14 +3279,14 @@
     {
       "index": 204,
       "path": "/characters/cure-white/frames/frame-204.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1838,
-        54,
-        1888
+        38,
+        1962,
+        90,
+        2012
       ],
       "width": 52,
       "height": 50,
@@ -3295,14 +3295,14 @@
     {
       "index": 205,
       "path": "/characters/cure-white/frames/frame-205.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1838,
-        178,
-        1895
+        166,
+        1955,
+        218,
+        2012
       ],
       "width": 52,
       "height": 57,
@@ -3311,14 +3311,14 @@
     {
       "index": 206,
       "path": "/characters/cure-white/frames/frame-206.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1838,
-        302,
-        1919
+        294,
+        1931,
+        346,
+        2012
       ],
       "width": 52,
       "height": 81,
@@ -3327,14 +3327,14 @@
     {
       "index": 207,
       "path": "/characters/cure-white/frames/frame-207.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1838,
-        426,
-        1928
+        422,
+        1922,
+        474,
+        2012
       ],
       "width": 52,
       "height": 90,
@@ -3343,14 +3343,14 @@
     {
       "index": 208,
       "path": "/characters/cure-white/frames/frame-208.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1838,
-        534,
-        1929
+        558,
+        1921,
+        594,
+        2012
       ],
       "width": 36,
       "height": 91,
@@ -3359,14 +3359,14 @@
     {
       "index": 209,
       "path": "/characters/cure-white/frames/frame-209.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1838,
-        691,
-        1927
+        669,
+        1923,
+        738,
+        2012
       ],
       "width": 69,
       "height": 89,
@@ -3375,14 +3375,14 @@
     {
       "index": 210,
       "path": "/characters/cure-white/frames/frame-210.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1838,
-        779,
-        1933
+        815,
+        1917,
+        848,
+        2012
       ],
       "width": 33,
       "height": 95,
@@ -3391,14 +3391,14 @@
     {
       "index": 211,
       "path": "/characters/cure-white/frames/frame-211.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1838,
-        903,
-        1930
+        943,
+        1920,
+        976,
+        2012
       ],
       "width": 33,
       "height": 92,
@@ -3407,14 +3407,14 @@
     {
       "index": 212,
       "path": "/characters/cure-white/frames/frame-212.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1838,
-        1029,
-        1903
+        1070,
+        1947,
+        1105,
+        2012
       ],
       "width": 35,
       "height": 65,
@@ -3423,14 +3423,14 @@
     {
       "index": 213,
       "path": "/characters/cure-white/frames/frame-213.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1838,
-        1160,
-        1911
+        1195,
+        1939,
+        1237,
+        2012
       ],
       "width": 42,
       "height": 73,
@@ -3439,14 +3439,14 @@
     {
       "index": 214,
       "path": "/characters/cure-white/frames/frame-214.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1838,
-        1290,
-        1932
+        1320,
+        1918,
+        1368,
+        2012
       ],
       "width": 48,
       "height": 94,
@@ -3455,14 +3455,14 @@
     {
       "index": 215,
       "path": "/characters/cure-white/frames/frame-215.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1838,
-        1409,
-        1938
+        1450,
+        1912,
+        1493,
+        2012
       ],
       "width": 43,
       "height": 100,
@@ -3471,14 +3471,14 @@
     {
       "index": 216,
       "path": "/characters/cure-white/frames/frame-216.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        1946,
         43,
-        2050
+        2020,
+        84,
+        2124
       ],
       "width": 41,
       "height": 104,
@@ -3487,14 +3487,14 @@
     {
       "index": 217,
       "path": "/characters/cure-white/frames/frame-217.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        1946,
-        167,
-        2044
+        171,
+        2026,
+        212,
+        2124
       ],
       "width": 41,
       "height": 98,
@@ -3503,14 +3503,14 @@
     {
       "index": 218,
       "path": "/characters/cure-white/frames/frame-218.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        1946,
-        307,
-        2027
+        291,
+        2043,
+        348,
+        2124
       ],
       "width": 57,
       "height": 81,
@@ -3519,14 +3519,14 @@
     {
       "index": 219,
       "path": "/characters/cure-white/frames/frame-219.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        1946,
-        437,
-        2023
+        416,
+        2047,
+        479,
+        2124
       ],
       "width": 63,
       "height": 77,
@@ -3535,14 +3535,14 @@
     {
       "index": 220,
       "path": "/characters/cure-white/frames/frame-220.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        1946,
-        544,
-        2013
+        553,
+        2057,
+        599,
+        2124
       ],
       "width": 46,
       "height": 67,
@@ -3551,14 +3551,14 @@
     {
       "index": 221,
       "path": "/characters/cure-white/frames/frame-221.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        1946,
-        685,
-        2023
+        672,
+        2047,
+        735,
+        2124
       ],
       "width": 63,
       "height": 77,
@@ -3567,14 +3567,14 @@
     {
       "index": 222,
       "path": "/characters/cure-white/frames/frame-222.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        1946,
-        830,
-        1987
+        790,
+        2083,
+        874,
+        2124
       ],
       "width": 84,
       "height": 41,
@@ -3583,14 +3583,14 @@
     {
       "index": 223,
       "path": "/characters/cure-white/frames/frame-223.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        1946,
-        948,
-        1997
+        921,
+        2073,
+        999,
+        2124
       ],
       "width": 78,
       "height": 51,
@@ -3599,14 +3599,14 @@
     {
       "index": 224,
       "path": "/characters/cure-white/frames/frame-224.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        1946,
-        1034,
-        2001
+        1068,
+        2069,
+        1108,
+        2124
       ],
       "width": 40,
       "height": 55,
@@ -3615,14 +3615,14 @@
     {
       "index": 225,
       "path": "/characters/cure-white/frames/frame-225.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        1946,
-        1157,
-        2008
+        1196,
+        2062,
+        1235,
+        2124
       ],
       "width": 39,
       "height": 62,
@@ -3631,14 +3631,14 @@
     {
       "index": 226,
       "path": "/characters/cure-white/frames/frame-226.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        1946,
-        1294,
-        2032
+        1318,
+        2038,
+        1370,
+        2124
       ],
       "width": 52,
       "height": 86,
@@ -3647,14 +3647,14 @@
     {
       "index": 227,
       "path": "/characters/cure-white/frames/frame-227.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        1946,
-        1418,
-        2027
+        1446,
+        2043,
+        1498,
+        2124
       ],
       "width": 52,
       "height": 81,
@@ -3663,14 +3663,14 @@
     {
       "index": 228,
       "path": "/characters/cure-white/frames/frame-228.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        2054,
-        89,
-        2095
+        20,
+        2195,
+        107,
+        2236
       ],
       "width": 87,
       "height": 41,
@@ -3679,14 +3679,14 @@
     {
       "index": 229,
       "path": "/characters/cure-white/frames/frame-229.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        2054,
-        193,
-        2106
+        158,
+        2184,
+        225,
+        2236
       ],
       "width": 67,
       "height": 52,
@@ -3695,14 +3695,14 @@
     {
       "index": 230,
       "path": "/characters/cure-white/frames/frame-230.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        2054,
-        315,
-        2122
+        287,
+        2168,
+        352,
+        2236
       ],
       "width": 65,
       "height": 68,
@@ -3711,14 +3711,14 @@
     {
       "index": 231,
       "path": "/characters/cure-white/frames/frame-231.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        2054,
         423,
-        2139
+        2151,
+        472,
+        2236
       ],
       "width": 49,
       "height": 85,
@@ -3727,14 +3727,14 @@
     {
       "index": 232,
       "path": "/characters/cure-white/frames/frame-232.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        2054,
-        562,
-        2130
+        544,
+        2160,
+        608,
+        2236
       ],
       "width": 64,
       "height": 76,
@@ -3743,14 +3743,14 @@
     {
       "index": 233,
       "path": "/characters/cure-white/frames/frame-233.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        2054,
-        674,
-        2137
+        678,
+        2153,
+        730,
+        2236
       ],
       "width": 52,
       "height": 83,
@@ -3759,14 +3759,14 @@
     {
       "index": 234,
       "path": "/characters/cure-white/frames/frame-234.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        2054,
-        800,
-        2136
+        805,
+        2154,
+        859,
+        2236
       ],
       "width": 54,
       "height": 82,
@@ -3775,14 +3775,14 @@
     {
       "index": 235,
       "path": "/characters/cure-white/frames/frame-235.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        2054,
-        920,
-        2138
+        935,
+        2152,
+        985,
+        2236
       ],
       "width": 50,
       "height": 84,
@@ -3791,14 +3791,14 @@
     {
       "index": 236,
       "path": "/characters/cure-white/frames/frame-236.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        2054,
-        1038,
-        2142
+        1066,
+        2148,
+        1110,
+        2236
       ],
       "width": 44,
       "height": 88,
@@ -3807,14 +3807,14 @@
     {
       "index": 237,
       "path": "/characters/cure-white/frames/frame-237.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        2054,
-        1162,
-        2138
+        1194,
+        2152,
+        1238,
+        2236
       ],
       "width": 44,
       "height": 84,
@@ -3823,14 +3823,14 @@
     {
       "index": 238,
       "path": "/characters/cure-white/frames/frame-238.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        2054,
-        1292,
-        2139
+        1319,
+        2151,
+        1369,
+        2236
       ],
       "width": 50,
       "height": 85,
@@ -3839,14 +3839,14 @@
     {
       "index": 239,
       "path": "/characters/cure-white/frames/frame-239.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        2054,
-        1426,
-        2143
+        1442,
+        2147,
+        1502,
+        2236
       ],
       "width": 60,
       "height": 89,
@@ -3855,14 +3855,14 @@
     {
       "index": 240,
       "path": "/characters/cure-white/frames/frame-240.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        2162,
-        59,
-        2246
+        35,
+        2264,
+        92,
+        2348
       ],
       "width": 57,
       "height": 84,
@@ -3871,14 +3871,14 @@
     {
       "index": 241,
       "path": "/characters/cure-white/frames/frame-241.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        2162,
-        177,
-        2230
+        166,
+        2280,
+        217,
+        2348
       ],
       "width": 51,
       "height": 68,
@@ -3887,14 +3887,14 @@
     {
       "index": 242,
       "path": "/characters/cure-white/frames/frame-242.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        2162,
-        297,
-        2221
+        296,
+        2289,
+        343,
+        2348
       ],
       "width": 47,
       "height": 59,
@@ -3903,14 +3903,14 @@
     {
       "index": 243,
       "path": "/characters/cure-white/frames/frame-243.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        2162,
-        425,
-        2230
+        422,
+        2280,
+        473,
+        2348
       ],
       "width": 51,
       "height": 68,
@@ -3919,14 +3919,14 @@
     {
       "index": 244,
       "path": "/characters/cure-white/frames/frame-244.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        2162,
-        549,
-        2251
+        550,
+        2259,
+        601,
+        2348
       ],
       "width": 51,
       "height": 89,
@@ -3935,14 +3935,14 @@
     {
       "index": 245,
       "path": "/characters/cure-white/frames/frame-245.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        622,
-        2162,
-        673,
-        2251
+        678,
+        2259,
+        729,
+        2348
       ],
       "width": 51,
       "height": 89,
@@ -3951,14 +3951,14 @@
     {
       "index": 246,
       "path": "/characters/cure-white/frames/frame-246.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        746,
-        2162,
-        797,
-        2251
+        806,
+        2259,
+        857,
+        2348
       ],
       "width": 51,
       "height": 89,
@@ -3967,14 +3967,14 @@
     {
       "index": 247,
       "path": "/characters/cure-white/frames/frame-247.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        870,
-        2162,
-        921,
-        2251
+        934,
+        2259,
+        985,
+        2348
       ],
       "width": 51,
       "height": 89,
@@ -3983,14 +3983,14 @@
     {
       "index": 248,
       "path": "/characters/cure-white/frames/frame-248.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        994,
-        2162,
-        1045,
-        2251
+        1062,
+        2259,
+        1113,
+        2348
       ],
       "width": 51,
       "height": 89,
@@ -3999,14 +3999,14 @@
     {
       "index": 249,
       "path": "/characters/cure-white/frames/frame-249.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1118,
-        2162,
-        1169,
-        2247
+        1190,
+        2263,
+        1241,
+        2348
       ],
       "width": 51,
       "height": 85,
@@ -4015,14 +4015,14 @@
     {
       "index": 250,
       "path": "/characters/cure-white/frames/frame-250.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1242,
-        2162,
-        1290,
-        2246
+        1320,
+        2264,
+        1368,
+        2348
       ],
       "width": 48,
       "height": 84,
@@ -4031,14 +4031,14 @@
     {
       "index": 251,
       "path": "/characters/cure-white/frames/frame-251.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        1366,
-        2162,
-        1417,
-        2245
+        1446,
+        2265,
+        1497,
+        2348
       ],
       "width": 51,
       "height": 83,
@@ -4047,14 +4047,14 @@
     {
       "index": 252,
       "path": "/characters/cure-white/frames/frame-252.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        2,
-        2270,
-        53,
-        2353
+        38,
+        2377,
+        89,
+        2460
       ],
       "width": 51,
       "height": 83,
@@ -4063,14 +4063,14 @@
     {
       "index": 253,
       "path": "/characters/cure-white/frames/frame-253.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        126,
-        2270,
-        177,
-        2353
+        166,
+        2377,
+        217,
+        2460
       ],
       "width": 51,
       "height": 83,
@@ -4079,14 +4079,14 @@
     {
       "index": 254,
       "path": "/characters/cure-white/frames/frame-254.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        250,
-        2270,
-        301,
-        2353
+        294,
+        2377,
+        345,
+        2460
       ],
       "width": 51,
       "height": 83,
@@ -4095,14 +4095,14 @@
     {
       "index": 255,
       "path": "/characters/cure-white/frames/frame-255.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        374,
-        2270,
-        425,
-        2353
+        422,
+        2377,
+        473,
+        2460
       ],
       "width": 51,
       "height": 83,
@@ -4111,14 +4111,14 @@
     {
       "index": 256,
       "path": "/characters/cure-white/frames/frame-256.png",
-      "sheetId": "main",
+      "sheetId": "generated",
       "sheetPath": "/characters/cure-white/animation-sheet.png",
       "sourceName": "Cure White.png",
       "box": [
-        498,
-        2270,
-        612,
-        2307
+        519,
+        2423,
+        633,
+        2460
       ],
       "width": 114,
       "height": 37,
@@ -4133,10 +4133,10 @@
       "replacementWidth": 108,
       "replacementHeight": 102,
       "box": [
-        622,
-        2270,
-        669,
-        2357
+        680,
+        2373,
+        727,
+        2460
       ],
       "width": 47,
       "height": 87,
@@ -4150,8 +4150,14 @@
       "generatedTransform": {
         "widthScale": 0.96
       },
-      "sheetId": "main",
-      "sheetPath": "/characters/cure-white/animation-sheet.png"
+      "sheetId": "generated",
+      "sheetPath": "/characters/cure-white/animation-sheet.png",
+      "sourceBox": [
+        7,
+        782,
+        54,
+        869
+      ]
     }
   ]
 }

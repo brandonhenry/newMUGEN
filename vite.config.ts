@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm, unlink, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, unlink, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { dirname, extname, resolve } from 'node:path';
@@ -1299,6 +1299,8 @@ function koreDevManifestWriter() {
             const framePath = resolve(voxelsDir, `frame-${frameIndex.toString().padStart(3, '0')}.json`);
             await writeFile(framePath, `${JSON.stringify(sanitizeHdVoxelPayload(frame.payload))}\n`, 'utf8');
           }
+
+          await writeHdVoxelPack(voxelsDir, characterId);
 
           const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
           manifest.voxelProfile = sanitizeVoxelProfile(payload.voxelProfile ?? 'hd-image-source');
@@ -2903,6 +2905,70 @@ function sanitizeHdVoxelPayload(payload: Record<string, unknown>) {
     voxels,
     source: sanitizeHdVoxelSource(payload.source)
   };
+}
+
+async function writeHdVoxelPack(voxelsDir: string, characterId: string) {
+  const parts = ['head', 'torso', 'leadArm', 'rearArm', 'leadLeg', 'rearLeg'];
+  const recordFields = 9;
+  const palette: string[] = [];
+  const paletteIndexes = new Map<string, number>();
+  const records: number[] = [];
+  const frames: Array<{ frame: string; offset: number; count: number }> = [];
+  const indexColor = (color: string) => {
+    const existing = paletteIndexes.get(color);
+    if (existing !== undefined) return existing;
+    const index = palette.length;
+    palette.push(color);
+    paletteIndexes.set(color, index);
+    return index;
+  };
+  const files = (await readdir(voxelsDir))
+    .filter((file) => /^frame-\d+\.json$/.test(file))
+    .sort();
+  for (const file of files) {
+    const payload = JSON.parse(await readFile(resolve(voxelsDir, file), 'utf8')) as {
+      palette?: string[];
+      voxels?: Array<Record<string, unknown>>;
+    };
+    const framePalette = Array.isArray(payload.palette) ? payload.palette : [];
+    const voxels = Array.isArray(payload.voxels) ? payload.voxels : [];
+    const offset = records.length / recordFields;
+    for (const voxel of voxels) {
+      const colorIndex = Math.max(0, Math.round(finiteOr(voxel.c, 0)));
+      const sideColorIndex = Math.max(0, Math.round(finiteOr(voxel.s, colorIndex)));
+      const color = framePalette[colorIndex] ?? '#ffffff';
+      const sideColor = framePalette[sideColorIndex] ?? color;
+      const part = typeof voxel.part === 'string' ? voxel.part : 'torso';
+      records.push(
+        Math.max(0, parts.indexOf(part)),
+        indexColor(color),
+        indexColor(sideColor),
+        finiteOr(voxel.x, 0),
+        finiteOr(voxel.y, 0),
+        finiteOr(voxel.z, 0),
+        finiteOr(voxel.w, 0),
+        finiteOr(voxel.h, 0),
+        finiteOr(voxel.d, 0)
+      );
+    }
+    frames.push({ frame: file.slice(0, -'.json'.length), offset, count: voxels.length });
+  }
+  const manifest = {
+    format: 'kore-voxel-pack-v1',
+    characterId,
+    source: 'voxels-hd',
+    binary: 'voxel-pack-v1.bin',
+    recordType: 'float64-le',
+    recordFields,
+    parts,
+    palette,
+    frames
+  };
+  const typedRecords = new Float64Array(records);
+  await Promise.all([
+    writeFile(resolve(voxelsDir, 'voxel-pack-v1.json'), JSON.stringify(manifest), 'utf8'),
+    writeFile(resolve(voxelsDir, 'voxel-pack-v1.bin'), Buffer.from(typedRecords.buffer))
+  ]);
 }
 
 function sanitizeHdVoxelSource(source: unknown) {
