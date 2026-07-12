@@ -30,6 +30,8 @@
     "audit:attack-scale": "node scripts/audit-attack-scale-vs-idle.mjs",
     "fix:knockdown-scale": "node scripts/lock-knockdown-voxel-aspect.mjs --write",
     "preview:knockdown-scale": "node scripts/lock-knockdown-voxel-aspect.mjs",
+    "fix:crouch-scale": "node scripts/lock-crouch-voxel-height.mjs --write",
+    "preview:crouch-scale": "node scripts/lock-crouch-voxel-height.mjs",
     "import:kore-stages": "node scripts/import-kore-stages.mjs",
     "import:naruto-stages": "node scripts/import-naruto-stages.mjs",
     "tag:patch": "node scripts/bump-version.mjs patch",

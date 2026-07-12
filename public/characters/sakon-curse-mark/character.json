@@ -186,106 +186,18 @@
       "/characters/sakon-curse-mark/frames/frame-230.png",
       "/characters/sakon-curse-mark/frames/frame-233.png"
     ],
-    "cmd:f+1": [
-      "/characters/sakon-curse-mark/frames/frame-236.png",
-      "/characters/sakon-curse-mark/frames/frame-237.png",
-      "/characters/sakon-curse-mark/frames/frame-238.png",
-      "/characters/sakon-curse-mark/frames/frame-239.png"
-    ],
-    "cmd:d/f+2": [
-      "/characters/sakon-curse-mark/frames/frame-240.png",
-      "/characters/sakon-curse-mark/frames/frame-241.png",
-      "/characters/sakon-curse-mark/frames/frame-242.png",
-      "/characters/sakon-curse-mark/frames/frame-243.png",
-      "/characters/sakon-curse-mark/frames/frame-244.png",
-      "/characters/sakon-curse-mark/frames/frame-246.png"
-    ],
-    "cmd:qcf+4": [
-      "/characters/sakon-curse-mark/frames/frame-240.png",
-      "/characters/sakon-curse-mark/frames/frame-241.png",
-      "/characters/sakon-curse-mark/frames/frame-242.png",
-      "/characters/sakon-curse-mark/frames/frame-243.png",
-      "/characters/sakon-curse-mark/frames/frame-244.png",
-      "/characters/sakon-curse-mark/frames/frame-246.png"
-    ],
-    "cmd:WS+4": [
-      "/characters/sakon-curse-mark/frames/frame-000.png",
-      "/characters/sakon-curse-mark/frames/frame-001.png",
-      "/characters/sakon-curse-mark/frames/frame-002.png",
-      "/characters/sakon-curse-mark/frames/frame-003.png"
-    ],
-    "cmd:FC+1": [
-      "/characters/sakon-curse-mark/frames/frame-004.png",
-      "/characters/sakon-curse-mark/frames/frame-005.png",
-      "/characters/sakon-curse-mark/frames/frame-006.png",
-      "/characters/sakon-curse-mark/frames/frame-007.png",
-      "/characters/sakon-curse-mark/frames/frame-008.png",
-      "/characters/sakon-curse-mark/frames/frame-009.png",
-      "/characters/sakon-curse-mark/frames/frame-010.png"
-    ],
-    "cmd:FC+2": [
-      "/characters/sakon-curse-mark/frames/frame-019.png",
-      "/characters/sakon-curse-mark/frames/frame-020.png",
-      "/characters/sakon-curse-mark/frames/frame-021.png",
-      "/characters/sakon-curse-mark/frames/frame-022.png",
-      "/characters/sakon-curse-mark/frames/frame-023.png",
-      "/characters/sakon-curse-mark/frames/frame-024.png",
-      "/characters/sakon-curse-mark/frames/frame-025.png",
-      "/characters/sakon-curse-mark/frames/frame-026.png"
-    ],
-    "cmd:1+2": [
-      "/characters/sakon-curse-mark/frames/frame-029.png",
-      "/characters/sakon-curse-mark/frames/frame-030.png",
-      "/characters/sakon-curse-mark/frames/frame-031.png",
-      "/characters/sakon-curse-mark/frames/frame-032.png"
-    ],
-    "cmd:1+3": [
-      "/characters/sakon-curse-mark/frames/frame-048.png",
-      "/characters/sakon-curse-mark/frames/frame-051.png",
-      "/characters/sakon-curse-mark/frames/frame-052.png",
-      "/characters/sakon-curse-mark/frames/frame-053.png",
-      "/characters/sakon-curse-mark/frames/frame-054.png",
-      "/characters/sakon-curse-mark/frames/frame-055.png"
-    ],
-    "cmd:2+3": [
-      "/characters/sakon-curse-mark/frames/frame-126.png",
-      "/characters/sakon-curse-mark/frames/frame-128.png",
-      "/characters/sakon-curse-mark/frames/frame-131.png",
-      "/characters/sakon-curse-mark/frames/frame-133.png",
-      "/characters/sakon-curse-mark/frames/frame-136.png",
-      "/characters/sakon-curse-mark/frames/frame-139.png",
-      "/characters/sakon-curse-mark/frames/frame-141.png",
-      "/characters/sakon-curse-mark/frames/frame-144.png"
-    ],
-    "cmd:2+4": [
-      "/characters/sakon-curse-mark/frames/frame-154.png",
-      "/characters/sakon-curse-mark/frames/frame-155.png",
-      "/characters/sakon-curse-mark/frames/frame-156.png",
-      "/characters/sakon-curse-mark/frames/frame-157.png",
-      "/characters/sakon-curse-mark/frames/frame-158.png",
-      "/characters/sakon-curse-mark/frames/frame-159.png",
-      "/characters/sakon-curse-mark/frames/frame-160.png"
-    ],
-    "cmd:3+4": [
-      "/characters/sakon-curse-mark/frames/frame-019.png",
-      "/characters/sakon-curse-mark/frames/frame-020.png",
-      "/characters/sakon-curse-mark/frames/frame-021.png",
-      "/characters/sakon-curse-mark/frames/frame-022.png",
-      "/characters/sakon-curse-mark/frames/frame-023.png",
-      "/characters/sakon-curse-mark/frames/frame-024.png",
-      "/characters/sakon-curse-mark/frames/frame-025.png",
-      "/characters/sakon-curse-mark/frames/frame-026.png"
-    ],
-    "cmd:O+2": [
-      "/characters/sakon-curse-mark/frames/frame-103.png",
-      "/characters/sakon-curse-mark/frames/frame-104.png",
-      "/characters/sakon-curse-mark/frames/frame-105.png",
-      "/characters/sakon-curse-mark/frames/frame-106.png",
-      "/characters/sakon-curse-mark/frames/frame-107.png",
-      "/characters/sakon-curse-mark/frames/frame-108.png",
-      "/characters/sakon-curse-mark/frames/frame-109.png",
-      "/characters/sakon-curse-mark/frames/frame-110.png"
-    ]
+    "cmd:f+1": [],
+    "cmd:d/f+2": [],
+    "cmd:qcf+4": [],
+    "cmd:WS+4": [],
+    "cmd:FC+1": [],
+    "cmd:FC+2": [],
+    "cmd:1+2": [],
+    "cmd:1+3": [],
+    "cmd:2+3": [],
+    "cmd:2+4": [],
+    "cmd:3+4": [],
+    "cmd:O+2": []
   },
   "animationFrameRates": {
     "idle": 5,
@@ -1501,9 +1413,19 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "246": {
+        "width": 0.96761,
+        "height": 0.96761,
+        "offsetX": 0
       }
     },
     "crouchBlock": {
+      "59": {
+        "width": 1.0148,
+        "height": 1.0148,
+        "offsetX": 0
+      },
       "248": {
         "width": 1.18,
         "height": 0.64,

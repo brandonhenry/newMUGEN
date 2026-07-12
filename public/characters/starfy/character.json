@@ -224,122 +224,18 @@
       "/characters/starfy/frames/frame-359.png",
       "/characters/starfy/frames/frame-360.png"
     ],
-    "cmd:f+1": [
-      "/characters/starfy/frames/frame-362.png",
-      "/characters/starfy/frames/frame-363.png",
-      "/characters/starfy/frames/frame-364.png",
-      "/characters/starfy/frames/frame-365.png",
-      "/characters/starfy/frames/frame-367.png",
-      "/characters/starfy/frames/frame-368.png",
-      "/characters/starfy/frames/frame-369.png",
-      "/characters/starfy/frames/frame-370.png"
-    ],
-    "cmd:d/f+2": [
-      "/characters/starfy/frames/frame-368.png",
-      "/characters/starfy/frames/frame-369.png",
-      "/characters/starfy/frames/frame-370.png",
-      "/characters/starfy/frames/frame-371.png"
-    ],
-    "cmd:qcf+4": [
-      "/characters/starfy/frames/frame-000.png",
-      "/characters/starfy/frames/frame-002.png",
-      "/characters/starfy/frames/frame-004.png",
-      "/characters/starfy/frames/frame-006.png",
-      "/characters/starfy/frames/frame-008.png",
-      "/characters/starfy/frames/frame-010.png",
-      "/characters/starfy/frames/frame-012.png",
-      "/characters/starfy/frames/frame-014.png"
-    ],
-    "cmd:WS+4": [
-      "/characters/starfy/frames/frame-016.png",
-      "/characters/starfy/frames/frame-018.png",
-      "/characters/starfy/frames/frame-020.png",
-      "/characters/starfy/frames/frame-022.png",
-      "/characters/starfy/frames/frame-024.png",
-      "/characters/starfy/frames/frame-026.png",
-      "/characters/starfy/frames/frame-028.png",
-      "/characters/starfy/frames/frame-030.png"
-    ],
-    "cmd:FC+1": [
-      "/characters/starfy/frames/frame-032.png",
-      "/characters/starfy/frames/frame-034.png",
-      "/characters/starfy/frames/frame-036.png",
-      "/characters/starfy/frames/frame-038.png",
-      "/characters/starfy/frames/frame-040.png",
-      "/characters/starfy/frames/frame-042.png",
-      "/characters/starfy/frames/frame-044.png",
-      "/characters/starfy/frames/frame-046.png"
-    ],
-    "cmd:FC+2": [
-      "/characters/starfy/frames/frame-048.png",
-      "/characters/starfy/frames/frame-049.png",
-      "/characters/starfy/frames/frame-050.png",
-      "/characters/starfy/frames/frame-052.png",
-      "/characters/starfy/frames/frame-053.png",
-      "/characters/starfy/frames/frame-054.png",
-      "/characters/starfy/frames/frame-056.png",
-      "/characters/starfy/frames/frame-057.png"
-    ],
-    "cmd:1+2": [
-      "/characters/starfy/frames/frame-059.png",
-      "/characters/starfy/frames/frame-061.png",
-      "/characters/starfy/frames/frame-063.png",
-      "/characters/starfy/frames/frame-065.png",
-      "/characters/starfy/frames/frame-067.png",
-      "/characters/starfy/frames/frame-069.png",
-      "/characters/starfy/frames/frame-071.png",
-      "/characters/starfy/frames/frame-073.png"
-    ],
-    "cmd:1+3": [
-      "/characters/starfy/frames/frame-075.png",
-      "/characters/starfy/frames/frame-077.png",
-      "/characters/starfy/frames/frame-079.png",
-      "/characters/starfy/frames/frame-081.png",
-      "/characters/starfy/frames/frame-083.png",
-      "/characters/starfy/frames/frame-085.png",
-      "/characters/starfy/frames/frame-087.png",
-      "/characters/starfy/frames/frame-089.png"
-    ],
-    "cmd:2+3": [
-      "/characters/starfy/frames/frame-091.png",
-      "/characters/starfy/frames/frame-093.png",
-      "/characters/starfy/frames/frame-095.png",
-      "/characters/starfy/frames/frame-097.png",
-      "/characters/starfy/frames/frame-099.png",
-      "/characters/starfy/frames/frame-101.png",
-      "/characters/starfy/frames/frame-103.png",
-      "/characters/starfy/frames/frame-105.png"
-    ],
-    "cmd:2+4": [
-      "/characters/starfy/frames/frame-107.png",
-      "/characters/starfy/frames/frame-109.png",
-      "/characters/starfy/frames/frame-111.png",
-      "/characters/starfy/frames/frame-113.png",
-      "/characters/starfy/frames/frame-115.png",
-      "/characters/starfy/frames/frame-117.png",
-      "/characters/starfy/frames/frame-119.png",
-      "/characters/starfy/frames/frame-121.png"
-    ],
-    "cmd:3+4": [
-      "/characters/starfy/frames/frame-123.png",
-      "/characters/starfy/frames/frame-125.png",
-      "/characters/starfy/frames/frame-127.png",
-      "/characters/starfy/frames/frame-129.png",
-      "/characters/starfy/frames/frame-131.png",
-      "/characters/starfy/frames/frame-133.png",
-      "/characters/starfy/frames/frame-135.png",
-      "/characters/starfy/frames/frame-137.png"
-    ],
-    "cmd:O+2": [
-      "/characters/starfy/frames/frame-139.png",
-      "/characters/starfy/frames/frame-141.png",
-      "/characters/starfy/frames/frame-143.png",
-      "/characters/starfy/frames/frame-145.png",
-      "/characters/starfy/frames/frame-147.png",
-      "/characters/starfy/frames/frame-149.png",
-      "/characters/starfy/frames/frame-151.png",
-      "/characters/starfy/frames/frame-153.png"
-    ]
+    "cmd:f+1": [],
+    "cmd:d/f+2": [],
+    "cmd:qcf+4": [],
+    "cmd:WS+4": [],
+    "cmd:FC+1": [],
+    "cmd:FC+2": [],
+    "cmd:1+2": [],
+    "cmd:1+3": [],
+    "cmd:2+3": [],
+    "cmd:2+4": [],
+    "cmd:3+4": [],
+    "cmd:O+2": []
   },
   "animationFrameRates": {
     "idle": 5,
@@ -1508,8 +1404,8 @@
     },
     "crouch": {
       "20": {
-        "width": 1,
-        "height": 1,
+        "width": 0.342,
+        "height": 0.342,
         "offsetX": 0,
         "flipX": true,
         "flipY": false
@@ -1573,8 +1469,8 @@
     },
     "crouchBlock": {
       "96": {
-        "width": 1,
-        "height": 1,
+        "width": 0.342,
+        "height": 0.342,
         "offsetX": 0,
         "flipX": true,
         "flipY": false

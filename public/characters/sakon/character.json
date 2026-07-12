@@ -220,87 +220,18 @@
       "/characters/sakon/frames/frame-155.png",
       "/characters/sakon/frames/frame-157.png"
     ],
-    "cmd:f+1": [
-      "/characters/sakon/frames/frame-169.png",
-      "/characters/sakon/frames/frame-170.png",
-      "/characters/sakon/frames/frame-171.png",
-      "/characters/sakon/frames/frame-172.png"
-    ],
-    "cmd:d/f+2": [
-      "/characters/sakon/frames/frame-173.png",
-      "/characters/sakon/frames/frame-174.png",
-      "/characters/sakon/frames/frame-175.png",
-      "/characters/sakon/frames/frame-176.png",
-      "/characters/sakon/frames/frame-177.png",
-      "/characters/sakon/frames/frame-178.png",
-      "/characters/sakon/frames/frame-179.png"
-    ],
-    "cmd:qcf+4": [
-      "/characters/sakon/frames/frame-188.png",
-      "/characters/sakon/frames/frame-189.png",
-      "/characters/sakon/frames/frame-190.png",
-      "/characters/sakon/frames/frame-191.png"
-    ],
-    "cmd:WS+4": [
-      "/characters/sakon/frames/frame-216.png",
-      "/characters/sakon/frames/frame-217.png"
-    ],
-    "cmd:FC+1": [
-      "/characters/sakon/frames/frame-235.png",
-      "/characters/sakon/frames/frame-236.png",
-      "/characters/sakon/frames/frame-237.png",
-      "/characters/sakon/frames/frame-238.png",
-      "/characters/sakon/frames/frame-239.png"
-    ],
-    "cmd:FC+2": [
-      "/characters/sakon/frames/frame-241.png",
-      "/characters/sakon/frames/frame-248.png",
-      "/characters/sakon/frames/frame-252.png",
-      "/characters/sakon/frames/frame-258.png",
-      "/characters/sakon/frames/frame-261.png",
-      "/characters/sakon/frames/frame-263.png",
-      "/characters/sakon/frames/frame-267.png"
-    ],
-    "cmd:1+2": [
-      "/characters/sakon/frames/frame-200.png",
-      "/characters/sakon/frames/frame-201.png"
-    ],
-    "cmd:1+3": [
-      "/characters/sakon/frames/frame-173.png",
-      "/characters/sakon/frames/frame-174.png",
-      "/characters/sakon/frames/frame-175.png",
-      "/characters/sakon/frames/frame-176.png",
-      "/characters/sakon/frames/frame-177.png",
-      "/characters/sakon/frames/frame-178.png",
-      "/characters/sakon/frames/frame-179.png"
-    ],
-    "cmd:2+3": [
-      "/characters/sakon/frames/frame-188.png",
-      "/characters/sakon/frames/frame-189.png",
-      "/characters/sakon/frames/frame-190.png",
-      "/characters/sakon/frames/frame-191.png"
-    ],
-    "cmd:2+4": [
-      "/characters/sakon/frames/frame-165.png",
-      "/characters/sakon/frames/frame-166.png",
-      "/characters/sakon/frames/frame-167.png",
-      "/characters/sakon/frames/frame-168.png"
-    ],
-    "cmd:3+4": [
-      "/characters/sakon/frames/frame-169.png",
-      "/characters/sakon/frames/frame-170.png",
-      "/characters/sakon/frames/frame-171.png",
-      "/characters/sakon/frames/frame-172.png"
-    ],
-    "cmd:O+2": [
-      "/characters/sakon/frames/frame-261.png",
-      "/characters/sakon/frames/frame-262.png",
-      "/characters/sakon/frames/frame-263.png",
-      "/characters/sakon/frames/frame-264.png",
-      "/characters/sakon/frames/frame-265.png",
-      "/characters/sakon/frames/frame-266.png",
-      "/characters/sakon/frames/frame-267.png"
-    ]
+    "cmd:f+1": [],
+    "cmd:d/f+2": [],
+    "cmd:qcf+4": [],
+    "cmd:WS+4": [],
+    "cmd:FC+1": [],
+    "cmd:FC+2": [],
+    "cmd:1+2": [],
+    "cmd:1+3": [],
+    "cmd:2+3": [],
+    "cmd:2+4": [],
+    "cmd:3+4": [],
+    "cmd:O+2": []
   },
   "animationFrameRates": {
     "idle": 5,
@@ -1797,6 +1728,11 @@
       }
     },
     "crouch": {
+      "123": {
+        "width": 0.77777,
+        "height": 0.77777,
+        "offsetX": 0
+      },
       "160": {
         "width": 0.25,
         "height": 0.28,
@@ -1842,8 +1778,8 @@
     },
     "crouchBlock": {
       "273": {
-        "width": 1.01,
-        "height": 1.2,
+        "width": 1.06667,
+        "height": 1.06667,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
