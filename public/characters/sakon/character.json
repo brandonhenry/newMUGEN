@@ -187,16 +187,7 @@
       "/characters/sakon/frames/frame-156.png",
       "/characters/sakon/frames/frame-157.png"
     ],
-    "getupStand": [
-      "/characters/sakon/frames/frame-154.png",
-      "/characters/sakon/frames/frame-155.png",
-      "/characters/sakon/frames/frame-156.png",
-      "/characters/sakon/frames/frame-157.png",
-      "/characters/sakon/frames/frame-158.png",
-      "/characters/sakon/frames/frame-159.png",
-      "/characters/sakon/frames/frame-165.png",
-      "/characters/sakon/frames/frame-166.png"
-    ],
+    "getupStand": [],
     "getupRollUp": [],
     "win": [
       "/characters/sakon/frames/frame-273.png",
@@ -1729,9 +1720,11 @@
     },
     "crouch": {
       "123": {
-        "width": 0.77777,
-        "height": 0.77777,
-        "offsetX": 0
+        "width": 0.78,
+        "height": 0.78,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "160": {
         "width": 0.25,
@@ -1778,8 +1771,8 @@
     },
     "crouchBlock": {
       "273": {
-        "width": 1.06667,
-        "height": 1.06667,
+        "width": 1.07,
+        "height": 1.07,
         "offsetX": 0,
         "flipX": false,
         "flipY": false

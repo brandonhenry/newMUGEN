@@ -157,14 +157,7 @@
       "/characters/sakon-curse-mark/frames/frame-179.png",
       "/characters/sakon-curse-mark/frames/frame-181.png"
     ],
-    "getupStand": [
-      "/characters/sakon-curse-mark/frames/frame-187.png",
-      "/characters/sakon-curse-mark/frames/frame-188.png",
-      "/characters/sakon-curse-mark/frames/frame-189.png",
-      "/characters/sakon-curse-mark/frames/frame-190.png",
-      "/characters/sakon-curse-mark/frames/frame-191.png",
-      "/characters/sakon-curse-mark/frames/frame-192.png"
-    ],
+    "getupStand": [],
     "getupRollUp": [],
     "win": [
       "/characters/sakon-curse-mark/frames/frame-202.png",
@@ -1415,16 +1408,20 @@
         "flipY": false
       },
       "246": {
-        "width": 0.96761,
-        "height": 0.96761,
-        "offsetX": 0
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "crouchBlock": {
       "59": {
-        "width": 1.0148,
-        "height": 1.0148,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "248": {
         "width": 1.18,

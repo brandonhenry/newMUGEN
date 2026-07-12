@@ -145,12 +145,7 @@
       "/characters/tsunade/frames/frame-102.png",
       "/characters/tsunade/frames/frame-103.png"
     ],
-    "getupStand": [
-      "/characters/tsunade/frames/frame-098.png",
-      "/characters/tsunade/frames/frame-099.png",
-      "/characters/tsunade/frames/frame-100.png",
-      "/characters/tsunade/frames/frame-101.png"
-    ],
+    "getupStand": [],
     "getupRollUp": [],
     "win": [
       "/characters/tsunade/frames/frame-104.png",
@@ -1220,13 +1215,6 @@
       }
     },
     "crouch": {
-      "36": {
-        "width": 0.99901,
-        "height": 0.99901,
-        "offsetX": 0,
-        "flipX": false,
-        "flipY": false
-      },
       "37": {
         "width": 0.71,
         "height": 0.84,
@@ -1243,11 +1231,6 @@
       }
     },
     "crouchBlock": {
-      "3": {
-        "width": 0.99901,
-        "height": 0.99901,
-        "offsetX": 0
-      },
       "36": {
         "width": 1.22,
         "height": 1.07,
