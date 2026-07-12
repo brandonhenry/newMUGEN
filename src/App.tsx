@@ -29082,13 +29082,7 @@ function HealthBar({ fighter, align, displayName, onlineWins, roundsToWin }: { f
       <div className="health-surface">
         <div className="hud-portrait" aria-hidden="true">
           {portrait.path ? (
-            <img
-              className={`hud-portrait-image ${portrait.kind}`}
-              src={portrait.path}
-              alt=""
-              data-testid={`fighter-portrait-${align}`}
-              data-portrait-source={portrait.kind}
-            />
+            <HudPortraitImage portrait={portrait} align={align} />
           ) : <span>{fighter.character.displayName.slice(0, 2).toUpperCase()}</span>}
         </div>
         <div className="health-label">
@@ -29124,6 +29118,74 @@ function getHudPortraitSource(character: MatchSnapshot['fighters'][number]['char
   if (character.faceCardPath) return { path: character.faceCardPath, kind: 'face-card' as const };
   if (character.spriteSheetPath) return { path: character.spriteSheetPath, kind: 'sprite-sheet' as const };
   return { path: '', kind: 'initials' as const };
+}
+
+const hudPortraitCropCache = new Map<string, string>();
+
+function HudPortraitImage({ portrait, align }: { portrait: ReturnType<typeof getHudPortraitSource>; align: 'left' | 'right' }) {
+  const [source, setSource] = useState(() => hudPortraitCropCache.get(portrait.path) ?? portrait.path);
+  useEffect(() => {
+    setSource(hudPortraitCropCache.get(portrait.path) ?? portrait.path);
+  }, [portrait.path]);
+  const cropVisiblePixels = useCallback((event: React.SyntheticEvent<HTMLImageElement>) => {
+    if (portrait.kind !== 'frame' || source !== portrait.path) return;
+    const cropped = cropHudPortraitToVisiblePixels(event.currentTarget);
+    if (!cropped) return;
+    hudPortraitCropCache.set(portrait.path, cropped);
+    setSource(cropped);
+  }, [portrait.kind, portrait.path, source]);
+  return (
+    <img
+      className={`hud-portrait-image ${portrait.kind}`}
+      src={source}
+      alt=""
+      onLoad={cropVisiblePixels}
+      data-testid={`fighter-portrait-${align}`}
+      data-portrait-source={portrait.kind}
+      data-portrait-original-src={portrait.path}
+    />
+  );
+}
+
+function cropHudPortraitToVisiblePixels(image: HTMLImageElement) {
+  const width = image.naturalWidth;
+  const height = image.naturalHeight;
+  if (width <= 0 || height <= 0) return null;
+  const sourceCanvas = document.createElement('canvas');
+  sourceCanvas.width = width;
+  sourceCanvas.height = height;
+  const sourceContext = sourceCanvas.getContext('2d', { willReadFrequently: true });
+  if (!sourceContext) return null;
+  try {
+    sourceContext.drawImage(image, 0, 0);
+    const pixels = sourceContext.getImageData(0, 0, width, height).data;
+    let left = width;
+    let top = height;
+    let right = -1;
+    let bottom = -1;
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        if (pixels[(y * width + x) * 4 + 3] <= 8) continue;
+        left = Math.min(left, x);
+        top = Math.min(top, y);
+        right = Math.max(right, x);
+        bottom = Math.max(bottom, y);
+      }
+    }
+    if (right < left || bottom < top || (left === 0 && top === 0 && right === width - 1 && bottom === height - 1)) return null;
+    const croppedWidth = right - left + 1;
+    const croppedHeight = bottom - top + 1;
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = croppedWidth;
+    cropCanvas.height = croppedHeight;
+    const cropContext = cropCanvas.getContext('2d');
+    if (!cropContext) return null;
+    cropContext.imageSmoothingEnabled = false;
+    cropContext.drawImage(image, left, top, croppedWidth, croppedHeight, 0, 0, croppedWidth, croppedHeight);
+    return cropCanvas.toDataURL('image/png');
+  } catch {
+    return null;
+  }
 }
 
 function FooterActions({

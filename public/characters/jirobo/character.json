@@ -100,22 +100,30 @@
       "/characters/jirobo/frames/frame-087.png"
     ],
     "jabright": [
-      "/characters/jirobo/frames/frame-079.png",
-      "/characters/jirobo/frames/frame-080.png",
-      "/characters/jirobo/frames/frame-081.png",
-      "/characters/jirobo/frames/frame-082.png",
-      "/characters/jirobo/frames/frame-083.png"
+      "/characters/jirobo/frames/frame-005.png",
+      "/characters/jirobo/frames/frame-006.png",
+      "/characters/jirobo/frames/frame-007.png",
+      "/characters/jirobo/frames/frame-009.png",
+      "/characters/jirobo/frames/frame-010.png"
     ],
     "kickleft": [
-      "/characters/jirobo/frames/frame-084.png",
-      "/characters/jirobo/frames/frame-085.png",
-      "/characters/jirobo/frames/frame-086.png",
-      "/characters/jirobo/frames/frame-087.png"
+      "/characters/jirobo/frames/frame-008.png",
+      "/characters/jirobo/frames/frame-011.png",
+      "/characters/jirobo/frames/frame-012.png",
+      "/characters/jirobo/frames/frame-013.png",
+      "/characters/jirobo/frames/frame-014.png",
+      "/characters/jirobo/frames/frame-015.png"
     ],
     "kickright": [
-      "/characters/jirobo/frames/frame-230.png",
-      "/characters/jirobo/frames/frame-231.png",
-      "/characters/jirobo/frames/frame-232.png"
+      "/characters/jirobo/frames/frame-016.png",
+      "/characters/jirobo/frames/frame-017.png",
+      "/characters/jirobo/frames/frame-018.png",
+      "/characters/jirobo/frames/frame-020.png",
+      "/characters/jirobo/frames/frame-021.png",
+      "/characters/jirobo/frames/frame-022.png",
+      "/characters/jirobo/frames/frame-023.png",
+      "/characters/jirobo/frames/frame-024.png",
+      "/characters/jirobo/frames/frame-025.png"
     ],
     "hitLight": [
       "/characters/jirobo/frames/frame-092.png"
@@ -470,7 +478,8 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Jirobo Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "throw",
+      "throwCapture": true
     },
     "cmd:f+1": {
       "startupFrames": 14,

@@ -1756,28 +1756,36 @@
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
       },
       "29": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
       },
       "30": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 3.25
       },
       "31": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.57
       },
       "49": {
         "width": 1.21,
@@ -1900,28 +1908,36 @@
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
       },
       "29": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1
       },
       "30": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 3.25
       },
       "31": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "voxelScaleX": 1,
+        "voxelScaleY": 2.57
       }
     },
     "cmd:1+2": {
@@ -2155,6 +2171,16 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "76": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
+      "77": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
       },
       "149": {
         "width": 1.37,
@@ -3011,6 +3037,11 @@
       }
     },
     "idle": {
+      "0": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0
+      },
       "1": {
         "width": 1,
         "height": 0.98,

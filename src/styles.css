@@ -10073,8 +10073,10 @@ button {
 }
 
 .hud-portrait-image.frame {
-  transform: translateY(24%) scale(2.08);
-  transform-origin: center;
+  object-fit: cover;
+  object-position: center top;
+  transform: none;
+  transform-origin: top center;
 }
 
 .hud-portrait-image.face-card {
