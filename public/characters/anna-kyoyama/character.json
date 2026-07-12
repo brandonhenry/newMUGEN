@@ -1361,6 +1361,62 @@
     "height": 1.01
   },
   "animationFrameScales": {
+    "knockdown": {
+      "34": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "37": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    },
+    "idle": {
+      "0": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.00011,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "1": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.00011,
+          "y": 1,
+          "z": 1
+        }
+      }
+    },
     "crouchBlock": {
       "90": {
         "width": 1.13,
@@ -1420,6 +1476,34 @@
       }
     },
     "getupStand": {
+      "34": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "35": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "36": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      "37": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
+      },
       "53": {
         "width": 1.15,
         "height": 0.6,
@@ -1851,6 +1935,18 @@
       }
     },
     "cmd:qcf+4": {
+      "166": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.4617,
+          "y": 1,
+          "z": 1
+        }
+      },
       "157": {
         "width": 0.92,
         "height": 0.92,
@@ -2076,6 +2172,18 @@
       }
     },
     "cmd:f+2": {
+      "126": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.00011,
+          "y": 1,
+          "z": 1
+        }
+      },
       "84": {
         "width": 0.92,
         "height": 0.96,
@@ -2264,6 +2372,78 @@
       }
     },
     "jableft": {
+      "79": {
+        "width": 0.95969,
+        "height": 0.95969,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.25548,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "80": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.58993,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "81": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.94894,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "82": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.82073,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "83": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.07704,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "84": {
+        "width": 0.95969,
+        "height": 0.95969,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 0.96164,
+          "y": 1,
+          "z": 1
+        }
+      },
       "170": {
         "width": 1.23,
         "height": 1,
@@ -2308,6 +2488,30 @@
       }
     },
     "kickleft": {
+      "181": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.33348,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "186": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.00011,
+          "y": 1,
+          "z": 1
+        }
+      },
       "177": {
         "width": 1.05,
         "height": 1,
@@ -2607,6 +2811,42 @@
       }
     },
     "cmd:2+4": {
+      "80": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.58993,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "81": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.94894,
+          "y": 1,
+          "z": 1
+        }
+      },
+      "82": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.82073,
+          "y": 1,
+          "z": 1
+        }
+      },
       "83": {
         "width": 1.08,
         "height": 1,
@@ -2616,6 +2856,18 @@
       }
     },
     "cmd:3+4": {
+      "96": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false,
+        "voxelScale": {
+          "x": 1.00011,
+          "y": 1,
+          "z": 1
+        }
+      },
       "91": {
         "width": 1.08,
         "height": 0.96,
