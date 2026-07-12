@@ -124,12 +124,14 @@
       "/characters/knuckles-the-echidna/frames/frame-003.png"
     ],
     "jabright": [
-      "/characters/knuckles-the-echidna/frames/frame-307.png",
-      "/characters/knuckles-the-echidna/frames/frame-308.png",
-      "/characters/knuckles-the-echidna/frames/frame-309.png",
-      "/characters/knuckles-the-echidna/frames/frame-310.png",
-      "/characters/knuckles-the-echidna/frames/frame-311.png",
-      "/characters/knuckles-the-echidna/frames/frame-312.png"
+      "/characters/knuckles-the-echidna/frames/frame-046.png",
+      "/characters/knuckles-the-echidna/frames/frame-047.png",
+      "/characters/knuckles-the-echidna/frames/frame-048.png",
+      "/characters/knuckles-the-echidna/frames/frame-049.png",
+      "/characters/knuckles-the-echidna/frames/frame-050.png",
+      "/characters/knuckles-the-echidna/frames/frame-051.png",
+      "/characters/knuckles-the-echidna/frames/frame-052.png",
+      "/characters/knuckles-the-echidna/frames/frame-053.png"
     ],
     "kickleft": [
       "/characters/knuckles-the-echidna/frames/frame-313.png",
@@ -481,6 +483,10 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Knuckles the Echidna Right Check",
       "hitLevel": "mid"
     },

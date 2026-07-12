@@ -101,11 +101,12 @@
       "/characters/jirobo-curse-mark/frames/frame-071.png"
     ],
     "jabright": [
-      "/characters/jirobo-curse-mark/frames/frame-063.png",
-      "/characters/jirobo-curse-mark/frames/frame-064.png",
-      "/characters/jirobo-curse-mark/frames/frame-065.png",
-      "/characters/jirobo-curse-mark/frames/frame-066.png",
-      "/characters/jirobo-curse-mark/frames/frame-067.png"
+      "/characters/jirobo-curse-mark/frames/frame-012.png",
+      "/characters/jirobo-curse-mark/frames/frame-013.png",
+      "/characters/jirobo-curse-mark/frames/frame-014.png",
+      "/characters/jirobo-curse-mark/frames/frame-015.png",
+      "/characters/jirobo-curse-mark/frames/frame-016.png",
+      "/characters/jirobo-curse-mark/frames/frame-017.png"
     ],
     "kickleft": [
       "/characters/jirobo-curse-mark/frames/frame-068.png",
@@ -440,6 +441,10 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Jirobo Curse Mark Right Check",
       "hitLevel": "mid"
     },

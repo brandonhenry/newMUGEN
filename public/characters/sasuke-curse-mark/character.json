@@ -113,33 +113,26 @@
       "/characters/sasuke-curse-mark/frames/frame-003.png"
     ],
     "jabright": [
-      "/characters/sasuke-curse-mark/frames/frame-134.png",
-      "/characters/sasuke-curse-mark/frames/frame-135.png",
-      "/characters/sasuke-curse-mark/frames/frame-137.png",
-      "/characters/sasuke-curse-mark/frames/frame-138.png",
-      "/characters/sasuke-curse-mark/frames/frame-140.png",
-      "/characters/sasuke-curse-mark/frames/frame-142.png",
-      "/characters/sasuke-curse-mark/frames/frame-143.png",
-      "/characters/sasuke-curse-mark/frames/frame-145.png"
+      "/characters/sasuke-curse-mark/frames/frame-006.png",
+      "/characters/sasuke-curse-mark/frames/frame-007.png",
+      "/characters/sasuke-curse-mark/frames/frame-008.png",
+      "/characters/sasuke-curse-mark/frames/frame-009.png"
     ],
     "kickleft": [
-      "/characters/sasuke-curse-mark/frames/frame-076.png",
-      "/characters/sasuke-curse-mark/frames/frame-077.png",
-      "/characters/sasuke-curse-mark/frames/frame-079.png",
-      "/characters/sasuke-curse-mark/frames/frame-080.png",
-      "/characters/sasuke-curse-mark/frames/frame-082.png",
-      "/characters/sasuke-curse-mark/frames/frame-084.png",
-      "/characters/sasuke-curse-mark/frames/frame-085.png",
-      "/characters/sasuke-curse-mark/frames/frame-087.png"
+      "/characters/sasuke-curse-mark/frames/frame-003.png",
+      "/characters/sasuke-curse-mark/frames/frame-005.png",
+      "/characters/sasuke-curse-mark/frames/frame-010.png",
+      "/characters/sasuke-curse-mark/frames/frame-011.png",
+      "/characters/sasuke-curse-mark/frames/frame-012.png",
+      "/characters/sasuke-curse-mark/frames/frame-013.png"
     ],
     "kickright": [
-      "/characters/sasuke-curse-mark/frames/frame-173.png",
-      "/characters/sasuke-curse-mark/frames/frame-174.png",
-      "/characters/sasuke-curse-mark/frames/frame-175.png",
-      "/characters/sasuke-curse-mark/frames/frame-176.png",
-      "/characters/sasuke-curse-mark/frames/frame-177.png",
-      "/characters/sasuke-curse-mark/frames/frame-178.png",
-      "/characters/sasuke-curse-mark/frames/frame-179.png"
+      "/characters/sasuke-curse-mark/frames/frame-013.png",
+      "/characters/sasuke-curse-mark/frames/frame-014.png",
+      "/characters/sasuke-curse-mark/frames/frame-015.png",
+      "/characters/sasuke-curse-mark/frames/frame-016.png",
+      "/characters/sasuke-curse-mark/frames/frame-017.png",
+      "/characters/sasuke-curse-mark/frames/frame-018.png"
     ],
     "hitLight": [
       "/characters/sasuke-curse-mark/frames/frame-092.png"
@@ -484,6 +477,10 @@
       "onCounterHitFrames": 13,
       "whiffRecoveryFrames": 7,
       "range": 1.7,
+      "launchHeight": 2.2,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Sasuke Curse Mark Right Kick",
       "hitLevel": "mid"
     },

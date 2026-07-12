@@ -115,29 +115,47 @@
       "/characters/sonic-the-hedgehog/frames/frame-128.png"
     ],
     "jabright": [
-      "/characters/sonic-the-hedgehog/frames/frame-066.png",
-      "/characters/sonic-the-hedgehog/frames/frame-067.png",
-      "/characters/sonic-the-hedgehog/frames/frame-068.png",
-      "/characters/sonic-the-hedgehog/frames/frame-069.png",
-      "/characters/sonic-the-hedgehog/frames/frame-070.png",
-      "/characters/sonic-the-hedgehog/frames/frame-071.png"
+      "/characters/sonic-the-hedgehog/frames/frame-168.png",
+      "/characters/sonic-the-hedgehog/frames/frame-169.png",
+      "/characters/sonic-the-hedgehog/frames/frame-170.png",
+      "/characters/sonic-the-hedgehog/frames/frame-172.png",
+      "/characters/sonic-the-hedgehog/frames/frame-173.png",
+      "/characters/sonic-the-hedgehog/frames/frame-174.png",
+      "/characters/sonic-the-hedgehog/frames/frame-175.png",
+      "/characters/sonic-the-hedgehog/frames/frame-176.png",
+      "/characters/sonic-the-hedgehog/frames/frame-177.png",
+      "/characters/sonic-the-hedgehog/frames/frame-178.png",
+      "/characters/sonic-the-hedgehog/frames/frame-179.png",
+      "/characters/sonic-the-hedgehog/frames/frame-180.png",
+      "/characters/sonic-the-hedgehog/frames/frame-181.png",
+      "/characters/sonic-the-hedgehog/frames/frame-182.png",
+      "/characters/sonic-the-hedgehog/frames/frame-183.png",
+      "/characters/sonic-the-hedgehog/frames/frame-184.png"
     ],
     "kickleft": [
-      "/characters/sonic-the-hedgehog/frames/frame-093.png",
-      "/characters/sonic-the-hedgehog/frames/frame-094.png",
-      "/characters/sonic-the-hedgehog/frames/frame-095.png",
-      "/characters/sonic-the-hedgehog/frames/frame-096.png",
-      "/characters/sonic-the-hedgehog/frames/frame-097.png",
-      "/characters/sonic-the-hedgehog/frames/frame-098.png",
-      "/characters/sonic-the-hedgehog/frames/frame-099.png"
+      "/characters/sonic-the-hedgehog/frames/frame-102.png",
+      "/characters/sonic-the-hedgehog/frames/frame-103.png",
+      "/characters/sonic-the-hedgehog/frames/frame-104.png",
+      "/characters/sonic-the-hedgehog/frames/frame-105.png",
+      "/characters/sonic-the-hedgehog/frames/frame-106.png",
+      "/characters/sonic-the-hedgehog/frames/frame-108.png",
+      "/characters/sonic-the-hedgehog/frames/frame-109.png",
+      "/characters/sonic-the-hedgehog/frames/frame-110.png",
+      "/characters/sonic-the-hedgehog/frames/frame-112.png",
+      "/characters/sonic-the-hedgehog/frames/frame-113.png",
+      "/characters/sonic-the-hedgehog/frames/frame-120.png",
+      "/characters/sonic-the-hedgehog/frames/frame-121.png",
+      "/characters/sonic-the-hedgehog/frames/frame-118.png",
+      "/characters/sonic-the-hedgehog/frames/frame-119.png"
     ],
     "kickright": [
-      "/characters/sonic-the-hedgehog/frames/frame-081.png",
-      "/characters/sonic-the-hedgehog/frames/frame-082.png",
-      "/characters/sonic-the-hedgehog/frames/frame-083.png",
-      "/characters/sonic-the-hedgehog/frames/frame-084.png",
-      "/characters/sonic-the-hedgehog/frames/frame-085.png",
-      "/characters/sonic-the-hedgehog/frames/frame-086.png"
+      "/characters/sonic-the-hedgehog/frames/frame-120.png",
+      "/characters/sonic-the-hedgehog/frames/frame-121.png",
+      "/characters/sonic-the-hedgehog/frames/frame-122.png",
+      "/characters/sonic-the-hedgehog/frames/frame-123.png",
+      "/characters/sonic-the-hedgehog/frames/frame-124.png",
+      "/characters/sonic-the-hedgehog/frames/frame-114.png",
+      "/characters/sonic-the-hedgehog/frames/frame-120.png"
     ],
     "hitLight": [
       "/characters/sonic-the-hedgehog/frames/frame-276.png"
@@ -484,7 +502,8 @@
       "whiffRecoveryFrames": 7,
       "range": 1.7,
       "label": "Sonic the Hedgehog Right Kick",
-      "hitLevel": "mid"
+      "hitLevel": "mid",
+      "endsInCrouch": true
     },
     "cmd:f+1": {
       "startupFrames": 14,

@@ -125,30 +125,33 @@
       "/characters/sasori/frames/frame-186.png"
     ],
     "jabright": [
-      "/characters/sasori/frames/frame-187.png",
-      "/characters/sasori/frames/frame-188.png",
-      "/characters/sasori/frames/frame-190.png",
-      "/characters/sasori/frames/frame-192.png",
-      "/characters/sasori/frames/frame-194.png",
-      "/characters/sasori/frames/frame-195.png",
-      "/characters/sasori/frames/frame-197.png",
-      "/characters/sasori/frames/frame-199.png"
+      "/characters/sasori/frames/frame-003.png",
+      "/characters/sasori/frames/frame-004.png",
+      "/characters/sasori/frames/frame-006.png"
     ],
     "kickleft": [
-      "/characters/sasori/frames/frame-201.png",
-      "/characters/sasori/frames/frame-202.png",
-      "/characters/sasori/frames/frame-203.png",
-      "/characters/sasori/frames/frame-204.png",
-      "/characters/sasori/frames/frame-205.png",
-      "/characters/sasori/frames/frame-206.png"
+      "/characters/sasori/frames/frame-001.png",
+      "/characters/sasori/frames/frame-005.png",
+      "/characters/sasori/frames/frame-007.png",
+      "/characters/sasori/frames/frame-008.png",
+      "/characters/sasori/frames/frame-009.png",
+      "/characters/sasori/frames/frame-010.png",
+      "/characters/sasori/frames/frame-011.png",
+      "/characters/sasori/frames/frame-012.png"
     ],
     "kickright": [
-      "/characters/sasori/frames/frame-201.png",
-      "/characters/sasori/frames/frame-202.png",
-      "/characters/sasori/frames/frame-203.png",
-      "/characters/sasori/frames/frame-204.png",
-      "/characters/sasori/frames/frame-205.png",
-      "/characters/sasori/frames/frame-206.png"
+      "/characters/sasori/frames/frame-012.png",
+      "/characters/sasori/frames/frame-013.png",
+      "/characters/sasori/frames/frame-014.png",
+      "/characters/sasori/frames/frame-016.png",
+      "/characters/sasori/frames/frame-018.png",
+      "/characters/sasori/frames/frame-020.png",
+      "/characters/sasori/frames/frame-022.png",
+      "/characters/sasori/frames/frame-024.png",
+      "/characters/sasori/frames/frame-028.png",
+      "/characters/sasori/frames/frame-032.png",
+      "/characters/sasori/frames/frame-036.png",
+      "/characters/sasori/frames/frame-040.png"
     ],
     "hitLight": [
       "/characters/sasori/frames/frame-111.png"
@@ -1464,9 +1467,11 @@
     },
     "crouch": {
       "26": {
-        "width": 1.134,
-        "height": 1.134,
-        "offsetX": 0
+        "width": 1.13,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "129": {
         "width": 1.18,
@@ -1527,9 +1532,11 @@
     },
     "crouchBlock": {
       "26": {
-        "width": 1.134,
-        "height": 1.134,
-        "offsetX": 0
+        "width": 1.13,
+        "height": 1.13,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "block": {

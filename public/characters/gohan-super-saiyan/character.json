@@ -1789,62 +1789,62 @@
   "animationFrameScales": {
     "knockdown": {
       "28": {
-        "width": 1.03849,
-        "height": 1.03849,
-        "offsetX": 0,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
-      },
-      "29": {
         "width": 1.0385,
         "height": 1.0385,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.11
+      },
+      "29": {
+        "width": 1.03849,
+        "height": 1.03849,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1.11
       },
       "30": {
         "width": 1.03849,
         "height": 1.03849,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.52
       },
       "31": {
         "width": 1.03849,
         "height": 1.03849,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.75
       }
     },
     "getupStand": {
       "28": {
-        "width": 1.03849,
-        "height": 1.03849,
-        "offsetX": 0,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
-      },
-      "29": {
         "width": 1.0385,
         "height": 1.0385,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.11
+      },
+      "29": {
+        "width": 1.03849,
+        "height": 1.03849,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 1.11
       },
       "30": {
         "width": 1.03849,
         "height": 1.03849,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.52
       },
       "31": {
         "width": 1.03849,
         "height": 1.03849,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.75
       },
       "46": {
         "width": 0.659,
@@ -2099,9 +2099,11 @@
     },
     "lose": {
       "23": {
-        "width": 1.318,
-        "height": 0.434,
-        "offsetX": 0
+        "width": 1.112,
+        "height": 1.112,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 0.335
       }
     },
     "cmd:1+2": {

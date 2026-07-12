@@ -452,8 +452,9 @@
       "onCounterHitFrames": 9,
       "whiffRecoveryFrames": 5,
       "range": 1.5,
+      "forwardForce": 0.65,
       "label": "Kazemon Right Check",
-      "hitLevel": "mid"
+      "hitLevel": "low"
     },
     "kickleft": {
       "startupFrames": 18,
