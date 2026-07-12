@@ -85,7 +85,14 @@
       "/characters/monkey-d-luffy/frames/frame-162.png",
       "/characters/monkey-d-luffy/frames/frame-163.png"
     ],
-    "kickright": [],
+    "kickright": [
+      "/characters/monkey-d-luffy/frames/frame-060.png",
+      "/characters/monkey-d-luffy/frames/frame-061.png",
+      "/characters/monkey-d-luffy/frames/frame-062.png",
+      "/characters/monkey-d-luffy/frames/frame-063.png",
+      "/characters/monkey-d-luffy/frames/frame-064.png",
+      "/characters/monkey-d-luffy/frames/frame-065.png"
+    ],
     "hitLight": [
       "/characters/monkey-d-luffy/frames/frame-025.png"
     ],
@@ -614,9 +621,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 39,
+      "recoveryFrames": 7,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,

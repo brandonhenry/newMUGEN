@@ -192,14 +192,81 @@
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:FC+1": [
+      "/characters/model-x/frames/frame-157.png",
+      "/characters/model-x/frames/frame-158.png",
+      "/characters/model-x/frames/frame-159.png",
+      "/characters/model-x/frames/frame-160.png",
+      "/characters/model-x/frames/frame-161.png",
+      "/characters/model-x/frames/frame-162.png",
+      "/characters/model-x/frames/frame-163.png",
+      "/characters/model-x/frames/frame-164.png",
+      "/characters/model-x/frames/frame-165.png",
+      "/characters/model-x/frames/frame-166.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/model-x/frames/frame-169.png",
+      "/characters/model-x/frames/frame-170.png",
+      "/characters/model-x/frames/frame-171.png",
+      "/characters/model-x/frames/frame-172.png",
+      "/characters/model-x/frames/frame-173.png",
+      "/characters/model-x/frames/frame-174.png",
+      "/characters/model-x/frames/frame-175.png",
+      "/characters/model-x/frames/frame-176.png",
+      "/characters/model-x/frames/frame-177.png",
+      "/characters/model-x/frames/frame-178.png"
+    ],
+    "cmd:1+2": [
+      "/characters/model-x/frames/frame-028.png",
+      "/characters/model-x/frames/frame-029.png",
+      "/characters/model-x/frames/frame-030.png",
+      "/characters/model-x/frames/frame-031.png",
+      "/characters/model-x/frames/frame-032.png",
+      "/characters/model-x/frames/frame-033.png",
+      "/characters/model-x/frames/frame-034.png",
+      "/characters/model-x/frames/frame-035.png",
+      "/characters/model-x/frames/frame-036.png",
+      "/characters/model-x/frames/frame-037.png"
+    ],
+    "cmd:1+3": [
+      "/characters/model-x/frames/frame-048.png",
+      "/characters/model-x/frames/frame-049.png",
+      "/characters/model-x/frames/frame-050.png",
+      "/characters/model-x/frames/frame-051.png",
+      "/characters/model-x/frames/frame-052.png",
+      "/characters/model-x/frames/frame-053.png",
+      "/characters/model-x/frames/frame-054.png",
+      "/characters/model-x/frames/frame-055.png",
+      "/characters/model-x/frames/frame-056.png",
+      "/characters/model-x/frames/frame-057.png"
+    ],
+    "cmd:2+3": [
+      "/characters/model-x/frames/frame-097.png",
+      "/characters/model-x/frames/frame-098.png",
+      "/characters/model-x/frames/frame-099.png",
+      "/characters/model-x/frames/frame-100.png",
+      "/characters/model-x/frames/frame-101.png"
+    ],
+    "cmd:2+4": [
+      "/characters/model-x/frames/frame-121.png",
+      "/characters/model-x/frames/frame-122.png",
+      "/characters/model-x/frames/frame-123.png"
+    ],
+    "cmd:3+4": [
+      "/characters/model-x/frames/frame-144.png",
+      "/characters/model-x/frames/frame-145.png",
+      "/characters/model-x/frames/frame-146.png",
+      "/characters/model-x/frames/frame-147.png",
+      "/characters/model-x/frames/frame-148.png",
+      "/characters/model-x/frames/frame-149.png"
+    ],
+    "cmd:O+2": [
+      "/characters/model-x/frames/frame-195.png",
+      "/characters/model-x/frames/frame-196.png",
+      "/characters/model-x/frames/frame-197.png",
+      "/characters/model-x/frames/frame-198.png",
+      "/characters/model-x/frames/frame-199.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -551,9 +618,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 0,
+      "activeFrames": 30,
+      "recoveryFrames": 1,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -564,9 +631,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 13,
       "onBlockFrames": -13,
       "onHitFrames": 24,
@@ -578,9 +645,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 14,
       "onBlockFrames": -8,
       "onHitFrames": 10,
@@ -591,9 +658,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 26,
+      "startupFrames": 0,
+      "activeFrames": 46,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -14,
       "onHitFrames": 24,
@@ -605,9 +672,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 0,
+      "activeFrames": 42,
+      "recoveryFrames": 1,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -618,9 +685,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 22,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 49,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -16,
       "onHitFrames": 8,
@@ -632,9 +699,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 28,
+      "startupFrames": 0,
+      "activeFrames": 53,
+      "recoveryFrames": 1,
       "damage": 18,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -646,9 +713,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 57,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

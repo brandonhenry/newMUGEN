@@ -178,18 +178,105 @@
     "lose": [
       "/characters/neji-hyuga/frames/frame-066.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
-    "cmd:FC+2": [],
-    "cmd:1+2": [],
-    "cmd:1+3": [],
-    "cmd:2+3": [],
-    "cmd:2+4": [],
-    "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:f+1": [
+      "/characters/neji-hyuga/frames/frame-096.png",
+      "/characters/neji-hyuga/frames/frame-097.png",
+      "/characters/neji-hyuga/frames/frame-098.png",
+      "/characters/neji-hyuga/frames/frame-099.png",
+      "/characters/neji-hyuga/frames/frame-100.png",
+      "/characters/neji-hyuga/frames/frame-101.png",
+      "/characters/neji-hyuga/frames/frame-102.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/neji-hyuga/frames/frame-089.png",
+      "/characters/neji-hyuga/frames/frame-090.png",
+      "/characters/neji-hyuga/frames/frame-091.png",
+      "/characters/neji-hyuga/frames/frame-092.png",
+      "/characters/neji-hyuga/frames/frame-093.png",
+      "/characters/neji-hyuga/frames/frame-094.png",
+      "/characters/neji-hyuga/frames/frame-095.png"
+    ],
+    "cmd:qcf+4": [
+      "/characters/neji-hyuga/frames/frame-109.png",
+      "/characters/neji-hyuga/frames/frame-110.png",
+      "/characters/neji-hyuga/frames/frame-111.png",
+      "/characters/neji-hyuga/frames/frame-112.png",
+      "/characters/neji-hyuga/frames/frame-113.png",
+      "/characters/neji-hyuga/frames/frame-114.png",
+      "/characters/neji-hyuga/frames/frame-115.png",
+      "/characters/neji-hyuga/frames/frame-116.png",
+      "/characters/neji-hyuga/frames/frame-117.png",
+      "/characters/neji-hyuga/frames/frame-118.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/neji-hyuga/frames/frame-076.png",
+      "/characters/neji-hyuga/frames/frame-077.png",
+      "/characters/neji-hyuga/frames/frame-078.png",
+      "/characters/neji-hyuga/frames/frame-079.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/neji-hyuga/frames/frame-036.png",
+      "/characters/neji-hyuga/frames/frame-037.png",
+      "/characters/neji-hyuga/frames/frame-038.png",
+      "/characters/neji-hyuga/frames/frame-039.png"
+    ],
+    "cmd:FC+2": [
+      "/characters/neji-hyuga/frames/frame-044.png",
+      "/characters/neji-hyuga/frames/frame-045.png",
+      "/characters/neji-hyuga/frames/frame-046.png",
+      "/characters/neji-hyuga/frames/frame-047.png"
+    ],
+    "cmd:1+2": [
+      "/characters/neji-hyuga/frames/frame-002.png",
+      "/characters/neji-hyuga/frames/frame-003.png",
+      "/characters/neji-hyuga/frames/frame-004.png",
+      "/characters/neji-hyuga/frames/frame-005.png",
+      "/characters/neji-hyuga/frames/frame-006.png",
+      "/characters/neji-hyuga/frames/frame-007.png",
+      "/characters/neji-hyuga/frames/frame-008.png",
+      "/characters/neji-hyuga/frames/frame-009.png"
+    ],
+    "cmd:1+3": [
+      "/characters/neji-hyuga/frames/frame-012.png",
+      "/characters/neji-hyuga/frames/frame-013.png",
+      "/characters/neji-hyuga/frames/frame-014.png",
+      "/characters/neji-hyuga/frames/frame-015.png",
+      "/characters/neji-hyuga/frames/frame-016.png"
+    ],
+    "cmd:2+3": [
+      "/characters/neji-hyuga/frames/frame-018.png",
+      "/characters/neji-hyuga/frames/frame-019.png",
+      "/characters/neji-hyuga/frames/frame-020.png",
+      "/characters/neji-hyuga/frames/frame-021.png",
+      "/characters/neji-hyuga/frames/frame-022.png"
+    ],
+    "cmd:2+4": [
+      "/characters/neji-hyuga/frames/frame-024.png",
+      "/characters/neji-hyuga/frames/frame-025.png",
+      "/characters/neji-hyuga/frames/frame-026.png",
+      "/characters/neji-hyuga/frames/frame-027.png",
+      "/characters/neji-hyuga/frames/frame-028.png",
+      "/characters/neji-hyuga/frames/frame-029.png"
+    ],
+    "cmd:3+4": [
+      "/characters/neji-hyuga/frames/frame-031.png",
+      "/characters/neji-hyuga/frames/frame-032.png",
+      "/characters/neji-hyuga/frames/frame-033.png",
+      "/characters/neji-hyuga/frames/frame-034.png",
+      "/characters/neji-hyuga/frames/frame-035.png"
+    ],
+    "cmd:O+2": [
+      "/characters/neji-hyuga/frames/frame-048.png",
+      "/characters/neji-hyuga/frames/frame-049.png",
+      "/characters/neji-hyuga/frames/frame-050.png",
+      "/characters/neji-hyuga/frames/frame-051.png",
+      "/characters/neji-hyuga/frames/frame-052.png",
+      "/characters/neji-hyuga/frames/frame-053.png",
+      "/characters/neji-hyuga/frames/frame-054.png",
+      "/characters/neji-hyuga/frames/frame-055.png",
+      "/characters/neji-hyuga/frames/frame-056.png",
+      "/characters/neji-hyuga/frames/frame-057.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -483,9 +570,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -497,9 +584,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 46,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -514,9 +601,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 27,
+      "startupFrames": 0,
+      "activeFrames": 52,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -528,9 +615,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -541,9 +628,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 0,
+      "activeFrames": 30,
+      "recoveryFrames": 1,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -554,9 +641,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+2": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 13,
       "onBlockFrames": -13,
       "onHitFrames": 24,
@@ -568,9 +655,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 14,
       "onBlockFrames": -8,
       "onHitFrames": 10,
@@ -581,9 +668,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 26,
+      "startupFrames": 0,
+      "activeFrames": 46,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -14,
       "onHitFrames": 24,
@@ -595,9 +682,9 @@
       "hitLevel": "mid"
     },
     "cmd:2+3": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 0,
+      "activeFrames": 42,
+      "recoveryFrames": 1,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -608,9 +695,9 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 22,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 49,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -16,
       "onHitFrames": 8,
@@ -622,9 +709,9 @@
       "knockdown": true
     },
     "cmd:3+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 28,
+      "startupFrames": 0,
+      "activeFrames": 53,
+      "recoveryFrames": 1,
       "damage": 18,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -636,9 +723,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 57,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

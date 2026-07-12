@@ -150,10 +150,27 @@
     "lose": [
       "/characters/nam/frames/frame-077.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
+    "cmd:f+1": [
+      "/characters/nam/frames/frame-023.png",
+      "/characters/nam/frames/frame-024.png",
+      "/characters/nam/frames/frame-025.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/nam/frames/frame-030.png",
+      "/characters/nam/frames/frame-031.png",
+      "/characters/nam/frames/frame-032.png",
+      "/characters/nam/frames/frame-033.png",
+      "/characters/nam/frames/frame-034.png",
+      "/characters/nam/frames/frame-035.png",
+      "/characters/nam/frames/frame-036.png",
+      "/characters/nam/frames/frame-037.png"
+    ],
     "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:WS+4": [
+      "/characters/nam/frames/frame-069.png",
+      "/characters/nam/frames/frame-070.png",
+      "/characters/nam/frames/frame-071.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [
@@ -499,9 +516,9 @@
       "tracking": "medium"
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 37,
+      "recoveryFrames": 1,
       "damage": 11,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -520,9 +537,9 @@
       "tracking": "medium"
     },
     "cmd:d/f+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 31,
+      "startupFrames": 0,
+      "activeFrames": 51,
+      "recoveryFrames": 1,
       "damage": 15,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -568,9 +585,9 @@
       "tornado": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,

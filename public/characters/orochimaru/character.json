@@ -160,18 +160,70 @@
     "lose": [
       "/characters/orochimaru/frames/frame-065.png"
     ],
-    "cmd:f+1": [],
-    "cmd:d/f+2": [],
+    "cmd:f+1": [
+      "/characters/orochimaru/frames/frame-024.png",
+      "/characters/orochimaru/frames/frame-025.png",
+      "/characters/orochimaru/frames/frame-026.png",
+      "/characters/orochimaru/frames/frame-027.png",
+      "/characters/orochimaru/frames/frame-028.png",
+      "/characters/orochimaru/frames/frame-029.png",
+      "/characters/orochimaru/frames/frame-030.png",
+      "/characters/orochimaru/frames/frame-031.png",
+      "/characters/orochimaru/frames/frame-032.png",
+      "/characters/orochimaru/frames/frame-033.png"
+    ],
+    "cmd:d/f+2": [
+      "/characters/orochimaru/frames/frame-093.png",
+      "/characters/orochimaru/frames/frame-094.png",
+      "/characters/orochimaru/frames/frame-095.png",
+      "/characters/orochimaru/frames/frame-096.png"
+    ],
     "cmd:qcf+4": [],
-    "cmd:WS+4": [],
-    "cmd:FC+1": [],
+    "cmd:WS+4": [
+      "/characters/orochimaru/frames/frame-108.png",
+      "/characters/orochimaru/frames/frame-109.png",
+      "/characters/orochimaru/frames/frame-110.png",
+      "/characters/orochimaru/frames/frame-111.png",
+      "/characters/orochimaru/frames/frame-112.png",
+      "/characters/orochimaru/frames/frame-113.png",
+      "/characters/orochimaru/frames/frame-114.png",
+      "/characters/orochimaru/frames/frame-115.png",
+      "/characters/orochimaru/frames/frame-116.png",
+      "/characters/orochimaru/frames/frame-117.png"
+    ],
+    "cmd:FC+1": [
+      "/characters/orochimaru/frames/frame-128.png",
+      "/characters/orochimaru/frames/frame-129.png",
+      "/characters/orochimaru/frames/frame-130.png",
+      "/characters/orochimaru/frames/frame-131.png",
+      "/characters/orochimaru/frames/frame-132.png"
+    ],
     "cmd:FC+2": [],
-    "cmd:1+2": [],
+    "cmd:1+2": [
+      "/characters/orochimaru/frames/frame-012.png",
+      "/characters/orochimaru/frames/frame-013.png",
+      "/characters/orochimaru/frames/frame-014.png",
+      "/characters/orochimaru/frames/frame-015.png",
+      "/characters/orochimaru/frames/frame-016.png",
+      "/characters/orochimaru/frames/frame-017.png",
+      "/characters/orochimaru/frames/frame-018.png"
+    ],
     "cmd:1+3": [],
     "cmd:2+3": [],
     "cmd:2+4": [],
     "cmd:3+4": [],
-    "cmd:O+2": []
+    "cmd:O+2": [
+      "/characters/orochimaru/frames/frame-118.png",
+      "/characters/orochimaru/frames/frame-119.png",
+      "/characters/orochimaru/frames/frame-120.png",
+      "/characters/orochimaru/frames/frame-121.png",
+      "/characters/orochimaru/frames/frame-122.png",
+      "/characters/orochimaru/frames/frame-123.png",
+      "/characters/orochimaru/frames/frame-124.png",
+      "/characters/orochimaru/frames/frame-125.png",
+      "/characters/orochimaru/frames/frame-126.png",
+      "/characters/orochimaru/frames/frame-127.png"
+    ]
   },
   "animationFrameRates": {
     "idle": 5,
@@ -466,9 +518,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 37,
+      "recoveryFrames": 1,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -480,9 +532,9 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 46,
+      "recoveryFrames": 1,
       "damage": 15,
       "onBlockFrames": -13,
       "onHitFrames": 25,
@@ -511,9 +563,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 0,
+      "activeFrames": 38,
+      "recoveryFrames": 1,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -524,9 +576,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 0,
+      "activeFrames": 30,
+      "recoveryFrames": 1,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -551,9 +603,9 @@
       "hitLevel": "mid"
     },
     "cmd:1+2": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 44,
+      "recoveryFrames": 1,
       "damage": 14,
       "onBlockFrames": -8,
       "onHitFrames": 10,
@@ -619,9 +671,9 @@
       "knockdown": true
     },
     "cmd:O+2": {
-      "startupFrames": 24,
-      "activeFrames": 4,
-      "recoveryFrames": 30,
+      "startupFrames": 0,
+      "activeFrames": 57,
+      "recoveryFrames": 1,
       "damage": 22,
       "onBlockFrames": -12,
       "onHitFrames": 22,

@@ -232,7 +232,18 @@
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-099.png",
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-100.png"
     ],
-    "cmd:2+4": [],
+    "cmd:2+4": [
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-159.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-160.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-161.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-162.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-163.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-164.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-165.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-166.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-167.png",
+      "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-168.png"
+    ],
     "cmd:3+4": [
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-050.png",
       "/characters/naruto-uzumaki-nine-tails-kyubi/frames/frame-051.png",
@@ -954,9 +965,9 @@
       "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
-      "startupFrames": 22,
-      "activeFrames": 4,
-      "recoveryFrames": 25,
+      "startupFrames": 0,
+      "activeFrames": 50,
+      "recoveryFrames": 1,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,

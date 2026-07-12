@@ -89,7 +89,17 @@
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-218.png",
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-219.png"
     ],
-    "kickright": [],
+    "kickright": [
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-220.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-221.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-222.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-223.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-224.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-225.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-226.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-227.png",
+      "/characters/monkey-d-luffy-2nd-gear/frames/frame-228.png"
+    ],
     "hitLight": [
       "/characters/monkey-d-luffy-2nd-gear/frames/frame-026.png"
     ],
@@ -648,9 +658,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 24,
+      "startupFrames": 0,
+      "activeFrames": 41,
+      "recoveryFrames": 5,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
