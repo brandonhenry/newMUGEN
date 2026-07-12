@@ -1,7 +1,8 @@
 import type { StageDefinition } from '../types';
 
 const CAMERA_SIDE_TIE_EPSILON = 0.001;
-const CAMERA_SIDE_CONTINUITY_EPSILON = 0.001;
+const CAMERA_ORBIT_AXIS_BLEND_START = 0.2;
+const CAMERA_ORBIT_AXIS_BLEND_END = 0.7;
 
 export type HorizontalVector = {
   x: number;
@@ -30,33 +31,34 @@ export function shouldFlipCameraSideForControls(
   previousCameraSide?: HorizontalVector,
   stage?: StageDefinition
 ) {
-  if (previousCameraSide) {
-    const continuity = cameraSide.x * previousCameraSide.x + cameraSide.z * previousCameraSide.z;
-    return continuity < -CAMERA_SIDE_CONTINUITY_EPSILON;
-  }
   const alignment = cameraScreenRightStageAlignment(cameraSide, stage);
-  return alignment < -CAMERA_SIDE_TIE_EPSILON;
+  if (alignment < -CAMERA_SIDE_TIE_EPSILON) return true;
+  if (alignment > CAMERA_SIDE_TIE_EPSILON || !previousCameraSide) return false;
+  return cameraSide.x * previousCameraSide.x + cameraSide.z * previousCameraSide.z < 0;
 }
 
-export function resolveFightCameraSide(
+export function stableControlAlignedFightCameraSide(
   dx: number,
   dz: number,
   previousCameraSide?: HorizontalVector,
-  stage?: StageDefinition,
-  presentationMirrored = false
+  stage?: StageDefinition
 ): [number, number] {
   let [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
-  if (!previousCameraSide && shouldFlipCameraSideForControls({ x: cameraX, z: cameraZ }, undefined, stage)) {
+  const rawSide = { x: cameraX, z: cameraZ };
+  if (shouldFlipCameraSideForControls(rawSide, previousCameraSide, stage)) {
     cameraX *= -1;
     cameraZ *= -1;
   }
-  if (presentationMirrored) {
-    cameraX *= -1;
-    cameraZ *= -1;
-  }
-  if (previousCameraSide && shouldFlipCameraSideForControls({ x: cameraX, z: cameraZ }, previousCameraSide, stage)) {
-    cameraX *= -1;
-    cameraZ *= -1;
-  }
-  return [cameraX, cameraZ];
+
+  const alignment = Math.abs(cameraScreenRightStageAlignment({ x: cameraX, z: cameraZ }, stage));
+  const blendRange = CAMERA_ORBIT_AXIS_BLEND_END - CAMERA_ORBIT_AXIS_BLEND_START;
+  const blendProgress = Math.max(0, Math.min(1, (alignment - CAMERA_ORBIT_AXIS_BLEND_START) / blendRange));
+  const perpendicularWeight = blendProgress * blendProgress * (3 - 2 * blendProgress);
+  const [stageRightX, stageRightZ] = stageControlAxis(stage);
+  const stageCameraX = -stageRightZ;
+  const stageCameraZ = stageRightX;
+  const blendedX = stageCameraX * (1 - perpendicularWeight) + cameraX * perpendicularWeight;
+  const blendedZ = stageCameraZ * (1 - perpendicularWeight) + cameraZ * perpendicularWeight;
+  const length = Math.hypot(blendedX, blendedZ) || 1;
+  return [blendedX / length, blendedZ / length];
 }

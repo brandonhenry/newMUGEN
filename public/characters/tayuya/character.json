@@ -59,9 +59,7 @@
       "/characters/tayuya/frames/frame-028.png"
     ],
     "backHop": [
-      "/characters/tayuya/frames/frame-029.png",
-      "/characters/tayuya/frames/frame-030.png",
-      "/characters/tayuya/frames/frame-031.png"
+      "/characters/tayuya/frames/frame-039.png"
     ],
     "sidestepLeft": [
       "/characters/tayuya/frames/frame-032.png",
@@ -1250,9 +1248,8 @@
     },
     "block": {
       "41": {
-        "width": 0.94967,
-        "height": 0.94967,
-        "voxelScaleX": 0.92511,
+        "width": 0.95,
+        "height": 0.95,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1325,33 +1322,29 @@
     },
     "jableft": {
       "0": {
-        "width": 0.94967,
-        "height": 0.94967,
-        "voxelScaleX": 1.00011,
+        "width": 0.95,
+        "height": 0.95,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "1": {
-        "width": 1.04275,
-        "height": 1.04275,
-        "voxelScaleX": 0.75143,
+        "width": 1.04,
+        "height": 1.04,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "2": {
-        "width": 0.96899,
-        "height": 0.96899,
-        "voxelScaleX": 1.34871,
+        "width": 0.97,
+        "height": 0.97,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "3": {
-        "width": 0.96899,
-        "height": 0.96899,
-        "voxelScaleX": 1.17706,
+        "width": 0.97,
+        "height": 0.97,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1610,9 +1603,8 @@
     },
     "hitLight": {
       "54": {
-        "width": 0.81967,
-        "height": 0.81967,
-        "voxelScaleX": 1.15922,
+        "width": 0.82,
+        "height": 0.82,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1710,11 +1702,9 @@
       "50": {
         "width": 0.95,
         "height": 0.95,
-        "voxelScaleX": 1,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "112": {
         "width": 0.77,

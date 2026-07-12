@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { StageDefinition } from '../types';
-import { cameraScreenRightStageAlignment, resolveFightCameraSide, shouldFlipCameraSideForControls, stableFightCameraSide, stageControlAxis } from './fightCamera';
+import { cameraScreenRightStageAlignment, shouldFlipCameraSideForControls, stableControlAlignedFightCameraSide, stableFightCameraSide, stageControlAxis } from './fightCamera';
 
 const baseStage: StageDefinition = {
   id: 'test-stage',
@@ -37,17 +37,7 @@ describe('fightCamera', () => {
     expect(shouldFlipCameraSideForControls(side, undefined, rotatedStage)).toBe(true);
   });
 
-  it('keeps the previous camera hemisphere even when stage alignment crosses the orbit axis', () => {
-    const rawSide = { x: 0, z: -1 };
-    const previousSame = { x: 0.1, z: -0.99 };
-    const previousOpposite = { x: -0.1, z: 0.99 };
-
-    expect(cameraScreenRightStageAlignment(rawSide, baseStage)).toBeLessThan(0);
-    expect(shouldFlipCameraSideForControls(rawSide, previousSame, baseStage)).toBe(false);
-    expect(shouldFlipCameraSideForControls(rawSide, previousOpposite, baseStage)).toBe(true);
-  });
-
-  it('uses previous camera continuity when stage-side alignment is tied', () => {
+  it('falls back to previous camera continuity when stage-side alignment is tied', () => {
     const rawSide = { x: -1, z: 0 };
     const previousSame = { x: -0.9, z: 0.1 };
     const previousOpposite = { x: 0.9, z: -0.1 };
@@ -57,23 +47,43 @@ describe('fightCamera', () => {
     expect(shouldFlipCameraSideForControls(rawSide, previousOpposite, baseStage)).toBe(true);
   });
 
-  it('follows a full sidestep orbit without a 180-degree camera swap', () => {
-    let previous: { x: number; z: number } | undefined;
+  it('crosses the full sidestep orbit without a camera swap or inverted controls', () => {
+    let previous = { x: 0, z: 1 };
 
-    for (let degrees = 0; degrees <= 720; degrees += 2) {
+    for (let degrees = 0; degrees <= 720; degrees += 1) {
       const angle = degrees * Math.PI / 180;
-      const [x, z] = resolveFightCameraSide(Math.cos(angle), Math.sin(angle), previous, baseStage);
-      if (previous) expect(x * previous.x + z * previous.z).toBeGreaterThan(0.99);
-      previous = { x, z };
+      const [x, z] = stableControlAlignedFightCameraSide(Math.cos(angle), Math.sin(angle), previous, baseStage);
+      const next = { x, z };
+
+      expect(cameraScreenRightStageAlignment(next, baseStage)).toBeGreaterThan(0);
+      expect(x * previous.x + z * previous.z).toBeGreaterThan(0.99);
+      previous = next;
     }
   });
 
-  it('applies presentation mirroring before continuity selection', () => {
-    const [initialX, initialZ] = resolveFightCameraSide(1, 0, undefined, baseStage, true);
-    const previous = { x: initialX, z: initialZ };
-    const [nextX, nextZ] = resolveFightCameraSide(1, 0.01, previous, baseStage, true);
+  it('uses the fixed stage-depth side while crossing the unstable orbit axis', () => {
+    const [x, z] = stableControlAlignedFightCameraSide(0, 1, { x: 0.1, z: 0.99 }, baseStage);
 
-    expect(nextX * previous.x + nextZ * previous.z).toBeGreaterThan(0.99);
-    expect(nextZ).toBeLessThan(0);
+    expect(x).toBeCloseTo(0, 5);
+    expect(z).toBeCloseTo(1, 5);
+  });
+
+  it('keeps control alignment and continuity on rotated stages', () => {
+    const rotatedStage: StageDefinition = {
+      ...baseStage,
+      fightPlane: { ...baseStage.fightPlane!, rotationY: Math.PI / 3 }
+    };
+    const [initialX, initialZ] = stableControlAlignedFightCameraSide(1, 0, undefined, rotatedStage);
+    let previous = { x: initialX, z: initialZ };
+
+    for (let degrees = 1; degrees <= 360; degrees += 1) {
+      const angle = degrees * Math.PI / 180;
+      const [x, z] = stableControlAlignedFightCameraSide(Math.cos(angle), Math.sin(angle), previous, rotatedStage);
+      const next = { x, z };
+
+      expect(cameraScreenRightStageAlignment(next, rotatedStage)).toBeGreaterThan(0);
+      expect(x * previous.x + z * previous.z).toBeGreaterThan(0.99);
+      previous = next;
+    }
   });
 });

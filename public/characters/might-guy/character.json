@@ -55,7 +55,7 @@
       "/characters/might-guy/frames/frame-018.png"
     ],
     "backHop": [
-      "/characters/might-guy/frames/frame-019.png"
+      "/characters/might-guy/frames/frame-023.png"
     ],
     "sidestepLeft": [
       "/characters/might-guy/frames/frame-022.png"
@@ -1164,6 +1164,13 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
+      },
+      "23": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
       }
     },
     "sidestepLeft": {
@@ -1812,13 +1819,11 @@
     },
     "knockdown": {
       "59": {
-        "width": 1.24021,
-        "height": 1.24021,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0,
         "flipX": true,
-        "flipY": false,
-        "voxelScaleX": 0.83994,
-        "voxelScaleY": 0.83994
+        "flipY": false
       },
       "107": {
         "width": 0.97,
@@ -2200,13 +2205,11 @@
         "flipY": false
       },
       "59": {
-        "width": 1.24021,
-        "height": 1.24021,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.83994,
-        "voxelScaleY": 0.83994
+        "flipY": false
       }
     },
     "cmd:f+1": {

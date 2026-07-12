@@ -59,7 +59,7 @@
       "/characters/kidomaru/frames/frame-010.png"
     ],
     "backHop": [
-      "/characters/kidomaru/frames/frame-011.png"
+      "/characters/kidomaru/frames/frame-020.png"
     ],
     "sidestepLeft": [
       "/characters/kidomaru/frames/frame-013.png"
@@ -709,178 +709,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Kidomaru Second Beat",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Second Beat"
     },
     "neutral:jab-jab-heavy": {
-      "label": "Kidomaru Body Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Body Blow"
     },
     "neutral:jab-jab-kick": {
-      "label": "Kidomaru Low Changeup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Low Changeup"
     },
     "neutral:jab-jab-special": {
-      "label": "Kidomaru Pressure Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Pressure Feint"
     },
     "neutral:jab-heavy": {
-      "label": "Kidomaru Drive",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Drive"
     },
     "neutral:jab-heavy-kick": {
-      "label": "Kidomaru Barrage",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Barrage"
     },
     "neutral:jab-heavy-special": {
-      "label": "Kidomaru Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Finisher"
     },
     "neutral:jab-kick": {
-      "label": "Kidomaru Step Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Step Kick"
     },
     "neutral:jab-kick-heavy": {
-      "label": "Kidomaru Palm String",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Palm String"
     },
     "neutral:jab-kick-special": {
-      "label": "Kidomaru Rising Chain",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Rising Chain"
     },
     "neutral:jab-special": {
-      "label": "Kidomaru Special Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Special Setup"
     },
     "neutral:jab-special-heavy": {
-      "label": "Kidomaru Break Art",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Break Art"
     },
     "neutral:heavy-jab": {
-      "label": "Kidomaru Check Hook",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Check Hook"
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Kidomaru Heavy Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Heavy Break"
     },
     "neutral:heavy-jab-special": {
-      "label": "Kidomaru Charged Follow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Charged Follow"
     },
     "neutral:heavy-kick": {
-      "label": "Kidomaru Drop Kick",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Drop Kick"
     },
     "neutral:heavy-kick-special": {
-      "label": "Kidomaru Arc Finisher",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Arc Finisher"
     },
     "neutral:heavy-special": {
-      "label": "Kidomaru Focus Stance",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Focus Stance"
     },
     "neutral:heavy-special-kick": {
-      "label": "Kidomaru Mode Shift",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Mode Shift"
     },
     "neutral:kick-jab": {
-      "label": "Kidomaru Heel Feint",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Heel Feint"
     },
     "neutral:kick-jab-special": {
-      "label": "Kidomaru Summon Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Summon Strike"
     },
     "neutral:kick-heavy": {
-      "label": "Kidomaru Guard Snare",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Guard Snare"
     },
     "neutral:kick-heavy-special": {
-      "label": "Kidomaru Armor Break",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Armor Break"
     },
     "neutral:kick-special": {
-      "label": "Kidomaru Power Setup",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Power Setup"
     },
     "neutral:kick-special-heavy": {
-      "label": "Kidomaru Switch Strike",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Switch Strike"
     },
     "neutral:special-jab": {
-      "label": "Kidomaru Spark Jab",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Spark Jab"
     },
     "neutral:special-jab-heavy": {
-      "label": "Kidomaru Binding Blow",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Binding Blow"
     },
     "neutral:special-heavy": {
-      "label": "Kidomaru Heavy Draw",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Heavy Draw"
     },
     "neutral:special-kick": {
-      "label": "Kidomaru Kick Ender",
       "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 18
+      "recoveryFrames": 18,
+      "label": "Kidomaru Kick Ender"
     }
   },
   "effects": [],
@@ -1717,33 +1717,29 @@
         "flipY": false
       },
       "70": {
-        "width": 0.92251,
-        "height": 0.92251,
-        "voxelScaleX": 1.24749,
+        "width": 0.92,
+        "height": 0.92,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "71": {
-        "width": 0.79051,
-        "height": 0.79051,
-        "voxelScaleX": 0.99978,
+        "width": 0.79,
+        "height": 0.79,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "72": {
-        "width": 0.88496,
-        "height": 0.88496,
-        "voxelScaleX": 0.99979,
+        "width": 0.89,
+        "height": 0.89,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "73": {
-        "width": 0.80906,
-        "height": 0.80906,
-        "voxelScaleX": 1.00001,
+        "width": 0.81,
+        "height": 0.81,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1751,49 +1747,43 @@
     },
     "jabright": {
       "14": {
-        "width": 0.95877,
-        "height": 0.95877,
-        "voxelScaleX": 1.28845,
+        "width": 0.96,
+        "height": 0.96,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "15": {
-        "width": 0.92251,
-        "height": 0.92251,
-        "voxelScaleX": 1.2163,
+        "width": 0.92,
+        "height": 0.92,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "16": {
-        "width": 0.88496,
-        "height": 0.88496,
-        "voxelScaleX": 1.65823,
+        "width": 0.89,
+        "height": 0.89,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "17": {
-        "width": 0.88496,
-        "height": 0.88496,
-        "voxelScaleX": 1.59319,
+        "width": 0.89,
+        "height": 0.89,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "18": {
-        "width": 0.8658,
-        "height": 0.8658,
-        "voxelScaleX": 1.62783,
+        "width": 0.87,
+        "height": 0.87,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "19": {
-        "width": 1.18483,
-        "height": 1.18483,
-        "voxelScaleX": 1.26133,
+        "width": 1.19,
+        "height": 1.19,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1910,9 +1900,8 @@
     },
     "hitLight": {
       "48": {
-        "width": 1.03413,
-        "height": 1.03413,
-        "voxelScaleX": 1.25032,
+        "width": 1.03,
+        "height": 1.03,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1976,9 +1965,8 @@
     },
     "hitHeavy": {
       "32": {
-        "width": 0.75245,
-        "height": 0.75245,
-        "voxelScaleX": 2.06302,
+        "width": 0.75,
+        "height": 0.75,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -2097,36 +2085,28 @@
         "height": 1.11,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.52817,
-        "voxelScaleY": 0.66655
+        "flipY": false
       },
       "32": {
         "width": 1.11,
         "height": 1.11,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.52817,
-        "voxelScaleY": 0.74064
+        "flipY": false
       },
       "33": {
         "width": 1.11,
         "height": 1.11,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.52817,
-        "voxelScaleY": 0.48057
+        "flipY": false
       },
       "34": {
         "width": 1.11,
         "height": 1.11,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.52816,
-        "voxelScaleY": 0.36045
+        "flipY": false
       },
       "97": {
         "width": 0.87,
@@ -2421,9 +2401,7 @@
         "height": 1.11,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1.52816,
-        "voxelScaleY": 0.36045
+        "flipY": false
       },
       "133": {
         "width": 1.03,
