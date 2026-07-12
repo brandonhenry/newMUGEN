@@ -90,7 +90,7 @@
       "/characters/omega-zero/frames/frame-037.png"
     ],
     "crouch": [
-      "/characters/omega-zero/frames/frame-032.png"
+      "/characters/omega-zero/frames/frame-113.png"
     ],
     "crouchBlock": [
       "/characters/omega-zero/frames/frame-058.png"
@@ -1674,6 +1674,13 @@
         "height": 0.48,
         "offsetX": 0,
         "flipX": false,
+        "flipY": false
+      },
+      "113": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
         "flipY": false
       }
     },
