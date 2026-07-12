@@ -150,10 +150,38 @@
       "/characters/tayuya/frames/frame-145.png",
       "/characters/tayuya/frames/frame-146.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/tayuya/frames/frame-004.png",
+      "/characters/tayuya/frames/frame-005.png",
+      "/characters/tayuya/frames/frame-006.png",
+      "/characters/tayuya/frames/frame-007.png",
+      "/characters/tayuya/frames/frame-008.png",
+      "/characters/tayuya/frames/frame-009.png",
+      "/characters/tayuya/frames/frame-010.png",
+      "/characters/tayuya/frames/frame-011.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:qcf+4": [
+      "/characters/tayuya/frames/frame-074.png",
+      "/characters/tayuya/frames/frame-075.png",
+      "/characters/tayuya/frames/frame-076.png",
+      "/characters/tayuya/frames/frame-077.png",
+      "/characters/tayuya/frames/frame-078.png",
+      "/characters/tayuya/frames/frame-079.png",
+      "/characters/tayuya/frames/frame-080.png",
+      "/characters/tayuya/frames/frame-081.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/tayuya/frames/frame-012.png",
+      "/characters/tayuya/frames/frame-013.png",
+      "/characters/tayuya/frames/frame-014.png",
+      "/characters/tayuya/frames/frame-015.png",
+      "/characters/tayuya/frames/frame-016.png",
+      "/characters/tayuya/frames/frame-017.png",
+      "/characters/tayuya/frames/frame-018.png",
+      "/characters/tayuya/frames/frame-019.png",
+      "/characters/tayuya/frames/frame-020.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -455,9 +483,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 0,
+      "activeFrames": 20,
+      "recoveryFrames": 11,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -486,9 +514,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 24,
-      "activeFrames": 6,
-      "recoveryFrames": 32,
+      "startupFrames": 0,
+      "activeFrames": 39,
+      "recoveryFrames": 23,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -500,9 +528,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 14,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 0,
+      "activeFrames": 26,
+      "recoveryFrames": 7,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,

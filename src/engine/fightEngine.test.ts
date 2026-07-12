@@ -8889,8 +8889,8 @@ describe('fight engine', () => {
 
     expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].position.y).toBeGreaterThan(0.6);
-    expect(match.fighters[1].velocityY).toBeGreaterThan(2.2);
-    expect(match.fighters[1].velocityY).toBeLessThan(3.2);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(3.1);
+    expect(match.fighters[1].velocityY).toBeLessThan(3.7);
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(0);
 
     let apex = match.fighters[1].position.y;
@@ -8907,8 +8907,8 @@ describe('fight engine', () => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
       match.phase = 'fighting';
       match.countdown = 0;
-      match.fighters[0].position.x = -0.45;
-      match.fighters[1].position.x = 0.45;
+      match.fighters[0].position.x = -0.75;
+      match.fighters[1].position.x = 0.75;
       match.fighters[1].position.y = 0.78;
       match.fighters[1].velocityY = -0.3;
       match.fighters[1].state = 'juggle';
@@ -8938,11 +8938,13 @@ describe('fight engine', () => {
       const pushback = match.fighters[1].position.x - startX;
       const appliedHitCount = match.fighters[1].juggleHitCount;
       let airborneFrames = 0;
+      let risingFrames = 0;
       while (airborneFrames < 90 && match.fighters[1].position.y > 0) {
         match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
         airborneFrames += 1;
+        if (match.fighters[1].velocityY > 0) risingFrames += 1;
       }
-      return { match, pushback, airborneFrames, appliedHitCount };
+      return { match, pushback, airborneFrames, risingFrames, appliedHitCount };
     };
 
     const early = runJuggleHit(0);
@@ -8954,11 +8956,15 @@ describe('fight engine', () => {
     expect(early.appliedHitCount).toBe(1);
     expect(late.appliedHitCount).toBe(6);
     expect(early.match.fighters[1].juggleHitCount).toBe(0);
+    expect(early.pushback).toBeGreaterThan(0.25);
     expect(late.pushback).toBeGreaterThan(early.pushback * 1.35);
     expect(heavy.pushback).toBeGreaterThan(early.pushback);
     expect(late.airborneFrames).toBeLessThan(early.airborneFrames - 8);
-    expect(early.airborneFrames).toBeLessThanOrEqual(48);
-    expect(late.airborneFrames).toBeLessThanOrEqual(30);
+    expect(early.airborneFrames).toBeGreaterThanOrEqual(45);
+    expect(early.airborneFrames).toBeLessThanOrEqual(53);
+    expect(early.risingFrames).toBeGreaterThanOrEqual(10);
+    expect(late.risingFrames).toBeGreaterThanOrEqual(6);
+    expect(late.airborneFrames).toBeLessThanOrEqual(34);
     expect(tornado.airborneFrames).toBeGreaterThan(late.airborneFrames + 5);
     expect(authoredRefloat.airborneFrames).toBeGreaterThan(late.airborneFrames);
   });

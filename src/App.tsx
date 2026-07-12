@@ -10323,6 +10323,35 @@ function TournamentSelect({
   );
   const nextLabel = tournamentMode === 'free' ? 'Start Free' : tournamentMode === 'custom' ? 'Start Custom' : tournamentMode === 'paid' ? hasKnownPaidEntry ? 'View Tournament' : 'Enter Tournament' : tournamentMode === 'infinite' ? 'Watch Infinite' : 'Enter Online';
   const nextDisabled = !canStart || (tournamentMode === 'paid' && !paidEnabled) || (tournamentMode === 'infinite' && !isDevHost);
+  const selectedModeSummary = tournamentMode === 'free'
+    ? {
+        label: 'Free local tournament',
+        description: localPlayerCount === 2 ? 'Two local players enter an eight-fighter CPU bracket.' : 'One local player enters an eight-fighter CPU bracket.',
+        stats: localPlayerCount === 2 ? '2 local players • 6 CPU opponents' : '1 local player • 7 CPU opponents'
+      }
+    : tournamentMode === 'custom'
+      ? {
+          label: 'Custom tournament',
+          description: 'P1 and P2 fight every match in a full-roster trial.',
+          stats: '2 local players • No CPU matches'
+        }
+      : tournamentMode === 'online'
+        ? {
+            label: 'Online tournament',
+            description: freeOnlineEntryLabel,
+            stats: freeOnlineActivityLabel
+          }
+        : tournamentMode === 'paid'
+          ? {
+              label: 'Prizepool tournament',
+              description: paidEntryLabel,
+              stats: paidActivityLabel || 'Lightning prizes'
+            }
+          : {
+              label: 'Infinite tournament',
+              description: 'A live-player bracket with no final round.',
+              stats: 'Endless matchups • Developer preview'
+            };
 
   useEffect(() => {
     let cancelled = false;
@@ -10490,55 +10519,10 @@ function TournamentSelect({
         </div>
 
         <div className="versus-roster-scroll" data-testid="select-roster-scroll">
-          <div className="tournament-entry-options" aria-label="Tournament options">
-            <button
-              type="button"
-              className={`tournament-entry-option ${tournamentMode === 'free' ? 'is-selected' : ''}`}
-              onClick={() => selectTournamentMode('free')}
-            >
-              <strong>FREE</strong>
-              <span>{localPlayerCount === 2 ? 'Local 1-2P + CPU' : 'Local 1P vs CPU'}</span>
-              <small>8-player bracket</small>
-            </button>
-            <button
-              type="button"
-              className={`tournament-entry-option ${tournamentMode === 'custom' ? 'is-selected' : ''}`}
-              onClick={() => selectTournamentMode('custom')}
-            >
-              <strong>CUSTOM</strong>
-              <span>P1 vs P2 every match</span>
-              <small>Full roster trial</small>
-            </button>
-            <button
-              type="button"
-              className={`tournament-entry-option ${tournamentMode === 'online' ? 'is-selected' : ''}`}
-              onClick={() => selectTournamentMode('online')}
-            >
-              <strong>ONLINE</strong>
-              <span>{freeOnlineEntryLabel}</span>
-              <small>{freeOnlineActivityLabel}</small>
-            </button>
-            <button
-              type="button"
-              className={`tournament-entry-option ${tournamentMode === 'paid' ? 'is-selected' : ''} ${paidEnabled ? '' : 'is-disabled'}`}
-              onClick={() => paidEnabled && selectTournamentMode('paid')}
-              disabled={!paidEnabled}
-            >
-              <strong>Prizepool</strong>
-              <span>{paidEntryLabel}</span>
-              {paidActivityLabel && <small>{paidActivityLabel}</small>}
-            </button>
-            {isDevHost && (
-              <button
-                type="button"
-                className={`tournament-entry-option ${tournamentMode === 'infinite' ? 'is-selected' : ''}`}
-                onClick={() => selectTournamentMode('infinite')}
-              >
-                <strong>INFINITE</strong>
-                <span>Live player bracket</span>
-                <small>Endless matchups</small>
-              </button>
-            )}
+          <div className="tournament-mode-summary" aria-live="polite" aria-atomic="true">
+            <strong>{selectedModeSummary.label}</strong>
+            <span>{selectedModeSummary.description}</span>
+            <small>{selectedModeSummary.stats}</small>
           </div>
 
           {summaryStatus === 'error' && <div className="tournament-status-strip">Online tournament list unavailable</div>}

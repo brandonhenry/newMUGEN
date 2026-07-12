@@ -68,6 +68,15 @@ async function startFromSplash(page: Page, options: { dismissStarterGuide?: bool
   await expectMainMenu(page);
 }
 
+async function selectTournamentMode(page: Page, label: 'Free' | 'Custom' | 'Online' | 'Prizepool' | 'Infinite') {
+  const currentMode = page.locator('.mode-carousel-current strong');
+  for (let index = 0; index < 5; index += 1) {
+    if ((await currentMode.textContent())?.trim() === label) return;
+    await page.getByRole('button', { name: 'Next tournament mode' }).click();
+  }
+  await expect(currentMode).toHaveText(label);
+}
+
 async function expectMainMenu(page: Page) {
   await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 10000 });
 }
@@ -1420,7 +1429,8 @@ test('opens tournament mode above characters and shows paid beta disabled', asyn
 
   await tournamentButton.click();
   await expect(page.locator('.tournament-select-screen')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Prizepool/i })).toBeDisabled();
+  await selectTournamentMode(page, 'Prizepool');
+  await expect(page.getByRole('button', { name: 'Enter Tournament' })).toBeDisabled();
   await expect(page.getByText('Paid beta unavailable')).toBeVisible();
 });
 
@@ -1437,7 +1447,7 @@ test('tournament select keeps the page locked while roster content scrolls inter
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await startFromSplash(page);
       await page.getByRole('button', { name: 'Tournament' }).click();
-      await page.getByRole('button', { name: /^ONLINE/i }).click();
+      await selectTournamentMode(page, 'Online');
 
       await expect(page.locator('.tournament-select-screen')).toBeVisible();
       await expect(page.getByLabel('Player name')).toBeVisible();
@@ -1465,7 +1475,7 @@ test('keyboard navigation scrolls hidden character rows into view', async ({ pag
   await page.setViewportSize({ width: 740, height: 390 });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click({ force: true });
-  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await selectTournamentMode(page, 'Online');
   await expect(page.locator('.tournament-select-screen')).toBeVisible();
 
   const scroll = page.getByTestId('select-roster-scroll');
@@ -1486,7 +1496,7 @@ test('controller can edit and save tournament username gate without moving menu 
   await page.setViewportSize({ width: 1100, height: 560 });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
-  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await selectTournamentMode(page, 'Online');
   await page.getByRole('button', { name: 'Enter Online' }).click();
 
   const dialog = page.locator('.username-gate-dialog');
@@ -1582,7 +1592,7 @@ test('starts a two-player free local tournament setup', async ({ page }) => {
   const rosterScroll = page.getByTestId('select-roster-scroll');
   await expect(rosterScroll.getByRole('button', { name: 'P1', exact: true })).toBeVisible();
   await expect(rosterScroll.getByRole('button', { name: 'P2', exact: true })).toBeVisible();
-  await expect(page.getByText('Local 1-2P + CPU')).toBeVisible();
+  await expect(page.getByText('Two local players enter an eight-fighter CPU bracket.')).toBeVisible();
   await page.getByRole('button', { name: 'Start Free' }).click();
   await expect(page.locator('.tournament-bracket-intro')).toBeVisible({ timeout: 5000 });
   await expect(page.locator('.tournament-bracket-board')).toContainText('P2');
@@ -1593,8 +1603,8 @@ test('starts a two-player free local tournament setup', async ({ page }) => {
 test('starts a custom local tournament with P1 versus P2 every match', async ({ page }) => {
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
-  await page.getByRole('button', { name: /^CUSTOM/i }).click();
-  await expect(page.getByText('P1 vs P2 every match')).toBeVisible();
+  await selectTournamentMode(page, 'Custom');
+  await expect(page.getByText('P1 and P2 fight every match in a full-roster trial.')).toBeVisible();
   await page.getByRole('button', { name: 'Start Custom' }).click();
   await expect(page.locator('.tournament-bracket-intro')).toBeVisible({ timeout: 5000 });
   await expect(page.locator('.tournament-bracket-board')).not.toContainText('CPU');
@@ -1605,7 +1615,7 @@ test('starts a custom local tournament with P1 versus P2 every match', async ({ 
 test('enters a free online tournament lobby', async ({ page }) => {
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
-  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await selectTournamentMode(page, 'Online');
   await page.getByRole('button', { name: 'Enter Online' }).click();
   await expect(page.locator('.tournament-lobby-screen')).toBeVisible({ timeout: 5000 });
   await expect(page.getByText(/entered|Choose a tournament|Tournament unavailable/i)).toBeVisible();
@@ -1623,7 +1633,7 @@ test('prompts for tournament reminder email after free online entry and saves it
   await installOnlineProfile(page, { playerId: 'player-email-1', displayName: 'EMAIL1' });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
-  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await selectTournamentMode(page, 'Online');
   await page.getByRole('button', { name: 'Enter Online' }).click();
 
   const dialog = page.locator('.email-reminder-dialog');
@@ -1652,7 +1662,7 @@ test('skipping tournament reminder email does not save and existing email suppre
   await installOnlineProfile(page, { playerId: 'player-email-2', displayName: 'EMAIL2' });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
-  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await selectTournamentMode(page, 'Online');
   await page.getByRole('button', { name: 'Enter Online' }).click();
   await expect(page.locator('.email-reminder-dialog')).toBeVisible({ timeout: 5000 });
   await page.getByRole('button', { name: 'Skip' }).click();
@@ -1668,7 +1678,7 @@ test('skipping tournament reminder email does not save and existing email suppre
   await page.reload();
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
-  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await selectTournamentMode(page, 'Online');
   await page.getByRole('button', { name: 'Enter Online' }).click();
   await expect(page.locator('.tournament-lobby-screen')).toBeVisible({ timeout: 5000 });
   await expect(page.locator('.email-reminder-dialog')).toHaveCount(0);
@@ -1679,7 +1689,7 @@ test('controller editing can enter a dot in tournament reminder email domain', a
   await installOnlineProfile(page, { playerId: 'player-email-4', displayName: 'EMAIL4' });
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
-  await page.getByRole('button', { name: /^ONLINE/i }).click();
+  await selectTournamentMode(page, 'Online');
   await page.getByRole('button', { name: 'Enter Online' }).click();
   await expect(page.locator('.email-reminder-dialog')).toBeVisible({ timeout: 5000 });
 

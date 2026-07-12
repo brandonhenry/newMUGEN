@@ -74,7 +74,6 @@ const TORNADO_REFLOAT_VELOCITY = 4.85;
 const JUGGLE_GRAVITY_SCALE = 0.52;
 const JUGGLE_FALL_SPEED_MULTIPLIER = 1.25;
 const JUGGLE_EFFECTIVE_GRAVITY_SCALE_MAX = 1.5;
-const JUGGLE_TARGET_AIRTIME_FRAMES = [50, 44, 38, 33, 29, 26, 23] as const;
 const JUGGLE_REFLOAT_VELOCITY_CAPS = [Number.POSITIVE_INFINITY, 4.15, 3.8, 3.45, 3.1, 2.72, 2.35] as const;
 const JUGGLE_MIN_START_HEIGHT = 0.72;
 const JUGGLE_REFLOAT_MIN_HEIGHT = 1.12;
@@ -1687,6 +1686,12 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.comboUsedKeys = [];
   fighter.comboHits = 0;
   fighter.comboDamage = 0;
+  fighter.juggleDamage = 0;
+  fighter.juggleSequenceDamage = 0;
+  fighter.juggleHitCount = 0;
+  fighter.juggleTornadoCount = 0;
+  fighter.juggleGravityScale = JUGGLE_GRAVITY_SCALE;
+  fighter.tornadoReactionFrames = 0;
   fighter.aiRecentComboKeys = [];
   fighter.aiRecentComboFamilies = [];
   fighter.aiRecentComboVisualFamilies = [];
@@ -4831,15 +4836,11 @@ function getMoveJuggleGravityScale(move: MoveDefinition) {
 }
 
 function getProgressiveJuggleGravityScale(defender: FighterRuntime, move: MoveDefinition, wasAirborne: boolean, tornadoExtendsJuggle: boolean) {
-  const depthIndex = Math.min(Math.max(0, defender.juggleHitCount), JUGGLE_TARGET_AIRTIME_FRAMES.length - 1);
-  let targetFrames = JUGGLE_TARGET_AIRTIME_FRAMES[depthIndex];
-  if (tornadoExtendsJuggle) targetFrames += 10;
-  else if (wasAirborne && Number.isFinite(move.juggleRefloatVelocity)) targetFrames += 4;
-  const targetSeconds = targetFrames / FRAMES_PER_SECOND;
-  const requiredAcceleration = 2 * (Math.max(0, defender.position.y) + Math.max(0, defender.velocityY) * targetSeconds) / (targetSeconds * targetSeconds);
-  const characterGravity = Math.max(1, defender.character.stats.gravity);
-  const requiredScale = requiredAcceleration / (characterGravity * JUGGLE_FALL_SPEED_MULTIPLIER);
-  return clamp(Math.max(getMoveJuggleGravityScale(move), requiredScale), 0.28, 1.2);
+  const baseScale = getMoveJuggleGravityScale(move);
+  const depth = Math.min(Math.max(0, defender.juggleHitCount), 6);
+  const extensionScale = tornadoExtendsJuggle ? 0.35 : wasAirborne && Number.isFinite(move.juggleRefloatVelocity) ? 0.7 : 1;
+  const gentleDepthBonus = depth * 0.025 * extensionScale;
+  return clamp(baseScale + gentleDepthBonus, 0.28, 1.2);
 }
 
 function getProgressiveJugglePushback(move: MoveDefinition, juggleHitCount: number, tornadoExtendsJuggle: boolean) {
