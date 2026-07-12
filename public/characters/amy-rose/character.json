@@ -85,13 +85,13 @@
       "/characters/amy-rose/frames/frame-045.png"
     ],
     "crouch": [
-      "/characters/amy-rose/frames/frame-047.png"
+      "/characters/amy-rose/frames/frame-261.png"
     ],
     "crouchBlock": [
-      "/characters/amy-rose/frames/frame-245.png"
+      "/characters/amy-rose/frames/frame-073.png"
     ],
     "block": [
-      "/characters/amy-rose/frames/frame-052.png"
+      "/characters/amy-rose/frames/frame-073.png"
     ],
     "chargeKi": [
       "/characters/amy-rose/frames/frame-054.png",
@@ -1216,6 +1216,13 @@
         "height": 0.54,
         "offsetX": 0,
         "flipX": false,
+        "flipY": false
+      },
+      "261": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
         "flipY": false
       }
     },
