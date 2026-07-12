@@ -104,14 +104,8 @@
       "/characters/tayuya-curse-mark/frames/frame-120.png"
     ],
     "jableft": [
-      "/characters/tayuya-curse-mark/frames/frame-121.png",
-      "/characters/tayuya-curse-mark/frames/frame-122.png",
-      "/characters/tayuya-curse-mark/frames/frame-124.png",
-      "/characters/tayuya-curse-mark/frames/frame-126.png",
-      "/characters/tayuya-curse-mark/frames/frame-128.png",
-      "/characters/tayuya-curse-mark/frames/frame-129.png",
-      "/characters/tayuya-curse-mark/frames/frame-131.png",
-      "/characters/tayuya-curse-mark/frames/frame-133.png"
+      "/characters/tayuya-curse-mark/frames/frame-014.png",
+      "/characters/tayuya-curse-mark/frames/frame-015.png"
     ],
     "jabright": [
       "/characters/tayuya-curse-mark/frames/frame-135.png",
@@ -1359,9 +1353,11 @@
         "flipY": false
       },
       "7": {
-        "width": 1.161,
-        "height": 1.161,
-        "offsetX": 0
+        "width": 1.16,
+        "height": 1.16,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "9": {
         "width": 1.24,
@@ -1408,8 +1404,8 @@
     },
     "crouchBlock": {
       "0": {
-        "width": 1.161,
-        "height": 1.161,
+        "width": 1.16,
+        "height": 1.16,
         "offsetX": 0,
         "flipX": false,
         "flipY": false

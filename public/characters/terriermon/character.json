@@ -119,14 +119,13 @@
       "/characters/terriermon/frames/frame-002.png"
     ],
     "jableft": [
-      "/characters/terriermon/frames/frame-188.png",
-      "/characters/terriermon/frames/frame-189.png",
-      "/characters/terriermon/frames/frame-191.png",
-      "/characters/terriermon/frames/frame-193.png",
-      "/characters/terriermon/frames/frame-195.png",
-      "/characters/terriermon/frames/frame-197.png",
-      "/characters/terriermon/frames/frame-199.png",
-      "/characters/terriermon/frames/frame-201.png"
+      "/characters/terriermon/frames/frame-132.png",
+      "/characters/terriermon/frames/frame-133.png",
+      "/characters/terriermon/frames/frame-134.png",
+      "/characters/terriermon/frames/frame-135.png",
+      "/characters/terriermon/frames/frame-136.png",
+      "/characters/terriermon/frames/frame-137.png",
+      "/characters/terriermon/frames/frame-138.png"
     ],
     "jabright": [
       "/characters/terriermon/frames/frame-203.png",
@@ -1476,9 +1475,11 @@
     },
     "crouch": {
       "41": {
-        "width": 0.34615,
-        "height": 0.34615,
-        "offsetX": 0
+        "width": 0.35,
+        "height": 0.35,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "132": {
         "width": 0.56,
@@ -1539,9 +1540,11 @@
     },
     "crouchBlock": {
       "59": {
-        "width": 0.40385,
-        "height": 0.40385,
-        "offsetX": 0
+        "width": 0.4,
+        "height": 0.4,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "132": {
         "width": 0.56,

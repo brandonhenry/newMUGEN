@@ -134,16 +134,7 @@
       "/characters/starfy/frames/frame-183.png",
       "/characters/starfy/frames/frame-185.png"
     ],
-    "jableft": [
-      "/characters/starfy/frames/frame-187.png",
-      "/characters/starfy/frames/frame-189.png",
-      "/characters/starfy/frames/frame-191.png",
-      "/characters/starfy/frames/frame-193.png",
-      "/characters/starfy/frames/frame-195.png",
-      "/characters/starfy/frames/frame-197.png",
-      "/characters/starfy/frames/frame-199.png",
-      "/characters/starfy/frames/frame-201.png"
-    ],
+    "jableft": [],
     "jabright": [
       "/characters/starfy/frames/frame-203.png",
       "/characters/starfy/frames/frame-205.png",
@@ -1404,8 +1395,8 @@
     },
     "crouch": {
       "20": {
-        "width": 0.342,
-        "height": 0.342,
+        "width": 0.34,
+        "height": 0.34,
         "offsetX": 0,
         "flipX": true,
         "flipY": false
@@ -1469,8 +1460,8 @@
     },
     "crouchBlock": {
       "20": {
-        "width": 0.342,
-        "height": 0.342,
+        "width": 0.34,
+        "height": 0.34,
         "offsetX": 0,
         "flipX": true,
         "flipY": false
@@ -3006,7 +2997,7 @@
       }
     }
   },
-  "unplayable": false,
+  "unplayable": true,
   "hasTransform": false,
   "modelScale": {
     "width": 1.08,

@@ -123,13 +123,9 @@
       "/characters/veemon/frames/frame-004.png"
     ],
     "jableft": [
-      "/characters/veemon/frames/frame-192.png",
-      "/characters/veemon/frames/frame-193.png",
-      "/characters/veemon/frames/frame-194.png",
-      "/characters/veemon/frames/frame-195.png",
-      "/characters/veemon/frames/frame-196.png",
-      "/characters/veemon/frames/frame-197.png",
-      "/characters/veemon/frames/frame-198.png"
+      "/characters/veemon/frames/frame-000.png",
+      "/characters/veemon/frames/frame-001.png",
+      "/characters/veemon/frames/frame-002.png"
     ],
     "jabright": [
       "/characters/veemon/frames/frame-199.png",
@@ -1455,9 +1451,11 @@
     },
     "crouch": {
       "3": {
-        "width": 0.44296,
-        "height": 0.44296,
-        "offsetX": 0
+        "width": 0.44,
+        "height": 0.44,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "141": {
         "width": 0.78,
@@ -1518,9 +1516,11 @@
     },
     "crouchBlock": {
       "13": {
-        "width": 0.468,
-        "height": 0.468,
-        "offsetX": 0
+        "width": 0.47,
+        "height": 0.47,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "141": {
         "width": 0.78,

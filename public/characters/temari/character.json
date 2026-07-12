@@ -92,10 +92,11 @@
       "/characters/temari/frames/frame-005.png"
     ],
     "jableft": [
-      "/characters/temari/frames/frame-042.png",
-      "/characters/temari/frames/frame-043.png",
-      "/characters/temari/frames/frame-047.png",
-      "/characters/temari/frames/frame-048.png"
+      "/characters/temari/frames/frame-021.png",
+      "/characters/temari/frames/frame-022.png",
+      "/characters/temari/frames/frame-023.png",
+      "/characters/temari/frames/frame-024.png",
+      "/characters/temari/frames/frame-025.png"
     ],
     "jabright": [
       "/characters/temari/frames/frame-049.png",
@@ -1070,9 +1071,11 @@
     },
     "crouch": {
       "15": {
-        "width": 0.65208,
-        "height": 0.65208,
-        "offsetX": 0
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "28": {
         "width": 1.04,
@@ -1098,9 +1101,11 @@
     },
     "crouchBlock": {
       "15": {
-        "width": 0.65208,
-        "height": 0.65208,
-        "offsetX": 0
+        "width": 0.65,
+        "height": 0.65,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "block": {
@@ -1213,6 +1218,34 @@
       }
     },
     "jableft": {
+      "21": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "22": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "23": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
+      "24": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
       "42": {
         "width": 0.86,
         "height": 1.1,

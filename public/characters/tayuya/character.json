@@ -98,13 +98,10 @@
       "/characters/tayuya/frames/frame-073.png"
     ],
     "jableft": [
-      "/characters/tayuya/frames/frame-075.png",
-      "/characters/tayuya/frames/frame-076.png",
-      "/characters/tayuya/frames/frame-077.png",
-      "/characters/tayuya/frames/frame-078.png",
-      "/characters/tayuya/frames/frame-079.png",
-      "/characters/tayuya/frames/frame-080.png",
-      "/characters/tayuya/frames/frame-081.png"
+      "/characters/tayuya/frames/frame-000.png",
+      "/characters/tayuya/frames/frame-001.png",
+      "/characters/tayuya/frames/frame-002.png",
+      "/characters/tayuya/frames/frame-003.png"
     ],
     "jabright": [
       "/characters/tayuya/frames/frame-082.png",
@@ -1198,8 +1195,8 @@
     },
     "crouch": {
       "41": {
-        "width": 0.855,
-        "height": 0.855,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1221,8 +1218,8 @@
     },
     "crouchBlock": {
       "41": {
-        "width": 0.855,
-        "height": 0.855,
+        "width": 0.85,
+        "height": 0.85,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1707,36 +1704,28 @@
         "height": 0.95,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "138": {
         "width": 0.95,
         "height": 0.95,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "139": {
         "width": 0.95,
         "height": 0.95,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "140": {
         "width": 0.95,
         "height": 0.95,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "getupStand": {

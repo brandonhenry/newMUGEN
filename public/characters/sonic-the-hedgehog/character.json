@@ -106,11 +106,13 @@
       "/characters/sonic-the-hedgehog/frames/frame-164.png"
     ],
     "jableft": [
-      "/characters/sonic-the-hedgehog/frames/frame-061.png",
-      "/characters/sonic-the-hedgehog/frames/frame-062.png",
-      "/characters/sonic-the-hedgehog/frames/frame-063.png",
-      "/characters/sonic-the-hedgehog/frames/frame-064.png",
-      "/characters/sonic-the-hedgehog/frames/frame-065.png"
+      "/characters/sonic-the-hedgehog/frames/frame-119.png",
+      "/characters/sonic-the-hedgehog/frames/frame-120.png",
+      "/characters/sonic-the-hedgehog/frames/frame-121.png",
+      "/characters/sonic-the-hedgehog/frames/frame-122.png",
+      "/characters/sonic-the-hedgehog/frames/frame-123.png",
+      "/characters/sonic-the-hedgehog/frames/frame-124.png",
+      "/characters/sonic-the-hedgehog/frames/frame-128.png"
     ],
     "jabright": [
       "/characters/sonic-the-hedgehog/frames/frame-066.png",
@@ -1243,7 +1245,9 @@
       "98": {
         "width": 0.9,
         "height": 0.9,
-        "offsetX": 0
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "crouchBlock": {
@@ -1255,9 +1259,11 @@
         "flipY": false
       },
       "161": {
-        "width": 0.6875,
-        "height": 0.6875,
-        "offsetX": 0
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "448": {
         "width": 0.33,

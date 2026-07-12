@@ -135,13 +135,7 @@
       "/characters/rouge-the-bat/frames/frame-167.png"
     ],
     "jableft": [
-      "/characters/rouge-the-bat/frames/frame-168.png",
-      "/characters/rouge-the-bat/frames/frame-174.png",
-      "/characters/rouge-the-bat/frames/frame-181.png",
-      "/characters/rouge-the-bat/frames/frame-187.png",
-      "/characters/rouge-the-bat/frames/frame-194.png",
-      "/characters/rouge-the-bat/frames/frame-201.png",
-      "/characters/rouge-the-bat/frames/frame-207.png"
+      "/characters/rouge-the-bat/frames/frame-097.png"
     ],
     "jabright": [
       "/characters/rouge-the-bat/frames/frame-221.png",
@@ -1376,16 +1370,20 @@
         "flipY": false
       },
       "150": {
-        "width": 0.69167,
-        "height": 0.69167,
-        "offsetX": 0
+        "width": 0.69,
+        "height": 0.69,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "crouchBlock": {
       "10": {
-        "width": 0.747,
-        "height": 0.747,
-        "offsetX": 0
+        "width": 0.75,
+        "height": 0.75,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "230": {
         "width": 0.63,

@@ -107,9 +107,10 @@
       "/characters/sasuke-curse-mark/frames/frame-070.png"
     ],
     "jableft": [
-      "/characters/sasuke-curse-mark/frames/frame-072.png",
-      "/characters/sasuke-curse-mark/frames/frame-073.png",
-      "/characters/sasuke-curse-mark/frames/frame-074.png"
+      "/characters/sasuke-curse-mark/frames/frame-000.png",
+      "/characters/sasuke-curse-mark/frames/frame-001.png",
+      "/characters/sasuke-curse-mark/frames/frame-002.png",
+      "/characters/sasuke-curse-mark/frames/frame-003.png"
     ],
     "jabright": [
       "/characters/sasuke-curse-mark/frames/frame-134.png",
@@ -1264,9 +1265,11 @@
     },
     "crouch": {
       "36": {
-        "width": 0.57714,
-        "height": 0.57714,
-        "offsetX": 0
+        "width": 0.58,
+        "height": 0.58,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "43": {
         "width": 0.94,
@@ -1306,9 +1309,11 @@
         "flipY": false
       },
       "49": {
-        "width": 0.909,
-        "height": 0.909,
-        "offsetX": 0
+        "width": 0.91,
+        "height": 0.91,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "254": {
         "width": 1,
