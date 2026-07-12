@@ -35,7 +35,7 @@ EXACT_KEYS_BY_CHARACTER: dict[str, set[tuple[int, int, int]]] = {
     "kiba-inuzuka": {(248, 0, 0), (0, 0, 248)},
     "kimimaro": {(32, 192, 32)},
     "sakon-curse-mark": {(0, 160, 0), (0, 255, 255)},
-    "temari": {(72, 176, 56), (0, 128, 128)},
+    "temari": {(24, 144, 0), (72, 176, 56), (0, 128, 128)},
     "tsunade": {(0, 136, 0)},
 }
 
