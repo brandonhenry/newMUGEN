@@ -9638,6 +9638,21 @@ button {
   touch-action: none;
 }
 
+.fight-scene-base,
+.fight-fighter-foreground {
+  position: absolute;
+  inset: 0;
+}
+
+.fight-scene-base {
+  z-index: 0;
+}
+
+.fight-fighter-foreground {
+  z-index: 13;
+  pointer-events: none;
+}
+
 .enemy-rush-hud {
   position: absolute;
   top: max(16px, env(safe-area-inset-top));
@@ -10355,9 +10370,14 @@ button {
   justify-content: center;
   gap: 1px;
   overflow: hidden;
-  background:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 5px),
-    #030508;
+  background-color: #070809;
+  background-image: url('/ui/fight-hud/player-name-texture.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.92) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.07) inset;
 }
 
 .round-box-frame {
@@ -10381,23 +10401,18 @@ button {
   filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.72));
 }
 
-.round-box strong {
+.round-box-infinity {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: block;
-  width: 2ch;
-  color: #ffd82e;
-  font-family: Impact, Haettenschweiler, 'Arial Black', sans-serif;
-  font-size: clamp(58px, 6.4vw, 104px);
-  font-weight: 900;
-  line-height: 0.82;
-  letter-spacing: -0.045em;
-  text-align: center;
-  -webkit-text-stroke: clamp(1px, 0.14vw, 2px) #120d00;
-  text-shadow:
-    0 2px 0 #5c2900,
-    2px 0 0 #241200,
-    -2px 0 0 #241200,
-    0 0 9px rgba(255, 211, 38, 0.52);
-  transform: translateY(2%);
+  width: 94%;
+  height: 78%;
+  object-fit: contain;
+  object-position: center;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.78));
+  transform: translate(-50%, -50%);
 }
 
 .combat-popup-layer {
@@ -14050,11 +14065,6 @@ button {
 
   .round-box {
     width: 72px;
-  }
-
-  .round-box strong {
-    font-size: 44px;
-    -webkit-text-stroke-width: 1px;
   }
 
   .combat-popup-layer {

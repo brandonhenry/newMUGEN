@@ -28937,7 +28937,15 @@ export function FightHud({ match, hudScale, onlineWins, playerNames, presentatio
               aria-hidden="true"
               data-testid={`fight-hud-timer-digit-${index}`}
             />
-          )) : <strong>{timerText}</strong>}
+          )) : (
+            <img
+              className="round-box-infinity"
+              src="/ui/fight-hud/timer-infinity.png"
+              alt=""
+              aria-hidden="true"
+              data-testid="fight-hud-timer-infinity"
+            />
+          )}
         </div>
         <img className="round-box-frame" src="/ui/fight-hud/timer-frame.png" alt="" aria-hidden="true" />
         <span className="visually-hidden">{timerText}</span>

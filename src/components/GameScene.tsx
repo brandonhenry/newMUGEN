@@ -670,6 +670,7 @@ export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
 export function GameScene({ match, presentationMirrored = false, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, movementSmokeStyle = defaultMovementSmokeStyle, audioSettings, reducedMotion = false, onAssetLoadingChange }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
+  const cameraFrameRef = useRef<FightCameraFrame>(makeFightCameraFrame());
   const fighterRenderStyles = useMemo(() => ([
     makeFightFighterRenderStyle(match, 1),
     makeFightFighterRenderStyle(match, 2)
@@ -687,31 +688,97 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
     };
   }, [match.fighters[0].character.id, match.fighters[1].character.id]);
   return (
-    <Canvas dpr={[1, 1.25]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
-      <AssetLoadingReporter onAssetLoadingChange={onAssetLoadingChange} />
-      {import.meta.env.DEV && <KoreHealthReporter match={match} />}
-      <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
-        <GameEnvironment />
-        {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
-        <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
-        <CameraRig match={match} settings={cameraSettings} presentationMirrored={presentationMirrored} reducedMotion={reducedMotion} impactFeedbackEnabled={sparkSettings.enabled && sparkSettings.cinematic} />
-        <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
-        <StageCameraOcclusionFader />
-        <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-        <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
-        <MovementFootSmokeLayer fighter={match.fighters[0]} style={movementSmokeStyle} />
-        <MovementFootSmokeLayer fighter={match.fighters[1]} style={movementSmokeStyle} />
-        <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
-        <TransformEffectLayer fighter={match.fighters[0]} />
-        <TransformEffectLayer fighter={match.fighters[1]} />
-        <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-        <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
-        <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
-        <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} />
-        <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
-      </StageCameraCollisionContext.Provider>
-    </Canvas>
+    <>
+      <div className="fight-scene-base">
+        <Canvas dpr={[1, 1.25]} camera={{ position: [0, 3.3, 6.8], fov: 46 }} data-testid="fight-canvas">
+          <AssetLoadingReporter onAssetLoadingChange={onAssetLoadingChange} />
+          {import.meta.env.DEV && <KoreHealthReporter match={match} />}
+          <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
+            <GameEnvironment />
+            {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
+            <StageVisualStyleRig stage={match.stage} fighters={match.fighters} />
+            <CameraRig match={match} settings={cameraSettings} presentationMirrored={presentationMirrored} reducedMotion={reducedMotion} impactFeedbackEnabled={sparkSettings.enabled && sparkSettings.cinematic} />
+            <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
+            <StageCameraOcclusionFader />
+            <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+            <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+            <MovementFootSmokeLayer fighter={match.fighters[0]} style={movementSmokeStyle} />
+            <MovementFootSmokeLayer fighter={match.fighters[1]} style={movementSmokeStyle} />
+            <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
+            <TransformEffectLayer fighter={match.fighters[0]} />
+            <TransformEffectLayer fighter={match.fighters[1]} />
+            <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+            <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+            <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
+            <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} />
+            <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
+            <FightCameraFrameWriter frameRef={cameraFrameRef} />
+          </StageCameraCollisionContext.Provider>
+        </Canvas>
+      </div>
+      <div className="fight-fighter-foreground" aria-hidden="true">
+        <Canvas
+          dpr={[1, 1.25]}
+          camera={{ position: [0, 3.3, 6.8], fov: 46 }}
+          gl={{ alpha: true }}
+          onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
+        >
+          <GameEnvironment />
+          <StageVisualStyleRig stage={match.stage} fighters={match.fighters} includeBackdrop={false} />
+          <FightCameraFrameReader frameRef={cameraFrameRef} />
+          <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+          <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+          <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+          <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+        </Canvas>
+      </div>
+    </>
   );
+}
+
+type FightCameraFrame = {
+  ready: boolean;
+  position: THREE.Vector3;
+  quaternion: THREE.Quaternion;
+  projectionMatrix: THREE.Matrix4;
+  projectionMatrixInverse: THREE.Matrix4;
+};
+
+function makeFightCameraFrame(): FightCameraFrame {
+  return {
+    ready: false,
+    position: new THREE.Vector3(0, 3.3, 6.8),
+    quaternion: new THREE.Quaternion(),
+    projectionMatrix: new THREE.Matrix4(),
+    projectionMatrixInverse: new THREE.Matrix4()
+  };
+}
+
+function FightCameraFrameWriter({ frameRef }: { frameRef: MutableRefObject<FightCameraFrame> }) {
+  const camera = useThree((state) => state.camera);
+  useFrame(() => {
+    frameRef.current.position.copy(camera.position);
+    frameRef.current.quaternion.copy(camera.quaternion);
+    frameRef.current.projectionMatrix.copy(camera.projectionMatrix);
+    frameRef.current.projectionMatrixInverse.copy(camera.projectionMatrixInverse);
+    frameRef.current.ready = true;
+  });
+  return null;
+}
+
+function FightCameraFrameReader({ frameRef }: { frameRef: MutableRefObject<FightCameraFrame> }) {
+  const { camera, scene } = useThree();
+  useFrame(() => {
+    const frame = frameRef.current;
+    scene.visible = frame.ready;
+    if (!frame.ready) return;
+    camera.position.copy(frame.position);
+    camera.quaternion.copy(frame.quaternion);
+    camera.projectionMatrix.copy(frame.projectionMatrix);
+    camera.projectionMatrixInverse.copy(frame.projectionMatrixInverse);
+    camera.updateMatrixWorld();
+  });
+  return null;
 }
 
 function AssetLoadingReporter({ onAssetLoadingChange }: { onAssetLoadingChange?: (state: AssetLoadingState) => void }) {
@@ -1416,11 +1483,13 @@ const AnimeColorGradeShader = {
 function StageVisualStyleRig({
   stage,
   fighters,
-  preview = false
+  preview = false,
+  includeBackdrop = true
 }: {
   stage: StageDefinition;
   fighters?: [FighterRuntime, FighterRuntime] | FighterRuntime[];
   preview?: boolean;
+  includeBackdrop?: boolean;
 }) {
   const style = resolveStageVisualStyle(stage);
   const previewScale = preview ? 0.82 : 1;
@@ -1431,8 +1500,8 @@ function StageVisualStyleRig({
   const [fighterA, fighterB] = fighters ?? [];
   return (
     <>
-      <color attach="background" args={[style.lighting.backgroundColor]} />
-      {modelStage ? null : <fog attach="fog" args={[style.lighting.fogColor, fogNear, fogFar]} />}
+      {includeBackdrop && <color attach="background" args={[style.lighting.backgroundColor]} />}
+      {includeBackdrop && !modelStage ? <fog attach="fog" args={[style.lighting.fogColor, fogNear, fogFar]} /> : null}
       {style.lighting.ambientMode === 'hemisphere' ? (
         <hemisphereLight color={style.lighting.skyColor} groundColor={style.lighting.groundColor} intensity={style.lighting.hemiIntensity * previewScale} />
       ) : (

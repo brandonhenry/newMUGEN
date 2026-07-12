@@ -77,6 +77,7 @@ describe('FightHud', () => {
     render(<FightHud match={match as MatchSnapshot} hudScale={1} presentationMirrored />);
 
     expect(screen.getByTestId('fight-hud-timer').textContent).toContain('∞');
+    expect(screen.getByTestId('fight-hud-timer-infinity').getAttribute('src')).toBe('/ui/fight-hud/timer-infinity.png');
     expect(screen.getByTestId('fighter-hud-left').textContent).toContain('Right Source');
     expect(screen.getByTestId('fighter-portrait-left').getAttribute('src')).toBe('/faces/right.png');
     expect(screen.getByTestId('fighter-hud-right').textContent).toContain('Left Source');
