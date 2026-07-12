@@ -160,10 +160,28 @@
       "/characters/tayuya-curse-mark/frames/frame-160.png",
       "/characters/tayuya-curse-mark/frames/frame-161.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/tayuya-curse-mark/frames/frame-024.png",
+      "/characters/tayuya-curse-mark/frames/frame-025.png",
+      "/characters/tayuya-curse-mark/frames/frame-026.png",
+      "/characters/tayuya-curse-mark/frames/frame-027.png",
+      "/characters/tayuya-curse-mark/frames/frame-028.png",
+      "/characters/tayuya-curse-mark/frames/frame-029.png",
+      "/characters/tayuya-curse-mark/frames/frame-030.png",
+      "/characters/tayuya-curse-mark/frames/frame-031.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:WS+4": [
+      "/characters/tayuya-curse-mark/frames/frame-016.png",
+      "/characters/tayuya-curse-mark/frames/frame-017.png",
+      "/characters/tayuya-curse-mark/frames/frame-018.png",
+      "/characters/tayuya-curse-mark/frames/frame-019.png",
+      "/characters/tayuya-curse-mark/frames/frame-020.png",
+      "/characters/tayuya-curse-mark/frames/frame-021.png",
+      "/characters/tayuya-curse-mark/frames/frame-022.png",
+      "/characters/tayuya-curse-mark/frames/frame-023.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -465,9 +483,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 0,
+      "activeFrames": 32,
+      "recoveryFrames": 4,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -510,9 +528,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 0,
+      "activeFrames": 28,
+      "recoveryFrames": 3,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,

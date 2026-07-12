@@ -1,6 +1,7 @@
 import type { StageDefinition } from '../types';
 
 const CAMERA_SIDE_TIE_EPSILON = 0.001;
+const CAMERA_SIDE_CONTINUITY_EPSILON = 0.001;
 
 export type HorizontalVector = {
   x: number;
@@ -29,8 +30,33 @@ export function shouldFlipCameraSideForControls(
   previousCameraSide?: HorizontalVector,
   stage?: StageDefinition
 ) {
+  if (previousCameraSide) {
+    const continuity = cameraSide.x * previousCameraSide.x + cameraSide.z * previousCameraSide.z;
+    return continuity < -CAMERA_SIDE_CONTINUITY_EPSILON;
+  }
   const alignment = cameraScreenRightStageAlignment(cameraSide, stage);
-  if (alignment < -CAMERA_SIDE_TIE_EPSILON) return true;
-  if (alignment > CAMERA_SIDE_TIE_EPSILON || !previousCameraSide) return false;
-  return cameraSide.x * previousCameraSide.x + cameraSide.z * previousCameraSide.z < 0;
+  return alignment < -CAMERA_SIDE_TIE_EPSILON;
+}
+
+export function resolveFightCameraSide(
+  dx: number,
+  dz: number,
+  previousCameraSide?: HorizontalVector,
+  stage?: StageDefinition,
+  presentationMirrored = false
+): [number, number] {
+  let [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
+  if (!previousCameraSide && shouldFlipCameraSideForControls({ x: cameraX, z: cameraZ }, undefined, stage)) {
+    cameraX *= -1;
+    cameraZ *= -1;
+  }
+  if (presentationMirrored) {
+    cameraX *= -1;
+    cameraZ *= -1;
+  }
+  if (previousCameraSide && shouldFlipCameraSideForControls({ x: cameraX, z: cameraZ }, previousCameraSide, stage)) {
+    cameraX *= -1;
+    cameraZ *= -1;
+  }
+  return [cameraX, cameraZ];
 }

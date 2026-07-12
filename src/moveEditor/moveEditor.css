@@ -485,9 +485,13 @@ textarea {
 }
 
 .move-toggle-field input {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 18px;
   width: 18px;
   height: 18px;
   accent-color: #2ee6ff;
+  cursor: pointer;
 }
 
 .move-cancel-field textarea {
@@ -513,5 +517,100 @@ textarea {
   .move-control-grid,
   .move-toggle-grid {
     grid-template-columns: repeat(4, minmax(82px, 1fr));
+  }
+}
+
+@media (max-width: 979px) {
+  body {
+    min-width: 320px;
+  }
+
+  .move-editor-page {
+    padding: clamp(10px, 3vw, 18px);
+  }
+
+  .move-editor-topbar {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .move-editor-title,
+  .move-editor-search,
+  .move-character-header > div,
+  .move-info-cell,
+  .move-controls-cell {
+    min-width: 0;
+  }
+
+  .move-editor-title h1 {
+    max-width: 100%;
+    font-size: clamp(20px, 6vw, 28px);
+    overflow-wrap: anywhere;
+  }
+
+  .move-editor-tabs {
+    top: 118px;
+  }
+
+  .move-character-section {
+    scroll-margin-top: 178px;
+  }
+
+  .move-character-header {
+    top: 170px;
+    flex-wrap: wrap;
+  }
+
+  .move-character-header h2,
+  .move-character-header small,
+  .move-empty-state,
+  .move-summary-line {
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
+  }
+
+  .move-editor-row {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .move-preview-frame {
+    position: relative;
+    top: auto;
+    height: clamp(190px, 52vw, 300px);
+  }
+
+  .move-control-grid,
+  .move-toggle-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(132px, 100%), 1fr));
+  }
+
+  .move-control-summary,
+  .move-command-line {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .move-editor-tabs {
+    top: 132px;
+  }
+
+  .move-character-section {
+    scroll-margin-top: 192px;
+  }
+
+  .move-character-header {
+    top: 184px;
+  }
+
+  .move-character-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .move-control-grid,
+  .move-toggle-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }

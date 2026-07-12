@@ -45,7 +45,7 @@ import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
-import { cameraScreenRightStageAlignment, shouldFlipCameraSideForControls, stableFightCameraSide } from '../lib/fightCamera';
+import { cameraScreenRightStageAlignment, resolveFightCameraSide } from '../lib/fightCamera';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
@@ -5276,11 +5276,9 @@ function CameraRig({ match, settings, presentationMirrored = false, reducedMotio
       const dx = p2x - p1x;
       const dz = p2z - p1z;
       const distance = Math.hypot(dx, dz);
-      const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
+      const [cameraX, cameraZ] = resolveFightCameraSide(dx, dz, initializedRef.current ? side : undefined, match.stage, presentationMirrored);
       rawSide.set(cameraX, 0, cameraZ).normalize();
       if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
-      if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
-      if (presentationMirrored) rawSide.multiplyScalar(-1);
 
       const perspective = camera as THREE.PerspectiveCamera;
       const aspect = size.width / Math.max(1, size.height);
@@ -5358,11 +5356,9 @@ function CameraRig({ match, settings, presentationMirrored = false, reducedMotio
       const p2z = finiteOr(p2.position.z, contactZ);
       const dx = p2x - p1x;
       const dz = p2z - p1z;
-      const [computedCameraX, computedCameraZ] = stableFightCameraSide(dx, dz);
+      const [computedCameraX, computedCameraZ] = resolveFightCameraSide(dx, dz, initializedRef.current ? side : undefined, match.stage, presentationMirrored);
       rawSide.set(computedCameraX, 0, computedCameraZ).normalize();
       if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
-      if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
-      if (presentationMirrored) rawSide.multiplyScalar(-1);
       const cameraX = rawSide.x;
       const cameraZ = rawSide.z;
       const cameraDistance = THREE.MathUtils.clamp(
@@ -5410,11 +5406,9 @@ function CameraRig({ match, settings, presentationMirrored = false, reducedMotio
     const dx = p2x - p1x;
     const dz = p2z - p1z;
     const distance = Math.hypot(dx, dz);
-    const [cameraX, cameraZ] = stableFightCameraSide(dx, dz);
+    const [cameraX, cameraZ] = resolveFightCameraSide(dx, dz, initializedRef.current ? side : undefined, match.stage, presentationMirrored);
     rawSide.set(cameraX, 0, cameraZ).normalize();
     if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
-    if (shouldFlipCameraSideForControls(rawSide, side, match.stage)) rawSide.multiplyScalar(-1);
-    if (presentationMirrored) rawSide.multiplyScalar(-1);
     logFightCameraInputDebug({
       mode: 'normal',
       rawSideX: Number(rawSide.x.toFixed(3)),

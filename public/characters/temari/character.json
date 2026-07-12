@@ -152,9 +152,25 @@
       "/characters/temari/frames/frame-091.png",
       "/characters/temari/frames/frame-092.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/temari/frames/frame-028.png",
+      "/characters/temari/frames/frame-029.png",
+      "/characters/temari/frames/frame-030.png",
+      "/characters/temari/frames/frame-031.png",
+      "/characters/temari/frames/frame-032.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
+    "cmd:qcf+4": [
+      "/characters/temari/frames/frame-099.png",
+      "/characters/temari/frames/frame-100.png",
+      "/characters/temari/frames/frame-101.png",
+      "/characters/temari/frames/frame-102.png",
+      "/characters/temari/frames/frame-103.png",
+      "/characters/temari/frames/frame-104.png",
+      "/characters/temari/frames/frame-105.png",
+      "/characters/temari/frames/frame-106.png",
+      "/characters/temari/frames/frame-107.png"
+    ],
     "cmd:WS+4": [],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
@@ -458,9 +474,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 7,
+      "activeFrames": 13,
+      "recoveryFrames": 12,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -489,9 +505,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 26,
-      "activeFrames": 6,
-      "recoveryFrames": 33,
+      "startupFrames": 15,
+      "activeFrames": 49,
+      "recoveryFrames": 1,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,

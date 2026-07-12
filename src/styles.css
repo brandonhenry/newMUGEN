@@ -26,6 +26,24 @@
   box-sizing: border-box;
 }
 
+.app-shell :where(h1, h2, h3) {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.app-shell :where(p, li, figcaption, blockquote) {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.app-shell :where(strong, small, span) {
+  min-width: 0;
+}
+
 html,
 #root {
   width: 100%;
@@ -3293,8 +3311,8 @@ button {
   align-self: end;
   width: min(96%, 760px);
   margin: 0;
-  min-height: clamp(66px, 12vh, 118px);
-  overflow: hidden;
+  min-height: 2.05em;
+  overflow: clip;
   transform: none;
   font-size: clamp(22px, min(3.6vw, 6vh), 60px);
   line-height: 0.95;
@@ -9976,7 +9994,7 @@ button {
   position: absolute;
   width: 1px;
   height: 1px;
-  overflow: hidden;
+  overflow: clip;
   clip-path: inset(50%);
   white-space: nowrap;
 }
@@ -11552,6 +11570,7 @@ button {
   display: grid;
   gap: clamp(14px, 2vh, 22px);
   width: min(88vw, 720px);
+  min-width: 0;
 }
 
 .arcade-transition-kicker {
@@ -11601,6 +11620,7 @@ button {
     0 0 24px color-mix(in srgb, var(--arcade-primary) 50%, transparent),
     0 30px 94px rgba(0, 0, 0, 0.86);
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .arcade-transition-subtitle {
@@ -11619,6 +11639,8 @@ button {
 }
 
 .arcade-transition-copy p {
+  width: 100%;
+  min-width: 0;
   max-width: 650px;
   margin: 0;
   color: rgba(238, 246, 255, 0.88);
@@ -11635,6 +11657,7 @@ button {
   grid-template-columns: repeat(5, minmax(66px, 1fr));
   gap: 8px;
   width: min(90vw, 620px);
+  min-width: 0;
 }
 
 .arcade-transition-stats span,
@@ -11649,18 +11672,30 @@ button {
 
 .arcade-transition-stats span {
   display: grid;
+  container-type: inline-size;
+  min-width: 0;
   min-height: 62px;
   place-items: center;
   padding: 8px;
 }
 
 .arcade-transition-stats strong {
+  display: block;
+  max-width: 100%;
   color: #fff06c;
-  font-size: clamp(18px, 2.7vw, 32px);
+  font-size: clamp(11px, 15cqi, 24px);
   font-weight: 950;
   letter-spacing: 0;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+}
+
+.stage-warmup-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stage-warmup-stats strong {
+  font-size: clamp(9px, 13cqi, 20px);
 }
 
 .arcade-transition-stats small {
@@ -11683,11 +11718,14 @@ button {
 
 .arcade-transition-next span,
 .arcade-transition-next small {
+  min-width: 0;
+  max-width: 100%;
   color: rgba(236, 244, 255, 0.68);
   font-size: 11px;
   font-weight: 850;
   letter-spacing: 0;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .arcade-transition-next strong {
@@ -11806,12 +11844,16 @@ button {
   }
 
   .arcade-transition-copy h1 {
-    font-size: clamp(42px, 16vw, 78px);
+    font-size: clamp(34px, 12vw, 58px);
   }
 
   .arcade-transition-stats {
-    grid-template-columns: repeat(5, minmax(48px, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: 100%;
+  }
+
+  .stage-warmup-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .arcade-transition-stats span {
@@ -11897,9 +11939,13 @@ button {
   .arcade-transition-stats strong {
     overflow: hidden;
     max-width: 100%;
-    font-size: clamp(17px, 2vw, 24px);
+    font-size: clamp(11px, 15cqi, 22px);
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .stage-warmup-stats strong {
+    font-size: clamp(9px, 12cqi, 18px);
   }
 
   .arcade-transition-next {
@@ -12331,6 +12377,7 @@ button {
   justify-items: start;
   gap: 10px;
   min-width: 0;
+  width: 100%;
   color: #f7f7f2;
   text-transform: uppercase;
   animation: resultsCopyIn 440ms 170ms cubic-bezier(0.2, 0, 0, 1) both;
@@ -12349,10 +12396,12 @@ button {
 
 .results-copy h2 {
   margin: 0;
-  max-width: 10ch;
+  width: 100%;
+  max-width: 100%;
   font-size: clamp(42px, 8vw, 94px);
   line-height: 0.88;
   text-wrap: balance;
+  overflow-wrap: anywhere;
   text-shadow:
     0 4px 0 rgba(0, 0, 0, 0.62),
     0 0 28px color-mix(in srgb, var(--winner-primary, #2ee6ff) 32%, transparent);
@@ -14466,10 +14515,11 @@ button {
 
 .leaderboard-header h1 {
   margin: 0;
-  font-size: clamp(3.2rem, 9vw, 8rem);
+  font-size: clamp(2rem, 7vw, 6rem);
   line-height: 0.9;
   color: #f6f3e8;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
   text-shadow:
     0 4px 0 rgba(0, 0, 0, 0.55),
     0 0 24px rgba(45, 227, 255, 0.18);
