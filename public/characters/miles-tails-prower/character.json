@@ -129,7 +129,7 @@
       "/characters/miles-tails-prower/frames/frame-058.png"
     ],
     "hitHeavy": [
-      "/characters/miles-tails-prower/frames/frame-127.png"
+      "/characters/miles-tails-prower/frames/frame-058.png"
     ],
     "juggle": [
       "/characters/miles-tails-prower/frames/frame-127.png"
@@ -282,9 +282,9 @@
       "id": "kick",
       "label": "Miles Tails Prower Left Kick",
       "input": "kick",
-      "startupFrames": 14,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -314,7 +314,7 @@
       "id": "heavy",
       "label": "Miles Tails Prower Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 17,
       "damage": 8,
@@ -346,9 +346,9 @@
       "id": "special",
       "label": "Miles Tails Prower Right Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -403,9 +403,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 13,
+      "recoveryFrames": 14,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -416,9 +416,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
+      "startupFrames": 16,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 23,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -433,9 +433,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -446,9 +446,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -459,9 +459,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -473,7 +473,7 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -506,7 +506,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -517,9 +517,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -584,7 +584,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -628,91 +628,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Miles Tails Prower Second Beat"
+      "label": "Miles Tails Prower Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Miles Tails Prower Body Blow"
+      "label": "Miles Tails Prower Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Miles Tails Prower Low Changeup"
+      "label": "Miles Tails Prower Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Miles Tails Prower Pressure Feint"
+      "label": "Miles Tails Prower Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Miles Tails Prower Drive"
+      "label": "Miles Tails Prower Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Miles Tails Prower Barrage"
+      "label": "Miles Tails Prower Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Miles Tails Prower Finisher"
+      "label": "Miles Tails Prower Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Miles Tails Prower Step Kick"
+      "label": "Miles Tails Prower Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Miles Tails Prower Palm String"
+      "label": "Miles Tails Prower Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Miles Tails Prower Rising Chain"
+      "label": "Miles Tails Prower Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Miles Tails Prower Special Setup"
+      "label": "Miles Tails Prower Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Miles Tails Prower Break Art"
+      "label": "Miles Tails Prower Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Miles Tails Prower Check Hook"
+      "label": "Miles Tails Prower Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Miles Tails Prower Heavy Break"
+      "label": "Miles Tails Prower Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Miles Tails Prower Charged Follow"
+      "label": "Miles Tails Prower Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Miles Tails Prower Drop Kick"
+      "label": "Miles Tails Prower Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Miles Tails Prower Arc Finisher"
+      "label": "Miles Tails Prower Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Miles Tails Prower Focus Stance"
+      "label": "Miles Tails Prower Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Miles Tails Prower Mode Shift"
+      "label": "Miles Tails Prower Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Miles Tails Prower Heel Feint"
+      "label": "Miles Tails Prower Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Miles Tails Prower Summon Strike"
+      "label": "Miles Tails Prower Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Miles Tails Prower Guard Snare"
+      "label": "Miles Tails Prower Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Miles Tails Prower Armor Break"
+      "label": "Miles Tails Prower Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Miles Tails Prower Power Setup"
+      "label": "Miles Tails Prower Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Miles Tails Prower Switch Strike"
+      "label": "Miles Tails Prower Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Miles Tails Prower Spark Jab"
+      "label": "Miles Tails Prower Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Miles Tails Prower Binding Blow"
+      "label": "Miles Tails Prower Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Miles Tails Prower Heavy Draw"
+      "label": "Miles Tails Prower Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Miles Tails Prower Kick Ender"
+      "label": "Miles Tails Prower Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

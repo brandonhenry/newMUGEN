@@ -337,9 +337,9 @@
       "id": "kick",
       "label": "Model OX Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -369,9 +369,9 @@
       "id": "heavy",
       "label": "Model OX Right Check",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -401,9 +401,9 @@
       "id": "special",
       "label": "Model OX Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -458,9 +458,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 9,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 13,
+      "recoveryFrames": 14,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -471,9 +471,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -484,9 +484,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 30,
+      "activeFrames": 4,
+      "recoveryFrames": 36,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -497,7 +497,7 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 21,
       "damage": 12,
@@ -512,7 +512,7 @@
     "cmd:f+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -557,7 +557,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -568,9 +568,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -635,7 +635,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -679,91 +679,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Model OX Second Beat"
+      "label": "Model OX Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Model OX Body Blow"
+      "label": "Model OX Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Model OX Low Changeup"
+      "label": "Model OX Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Model OX Pressure Feint"
+      "label": "Model OX Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Model OX Drive"
+      "label": "Model OX Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Model OX Barrage"
+      "label": "Model OX Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Model OX Finisher"
+      "label": "Model OX Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Model OX Step Kick"
+      "label": "Model OX Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Model OX Palm String"
+      "label": "Model OX Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Model OX Rising Chain"
+      "label": "Model OX Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Model OX Special Setup"
+      "label": "Model OX Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Model OX Break Art"
+      "label": "Model OX Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Model OX Check Hook"
+      "label": "Model OX Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Model OX Heavy Break"
+      "label": "Model OX Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Model OX Charged Follow"
+      "label": "Model OX Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Model OX Drop Kick"
+      "label": "Model OX Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Model OX Arc Finisher"
+      "label": "Model OX Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Model OX Focus Stance"
+      "label": "Model OX Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Model OX Mode Shift"
+      "label": "Model OX Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Model OX Heel Feint"
+      "label": "Model OX Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Model OX Summon Strike"
+      "label": "Model OX Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Model OX Guard Snare"
+      "label": "Model OX Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Model OX Armor Break"
+      "label": "Model OX Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Model OX Power Setup"
+      "label": "Model OX Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Model OX Switch Strike"
+      "label": "Model OX Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Model OX Spark Jab"
+      "label": "Model OX Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Model OX Binding Blow"
+      "label": "Model OX Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Model OX Heavy Draw"
+      "label": "Model OX Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Model OX Kick Ender"
+      "label": "Model OX Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

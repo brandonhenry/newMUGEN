@@ -295,9 +295,9 @@
       "id": "kick",
       "label": "Giran Left Kick",
       "input": "kick",
-      "startupFrames": 14,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -327,9 +327,9 @@
       "id": "heavy",
       "label": "Giran Right Check",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -359,9 +359,9 @@
       "id": "special",
       "label": "Giran Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -416,9 +416,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 13,
+      "recoveryFrames": 14,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -429,9 +429,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -442,9 +442,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -455,9 +455,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 20,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -468,9 +468,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -482,7 +482,7 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -513,9 +513,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -526,9 +526,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -593,7 +593,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -637,91 +637,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Giran Second Beat"
+      "label": "Giran Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Giran Body Blow"
+      "label": "Giran Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Giran Low Changeup"
+      "label": "Giran Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Giran Pressure Feint"
+      "label": "Giran Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Giran Drive"
+      "label": "Giran Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Giran Barrage"
+      "label": "Giran Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Giran Finisher"
+      "label": "Giran Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Giran Step Kick"
+      "label": "Giran Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Giran Palm String"
+      "label": "Giran Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Giran Rising Chain"
+      "label": "Giran Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Giran Special Setup"
+      "label": "Giran Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Giran Break Art"
+      "label": "Giran Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Giran Check Hook"
+      "label": "Giran Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Giran Heavy Break"
+      "label": "Giran Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Giran Charged Follow"
+      "label": "Giran Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Giran Drop Kick"
+      "label": "Giran Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Giran Arc Finisher"
+      "label": "Giran Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Giran Focus Stance"
+      "label": "Giran Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Giran Mode Shift"
+      "label": "Giran Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Giran Heel Feint"
+      "label": "Giran Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Giran Summon Strike"
+      "label": "Giran Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Giran Guard Snare"
+      "label": "Giran Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Giran Armor Break"
+      "label": "Giran Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Giran Power Setup"
+      "label": "Giran Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Giran Switch Strike"
+      "label": "Giran Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Giran Spark Jab"
+      "label": "Giran Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Giran Binding Blow"
+      "label": "Giran Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Giran Heavy Draw"
+      "label": "Giran Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Giran Kick Ender"
+      "label": "Giran Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

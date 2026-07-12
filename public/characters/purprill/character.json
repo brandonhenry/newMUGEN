@@ -175,7 +175,7 @@
       "/characters/purprill/frames/frame-078.png"
     ],
     "hitHeavy": [
-      "/characters/purprill/frames/frame-095.png"
+      "/characters/purprill/frames/frame-078.png"
     ],
     "juggle": [
       "/characters/purprill/frames/frame-043.png"
@@ -306,7 +306,7 @@
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 14,
+      "recoveryFrames": 15,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -336,9 +336,9 @@
       "id": "kick",
       "label": "Purprill Left Kick",
       "input": "kick",
-      "startupFrames": 14,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -368,9 +368,9 @@
       "id": "heavy",
       "label": "Purprill Right Check",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -400,9 +400,9 @@
       "id": "special",
       "label": "Purprill Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -457,9 +457,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 9,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 13,
+      "recoveryFrames": 15,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -470,9 +470,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -483,9 +483,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 14,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -496,7 +496,7 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 21,
       "damage": 12,
@@ -511,7 +511,7 @@
     "cmd:f+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -556,7 +556,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -567,9 +567,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -634,7 +634,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -678,91 +678,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Purprill Second Beat"
+      "label": "Purprill Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Purprill Body Blow"
+      "label": "Purprill Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Purprill Low Changeup"
+      "label": "Purprill Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Purprill Pressure Feint"
+      "label": "Purprill Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Purprill Drive"
+      "label": "Purprill Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Purprill Barrage"
+      "label": "Purprill Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Purprill Finisher"
+      "label": "Purprill Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Purprill Step Kick"
+      "label": "Purprill Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Purprill Palm String"
+      "label": "Purprill Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Purprill Rising Chain"
+      "label": "Purprill Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Purprill Special Setup"
+      "label": "Purprill Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Purprill Break Art"
+      "label": "Purprill Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Purprill Check Hook"
+      "label": "Purprill Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Purprill Heavy Break"
+      "label": "Purprill Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Purprill Charged Follow"
+      "label": "Purprill Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Purprill Drop Kick"
+      "label": "Purprill Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Purprill Arc Finisher"
+      "label": "Purprill Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Purprill Focus Stance"
+      "label": "Purprill Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Purprill Mode Shift"
+      "label": "Purprill Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Purprill Heel Feint"
+      "label": "Purprill Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Purprill Summon Strike"
+      "label": "Purprill Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Purprill Guard Snare"
+      "label": "Purprill Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Purprill Armor Break"
+      "label": "Purprill Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Purprill Power Setup"
+      "label": "Purprill Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Purprill Switch Strike"
+      "label": "Purprill Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Purprill Spark Jab"
+      "label": "Purprill Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Purprill Binding Blow"
+      "label": "Purprill Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Purprill Heavy Draw"
+      "label": "Purprill Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Purprill Kick Ender"
+      "label": "Purprill Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

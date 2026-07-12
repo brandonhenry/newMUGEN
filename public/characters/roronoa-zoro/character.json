@@ -457,9 +457,9 @@
       "id": "kick",
       "label": "Low Santoryu Sweep",
       "input": "kick",
-      "startupFrames": 29,
+      "startupFrames": 30,
       "activeFrames": 4,
-      "recoveryFrames": 35,
+      "recoveryFrames": 36,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -501,7 +501,7 @@
       "input": "heavy",
       "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 21,
       "damage": 9,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -541,9 +541,9 @@
       "id": "special",
       "label": "Three-Sword Driving Cut",
       "input": "special",
-      "startupFrames": 22,
+      "startupFrames": 23,
       "activeFrames": 4,
-      "recoveryFrames": 30,
+      "recoveryFrames": 31,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -633,7 +633,7 @@
     "jabright": {
       "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 21,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": -1,
@@ -654,9 +654,9 @@
       "juggleRepeatPenaltyFrames": 7
     },
     "kickleft": {
-      "startupFrames": 29,
+      "startupFrames": 30,
       "activeFrames": 4,
-      "recoveryFrames": 35,
+      "recoveryFrames": 36,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -678,7 +678,7 @@
     "kickright": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 19,
+      "recoveryFrames": 20,
       "damage": 9,
       "blockDamage": 1,
       "onBlockFrames": 0,
@@ -748,9 +748,9 @@
       "juggleRepeatPenaltyFrames": 12
     },
     "cmd:qcf+4": {
-      "startupFrames": 27,
+      "startupFrames": 28,
       "activeFrames": 7,
-      "recoveryFrames": 35,
+      "recoveryFrames": 36,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -773,7 +773,7 @@
     "cmd:WS+4": {
       "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -9,
@@ -886,9 +886,9 @@
       "juggleRepeatPenaltyFrames": 12
     },
     "cmd:2+3": {
-      "startupFrames": 28,
+      "startupFrames": 29,
       "activeFrames": 4,
-      "recoveryFrames": 33,
+      "recoveryFrames": 34,
       "damage": 10,
       "blockDamage": 1,
       "onBlockFrames": -10,
@@ -908,9 +908,9 @@
       "juggleRepeatPenaltyFrames": 6
     },
     "cmd:2+4": {
-      "startupFrames": 23,
+      "startupFrames": 24,
       "activeFrames": 4,
-      "recoveryFrames": 33,
+      "recoveryFrames": 34,
       "damage": 14,
       "blockDamage": 1,
       "onBlockFrames": -15,
@@ -963,7 +963,7 @@
       "juggleRepeatPenaltyFrames": 16
     },
     "cmd:O+2": {
-      "startupFrames": 24,
+      "startupFrames": 25,
       "activeFrames": 6,
       "recoveryFrames": 32,
       "damage": 16,
@@ -1655,7 +1655,7 @@
     "cmd:WS+2": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 19,
+      "recoveryFrames": 20,
       "onBlockFrames": -6,
       "onHitFrames": 15,
       "onCounterHitFrames": 20,
@@ -1677,7 +1677,7 @@
     "cmd:O+1": {
       "startupFrames": 21,
       "activeFrames": 4,
-      "recoveryFrames": 28,
+      "recoveryFrames": 29,
       "onBlockFrames": 1,
       "onHitFrames": 14,
       "onCounterHitFrames": 18,

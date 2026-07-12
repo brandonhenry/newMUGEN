@@ -255,9 +255,9 @@
       "id": "jab",
       "label": "Cure Black Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -287,8 +287,8 @@
       "id": "kick",
       "label": "Cure Black Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
+      "startupFrames": 18,
+      "activeFrames": 2,
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 0,
@@ -319,7 +319,7 @@
       "id": "heavy",
       "label": "Cure Black Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
       "recoveryFrames": 17,
       "damage": 8,
@@ -351,9 +351,9 @@
       "id": "special",
       "label": "Cure Black Right Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -409,8 +409,8 @@
   "moveOverrides": {
     "jableft": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -421,9 +421,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -434,8 +434,8 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 15,
-      "activeFrames": 3,
+      "startupFrames": 18,
+      "activeFrames": 2,
       "recoveryFrames": 20,
       "damage": 10,
       "onBlockFrames": -12,
@@ -447,9 +447,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 17,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -460,9 +460,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -505,9 +505,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -518,9 +518,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -585,7 +585,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -629,96 +629,183 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Cure Black Second Beat"
+      "label": "Cure Black Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Cure Black Body Blow"
+      "label": "Cure Black Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Cure Black Low Changeup"
+      "label": "Cure Black Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Cure Black Pressure Feint"
+      "label": "Cure Black Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Cure Black Drive"
+      "label": "Cure Black Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Cure Black Barrage"
+      "label": "Cure Black Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Cure Black Finisher"
+      "label": "Cure Black Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Cure Black Step Kick"
+      "label": "Cure Black Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Cure Black Palm String"
+      "label": "Cure Black Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Cure Black Rising Chain"
+      "label": "Cure Black Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Cure Black Special Setup"
+      "label": "Cure Black Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Cure Black Break Art"
+      "label": "Cure Black Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Cure Black Check Hook"
+      "label": "Cure Black Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Cure Black Heavy Break"
+      "label": "Cure Black Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Cure Black Charged Follow"
+      "label": "Cure Black Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Cure Black Drop Kick"
+      "label": "Cure Black Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Cure Black Arc Finisher"
+      "label": "Cure Black Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Cure Black Focus Stance"
+      "label": "Cure Black Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Cure Black Mode Shift"
+      "label": "Cure Black Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Cure Black Heel Feint"
+      "label": "Cure Black Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Cure Black Summon Strike"
+      "label": "Cure Black Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Cure Black Guard Snare"
+      "label": "Cure Black Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Cure Black Armor Break"
+      "label": "Cure Black Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Cure Black Power Setup"
+      "label": "Cure Black Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Cure Black Switch Strike"
+      "label": "Cure Black Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Cure Black Spark Jab"
+      "label": "Cure Black Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Cure Black Binding Blow"
+      "label": "Cure Black Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Cure Black Heavy Draw"
+      "label": "Cure Black Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Cure Black Kick Ender"
+      "label": "Cure Black Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:b+1": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -758,9 +845,9 @@
       "knockdown": true
     },
     "cmd:WR+3": {
-      "startupFrames": 18,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 13,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -819,9 +906,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+3": {
-      "startupFrames": 20,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 13,
       "onBlockFrames": -6,
       "onHitFrames": 7,

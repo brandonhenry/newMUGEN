@@ -291,9 +291,9 @@
       "id": "kick",
       "label": "Daichi Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -323,9 +323,9 @@
       "id": "heavy",
       "label": "Daichi Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -355,9 +355,9 @@
       "id": "special",
       "label": "Daichi Right Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -412,9 +412,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 13,
+      "recoveryFrames": 14,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -425,9 +425,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 18,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -438,9 +438,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 16,
+      "activeFrames": 2,
+      "recoveryFrames": 18,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -451,9 +451,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
+      "startupFrames": 16,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 25,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -468,9 +468,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -482,7 +482,7 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -513,9 +513,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -526,9 +526,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -593,7 +593,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -637,91 +637,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Daichi Second Beat"
+      "label": "Daichi Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Daichi Body Blow"
+      "label": "Daichi Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Daichi Low Changeup"
+      "label": "Daichi Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Daichi Pressure Feint"
+      "label": "Daichi Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Daichi Drive"
+      "label": "Daichi Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Daichi Barrage"
+      "label": "Daichi Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Daichi Finisher"
+      "label": "Daichi Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Daichi Step Kick"
+      "label": "Daichi Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Daichi Palm String"
+      "label": "Daichi Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Daichi Rising Chain"
+      "label": "Daichi Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Daichi Special Setup"
+      "label": "Daichi Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Daichi Break Art"
+      "label": "Daichi Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Daichi Check Hook"
+      "label": "Daichi Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Daichi Heavy Break"
+      "label": "Daichi Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Daichi Charged Follow"
+      "label": "Daichi Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Daichi Drop Kick"
+      "label": "Daichi Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Daichi Arc Finisher"
+      "label": "Daichi Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Daichi Focus Stance"
+      "label": "Daichi Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Daichi Mode Shift"
+      "label": "Daichi Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Daichi Heel Feint"
+      "label": "Daichi Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Daichi Summon Strike"
+      "label": "Daichi Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Daichi Guard Snare"
+      "label": "Daichi Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Daichi Armor Break"
+      "label": "Daichi Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Daichi Power Setup"
+      "label": "Daichi Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Daichi Switch Strike"
+      "label": "Daichi Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Daichi Spark Jab"
+      "label": "Daichi Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Daichi Binding Blow"
+      "label": "Daichi Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Daichi Heavy Draw"
+      "label": "Daichi Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Daichi Kick Ender"
+      "label": "Daichi Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

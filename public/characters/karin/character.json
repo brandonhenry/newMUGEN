@@ -241,9 +241,9 @@
       "id": "jab",
       "label": "Karin Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -273,9 +273,9 @@
       "id": "kick",
       "label": "Karin Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -305,7 +305,7 @@
       "id": "heavy",
       "label": "Karin Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 17,
       "damage": 8,
@@ -337,9 +337,9 @@
       "id": "special",
       "label": "Karin Right Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -394,9 +394,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -409,7 +409,7 @@
     "jabright": {
       "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -420,9 +420,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -433,9 +433,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -446,9 +446,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -493,7 +493,7 @@
     "cmd:WS+4": {
       "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -504,9 +504,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -571,7 +571,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -615,91 +615,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Karin Second Beat"
+      "label": "Karin Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Karin Body Blow"
+      "label": "Karin Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Karin Low Changeup"
+      "label": "Karin Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Karin Pressure Feint"
+      "label": "Karin Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Karin Drive"
+      "label": "Karin Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Karin Barrage"
+      "label": "Karin Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Karin Finisher"
+      "label": "Karin Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Karin Step Kick"
+      "label": "Karin Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Karin Palm String"
+      "label": "Karin Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Karin Rising Chain"
+      "label": "Karin Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Karin Special Setup"
+      "label": "Karin Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Karin Break Art"
+      "label": "Karin Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Karin Check Hook"
+      "label": "Karin Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Karin Heavy Break"
+      "label": "Karin Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Karin Charged Follow"
+      "label": "Karin Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Karin Drop Kick"
+      "label": "Karin Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Karin Arc Finisher"
+      "label": "Karin Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Karin Focus Stance"
+      "label": "Karin Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Karin Mode Shift"
+      "label": "Karin Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Karin Heel Feint"
+      "label": "Karin Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Karin Summon Strike"
+      "label": "Karin Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Karin Guard Snare"
+      "label": "Karin Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Karin Armor Break"
+      "label": "Karin Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Karin Power Setup"
+      "label": "Karin Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Karin Switch Strike"
+      "label": "Karin Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Karin Spark Jab"
+      "label": "Karin Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Karin Binding Blow"
+      "label": "Karin Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Karin Heavy Draw"
+      "label": "Karin Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Karin Kick Ender"
+      "label": "Karin Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

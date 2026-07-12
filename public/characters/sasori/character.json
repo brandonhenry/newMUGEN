@@ -157,7 +157,7 @@
       "/characters/sasori/frames/frame-111.png"
     ],
     "hitHeavy": [
-      "/characters/sasori/frames/frame-238.png"
+      "/characters/sasori/frames/frame-111.png"
     ],
     "juggle": [
       "/characters/sasori/frames/frame-249.png"
@@ -327,9 +327,9 @@
       "id": "kick",
       "label": "Sasori Left Kick",
       "input": "kick",
-      "startupFrames": 18,
-      "activeFrames": 2,
-      "recoveryFrames": 21,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -359,9 +359,9 @@
       "id": "heavy",
       "label": "Sasori Right Check",
       "input": "heavy",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -391,9 +391,9 @@
       "id": "special",
       "label": "Sasori Right Kick",
       "input": "special",
-      "startupFrames": 14,
-      "activeFrames": 2,
-      "recoveryFrames": 18,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -461,9 +461,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -474,9 +474,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
-      "activeFrames": 2,
-      "recoveryFrames": 21,
+      "startupFrames": 20,
+      "activeFrames": 3,
+      "recoveryFrames": 23,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -487,9 +487,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 14,
-      "activeFrames": 2,
-      "recoveryFrames": 18,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,

@@ -259,9 +259,9 @@
       "id": "jab",
       "label": "Pain Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -291,9 +291,9 @@
       "id": "kick",
       "label": "Pain Left Kick",
       "input": "kick",
-      "startupFrames": 14,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -323,9 +323,9 @@
       "id": "heavy",
       "label": "Pain Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 16,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -355,9 +355,9 @@
       "id": "special",
       "label": "Pain Right Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -412,9 +412,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -438,9 +438,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 16,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 22,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -451,9 +451,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -466,7 +466,7 @@
     "cmd:f+1": {
       "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -511,7 +511,7 @@
     "cmd:WS+4": {
       "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -522,9 +522,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -589,7 +589,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -633,91 +633,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Pain Second Beat"
+      "label": "Pain Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Pain Body Blow"
+      "label": "Pain Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Pain Low Changeup"
+      "label": "Pain Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Pain Pressure Feint"
+      "label": "Pain Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Pain Drive"
+      "label": "Pain Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Pain Barrage"
+      "label": "Pain Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Pain Finisher"
+      "label": "Pain Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Pain Step Kick"
+      "label": "Pain Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Pain Palm String"
+      "label": "Pain Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Pain Rising Chain"
+      "label": "Pain Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Pain Special Setup"
+      "label": "Pain Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Pain Break Art"
+      "label": "Pain Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Pain Check Hook"
+      "label": "Pain Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Pain Heavy Break"
+      "label": "Pain Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Pain Charged Follow"
+      "label": "Pain Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Pain Drop Kick"
+      "label": "Pain Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Pain Arc Finisher"
+      "label": "Pain Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Pain Focus Stance"
+      "label": "Pain Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Pain Mode Shift"
+      "label": "Pain Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Pain Heel Feint"
+      "label": "Pain Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Pain Summon Strike"
+      "label": "Pain Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Pain Guard Snare"
+      "label": "Pain Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Pain Armor Break"
+      "label": "Pain Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Pain Power Setup"
+      "label": "Pain Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Pain Switch Strike"
+      "label": "Pain Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Pain Spark Jab"
+      "label": "Pain Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Pain Binding Blow"
+      "label": "Pain Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Pain Heavy Draw"
+      "label": "Pain Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Pain Kick Ender"
+      "label": "Pain Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

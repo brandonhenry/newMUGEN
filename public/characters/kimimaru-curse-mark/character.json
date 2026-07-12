@@ -253,9 +253,9 @@
       "id": "jab",
       "label": "Kimimaru Curse Mark Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -285,8 +285,8 @@
       "id": "kick",
       "label": "Kimimaru Curse Mark Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
+      "startupFrames": 18,
+      "activeFrames": 2,
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 0,
@@ -317,9 +317,9 @@
       "id": "heavy",
       "label": "Kimimaru Curse Mark Right Check",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -349,9 +349,9 @@
       "id": "special",
       "label": "Kimimaru Curse Mark Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 19,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -406,8 +406,8 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
+      "startupFrames": 9,
+      "activeFrames": 1,
       "recoveryFrames": 13,
       "damage": 6,
       "onBlockFrames": -2,
@@ -419,9 +419,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -432,8 +432,8 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 16,
-      "activeFrames": 3,
+      "startupFrames": 18,
+      "activeFrames": 2,
       "recoveryFrames": 20,
       "damage": 10,
       "onBlockFrames": -12,
@@ -445,9 +445,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 18,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 19,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -460,7 +460,7 @@
     "cmd:f+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -505,7 +505,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -516,9 +516,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -583,7 +583,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -627,91 +627,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Kimimaru Curse Mark Second Beat"
+      "label": "Kimimaru Curse Mark Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Kimimaru Curse Mark Body Blow"
+      "label": "Kimimaru Curse Mark Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Kimimaru Curse Mark Low Changeup"
+      "label": "Kimimaru Curse Mark Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Kimimaru Curse Mark Pressure Feint"
+      "label": "Kimimaru Curse Mark Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Kimimaru Curse Mark Drive"
+      "label": "Kimimaru Curse Mark Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Kimimaru Curse Mark Barrage"
+      "label": "Kimimaru Curse Mark Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Kimimaru Curse Mark Finisher"
+      "label": "Kimimaru Curse Mark Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Kimimaru Curse Mark Step Kick"
+      "label": "Kimimaru Curse Mark Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Kimimaru Curse Mark Palm String"
+      "label": "Kimimaru Curse Mark Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Kimimaru Curse Mark Rising Chain"
+      "label": "Kimimaru Curse Mark Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Kimimaru Curse Mark Special Setup"
+      "label": "Kimimaru Curse Mark Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Kimimaru Curse Mark Break Art"
+      "label": "Kimimaru Curse Mark Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Kimimaru Curse Mark Check Hook"
+      "label": "Kimimaru Curse Mark Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Kimimaru Curse Mark Heavy Break"
+      "label": "Kimimaru Curse Mark Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Kimimaru Curse Mark Charged Follow"
+      "label": "Kimimaru Curse Mark Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Kimimaru Curse Mark Drop Kick"
+      "label": "Kimimaru Curse Mark Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Kimimaru Curse Mark Arc Finisher"
+      "label": "Kimimaru Curse Mark Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Kimimaru Curse Mark Focus Stance"
+      "label": "Kimimaru Curse Mark Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Kimimaru Curse Mark Mode Shift"
+      "label": "Kimimaru Curse Mark Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Kimimaru Curse Mark Heel Feint"
+      "label": "Kimimaru Curse Mark Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Kimimaru Curse Mark Summon Strike"
+      "label": "Kimimaru Curse Mark Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Kimimaru Curse Mark Guard Snare"
+      "label": "Kimimaru Curse Mark Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Kimimaru Curse Mark Armor Break"
+      "label": "Kimimaru Curse Mark Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Kimimaru Curse Mark Power Setup"
+      "label": "Kimimaru Curse Mark Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Kimimaru Curse Mark Switch Strike"
+      "label": "Kimimaru Curse Mark Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Kimimaru Curse Mark Spark Jab"
+      "label": "Kimimaru Curse Mark Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Kimimaru Curse Mark Binding Blow"
+      "label": "Kimimaru Curse Mark Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Kimimaru Curse Mark Heavy Draw"
+      "label": "Kimimaru Curse Mark Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Kimimaru Curse Mark Kick Ender"
+      "label": "Kimimaru Curse Mark Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

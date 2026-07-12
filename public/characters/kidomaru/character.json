@@ -239,9 +239,9 @@
       "id": "jab",
       "label": "Kidomaru Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -271,9 +271,9 @@
       "id": "kick",
       "label": "Kidomaru Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -303,9 +303,9 @@
       "id": "heavy",
       "label": "Kidomaru Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -335,9 +335,9 @@
       "id": "special",
       "label": "Kidomaru Right Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -393,8 +393,8 @@
   "moveOverrides": {
     "jableft": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -405,9 +405,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 18,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -418,9 +418,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -431,9 +431,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 17,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -444,9 +444,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -458,7 +458,7 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -489,9 +489,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -502,9 +502,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -569,7 +569,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -613,91 +613,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Kidomaru Second Beat"
+      "label": "Kidomaru Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Kidomaru Body Blow"
+      "label": "Kidomaru Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Kidomaru Low Changeup"
+      "label": "Kidomaru Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Kidomaru Pressure Feint"
+      "label": "Kidomaru Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Kidomaru Drive"
+      "label": "Kidomaru Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Kidomaru Barrage"
+      "label": "Kidomaru Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Kidomaru Finisher"
+      "label": "Kidomaru Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Kidomaru Step Kick"
+      "label": "Kidomaru Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Kidomaru Palm String"
+      "label": "Kidomaru Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Kidomaru Rising Chain"
+      "label": "Kidomaru Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Kidomaru Special Setup"
+      "label": "Kidomaru Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Kidomaru Break Art"
+      "label": "Kidomaru Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Kidomaru Check Hook"
+      "label": "Kidomaru Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Kidomaru Heavy Break"
+      "label": "Kidomaru Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Kidomaru Charged Follow"
+      "label": "Kidomaru Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Kidomaru Drop Kick"
+      "label": "Kidomaru Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Kidomaru Arc Finisher"
+      "label": "Kidomaru Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Kidomaru Focus Stance"
+      "label": "Kidomaru Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Kidomaru Mode Shift"
+      "label": "Kidomaru Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Kidomaru Heel Feint"
+      "label": "Kidomaru Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Kidomaru Summon Strike"
+      "label": "Kidomaru Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Kidomaru Guard Snare"
+      "label": "Kidomaru Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Kidomaru Armor Break"
+      "label": "Kidomaru Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Kidomaru Power Setup"
+      "label": "Kidomaru Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Kidomaru Switch Strike"
+      "label": "Kidomaru Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Kidomaru Spark Jab"
+      "label": "Kidomaru Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Kidomaru Binding Blow"
+      "label": "Kidomaru Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Kidomaru Heavy Draw"
+      "label": "Kidomaru Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Kidomaru Kick Ender"
+      "label": "Kidomaru Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

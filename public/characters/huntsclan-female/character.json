@@ -140,7 +140,7 @@
       "/characters/huntsclan-female/frames/frame-079.png"
     ],
     "hitHeavy": [
-      "/characters/huntsclan-female/frames/frame-073.png"
+      "/characters/huntsclan-female/frames/frame-079.png"
     ],
     "juggle": [
       "/characters/huntsclan-female/frames/frame-068.png"
@@ -258,9 +258,9 @@
       "id": "jab",
       "label": "Huntsclan Female Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -290,9 +290,9 @@
       "id": "kick",
       "label": "Huntsclan Female Left Kick",
       "input": "kick",
-      "startupFrames": 14,
+      "startupFrames": 21,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 24,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -322,9 +322,9 @@
       "id": "heavy",
       "label": "Huntsclan Female Right Check",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -354,9 +354,9 @@
       "id": "special",
       "label": "Huntsclan Female Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -411,9 +411,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -424,9 +424,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -437,9 +437,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
+      "startupFrames": 21,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 24,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -450,9 +450,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 20,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -465,7 +465,7 @@
     "cmd:f+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -510,7 +510,7 @@
     "cmd:WS+4": {
       "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -521,9 +521,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -588,7 +588,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -632,91 +632,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Huntsclan Female Second Beat"
+      "label": "Huntsclan Female Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Huntsclan Female Body Blow"
+      "label": "Huntsclan Female Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Huntsclan Female Low Changeup"
+      "label": "Huntsclan Female Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Huntsclan Female Pressure Feint"
+      "label": "Huntsclan Female Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Huntsclan Female Drive"
+      "label": "Huntsclan Female Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Huntsclan Female Barrage"
+      "label": "Huntsclan Female Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Huntsclan Female Finisher"
+      "label": "Huntsclan Female Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Huntsclan Female Step Kick"
+      "label": "Huntsclan Female Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Huntsclan Female Palm String"
+      "label": "Huntsclan Female Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Huntsclan Female Rising Chain"
+      "label": "Huntsclan Female Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Huntsclan Female Special Setup"
+      "label": "Huntsclan Female Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Huntsclan Female Break Art"
+      "label": "Huntsclan Female Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Huntsclan Female Check Hook"
+      "label": "Huntsclan Female Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Huntsclan Female Heavy Break"
+      "label": "Huntsclan Female Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Huntsclan Female Charged Follow"
+      "label": "Huntsclan Female Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Huntsclan Female Drop Kick"
+      "label": "Huntsclan Female Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Huntsclan Female Arc Finisher"
+      "label": "Huntsclan Female Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Huntsclan Female Focus Stance"
+      "label": "Huntsclan Female Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Huntsclan Female Mode Shift"
+      "label": "Huntsclan Female Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Huntsclan Female Heel Feint"
+      "label": "Huntsclan Female Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Huntsclan Female Summon Strike"
+      "label": "Huntsclan Female Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Huntsclan Female Guard Snare"
+      "label": "Huntsclan Female Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Huntsclan Female Armor Break"
+      "label": "Huntsclan Female Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Huntsclan Female Power Setup"
+      "label": "Huntsclan Female Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Huntsclan Female Switch Strike"
+      "label": "Huntsclan Female Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Huntsclan Female Spark Jab"
+      "label": "Huntsclan Female Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Huntsclan Female Binding Blow"
+      "label": "Huntsclan Female Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Huntsclan Female Heavy Draw"
+      "label": "Huntsclan Female Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Huntsclan Female Kick Ender"
+      "label": "Huntsclan Female Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

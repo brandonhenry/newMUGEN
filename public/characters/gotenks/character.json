@@ -1361,62 +1361,62 @@
   "animationFrameScales": {
     "knockdown": {
       "30": {
-        "width": 1.05099,
-        "height": 1.05099,
+        "width": 1.051,
+        "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.39
       },
       "31": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.41
       },
       "32": {
-        "width": 1.05099,
-        "height": 1.05099,
+        "width": 1.051,
+        "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.89
       },
       "33": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.93
       }
     },
     "getupStand": {
       "30": {
-        "width": 1.05099,
-        "height": 1.05099,
+        "width": 1.051,
+        "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.39
       },
       "31": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 2.41
       },
       "32": {
-        "width": 1.05099,
-        "height": 1.05099,
+        "width": 1.051,
+        "height": 1.051,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.89
       },
       "33": {
         "width": 1.05099,
         "height": 1.05099,
         "offsetX": 0,
         "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "voxelScaleY": 1.93
       },
       "49": {
         "width": 0.62,
@@ -1831,9 +1831,11 @@
     },
     "lose": {
       "23": {
-        "width": 1.041,
-        "height": 0.359,
-        "offsetX": 0
+        "width": 0.908,
+        "height": 0.908,
+        "offsetX": 0,
+        "voxelScaleX": 1,
+        "voxelScaleY": 0.345
       }
     },
     "cmd:f+1": {
@@ -2134,8 +2136,8 @@
     },
     "crouchBlock": {
       "209": {
-        "width": 0.454,
-        "height": 0.757,
+        "width": 0.67,
+        "height": 1.117,
         "offsetX": 0
       }
     },

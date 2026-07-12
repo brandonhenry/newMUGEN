@@ -306,8 +306,8 @@
       "label": "American Dragon Jab",
       "description": "Fast human-form check that starts Jake's close pressure.",
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -342,7 +342,7 @@
     {
       "label": "Skate Park Low",
       "description": "Low crouching strike that ducks under highs and keeps Jake near the opponent.",
-      "startupFrames": 15,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
@@ -380,9 +380,9 @@
     {
       "label": "Dragon Claw Check",
       "description": "Compact red-aura claw swipe with better reward than his fastest jab.",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 17,
+      "recoveryFrames": 19,
       "damage": 9,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -417,9 +417,9 @@
     {
       "label": "Dragon Tail Spark",
       "description": "Forward red-aura swing that cashes out basic human strings.",
-      "startupFrames": 17,
+      "startupFrames": 23,
       "activeFrames": 4,
-      "recoveryFrames": 25,
+      "recoveryFrames": 31,
       "damage": 13,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -484,8 +484,8 @@
   "moveOverrides": {
     "jableft": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "onBlockFrames": -1,
@@ -502,9 +502,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 16,
+      "recoveryFrames": 19,
       "damage": 8,
       "blockDamage": 0,
       "onBlockFrames": -4,
@@ -521,7 +521,7 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 15,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 22,
       "damage": 10,
@@ -541,9 +541,9 @@
       "endsInCrouch": true
     },
     "kickright": {
-      "startupFrames": 16,
+      "startupFrames": 23,
       "activeFrames": 4,
-      "recoveryFrames": 24,
+      "recoveryFrames": 31,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -8,
@@ -565,7 +565,7 @@
     "cmd:f+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -702,8 +702,8 @@
     },
     "cmd:qcf+4": {
       "startupFrames": 23,
-      "activeFrames": 5,
-      "recoveryFrames": 35,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -750,7 +750,7 @@
       "knockdown": false
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 7,
@@ -886,9 +886,9 @@
       "endsInCrouch": true
     },
     "cmd:3+4": {
-      "startupFrames": 25,
-      "activeFrames": 6,
-      "recoveryFrames": 38,
+      "startupFrames": 24,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 19,
       "blockDamage": 1,
       "onBlockFrames": -14,
@@ -907,7 +907,7 @@
       "tornado": true
     },
     "cmd:SS+3": {
-      "startupFrames": 17,
+      "startupFrames": 18,
       "activeFrames": 4,
       "recoveryFrames": 27,
       "damage": 13,
@@ -929,7 +929,7 @@
     "cmd:O+1": {
       "startupFrames": 29,
       "activeFrames": 5,
-      "recoveryFrames": 40,
+      "recoveryFrames": 38,
       "damage": 19,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -953,9 +953,9 @@
       "usesKi": true
     },
     "cmd:O+2": {
-      "startupFrames": 31,
+      "startupFrames": 30,
       "activeFrames": 6,
-      "recoveryFrames": 45,
+      "recoveryFrames": 38,
       "damage": 25,
       "blockDamage": 1,
       "onBlockFrames": -17,
@@ -979,124 +979,211 @@
     },
     "neutral:jab-jab": {
       "label": "Dragon Combo Second Beat",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
       "label": "Claw Check Route",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
       "label": "Skate Park Changeup",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
       "label": "Dragon Tail Ender",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
       "label": "Claw Drive",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
       "label": "Claw to Low",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
       "label": "Dragon Rush Ender",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
       "label": "Low Skate Link",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
       "label": "Low to Claw Check",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
       "label": "Low Dragon Spark",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
       "label": "Tail Spark Setup",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
       "label": "Spark Crush",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
       "label": "Claw Reset",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
       "label": "Double Claw Loop",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
       "label": "Claw to Dragon Rush",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
       "label": "Claw Low",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
       "label": "Skate Spark",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
       "label": "Dragon Pressure",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
       "label": "Spark Low Reset",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
       "label": "Skate Jab Reset",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
       "label": "Skate Dragon Spark",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
       "label": "Skate Claw Check",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
       "label": "Skate Rush Ender",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
       "label": "Skate Spark",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
       "label": "Spark Claw Route",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
       "label": "Dragon Tail Reset",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
       "label": "Tail to Claw",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
       "label": "Dragon Tail Drive",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
       "label": "Dragon Tail Low",
-      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat."
+      "description": "Jake Long string route built from quick human checks, skateboard movement, and dragon-form threat.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:b+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -1118,7 +1205,7 @@
     "cmd:WR+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -1138,7 +1225,7 @@
       "knockdown": false
     },
     "cmd:b,b+3": {
-      "startupFrames": 17,
+      "startupFrames": 18,
       "activeFrames": 4,
       "recoveryFrames": 27,
       "damage": 13,
@@ -1160,7 +1247,7 @@
     "cmd:O+3": {
       "startupFrames": 29,
       "activeFrames": 5,
-      "recoveryFrames": 40,
+      "recoveryFrames": 38,
       "damage": 19,
       "blockDamage": 1,
       "onBlockFrames": -11,
@@ -1185,8 +1272,8 @@
     },
     "cmd:qcb+4": {
       "startupFrames": 23,
-      "activeFrames": 5,
-      "recoveryFrames": 35,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -1210,9 +1297,9 @@
       "jumpBeforeMove": true
     },
     "cmd:O+4": {
-      "startupFrames": 31,
+      "startupFrames": 30,
       "activeFrames": 6,
-      "recoveryFrames": 45,
+      "recoveryFrames": 38,
       "damage": 25,
       "blockDamage": 1,
       "onBlockFrames": -17,

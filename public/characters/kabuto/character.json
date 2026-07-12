@@ -246,9 +246,9 @@
       "id": "jab",
       "label": "Kabuto Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -278,9 +278,9 @@
       "id": "kick",
       "label": "Kabuto Left Kick",
       "input": "kick",
-      "startupFrames": 14,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -310,9 +310,9 @@
       "id": "heavy",
       "label": "Kabuto Right Check",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -342,9 +342,9 @@
       "id": "special",
       "label": "Kabuto Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -399,8 +399,8 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
+      "startupFrames": 9,
+      "activeFrames": 1,
       "recoveryFrames": 13,
       "damage": 6,
       "onBlockFrames": -2,
@@ -412,9 +412,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -425,9 +425,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
+      "startupFrames": 20,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 23,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -438,9 +438,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 15,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 20,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -451,9 +451,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 18,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -498,7 +498,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -509,9 +509,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -576,7 +576,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -620,91 +620,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Kabuto Second Beat"
+      "label": "Kabuto Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Kabuto Body Blow"
+      "label": "Kabuto Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Kabuto Low Changeup"
+      "label": "Kabuto Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Kabuto Pressure Feint"
+      "label": "Kabuto Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Kabuto Drive"
+      "label": "Kabuto Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Kabuto Barrage"
+      "label": "Kabuto Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Kabuto Finisher"
+      "label": "Kabuto Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Kabuto Step Kick"
+      "label": "Kabuto Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Kabuto Palm String"
+      "label": "Kabuto Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Kabuto Rising Chain"
+      "label": "Kabuto Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Kabuto Special Setup"
+      "label": "Kabuto Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Kabuto Break Art"
+      "label": "Kabuto Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Kabuto Check Hook"
+      "label": "Kabuto Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Kabuto Heavy Break"
+      "label": "Kabuto Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Kabuto Charged Follow"
+      "label": "Kabuto Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Kabuto Drop Kick"
+      "label": "Kabuto Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Kabuto Arc Finisher"
+      "label": "Kabuto Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Kabuto Focus Stance"
+      "label": "Kabuto Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Kabuto Mode Shift"
+      "label": "Kabuto Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Kabuto Heel Feint"
+      "label": "Kabuto Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Kabuto Summon Strike"
+      "label": "Kabuto Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Kabuto Guard Snare"
+      "label": "Kabuto Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Kabuto Armor Break"
+      "label": "Kabuto Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Kabuto Power Setup"
+      "label": "Kabuto Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Kabuto Switch Strike"
+      "label": "Kabuto Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Kabuto Spark Jab"
+      "label": "Kabuto Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Kabuto Binding Blow"
+      "label": "Kabuto Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Kabuto Heavy Draw"
+      "label": "Kabuto Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Kabuto Kick Ender"
+      "label": "Kabuto Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

@@ -97,12 +97,19 @@
       "/characters/gabumon/frames/frame-235.png"
     ],
     "jableft": [
-      "/characters/gabumon/frames/frame-206.png",
-      "/characters/gabumon/frames/frame-207.png",
-      "/characters/gabumon/frames/frame-208.png",
-      "/characters/gabumon/frames/frame-209.png",
-      "/characters/gabumon/frames/frame-210.png",
-      "/characters/gabumon/frames/frame-211.png"
+      "/characters/gabumon/frames/frame-180.png",
+      "/characters/gabumon/frames/frame-181.png",
+      "/characters/gabumon/frames/frame-182.png",
+      "/characters/gabumon/frames/frame-183.png",
+      "/characters/gabumon/frames/frame-184.png",
+      "/characters/gabumon/frames/frame-185.png",
+      "/characters/gabumon/frames/frame-186.png",
+      "/characters/gabumon/frames/frame-187.png",
+      "/characters/gabumon/frames/frame-188.png",
+      "/characters/gabumon/frames/frame-189.png",
+      "/characters/gabumon/frames/frame-190.png",
+      "/characters/gabumon/frames/frame-191.png",
+      "/characters/gabumon/frames/frame-192.png"
     ],
     "jabright": [
       "/characters/gabumon/frames/frame-206.png",
@@ -113,16 +120,21 @@
       "/characters/gabumon/frames/frame-211.png"
     ],
     "kickleft": [
-      "/characters/gabumon/frames/frame-212.png",
-      "/characters/gabumon/frames/frame-213.png",
-      "/characters/gabumon/frames/frame-214.png",
-      "/characters/gabumon/frames/frame-215.png"
+      "/characters/gabumon/frames/frame-039.png",
+      "/characters/gabumon/frames/frame-040.png",
+      "/characters/gabumon/frames/frame-041.png",
+      "/characters/gabumon/frames/frame-042.png"
     ],
     "kickright": [
-      "/characters/gabumon/frames/frame-212.png",
-      "/characters/gabumon/frames/frame-213.png",
-      "/characters/gabumon/frames/frame-214.png",
-      "/characters/gabumon/frames/frame-215.png"
+      "/characters/gabumon/frames/frame-104.png",
+      "/characters/gabumon/frames/frame-105.png",
+      "/characters/gabumon/frames/frame-106.png",
+      "/characters/gabumon/frames/frame-107.png",
+      "/characters/gabumon/frames/frame-108.png",
+      "/characters/gabumon/frames/frame-109.png",
+      "/characters/gabumon/frames/frame-110.png",
+      "/characters/gabumon/frames/frame-111.png",
+      "/characters/gabumon/frames/frame-112.png"
     ],
     "hitLight": [
       "/characters/gabumon/frames/frame-079.png"
@@ -260,7 +272,7 @@
       "input": "jab",
       "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 14,
+      "recoveryFrames": 15,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -290,9 +302,9 @@
       "id": "kick",
       "label": "Gabumon Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -322,9 +334,9 @@
       "id": "heavy",
       "label": "Gabumon Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -354,9 +366,9 @@
       "id": "special",
       "label": "Gabumon Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -411,9 +423,9 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
+      "startupFrames": 10,
       "activeFrames": 2,
-      "recoveryFrames": 13,
+      "recoveryFrames": 15,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -424,9 +436,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 18,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -437,22 +449,26 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
       "onCounterHitFrames": 8,
       "whiffRecoveryFrames": 7,
       "range": 1.62,
+      "launchHeight": 0,
+      "launchVelocity": 5.95,
+      "juggleRefloatVelocity": 4.35,
+      "juggleGravityScale": 0.52,
       "label": "Gabumon Left Kick",
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 20,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -463,9 +479,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 19,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -477,7 +493,7 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -508,9 +524,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -521,9 +537,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -588,7 +604,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -632,91 +648,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Gabumon Second Beat"
+      "label": "Gabumon Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Gabumon Body Blow"
+      "label": "Gabumon Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Gabumon Low Changeup"
+      "label": "Gabumon Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Gabumon Pressure Feint"
+      "label": "Gabumon Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Gabumon Drive"
+      "label": "Gabumon Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Gabumon Barrage"
+      "label": "Gabumon Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Gabumon Finisher"
+      "label": "Gabumon Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Gabumon Step Kick"
+      "label": "Gabumon Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Gabumon Palm String"
+      "label": "Gabumon Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Gabumon Rising Chain"
+      "label": "Gabumon Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Gabumon Special Setup"
+      "label": "Gabumon Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Gabumon Break Art"
+      "label": "Gabumon Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Gabumon Check Hook"
+      "label": "Gabumon Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Gabumon Heavy Break"
+      "label": "Gabumon Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Gabumon Charged Follow"
+      "label": "Gabumon Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Gabumon Drop Kick"
+      "label": "Gabumon Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Gabumon Arc Finisher"
+      "label": "Gabumon Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Gabumon Focus Stance"
+      "label": "Gabumon Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Gabumon Mode Shift"
+      "label": "Gabumon Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Gabumon Heel Feint"
+      "label": "Gabumon Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Gabumon Summon Strike"
+      "label": "Gabumon Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Gabumon Guard Snare"
+      "label": "Gabumon Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Gabumon Armor Break"
+      "label": "Gabumon Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Gabumon Power Setup"
+      "label": "Gabumon Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Gabumon Switch Strike"
+      "label": "Gabumon Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Gabumon Spark Jab"
+      "label": "Gabumon Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Gabumon Binding Blow"
+      "label": "Gabumon Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Gabumon Heavy Draw"
+      "label": "Gabumon Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Gabumon Kick Ender"
+      "label": "Gabumon Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

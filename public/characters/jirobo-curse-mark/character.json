@@ -252,9 +252,9 @@
       "id": "jab",
       "label": "Jirobo Curse Mark Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -284,9 +284,9 @@
       "id": "kick",
       "label": "Jirobo Curse Mark Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -316,9 +316,9 @@
       "id": "heavy",
       "label": "Jirobo Curse Mark Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 17,
+      "recoveryFrames": 18,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -348,9 +348,9 @@
       "id": "special",
       "label": "Jirobo Curse Mark Right Kick",
       "input": "special",
-      "startupFrames": 16,
-      "activeFrames": 3,
-      "recoveryFrames": 22,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -406,8 +406,8 @@
   "moveOverrides": {
     "jableft": {
       "startupFrames": 9,
-      "activeFrames": 2,
-      "recoveryFrames": 13,
+      "activeFrames": 1,
+      "recoveryFrames": 12,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -418,9 +418,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 17,
+      "activeFrames": 3,
+      "recoveryFrames": 26,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -435,9 +435,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 20,
+      "startupFrames": 17,
+      "activeFrames": 2,
+      "recoveryFrames": 19,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -448,9 +448,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 13,
+      "activeFrames": 2,
+      "recoveryFrames": 16,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -461,9 +461,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 17,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -508,7 +508,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -519,9 +519,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -586,7 +586,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -630,91 +630,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Jirobo Curse Mark Second Beat"
+      "label": "Jirobo Curse Mark Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Jirobo Curse Mark Body Blow"
+      "label": "Jirobo Curse Mark Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Jirobo Curse Mark Low Changeup"
+      "label": "Jirobo Curse Mark Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Jirobo Curse Mark Pressure Feint"
+      "label": "Jirobo Curse Mark Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Jirobo Curse Mark Drive"
+      "label": "Jirobo Curse Mark Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Jirobo Curse Mark Barrage"
+      "label": "Jirobo Curse Mark Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Jirobo Curse Mark Finisher"
+      "label": "Jirobo Curse Mark Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Jirobo Curse Mark Step Kick"
+      "label": "Jirobo Curse Mark Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Jirobo Curse Mark Palm String"
+      "label": "Jirobo Curse Mark Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Jirobo Curse Mark Rising Chain"
+      "label": "Jirobo Curse Mark Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Jirobo Curse Mark Special Setup"
+      "label": "Jirobo Curse Mark Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Jirobo Curse Mark Break Art"
+      "label": "Jirobo Curse Mark Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Jirobo Curse Mark Check Hook"
+      "label": "Jirobo Curse Mark Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Jirobo Curse Mark Heavy Break"
+      "label": "Jirobo Curse Mark Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Jirobo Curse Mark Charged Follow"
+      "label": "Jirobo Curse Mark Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Jirobo Curse Mark Drop Kick"
+      "label": "Jirobo Curse Mark Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Jirobo Curse Mark Arc Finisher"
+      "label": "Jirobo Curse Mark Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Jirobo Curse Mark Focus Stance"
+      "label": "Jirobo Curse Mark Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Jirobo Curse Mark Mode Shift"
+      "label": "Jirobo Curse Mark Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Jirobo Curse Mark Heel Feint"
+      "label": "Jirobo Curse Mark Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Jirobo Curse Mark Summon Strike"
+      "label": "Jirobo Curse Mark Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Jirobo Curse Mark Guard Snare"
+      "label": "Jirobo Curse Mark Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Jirobo Curse Mark Armor Break"
+      "label": "Jirobo Curse Mark Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Jirobo Curse Mark Power Setup"
+      "label": "Jirobo Curse Mark Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Jirobo Curse Mark Switch Strike"
+      "label": "Jirobo Curse Mark Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Jirobo Curse Mark Spark Jab"
+      "label": "Jirobo Curse Mark Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Jirobo Curse Mark Binding Blow"
+      "label": "Jirobo Curse Mark Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Jirobo Curse Mark Heavy Draw"
+      "label": "Jirobo Curse Mark Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Jirobo Curse Mark Kick Ender"
+      "label": "Jirobo Curse Mark Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

@@ -299,7 +299,7 @@
       "label": "Quick Turtle Jab",
       "description": "Fast high jab with short reach that starts Kid Goku's close pressure.",
       "startupFrames": 9,
-      "activeFrames": 2,
+      "activeFrames": 1,
       "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
@@ -335,9 +335,9 @@
     {
       "label": "Low Tail Trip",
       "description": "Quick low tail trip that ducks under highs and leaves Kid Goku near crouch range.",
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -373,9 +373,9 @@
     {
       "label": "Power Pole Poke",
       "description": "Quick mid staff poke with better reach than his bare-handed checks.",
-      "startupFrames": 12,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 18,
+      "recoveryFrames": 20,
       "damage": 9,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -410,9 +410,9 @@
     {
       "label": "Power Pole Sweep",
       "description": "Forward staff swing that works as a reliable mid combo ender.",
-      "startupFrames": 17,
+      "startupFrames": 23,
       "activeFrames": 4,
-      "recoveryFrames": 25,
+      "recoveryFrames": 31,
       "damage": 13,
       "blockDamage": 1,
       "hitLevel": "mid",
@@ -477,7 +477,7 @@
   "moveOverrides": {
     "jableft": {
       "startupFrames": 9,
-      "activeFrames": 2,
+      "activeFrames": 1,
       "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
@@ -495,9 +495,9 @@
       "knockdown": false
     },
     "jabright": {
-      "startupFrames": 11,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 15,
+      "activeFrames": 3,
+      "recoveryFrames": 20,
       "damage": 8,
       "blockDamage": 0,
       "onBlockFrames": -4,
@@ -514,9 +514,9 @@
       "knockdown": false
     },
     "kickleft": {
-      "startupFrames": 15,
-      "activeFrames": 3,
-      "recoveryFrames": 21,
+      "startupFrames": 18,
+      "activeFrames": 2,
+      "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 0,
       "onBlockFrames": -12,
@@ -555,7 +555,7 @@
     "cmd:f+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -575,7 +575,7 @@
       "knockdown": false
     },
     "cmd:f+3": {
-      "startupFrames": 17,
+      "startupFrames": 18,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 13,
@@ -738,7 +738,7 @@
       "knockdown": false
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
       "recoveryFrames": 16,
       "damage": 7,
@@ -851,7 +851,7 @@
       "counterHit": true
     },
     "cmd:2+4": {
-      "startupFrames": 21,
+      "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 14,
@@ -872,8 +872,8 @@
     },
     "cmd:3+4": {
       "startupFrames": 24,
-      "activeFrames": 5,
-      "recoveryFrames": 35,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -12,
@@ -894,7 +894,7 @@
       "jumpBeforeMove": true
     },
     "cmd:SS+3": {
-      "startupFrames": 17,
+      "startupFrames": 18,
       "activeFrames": 4,
       "recoveryFrames": 27,
       "damage": 13,
@@ -942,7 +942,7 @@
     "cmd:O+2": {
       "startupFrames": 30,
       "activeFrames": 6,
-      "recoveryFrames": 42,
+      "recoveryFrames": 38,
       "damage": 24,
       "blockDamage": 1,
       "onBlockFrames": -16,
@@ -969,124 +969,211 @@
     },
     "neutral:jab-jab": {
       "label": "Turtle Combo Second Beat",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
       "label": "Turtle Body Route",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
       "label": "Tail Trip Changeup",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
       "label": "Power Pole Ender",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
       "label": "Turtle Drive",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
       "label": "Staff Barrage",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
       "label": "Dash Pole Ender",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
       "label": "Tail Trip Link",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
       "label": "Tail to Staff",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
       "label": "Tail Pole Route",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
       "label": "Power Pole Setup",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
       "label": "Pole Crush",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
       "label": "Staff Jab Reset",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
       "label": "Power Pole Loop",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
       "label": "Pole Rush Ender",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
       "label": "Staff Low Mix",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
       "label": "Pole Sweep Route",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
       "label": "Staff Drive",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
       "label": "Pole Low Reset",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
       "label": "Tail Jab Reset",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
       "label": "Tail Pole Setup",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
       "label": "Tail Staff Link",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
       "label": "Tail Rush Ender",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
       "label": "Tail Cyclone",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
       "label": "Cyclone Staff Route",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
       "label": "Pole Jab Reset",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
       "label": "Pole Body Route",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
       "label": "Power Pole Drive",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
       "label": "Power Pole Trip",
-      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links."
+      "description": "Auto-generated Kid Goku string route built from quick Turtle School checks and staff links.",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "cmd:b+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -1106,7 +1193,7 @@
       "knockdown": false
     },
     "cmd:WR+3": {
-      "startupFrames": 21,
+      "startupFrames": 22,
       "activeFrames": 4,
       "recoveryFrames": 30,
       "damage": 14,
@@ -1128,7 +1215,7 @@
     "cmd:f,f+1": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 1,
       "onBlockFrames": -6,
@@ -1215,7 +1302,7 @@
       "knockdown": false
     },
     "cmd:1+4": {
-      "startupFrames": 17,
+      "startupFrames": 18,
       "activeFrames": 4,
       "recoveryFrames": 27,
       "damage": 13,
@@ -1236,8 +1323,8 @@
     },
     "cmd:1+2+3": {
       "startupFrames": 24,
-      "activeFrames": 5,
-      "recoveryFrames": 35,
+      "activeFrames": 4,
+      "recoveryFrames": 34,
       "damage": 17,
       "blockDamage": 1,
       "onBlockFrames": -12,

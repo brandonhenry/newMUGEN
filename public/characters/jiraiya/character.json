@@ -262,9 +262,9 @@
       "id": "jab",
       "label": "Jiraiya Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -294,8 +294,8 @@
       "id": "kick",
       "label": "Jiraiya Left Kick",
       "input": "kick",
-      "startupFrames": 14,
-      "activeFrames": 3,
+      "startupFrames": 18,
+      "activeFrames": 2,
       "recoveryFrames": 20,
       "damage": 10,
       "blockDamage": 0,
@@ -326,9 +326,9 @@
       "id": "heavy",
       "label": "Jiraiya Right Check",
       "input": "heavy",
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -358,9 +358,9 @@
       "id": "special",
       "label": "Jiraiya Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 19,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -415,8 +415,8 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 11,
-      "activeFrames": 2,
+      "startupFrames": 9,
+      "activeFrames": 1,
       "recoveryFrames": 13,
       "damage": 6,
       "onBlockFrames": -2,
@@ -428,9 +428,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 12,
-      "activeFrames": 2,
-      "recoveryFrames": 16,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -441,8 +441,8 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 14,
-      "activeFrames": 3,
+      "startupFrames": 18,
+      "activeFrames": 2,
       "recoveryFrames": 20,
       "damage": 10,
       "onBlockFrames": -12,
@@ -454,9 +454,9 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 15,
+      "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 21,
+      "recoveryFrames": 19,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,
@@ -467,9 +467,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 18,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -514,7 +514,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -525,9 +525,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -592,7 +592,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -636,91 +636,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Jiraiya Second Beat"
+      "label": "Jiraiya Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Jiraiya Body Blow"
+      "label": "Jiraiya Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Jiraiya Low Changeup"
+      "label": "Jiraiya Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Jiraiya Pressure Feint"
+      "label": "Jiraiya Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Jiraiya Drive"
+      "label": "Jiraiya Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Jiraiya Barrage"
+      "label": "Jiraiya Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Jiraiya Finisher"
+      "label": "Jiraiya Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Jiraiya Step Kick"
+      "label": "Jiraiya Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Jiraiya Palm String"
+      "label": "Jiraiya Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Jiraiya Rising Chain"
+      "label": "Jiraiya Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Jiraiya Special Setup"
+      "label": "Jiraiya Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Jiraiya Break Art"
+      "label": "Jiraiya Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Jiraiya Check Hook"
+      "label": "Jiraiya Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Jiraiya Heavy Break"
+      "label": "Jiraiya Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Jiraiya Charged Follow"
+      "label": "Jiraiya Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Jiraiya Drop Kick"
+      "label": "Jiraiya Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Jiraiya Arc Finisher"
+      "label": "Jiraiya Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Jiraiya Focus Stance"
+      "label": "Jiraiya Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Jiraiya Mode Shift"
+      "label": "Jiraiya Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Jiraiya Heel Feint"
+      "label": "Jiraiya Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Jiraiya Summon Strike"
+      "label": "Jiraiya Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Jiraiya Guard Snare"
+      "label": "Jiraiya Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Jiraiya Armor Break"
+      "label": "Jiraiya Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Jiraiya Power Setup"
+      "label": "Jiraiya Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Jiraiya Switch Strike"
+      "label": "Jiraiya Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Jiraiya Spark Jab"
+      "label": "Jiraiya Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Jiraiya Binding Blow"
+      "label": "Jiraiya Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Jiraiya Heavy Draw"
+      "label": "Jiraiya Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Jiraiya Kick Ender"
+      "label": "Jiraiya Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],

@@ -169,7 +169,7 @@
       "/characters/shadow-the-hedgehog/frames/frame-397.png"
     ],
     "hitHeavy": [
-      "/characters/shadow-the-hedgehog/frames/frame-111.png"
+      "/characters/shadow-the-hedgehog/frames/frame-397.png"
     ],
     "juggle": [
       "/characters/shadow-the-hedgehog/frames/frame-111.png"
@@ -300,7 +300,7 @@
       "input": "jab",
       "startupFrames": 9,
       "activeFrames": 1,
-      "recoveryFrames": 12,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -330,7 +330,7 @@
       "id": "kick",
       "label": "Shadow the Hedgehog Left Kick",
       "input": "kick",
-      "startupFrames": 18,
+      "startupFrames": 19,
       "activeFrames": 2,
       "recoveryFrames": 21,
       "damage": 10,
@@ -362,9 +362,9 @@
       "id": "heavy",
       "label": "Shadow the Hedgehog Right Check",
       "input": "heavy",
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 8,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -396,7 +396,7 @@
       "input": "special",
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 19,
+      "recoveryFrames": 20,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -453,7 +453,7 @@
     "jableft": {
       "startupFrames": 9,
       "activeFrames": 1,
-      "recoveryFrames": 12,
+      "recoveryFrames": 13,
       "damage": 6,
       "onBlockFrames": -2,
       "onHitFrames": 8,
@@ -464,9 +464,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
-      "activeFrames": 2,
-      "recoveryFrames": 17,
+      "startupFrames": 14,
+      "activeFrames": 3,
+      "recoveryFrames": 19,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -477,7 +477,7 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 18,
+      "startupFrames": 19,
       "activeFrames": 2,
       "recoveryFrames": 21,
       "damage": 10,
@@ -492,7 +492,7 @@
     "kickright": {
       "startupFrames": 14,
       "activeFrames": 3,
-      "recoveryFrames": 19,
+      "recoveryFrames": 20,
       "damage": 12,
       "onBlockFrames": -7,
       "onHitFrames": 8,

@@ -259,9 +259,9 @@
       "id": "jab",
       "label": "Danny Phantom Left Check",
       "input": "jab",
-      "startupFrames": 10,
-      "activeFrames": 2,
-      "recoveryFrames": 14,
+      "startupFrames": 9,
+      "activeFrames": 1,
+      "recoveryFrames": 13,
       "damage": 6,
       "blockDamage": 0,
       "hitLevel": "high",
@@ -291,9 +291,9 @@
       "id": "kick",
       "label": "Danny Phantom Left Kick",
       "input": "kick",
-      "startupFrames": 14,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 22,
       "damage": 10,
       "blockDamage": 0,
       "hitLevel": "low",
@@ -323,7 +323,7 @@
       "id": "heavy",
       "label": "Danny Phantom Right Check",
       "input": "heavy",
-      "startupFrames": 12,
+      "startupFrames": 14,
       "activeFrames": 2,
       "recoveryFrames": 17,
       "damage": 8,
@@ -355,9 +355,9 @@
       "id": "special",
       "label": "Danny Phantom Right Kick",
       "input": "special",
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "blockDamage": 0,
       "hitLevel": "mid",
@@ -412,8 +412,8 @@
   },
   "moveOverrides": {
     "jableft": {
-      "startupFrames": 10,
-      "activeFrames": 2,
+      "startupFrames": 9,
+      "activeFrames": 1,
       "recoveryFrames": 13,
       "damage": 6,
       "onBlockFrames": -2,
@@ -425,9 +425,9 @@
       "hitLevel": "high"
     },
     "jabright": {
-      "startupFrames": 13,
+      "startupFrames": 14,
       "activeFrames": 2,
-      "recoveryFrames": 16,
+      "recoveryFrames": 17,
       "damage": 8,
       "onBlockFrames": -5,
       "onHitFrames": 6,
@@ -438,9 +438,9 @@
       "hitLevel": "mid"
     },
     "kickleft": {
-      "startupFrames": 15,
+      "startupFrames": 19,
       "activeFrames": 3,
-      "recoveryFrames": 20,
+      "recoveryFrames": 22,
       "damage": 10,
       "onBlockFrames": -12,
       "onHitFrames": 4,
@@ -451,7 +451,7 @@
       "hitLevel": "low"
     },
     "kickright": {
-      "startupFrames": 18,
+      "startupFrames": 15,
       "activeFrames": 3,
       "recoveryFrames": 21,
       "damage": 12,
@@ -464,9 +464,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 16,
+      "startupFrames": 15,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -478,7 +478,7 @@
       "hitLevel": "mid"
     },
     "cmd:d/f+2": {
-      "startupFrames": 20,
+      "startupFrames": 19,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -511,7 +511,7 @@
     "cmd:WS+4": {
       "startupFrames": 13,
       "activeFrames": 3,
-      "recoveryFrames": 22,
+      "recoveryFrames": 21,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
@@ -522,9 +522,9 @@
       "hitLevel": "mid"
     },
     "cmd:FC+1": {
-      "startupFrames": 12,
+      "startupFrames": 13,
       "activeFrames": 2,
-      "recoveryFrames": 15,
+      "recoveryFrames": 16,
       "damage": 7,
       "onBlockFrames": -4,
       "onHitFrames": 6,
@@ -589,7 +589,7 @@
       "hitLevel": "low"
     },
     "cmd:2+4": {
-      "startupFrames": 20,
+      "startupFrames": 22,
       "activeFrames": 3,
       "recoveryFrames": 25,
       "damage": 15,
@@ -633,91 +633,178 @@
       "usesKi": true
     },
     "neutral:jab-jab": {
-      "label": "Danny Phantom Second Beat"
+      "label": "Danny Phantom Second Beat",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-heavy": {
-      "label": "Danny Phantom Body Blow"
+      "label": "Danny Phantom Body Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-kick": {
-      "label": "Danny Phantom Low Changeup"
+      "label": "Danny Phantom Low Changeup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-jab-special": {
-      "label": "Danny Phantom Pressure Feint"
+      "label": "Danny Phantom Pressure Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy": {
-      "label": "Danny Phantom Drive"
+      "label": "Danny Phantom Drive",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-kick": {
-      "label": "Danny Phantom Barrage"
+      "label": "Danny Phantom Barrage",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-heavy-special": {
-      "label": "Danny Phantom Finisher"
+      "label": "Danny Phantom Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick": {
-      "label": "Danny Phantom Step Kick"
+      "label": "Danny Phantom Step Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-heavy": {
-      "label": "Danny Phantom Palm String"
+      "label": "Danny Phantom Palm String",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-kick-special": {
-      "label": "Danny Phantom Rising Chain"
+      "label": "Danny Phantom Rising Chain",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special": {
-      "label": "Danny Phantom Special Setup"
+      "label": "Danny Phantom Special Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:jab-special-heavy": {
-      "label": "Danny Phantom Break Art"
+      "label": "Danny Phantom Break Art",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab": {
-      "label": "Danny Phantom Check Hook"
+      "label": "Danny Phantom Check Hook",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-heavy": {
-      "label": "Danny Phantom Heavy Break"
+      "label": "Danny Phantom Heavy Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-jab-special": {
-      "label": "Danny Phantom Charged Follow"
+      "label": "Danny Phantom Charged Follow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick": {
-      "label": "Danny Phantom Drop Kick"
+      "label": "Danny Phantom Drop Kick",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-kick-special": {
-      "label": "Danny Phantom Arc Finisher"
+      "label": "Danny Phantom Arc Finisher",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special": {
-      "label": "Danny Phantom Focus Stance"
+      "label": "Danny Phantom Focus Stance",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:heavy-special-kick": {
-      "label": "Danny Phantom Mode Shift"
+      "label": "Danny Phantom Mode Shift",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab": {
-      "label": "Danny Phantom Heel Feint"
+      "label": "Danny Phantom Heel Feint",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-jab-special": {
-      "label": "Danny Phantom Summon Strike"
+      "label": "Danny Phantom Summon Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy": {
-      "label": "Danny Phantom Guard Snare"
+      "label": "Danny Phantom Guard Snare",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-heavy-special": {
-      "label": "Danny Phantom Armor Break"
+      "label": "Danny Phantom Armor Break",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special": {
-      "label": "Danny Phantom Power Setup"
+      "label": "Danny Phantom Power Setup",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:kick-special-heavy": {
-      "label": "Danny Phantom Switch Strike"
+      "label": "Danny Phantom Switch Strike",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab": {
-      "label": "Danny Phantom Spark Jab"
+      "label": "Danny Phantom Spark Jab",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-jab-heavy": {
-      "label": "Danny Phantom Binding Blow"
+      "label": "Danny Phantom Binding Blow",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-heavy": {
-      "label": "Danny Phantom Heavy Draw"
+      "label": "Danny Phantom Heavy Draw",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     },
     "neutral:special-kick": {
-      "label": "Danny Phantom Kick Ender"
+      "label": "Danny Phantom Kick Ender",
+      "startupFrames": 14,
+      "activeFrames": 2,
+      "recoveryFrames": 18
     }
   },
   "effects": [],
