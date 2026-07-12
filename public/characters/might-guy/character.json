@@ -117,13 +117,13 @@
       "/characters/might-guy/frames/frame-057.png"
     ],
     "hitLight": [
-      "/characters/might-guy/frames/frame-058.png"
+      "/characters/might-guy/frames/frame-060.png"
     ],
     "hitHeavy": [
       "/characters/might-guy/frames/frame-059.png"
     ],
     "juggle": [
-      "/characters/might-guy/frames/frame-073.png"
+      "/characters/might-guy/frames/frame-059.png"
     ],
     "knockdown": [
       "/characters/might-guy/frames/frame-059.png"
@@ -1308,9 +1308,8 @@
         "flipY": false
       },
       "145": {
-        "width": 1.01523,
-        "height": 1.01523,
-        "voxelScaleX": 1.73089,
+        "width": 1.01,
+        "height": 1.01,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1506,17 +1505,15 @@
     },
     "kickleft": {
       "9": {
-        "width": 1.20337,
-        "height": 1.20337,
-        "voxelScaleX": 1.00005,
+        "width": 1.2,
+        "height": 1.2,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "11": {
-        "width": 1.03306,
-        "height": 1.03306,
-        "voxelScaleX": 1.05789,
+        "width": 1.03,
+        "height": 1.03,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1552,65 +1549,57 @@
     },
     "kickright": {
       "49": {
-        "width": 1.05042,
-        "height": 1.05042,
-        "voxelScaleX": 0.99994,
+        "width": 1.05,
+        "height": 1.05,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "50": {
-        "width": 0.97656,
-        "height": 0.97656,
-        "voxelScaleX": 0.99992,
+        "width": 0.98,
+        "height": 0.98,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "51": {
-        "width": 1.27714,
-        "height": 1.27714,
-        "voxelScaleX": 1.00006,
+        "width": 1.28,
+        "height": 1.28,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "52": {
-        "width": 1.29702,
-        "height": 1.29702,
-        "voxelScaleX": 0.99999,
+        "width": 1.3,
+        "height": 1.3,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "54": {
-        "width": 0.95877,
-        "height": 0.95877,
-        "voxelScaleX": 1.16967,
+        "width": 0.96,
+        "height": 0.96,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "55": {
-        "width": 0.95877,
-        "height": 0.95877,
-        "voxelScaleX": 1.21645,
+        "width": 0.96,
+        "height": 0.96,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "56": {
-        "width": 0.92081,
-        "height": 0.92081,
-        "voxelScaleX": 1.14435,
+        "width": 0.92,
+        "height": 0.92,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
       "57": {
-        "width": 0.86505,
-        "height": 0.86505,
-        "voxelScaleX": 1.16711,
+        "width": 0.86,
+        "height": 0.86,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1625,11 +1614,17 @@
     },
     "hitLight": {
       "58": {
-        "width": 0.99602,
-        "height": 0.99602,
-        "voxelScaleX": 1.00001,
+        "width": 1,
+        "height": 1,
         "offsetX": 0,
-        "flipX": false,
+        "flipX": true,
+        "flipY": false
+      },
+      "60": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
         "flipY": false
       },
       "78": {
@@ -1755,6 +1750,13 @@
       }
     },
     "juggle": {
+      "59": {
+        "width": 1,
+        "height": 1,
+        "offsetX": 0,
+        "flipX": true,
+        "flipY": false
+      },
       "73": {
         "width": 1.19,
         "height": 0.94,
@@ -1772,13 +1774,11 @@
     },
     "knockdown": {
       "59": {
-        "width": 1.24021,
-        "height": 1.24021,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0,
-        "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.83994,
-        "voxelScaleY": 0.83994
+        "flipX": true,
+        "flipY": false
       },
       "107": {
         "width": 0.97,
@@ -2160,13 +2160,11 @@
         "flipY": false
       },
       "59": {
-        "width": 1.24021,
-        "height": 1.24021,
+        "width": 1.24,
+        "height": 1.24,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 0.83994,
-        "voxelScaleY": 0.83994
+        "flipY": false
       }
     },
     "cmd:f+1": {
