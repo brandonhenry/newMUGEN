@@ -197,7 +197,18 @@
       "/characters/sasori/frames/frame-288.png",
       "/characters/sasori/frames/frame-289.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/sasori/frames/frame-338.png",
+      "/characters/sasori/frames/frame-339.png",
+      "/characters/sasori/frames/frame-340.png",
+      "/characters/sasori/frames/frame-341.png",
+      "/characters/sasori/frames/frame-342.png",
+      "/characters/sasori/frames/frame-343.png",
+      "/characters/sasori/frames/frame-344.png",
+      "/characters/sasori/frames/frame-345.png",
+      "/characters/sasori/frames/frame-346.png",
+      "/characters/sasori/frames/frame-347.png"
+    ],
     "cmd:d/f+2": [],
     "cmd:qcf+4": [],
     "cmd:WS+4": [],
@@ -503,9 +514,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 15,
+      "activeFrames": 18,
+      "recoveryFrames": 3,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,

@@ -1316,6 +1316,7 @@ export type FighterRuntime = {
   getupTotalFrames: number;
   juggleDamage: number;
   juggleSequenceDamage: number;
+  juggleHitCount: number;
   juggleTornadoCount: number;
   juggleGravityScale: number;
   tornadoReactionFrames: number;

@@ -7075,6 +7075,55 @@ describe('fight engine', () => {
     expect(match.fighters[0].roundsWon).toBe(1);
   });
 
+  it('applies progressive juggle depth to shadow clone hits', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    const sourceMove: MoveDefinition = {
+      ...starterCharacters[0].moves[0],
+      startupFrames: 0,
+      activeFrames: 8,
+      recoveryFrames: 12,
+      damage: 9,
+      pushback: 0.95,
+      range: 2.5,
+      hitbox: { offset: [0, 1.05, 0.7], size: [1, 1.2, 1.5] }
+    };
+    match.phase = 'fighting';
+    match.countdown = 0;
+    match.fighters[0].position.x = -0.75;
+    match.fighters[1].position.x = 0.45;
+    match.fighters[1].position.y = 0.8;
+    match.fighters[1].velocityY = -0.3;
+    match.fighters[1].state = 'juggle';
+    match.fighters[1].juggleHitCount = 3;
+    match.fighters[1].juggleDamage = 10;
+    match.fighters[1].juggleSequenceDamage = 10;
+    match.fighters[0].shadowClone = {
+      phase: 'active',
+      position: { x: -0.35, y: 0, z: 0 },
+      velocityY: 0,
+      facing: 1,
+      facingYaw: Math.PI / 2,
+      state: 'attack',
+      currentMove: sourceMove,
+      moveInstanceId: 2,
+      moveFrame: 1,
+      actionFramesRemaining: 10,
+      hitConnected: false,
+      attackConsumed: true,
+      vanishOnLanding: false,
+      visualHitstop: { framesRemaining: 0, animationKey: null, progress: 0 },
+      spawnSmokeFrames: 0,
+      vanishSmokeFrames: 0
+    };
+    const startX = match.fighters[1].position.x;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[1].juggleHitCount).toBe(4);
+    expect(match.fighters[1].juggleGravityScale).toBeGreaterThan(0.52);
+    expect(match.fighters[1].position.x).toBeGreaterThan(startX);
+  });
+
   it('keeps a spawned shadow clone offset instead of teleporting it onto Naruto before attack', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
@@ -8375,6 +8424,7 @@ describe('fight engine', () => {
     }
 
     expect(match.fighters[1].state).toBe('juggle');
+    expect(match.fighters[1].juggleHitCount).toBe(1);
     expect(match.fighters[1].juggleTornadoCount).toBe(1);
     expect(match.fighters[1].tornadoReactionFrames).toBeGreaterThan(0);
     expect(match.fighters[1].juggleSequenceDamage).toBeLessThan(86);
@@ -8839,8 +8889,8 @@ describe('fight engine', () => {
 
     expect(match.fighters[1].state).toBe('juggle');
     expect(match.fighters[1].position.y).toBeGreaterThan(0.6);
-    expect(match.fighters[1].velocityY).toBeGreaterThan(3.4);
-    expect(match.fighters[1].velocityY).toBeLessThan(3.9);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(2.2);
+    expect(match.fighters[1].velocityY).toBeLessThan(3.2);
     expect(match.fighters[1].juggleDamage).toBeGreaterThan(0);
 
     let apex = match.fighters[1].position.y;
@@ -8848,8 +8898,69 @@ describe('fight engine', () => {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
       apex = Math.max(apex, match.fighters[1].position.y);
     }
-    expect(apex).toBeGreaterThan(2.1);
+    expect(apex).toBeGreaterThan(1.6);
     expect(match.fighters[1].state).toBe('juggle');
+  });
+
+  it('increases move-sensitive pushback and shortens airtime as juggle hits accumulate', () => {
+    const runJuggleHit = (juggleHitCount: number, damage = 8, tuning: Partial<MoveDefinition> = {}) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+      match.phase = 'fighting';
+      match.countdown = 0;
+      match.fighters[0].position.x = -0.45;
+      match.fighters[1].position.x = 0.45;
+      match.fighters[1].position.y = 0.78;
+      match.fighters[1].velocityY = -0.3;
+      match.fighters[1].state = 'juggle';
+      match.fighters[1].juggleHitCount = juggleHitCount;
+      match.fighters[1].juggleDamage = 10;
+      match.fighters[1].juggleSequenceDamage = 10;
+      match.fighters[0].state = 'attack';
+      match.fighters[0].currentMove = {
+        ...starterCharacters[0].moves[0],
+        startupFrames: 0,
+        activeFrames: 3,
+        recoveryFrames: 12,
+        damage,
+        pushback: 0.95,
+        knockdown: false,
+        launchHeight: undefined,
+        juggleRefloatVelocity: undefined,
+        juggleGravityScale: undefined,
+        range: 2.5,
+        hitbox: { offset: [0, 1.1, 0.75], size: [0.9, 1, 1.2] },
+        ...tuning
+      };
+      match.fighters[0].actionFramesRemaining = 12;
+      match.fighters[0].actionTimer = 12 / 60;
+      const startX = match.fighters[1].position.x;
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      const pushback = match.fighters[1].position.x - startX;
+      const appliedHitCount = match.fighters[1].juggleHitCount;
+      let airborneFrames = 0;
+      while (airborneFrames < 90 && match.fighters[1].position.y > 0) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        airborneFrames += 1;
+      }
+      return { match, pushback, airborneFrames, appliedHitCount };
+    };
+
+    const early = runJuggleHit(0);
+    const late = runJuggleHit(5);
+    const heavy = runJuggleHit(0, 22);
+    const tornado = runJuggleHit(5, 8, { tornado: true });
+    const authoredRefloat = runJuggleHit(5, 8, { juggleRefloatVelocity: 3.2 });
+
+    expect(early.appliedHitCount).toBe(1);
+    expect(late.appliedHitCount).toBe(6);
+    expect(early.match.fighters[1].juggleHitCount).toBe(0);
+    expect(late.pushback).toBeGreaterThan(early.pushback * 1.35);
+    expect(heavy.pushback).toBeGreaterThan(early.pushback);
+    expect(late.airborneFrames).toBeLessThan(early.airborneFrames - 8);
+    expect(early.airborneFrames).toBeLessThanOrEqual(48);
+    expect(late.airborneFrames).toBeLessThanOrEqual(30);
+    expect(tornado.airborneFrames).toBeGreaterThan(late.airborneFrames + 5);
+    expect(authoredRefloat.airborneFrames).toBeGreaterThan(late.airborneFrames);
   });
 
   it('applies per-launcher pop and fall-speed tuning', () => {

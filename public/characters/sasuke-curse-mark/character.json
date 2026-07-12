@@ -168,10 +168,39 @@
       "/characters/sasuke-curse-mark/frames/frame-130.png",
       "/characters/sasuke-curse-mark/frames/frame-132.png"
     ],
-    "cmd:f+1": [],
+    "cmd:f+1": [
+      "/characters/sasuke-curse-mark/frames/frame-050.png",
+      "/characters/sasuke-curse-mark/frames/frame-051.png",
+      "/characters/sasuke-curse-mark/frames/frame-052.png",
+      "/characters/sasuke-curse-mark/frames/frame-053.png",
+      "/characters/sasuke-curse-mark/frames/frame-054.png",
+      "/characters/sasuke-curse-mark/frames/frame-055.png",
+      "/characters/sasuke-curse-mark/frames/frame-056.png",
+      "/characters/sasuke-curse-mark/frames/frame-057.png",
+      "/characters/sasuke-curse-mark/frames/frame-058.png",
+      "/characters/sasuke-curse-mark/frames/frame-059.png"
+    ],
     "cmd:d/f+2": [],
-    "cmd:qcf+4": [],
-    "cmd:WS+4": [],
+    "cmd:qcf+4": [
+      "/characters/sasuke-curse-mark/frames/frame-075.png",
+      "/characters/sasuke-curse-mark/frames/frame-076.png",
+      "/characters/sasuke-curse-mark/frames/frame-077.png",
+      "/characters/sasuke-curse-mark/frames/frame-078.png",
+      "/characters/sasuke-curse-mark/frames/frame-079.png",
+      "/characters/sasuke-curse-mark/frames/frame-080.png",
+      "/characters/sasuke-curse-mark/frames/frame-081.png",
+      "/characters/sasuke-curse-mark/frames/frame-082.png",
+      "/characters/sasuke-curse-mark/frames/frame-083.png"
+    ],
+    "cmd:WS+4": [
+      "/characters/sasuke-curse-mark/frames/frame-108.png",
+      "/characters/sasuke-curse-mark/frames/frame-109.png",
+      "/characters/sasuke-curse-mark/frames/frame-110.png",
+      "/characters/sasuke-curse-mark/frames/frame-111.png",
+      "/characters/sasuke-curse-mark/frames/frame-112.png",
+      "/characters/sasuke-curse-mark/frames/frame-113.png",
+      "/characters/sasuke-curse-mark/frames/frame-114.png"
+    ],
     "cmd:FC+1": [],
     "cmd:FC+2": [],
     "cmd:1+2": [],
@@ -477,9 +506,9 @@
       "hitLevel": "mid"
     },
     "cmd:f+1": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 0,
+      "activeFrames": 11,
+      "recoveryFrames": 25,
       "damage": 11,
       "onBlockFrames": -6,
       "onHitFrames": 7,
@@ -508,9 +537,9 @@
       "hitLevel": "mid"
     },
     "cmd:qcf+4": {
-      "startupFrames": 21,
-      "activeFrames": 4,
-      "recoveryFrames": 28,
+      "startupFrames": 12,
+      "activeFrames": 36,
+      "recoveryFrames": 5,
       "damage": 17,
       "onBlockFrames": -9,
       "onHitFrames": 18,
@@ -522,9 +551,9 @@
       "knockdown": true
     },
     "cmd:WS+4": {
-      "startupFrames": 14,
-      "activeFrames": 3,
-      "recoveryFrames": 19,
+      "startupFrames": 6,
+      "activeFrames": 25,
+      "recoveryFrames": 5,
       "damage": 12,
       "onBlockFrames": -10,
       "onHitFrames": 18,
