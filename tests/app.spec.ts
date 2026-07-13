@@ -2074,6 +2074,8 @@ test('mobile attack surface accepts gap taps, preserves target sizes, shows nota
   test.skip(!['mobile', 'mobile-webkit'].includes(testInfo.project.name), 'Requires coarse pointer mobile viewport');
   await startFight(page, true);
 
+  await expect(page.locator('.fight-fullscreen-button')).toBeHidden();
+
   const cluster = page.getByLabel('Attack controls');
   const clusterBox = await cluster.boundingBox();
   if (!clusterBox) throw new Error('Missing attack control bounds');
@@ -2086,6 +2088,13 @@ test('mobile attack surface accepts gap taps, preserves target sizes, shows nota
     expect(box?.width ?? 0, `${testId} width`).toBeGreaterThanOrEqual(48);
     expect(box?.height ?? 0, `${testId} height`).toBeGreaterThanOrEqual(48);
   }
+
+  const padBox = await page.getByLabel('Movement pad').boundingBox();
+  const pauseBox = await page.getByTestId('touch-pause').boundingBox();
+  if (!padBox || !pauseBox) throw new Error('Missing movement or pause control bounds');
+  expect(Math.abs((pauseBox.x + pauseBox.width / 2) - (padBox.x + padBox.width / 2))).toBeLessThanOrEqual(1);
+  expect(padBox.y - (pauseBox.y + pauseBox.height)).toBeGreaterThanOrEqual(8);
+  expect(padBox.y - (pauseBox.y + pauseBox.height)).toBeLessThanOrEqual(9);
 
   const colors = await page.evaluate(() => ['jab', 'heavy', 'kick', 'special'].map((action) => {
     const button = document.querySelector<HTMLElement>(`.touch-${action}`);
@@ -2101,8 +2110,6 @@ test('mobile attack surface accepts gap taps, preserves target sizes, shows nota
   await expectNoHeldFightInput(page);
 
   if (testInfo.project.name === 'mobile-webkit') {
-    const pauseBox = await page.getByTestId('touch-pause').boundingBox();
-    if (!pauseBox) throw new Error('Missing pause control bounds');
     await page.touchscreen.tap(pauseBox.x + pauseBox.width / 2, pauseBox.y + pauseBox.height / 2);
   } else {
     await touchHold(page, 'touch-pause', 40);

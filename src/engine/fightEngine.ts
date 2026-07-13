@@ -1002,7 +1002,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.chargePhase !== 'startup' &&
     fighter.chargePhase !== 'recovery'
   ) {
-    clearKiChargeState(fighter);
+    clearKiChargeState(fighter, true);
     if (startComboAttack(fighter, opponent, input, freshMoveInput, 'neutral', freshMoveIntent)) clearBufferedMoveInput(fighter);
     applyGravity(fighter, dt);
     finishFighterStep();
@@ -1977,6 +1977,7 @@ function addKiCharge(fighter: FighterRuntime, amount: number, canOverchargeTrans
 
 function beginKiChargeRecovery(fighter: FighterRuntime, move: MoveDefinition) {
   syncDisplayedKi(fighter);
+  scheduleShadowCloneVanish(fighter);
   fighter.chargePhase = 'recovery';
   fighter.chargeFrame = 0;
   fighter.actionFramesRemaining = move.recoveryFrames;
@@ -1985,8 +1986,9 @@ function beginKiChargeRecovery(fighter: FighterRuntime, move: MoveDefinition) {
   fighter.bufferedMoveFrames = 0;
 }
 
-function clearKiChargeState(fighter: FighterRuntime) {
+function clearKiChargeState(fighter: FighterRuntime, preserveShadowClone = false) {
   syncDisplayedKi(fighter);
+  if (!preserveShadowClone) scheduleShadowCloneVanish(fighter);
   fighter.currentMove = null;
   fighter.state = 'idle';
   resetKiChargeRuntime(fighter);
@@ -2123,6 +2125,14 @@ function updateShadowClone(fighter: FighterRuntime, dt: number) {
 
   if (clone.phase === 'vanishing') {
     if (clone.vanishSmokeFrames === 0) fighter.shadowClone = null;
+    return;
+  }
+
+  // A charged clone may finish the attack started directly from Naruto's
+  // charge stance, but it must never linger as a passive second fighter once
+  // Naruto has returned to ordinary movement or defense.
+  if (fighter.state !== 'chargeKi' && clone.state !== 'attack') {
+    scheduleShadowCloneVanish(fighter);
     return;
   }
 

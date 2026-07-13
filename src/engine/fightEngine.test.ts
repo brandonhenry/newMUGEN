@@ -6967,7 +6967,7 @@ describe('fight engine', () => {
     expect(match.fighters[0].shadowClone?.position.z).toBeLessThan(match.fighters[0].position.z);
   });
 
-  it('mirrors Naruto passive movement states with the spawned shadow clone', () => {
+  it('removes Naruto shadow clone after ki charging instead of leaving a passive duplicate', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -6978,23 +6978,16 @@ describe('fight engine', () => {
       match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
     }
 
-    for (let i = 0; i < 48 && match.fighters[0].state !== 'idle'; i += 1) {
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.fighters[0].state).toBe('idle');
+    expect(match.fighters[0].shadowClone?.phase).toBe('vanishing');
+
+    for (let i = 0; i < 48 && match.fighters[0].shadowClone; i += 1) {
       match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
     }
 
-    expect(match.fighters[0].shadowClone?.state).toBe('idle');
-
-    const walkForward = emptyInputFrame();
-    walkForward.right = true;
-    match = stepMatch(match, walkForward, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].state).toBe('walk');
-    expect(match.fighters[0].shadowClone?.state).toBe('walk');
-
-    const blockBack = emptyInputFrame();
-    blockBack.left = true;
-    match = stepMatch(match, blockBack, emptyInputFrame(), 1 / 60);
-    expect(match.fighters[0].state).toBe('block');
-    expect(match.fighters[0].shadowClone?.state).toBe('block');
+    expect(match.fighters[0].shadowClone).toBeNull();
   });
 
   it('mirrors Naruto next attack once with the spawned shadow clone', () => {
@@ -7125,7 +7118,7 @@ describe('fight engine', () => {
     expect(match.fighters[1].position.x).toBeGreaterThan(startX);
   });
 
-  it('keeps a spawned shadow clone offset instead of teleporting it onto Naruto before attack', () => {
+  it('keeps a charged shadow clone offset when Naruto attacks directly from ki charge', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
     match.countdown = 0;
@@ -7136,10 +7129,6 @@ describe('fight engine', () => {
       match = stepMatch(match, charge, emptyInputFrame(), 1 / 60);
     }
 
-    for (let i = 0; i < 48 && match.fighters[0].state !== 'idle'; i += 1) {
-      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
-    }
-
     const clone = match.fighters[0].shadowClone;
     expect(clone?.phase).toBe('active');
     const initialOffset = {
@@ -7147,17 +7136,8 @@ describe('fight engine', () => {
       z: (clone?.position.z ?? 0) - match.fighters[0].position.z
     };
 
-    const walk = emptyInputFrame();
-    walk.right = true;
-    for (let i = 0; i < 10; i += 1) {
-      match = stepMatch(match, walk, emptyInputFrame(), 1 / 60);
-    }
-
-    const movedClone = match.fighters[0].shadowClone;
-    expect((movedClone?.position.x ?? 0) - match.fighters[0].position.x).toBeCloseTo(initialOffset.x, 4);
-    expect((movedClone?.position.z ?? 0) - match.fighters[0].position.z).toBeCloseTo(initialOffset.z, 4);
-
     const attack = emptyInputFrame();
+    attack.charge = true;
     attack.jab = true;
     match = stepMatch(match, attack, emptyInputFrame(), 1 / 60);
 

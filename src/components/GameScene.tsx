@@ -707,17 +707,11 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
             <CameraRig match={match} settings={cameraSettings} presentationMirrored={presentationMirrored} reducedMotion={reducedMotion} impactFeedbackEnabled={sparkSettings.enabled && sparkSettings.cinematic} />
             <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
             <StageCameraOcclusionFader />
-            <FighterRig fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-            <FighterRig fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
-            <AttackCompanionLayer fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-            <AttackCompanionLayer fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
             <MovementFootSmokeLayer fighter={match.fighters[0]} style={movementSmokeStyle} />
             <MovementFootSmokeLayer fighter={match.fighters[1]} style={movementSmokeStyle} />
             <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
             <TransformEffectLayer fighter={match.fighters[0]} />
             <TransformEffectLayer fighter={match.fighters[1]} />
-            <ShadowCloneLayer fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-            <ShadowCloneLayer fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
             <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
             <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} />
             <FightCameraFrameWriter frameRef={cameraFrameRef} />

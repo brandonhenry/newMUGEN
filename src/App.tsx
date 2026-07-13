@@ -10760,7 +10760,11 @@ function TournamentModeCarousel({
       <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1)} aria-label="Previous tournament mode">
         <ChevronLeft size={26} />
       </button>
-      <div className="mode-carousel-current" aria-live="polite">
+      <div
+        className="mode-carousel-current"
+        style={{ '--label-font-size': responsiveLabelFontSize(activeOption.label, 60) } as CSSProperties}
+        aria-live="polite"
+      >
         {activeOption.icon}
         <strong>{activeOption.label}</strong>
       </div>
@@ -11641,7 +11645,11 @@ function TrainingModeCarousel({
       <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1)} aria-label="Previous training mode">
         <ChevronLeft size={26} />
       </button>
-      <div className="mode-carousel-current" aria-live="polite">
+      <div
+        className="mode-carousel-current"
+        style={{ '--label-font-size': responsiveLabelFontSize(activeOption.label, 60) } as CSSProperties}
+        aria-live="polite"
+      >
         {activeOption.icon}
         <strong>{activeOption.label}</strong>
         {activeOption.count !== undefined && <small>{activeOption.count} trials</small>}
@@ -12300,7 +12308,11 @@ function CharacterSelectModeCarousel({
       <button type="button" className="mode-carousel-arrow" onClick={() => cycleMode(-1, false)} aria-label="Previous match mode">
         <ChevronLeft size={26} />
       </button>
-      <div className="mode-carousel-current" aria-live="polite">
+      <div
+        className="mode-carousel-current"
+        style={{ '--label-font-size': responsiveLabelFontSize(activeOption.label, 60) } as CSSProperties}
+        aria-live="polite"
+      >
         {activeOption.icon}
         <strong>{activeOption.label}</strong>
       </div>
@@ -12342,7 +12354,11 @@ function RoundTimerControl({ value, setValue }: { value: number; setValue: (valu
       <button type="button" className="mode-carousel-arrow" onClick={() => cycleTimer(-1)} aria-label="Lower round timer">
         <ChevronLeft size={24} />
       </button>
-      <div className="mode-carousel-current" aria-live="polite">
+      <div
+        className="mode-carousel-current"
+        style={{ '--label-font-size': responsiveLabelFontSize(formatRoundTimer(value), 60) } as CSSProperties}
+        aria-live="polite"
+      >
         <Timer size={22} />
         <strong>{formatRoundTimer(value)}</strong>
       </div>
@@ -12385,7 +12401,11 @@ function MaxHealthControl({ value, setValue }: { value: number; setValue: (value
       <button type="button" className="mode-carousel-arrow" onClick={() => cycleHealth(-1)} aria-label="Lower max health">
         <ChevronLeft size={24} />
       </button>
-      <div className="mode-carousel-current" aria-live="polite">
+      <div
+        className="mode-carousel-current"
+        style={{ '--label-font-size': responsiveLabelFontSize(formatMaxHealth(value), 60) } as CSSProperties}
+        aria-live="polite"
+      >
         <Swords size={22} />
         <strong>{formatMaxHealth(value)}</strong>
       </div>
@@ -12443,7 +12463,11 @@ function CpuDifficultyControl({
         <button type="button" className="mode-carousel-arrow" onClick={() => cycleDifficulty(-1, false)} aria-label="Lower CPU difficulty">
           <ChevronLeft size={24} />
         </button>
-        <div className="mode-carousel-current" aria-live="polite">
+        <div
+          className="mode-carousel-current"
+          style={{ '--label-font-size': responsiveLabelFontSize(cpuDifficultyLabels[value], 60) } as CSSProperties}
+          aria-live="polite"
+        >
           <Swords size={22} />
           <strong>{cpuDifficultyLabels[value]}</strong>
         </div>

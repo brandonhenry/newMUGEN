@@ -5149,11 +5149,15 @@ button {
 }
 
 .mode-carousel-current {
+  container-type: inline-size;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(8px, 1.4vh, 13px);
-  padding: 0 clamp(14px, 2vh, 22px);
+  gap: clamp(6px, 1vh, 10px);
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0 clamp(8px, 1.2vh, 14px);
   color: #101114;
   background: #f7f7f2;
   box-shadow:
@@ -5162,10 +5166,19 @@ button {
 }
 
 .mode-carousel-current strong {
-  font-size: clamp(16px, min(2.4vw, 4.1vh), 28px);
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: clamp(11px, var(--label-font-size, 7cqi), 24px);
   font-weight: 900;
   letter-spacing: 0;
+  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.mode-carousel-current > svg {
+  flex: 0 0 auto;
 }
 
 .cpu-difficulty-carousel {
@@ -5177,7 +5190,7 @@ button {
 }
 
 .cpu-difficulty-carousel .mode-carousel-current strong {
-  font-size: clamp(15px, min(2.1vw, 3.7vh), 24px);
+  font-size: clamp(11px, var(--label-font-size, 7cqi), 22px);
 }
 
 .cpu-difficulty {
@@ -14121,9 +14134,9 @@ button {
 }
 
 .touch-pause {
-  position: fixed;
-  top: max(82px, calc(env(safe-area-inset-top) + 68px));
-  right: max(12px, env(safe-area-inset-right));
+  position: absolute;
+  left: calc(clamp(132px, 36vw, 164px) / 2 - 24px);
+  bottom: calc(clamp(132px, 36vw, 164px) + 8px);
   z-index: 21;
   display: grid;
   width: 48px;
@@ -14171,6 +14184,10 @@ button {
 @media (hover: none), (pointer: coarse) {
   .touch-controls {
     display: flex;
+  }
+
+  .fight-fullscreen-button {
+    display: none;
   }
 }
 
@@ -14779,10 +14796,6 @@ button {
 
   .touch-controls {
     bottom: max(8px, env(safe-area-inset-bottom));
-  }
-
-  .touch-pause {
-    top: max(58px, calc(env(safe-area-inset-top) + 50px));
   }
 
   .match-message {
