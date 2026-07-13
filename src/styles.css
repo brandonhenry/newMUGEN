@@ -10565,11 +10565,11 @@ button {
   object-fit: contain;
   image-rendering: pixelated;
   filter:
-    brightness(0)
-    drop-shadow(1px 0 0 #fff)
-    drop-shadow(-1px 0 0 #fff)
-    drop-shadow(0 1px 0 #fff)
-    drop-shadow(0 -1px 0 #fff);
+    brightness(0) invert(1)
+    drop-shadow(1px 0 0 #000)
+    drop-shadow(-1px 0 0 #000)
+    drop-shadow(0 1px 0 #000)
+    drop-shadow(0 -1px 0 #000);
 }
 
 .round-box-infinity {
@@ -10583,11 +10583,11 @@ button {
   object-position: center;
   image-rendering: pixelated;
   filter:
-    brightness(0)
-    drop-shadow(1px 0 0 #fff)
-    drop-shadow(-1px 0 0 #fff)
-    drop-shadow(0 1px 0 #fff)
-    drop-shadow(0 -1px 0 #fff);
+    brightness(0) invert(1)
+    drop-shadow(1px 0 0 #000)
+    drop-shadow(-1px 0 0 #000)
+    drop-shadow(0 1px 0 #000)
+    drop-shadow(0 -1px 0 #000);
   transform: translate(-50%, -50%);
 }
 
