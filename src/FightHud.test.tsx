@@ -1,6 +1,6 @@
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { FightHud } from './App';
+import { FightHud, getPlayerRelativeFightMessage } from './App';
 import { starterCharacters } from './data/characters';
 import { stages } from './data/stages';
 import { createMatch } from './engine/fightEngine';
@@ -101,5 +101,28 @@ describe('FightHud', () => {
 
     expect(screen.getByTestId('fighter-name-left').textContent).toBe('REMOTE RIVAL');
     expect(screen.getByTestId('fighter-name-right').textContent).toBe('LOCAL HERO');
+  });
+});
+
+describe('getPlayerRelativeFightMessage', () => {
+  it.each([
+    { winnerSlot: 1 as const, localPlayerSlot: 1 as const, expected: 'You Win' },
+    { winnerSlot: 2 as const, localPlayerSlot: 2 as const, expected: 'You Win' },
+    { winnerSlot: 1 as const, localPlayerSlot: 2 as const, expected: 'You Lose' },
+    { winnerSlot: 2 as const, localPlayerSlot: 1 as const, expected: 'You Lose' }
+  ])('shows $expected when slot $localPlayerSlot views a slot $winnerSlot victory', ({ winnerSlot, localPlayerSlot, expected }) => {
+    expect(getPlayerRelativeFightMessage({
+      phase: 'matchOver',
+      winnerSlot,
+      message: 'Naruto wins'
+    }, localPlayerSlot)).toBe(expected);
+  });
+
+  it('preserves round and intro announcements before the match ends', () => {
+    expect(getPlayerRelativeFightMessage({
+      phase: 'intro',
+      winnerSlot: null,
+      message: 'FIGHT'
+    }, 1)).toBe('FIGHT');
   });
 });

@@ -3112,7 +3112,7 @@ button {
   isolation: isolate;
   height: 100%;
   min-height: 0;
-  grid-template-columns: minmax(160px, 1fr) minmax(360px, 640px) minmax(160px, 1fr);
+  grid-template-columns: minmax(160px, 1fr) minmax(360px, 520px) minmax(160px, 1fr);
   align-items: stretch;
   gap: clamp(8px, min(1.55vw, 2vh), 24px);
   overflow: hidden;
@@ -3169,6 +3169,7 @@ button {
 }
 
 .versus-hero {
+  container-type: inline-size;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   justify-items: center;
@@ -3313,23 +3314,29 @@ button {
   bottom: auto;
   z-index: 1;
   align-self: end;
-  width: min(96%, 760px);
+  box-sizing: border-box;
+  width: 100%;
   margin: 0;
-  min-height: 2.05em;
-  overflow: clip;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(8px, 1.35vh, 14px) clamp(10px, 1.2vw, 18px);
   transform: none;
-  font-size: clamp(22px, min(3.6vw, 6vh), 60px);
-  line-height: 0.95;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--fighter-color) 34%, rgba(5, 7, 12, 0.92)), rgba(5, 7, 12, 0.72)),
+    rgba(5, 7, 12, 0.82);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 12px 30px rgba(0, 0, 0, 0.28);
+  font-size: clamp(12px, var(--label-font-size, 2.8cqi), 32px);
+  line-height: 1.02;
   font-weight: 950;
   text-transform: uppercase;
   text-shadow:
     0 4px 0 rgba(0, 0, 0, 0.58),
     0 0 22px color-mix(in srgb, var(--fighter-color) 58%, transparent);
+  overflow-wrap: normal;
   text-wrap: balance;
-  overflow-wrap: anywhere;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  white-space: normal;
 }
 
 .versus-roster-panel {
@@ -5467,6 +5474,7 @@ button {
 }
 
 .stage-hero {
+  container-type: inline-size;
   position: relative;
   align-self: start;
   width: min(100%, 1560px);
@@ -5530,43 +5538,41 @@ button {
   z-index: 4;
   display: grid;
   justify-items: center;
+  box-sizing: border-box;
+  width: min(84%, 760px);
+  min-height: 0;
+  padding: clamp(10px, 1.7vh, 16px) clamp(16px, 2.2vw, 30px);
   transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgba(38, 38, 72, 0.9), rgba(15, 22, 48, 0.88)),
+    rgba(10, 18, 36, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 8px 0 rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.42);
   text-align: center;
   pointer-events: none;
 }
 
 .stage-hero-label::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: -1;
-  width: min(76vw, 600px);
-  height: 66px;
-  transform: translate(-50%, -50%);
-  background:
-    linear-gradient(180deg, rgba(38, 38, 72, 0.88), rgba(15, 22, 48, 0.86)),
-    rgba(10, 18, 36, 0.88);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
-    0 8px 0 rgba(0, 0, 0, 0.22),
-    0 18px 36px rgba(0, 0, 0, 0.42);
+  content: none;
 }
 
 .stage-hero-label strong {
   position: relative;
   z-index: 1;
-  max-width: min(72vw, 560px);
+  display: block;
+  width: 100%;
+  overflow: hidden;
   color: #ffb45f;
-  font-size: clamp(1.45rem, min(3.6vw, 5.6vh), 2.35rem);
+  font-size: clamp(0.5rem, var(--label-font-size, 2.2cqi), 1.25rem);
   font-weight: 950;
-  line-height: 1;
+  line-height: 1.08;
   text-transform: uppercase;
   text-shadow:
     0 3px 0 rgba(72, 26, 12, 0.88),
     0 0 18px rgba(255, 255, 255, 0.22);
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -5632,10 +5638,11 @@ button {
 }
 
 .stage-thumbnail {
+  container-type: inline-size;
   position: relative;
   display: grid;
-  flex: 0 0 clamp(92px, 11vw, 140px);
-  width: clamp(92px, 11vw, 140px);
+  flex: 0 0 clamp(180px, 18vw, 240px);
+  width: clamp(180px, 18vw, 240px);
   min-height: clamp(56px, 10vh, 86px);
   padding: 0;
   overflow: hidden;
@@ -5730,18 +5737,22 @@ button {
   grid-area: 1 / 1;
   align-self: end;
   justify-self: stretch;
-  padding: 22px 8px 8px;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 24px 8px 8px;
   background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.74));
   color: #ffffff;
-  font-size: 0.82rem;
+  font-size: clamp(0.5rem, var(--label-font-size, 6cqi), 0.68rem);
   font-weight: 950;
   line-height: 1.05;
   text-align: center;
   text-transform: uppercase;
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
   pointer-events: none;
-  overflow-wrap: anywhere;
+  overflow: visible;
+  overflow-wrap: normal;
   text-wrap: balance;
+  white-space: normal;
 }
 
 .stage-thumbnail-flag {
@@ -5891,9 +5902,13 @@ button {
 }
 
 .fight-versus-stage {
+  container-type: inline-size;
   display: grid;
   justify-items: center;
   gap: 4px;
+  justify-self: center;
+  width: min(100%, 1080px);
+  min-width: 0;
   text-align: center;
   text-transform: uppercase;
   animation: versus-stage-in 500ms cubic-bezier(0.18, 0.9, 0.2, 1) both;
@@ -5908,14 +5923,21 @@ button {
 }
 
 .fight-versus-stage strong {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  padding-inline: clamp(6px, 1vw, 14px);
   color: #ffe26a;
-  font-size: clamp(26px, 4.2vw, 58px);
+  font-size: clamp(9px, var(--label-font-size, 4cqi), 38px);
   font-weight: 950;
   line-height: 0.92;
   letter-spacing: 0.08em;
   text-shadow:
     0 5px 0 rgba(0, 0, 0, 0.62),
     0 0 26px rgba(255, 214, 64, 0.36);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .fight-versus-roster {
@@ -5930,6 +5952,7 @@ button {
 
 .fight-versus-card {
   --fighter-color: #35dff5;
+  container-type: inline-size;
   position: relative;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) minmax(clamp(96px, 15vh, 150px), auto);
@@ -5981,8 +6004,16 @@ button {
 
 .fight-versus-name {
   align-content: end;
-  min-height: clamp(96px, 15vh, 150px);
+  box-sizing: border-box;
+  min-height: clamp(82px, 12vh, 124px);
   overflow: hidden;
+  padding: clamp(9px, 1.4vh, 14px) clamp(10px, 1.1vw, 16px);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--fighter-color) 24%, rgba(4, 6, 11, 0.92)), rgba(4, 6, 11, 0.72)),
+    rgba(4, 6, 11, 0.8);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 12px 28px rgba(0, 0, 0, 0.24);
 }
 
 .fight-versus-card-right .fight-versus-role,
@@ -6044,20 +6075,20 @@ button {
 }
 
 .fight-versus-name strong {
-  overflow: hidden;
+  display: block;
+  width: 100%;
+  overflow: visible;
   color: #fffdf1;
-  font-size: clamp(28px, min(4vw, 7vh), 62px);
+  font-size: clamp(12px, var(--label-font-size, 4cqi), 38px);
   font-weight: 950;
   line-height: 0.92;
   letter-spacing: 0;
   text-shadow:
     0 5px 0 rgba(0, 0, 0, 0.68),
     0 0 22px color-mix(in srgb, var(--fighter-color) 44%, transparent);
+  overflow-wrap: normal;
   text-wrap: balance;
-  overflow-wrap: anywhere;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  white-space: normal;
 }
 
 .fight-versus-mark {
@@ -6160,7 +6191,7 @@ button {
   }
 
   .fight-versus-name strong {
-    font-size: clamp(20px, 6vw, 38px);
+    font-size: clamp(10px, var(--label-font-size, 5cqi), 24px);
   }
 
   .fight-versus-name small,
@@ -6190,8 +6221,8 @@ button {
   }
 
   .fight-versus-stage strong {
-    max-width: min(72vw, 560px);
-    font-size: clamp(20px, min(4.8vw, 7vh), 32px);
+    max-width: min(92vw, 720px);
+    font-size: clamp(9px, var(--label-font-size, 4cqi), 24px);
     letter-spacing: 0.04em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -14414,16 +14445,12 @@ button {
 
   .stage-hero-label {
     bottom: 20px;
-  }
-
-  .stage-hero-label::before {
     width: min(88vw, 430px);
-    height: 58px;
+    padding: 10px 14px;
   }
 
   .stage-hero-label strong {
-    max-width: min(82vw, 390px);
-    font-size: 1.42rem;
+    font-size: clamp(0.5rem, var(--label-font-size, 3.4cqi), 1.12rem);
   }
 
   .stage-reel-shell {
@@ -14441,13 +14468,13 @@ button {
   }
 
   .stage-thumbnail {
-    flex-basis: 118px;
-    width: 118px;
+    flex-basis: 200px;
+    width: 200px;
     min-height: 86px;
   }
 
   .stage-thumbnail strong {
-    font-size: 0.72rem;
+    font-size: clamp(0.5rem, var(--label-font-size, 6cqi), 0.68rem);
   }
 
   .stage-screen .footer-actions {

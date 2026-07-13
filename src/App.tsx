@@ -376,6 +376,15 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
 type ActiveTrainingFrameNumber = TrainingFrameEvent;
 type OnlineWins = [number, number];
+
+export function getPlayerRelativeFightMessage(
+  match: Pick<MatchSnapshot, 'phase' | 'winnerSlot' | 'message'>,
+  localPlayerSlot: 1 | 2
+) {
+  if (match.phase !== 'matchOver' || !match.winnerSlot) return match.message;
+  return match.winnerSlot === localPlayerSlot ? 'You Win' : 'You Lose';
+}
+
 type OnlineTrainingChatEntry = {
   id: string;
   text: string;
@@ -11130,7 +11139,10 @@ function TournamentBracketIntroScreen({
       onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptTournamentIntroInput, onBack)}
       aria-label="Tournament match intro. Press any key to fight."
     >
-      <div className="fight-versus-stage">
+      <div
+        className="fight-versus-stage"
+        style={{ '--label-font-size': responsiveLabelFontSize('Winner Advances', 82) } as CSSProperties}
+      >
         <span>{match ? getTournamentRoundLabel(match.round, getTournamentTotalRounds(bracket)) : 'Tournament'}</span>
         <strong>Winner Advances</strong>
         <small>{localEntryId ? bracket?.kind === 'paidOnline' ? 'Lightning bracket match' : bracket?.kind === 'freeOnline' ? 'Online bracket match' : 'Local bracket match' : 'Infinite bracket match'}</small>
@@ -11662,6 +11674,11 @@ function cycleModeValue<T>(options: readonly T[], value: T, direction: -1 | 1) {
   return options[(activeIndex + direction + options.length) % options.length] ?? value;
 }
 
+function responsiveLabelFontSize(label: string, fitRatio = 90) {
+  const characterCount = Math.max(6, Array.from(label.trim()).length);
+  return `${fitRatio / characterCount}cqi`;
+}
+
 function CharacterSelect({
   roster,
   p1Id,
@@ -11713,6 +11730,8 @@ function CharacterSelect({
   const modeGamepadStateRef = useRef({ previous: false, next: false });
   const p1Character = roster.find((character) => character.id === p1Id) ?? roster[0];
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster[1] ?? p1Character;
+  const p1DisplayLabel = randomCharacterSlots[1] ? 'Random' : p1Character?.displayName ?? '';
+  const p2DisplayLabel = isArcadeMatchMode(mode) ? 'Random CPU' : randomCharacterSlots[2] ? 'Random' : p2Character?.displayName ?? '';
   const baseRoster = useMemo(() => (
     sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
   ), [roster, unlockedCharacterIds]);
@@ -11920,7 +11939,10 @@ function CharacterSelect({
       <button
         type="button"
         className={`versus-hero versus-hero-left ${selectTarget === 1 ? 'is-picking' : ''} ${randomCharacterSlots[1] ? 'is-random-selection' : ''}`}
-        style={{ '--fighter-color': p1Character.colors.primary } as CSSProperties}
+        style={{
+          '--fighter-color': p1Character.colors.primary,
+          '--label-font-size': responsiveLabelFontSize(p1DisplayLabel)
+        } as CSSProperties}
         onClick={() => setSelectTarget(1)}
       >
         <span className="versus-player-kicker">{getSlotLabel(mode, 1)}</span>
@@ -11931,7 +11953,7 @@ function CharacterSelect({
         ) : (
           <AnimatedCharacterSprite character={p1Character} />
         )}
-        <span className="versus-hero-name">{randomCharacterSlots[1] ? 'Random' : p1Character.displayName}</span>
+        <span className="versus-hero-name">{p1DisplayLabel}</span>
       </button>
 
       <section className="versus-roster-panel" aria-label="Character select">
@@ -12096,7 +12118,10 @@ function CharacterSelect({
       <button
         type="button"
         className={`versus-hero versus-hero-right ${selectTarget === 2 ? 'is-picking' : ''} ${isArcadeMode ? 'is-random-opponent' : ''} ${!isArcadeMode && randomCharacterSlots[2] ? 'is-random-selection' : ''}`}
-        style={{ '--fighter-color': p2Character.colors.primary } as CSSProperties}
+        style={{
+          '--fighter-color': p2Character.colors.primary,
+          '--label-font-size': responsiveLabelFontSize(p2DisplayLabel)
+        } as CSSProperties}
         onClick={() => {
           if (!isArcadeMode) {
             setSelectTarget(2);
@@ -12114,7 +12139,7 @@ function CharacterSelect({
         ) : (
           <AnimatedCharacterSprite character={p2Character} />
         )}
-        <span className="versus-hero-name">{isArcadeMode ? 'Random CPU' : randomCharacterSlots[2] ? 'Random' : p2Character.displayName}</span>
+        <span className="versus-hero-name">{p2DisplayLabel}</span>
       </button>
       <div className="versus-floor-glow" aria-hidden="true" />
     </div>
@@ -12593,7 +12618,10 @@ function VersusSplashScreen({
       onKeyDown={(event) => handleLocalAnyInputKeyDown(event, acceptVersusInput, onBack)}
       aria-label={`${p1.displayName} versus ${p2.displayName}. ${skipEnabled ? 'Press any key to skip.' : 'Match starts after the versus screen.'}`}
     >
-      <div className="fight-versus-stage">
+      <div
+        className="fight-versus-stage"
+        style={{ '--label-font-size': responsiveLabelFontSize(stage.name, 82) } as CSSProperties}
+      >
         <span>{battleKicker}</span>
         <strong>{stage.name}</strong>
         <small>{battleHint}</small>
@@ -12602,7 +12630,10 @@ function VersusSplashScreen({
       <section className="fight-versus-roster" aria-label="Matchup">
         <article
           className="fight-versus-card fight-versus-card-left"
-          style={{ '--fighter-color': p1.colors.primary } as CSSProperties}
+          style={{
+            '--fighter-color': p1.colors.primary,
+            '--label-font-size': responsiveLabelFontSize(p1.displayName)
+          } as CSSProperties}
         >
           <div className="fight-versus-role">
             <span>{p1Short}</span>
@@ -12623,7 +12654,10 @@ function VersusSplashScreen({
 
         <article
           className="fight-versus-card fight-versus-card-right"
-          style={{ '--fighter-color': p2.colors.primary } as CSSProperties}
+          style={{
+            '--fighter-color': p2.colors.primary,
+            '--label-font-size': responsiveLabelFontSize(p2.displayName)
+          } as CSSProperties}
         >
           <div className="fight-versus-role">
             <span>{p2Short}</span>
@@ -12674,6 +12708,7 @@ function StageSelect({
   const stageColor = randomSelected ? '#f7d45a' : selectedStage.rail;
   const selectedStageIndex = randomSelected ? 0 : Math.max(0, stages.findIndex((stage) => stage.id === selected) + 1);
   const stageOptionCount = stages.length + 1;
+  const selectedStageLabel = randomSelected ? 'Random' : selectedStage.name;
   const selectedModelStageLoading = !randomSelected && isModelStage(selectedStage) && !selectedStageAssetStatus.ready;
   useEffect(() => {
     logStageModelDebug('H8 StageSelect selectedStage object', {
@@ -12743,7 +12778,11 @@ function StageSelect({
 
       <section
         className={`stage-hero ${randomSelected ? 'is-random-stage' : ''}`}
-        style={{ '--stage-color': stageColor, '--stage-floor': selectedStage.floor } as CSSProperties}
+        style={{
+          '--stage-color': stageColor,
+          '--stage-floor': selectedStage.floor,
+          '--label-font-size': responsiveLabelFontSize(selectedStageLabel, 55)
+        } as CSSProperties}
         aria-label={randomSelected ? 'Random selected stage preview' : `${selectedStage.name} selected stage preview`}
       >
         <div className="stage-hero-preview">
@@ -12755,7 +12794,7 @@ function StageSelect({
           )}
         </div>
         <div className="stage-hero-label">
-          <strong>{randomSelected ? 'Random' : selectedStage.name}</strong>
+          <strong>{selectedStageLabel}</strong>
         </div>
       </section>
 
@@ -12772,7 +12811,11 @@ function StageSelect({
           <button
             type="button"
             className={`stage-thumbnail stage-random-thumbnail ${randomSelected ? 'is-selected' : ''}`}
-            style={{ '--stage-color': '#f7d45a', '--stage-floor': '#2ee6ff' } as CSSProperties}
+            style={{
+              '--stage-color': '#f7d45a',
+              '--stage-floor': '#2ee6ff',
+              '--label-font-size': responsiveLabelFontSize('Random')
+            } as CSSProperties}
             onClick={() => {
               setRandomSelected(true);
               onAnalytics('random_stage_toggled', { selected: true, source: 'stage_thumbnail' });
@@ -12792,7 +12835,11 @@ function StageSelect({
             <button
               key={stage.id}
               className={`stage-thumbnail ${!randomSelected && selected === stage.id ? 'is-selected' : ''}`}
-              style={{ '--stage-color': stage.rail, '--stage-floor': stage.floor } as CSSProperties}
+              style={{
+                '--stage-color': stage.rail,
+                '--stage-floor': stage.floor,
+                '--label-font-size': responsiveLabelFontSize(stage.name)
+              } as CSSProperties}
               onClick={() => {
                 logStageModelDebug('H7 StageSelect thumbnail clicked', {
                   stageId: stage.id,
@@ -23915,6 +23962,9 @@ function FightScreen({
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
   const localPresentationSlot: 1 | 2 = isOnline && onlineRole === 'guest' ? 2 : 1;
+  const localResultSlot: 1 | 2 = !isOnline && cpuSlots?.includes(1) && !cpuSlots.includes(2)
+    ? 2
+    : localPresentationSlot;
   const presentationMirrored = useMemo(
     () => shouldMirrorStartSide(match.stage, localPresentationSlot, preferredStartSide),
     [localPresentationSlot, match.stage, preferredStartSide]
@@ -26947,6 +26997,7 @@ function FightScreen({
       new Set([...completedTrainingTrialIds, trainingTrialOutcome.trialId])
     )
     : null;
+  const playerRelativeFightMessage = getPlayerRelativeFightMessage(match, localResultSlot);
 
   return (
     <div
@@ -27009,11 +27060,11 @@ function FightScreen({
       {settings.display.touchControls !== 'off' && !onlineAssetGateActive && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} showPause={!isOnline || onlineState !== 'connected'} />}
       {showLateAssetFallback && !onlineAssetGateActive && (assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
       {onlineAssetGate && <OnlineAssetWarmupOverlay gate={onlineAssetGate} displayMode={mode} privateRoomName={privateRoomName} privateRoomPassword={privateRoomPassword} />}
-      {match.message && !onlineAssetGateActive && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (
+      {playerRelativeFightMessage && !onlineAssetGateActive && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (
         <div
           className={`match-message ${match.phase === 'intro' ? 'intro-message' : ''} ${match.phase === 'intro' && match.message === 'FIGHT' ? 'fight-message' : ''} ${match.phase === 'intro' && match.message.startsWith('ROUND') ? 'round-message' : ''} ${match.phase === 'roundOver' ? 'ko-message' : ''}`}
         >
-          {match.message}
+          {playerRelativeFightMessage}
         </div>
       )}
       {trainingTrialCallout && mode === 'training' && !onlineAssetGateActive && !trainingTrialOutcome && (
@@ -27284,7 +27335,7 @@ function FightScreen({
                   <Trophy size={18} />
                   Winner
                 </span>
-                <h2>{match.message}</h2>
+                <h2>{playerRelativeFightMessage}</h2>
                 <p>{winnerFighter.character.displayName}</p>
               </div>
             </section>
