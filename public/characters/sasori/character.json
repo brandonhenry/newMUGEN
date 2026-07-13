@@ -114,7 +114,6 @@
     ],
     "kickright": [
       "/characters/sasori/frames/frame-012.png",
-      "/characters/sasori/frames/frame-013.png",
       "/characters/sasori/frames/frame-014.png",
       "/characters/sasori/frames/frame-016.png",
       "/characters/sasori/frames/frame-018.png",
@@ -1579,7 +1578,7 @@
       },
       "41": {
         "width": 0.70825,
-        "height": 0.70825,
+        "height": 0.74477,
         "voxelScaleX": 0.81449,
         "voxelScaleY": 1.22776,
         "offsetX": 0
@@ -1651,7 +1650,7 @@
       },
       "209": {
         "width": 1.31876,
-        "height": 1.31876,
+        "height": 0.84821,
         "voxelScaleX": 0.94786,
         "voxelScaleY": 1.05501,
         "offsetX": 0
@@ -3460,6 +3459,105 @@
     "height": 1.02
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "puppet-flame-stream",
+      "name": "Puppet Flame Stream",
+      "kind": "projectile",
+      "sourcePath": "/characters/sasori/animation-sheet.png",
+      "frames": [
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-000.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-001.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-002.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-003.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-004.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-005.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-006.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-007.png",
+        "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-008.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-000.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-001.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-002.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-003.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-004.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-005.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-006.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-007.png",
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-008.png"
+        ],
+        "recovery": [
+          "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-008.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.58,
+        0.58,
+        0.58
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ff7b24"
+    }
+  ],
+  "moveProjectiles": {
+    "kickright": [
+      {
+        "id": "kickright-puppet-flame-stream",
+        "projectileId": "puppet-flame-stream",
+        "kind": "projectile",
+        "label": "Puppet Flame Stream",
+        "spawnFrame": 13,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 10.5,
+        "forwardVelocity": 10.5,
+        "homingMode": "limited",
+        "homingStrength": 1.5,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.58,
+            0.46,
+            0.82
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }

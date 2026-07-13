@@ -1,0 +1,46 @@
+{
+  "characterId": "daichi",
+  "assetId": "daichi-energy-orb",
+  "classification": "projectile",
+  "source": "daichi original sprite sheet",
+  "sourceSheetPath": "/characters/daichi/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 26,
+      "path": "/characters/daichi/frames/frame-026.png",
+      "cropBox": [
+        485,
+        501,
+        519,
+        521
+      ],
+      "output": "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-000.png"
+    },
+    {
+      "index": 28,
+      "path": "/characters/daichi/frames/frame-028.png",
+      "cropBox": [
+        887,
+        501,
+        921,
+        521
+      ],
+      "output": "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-001.png"
+    },
+    {
+      "index": 30,
+      "path": "/characters/daichi/frames/frame-030.png",
+      "cropBox": [
+        1291,
+        501,
+        1321,
+        521
+      ],
+      "output": "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-002.png"
+    }
+  ],
+  "matchedMoves": [
+    "kickright",
+    "cmd:f+1"
+  ]
+}

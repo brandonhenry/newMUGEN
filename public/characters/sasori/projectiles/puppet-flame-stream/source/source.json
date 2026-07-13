@@ -1,0 +1,111 @@
+{
+  "characterId": "sasori",
+  "assetId": "puppet-flame-stream",
+  "classification": "projectile",
+  "source": "sasori original sprite sheet",
+  "sourceSheetPath": "/characters/sasori/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 15,
+      "path": "/characters/sasori/frames/frame-015.png",
+      "cropBox": [
+        486,
+        222,
+        522,
+        242
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-000.png"
+    },
+    {
+      "index": 17,
+      "path": "/characters/sasori/frames/frame-017.png",
+      "cropBox": [
+        774,
+        222,
+        810,
+        242
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-001.png"
+    },
+    {
+      "index": 19,
+      "path": "/characters/sasori/frames/frame-019.png",
+      "cropBox": [
+        1057,
+        219,
+        1102,
+        242
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-002.png"
+    },
+    {
+      "index": 21,
+      "path": "/characters/sasori/frames/frame-021.png",
+      "cropBox": [
+        1344,
+        219,
+        1391,
+        242
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-003.png"
+    },
+    {
+      "index": 23,
+      "path": "/characters/sasori/frames/frame-023.png",
+      "cropBox": [
+        1635,
+        215,
+        1676,
+        242
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-004.png"
+    },
+    {
+      "index": 25,
+      "path": "/characters/sasori/frames/frame-025.png",
+      "cropBox": [
+        194,
+        343,
+        237,
+        365
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-005.png"
+    },
+    {
+      "index": 29,
+      "path": "/characters/sasori/frames/frame-029.png",
+      "cropBox": [
+        765,
+        340,
+        819,
+        365
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-006.png"
+    },
+    {
+      "index": 35,
+      "path": "/characters/sasori/frames/frame-035.png",
+      "cropBox": [
+        1639,
+        341,
+        1672,
+        365
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-007.png"
+    },
+    {
+      "index": 38,
+      "path": "/characters/sasori/frames/frame-038.png",
+      "cropBox": [
+        342,
+        464,
+        378,
+        488
+      ],
+      "output": "/characters/sasori/projectiles/puppet-flame-stream/frames/frame-008.png"
+    }
+  ],
+  "matchedMoves": [
+    "kickright"
+  ]
+}

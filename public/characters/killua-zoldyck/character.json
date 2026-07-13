@@ -2031,7 +2031,7 @@
       },
       "199": {
         "width": 0.86,
-        "height": 0.86,
+        "height": 0.86367,
         "voxelScaleX": 1,
         "voxelScaleY": 1,
         "offsetX": 0
@@ -2047,7 +2047,7 @@
       },
       "199": {
         "width": 1,
-        "height": 1,
+        "height": 0.88424,
         "voxelScaleX": 1,
         "voxelScaleY": 1,
         "offsetX": 0
@@ -3615,6 +3615,91 @@
       "/characters/killua-zoldyck/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "electric-yo-yo-orb",
+      "name": "Electric Yo-Yo Orb",
+      "kind": "projectile",
+      "sourcePath": "/characters/killua-zoldyck/animation-sheet.png",
+      "frames": [
+        "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-000.png",
+        "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-001.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-000.png",
+          "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-001.png"
+        ],
+        "recovery": [
+          "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-001.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.46,
+        0.46,
+        0.46
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#43dfff"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:qcf+1": [
+      {
+        "id": "cmd-qcf-1-electric-yo-yo-orb",
+        "projectileId": "electric-yo-yo-orb",
+        "kind": "projectile",
+        "label": "Electric Yo-Yo Orb",
+        "spawnFrame": 8,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 10.5,
+        "forwardVelocity": 10.5,
+        "homingMode": "limited",
+        "homingStrength": 3.6,
+        "homingTurnRate": 4,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.46,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }

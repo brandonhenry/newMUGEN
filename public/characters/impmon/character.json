@@ -872,8 +872,78 @@
       "recoveryFrames": 18
     }
   },
-  "effects": [],
-  "moveEffects": {},
+  "effects": [
+    {
+      "id": "impmon-cast-ring",
+      "name": "Impmon Cast Ring",
+      "spriteSheetPath": "/characters/impmon/animation-sheet.png",
+      "frames": [
+        "/characters/impmon/effects/impmon-cast-ring/frames/frame-000.png",
+        "/characters/impmon/effects/impmon-cast-ring/frames/frame-001.png"
+      ],
+      "fps": 18,
+      "loop": true,
+      "billboard": true,
+      "blendMode": "additive",
+      "anchor": "body",
+      "defaultTransform": {
+        "position": [
+          0,
+          0.9,
+          0.2
+        ],
+        "scale": [
+          0.62,
+          0.62,
+          0.62
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "opacity": 1,
+        "color": "#ffffff"
+      }
+    }
+  ],
+  "moveEffects": {
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-impmon-cast-ring",
+        "effectId": "impmon-cast-ring",
+        "label": "Impmon Cast Ring",
+        "startFrame": 23,
+        "endFrame": 29,
+        "layer": 1,
+        "mirrorWithFacing": true,
+        "anchor": "body",
+        "loop": true,
+        "keyframes": [
+          {
+            "frame": 23,
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "opacity": 1,
+            "color": "#ffffff"
+          }
+        ]
+      }
+    ]
+  },
   "spriteFrameEdits": {},
   "aiProfile": {
     "aggression": 0.71,
@@ -1727,7 +1797,7 @@
       },
       "11": {
         "width": 0.53879,
-        "height": 0.53879,
+        "height": 0.43813,
         "offsetX": 0,
         "flipX": false,
         "flipY": false,
@@ -1786,7 +1856,7 @@
     "crouchBlock": {
       "46": {
         "width": 0.50125,
-        "height": 0.50125,
+        "height": 0.43813,
         "offsetX": 0,
         "flipX": false,
         "flipY": false,
@@ -4980,6 +5050,95 @@
     "height": 1
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "bada-boom-fireball",
+      "name": "Bada Boom Fireball",
+      "kind": "projectile",
+      "sourcePath": "/characters/impmon/animation-sheet.png",
+      "frames": [
+        "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-000.png",
+        "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-001.png",
+        "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-002.png",
+        "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-003.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-000.png",
+          "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-001.png",
+          "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-002.png",
+          "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-003.png"
+        ],
+        "recovery": [
+          "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-003.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ff8a24"
+    }
+  ],
+  "moveProjectiles": {
+    "jableft": [
+      {
+        "id": "jableft-bada-boom-fireball",
+        "projectileId": "bada-boom-fireball",
+        "kind": "projectile",
+        "label": "Bada Boom Fireball",
+        "spawnFrame": 8,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 9.5,
+        "forwardVelocity": 9.5,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.46,
+            0.66
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }

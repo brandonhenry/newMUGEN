@@ -1,0 +1,34 @@
+{
+  "characterId": "omega-zero",
+  "assetId": "omega-energy-orb",
+  "classification": "projectile",
+  "source": "omega-zero original sprite sheet",
+  "sourceSheetPath": "/characters/omega-zero/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 123,
+      "path": "/characters/omega-zero/frames/frame-123.png",
+      "cropBox": [
+        435,
+        1037,
+        461,
+        1063
+      ],
+      "output": "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-000.png"
+    },
+    {
+      "index": 124,
+      "path": "/characters/omega-zero/frames/frame-124.png",
+      "cropBox": [
+        564,
+        1047,
+        588,
+        1063
+      ],
+      "output": "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-001.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:qcf+4"
+  ]
+}

@@ -10815,9 +10815,9 @@
     },
     "crouch": {
       "124": {
-        "width": 1.06,
-        "height": 0.72,
-        "offsetX": 0,
+        "width": 1.16,
+        "height": 0.82875,
+        "offsetX": 0.0,
         "flipX": false,
         "flipY": false
       }
@@ -10832,8 +10832,8 @@
       },
       "522": {
         "width": 0.68,
-        "height": 0.56,
-        "offsetX": 0,
+        "height": 0.72982,
+        "offsetX": 0.0,
         "flipX": false,
         "flipY": false
       }
@@ -10915,36 +10915,28 @@
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "37": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "38": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "39": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "win": {
@@ -11503,27 +11495,21 @@
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "37": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "38": {
         "width": 0.97,
         "height": 0.97,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "sprint": {
@@ -12893,5 +12879,6 @@
     "shadowClone": [
       "/characters/kiro/sounds/voices/S2.wav"
     ]
-  }
+  },
+  "projectiles": []
 }

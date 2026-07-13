@@ -1,0 +1,23 @@
+{
+  "characterId": "agumon",
+  "assetId": "pepper-breath-fireball",
+  "classification": "projectile",
+  "source": "agumon original sprite sheet",
+  "sourceSheetPath": "/characters/agumon/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 155,
+      "path": "/characters/agumon/frames/frame-155.png",
+      "cropBox": [
+        1383,
+        1254,
+        1399,
+        1270
+      ],
+      "output": "/characters/agumon/projectiles/pepper-breath-fireball/frames/frame-000.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:qcf+4"
+  ]
+}

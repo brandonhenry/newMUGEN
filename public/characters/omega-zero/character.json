@@ -855,8 +855,82 @@
       "label": "Omega Zero Kick Ender"
     }
   },
-  "effects": [],
-  "moveEffects": {},
+  "effects": [
+    {
+      "id": "omega-saber-arc",
+      "name": "Omega Saber Arc",
+      "spriteSheetPath": "/characters/omega-zero/animation-sheet.png",
+      "frames": [
+        "/characters/omega-zero/effects/omega-saber-arc/frames/frame-000.png",
+        "/characters/omega-zero/effects/omega-saber-arc/frames/frame-001.png",
+        "/characters/omega-zero/effects/omega-saber-arc/frames/frame-002.png",
+        "/characters/omega-zero/effects/omega-saber-arc/frames/frame-003.png",
+        "/characters/omega-zero/effects/omega-saber-arc/frames/frame-004.png",
+        "/characters/omega-zero/effects/omega-saber-arc/frames/frame-005.png"
+      ],
+      "fps": 18,
+      "loop": true,
+      "billboard": true,
+      "blendMode": "additive",
+      "anchor": "hitbox",
+      "defaultTransform": {
+        "position": [
+          0,
+          0.1,
+          0.35
+        ],
+        "scale": [
+          0.72,
+          0.72,
+          0.72
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "opacity": 1,
+        "color": "#ffffff"
+      }
+    }
+  ],
+  "moveEffects": {
+    "kickright": [
+      {
+        "id": "kickright-omega-saber-arc",
+        "effectId": "omega-saber-arc",
+        "label": "Omega Saber Arc",
+        "startFrame": 12,
+        "endFrame": 30,
+        "layer": 1,
+        "mirrorWithFacing": true,
+        "anchor": "hitbox",
+        "loop": true,
+        "keyframes": [
+          {
+            "frame": 12,
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "opacity": 1,
+            "color": "#ffffff"
+          }
+        ]
+      }
+    ]
+  },
   "spriteFrameEdits": {},
   "aiProfile": {
     "aggression": 0.6,
@@ -1649,7 +1723,7 @@
       },
       "113": {
         "width": 0.66822,
-        "height": 0.66822,
+        "height": 0.57021,
         "voxelScaleX": 0.89314,
         "voxelScaleY": 1.11965,
         "offsetX": 0,
@@ -1659,7 +1733,7 @@
     "crouchBlock": {
       "113": {
         "width": 0.66822,
-        "height": 0.66822,
+        "height": 0.57021,
         "voxelScaleX": 0.89314,
         "voxelScaleY": 1.11965,
         "offsetX": 0,
@@ -4439,6 +4513,91 @@
     "height": 1.26
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "omega-energy-orb",
+      "name": "Omega Energy Orb",
+      "kind": "projectile",
+      "sourcePath": "/characters/omega-zero/animation-sheet.png",
+      "frames": [
+        "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-000.png",
+        "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-001.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-000.png",
+          "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-001.png"
+        ],
+        "recovery": [
+          "/characters/omega-zero/projectiles/omega-energy-orb/frames/frame-001.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.46,
+        0.46,
+        0.46
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#43dfff"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-omega-energy-orb",
+        "projectileId": "omega-energy-orb",
+        "kind": "projectile",
+        "label": "Omega Energy Orb",
+        "spawnFrame": 18,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 10.5,
+        "forwardVelocity": 10.5,
+        "homingMode": "limited",
+        "homingStrength": 3.6,
+        "homingTurnRate": 4,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.46,
+            0.62
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }

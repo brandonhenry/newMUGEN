@@ -1,0 +1,84 @@
+{
+  "characterId": "majin-buu",
+  "assetId": "majin-ki-bolt",
+  "classification": "projectile",
+  "source": "majin-buu original sprite sheet",
+  "sourceSheetPath": "/characters/majin-buu/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 88,
+      "path": "/characters/majin-buu/frames/frame-088.png",
+      "cropBox": [
+        1146,
+        701,
+        1161,
+        710
+      ],
+      "output": "/characters/majin-buu/projectiles/majin-ki-bolt/frames/frame-000.png"
+    },
+    {
+      "index": 90,
+      "path": "/characters/majin-buu/frames/frame-090.png",
+      "cropBox": [
+        1276,
+        701,
+        1298,
+        711
+      ],
+      "output": "/characters/majin-buu/projectiles/majin-ki-bolt/frames/frame-001.png"
+    },
+    {
+      "index": 93,
+      "path": "/characters/majin-buu/frames/frame-093.png",
+      "cropBox": [
+        125,
+        785,
+        140,
+        794
+      ],
+      "output": "/characters/majin-buu/projectiles/majin-ki-bolt/frames/frame-002.png"
+    },
+    {
+      "index": 95,
+      "path": "/characters/majin-buu/frames/frame-095.png",
+      "cropBox": [
+        245,
+        785,
+        263,
+        795
+      ],
+      "output": "/characters/majin-buu/projectiles/majin-ki-bolt/frames/frame-003.png"
+    },
+    {
+      "index": 180,
+      "path": "/characters/majin-buu/frames/frame-180.png",
+      "cropBox": [
+        125,
+        1449,
+        140,
+        1458
+      ],
+      "output": "/characters/majin-buu/projectiles/majin-ki-bolt/frames/frame-004.png"
+    },
+    {
+      "index": 182,
+      "path": "/characters/majin-buu/frames/frame-182.png",
+      "cropBox": [
+        245,
+        1449,
+        263,
+        1459
+      ],
+      "output": "/characters/majin-buu/projectiles/majin-ki-bolt/frames/frame-005.png"
+    }
+  ],
+  "matchedMoves": [
+    "jabright",
+    "cmd:d/f+2",
+    "cmd:FC+2",
+    "cmd:1+3",
+    "cmd:2+3",
+    "cmd:FC+1",
+    "cmd:qcf+4"
+  ]
+}

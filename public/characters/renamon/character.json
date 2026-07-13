@@ -128,8 +128,7 @@
       "/characters/renamon/frames/frame-315.png",
       "/characters/renamon/frames/frame-316.png",
       "/characters/renamon/frames/frame-317.png",
-      "/characters/renamon/frames/frame-318.png",
-      "/characters/renamon/frames/frame-319.png"
+      "/characters/renamon/frames/frame-318.png"
     ],
     "cmd:qcf+4": [],
     "cmd:WS+4": [
@@ -147,9 +146,7 @@
     "cmd:FC+1": [
       "/characters/renamon/frames/frame-274.png",
       "/characters/renamon/frames/frame-275.png",
-      "/characters/renamon/frames/frame-276.png",
       "/characters/renamon/frames/frame-277.png",
-      "/characters/renamon/frames/frame-278.png",
       "/characters/renamon/frames/frame-279.png",
       "/characters/renamon/frames/frame-280.png",
       "/characters/renamon/frames/frame-281.png",
@@ -160,13 +157,10 @@
       "/characters/renamon/frames/frame-284.png",
       "/characters/renamon/frames/frame-285.png",
       "/characters/renamon/frames/frame-286.png",
-      "/characters/renamon/frames/frame-287.png",
       "/characters/renamon/frames/frame-288.png",
       "/characters/renamon/frames/frame-289.png",
-      "/characters/renamon/frames/frame-290.png",
       "/characters/renamon/frames/frame-291.png",
-      "/characters/renamon/frames/frame-292.png",
-      "/characters/renamon/frames/frame-293.png"
+      "/characters/renamon/frames/frame-292.png"
     ],
     "cmd:1+2": [
       "/characters/renamon/frames/frame-024.png",
@@ -194,7 +188,6 @@
       "/characters/renamon/frames/frame-096.png",
       "/characters/renamon/frames/frame-097.png",
       "/characters/renamon/frames/frame-098.png",
-      "/characters/renamon/frames/frame-099.png",
       "/characters/renamon/frames/frame-100.png",
       "/characters/renamon/frames/frame-101.png",
       "/characters/renamon/frames/frame-102.png",
@@ -210,7 +203,6 @@
       "/characters/renamon/frames/frame-259.png",
       "/characters/renamon/frames/frame-260.png",
       "/characters/renamon/frames/frame-261.png",
-      "/characters/renamon/frames/frame-262.png",
       "/characters/renamon/frames/frame-263.png"
     ],
     "cmd:3+4": [
@@ -234,8 +226,7 @@
       "/characters/renamon/frames/frame-299.png",
       "/characters/renamon/frames/frame-300.png",
       "/characters/renamon/frames/frame-301.png",
-      "/characters/renamon/frames/frame-302.png",
-      "/characters/renamon/frames/frame-303.png"
+      "/characters/renamon/frames/frame-302.png"
     ]
   },
   "animationFrameRates": {
@@ -1497,7 +1488,7 @@
       },
       "114": {
         "width": 0.9941,
-        "height": 0.9941,
+        "height": 0.8577,
         "voxelScaleX": 1.20712,
         "voxelScaleY": 0.82842,
         "offsetX": 0
@@ -1534,7 +1525,7 @@
     "crouchBlock": {
       "90": {
         "width": 0.8044,
-        "height": 0.8044,
+        "height": 0.80725,
         "voxelScaleX": 0.82877,
         "voxelScaleY": 1.2066,
         "offsetX": 0
@@ -3924,6 +3915,232 @@
     "height": 0.69
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "diamond-storm-shard",
+      "name": "Diamond Storm Shard",
+      "kind": "projectile",
+      "sourcePath": "/characters/renamon/animation-sheet.png",
+      "frames": [
+        "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-000.png",
+        "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-001.png",
+        "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-002.png",
+        "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-003.png",
+        "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-004.png",
+        "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-005.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-000.png",
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-001.png",
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-002.png",
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-003.png",
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-004.png",
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-005.png"
+        ],
+        "recovery": [
+          "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-005.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#78e8ff"
+    },
+    {
+      "id": "fox-fire-projectile",
+      "name": "Fox Fire",
+      "kind": "projectile",
+      "sourcePath": "/characters/renamon/animation-sheet.png",
+      "frames": [
+        "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-000.png",
+        "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-001.png",
+        "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-002.png",
+        "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-003.png",
+        "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-004.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-000.png",
+          "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-001.png",
+          "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-002.png",
+          "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-003.png",
+          "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-004.png"
+        ],
+        "recovery": [
+          "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-004.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ff8a24"
+    }
+  ],
+  "moveProjectiles": {
+    "jabright": [
+      {
+        "id": "jabright-diamond-storm-shard",
+        "projectileId": "diamond-storm-shard",
+        "kind": "projectile",
+        "label": "Diamond Storm Shard",
+        "spawnFrame": 12,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 12,
+        "forwardVelocity": 12,
+        "homingMode": "limited",
+        "homingStrength": 2.6,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.36,
+            0.34,
+            0.6
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ],
+    "cmd:2+4": [
+      {
+        "id": "cmd-2-4-fox-fire-projectile",
+        "projectileId": "fox-fire-projectile",
+        "kind": "projectile",
+        "label": "Fox Fire",
+        "spawnFrame": 27,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 9.5,
+        "forwardVelocity": 9.5,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.46,
+            0.66
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ],
+    "cmd:FC+1": [
+      {
+        "id": "cmd-fc-1-fox-fire-projectile",
+        "projectileId": "fox-fire-projectile",
+        "kind": "projectile",
+        "label": "Fox Fire",
+        "spawnFrame": 13,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 9.5,
+        "forwardVelocity": 9.5,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.46,
+            0.66
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }

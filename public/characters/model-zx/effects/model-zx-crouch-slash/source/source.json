@@ -1,0 +1,34 @@
+{
+  "characterId": "model-zx",
+  "assetId": "model-zx-crouch-slash",
+  "classification": "effect",
+  "source": "model-zx original sprite sheet",
+  "sourceSheetPath": "/characters/model-zx/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 119,
+      "path": "/characters/model-zx/frames/frame-119.png",
+      "cropBox": [
+        1047,
+        751,
+        1115,
+        766
+      ],
+      "output": "/characters/model-zx/effects/model-zx-crouch-slash/frames/frame-000.png"
+    },
+    {
+      "index": 121,
+      "path": "/characters/model-zx/frames/frame-121.png",
+      "cropBox": [
+        129,
+        828,
+        152,
+        843
+      ],
+      "output": "/characters/model-zx/effects/model-zx-crouch-slash/frames/frame-001.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:FC+1"
+  ]
+}

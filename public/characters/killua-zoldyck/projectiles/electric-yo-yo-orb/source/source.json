@@ -1,0 +1,34 @@
+{
+  "characterId": "killua-zoldyck",
+  "assetId": "electric-yo-yo-orb",
+  "classification": "projectile",
+  "source": "killua-zoldyck original sprite sheet",
+  "sourceSheetPath": "/characters/killua-zoldyck/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 299,
+      "path": "/characters/killua-zoldyck/frames/frame-299.png",
+      "cropBox": [
+        281,
+        2941,
+        305,
+        2970
+      ],
+      "output": "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-000.png"
+    },
+    {
+      "index": 301,
+      "path": "/characters/killua-zoldyck/frames/frame-301.png",
+      "cropBox": [
+        405,
+        2945,
+        422,
+        2970
+      ],
+      "output": "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-001.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:qcf+1"
+  ]
+}

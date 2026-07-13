@@ -1950,7 +1950,7 @@
       },
       "176": {
         "width": 0.997,
-        "height": 0.917,
+        "height": 0.87566,
         "offsetX": 0
       }
     },
@@ -2650,7 +2650,7 @@
     "crouchBlock": {
       "176": {
         "width": 0.997,
-        "height": 0.917,
+        "height": 0.87566,
         "offsetX": 0
       }
     },
@@ -2913,6 +2913,91 @@
       "/characters/nami/sounds/voices/win-01.wav"
     ]
   },
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "thunder-tempo-bolt",
+      "name": "Thunder Tempo Bolt",
+      "kind": "projectile",
+      "sourcePath": "/characters/nami/animation-sheet.png",
+      "frames": [
+        "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-000.png",
+        "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-001.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-000.png",
+          "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-001.png"
+        ],
+        "recovery": [
+          "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-001.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ffe873"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:3+4": [
+      {
+        "id": "cmd-3-4-thunder-tempo-bolt",
+        "projectileId": "thunder-tempo-bolt",
+        "kind": "projectile",
+        "label": "Thunder Tempo Bolt",
+        "spawnFrame": 22,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 12.5,
+        "forwardVelocity": 12.5,
+        "homingMode": "limited",
+        "homingStrength": 2.4,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.42,
+            0.76
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }

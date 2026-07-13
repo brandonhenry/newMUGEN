@@ -1,0 +1,56 @@
+{
+  "characterId": "impmon",
+  "assetId": "bada-boom-fireball",
+  "classification": "projectile",
+  "source": "impmon original sprite sheet",
+  "sourceSheetPath": "/characters/impmon/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 64,
+      "path": "/characters/impmon/frames/frame-064.png",
+      "cropBox": [
+        915,
+        677,
+        930,
+        692
+      ],
+      "output": "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-000.png"
+    },
+    {
+      "index": 65,
+      "path": "/characters/impmon/frames/frame-065.png",
+      "cropBox": [
+        1119,
+        679,
+        1135,
+        692
+      ],
+      "output": "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-001.png"
+    },
+    {
+      "index": 66,
+      "path": "/characters/impmon/frames/frame-066.png",
+      "cropBox": [
+        1325,
+        678,
+        1340,
+        692
+      ],
+      "output": "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-002.png"
+    },
+    {
+      "index": 68,
+      "path": "/characters/impmon/frames/frame-068.png",
+      "cropBox": [
+        1733,
+        679,
+        1751,
+        692
+      ],
+      "output": "/characters/impmon/projectiles/bada-boom-fireball/frames/frame-003.png"
+    }
+  ],
+  "matchedMoves": [
+    "jableft"
+  ]
+}

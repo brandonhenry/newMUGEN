@@ -185,7 +185,6 @@
     "cmd:O+2": [
       "/characters/beetlemon/frames/frame-324.png",
       "/characters/beetlemon/frames/frame-325.png",
-      "/characters/beetlemon/frames/frame-326.png",
       "/characters/beetlemon/frames/frame-327.png",
       "/characters/beetlemon/frames/frame-328.png",
       "/characters/beetlemon/frames/frame-329.png",
@@ -845,8 +844,77 @@
       "hitLevel": "mid"
     }
   },
-  "effects": [],
-  "moveEffects": {},
+  "effects": [
+    {
+      "id": "beetlemon-aura-spark",
+      "name": "Beetlemon Aura Spark",
+      "spriteSheetPath": "/characters/beetlemon/animation-sheet.png",
+      "frames": [
+        "/characters/beetlemon/effects/beetlemon-aura-spark/frames/frame-000.png"
+      ],
+      "fps": 18,
+      "loop": false,
+      "billboard": true,
+      "blendMode": "additive",
+      "anchor": "body",
+      "defaultTransform": {
+        "position": [
+          0,
+          0.9,
+          0.2
+        ],
+        "scale": [
+          0.62,
+          0.62,
+          0.62
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "opacity": 1,
+        "color": "#ffffff"
+      }
+    }
+  ],
+  "moveEffects": {
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-beetlemon-aura-spark",
+        "effectId": "beetlemon-aura-spark",
+        "label": "Beetlemon Aura Spark",
+        "startFrame": 23,
+        "endFrame": 29,
+        "layer": 1,
+        "mirrorWithFacing": true,
+        "anchor": "body",
+        "loop": false,
+        "keyframes": [
+          {
+            "frame": 23,
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "opacity": 1,
+            "color": "#ffffff"
+          }
+        ]
+      }
+    ]
+  },
   "spriteFrameEdits": {},
   "aiProfile": {
     "aggression": 0.65,
@@ -1518,7 +1586,7 @@
       },
       "74": {
         "width": 0.76,
-        "height": 0.65,
+        "height": 0.64147,
         "offsetX": 0,
         "flipX": true,
         "flipY": false
@@ -1541,7 +1609,7 @@
     "crouchBlock": {
       "331": {
         "width": 0.67,
-        "height": 0.88,
+        "height": 0.71705,
         "offsetX": 0,
         "flipX": false,
         "flipY": false

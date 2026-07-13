@@ -1,0 +1,68 @@
+{
+  "characterId": "renamon",
+  "assetId": "fox-fire-projectile",
+  "classification": "projectile",
+  "source": "renamon original sprite sheet",
+  "sourceSheetPath": "/characters/renamon/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 262,
+      "path": "/characters/renamon/frames/frame-262.png",
+      "cropBox": [
+        1159,
+        2820,
+        1172,
+        2834
+      ],
+      "output": "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-000.png"
+    },
+    {
+      "index": 264,
+      "path": "/characters/renamon/frames/frame-264.png",
+      "cropBox": [
+        49,
+        2947,
+        62,
+        2963
+      ],
+      "output": "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-001.png"
+    },
+    {
+      "index": 268,
+      "path": "/characters/renamon/frames/frame-268.png",
+      "cropBox": [
+        493,
+        2949,
+        506,
+        2963
+      ],
+      "output": "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-002.png"
+    },
+    {
+      "index": 276,
+      "path": "/characters/renamon/frames/frame-276.png",
+      "cropBox": [
+        49,
+        3076,
+        61,
+        3092
+      ],
+      "output": "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-003.png"
+    },
+    {
+      "index": 278,
+      "path": "/characters/renamon/frames/frame-278.png",
+      "cropBox": [
+        271,
+        3081,
+        284,
+        3092
+      ],
+      "output": "/characters/renamon/projectiles/fox-fire-projectile/frames/frame-004.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:2+4",
+    "cmd:FC+1"
+  ]
+}

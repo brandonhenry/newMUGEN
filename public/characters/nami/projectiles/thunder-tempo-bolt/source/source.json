@@ -1,0 +1,34 @@
+{
+  "characterId": "nami",
+  "assetId": "thunder-tempo-bolt",
+  "classification": "projectile",
+  "source": "nami original sprite sheet",
+  "sourceSheetPath": "/characters/nami/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 30,
+      "path": "/characters/nami/frames/frame-030.png",
+      "cropBox": [
+        26,
+        286,
+        76,
+        308
+      ],
+      "output": "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-000.png"
+    },
+    {
+      "index": 32,
+      "path": "/characters/nami/frames/frame-032.png",
+      "cropBox": [
+        245,
+        286,
+        300,
+        309
+      ],
+      "output": "/characters/nami/projectiles/thunder-tempo-bolt/frames/frame-001.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:3+4"
+  ]
+}

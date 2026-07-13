@@ -1,0 +1,78 @@
+{
+  "characterId": "renamon",
+  "assetId": "diamond-storm-shard",
+  "classification": "projectile",
+  "source": "renamon original sprite sheet",
+  "sourceSheetPath": "/characters/renamon/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 17,
+      "path": "/characters/renamon/frames/frame-017.png",
+      "cropBox": [
+        608,
+        248,
+        613,
+        254
+      ],
+      "output": "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-000.png"
+    },
+    {
+      "index": 18,
+      "path": "/characters/renamon/frames/frame-018.png",
+      "cropBox": [
+        719,
+        248,
+        724,
+        254
+      ],
+      "output": "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-001.png"
+    },
+    {
+      "index": 19,
+      "path": "/characters/renamon/frames/frame-019.png",
+      "cropBox": [
+        826,
+        237,
+        839,
+        254
+      ],
+      "output": "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-002.png"
+    },
+    {
+      "index": 20,
+      "path": "/characters/renamon/frames/frame-020.png",
+      "cropBox": [
+        937,
+        237,
+        950,
+        254
+      ],
+      "output": "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-003.png"
+    },
+    {
+      "index": 21,
+      "path": "/characters/renamon/frames/frame-021.png",
+      "cropBox": [
+        1047,
+        230,
+        1062,
+        254
+      ],
+      "output": "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-004.png"
+    },
+    {
+      "index": 22,
+      "path": "/characters/renamon/frames/frame-022.png",
+      "cropBox": [
+        1155,
+        231,
+        1175,
+        254
+      ],
+      "output": "/characters/renamon/projectiles/diamond-storm-shard/frames/frame-005.png"
+    }
+  ],
+  "matchedMoves": [
+    "jabright"
+  ]
+}

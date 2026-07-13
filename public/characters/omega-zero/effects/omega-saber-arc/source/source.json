@@ -1,0 +1,78 @@
+{
+  "characterId": "omega-zero",
+  "assetId": "omega-saber-arc",
+  "classification": "effect",
+  "source": "omega-zero original sprite sheet",
+  "sourceSheetPath": "/characters/omega-zero/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 74,
+      "path": "/characters/omega-zero/frames/frame-074.png",
+      "cropBox": [
+        298,
+        658,
+        342,
+        675
+      ],
+      "output": "/characters/omega-zero/effects/omega-saber-arc/frames/frame-000.png"
+    },
+    {
+      "index": 75,
+      "path": "/characters/omega-zero/frames/frame-075.png",
+      "cropBox": [
+        425,
+        668,
+        470,
+        675
+      ],
+      "output": "/characters/omega-zero/effects/omega-saber-arc/frames/frame-001.png"
+    },
+    {
+      "index": 82,
+      "path": "/characters/omega-zero/frames/frame-082.png",
+      "cropBox": [
+        1324,
+        662,
+        1363,
+        675
+      ],
+      "output": "/characters/omega-zero/effects/omega-saber-arc/frames/frame-002.png"
+    },
+    {
+      "index": 83,
+      "path": "/characters/omega-zero/frames/frame-083.png",
+      "cropBox": [
+        1461,
+        643,
+        1482,
+        675
+      ],
+      "output": "/characters/omega-zero/effects/omega-saber-arc/frames/frame-003.png"
+    },
+    {
+      "index": 87,
+      "path": "/characters/omega-zero/frames/frame-087.png",
+      "cropBox": [
+        439,
+        747,
+        456,
+        772
+      ],
+      "output": "/characters/omega-zero/effects/omega-saber-arc/frames/frame-004.png"
+    },
+    {
+      "index": 88,
+      "path": "/characters/omega-zero/frames/frame-088.png",
+      "cropBox": [
+        570,
+        747,
+        581,
+        772
+      ],
+      "output": "/characters/omega-zero/effects/omega-saber-arc/frames/frame-005.png"
+    }
+  ],
+  "matchedMoves": [
+    "kickright"
+  ]
+}

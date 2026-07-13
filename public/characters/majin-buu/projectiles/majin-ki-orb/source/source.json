@@ -1,0 +1,23 @@
+{
+  "characterId": "majin-buu",
+  "assetId": "majin-ki-orb",
+  "classification": "projectile",
+  "source": "majin-buu original sprite sheet",
+  "sourceSheetPath": "/characters/majin-buu/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 151,
+      "path": "/characters/majin-buu/frames/frame-151.png",
+      "cropBox": [
+        667,
+        1202,
+        687,
+        1220
+      ],
+      "output": "/characters/majin-buu/projectiles/majin-ki-orb/frames/frame-000.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:O+2"
+  ]
+}

@@ -862,8 +862,139 @@
     "height": 1.02
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "daichi-energy-orb",
+      "name": "Daichi Energy Orb",
+      "kind": "projectile",
+      "sourcePath": "/characters/daichi/animation-sheet.png",
+      "frames": [
+        "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-000.png",
+        "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-001.png",
+        "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-002.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-000.png",
+          "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-001.png",
+          "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-002.png"
+        ],
+        "recovery": [
+          "/characters/daichi/projectiles/daichi-energy-orb/frames/frame-002.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.55,
+        0.55,
+        0.55
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ffe04f"
+    }
+  ],
+  "moveProjectiles": {
+    "kickright": [
+      {
+        "id": "kickright-daichi-energy-orb",
+        "projectileId": "daichi-energy-orb",
+        "kind": "projectile",
+        "label": "Daichi Energy Orb",
+        "spawnFrame": 12,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 8.5,
+        "forwardVelocity": 8.5,
+        "homingMode": "limited",
+        "homingStrength": 3.8,
+        "homingTurnRate": 4.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.56,
+            0.54,
+            0.66
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ],
+    "cmd:f+1": [
+      {
+        "id": "cmd-f-1-daichi-energy-orb",
+        "projectileId": "daichi-energy-orb",
+        "kind": "projectile",
+        "label": "Daichi Energy Orb",
+        "spawnFrame": 11,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 8.5,
+        "forwardVelocity": 8.5,
+        "homingMode": "limited",
+        "homingStrength": 3.8,
+        "homingTurnRate": 4.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.56,
+            0.54,
+            0.66
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  },
   "animationFrameScales": {
     "idle": {
       "0": {
@@ -1269,7 +1400,7 @@
       },
       "62": {
         "width": 1.27483,
-        "height": 1.27483,
+        "height": 0.91116,
         "offsetX": 0,
         "flipX": false,
         "flipY": false,
@@ -1322,7 +1453,7 @@
     "crouchBlock": {
       "62": {
         "width": 1.27483,
-        "height": 1.27483,
+        "height": 0.91116,
         "offsetX": 0,
         "flipX": false,
         "flipY": false,

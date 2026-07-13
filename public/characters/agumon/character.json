@@ -813,8 +813,91 @@
     "height": 0.96
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "pepper-breath-fireball",
+      "name": "Pepper Breath Fireball",
+      "kind": "projectile",
+      "sourcePath": "/characters/agumon/animation-sheet.png",
+      "frames": [
+        "/characters/agumon/projectiles/pepper-breath-fireball/frames/frame-000.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/agumon/projectiles/pepper-breath-fireball/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/agumon/projectiles/pepper-breath-fireball/frames/frame-000.png"
+        ],
+        "recovery": [
+          "/characters/agumon/projectiles/pepper-breath-fireball/frames/frame-000.png"
+        ]
+      },
+      "fps": 18,
+      "loop": false,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ff8a24"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-pepper-breath-fireball",
+        "projectileId": "pepper-breath-fireball",
+        "kind": "projectile",
+        "label": "Pepper Breath Fireball",
+        "spawnFrame": 23,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 9.5,
+        "forwardVelocity": 9.5,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.46,
+            0.66
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  },
   "animationFrameScales": {
     "idle": {
       "0": {
@@ -1479,7 +1562,7 @@
     "crouch": {
       "50": {
         "width": 1.23,
-        "height": 0.72,
+        "height": 0.71866,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1544,7 +1627,7 @@
     "crouchBlock": {
       "50": {
         "width": 1.23,
-        "height": 0.72,
+        "height": 0.71866,
         "offsetX": 0,
         "flipX": false,
         "flipY": false

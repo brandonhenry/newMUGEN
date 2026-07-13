@@ -1,0 +1,23 @@
+{
+  "characterId": "beetlemon",
+  "assetId": "beetlemon-aura-spark",
+  "classification": "effect",
+  "source": "beetlemon original sprite sheet",
+  "sourceSheetPath": "/characters/beetlemon/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 326,
+      "path": "/characters/beetlemon/frames/frame-326.png",
+      "cropBox": [
+        262,
+        5456,
+        272,
+        5484
+      ],
+      "output": "/characters/beetlemon/effects/beetlemon-aura-spark/frames/frame-000.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:O+2"
+  ]
+}

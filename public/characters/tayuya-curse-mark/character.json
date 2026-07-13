@@ -1359,7 +1359,7 @@
       },
       "7": {
         "width": 1.16,
-        "height": 1.16,
+        "height": 1.09226,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1410,7 +1410,7 @@
     "crouchBlock": {
       "0": {
         "width": 1.16,
-        "height": 1.16,
+        "height": 1.09226,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -2931,7 +2931,156 @@
     "height": 1.04
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {},
+  "projectiles": [
+    {
+      "id": "demonic-flute-note",
+      "name": "Demonic Flute Note",
+      "kind": "projectile",
+      "sourcePath": "/characters/tayuya-curse-mark/animation-sheet.png",
+      "frames": [
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-000.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-001.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-002.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-003.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-004.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-005.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-006.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-007.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-008.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-009.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-010.png",
+        "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-011.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-000.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-001.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-002.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-003.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-004.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-005.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-006.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-007.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-008.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-009.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-010.png",
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-011.png"
+        ],
+        "recovery": [
+          "/characters/tayuya-curse-mark/projectiles/demonic-flute-note/frames/frame-011.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.48,
+        0.48,
+        0.48
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ff69d4"
+    }
+  ],
+  "moveProjectiles": {
+    "jabright": [
+      {
+        "id": "jabright-demonic-flute-note",
+        "projectileId": "demonic-flute-note",
+        "kind": "projectile",
+        "label": "Demonic Flute Note",
+        "spawnFrame": 11,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 8,
+        "forwardVelocity": 8,
+        "homingMode": "limited",
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.48,
+            0.56
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ],
+    "kickright": [
+      {
+        "id": "kickright-demonic-flute-note",
+        "projectileId": "demonic-flute-note",
+        "kind": "projectile",
+        "label": "Demonic Flute Note",
+        "spawnFrame": 11,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 8,
+        "forwardVelocity": 8,
+        "homingMode": "limited",
+        "homingStrength": 4.2,
+        "homingTurnRate": 4.6,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.42,
+            0.48,
+            0.56
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  },
   "variantOf": "tayuya"
 }

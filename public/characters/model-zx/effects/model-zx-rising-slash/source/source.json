@@ -1,0 +1,78 @@
+{
+  "characterId": "model-zx",
+  "assetId": "model-zx-rising-slash",
+  "classification": "effect",
+  "source": "model-zx original sprite sheet",
+  "sourceSheetPath": "/characters/model-zx/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 199,
+      "path": "/characters/model-zx/frames/frame-199.png",
+      "cropBox": [
+        695,
+        1298,
+        714,
+        1305
+      ],
+      "output": "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-000.png"
+    },
+    {
+      "index": 200,
+      "path": "/characters/model-zx/frames/frame-200.png",
+      "cropBox": [
+        791,
+        1281,
+        806,
+        1305
+      ],
+      "output": "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-001.png"
+    },
+    {
+      "index": 202,
+      "path": "/characters/model-zx/frames/frame-202.png",
+      "cropBox": [
+        977,
+        1298,
+        996,
+        1305
+      ],
+      "output": "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-002.png"
+    },
+    {
+      "index": 203,
+      "path": "/characters/model-zx/frames/frame-203.png",
+      "cropBox": [
+        1073,
+        1281,
+        1088,
+        1305
+      ],
+      "output": "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-003.png"
+    },
+    {
+      "index": 204,
+      "path": "/characters/model-zx/frames/frame-204.png",
+      "cropBox": [
+        37,
+        1375,
+        56,
+        1382
+      ],
+      "output": "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-004.png"
+    },
+    {
+      "index": 206,
+      "path": "/characters/model-zx/frames/frame-206.png",
+      "cropBox": [
+        227,
+        1358,
+        242,
+        1382
+      ],
+      "output": "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-005.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:WS+4"
+  ]
+}

@@ -252,14 +252,8 @@
       "/characters/model-zx/frames/frame-238.png"
     ],
     "cmd:WS+4": [
-      "/characters/model-zx/frames/frame-199.png",
-      "/characters/model-zx/frames/frame-200.png",
       "/characters/model-zx/frames/frame-201.png",
-      "/characters/model-zx/frames/frame-202.png",
-      "/characters/model-zx/frames/frame-203.png",
-      "/characters/model-zx/frames/frame-204.png",
       "/characters/model-zx/frames/frame-205.png",
-      "/characters/model-zx/frames/frame-206.png",
       "/characters/model-zx/frames/frame-207.png",
       "/characters/model-zx/frames/frame-208.png"
     ],
@@ -270,9 +264,7 @@
       "/characters/model-zx/frames/frame-116.png",
       "/characters/model-zx/frames/frame-117.png",
       "/characters/model-zx/frames/frame-118.png",
-      "/characters/model-zx/frames/frame-119.png",
       "/characters/model-zx/frames/frame-120.png",
-      "/characters/model-zx/frames/frame-121.png",
       "/characters/model-zx/frames/frame-122.png"
     ],
     "cmd:FC+2": [
@@ -995,8 +987,150 @@
       "label": "Model ZX Kick Ender"
     }
   },
-  "effects": [],
-  "moveEffects": {},
+  "effects": [
+    {
+      "id": "model-zx-crouch-slash",
+      "name": "Model ZX Crouch Slash",
+      "spriteSheetPath": "/characters/model-zx/animation-sheet.png",
+      "frames": [
+        "/characters/model-zx/effects/model-zx-crouch-slash/frames/frame-000.png",
+        "/characters/model-zx/effects/model-zx-crouch-slash/frames/frame-001.png"
+      ],
+      "fps": 18,
+      "loop": true,
+      "billboard": true,
+      "blendMode": "additive",
+      "anchor": "hitbox",
+      "defaultTransform": {
+        "position": [
+          0,
+          0.1,
+          0.35
+        ],
+        "scale": [
+          0.72,
+          0.72,
+          0.72
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "opacity": 1,
+        "color": "#ffffff"
+      }
+    },
+    {
+      "id": "model-zx-rising-slash",
+      "name": "Model ZX Rising Slash",
+      "spriteSheetPath": "/characters/model-zx/animation-sheet.png",
+      "frames": [
+        "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-000.png",
+        "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-001.png",
+        "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-002.png",
+        "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-003.png",
+        "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-004.png",
+        "/characters/model-zx/effects/model-zx-rising-slash/frames/frame-005.png"
+      ],
+      "fps": 18,
+      "loop": true,
+      "billboard": true,
+      "blendMode": "additive",
+      "anchor": "hitbox",
+      "defaultTransform": {
+        "position": [
+          0,
+          0.1,
+          0.35
+        ],
+        "scale": [
+          0.72,
+          0.72,
+          0.72
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "opacity": 1,
+        "color": "#ffffff"
+      }
+    }
+  ],
+  "moveEffects": {
+    "cmd:FC+1": [
+      {
+        "id": "cmd-fc-1-model-zx-crouch-slash",
+        "effectId": "model-zx-crouch-slash",
+        "label": "Model ZX Crouch Slash",
+        "startFrame": 13,
+        "endFrame": 19,
+        "layer": 1,
+        "mirrorWithFacing": true,
+        "anchor": "hitbox",
+        "loop": true,
+        "keyframes": [
+          {
+            "frame": 13,
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "opacity": 1,
+            "color": "#ffffff"
+          }
+        ]
+      }
+    ],
+    "cmd:WS+4": [
+      {
+        "id": "cmd-ws-4-model-zx-rising-slash",
+        "effectId": "model-zx-rising-slash",
+        "label": "Model ZX Rising Slash",
+        "startFrame": 13,
+        "endFrame": 31,
+        "layer": 1,
+        "mirrorWithFacing": true,
+        "anchor": "hitbox",
+        "loop": true,
+        "keyframes": [
+          {
+            "frame": 13,
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "opacity": 1,
+            "color": "#ffffff"
+          }
+        ]
+      }
+    ]
+  },
   "spriteFrameEdits": {},
   "aiProfile": {
     "aggression": 0.73,
@@ -2004,7 +2138,7 @@
       },
       "384": {
         "width": 0.74189,
-        "height": 0.74189,
+        "height": 0.65154,
         "voxelScaleX": 1.23648,
         "voxelScaleY": 0.80875,
         "offsetX": 0
@@ -2013,7 +2147,7 @@
     "crouchBlock": {
       "310": {
         "width": 1.10118,
-        "height": 1.10118,
+        "height": 0.65154,
         "voxelScaleX": 1.17146,
         "voxelScaleY": 0.85363,
         "offsetX": 0

@@ -1,0 +1,34 @@
+{
+  "characterId": "impmon",
+  "assetId": "impmon-cast-ring",
+  "classification": "effect",
+  "source": "impmon original sprite sheet",
+  "sourceSheetPath": "/characters/impmon/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 92,
+      "path": "/characters/impmon/frames/frame-092.png",
+      "cropBox": [
+        1737,
+        897,
+        1747,
+        924
+      ],
+      "output": "/characters/impmon/effects/impmon-cast-ring/frames/frame-000.png"
+    },
+    {
+      "index": 94,
+      "path": "/characters/impmon/frames/frame-094.png",
+      "cropBox": [
+        2147,
+        897,
+        2157,
+        924
+      ],
+      "output": "/characters/impmon/effects/impmon-cast-ring/frames/frame-001.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:qcf+4"
+  ]
+}

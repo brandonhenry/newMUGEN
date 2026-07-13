@@ -28,6 +28,7 @@
     "spectator:load": "node scripts/spectator-load-test.mjs",
     "audit:knockdown": "node scripts/audit-knockdown-scale-continuity.mjs",
     "audit:attack-scale": "node scripts/audit-attack-scale-vs-idle.mjs",
+    "audit:spritesheet-projectiles": "node scripts/audit-spritesheet-projectiles.mjs",
     "fix:knockdown-scale": "node scripts/lock-knockdown-voxel-aspect.mjs --write",
     "preview:knockdown-scale": "node scripts/lock-knockdown-voxel-aspect.mjs",
     "fix:crouch-scale": "node scripts/lock-crouch-voxel-height.mjs --write",
