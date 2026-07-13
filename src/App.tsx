@@ -24582,7 +24582,7 @@ function FightScreen({
       setTrainingFrameNumbers((current) => [...current, event].slice(-8));
       window.setTimeout(() => {
         setTrainingFrameNumbers((current) => current.filter((item) => item.id !== event.id));
-      }, settings.display.reducedMotion ? 620 : 980);
+      }, settings.display.reducedMotion ? 620 : 1460);
     });
 
     if (!settings.training.frameAdvantageNumbers) setTrainingFrameNumbers([]);

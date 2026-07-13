@@ -10022,6 +10022,7 @@ button {
 }
 
 .training-frame-number {
+  --training-frame-travel-y: -42vh;
   display: block;
   min-width: 1.2em;
   pointer-events: none;
@@ -10037,7 +10038,7 @@ button {
     0 0 8px rgba(255, 255, 255, 0.72),
     0 0 22px currentColor,
     0 8px 24px rgba(0, 0, 0, 0.74);
-  animation: trainingFrameNumberRise 920ms cubic-bezier(0.16, 0.84, 0.28, 1) forwards;
+  animation: trainingFrameNumberRise 1400ms cubic-bezier(0.16, 0.72, 0.24, 1) forwards;
   will-change: transform, opacity, filter;
 }
 
@@ -10060,22 +10061,25 @@ button {
 @keyframes trainingFrameNumberRise {
   0% {
     opacity: 0;
-    transform: translateY(8px) scale(0.86);
+    transform: translateY(0) scale(0.86);
     filter: blur(3px);
   }
-  18% {
+  14% {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
   }
-  70% {
+  72% {
     opacity: 1;
-    transform: translateY(-28px) scale(1);
+    filter: blur(0);
+  }
+  88% {
+    opacity: 0.46;
     filter: blur(0);
   }
   100% {
     opacity: 0;
-    transform: translateY(-48px) scale(0.98);
+    transform: translateY(var(--training-frame-travel-y)) scale(0.98);
     filter: blur(2px);
   }
 }

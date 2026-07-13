@@ -1,6 +1,6 @@
 import { Bounds, ContactShadows, Environment, Html, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
-import { Component, Suspense, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ErrorInfo, type MutableRefObject, type ReactNode, type RefObject } from 'react';
+import { Component, Suspense, createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ErrorInfo, type MutableRefObject, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
@@ -754,18 +754,41 @@ function TrainingFrameNumberLayer({ events, reducedMotion }: { events: TrainingF
     <group>
       {events.map((event) => (
         <Html key={event.id} position={event.position} center zIndexRange={[18, 18]}>
-          <span
-            className={`training-frame-number ${trainingFrameNumberTone(event.frames)} ${reducedMotion ? 'reduced-motion' : ''}`}
-            data-testid="training-frame-number"
-            data-frame-kind={event.kind}
-            data-frame-value={event.frames}
-            aria-hidden="true"
-          >
-            {formatTrainingFrameNumber(event.frames)}
-          </span>
+          <TrainingFrameNumber event={event} reducedMotion={reducedMotion} />
         </Html>
       ))}
     </group>
+  );
+}
+
+function TrainingFrameNumber({ event, reducedMotion }: { event: TrainingFrameEvent; reducedMotion: boolean }) {
+  const numberRef = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const element = numberRef.current;
+    if (!element || reducedMotion) return;
+    const frameBounds = element.getBoundingClientRect();
+    const healthBars = Array.from(document.querySelectorAll<HTMLElement>('.fight-hud .health'));
+    const healthBarBottom = healthBars.reduce(
+      (lowest, healthBar) => Math.max(lowest, healthBar.getBoundingClientRect().bottom),
+      Math.max(88, window.innerHeight * 0.14)
+    );
+    const originCenterY = frameBounds.top + frameBounds.height / 2;
+    const travelY = trainingFrameTravelY(originCenterY, healthBarBottom, element.offsetHeight || frameBounds.height);
+    element.style.setProperty('--training-frame-travel-y', `${travelY}px`);
+  }, [event.id, reducedMotion]);
+
+  return (
+    <span
+      ref={numberRef}
+      className={`training-frame-number ${trainingFrameNumberTone(event.frames)} ${reducedMotion ? 'reduced-motion' : ''}`}
+      data-testid="training-frame-number"
+      data-frame-kind={event.kind}
+      data-frame-value={event.frames}
+      aria-hidden="true"
+    >
+      {formatTrainingFrameNumber(event.frames)}
+    </span>
   );
 }
 
@@ -777,6 +800,11 @@ export function trainingFrameNumberTone(frames: number) {
   if (frames > 0) return 'positive';
   if (frames < 0) return 'negative';
   return 'neutral';
+}
+
+export function trainingFrameTravelY(originCenterY: number, healthBarBottomY: number, frameHeight: number) {
+  const invisibleTargetCenterY = healthBarBottomY + 12 + frameHeight / 2;
+  return Math.min(0, Math.round(invisibleTargetCenterY - originCenterY));
 }
 
 function getMatchFighterTimeScale(match: MatchSnapshot, slot: 1 | 2) {

@@ -961,6 +961,9 @@ test('shows unsigned frame numbers by default and suppresses them from training 
   await expect(whiffNumber).toBeVisible({ timeout: 4000 });
   await expect(whiffNumber).not.toContainText(/[+-]/);
   await expect(whiffNumber).toHaveClass(/negative/);
+  await expect.poll(() => whiffNumber.evaluate((element) => (
+    Number.parseFloat(getComputedStyle(element).getPropertyValue('--training-frame-travel-y'))
+  ))).toBeLessThan(-100);
 
   await page.waitForTimeout(1100);
   await page.keyboard.press('Escape');
