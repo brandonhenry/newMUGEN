@@ -14,9 +14,16 @@
       "path": "/characters/dio/animation-sheet.png",
       "frameStart": 0,
       "frameCount": 209
+    },
+    {
+      "id": "the-world",
+      "name": "The World",
+      "path": "/characters/dio/the-world-sheet.png",
+      "frameStart": 210,
+      "frameCount": 60
     }
   ],
-  "spriteFrameCount": 210,
+  "spriteFrameCount": 270,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -303,6 +310,153 @@
     "crouchBlock": 5
   },
   "animationFps": 6,
+  "attackCompanion": {
+    "id": "the-world",
+    "displayName": "The World",
+    "animations": {
+      "stand-assault": [
+        "/characters/dio/frames/frame-210.png",
+        "/characters/dio/frames/frame-211.png",
+        "/characters/dio/frames/frame-212.png",
+        "/characters/dio/frames/frame-213.png",
+        "/characters/dio/frames/frame-214.png",
+        "/characters/dio/frames/frame-215.png",
+        "/characters/dio/frames/frame-216.png",
+        "/characters/dio/frames/frame-217.png",
+        "/characters/dio/frames/frame-218.png",
+        "/characters/dio/frames/frame-219.png",
+        "/characters/dio/frames/frame-220.png",
+        "/characters/dio/frames/frame-221.png"
+      ],
+      "quick-punch": [
+        "/characters/dio/frames/frame-222.png",
+        "/characters/dio/frames/frame-223.png",
+        "/characters/dio/frames/frame-224.png",
+        "/characters/dio/frames/frame-225.png",
+        "/characters/dio/frames/frame-226.png",
+        "/characters/dio/frames/frame-227.png",
+        "/characters/dio/frames/frame-228.png",
+        "/characters/dio/frames/frame-229.png",
+        "/characters/dio/frames/frame-230.png",
+        "/characters/dio/frames/frame-231.png"
+      ],
+      "low-strike": [
+        "/characters/dio/frames/frame-232.png",
+        "/characters/dio/frames/frame-233.png",
+        "/characters/dio/frames/frame-234.png",
+        "/characters/dio/frames/frame-235.png",
+        "/characters/dio/frames/frame-236.png"
+      ],
+      "kick-chain": [
+        "/characters/dio/frames/frame-237.png",
+        "/characters/dio/frames/frame-238.png",
+        "/characters/dio/frames/frame-239.png",
+        "/characters/dio/frames/frame-240.png",
+        "/characters/dio/frames/frame-241.png",
+        "/characters/dio/frames/frame-242.png",
+        "/characters/dio/frames/frame-243.png",
+        "/characters/dio/frames/frame-244.png",
+        "/characters/dio/frames/frame-245.png",
+        "/characters/dio/frames/frame-246.png",
+        "/characters/dio/frames/frame-247.png",
+        "/characters/dio/frames/frame-248.png",
+        "/characters/dio/frames/frame-249.png",
+        "/characters/dio/frames/frame-250.png"
+      ],
+      "muda-barrage": [
+        "/characters/dio/frames/frame-251.png",
+        "/characters/dio/frames/frame-252.png",
+        "/characters/dio/frames/frame-253.png",
+        "/characters/dio/frames/frame-254.png",
+        "/characters/dio/frames/frame-255.png",
+        "/characters/dio/frames/frame-256.png",
+        "/characters/dio/frames/frame-257.png",
+        "/characters/dio/frames/frame-258.png",
+        "/characters/dio/frames/frame-259.png",
+        "/characters/dio/frames/frame-260.png"
+      ],
+      "world-crush": [
+        "/characters/dio/frames/frame-261.png",
+        "/characters/dio/frames/frame-262.png",
+        "/characters/dio/frames/frame-263.png",
+        "/characters/dio/frames/frame-264.png",
+        "/characters/dio/frames/frame-265.png",
+        "/characters/dio/frames/frame-266.png",
+        "/characters/dio/frames/frame-267.png",
+        "/characters/dio/frames/frame-268.png",
+        "/characters/dio/frames/frame-269.png"
+      ]
+    },
+    "moveAnimations": {
+      "jableft": "quick-punch",
+      "jabright": "muda-barrage",
+      "kickleft": "kick-chain",
+      "kickright": "stand-assault",
+      "cmd:f+1": "quick-punch",
+      "cmd:d/f+2": "world-crush",
+      "cmd:qcf+4": "world-crush",
+      "cmd:WS+4": "kick-chain",
+      "cmd:FC+1": "low-strike",
+      "cmd:FC+2": "world-crush",
+      "cmd:1+2": "muda-barrage",
+      "cmd:2+3": "low-strike",
+      "cmd:2+4": "low-strike",
+      "cmd:3+4": "world-crush",
+      "cmd:O+2": "muda-barrage",
+      "cmd:d+1": "low-strike",
+      "cmd:qcf+1": "quick-punch",
+      "cmd:O+1": "muda-barrage",
+      "neutral:jab-jab": "quick-punch",
+      "neutral:jab-jab-heavy": "muda-barrage",
+      "neutral:jab-jab-kick": "kick-chain",
+      "neutral:jab-jab-special": "world-crush",
+      "neutral:jab-heavy": "muda-barrage",
+      "neutral:jab-heavy-kick": "kick-chain",
+      "neutral:jab-heavy-special": "world-crush",
+      "neutral:jab-kick": "kick-chain",
+      "neutral:jab-kick-heavy": "muda-barrage",
+      "neutral:jab-kick-special": "world-crush",
+      "neutral:jab-special": "world-crush",
+      "neutral:jab-special-heavy": "muda-barrage",
+      "neutral:heavy-jab": "quick-punch",
+      "neutral:heavy-jab-heavy": "muda-barrage",
+      "neutral:heavy-jab-special": "world-crush",
+      "neutral:heavy-kick": "kick-chain",
+      "neutral:heavy-kick-special": "world-crush",
+      "neutral:heavy-special": "world-crush",
+      "neutral:heavy-special-kick": "kick-chain",
+      "neutral:kick-jab": "quick-punch",
+      "neutral:kick-jab-special": "world-crush",
+      "neutral:kick-heavy": "muda-barrage",
+      "neutral:kick-heavy-special": "world-crush",
+      "neutral:kick-special": "world-crush",
+      "neutral:kick-special-heavy": "muda-barrage",
+      "neutral:special-jab": "quick-punch",
+      "neutral:special-jab-heavy": "muda-barrage",
+      "neutral:special-heavy": "muda-barrage",
+      "neutral:special-kick": "kick-chain"
+    },
+    "inputFallbacks": {
+      "jab": "quick-punch",
+      "heavy": "muda-barrage",
+      "kick": "kick-chain",
+      "special": "world-crush"
+    },
+    "animationFrameRates": {
+      "stand-assault": 12,
+      "quick-punch": 12,
+      "low-strike": 10,
+      "kick-chain": 14,
+      "muda-barrage": 16,
+      "world-crush": 10
+    },
+    "modelScale": {
+      "width": 1.21,
+      "height": 1.2
+    },
+    "forwardOffset": 0.65,
+    "verticalOffset": 0
+  },
   "scale": 1.08,
   "cameraOffset": [
     0,

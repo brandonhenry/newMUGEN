@@ -45,6 +45,7 @@ import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
+import { getAttackCompanionPosition, resolveAttackCompanionAnimation } from '../lib/attackCompanion';
 import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, stableControlAlignedFightCameraSide } from '../lib/fightCamera';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
@@ -702,6 +703,8 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
             <StageCameraOcclusionFader />
             <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
             <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+            <AttackCompanionLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+            <AttackCompanionLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
             <MovementFootSmokeLayer fighter={match.fighters[0]} style={movementSmokeStyle} />
             <MovementFootSmokeLayer fighter={match.fighters[1]} style={movementSmokeStyle} />
             <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
@@ -711,7 +714,6 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
             <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
             <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
             <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} />
-            <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
             <FightCameraFrameWriter frameRef={cameraFrameRef} />
           </StageCameraCollisionContext.Provider>
         </Canvas>
@@ -728,8 +730,11 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
           <FightCameraFrameReader frameRef={cameraFrameRef} />
           <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
           <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+          <AttackCompanionLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+          <AttackCompanionLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
           <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
           <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+          <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
         </Canvas>
       </div>
     </>
@@ -1912,6 +1917,48 @@ function ShadowCloneLayer({
   );
 }
 
+function AttackCompanionLayer({
+  fighter,
+  timeScale,
+  stage,
+  renderStyle
+}: {
+  fighter: FighterRuntime;
+  timeScale: number;
+  stage?: StageDefinition;
+  renderStyle?: Partial<FighterRenderStyle>;
+}) {
+  const companionFighter = makeAttackCompanionRenderFighter(fighter);
+  if (!companionFighter) return null;
+  return <FighterRig fighter={companionFighter} timeScale={timeScale} stage={stage} renderStyle={renderStyle} />;
+}
+
+export function makeAttackCompanionRenderFighter(fighter: FighterRuntime): FighterRuntime | null {
+  if (fighter.state !== 'attack' || !fighter.currentMove) return null;
+  const companion = fighter.character.attackCompanion;
+  const animation = resolveAttackCompanionAnimation(fighter.character, fighter.currentMove);
+  if (!companion || !animation) return null;
+  const companionMove: MoveDefinition = {
+    ...fighter.currentMove,
+    animationKey: animation.key
+  };
+  return {
+    ...fighter,
+    character: {
+      ...fighter.character,
+      displayName: companion.displayName,
+      animationFrames: { [animation.key]: animation.frames },
+      animationFrameRates: { [animation.key]: animation.fps },
+      modelScale: companion.modelScale ?? fighter.character.modelScale,
+      attackCompanion: undefined
+    },
+    position: getAttackCompanionPosition(fighter),
+    currentMove: companionMove,
+    shadowClone: null,
+    visualHitstop: { ...fighter.visualHitstop }
+  };
+}
+
 function makeShadowCloneRenderFighter(fighter: FighterRuntime): FighterRuntime | null {
   const clone = fighter.shadowClone;
   if (!clone || clone.phase !== 'active') return null;
@@ -2669,7 +2716,7 @@ function ImpactSpark({
             transparent
             blending={THREE.AdditiveBlending}
             depthWrite={false}
-            depthTest
+            depthTest={false}
             toneMapped={false}
             side={THREE.DoubleSide}
           />
@@ -2709,15 +2756,15 @@ function ImpactCore({ colors, profile }: { colors: ImpactSparkColors; profile: I
     <group renderOrder={34}>
       <mesh scale={[profile.discScale * 1.15, profile.discScale * 0.84, 1]}>
         <circleGeometry args={[0.42, 64]} />
-        <meshBasicMaterial color={colors.core} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={colors.core} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
       </mesh>
       <mesh scale={[profile.coreScale * 1.45, profile.coreScale * 1.05, 1]}>
         <torusGeometry args={[0.64, 0.055, 8, 36]} />
-        <meshBasicMaterial color={colors.base} transparent opacity={0.46} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={colors.base} transparent opacity={0.46} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
       </mesh>
       <mesh scale={[profile.coreScale * 2.1, profile.coreScale * 1.45, 1]}>
         <torusGeometry args={[0.66, 0.025, 8, 44]} />
-        <meshBasicMaterial color={colors.edge} transparent opacity={0.22} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={colors.edge} transparent opacity={0.22} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
       </mesh>
     </group>
   );
@@ -2743,18 +2790,18 @@ function ImpactEnergyRings({
     <group ref={refGroup} renderOrder={30} rotation={[isLauncher ? -0.12 : isBlock ? 0.08 : 0, 0, isBlock ? 0.18 : 0]}>
       <mesh scale={[profile.ringX, profile.ringY, 1]}>
         <torusGeometry args={[isClash ? 0.72 : isLauncher ? 0.64 : isBlock ? 0.5 : 0.58, isBlock ? 0.028 : ringOnly ? 0.04 : 0.052, 8, 72]} />
-        <meshBasicMaterial color={colors.base} transparent opacity={ringOnly ? 0.72 : isLauncher ? 0.46 : 0.58} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <meshBasicMaterial color={colors.base} transparent opacity={ringOnly ? 0.72 : isLauncher ? 0.46 : 0.58} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
       </mesh>
       {!ringOnly && (
         <mesh scale={[profile.ringX * 1.25, profile.ringY * 1.18, 1]}>
           <torusGeometry args={[isLauncher ? 0.74 : isBlock ? 0.62 : 0.68, 0.018, 8, 72]} />
-          <meshBasicMaterial color={colors.edge} transparent opacity={isBlock ? 0.24 : isLauncher ? 0.22 : 0.32} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          <meshBasicMaterial color={colors.edge} transparent opacity={isBlock ? 0.24 : isLauncher ? 0.22 : 0.32} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
         </mesh>
       )}
       {!ringOnly && (
         <mesh scale={[profile.ringX * 1.72, profile.ringY * 1.45, 1]}>
           <torusGeometry args={[isClash ? 0.82 : isBlock ? 0.66 : 0.76, 0.012, 8, 84]} />
-          <meshBasicMaterial color={colors.core} transparent opacity={isBlock ? 0.12 : 0.18} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+          <meshBasicMaterial color={colors.core} transparent opacity={isBlock ? 0.12 : 0.18} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
         </mesh>
       )}
     </group>
@@ -2775,11 +2822,11 @@ function ImpactBlockShield({
     <group position={[side * 0.08, 0, 0]} renderOrder={29}>
       <mesh scale={[0.42 * profile.ringX, 1.02 * profile.ringY, 1.02 * profile.ringY]}>
         <sphereGeometry args={[0.78, 56, 22]} />
-        <meshBasicMaterial color={colors.base} transparent opacity={0.28} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+        <meshBasicMaterial color={colors.base} transparent opacity={0.28} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} side={THREE.DoubleSide} />
       </mesh>
       <mesh scale={[0.5 * profile.ringX, 1.18 * profile.ringY, 1.18 * profile.ringY]}>
         <sphereGeometry args={[0.78, 56, 22]} />
-        <meshBasicMaterial color={colors.edge} transparent opacity={0.13} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} wireframe />
+        <meshBasicMaterial color={colors.edge} transparent opacity={0.13} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} wireframe />
       </mesh>
     </group>
   );
@@ -2810,7 +2857,7 @@ function ImpactSlashStreaks({
             scale={[0.54 + direction[4] * 0.18, 0.28 + seededUnit(seed + 19, index) * 0.18, 1]}
           >
             <torusGeometry args={[0.5, 0.018, 8, 32, Math.PI * (0.5 + seededUnit(seed + 29, index) * 0.45)]} />
-            <meshBasicMaterial color={tint} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+            <meshBasicMaterial color={tint} transparent opacity={0.42} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} side={THREE.DoubleSide} />
           </mesh>
         );
       })}
@@ -2845,7 +2892,7 @@ function ImpactSphereParticles({
         return (
           <mesh key={`particle-${index}`} position={[x, y, z]} scale={size}>
             <sphereGeometry args={[0.045, 8, 6]} />
-            <meshBasicMaterial color={tint} transparent opacity={event.kind === 'block' ? 0.72 : 0.82} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+            <meshBasicMaterial color={tint} transparent opacity={event.kind === 'block' ? 0.72 : 0.82} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
           </mesh>
         );
       })}
@@ -2885,7 +2932,7 @@ function ImpactShardBurst({
             scale={[0.24 + direction[4] * 0.22, 0.022 + seededUnit(seed + 43, index) * 0.026, 0.022]}
           >
             <boxGeometry args={[1, 1, 1]} />
-            <meshBasicMaterial color={tint} transparent opacity={event.kind === 'block' ? 0.46 : 0.58} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+            <meshBasicMaterial color={tint} transparent opacity={event.kind === 'block' ? 0.46 : 0.58} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} />
           </mesh>
         );
       })}
@@ -2913,7 +2960,7 @@ function ImpactAfterimage({
           rotation={[0, 0, side * (-0.1 - index * 0.06)]}
         >
           <circleGeometry args={[0.52, 36]} />
-          <meshBasicMaterial color={index === 0 ? colors.edge : colors.base} transparent opacity={0.14 - index * 0.04} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+          <meshBasicMaterial color={index === 0 ? colors.edge : colors.base} transparent opacity={0.14 - index * 0.04} blending={THREE.AdditiveBlending} depthWrite={false} depthTest={false} toneMapped={false} side={THREE.DoubleSide} />
         </mesh>
       ))}
     </group>
@@ -7267,7 +7314,10 @@ async function pumpImageVoxelPrewarmQueue() {
 }
 
 function collectImageVoxelFrameSources(character: CharacterDefinition) {
-  return Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []);
+  return [
+    ...Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []),
+    ...Object.values(character.attackCompanion?.animations ?? {}).flatMap((frames) => frames ?? [])
+  ];
 }
 
 function getPreviewCharacterFrameSources(character: CharacterDefinition, animationKey?: string) {

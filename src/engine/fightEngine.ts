@@ -38,6 +38,7 @@ import {
 } from '../lib/comboRoutes';
 import { commandRouteFamily } from '../lib/commandRoutes';
 import { effectIsVisibleAt, effectTransformAt } from '../lib/effects';
+import { getAttackCompanionPosition, getAttackCompanionRangeBonus, resolveAttackCompanionAnimation } from '../lib/attackCompanion';
 
 const ROUND_TIME = 60;
 const INFINITE_HEALTH_VALUE = 999_999;
@@ -4189,7 +4190,16 @@ function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: Fighte
   const dz = defenderPosition.z - attackerPosition.z;
   const distance = Math.hypot(dx, dz);
   const attackerScale = getCharacterCombatScale(attacker.character);
-  const collision = getAttackCollision(attacker, defender, move, distance <= move.range * attackerScale.width + UNIVERSAL_RANGE_BUFFER, activeMoveFrame);
+  const companionRangeBonus = resolveAttackCompanionAnimation(attacker.character, move)
+    ? getAttackCompanionRangeBonus(attacker.character)
+    : 0;
+  const collision = getAttackCollision(
+    attacker,
+    defender,
+    move,
+    distance <= move.range * attackerScale.width + UNIVERSAL_RANGE_BUFFER + companionRangeBonus,
+    activeMoveFrame
+  );
   if (!collision) return;
 
   const wasJuggled = defender.state === 'juggle';
@@ -4925,6 +4935,12 @@ function getImpactPosition(attacker: FighterRuntime, defender: FighterRuntime, m
 
 function getActiveAttackAabbs(attacker: FighterRuntime, move: MoveDefinition, includeBaseHitbox: boolean, moveFrame = attacker.moveFrame) {
   const boxes = includeBaseHitbox ? [moveHitboxToWorldAabb(attacker, move.hitbox)] : [];
+  if (includeBaseHitbox && resolveAttackCompanionAnimation(attacker.character, move)) {
+    boxes.push(moveHitboxToWorldAabb({
+      ...attacker,
+      position: getAttackCompanionPosition(attacker)
+    }, move.hitbox));
+  }
   return [...boxes, ...getActiveEffectHitboxes(attacker, move, moveFrame)];
 }
 

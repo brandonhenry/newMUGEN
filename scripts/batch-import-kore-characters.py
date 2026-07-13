@@ -2250,6 +2250,153 @@ def import_character(
     }
 
 
+def load_append_crop_manifest(path: Path) -> dict[str, Any]:
+    payload = json.loads(path.read_text())
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"Append crop manifest must be an object: {path}")
+    return payload
+
+
+def normalize_append_frame_density(cropped: Image.Image, target_foreground_height: int) -> Image.Image:
+    """Trim transparent padding and match appended pixel art to the fighter's HD source density."""
+    if target_foreground_height <= 0:
+        return cropped
+    alpha_bounds = cropped.getchannel("A").getbbox()
+    if alpha_bounds is None:
+        return cropped
+    foreground = cropped.crop(alpha_bounds)
+    if foreground.height == target_foreground_height:
+        return foreground
+    target_width = max(1, round(foreground.width * target_foreground_height / foreground.height))
+    return foreground.resize((target_width, target_foreground_height), Image.Resampling.NEAREST)
+
+
+def select_append_sheet_boxes(image: Image.Image, character_id: str, crop_manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    detected, _ = filtered_projection_boxes(image, character_id)
+    regions = [tuple(int(value) for value in region) for region in crop_manifest.get("includeRegions", [])]
+    selected: list[dict[str, Any]] = []
+    for entry in detected:
+        x1, y1, x2, y2 = (int(value) for value in entry["box"])
+        center_x = (x1 + x2) / 2
+        center_y = (y1 + y2) / 2
+        if regions and not any(rx1 <= center_x <= rx2 and ry1 <= center_y <= ry2 for rx1, ry1, rx2, ry2 in regions):
+            continue
+        selected.append({"box": (x1, y1, x2, y2), "row": int(entry.get("row", 0))})
+
+    explicit_row = max((int(entry["row"]) for entry in selected), default=-1) + 1
+    for index, box in enumerate(crop_manifest.get("boxes", [])):
+        if not isinstance(box, list) or len(box) != 4:
+            raise RuntimeError(f"Invalid explicit append crop box at index {index}")
+        x1, y1, x2, y2 = (int(value) for value in box)
+        if x2 <= x1 or y2 <= y1:
+            raise RuntimeError(f"Invalid explicit append crop bounds at index {index}: {box}")
+        selected.append({"box": (x1, y1, x2, y2), "row": explicit_row + index})
+
+    selected.sort(key=lambda entry: (entry["box"][1], entry["box"][0]))
+    return selected
+
+
+def append_character_sheet(
+    repo: Path,
+    source_path: Path,
+    character_id: str,
+    sheet_id: str,
+    sheet_name: str,
+    sheet_output_name: str,
+    crop_manifest_path: Path,
+    dry_run: bool = False,
+    refresh_existing: bool = False,
+) -> dict[str, Any]:
+    character_dir = repo / "public" / "characters" / character_id
+    character_path = character_dir / "character.json"
+    frames_json_path = character_dir / "frames" / "frames.json"
+    if not character_path.exists() or not frames_json_path.exists():
+        raise RuntimeError(f"Cannot append sheet to missing character {character_id}")
+
+    image = load_source_image(source_path)
+    crop_manifest = load_append_crop_manifest(crop_manifest_path)
+    boxes = select_append_sheet_boxes(image, character_id, crop_manifest)
+    if not boxes:
+        raise RuntimeError(f"No append frames selected for {character_id}")
+
+    manifest = json.loads(character_path.read_text())
+    frames_json = json.loads(frames_json_path.read_text())
+    existing_frames = frames_json.get("frames", [])
+    existing_sheets = frames_json.get("sheets", [])
+    existing_sheet = next((sheet for sheet in existing_sheets if sheet.get("id") == sheet_id), None)
+    if existing_sheet and not refresh_existing:
+        raise RuntimeError(f"Sheet id {sheet_id} already exists for {character_id}")
+    output_path = character_dir / sheet_output_name
+    if output_path.exists() and not refresh_existing:
+        raise RuntimeError(f"Sheet output already exists: {output_path}")
+
+    frame_start = int(existing_sheet["frameStart"]) if existing_sheet else max((int(frame.get("index", -1)) for frame in existing_frames), default=-1) + 1
+    if existing_sheet and int(existing_sheet.get("frameCount", -1)) != len(boxes):
+        raise RuntimeError(
+            f"Cannot refresh {sheet_id}: selected {len(boxes)} frames but existing sheet has {existing_sheet.get('frameCount')}"
+        )
+    result = {
+        "id": character_id,
+        "sheetId": sheet_id,
+        "frames": len(boxes),
+        "frameStart": frame_start,
+        "source": str(source_path),
+        "dryRun": dry_run,
+        "refreshed": bool(existing_sheet),
+    }
+    if dry_run:
+        return result
+
+    image.save(output_path)
+    backgrounds = dominant_border_backgrounds(image, sample_backgrounds(image))
+    target_foreground_height = int(crop_manifest.get("targetForegroundHeight", 0))
+    public_sheet_path = f"/characters/{character_id}/{sheet_output_name}"
+    appended_frames: list[dict[str, Any]] = []
+    for offset, entry in enumerate(boxes):
+        frame_index = frame_start + offset
+        box = tuple(int(value) for value in entry["box"])
+        cropped = transparent_crop(image, box, backgrounds)
+        cropped = normalize_append_frame_density(cropped, target_foreground_height)
+        frame_file = character_dir / "frames" / f"frame-{frame_index:03d}.png"
+        cropped.save(frame_file)
+        appended_frames.append({
+            "index": frame_index,
+            "path": frame_path(character_id, frame_index),
+            "sheetId": sheet_id,
+            "sheetPath": public_sheet_path,
+            "sourceName": source_path.name,
+            "box": list(box),
+            "width": cropped.size[0],
+            "height": cropped.size[1],
+            "row": int(entry["row"]),
+            **({"targetForegroundHeight": target_foreground_height} if target_foreground_height > 0 else {}),
+        })
+
+    sheet_entry = {
+        "id": sheet_id,
+        "name": sheet_name,
+        "path": public_sheet_path,
+        "frameStart": frame_start,
+        "frameCount": len(appended_frames),
+    }
+    if existing_sheet:
+        appended_by_index = {int(frame["index"]): frame for frame in appended_frames}
+        frames_json["frames"] = [appended_by_index.get(int(frame.get("index", -1)), frame) for frame in existing_frames]
+    else:
+        frames_json["frames"] = [*existing_frames, *appended_frames]
+    frames_json["count"] = len(frames_json["frames"])
+    frames_json["sheets"] = [*[sheet for sheet in existing_sheets if sheet.get("id") != sheet_id], sheet_entry]
+    frames_json_path.write_text(json.dumps(frames_json, indent=2, ensure_ascii=False) + "\n")
+
+    manifest["spriteFrameCount"] = len(frames_json["frames"])
+    manifest["spriteSheets"] = [
+        *[sheet for sheet in manifest.get("spriteSheets", []) if sheet.get("id") != sheet_id],
+        sheet_entry,
+    ]
+    character_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
+    return result
+
+
 def discover_sources(source_root: Path) -> list[tuple[Path, str]]:
     raw_dirs = sorted(path for path in source_root.iterdir() if path.is_dir())
     used_ids: set[str] = set(PROTECTED_IDS)
@@ -2285,6 +2432,12 @@ def main() -> None:
     parser.add_argument("--character-id")
     parser.add_argument("--display-name")
     parser.add_argument("--append-index", action="store_true")
+    parser.add_argument("--append-sheet", action="store_true")
+    parser.add_argument("--refresh-sheet", action="store_true")
+    parser.add_argument("--sheet-id")
+    parser.add_argument("--sheet-name")
+    parser.add_argument("--sheet-output-name")
+    parser.add_argument("--crop-manifest", type=Path)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     repo = args.repo.expanduser().resolve()
@@ -2296,6 +2449,23 @@ def main() -> None:
             raise SystemExit(f"Source file does not exist: {source_file}")
         character_id = args.character_id or slugify(args.display_name or source_file.parent.name)
         display_name = args.display_name or source_file.parent.name
+        if args.append_sheet:
+            if not args.sheet_id or not args.crop_manifest:
+                raise SystemExit("--append-sheet requires --sheet-id and --crop-manifest")
+            crop_manifest = args.crop_manifest.expanduser().resolve()
+            result = append_character_sheet(
+                repo,
+                source_file,
+                character_id,
+                args.sheet_id,
+                args.sheet_name or args.sheet_id.replace("-", " ").title(),
+                args.sheet_output_name or f"{args.sheet_id}-sheet.png",
+                crop_manifest,
+                args.dry_run,
+                args.refresh_sheet,
+            )
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return
         result = import_character(repo, source_file.parent, character_id, display_name, source_file, args.dry_run)
         print(json.dumps(result, indent=2, ensure_ascii=False))
         if args.append_index and not args.dry_run:

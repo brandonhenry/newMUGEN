@@ -61,6 +61,7 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
     animationFrameRates: canonicalizeBaseButtonRecord(character.animationFrameRates ?? {}),
     animationScales: sanitizeAnimationScaleMap(character.animationScales ?? {}),
     animationFrameScales: sanitizeAnimationFrameScaleMap(character.animationFrameScales ?? {}),
+    attackCompanion: sanitizeAttackCompanion(character.id, character.attackCompanion, character.scale),
     animations: canonicalizeAnimationNameRecord(character.animations ?? {}),
     modelScale: normalizeCharacterModelScale(character.modelScale, character.scale),
     moves: (character.moves ?? []).map(normalizeMove),
@@ -75,6 +76,42 @@ export function normalizeCharacter(character: CharacterDefinition): CharacterDef
       Array.isArray(character.hurtboxes) && character.hurtboxes.length > 0
         ? character.hurtboxes.map((box) => normalizeBoxSpec(box, { offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }))
         : [{ offset: [0, 1, 0], size: [0.86, 1.9, 0.58] }]
+  };
+}
+
+function sanitizeAttackCompanion(
+  characterId: string,
+  companion: CharacterDefinition['attackCompanion'],
+  legacyScale: number
+): CharacterDefinition['attackCompanion'] {
+  if (!companion || typeof companion !== 'object') return undefined;
+  const animations = normalizeAnimationFrameMap(characterId, companion.animations ?? {});
+  if (Object.keys(animations).length === 0) return undefined;
+  const animationKeys = new Set(Object.keys(animations));
+  const moveAnimations = Object.fromEntries(
+    Object.entries(companion.moveAnimations ?? {})
+      .filter(([moveKey, animationKey]) => moveKey.length > 0 && typeof animationKey === 'string' && animationKeys.has(animationKey))
+  );
+  const inputFallbacks = Object.fromEntries(
+    (['jab', 'heavy', 'kick', 'special'] as const)
+      .map((input) => [input, companion.inputFallbacks?.[input]] as const)
+      .filter((entry): entry is readonly [typeof entry[0], string] => typeof entry[1] === 'string' && animationKeys.has(entry[1]))
+  );
+  const animationFrameRates = Object.fromEntries(
+    Object.entries(companion.animationFrameRates ?? {})
+      .filter(([key, value]) => animationKeys.has(key) && typeof value === 'number' && Number.isFinite(value))
+      .map(([key, value]) => [key, clamp(value, 1, 60)])
+  );
+  return {
+    id: typeof companion.id === 'string' && companion.id.trim() ? companion.id.trim() : 'attack-companion',
+    displayName: typeof companion.displayName === 'string' && companion.displayName.trim() ? companion.displayName.trim() : 'Attack Companion',
+    animations,
+    moveAnimations,
+    inputFallbacks,
+    animationFrameRates,
+    modelScale: normalizeCharacterModelScale(companion.modelScale, legacyScale),
+    forwardOffset: clamp(finiteOr(companion.forwardOffset, 0.65), 0, 2.4),
+    verticalOffset: clamp(finiteOr(companion.verticalOffset, 0), -2, 2)
   };
 }
 

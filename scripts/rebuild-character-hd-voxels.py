@@ -573,6 +573,18 @@ def wide_visual_candidate_frames(character_manifest: dict) -> set[int]:
                     eligible_indices.add(index)
                 if animation_key in protected_keys:
                     protected_indices.add(index)
+    attack_companion = character_manifest.get("attackCompanion", {})
+    companion_animations = attack_companion.get("animations", {}) if isinstance(attack_companion, dict) else {}
+    if isinstance(companion_animations, dict):
+        for paths in companion_animations.values():
+            if not isinstance(paths, list):
+                continue
+            for path in paths:
+                if not isinstance(path, str):
+                    continue
+                index = frame_index_from_path(path)
+                if index is not None:
+                    eligible_indices.add(index)
     return eligible_indices - protected_indices
 
 

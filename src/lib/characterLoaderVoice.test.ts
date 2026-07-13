@@ -99,6 +99,30 @@ describe('normalizeCharacter animation frame paths', () => {
     expect(normalized.animationFrames?.walkForward).toEqual(['/characters/model-px/frames/frame-019.png']);
   });
 
+  it('normalizes attack companion frames and removes broken mappings', () => {
+    const normalized = normalizeCharacter(makeCharacter({
+      id: 'dio-test',
+      attackCompanion: {
+        id: 'the-world',
+        displayName: 'The World',
+        animations: { punch: ['frames/frame-210.png'] },
+        moveAnimations: { jableft: 'punch', kickleft: 'missing' },
+        inputFallbacks: { jab: 'punch', kick: 'missing' },
+        animationFrameRates: { punch: 12, missing: 99 },
+        modelScale: { width: 1.1, height: 1.2 },
+        forwardOffset: 0.65
+      }
+    }));
+
+    expect(normalized.attackCompanion).toMatchObject({
+      animations: { punch: ['/characters/dio-test/frames/frame-210.png'] },
+      moveAnimations: { jableft: 'punch' },
+      inputFallbacks: { jab: 'punch' },
+      animationFrameRates: { punch: 12 },
+      forwardOffset: 0.65
+    });
+  });
+
   it('leaves absolute and generated frame sources untouched', () => {
     const normalized = normalizeCharacter(makeCharacter({
       animationFrames: {

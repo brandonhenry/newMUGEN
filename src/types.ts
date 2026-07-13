@@ -437,6 +437,18 @@ export type CharacterModelScale = {
   height?: number;
 };
 
+export type AttackCompanionDefinition = {
+  id: string;
+  displayName: string;
+  animations: Record<string, string[]>;
+  moveAnimations: Record<string, string>;
+  inputFallbacks?: Partial<Record<MoveInput, string>>;
+  animationFrameRates?: Record<string, number>;
+  modelScale?: CharacterModelScale;
+  forwardOffset: number;
+  verticalOffset?: number;
+};
+
 export type CharacterDefinition = {
   id: string;
   displayName: string;
@@ -460,6 +472,7 @@ export type CharacterDefinition = {
   animationScales?: Record<string, AnimationScale>;
   animationFrameScales?: Record<string, Record<string, AnimationScale>>;
   animationFps?: number;
+  attackCompanion?: AttackCompanionDefinition;
   scale: number;
   modelScale?: CharacterModelScale;
   cameraOffset: Vec3Tuple;
