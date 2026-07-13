@@ -5734,6 +5734,8 @@ button {
 }
 
 .stage-thumbnail strong {
+  position: relative;
+  z-index: 1;
   grid-area: 1 / 1;
   align-self: end;
   justify-self: stretch;
