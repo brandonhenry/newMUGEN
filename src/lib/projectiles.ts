@@ -5,6 +5,7 @@ import type {
   BlastVisualDefinition,
   MoveProjectileInstance,
   ProjectileAnimationFrames,
+  ProjectileDeliveryMode,
   ProjectileHomingMode,
   ProjectileKind,
   ProjectileTargetMode,
@@ -18,6 +19,7 @@ const blends = new Set<EffectBlendMode>(['normal', 'additive', 'screen']);
 const projectileKinds = new Set<ProjectileKind>(['projectile', 'blast']);
 const homingModes = new Set<ProjectileHomingMode>(['none', 'limited']);
 const targetModes = new Set<ProjectileTargetMode>(['forward', 'targetLocation']);
+const deliveryModes = new Set<ProjectileDeliveryMode>(['additional', 'replaceMoveHit']);
 const proceduralKinds = new Set<ProceduralEffectKind>(['lightning', 'wind', 'ring', 'glow', 'trail', 'shards']);
 
 export function defaultCharacterProjectile(id = 'projectile'): CharacterProjectileDefinition {
@@ -34,6 +36,7 @@ export function defaultCharacterProjectile(id = 'projectile'): CharacterProjecti
     voxelProfile: 'image-source',
     defaultScale: [0.55, 0.55, 0.55],
     defaultRotation: [0, 0, 0],
+    alignToVelocity: false,
     color: '#fff4a8',
     soundCues: [],
     proceduralLayers: []
@@ -78,6 +81,7 @@ export function sanitizeProjectile(projectile: Record<string, unknown>): Charact
     voxelFidelity: sanitizeVoxelFidelity(projectile.voxelFidelity),
     defaultScale: readVec3(projectile.defaultScale, [0.55, 0.55, 0.55]).map((value) => Math.max(0.01, value)) as Vec3Tuple,
     defaultRotation: readVec3(projectile.defaultRotation, [0, 0, 0]),
+    alignToVelocity: projectile.alignToVelocity === true,
     color: typeof projectile.color === 'string' ? projectile.color : undefined,
     blastVisual: sanitizeBlastVisual(projectile.blastVisual),
     soundCues: sanitizeSoundCues(projectile.soundCues),
@@ -125,6 +129,7 @@ export function sanitizeMoveProjectileInstance(instance: unknown): MoveProjectil
     pushbackScale: clampNumber(source.pushbackScale, 0, 5, 1),
     blockPushbackScale: clampNumber(source.blockPushbackScale, 0, 5, 1),
     mirrorWithFacing: source.mirrorWithFacing !== false,
+    delivery: deliveryModes.has(source.delivery as ProjectileDeliveryMode) ? source.delivery as ProjectileDeliveryMode : 'additional',
     pierce: source.pierce === true,
     clash: source.clash === true,
     kiBurst: source.kiBurst === true,

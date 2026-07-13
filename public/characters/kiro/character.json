@@ -12561,60 +12561,6 @@
     "width": 0.89,
     "height": 1.08
   },
-  "projectiles": [
-    {
-      "id": "chakra-or-tool-projectile",
-      "name": "Chakra Shot",
-      "frames": [
-        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png",
-        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-001.png",
-        "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
-      ],
-      "animationFrames": {
-        "startup": [
-          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png"
-        ],
-        "active": [
-          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-000.png",
-          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-001.png",
-          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
-        ],
-        "recovery": [
-          "/characters/kiro/projectiles/chakra-or-tool-projectile/frames/frame-002.png"
-        ]
-      },
-      "fps": 18,
-      "loop": true,
-      "billboard": false,
-      "blendMode": "additive",
-      "voxelProfile": "image-source",
-      "voxelFidelity": {
-        "resolutionScale": 2,
-        "maxRows": 64,
-        "depth": 0.24,
-        "alphaThreshold": 24,
-        "paletteSnap": 1,
-        "mergeRuns": true,
-        "lod": {
-          "mobileStep": 2,
-          "farStep": 2
-        }
-      },
-      "defaultScale": [
-        0.42,
-        0.42,
-        0.42
-      ],
-      "defaultRotation": [
-        0,
-        0,
-        0
-      ],
-      "color": "#b8f4ff",
-      "soundCues": [],
-      "proceduralLayers": []
-    }
-  ],
   "moveProjectiles": {
     "kickright": [
       {

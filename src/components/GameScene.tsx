@@ -3401,14 +3401,14 @@ function ProjectileVisual({
     receiveShadow: false
   }), [definition.color, projectile.phase]);
   if (!source || voxels.length === 0) return null;
-  const yaw = getProjectileVisualYaw(projectile);
+  const quaternion = getProjectileVisualQuaternion(projectile, definition);
   const reveal = getProjectileRevealProgress(projectile);
   const position = getProjectileVisualPosition(projectile, camera, reveal);
   const scale = getProjectileVisualScale(definition, reveal);
   return (
     <group
       position={position}
-      rotation={[definition.defaultRotation[0], yaw + definition.defaultRotation[1], definition.defaultRotation[2]]}
+      quaternion={quaternion}
       scale={scale}
     >
       <ImageVoxelPartGroup part={parts.head} outlineStyle={outlineStyle} renderStyle={renderStyle} />
@@ -3423,6 +3423,28 @@ function ProjectileVisual({
 
 function getProjectileVisualYaw(projectile: ProjectileRuntime) {
   return projectile.facing >= 0 ? 0 : Math.PI;
+}
+
+export function getProjectileVisualQuaternion(projectile: ProjectileRuntime, definition: CharacterProjectileDefinition) {
+  const baseRotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(
+    definition.defaultRotation[0],
+    definition.defaultRotation[1],
+    definition.defaultRotation[2]
+  ));
+  if (!definition.alignToVelocity) {
+    return new THREE.Quaternion().setFromEuler(new THREE.Euler(
+      definition.defaultRotation[0],
+      getProjectileVisualYaw(projectile) + definition.defaultRotation[1],
+      definition.defaultRotation[2]
+    ));
+  }
+  const direction = new THREE.Vector3(projectile.velocity.x, projectile.velocity.y, projectile.velocity.z);
+  if (direction.lengthSq() <= 0.000001) return baseRotation;
+  const alignment = new THREE.Quaternion().setFromUnitVectors(
+    new THREE.Vector3(1, 0, 0),
+    direction.normalize()
+  );
+  return alignment.multiply(baseRotation);
 }
 
 function getProjectileRevealProgress(projectile: ProjectileRuntime) {

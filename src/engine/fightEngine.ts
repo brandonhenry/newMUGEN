@@ -3509,6 +3509,11 @@ function getUniqueMoveProjectileInstances(attacker: FighterRuntime, move: MoveDe
     .filter((instance, index, all) => all.findIndex((candidate) => candidate.id === instance.id) === index);
 }
 
+function getProjectileInstanceForRuntime(attacker: FighterRuntime, move: MoveDefinition, runtimeInstanceId: string) {
+  const instanceId = runtimeInstanceId.split('@', 1)[0];
+  return getUniqueMoveProjectileInstances(attacker, move).find((instance) => instance.id === instanceId);
+}
+
 function shouldDelayReleaseGatedProjectile(instance: MoveProjectileInstance, move: MoveDefinition, input: InputFrame | undefined, currentMoveFrame: number) {
   if (!instance.releaseGated || !input?.[move.input]) return false;
   return currentMoveFrame >= getProjectileSpawnFrame(instance, move);
@@ -3809,6 +3814,7 @@ function pushProjectileClashSpark(match: MatchSnapshot, first: ProjectileRuntime
 
 function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, projectile: ProjectileRuntime, position: [number, number, number]) {
   const sourceMove = projectile.move;
+  const replacesMoveHit = getProjectileInstanceForRuntime(attacker, sourceMove, projectile.instanceId)?.delivery === 'replaceMoveHit';
   const wasJuggled = defender.state === 'juggle';
   const tornadoExtendsJuggle = wasJuggled && defender.juggleTornadoCount < TORNADO_EXTENSION_LIMIT;
   const move: MoveDefinition = {
@@ -3817,11 +3823,11 @@ function applyProjectileHit(match: MatchSnapshot, attacker: FighterRuntime, defe
     blockDamage: Math.max(0, Math.round(sourceMove.blockDamage * projectile.blockDamageScale)),
     pushback: sourceMove.pushback * projectile.pushbackScale,
     blockPushback: sourceMove.blockPushback * projectile.blockPushbackScale,
-    launchHeight: projectile.kind === 'blast' ? Math.max(0, sourceMove.launchHeight ?? 0) : 0,
-    launchVelocity: projectile.kind === 'blast' ? sourceMove.launchVelocity : undefined,
-    tornado: tornadoExtendsJuggle,
+    launchHeight: replacesMoveHit || projectile.kind === 'blast' ? Math.max(0, sourceMove.launchHeight ?? 0) : 0,
+    launchVelocity: replacesMoveHit || projectile.kind === 'blast' ? sourceMove.launchVelocity : undefined,
+    tornado: replacesMoveHit ? sourceMove.tornado : tornadoExtendsJuggle,
     throwCapture: false,
-    knockdown: false,
+    knockdown: replacesMoveHit ? sourceMove.knockdown : false,
     hitbox: projectile.hitbox
   };
   const defenderPosition = getFighterCombatPosition(defender);
@@ -4172,6 +4178,7 @@ function clashParticipantHasPerfect(clash: ClashState, slot: 1 | 2) {
 function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, frameDelta: number) {
   const move = attacker.currentMove;
   if (!move || attacker.state !== 'attack' || attacker.hitConnected) return;
+  if (getUniqueMoveProjectileInstances(attacker, move).some((instance) => instance.delivery === 'replaceMoveHit')) return;
   if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) return;
   const moveFrame = attacker.moveFrame || secondsToFrames(totalMoveSeconds(move) - attacker.actionTimer);
   const activeMoveFrame = getSweptActiveMoveFrame(move, moveFrame, frameDelta);

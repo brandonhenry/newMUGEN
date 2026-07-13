@@ -8402,6 +8402,63 @@ describe('fight engine', () => {
     expect(match.fighters[1].actionFramesRemaining).toBe(match.fighters[1].stunFramesRemaining);
   });
 
+  it('lets replacement projectiles suppress the source melee hit while the shot is inactive', () => {
+    const shooter = makeProjectileCharacter('replacement-projectile-melee-test', {
+      range: 8,
+      hitbox: { offset: [0, 1, 2], size: [8, 4, 8] }
+    }, {
+      delivery: 'replaceMoveHit',
+      startupFrames: 30,
+      activeFrames: 30,
+      recoveryFrames: 6,
+      lifetimeFrames: 66
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 8);
+
+    expect(match.projectiles).toHaveLength(1);
+    expect(match.projectiles[0].phase).toBe('startup');
+    expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
+  });
+
+  it('lets replacement projectiles inherit launcher properties from the source move', () => {
+    const shooter = makeProjectileCharacter('replacement-projectile-launcher-test', {
+      launchHeight: 1.8,
+      launchVelocity: 5.5,
+      onHitFrames: 30
+    }, {
+      delivery: 'replaceMoveHit'
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 20);
+
+    expect(match.fighters[1].state).toBe('juggle');
+    expect(match.fighters[1].position.y).toBeGreaterThan(0);
+    expect(match.fighters[1].velocityY).toBeGreaterThan(0);
+  });
+
+  it('lets replacement projectiles inherit knockdown from the source move', () => {
+    const shooter = makeProjectileCharacter('replacement-projectile-knockdown-test', {
+      knockdown: true,
+      launchHeight: 0
+    }, {
+      delivery: 'replaceMoveHit'
+    });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match = stepFrames(match, 20);
+
+    expect(match.fighters[1].state).toBe('knockdown');
+  });
+
   it('gives projectile hits tornado extension while the defender is already juggled', () => {
     const shooter = makeProjectileCharacter('projectile-juggle-tornado-test', {
       damage: 9,

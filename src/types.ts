@@ -349,6 +349,7 @@ export type CharacterProjectileDefinition = {
   voxelFidelity?: VoxelFidelitySettings;
   defaultScale: Vec3Tuple;
   defaultRotation: Vec3Tuple;
+  alignToVelocity?: boolean;
   color?: string;
   blastVisual?: BlastVisualDefinition;
   soundCues?: EffectSoundCue[];
@@ -357,6 +358,7 @@ export type CharacterProjectileDefinition = {
 
 export type ProjectileHomingMode = 'none' | 'limited';
 export type ProjectileTargetMode = 'forward' | 'targetLocation';
+export type ProjectileDeliveryMode = 'additional' | 'replaceMoveHit';
 
 export type MoveProjectileInstance = {
   id: string;
@@ -389,6 +391,7 @@ export type MoveProjectileInstance = {
   pushbackScale: number;
   blockPushbackScale: number;
   mirrorWithFacing: boolean;
+  delivery?: ProjectileDeliveryMode;
   pierce?: boolean;
   clash?: boolean;
   kiBurst?: boolean;
