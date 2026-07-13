@@ -4299,19 +4299,35 @@
       "sheetPath": "/characters/sasuke-curse-mark/animation-sheet.png",
       "sourceName": "Sasuke (Curse Mark).png",
       "box": [
-        1962,
-        3972,
-        2933,
-        4212
+        2078,
+        3973,
+        2134,
+        4032
       ],
-      "width": 971,
-      "height": 240,
+      "width": 56,
+      "height": 59,
       "row": 16,
+      "sourceRepair": {
+        "type": "split-composite-projectile-strip",
+        "originalFrame": 194,
+        "originalSize": [
+          971,
+          240
+        ],
+        "cropBox": [
+          116,
+          0,
+          172,
+          61
+        ],
+        "extractedProjectile": "fireball-jutsu",
+        "projectileFrameCount": 12
+      },
       "sourceBox": [
-        0,
-        3353,
-        971,
-        3593
+        116,
+        3354,
+        172,
+        3413
       ]
     },
     {

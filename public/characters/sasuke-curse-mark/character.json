@@ -187,15 +187,20 @@
       "/characters/sasuke-curse-mark/frames/frame-143.png"
     ],
     "cmd:qcf+4": [
-      "/characters/sasuke-curse-mark/frames/frame-075.png",
-      "/characters/sasuke-curse-mark/frames/frame-076.png",
-      "/characters/sasuke-curse-mark/frames/frame-077.png",
-      "/characters/sasuke-curse-mark/frames/frame-078.png",
-      "/characters/sasuke-curse-mark/frames/frame-079.png",
-      "/characters/sasuke-curse-mark/frames/frame-080.png",
-      "/characters/sasuke-curse-mark/frames/frame-081.png",
-      "/characters/sasuke-curse-mark/frames/frame-082.png",
-      "/characters/sasuke-curse-mark/frames/frame-083.png"
+      "/characters/sasuke-curse-mark/frames/frame-180.png",
+      "/characters/sasuke-curse-mark/frames/frame-181.png",
+      "/characters/sasuke-curse-mark/frames/frame-182.png",
+      "/characters/sasuke-curse-mark/frames/frame-183.png",
+      "/characters/sasuke-curse-mark/frames/frame-184.png",
+      "/characters/sasuke-curse-mark/frames/frame-185.png",
+      "/characters/sasuke-curse-mark/frames/frame-186.png",
+      "/characters/sasuke-curse-mark/frames/frame-187.png",
+      "/characters/sasuke-curse-mark/frames/frame-188.png",
+      "/characters/sasuke-curse-mark/frames/frame-189.png",
+      "/characters/sasuke-curse-mark/frames/frame-190.png",
+      "/characters/sasuke-curse-mark/frames/frame-191.png",
+      "/characters/sasuke-curse-mark/frames/frame-192.png",
+      "/characters/sasuke-curse-mark/frames/frame-193.png"
     ],
     "cmd:WS+4": [
       "/characters/sasuke-curse-mark/frames/frame-108.png",
@@ -631,7 +636,7 @@
       "onCounterHitFrames": 26,
       "whiffRecoveryFrames": 13,
       "range": 2.05,
-      "label": "Sasuke Curse Mark Burst",
+      "label": "Fire Style: Fireball Jutsu",
       "hitLevel": "mid",
       "knockdown": true
     },
@@ -2639,8 +2644,8 @@
     },
     "cmd:1+3": {
       "194": {
-        "width": 2.5,
-        "height": 2.5,
+        "width": 1.45,
+        "height": 1.45,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -3138,6 +3143,125 @@
     "height": 1.18
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "fireball-jutsu",
+      "name": "Fire Style: Fireball Jutsu",
+      "kind": "projectile",
+      "frames": [
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-000.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-001.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-002.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-003.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-004.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-005.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-006.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-007.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-008.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-009.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-010.png",
+        "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-011.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-000.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-001.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-002.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-003.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-004.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-005.png"
+        ],
+        "recovery": [
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-006.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-007.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-008.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-009.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-010.png",
+          "/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-011.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "normal",
+      "voxelProfile": "image-source",
+      "voxelFidelity": {
+        "resolutionScale": 3,
+        "maxRows": 64,
+        "depth": 0.2,
+        "alphaThreshold": 16,
+        "paletteSnap": 1,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 1,
+          "farStep": 1
+        }
+      },
+      "defaultScale": [
+        0.72,
+        0.72,
+        0.72
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": false,
+      "color": "#ffffff",
+      "soundCues": [],
+      "proceduralLayers": []
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-fireball-jutsu",
+        "projectileId": "fireball-jutsu",
+        "kind": "projectile",
+        "label": "Fire Style: Fireball Jutsu",
+        "spawnFrame": 28,
+        "spawnOffset": [
+          0,
+          1.08,
+          1.08
+        ],
+        "startupFrames": 0,
+        "activeFrames": 84,
+        "recoveryFrames": 20,
+        "lifetimeFrames": 104,
+        "speed": 8.5,
+        "forwardVelocity": 8.5,
+        "homingMode": "limited",
+        "homingStrength": 2.8,
+        "homingTurnRate": 3.2,
+        "homingEndFrame": 42,
+        "nearMissRadius": 0.72,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.65,
+            0.65,
+            0.9
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1.1,
+        "blockPushbackScale": 1.15,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": false,
+        "clash": true,
+        "kiBurst": true
+      }
+    ]
+  }
 }
