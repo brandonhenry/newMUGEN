@@ -1065,6 +1065,36 @@ test('arcade loading interstitials fit Steam Deck viewport', async ({ page }, te
   await expectLoadingInterstitialFitsSteamDeck(routeLoading);
 });
 
+test('local-dev CPU Arcade advances from a win into the next fight without input', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
+  await page.getByRole('button', { name: 'Next match mode' }).click();
+  await expect(page.getByRole('group', { name: 'Match mode', exact: true })).toContainText('CPU Arcade');
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+
+  await expect(page.getByTestId('match-mode')).toHaveText('cpuArcade', { timeout: 30_000 });
+  await forceMatchOver(page, 1);
+  await expect(page.getByLabel('Arcade route loading')).toBeVisible({ timeout: 5_000 });
+  await expect(page.getByTestId('match-mode')).toHaveText('cpuArcade', { timeout: 30_000 });
+  await expect(page.getByTestId('match-phase')).not.toHaveText('matchOver');
+});
+
+test('local-dev CPU vs CPU automatically rematches after a result', async ({ page }) => {
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Arcade' }).click({ force: true });
+  await page.getByRole('button', { name: 'Previous match mode' }).click();
+  await expect(page.getByRole('group', { name: 'Match mode', exact: true })).toContainText('CPU vs CPU');
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+
+  await expect(page.getByTestId('match-mode')).toHaveText('cpu', { timeout: 30_000 });
+  const firstSession = await fightSessionId(page);
+  await forceMatchOver(page, 1);
+  await expect.poll(() => fightSessionId(page), { timeout: 5_000 }).not.toBe(firstSession);
+  await expect(page.getByTestId('match-phase')).not.toHaveText('matchOver');
+});
+
 test('start basics loads the chamber then opens the trial picker', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Desktop training picker flow covers the large preview layout');
   await startFromSplash(page);

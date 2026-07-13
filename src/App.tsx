@@ -6072,9 +6072,25 @@ export default function App() {
           <ArcadeGameOverScreen
             run={arcadeRun}
             bestScore={Math.max(arcadeRunBestScore, arcadeRun.score)}
+            cpuAutoAccept={cpuAutoAccept}
             onStartOver={() => {
               resetArcadeRun();
-              captureAppAnalytics('game_start_clicked', { source: 'arcade_game_over', selected_mode: 'ai' });
+              captureAppAnalytics('game_start_clicked', { source: 'arcade_game_over', selected_mode: mode });
+              if (mode === 'cpuArcade') {
+                const nextOpponent = pickArcadeOpponent(roster, p1.id, effectiveUnlockedCharacterIds, cpuDifficulty) ?? p2;
+                const nextStage = resolveNextArcadeStage();
+                setP2Id(nextOpponent.id);
+                setVersusReturnScreen('stage');
+                continueWhenAssetsReady(
+                  nextStage,
+                  'versus',
+                  () => setScreen('versus'),
+                  'arcadeGameOver',
+                  { roster },
+                  { p2: nextOpponent }
+                );
+                return;
+              }
               setMode('ai');
               setScreen('select');
             }}
@@ -6170,6 +6186,7 @@ export default function App() {
             mode={mode}
             cpuDifficulty={effectiveCpuDifficulty}
             cpuSlots={mode === 'tournamentLocal' ? localTournamentCpuSlots : undefined}
+            cpuAutoAdvance={cpuAutoAccept}
             preferredStartSide={startSide}
             settings={settings}
             onTrainingSettingsChange={(trainingSettings) => setSettings((current) => sanitizeGameSettings({
@@ -23736,6 +23753,7 @@ function FightScreen({
   mode,
   cpuDifficulty,
   cpuSlots,
+  cpuAutoAdvance = false,
   preferredStartSide,
   settings,
   onTrainingSettingsChange,
@@ -23777,6 +23795,7 @@ function FightScreen({
   mode: MatchMode;
   cpuDifficulty: CpuDifficulty;
   cpuSlots?: Array<1 | 2>;
+  cpuAutoAdvance?: boolean;
   preferredStartSide: StartSide;
   settings: GameSettings;
   onTrainingSettingsChange: (settings: Partial<GameSettings['training']>) => void;
@@ -23958,6 +23977,10 @@ function FightScreen({
     { attacking: false, hitConnected: false }
   ]);
   const arcadeAdvanceRef = useRef(false);
+  const onArcadeAdvanceRef = useRef(onArcadeAdvance);
+  const onTournamentMatchCompleteRef = useRef(onTournamentMatchComplete);
+  onArcadeAdvanceRef.current = onArcadeAdvance;
+  onTournamentMatchCompleteRef.current = onTournamentMatchComplete;
   const fightAnalyticsStateRef = useRef(createFightAnalyticsState());
   const matchStartedTrackedRef = useRef(false);
   const mobileControlsTrackedRef = useRef(false);
@@ -26502,32 +26525,34 @@ function FightScreen({
 
   const arcadeMatchPhase = match.phase;
   const arcadeWinnerSlot = match.winnerSlot;
-  const arcadeDefeatedCharacterId = match.fighters[1].character.id;
   const tournamentMatchPhase = match.phase;
   const tournamentWinnerSlot = match.winnerSlot;
 
   useEffect(() => {
     if (!isArcadeMatchMode(mode) || arcadeMatchPhase !== 'matchOver' || !arcadeWinnerSlot || arcadeAdvanceRef.current) return undefined;
-    arcadeAdvanceRef.current = true;
     const timeout = window.setTimeout(() => {
-      onArcadeAdvance?.({
-        winnerSlot: arcadeWinnerSlot,
-        defeatedCharacterId: arcadeDefeatedCharacterId,
-        playerHealth: Math.max(0, match.fighters[0].hp),
-        playerMaxHealth: Math.max(1, match.fighters[0].maxHp)
+      if (arcadeAdvanceRef.current) return;
+      arcadeAdvanceRef.current = true;
+      const completedMatch = matchRef.current;
+      onArcadeAdvanceRef.current?.({
+        winnerSlot: completedMatch.winnerSlot ?? arcadeWinnerSlot,
+        defeatedCharacterId: completedMatch.fighters[1].character.id,
+        playerHealth: Math.max(0, completedMatch.fighters[0].hp),
+        playerMaxHealth: Math.max(1, completedMatch.fighters[0].maxHp)
       });
     }, 1650);
     return () => window.clearTimeout(timeout);
-  }, [arcadeDefeatedCharacterId, arcadeMatchPhase, arcadeWinnerSlot, mode, onArcadeAdvance]);
+  }, [arcadeMatchPhase, arcadeWinnerSlot, mode]);
 
   useEffect(() => {
     if ((mode !== 'tournamentLocal' && mode !== 'tournamentInfinite') || tournamentMatchPhase !== 'matchOver' || !tournamentWinnerSlot || arcadeAdvanceRef.current) return undefined;
-    arcadeAdvanceRef.current = true;
     const timeout = window.setTimeout(() => {
-      onTournamentMatchComplete?.({ winnerSlot: tournamentWinnerSlot });
+      if (arcadeAdvanceRef.current) return;
+      arcadeAdvanceRef.current = true;
+      onTournamentMatchCompleteRef.current?.({ winnerSlot: matchRef.current.winnerSlot ?? tournamentWinnerSlot });
     }, 1650);
     return () => window.clearTimeout(timeout);
-  }, [mode, onTournamentMatchComplete, tournamentMatchPhase, tournamentWinnerSlot]);
+  }, [mode, tournamentMatchPhase, tournamentWinnerSlot]);
 
   const reset = () => {
     if (isTournamentMatchMode(mode)) {
@@ -26546,6 +26571,15 @@ function FightScreen({
     installFreshMatch(fresh);
     setPaused(false);
   };
+
+  const resetRef = useRef(reset);
+  resetRef.current = reset;
+
+  useEffect(() => {
+    if (!cpuAutoAdvance || mode !== 'cpu' || match.phase !== 'matchOver' || !match.winnerSlot) return undefined;
+    const timeout = window.setTimeout(() => resetRef.current(), 1650);
+    return () => window.clearTimeout(timeout);
+  }, [cpuAutoAdvance, fightSessionId, match.phase, match.winnerSlot, mode]);
 
   const prepareTrainingTrialMatch = useCallback((fresh: MatchSnapshot, trial: TrainingTrialDefinition | null) => {
     if (!trial) return fresh;
@@ -29175,14 +29209,23 @@ function AssetWarmupScreen({
 function ArcadeGameOverScreen({
   run,
   bestScore,
+  cpuAutoAccept = false,
   onStartOver,
   onGiveUp
 }: {
   run: ArcadeRunState;
   bestScore: number;
+  cpuAutoAccept?: boolean;
   onStartOver: () => void;
   onGiveUp: () => void;
 }) {
+  useAnyInputActivation({
+    enabled: cpuAutoAccept,
+    autoAccept: cpuAutoAccept,
+    autoAcceptDelayMs: 1600,
+    onAccept: onStartOver
+  });
+
   return (
     <div className="mini-game-result-screen arcade-game-over-screen" aria-label="Arcade game over">
       <div className="mini-game-result-vignette" />
