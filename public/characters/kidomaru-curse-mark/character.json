@@ -3908,18 +3908,14 @@
       "loop": true,
       "billboard": false,
       "blendMode": "normal",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "voxelFidelity": {
-        "resolutionScale": 3,
-        "maxRows": 48,
-        "depth": 0.18,
-        "alphaThreshold": 16,
-        "paletteSnap": 1,
-        "mergeRuns": true,
-        "lod": {
-          "mobileStep": 1,
-          "farStep": 1
-        }
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
       },
       "defaultScale": [
         0.5,

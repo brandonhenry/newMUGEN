@@ -3094,18 +3094,14 @@
       "loop": true,
       "billboard": false,
       "blendMode": "additive",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "voxelFidelity": {
-        "resolutionScale": 2,
+        "resolutionScale": 1,
         "maxRows": 64,
-        "depth": 0.24,
+        "depth": 0.14,
         "alphaThreshold": 24,
-        "paletteSnap": 1,
-        "mergeRuns": true,
-        "lod": {
-          "mobileStep": 2,
-          "farStep": 2
-        }
+        "paletteSnap": 8,
+        "mergeRuns": true
       },
       "defaultScale": [
         0.42,

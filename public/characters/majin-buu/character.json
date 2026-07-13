@@ -3713,7 +3713,7 @@
       "loop": true,
       "billboard": false,
       "blendMode": "additive",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "defaultScale": [
         0.44,
         0.44,
@@ -3725,7 +3725,15 @@
         0
       ],
       "alignToVelocity": true,
-      "color": "#ff84dc"
+      "color": "#ff84dc",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
     },
     {
       "id": "majin-ki-orb",
@@ -3750,7 +3758,7 @@
       "loop": false,
       "billboard": false,
       "blendMode": "additive",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "defaultScale": [
         0.55,
         0.55,
@@ -3762,7 +3770,15 @@
         0
       ],
       "alignToVelocity": true,
-      "color": "#ffe04f"
+      "color": "#ffe04f",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
     }
   ],
   "moveProjectiles": {

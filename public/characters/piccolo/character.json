@@ -3182,7 +3182,7 @@
       "loop": true,
       "billboard": false,
       "blendMode": "additive",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "defaultScale": [
         0.46,
         0.46,
@@ -3193,7 +3193,15 @@
         0,
         0
       ],
-      "color": "#72ff66"
+      "color": "#72ff66",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
     },
     {
       "id": "special-beam-cannon-blast",

@@ -154,6 +154,8 @@ export type MoveDefinition = {
   kiBurst?: boolean;
   healsHp?: boolean;
   healAmount?: number;
+  /** Utility activation: stop the non-owner simulation for this many owner-action frames. */
+  timeStopFrames?: number;
   soundCues?: EffectSoundCue[];
 };
 
@@ -200,6 +202,12 @@ export type RoundFinisherState = {
   duration: number;
   elapsed: number;
   cameraZoomScale: number;
+};
+
+export type MatchTimeStopRuntime = {
+  ownerSlot: 1 | 2;
+  framesRemaining: number;
+  totalFrames: number;
 };
 
 export type MoveOverride = Partial<Omit<MoveDefinition, 'id' | 'input' | 'hitbox'>> & {
@@ -1386,6 +1394,7 @@ export type MatchSnapshot = {
   impactEvents: ImpactSparkEvent[];
   clashState: ClashState;
   roundFinisher: RoundFinisherState | null;
+  timeStop: MatchTimeStopRuntime | null;
   visualTimeScale: number;
   cameraShake: number;
   idleQuietFrames: number;

@@ -239,6 +239,7 @@ export function createMatch(
     impactEvents: [],
     clashState: createEmptyClashState(),
     roundFinisher: null,
+    timeStop: null,
     visualTimeScale: 1,
     cameraShake: 0,
     idleQuietFrames: 0,
@@ -326,15 +327,27 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     resetIdleQuietState(next);
     return next;
   }
+  const activeTimeStop = next.timeStop;
   updateControlSideSigns(next);
-  applyFighterStep(next, 0, input1, dt);
-  applyFighterStep(next, 1, input2, dt);
-  resolveFacing(next);
-  updateProjectiles(next, frameDelta);
-  resolveBodyCollision(next);
+  if (activeTimeStop) {
+    const ownerIndex = (activeTimeStop.ownerSlot - 1) as 0 | 1;
+    const ownerInput = withoutTimeStopRestrictedInputs(ownerIndex === 0 ? input1 : input2);
+    applyFighterStep(next, ownerIndex, ownerInput, dt);
+    resolveFacingForTimeStopOwner(next, activeTimeStop.ownerSlot);
+    resolveBodyCollisionAgainstFrozenFighter(next, activeTimeStop.ownerSlot);
+  } else {
+    applyFighterStep(next, 0, input1, dt);
+    applyFighterStep(next, 1, input2, dt);
+    resolveTimeStopActivations(next);
+    if (next.timeStop) resolveFacingForTimeStopOwner(next, next.timeStop.ownerSlot);
+    else resolveFacing(next);
+    if (!next.timeStop) updateProjectiles(next, frameDelta);
+    resolveBodyCollision(next);
+  }
   constrainFightersToStageBounds(next);
   updateControlSideSigns(next);
-  resolveHits(next, frameDelta);
+  if (next.timeStop) resolveTimeStopHits(next, frameDelta);
+  else resolveHits(next, frameDelta);
   constrainFightersToStageBounds(next);
   updateControlSideSigns(next);
 
@@ -344,10 +357,12 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   }
 
   updateIdleQuietState(next, input1, input2, frameDelta);
-  updateRecoverableHealth(next, frameDelta);
+  updateRecoverableHealth(next, frameDelta, next.timeStop ? next.timeStop.ownerSlot : undefined);
 
   const infiniteTimer = isInfiniteRoundTime(next.roundTime);
-  next.timer = infiniteTimer || (isTrainingInfiniteHealthMode(next) && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
+  if (!next.timeStop) {
+    next.timer = infiniteTimer || (isTrainingInfiniteHealthMode(next) && next.trainingInfiniteHealth) ? next.roundTime : Math.max(0, next.timer - dt);
+  }
   const ko = next.fighters.find((fighter) => fighter.hp <= 0);
   if (isTrainingInfiniteHealthMode(next) && next.trainingInfiniteHealth) {
     refillTrainingHealth(next);
@@ -355,7 +370,49 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
     finishRound(next, ko ? 'ko' : 'timeout');
   }
 
+  if (activeTimeStop && next.timeStop && next.phase === 'fighting') {
+    next.timeStop.framesRemaining = Math.max(0, next.timeStop.framesRemaining - frameDelta);
+    if (next.timeStop.framesRemaining <= 0) next.timeStop = null;
+  }
+
   return next;
+}
+
+function withoutTimeStopRestrictedInputs(input: InputFrame): InputFrame {
+  return { ...input, charge: false };
+}
+
+function resolveTimeStopActivations(match: MatchSnapshot) {
+  const activators = match.fighters.filter((fighter) => {
+    const move = fighter.currentMove;
+    return fighter.state === 'attack' && Boolean(move?.timeStopFrames) && fighter.moveFrame >= (move?.startupFrames ?? Number.POSITIVE_INFINITY);
+  });
+  if (!activators.length) return;
+  const frames = Math.max(1, Math.round(activators[0].currentMove?.timeStopFrames ?? 1));
+  for (const fighter of activators) releaseTimeStopActivator(fighter);
+  if (activators.length !== 1) {
+    match.timeStop = null;
+    return;
+  }
+  match.timeStop = { ownerSlot: activators[0].slot, framesRemaining: frames, totalFrames: frames };
+}
+
+function releaseTimeStopActivator(fighter: FighterRuntime) {
+  fighter.currentMove = null;
+  fighter.state = 'idle';
+  fighter.actionTimer = 0;
+  fighter.actionFramesRemaining = 0;
+  fighter.moveFrame = 0;
+  fighter.hitConnected = false;
+  fighter.hitConfirmed = false;
+  fighter.whiffRecoveryApplied = false;
+  clearBufferedMoveInput(fighter);
+}
+
+function resolveFacingForTimeStopOwner(match: MatchSnapshot, ownerSlot: 1 | 2) {
+  const owner = match.fighters[ownerSlot - 1];
+  const opponent = match.fighters[ownerSlot === 1 ? 1 : 0];
+  resolveFighterFacing(match.stage, owner, opponent);
 }
 
 function normalizeRoundTime(roundTime: number | undefined) {
@@ -2766,7 +2823,7 @@ function applyMoveOverrides(
     startupFrames: Math.max(1, Math.round(merged.startupFrames)),
     activeFrames: Math.max(1, Math.round(merged.activeFrames)),
     recoveryFrames: Math.max(1, Math.round(merged.recoveryFrames)),
-    damage: Math.max(1, Math.round(merged.damage)),
+    damage: merged.timeStopFrames ? 0 : Math.max(1, Math.round(merged.damage)),
     blockDamage: Math.max(0, Math.round(merged.blockDamage)),
     onBlockFrames: Math.round(merged.onBlockFrames),
     onHitFrames: Math.round(merged.onHitFrames),
@@ -2795,7 +2852,8 @@ function applyMoveOverrides(
     holdable: Boolean(merged.holdable),
     cancelable: Boolean(merged.cancelable),
     healsHp: Boolean(merged.healsHp),
-    healAmount: merged.healAmount === undefined ? undefined : clamp(Math.round(merged.healAmount), 0, 100)
+    healAmount: merged.healAmount === undefined ? undefined : clamp(Math.round(merged.healAmount), 0, 100),
+    timeStopFrames: merged.timeStopFrames === undefined ? undefined : Math.max(1, Math.round(merged.timeStopFrames))
   };
 }
 
@@ -3461,6 +3519,16 @@ function resolveHits(match: MatchSnapshot, frameDelta = 1) {
   tryShadowCloneHit(match, b, a, frameDelta);
   if (match.roundFinisher) return;
   resolveProjectileHits(match, frameDelta);
+}
+
+function resolveTimeStopHits(match: MatchSnapshot, frameDelta = 1) {
+  const timeStop = match.timeStop;
+  if (!timeStop) return;
+  const attacker = match.fighters[timeStop.ownerSlot - 1];
+  const defender = match.fighters[timeStop.ownerSlot === 1 ? 1 : 0];
+  tryHit(match, attacker, defender, frameDelta);
+  if (match.roundFinisher) return;
+  tryShadowCloneHit(match, attacker, defender, frameDelta);
 }
 
 function spawnMoveProjectiles(match: MatchSnapshot, attacker: FighterRuntime, opponent: FighterRuntime, previousMoveFrame: number, currentMoveFrame: number, input?: InputFrame) {
@@ -4179,6 +4247,7 @@ function clashParticipantHasPerfect(clash: ClashState, slot: 1 | 2) {
 function tryHit(match: MatchSnapshot, attacker: FighterRuntime, defender: FighterRuntime, frameDelta: number) {
   const move = attacker.currentMove;
   if (!move || attacker.state !== 'attack' || attacker.hitConnected) return;
+  if (move.timeStopFrames) return;
   if (getUniqueMoveProjectileInstances(attacker, move).some((instance) => instance.delivery === 'replaceMoveHit')) return;
   if (defender.state === 'knockdown' || defender.state === 'transform' || defender.state === 'throwHold' || defender.state === 'throwHeld' || defender.getupInvulnerableFrames > 0) return;
   const moveFrame = attacker.moveFrame || secondsToFrames(totalMoveSeconds(move) - attacker.actionTimer);
@@ -5370,8 +5439,9 @@ function recoverFighterHealth(fighter: FighterRuntime, amount: number) {
   fighter.recoverableFlashFrames = RECOVERABLE_FLASH_FRAMES;
 }
 
-function updateRecoverableHealth(match: MatchSnapshot, frameDelta: number) {
+function updateRecoverableHealth(match: MatchSnapshot, frameDelta: number, activeSlot?: 1 | 2) {
   for (const fighter of match.fighters) {
+    if (activeSlot && fighter.slot !== activeSlot) continue;
     clampRecoverableHealth(fighter);
     if (fighter.recoverableFlashFrames > 0) fighter.recoverableFlashFrames = Math.max(0, fighter.recoverableFlashFrames - frameDelta);
     if (fighter.recoverableRecoveryDelayFrames > 0) {
@@ -5431,6 +5501,7 @@ function finishRound(match: MatchSnapshot, reason: RoundFinishReason = 'ko') {
   match.message = winner && loser ? reason === 'timeout' ? 'TIME OVER' : getRoundFinishMessage(winner, loser) : 'DRAW';
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
+  match.timeStop = null;
   match.visualTimeScale = reason === 'ko' ? KO_SLOWMO_TIME_SCALE : 1;
   match.idleQuietFrames = 0;
   match.idleQuietLockFrames = 0;
@@ -5468,6 +5539,7 @@ function beginRoundFinisher(
   if (isTrainingInfiniteHealthMode(match) && match.trainingInfiniteHealth) return false;
   if (match.phase === 'roundFinisher' || match.phase === 'roundOver' || match.phase === 'matchOver') return false;
   match.phase = 'roundFinisher';
+  match.timeStop = null;
   match.countdown = ROUND_FINISHER_SECONDS;
   match.message = '';
   match.clashState = createEmptyClashState();
@@ -5522,6 +5594,7 @@ function refillTrainingHealth(match: MatchSnapshot) {
   match.message = '';
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
+  match.timeStop = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.idleQuietFrames = 0;
@@ -5547,6 +5620,7 @@ function beginRoundIntro(match: MatchSnapshot) {
   match.message = `ROUND ${match.round}`;
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
+  match.timeStop = null;
   match.visualTimeScale = 1;
   match.winnerSlot = null;
   match.idleQuietFrames = 0;
@@ -5665,6 +5739,7 @@ function resetRound(match: MatchSnapshot) {
   match.projectiles = [];
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
+  match.timeStop = null;
   match.visualTimeScale = 1;
   match.idleQuietFrames = 0;
   match.idleQuietLockFrames = 0;
@@ -5742,6 +5817,22 @@ function resolveBodyCollision(match: MatchSnapshot) {
     p2.position.x += correction * directionX;
     p2.position.z += correction * directionZ;
   }
+}
+
+function resolveBodyCollisionAgainstFrozenFighter(match: MatchSnapshot, ownerSlot: 1 | 2) {
+  const owner = match.fighters[ownerSlot - 1];
+  const frozen = match.fighters[ownerSlot === 1 ? 1 : 0];
+  if (owner.state === 'throwHold' || owner.state === 'throwHeld' || frozen.state === 'throwHold' || frozen.state === 'throwHeld') return;
+  const minDistance = 0.72;
+  const dx = frozen.position.x - owner.position.x;
+  const dz = frozen.position.z - owner.position.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance >= minDistance) return;
+  const correction = minDistance - distance;
+  const directionX = distance > 0 ? dx / distance : owner.facing;
+  const directionZ = distance > 0 ? dz / distance : 0;
+  owner.position.x -= correction * directionX;
+  owner.position.z -= correction * directionZ;
 }
 
 function constrainFightersToStageBounds(match: MatchSnapshot) {
@@ -6321,6 +6412,29 @@ function makeAiInput(match: MatchSnapshot, ai: FighterRuntime, opponent: Fighter
       return input;
     }
     input.charge = shouldAiContinueCharacterAbilityCharge(ai, hasTransformAbility);
+    return input;
+  }
+  const timeStopMove = Object.entries(ai.character.moveOverrides ?? {}).find(([key, move]) => (
+    key === 'cmd:O+3' && Boolean(move.timeStopFrames)
+  ))?.[1];
+  const canActivateTimeStop = Boolean(
+    timeStopMove &&
+    !match.timeStop &&
+    ai.ki >= (timeStopMove.kiCost ?? KI_MAX) &&
+    ai.state === 'idle' &&
+    ai.actionFramesRemaining === 0 &&
+    ai.actionTimer === 0 &&
+    ai.stunFramesRemaining === 0 &&
+    ai.blockstunFramesRemaining === 0 &&
+    opponent.hp > 0 &&
+    opponent.state !== 'knockdown' &&
+    opponent.state !== 'transform' &&
+    positiveModulo(Math.floor(elapsed * FRAMES_PER_SECOND) + ai.slot * 19 + roundAiSeed, 45) === 0
+  );
+  if (canActivateTimeStop) {
+    input.charge = true;
+    input.kick = true;
+    (input as InputFrameWithMetadata).__pressedActions = ['kick'];
     return input;
   }
   let selectedMoveInput = chooseAiMoveInput(ai, profile, settings, selector, routeRoll);
@@ -7876,6 +7990,7 @@ export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
           impactPosition: [...match.roundFinisher.impactPosition]
         }
       : null,
+    timeStop: match.timeStop ? { ...match.timeStop } : null,
     fighters: match.fighters.map((fighter) => ({
       ...fighter,
       character: fighter.character,

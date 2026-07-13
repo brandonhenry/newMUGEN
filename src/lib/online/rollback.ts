@@ -487,6 +487,13 @@ export function checksumMatch(match: MatchSnapshot) {
     timer: roundNumber(match.timer),
     winnerSlot: match.winnerSlot,
     lastHitId: match.lastHitId,
+    timeStop: match.timeStop
+      ? {
+          ownerSlot: match.timeStop.ownerSlot,
+          framesRemaining: roundNumber(match.timeStop.framesRemaining),
+          totalFrames: roundNumber(match.timeStop.totalFrames)
+        }
+      : null,
     projectiles: (match.projectiles ?? []).map((projectile) => ({
       id: projectile.id,
       ownerSlot: projectile.ownerSlot,

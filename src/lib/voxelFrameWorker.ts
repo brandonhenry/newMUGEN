@@ -5,6 +5,7 @@ import {
   type PackedImageVoxel,
   type VoxelPackManifest
 } from './voxelPack';
+import { getPrecomputedVoxelPath, getVoxelAssetRoot, getVoxelPackFrameName } from './voxelAssetPaths';
 
 type WorkerRequest =
   | { id: number; type: 'loadFrame'; characterId: string; frameSource: string }
@@ -54,8 +55,9 @@ async function prewarmFrames(request: Extract<WorkerRequest, { type: 'prewarm' }
   for (const frameSource of request.frameSources) {
     if (cancelledCharacters.has(request.characterId)) return;
     const frame = getVoxelPackFrameName(frameSource);
-    if (!frame) continue;
-    const cacheKey = makeFrameCacheKey(request.characterId, frame);
+    const assetRoot = getVoxelAssetRoot(frameSource);
+    if (!frame || !assetRoot) continue;
+    const cacheKey = makeFrameCacheKey(assetRoot, frame);
     if (frameCache.has(cacheKey)) continue;
     await loadFrame({ id: request.id, type: 'loadFrame', characterId: request.characterId, frameSource }).catch(() => null);
     await new Promise((resolve) => setTimeout(resolve, 0));
@@ -65,10 +67,11 @@ async function prewarmFrames(request: Extract<WorkerRequest, { type: 'prewarm' }
 async function loadFrame(request: Extract<WorkerRequest, { type: 'loadFrame' }>): Promise<WorkerResponse> {
   const startedAt = now();
   const frame = getVoxelPackFrameName(request.frameSource);
-  if (!frame) {
+  const assetRoot = getVoxelAssetRoot(request.frameSource);
+  if (!frame || !assetRoot) {
     return { id: request.id, ok: false, error: 'missing-frame-name' };
   }
-  const cacheKey = makeFrameCacheKey(request.characterId, frame);
+  const cacheKey = makeFrameCacheKey(assetRoot, frame);
   const cached = frameCache.get(cacheKey);
   if (cached) {
     frameCache.delete(cacheKey);
@@ -77,7 +80,7 @@ async function loadFrame(request: Extract<WorkerRequest, { type: 'loadFrame' }>)
   }
 
   const timings: VoxelFrameWorkerTimings = { totalMs: 0 };
-  const rangeResult = await loadFrameFromRange(request.characterId, frame, timings);
+  const rangeResult = await loadFrameFromRange(assetRoot, frame, timings);
   if (rangeResult) {
     setFrameCache(cacheKey, rangeResult);
     timings.totalMs = roundMs(now() - startedAt);
@@ -95,16 +98,16 @@ async function loadFrame(request: Extract<WorkerRequest, { type: 'loadFrame' }>)
   return { id: request.id, ok: false, error: 'frame-load-failed', timings };
 }
 
-async function loadFrameFromRange(characterId: string, frame: string, timings: VoxelFrameWorkerTimings) {
+async function loadFrameFromRange(assetRoot: string, frame: string, timings: VoxelFrameWorkerTimings) {
   const manifestStartedAt = now();
-  const manifest = await getManifest(characterId);
+  const manifest = await getManifest(assetRoot);
   timings.manifestMs = roundMs(now() - manifestStartedAt);
   if (!manifest) return null;
   const range = voxelPackFrameByteRange(manifest, frame);
   if (!range || range.length <= 0) return null;
 
   const rangeStartedAt = now();
-  const response = await fetch(`/characters/${characterId}/voxels-hd/${manifest.binary}`, {
+  const response = await fetch(`${assetRoot}/voxels-hd/${manifest.binary}`, {
     cache: 'no-cache',
     headers: { Range: `bytes=${range.start}-${range.end}` }
   });
@@ -135,13 +138,13 @@ async function loadFrameFromJson(frameSource: string, timings: VoxelFrameWorkerT
   return voxels;
 }
 
-async function getManifest(characterId: string) {
-  const cached = manifestCache.get(characterId);
+async function getManifest(assetRoot: string) {
+  const cached = manifestCache.get(assetRoot);
   if (cached) return cached;
-  const request = fetch(`/characters/${characterId}/voxels-hd/voxel-pack-v1.json`, { cache: 'no-cache' })
+  const request = fetch(`${assetRoot}/voxels-hd/voxel-pack-v1.json`, { cache: 'no-cache' })
     .then((response) => response.ok ? response.json() as Promise<VoxelPackManifest> : null)
     .catch(() => null);
-  manifestCache.set(characterId, request);
+  manifestCache.set(assetRoot, request);
   return request;
 }
 
@@ -155,23 +158,8 @@ function setFrameCache(key: string, voxels: PackedImageVoxel[]) {
   }
 }
 
-function makeFrameCacheKey(characterId: string, frame: string) {
-  return `${characterId}:${frame}`;
-}
-
-function getVoxelPackFrameName(src: string | undefined) {
-  const frameIndex = src?.split('?')[0]?.match(/frame-(\d+)\.png$/)?.[1];
-  return frameIndex ? `frame-${frameIndex}` : null;
-}
-
-function getPrecomputedVoxelPath(src: string, hd = false) {
-  const cleanSrc = src.split('?')[0] ?? src;
-  const match = cleanSrc.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/)
-    ?? cleanSrc.match(/^(\/characters\/[\w-]+\/projectiles\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
-  if (!match) return null;
-  const queryIndex = src.indexOf('?');
-  const cacheBust = queryIndex >= 0 ? src.slice(queryIndex) : '';
-  return `${match[1]}/${hd ? 'voxels-hd' : 'voxels'}/${match[2]}.json${cacheBust}`;
+function makeFrameCacheKey(assetRoot: string, frame: string) {
+  return `${assetRoot}:${frame}`;
 }
 
 function roundMs(value: number) {

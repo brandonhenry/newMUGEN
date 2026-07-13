@@ -1484,10 +1484,12 @@ function pickKiAttackInput(character: CharacterDefinition | undefined): MoveInpu
   if (!character) return 'special';
   const scored: Array<{ input: MoveInput; score: number }> = [];
   for (const move of character.moves) {
+    if (move.timeStopFrames) continue;
     if (!move.kiBurst && !move.usesKi && !move.command?.startsWith('O+')) continue;
     scored.push({ input: move.input, score: move.kiBurst ? 4 : move.command?.startsWith('O+') ? 2 : 1 });
   }
   for (const [key, override] of Object.entries(character.moveOverrides ?? {})) {
+    if (override.timeStopFrames) continue;
     const command = override.command ?? (key.startsWith('cmd:') ? key.slice(4) : key);
     if (!override.kiBurst && !override.usesKi && !command.startsWith('O+')) continue;
     const input = override.input ?? commandInputFromNotation(command);

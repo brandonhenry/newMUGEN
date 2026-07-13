@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 20;
+export const ONLINE_PROTOCOL_VERSION = 21;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -145,6 +145,7 @@ export type CompactMatchSnapshot = {
   impactEvents: MatchSnapshot['impactEvents'];
   clashState: MatchSnapshot['clashState'];
   roundFinisher: MatchSnapshot['roundFinisher'];
+  timeStop: MatchSnapshot['timeStop'];
   visualTimeScale: number;
   cameraShake: number;
   idleQuietFrames: number;
@@ -200,6 +201,7 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
           impactPosition: [...match.roundFinisher.impactPosition]
         }
       : null,
+    timeStop: match.timeStop ? { ...match.timeStop } : null,
     visualTimeScale: match.visualTimeScale,
     cameraShake: match.cameraShake,
     idleQuietFrames: match.idleQuietFrames,
@@ -238,6 +240,7 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
           impactPosition: [...snapshot.roundFinisher.impactPosition]
         }
       : null,
+    timeStop: snapshot.timeStop ? { ...snapshot.timeStop } : null,
     visualTimeScale: snapshot.visualTimeScale,
     cameraShake: snapshot.cameraShake,
     idleQuietFrames: snapshot.idleQuietFrames ?? base.idleQuietFrames,

@@ -3200,7 +3200,7 @@
       "loop": true,
       "billboard": false,
       "blendMode": "additive",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "defaultScale": [
         0.32,
         0.32,
@@ -3211,7 +3211,15 @@
         0,
         0
       ],
-      "color": "#ffe06e"
+      "color": "#ffe06e",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
     }
   ],
   "moveProjectiles": {

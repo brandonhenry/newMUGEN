@@ -217,7 +217,7 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     startupFrames,
     activeFrames,
     recoveryFrames,
-    damage: Math.max(1, Math.round(finiteOr(move.damage, 1))),
+    damage: move.timeStopFrames ? 0 : Math.max(1, Math.round(finiteOr(move.damage, 1))),
     blockDamage: Math.max(0, Math.round(finiteOr(move.blockDamage, 0))),
     hitLevel: normalizeHitLevel(move.hitLevel),
     onBlockFrames: Math.round(finiteOr(move.onBlockFrames, -Math.max(1, recoveryFrames - 12))),
@@ -255,6 +255,7 @@ export function normalizeMove(move: MoveDefinition): MoveDefinition {
     kiCost: move.kiCost === undefined ? undefined : clamp(Math.round(finiteOr(move.kiCost, 35)), 0, 100),
     healsHp: Boolean(move.healsHp),
     healAmount: move.healAmount === undefined ? undefined : clamp(Math.round(finiteOr(move.healAmount, 8)), 0, 100),
+    timeStopFrames: move.timeStopFrames === undefined ? undefined : Math.max(1, Math.round(finiteOr(move.timeStopFrames, 1))),
     cancelWindows: Array.isArray(move.cancelWindows)
       ? move.cancelWindows
           .map((window) => ({
@@ -278,7 +279,8 @@ function sanitizeMoveOverrides(overrides: CharacterDefinition['moveOverrides']) 
       .filter(([key, value]) => key.length > 0 && value && typeof value === 'object')
       .map(([key, value]) => {
         const soundCues = sanitizeSoundCues(value.soundCues);
-        return [key, soundCues.length > 0 ? { ...value, soundCues } : value];
+        const timeStopFrames = value.timeStopFrames === undefined ? undefined : Math.max(1, Math.round(finiteOr(value.timeStopFrames, 1)));
+        return [key, { ...value, timeStopFrames, ...(soundCues.length > 0 ? { soundCues } : {}) }];
       })
   ));
 }

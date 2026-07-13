@@ -3949,7 +3949,7 @@
       "loop": true,
       "billboard": false,
       "blendMode": "additive",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "defaultScale": [
         0.4,
         0.4,
@@ -3961,7 +3961,15 @@
         0
       ],
       "alignToVelocity": true,
-      "color": "#78e8ff"
+      "color": "#78e8ff",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
     },
     {
       "id": "fox-fire-projectile",
@@ -3994,7 +4002,7 @@
       "loop": true,
       "billboard": false,
       "blendMode": "additive",
-      "voxelProfile": "image-source",
+      "voxelProfile": "hd-image-source",
       "defaultScale": [
         0.5,
         0.5,
@@ -4006,7 +4014,15 @@
         0
       ],
       "alignToVelocity": true,
-      "color": "#ff8a24"
+      "color": "#ff8a24",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
     }
   ],
   "moveProjectiles": {

@@ -24105,6 +24105,7 @@ function FightScreen({
       next.countdown = 0;
       next.message = '';
       next.roundFinisher = null;
+      next.timeStop = null;
       next.projectiles = [];
       next.combatEvents = [];
       next.impactEvents = [];
@@ -24207,6 +24208,7 @@ function FightScreen({
       next.message = `${winner.character.displayName} wins`;
       next.countdown = 0;
       next.roundFinisher = null;
+      next.timeStop = null;
       next.projectiles = [];
       next.combatEvents = [];
       next.impactEvents = [];
@@ -26869,6 +26871,7 @@ function FightScreen({
       {trainingButtonHistoryVisible && <TrainingButtonHistory entries={trainingButtonHistory} />}
       {!onlineAssetGateActive && <CombatPopupLayer popups={combatPopups} />}
       {!onlineAssetGateActive && <ClashOverlay match={match} />}
+      {!onlineAssetGateActive && <TimeStopOverlay match={match} />}
       <button
         type="button"
         className="fight-fullscreen-button"
@@ -29222,6 +29225,21 @@ function ClashOverlay({ match }: { match: MatchSnapshot }) {
           <ClashProgress name={match.fighters[1].character.displayName} progress={p2Progress} total={clash.sequence.length} failed={clash.p2.failed} />
         </div>
         {clash.status === 'result' && clash.damage > 0 && <small>{clash.damage} clash damage</small>}
+      </div>
+    </div>
+  );
+}
+
+function TimeStopOverlay({ match }: { match: MatchSnapshot }) {
+  const timeStop = match.timeStop;
+  if (!timeStop) return null;
+  const owner = match.fighters[timeStop.ownerSlot - 1];
+  return (
+    <div className="time-stop-overlay" aria-live="assertive" data-owner-slot={timeStop.ownerSlot}>
+      <div className="time-stop-pulse" />
+      <div className="time-stop-callout">
+        <small>{owner.character.displayName}</small>
+        <strong>Star Platinum: The World</strong>
       </div>
     </div>
   );

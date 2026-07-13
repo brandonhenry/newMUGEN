@@ -51,6 +51,7 @@ import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
 import { normalizeHdVoxelPayload, type VoxelPackPart } from '../lib/voxelPack';
+import { getPrecomputedVoxelPath, getVoxelPackFrameName } from '../lib/voxelAssetPaths';
 import { installVoxelFreezeMonitor, loadHdVoxelFrameInWorker } from '../lib/voxelFrameClient';
 import { applyQueuedPressesToInputs, enqueueInputPress, getKeyboardBindingsForEvent, type QueuedInputPress } from '../hooks/useControls';
 import { StageFloorEffects as UpgradedStageFloorEffects } from './StageFloorEffects';
@@ -676,6 +677,7 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
     makeFightFighterRenderStyle(match, 1),
     makeFightFighterRenderStyle(match, 2)
   ] as const), [match.fighters[0].baseCharacter.id, match.fighters[1].baseCharacter.id]);
+  const fighterTimeScales = [getMatchFighterTimeScale(match, 1), getMatchFighterTimeScale(match, 2)] as const;
   useEffect(() => {
     const cancelP1 = prewarmActiveFighterVoxels(match.fighters[0].character, collectImageVoxelFrameSources(match.fighters[0].character), {
       immediateFrames: uniqueFrameSources([getImageVoxelFramePath(match.fighters[0], getFighterRenderProgress(match.fighters[0]), 0)])
@@ -701,17 +703,17 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
             <CameraRig match={match} settings={cameraSettings} presentationMirrored={presentationMirrored} reducedMotion={reducedMotion} impactFeedbackEnabled={sparkSettings.enabled && sparkSettings.cinematic} />
             <Arena stage={match.stage} fighters={match.fighters} impactEvents={match.impactEvents} />
             <StageCameraOcclusionFader />
-            <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-            <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
-            <AttackCompanionLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-            <AttackCompanionLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+            <FighterRig fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+            <FighterRig fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+            <AttackCompanionLayer fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+            <AttackCompanionLayer fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
             <MovementFootSmokeLayer fighter={match.fighters[0]} style={movementSmokeStyle} />
             <MovementFootSmokeLayer fighter={match.fighters[1]} style={movementSmokeStyle} />
             <TornadoRibbonLayer events={match.impactEvents} fighters={match.fighters} reducedMotion={reducedMotion} />
             <TransformEffectLayer fighter={match.fighters[0]} />
             <TransformEffectLayer fighter={match.fighters[1]} />
-            <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-            <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+            <ShadowCloneLayer fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+            <ShadowCloneLayer fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
             <EffectLayer match={match} audioSettings={audioSettings} reducedMotion={reducedMotion} />
             <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} />
             <FightCameraFrameWriter frameRef={cameraFrameRef} />
@@ -728,17 +730,21 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
           <GameEnvironment />
           <StageVisualStyleRig stage={match.stage} fighters={match.fighters} includeBackdrop={false} />
           <FightCameraFrameReader frameRef={cameraFrameRef} />
-          <FighterRig fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-          <FighterRig fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
-          <AttackCompanionLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-          <AttackCompanionLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
-          <ShadowCloneLayer fighter={match.fighters[0]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
-          <ShadowCloneLayer fighter={match.fighters[1]} timeScale={match.visualTimeScale} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+          <FighterRig fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+          <FighterRig fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+          <AttackCompanionLayer fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+          <AttackCompanionLayer fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
+          <ShadowCloneLayer fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
+          <ShadowCloneLayer fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
           <ImpactSparkLayer events={match.impactEvents} settings={sparkSettings} reducedMotion={reducedMotion} />
         </Canvas>
       </div>
     </>
   );
+}
+
+function getMatchFighterTimeScale(match: MatchSnapshot, slot: 1 | 2) {
+  return match.timeStop && match.timeStop.ownerSlot !== slot ? 0 : match.visualTimeScale;
 }
 
 type FightCameraFrame = {
@@ -3437,7 +3443,8 @@ function ProjectileVisual({
       canceled = true;
     };
   }, [character, source]);
-  const parts = useMemo(() => buildVoxelParts(voxels, voxels.length > 900 ? 2 : 1, source), [source, voxels]);
+  const lodStep = definition.voxelProfile === 'hd-image-source' ? 1 : voxels.length > 900 ? 2 : 1;
+  const parts = useMemo(() => buildVoxelParts(voxels, lodStep, source), [lodStep, source, voxels]);
   const outlineStyle = useMemo(() => getFighterOutlineStyle(stage), [stage]);
   const renderStyle = useMemo(() => withDefaultRenderStyle({
     tint: definition.color ?? '#ffffff',
@@ -8103,21 +8110,6 @@ async function loadPackedImageVoxels(src: string, character: CharacterDefinition
   }
   incrementMenuPerfCounter('voxelPackHits');
   return voxels;
-}
-
-function getVoxelPackFrameName(src: string | undefined) {
-  const frameIndex = src?.split('?')[0]?.match(/frame-(\d+)\.png$/)?.[1];
-  return frameIndex ? `frame-${frameIndex}` : null;
-}
-
-function getPrecomputedVoxelPath(src: string, hd = false) {
-  const cleanSrc = src.split('?')[0] ?? src;
-  const match = cleanSrc.match(/^(\/characters\/[\w-]+)\/frames\/(frame-\d+)\.png$/)
-    ?? cleanSrc.match(/^(\/characters\/[\w-]+\/projectiles\/[\w-]+)\/frames\/(frame-\d+)\.png$/);
-  if (!match) return null;
-  const queryIndex = src.indexOf('?');
-  const cacheBust = queryIndex >= 0 ? src.slice(queryIndex) : '';
-  return `${match[1]}/${hd ? 'voxels-hd' : 'voxels'}/${match[2]}.json${cacheBust}`;
 }
 
 function normalizePrecomputedImageVoxels(payload: unknown): ImageVoxel[] | null {

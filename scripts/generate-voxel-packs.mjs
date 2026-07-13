@@ -6,6 +6,7 @@ const charactersRoot = path.join(repoRoot, 'public', 'characters');
 const parts = ['head', 'torso', 'leadArm', 'rearArm', 'leadLeg', 'rearLeg'];
 const recordFields = 9;
 const validate = process.argv.includes('--validate');
+const projectiles = process.argv.includes('--projectiles');
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -66,24 +67,47 @@ function buildVoxelPack(characterId, frameFiles) {
   };
 }
 
-function characterIdsFromArgs() {
-  const ids = process.argv.slice(2).filter((arg) => !arg.startsWith('-'));
-  if (ids.length > 0) return ids;
-  return fs.readdirSync(charactersRoot)
-    .filter((id) => fs.existsSync(path.join(charactersRoot, id, 'voxels-hd')));
+function targetIdsFromArgs() {
+  return process.argv.slice(2).filter((arg) => !arg.startsWith('-'));
 }
 
-function assertPackMatchesSource(characterId, frameFiles, manifest, records) {
-  if (manifest.format !== 'kore-voxel-pack-v1') throw new Error(`${characterId}: invalid pack format`);
-  if (manifest.recordType !== 'float64-le') throw new Error(`${characterId}: invalid record type`);
-  if (manifest.recordFields !== recordFields) throw new Error(`${characterId}: invalid record field count`);
-  if (manifest.frames.length !== frameFiles.length) throw new Error(`${characterId}: frame count mismatch`);
+function voxelTargets() {
+  const requestedIds = targetIdsFromArgs();
+  if (!projectiles) {
+    const characterIds = requestedIds.length > 0
+      ? requestedIds
+      : fs.readdirSync(charactersRoot).filter((id) => fs.existsSync(path.join(charactersRoot, id, 'voxels-hd')));
+    return characterIds.map((characterId) => ({
+      id: characterId,
+      voxelDir: path.join(charactersRoot, characterId, 'voxels-hd')
+    }));
+  }
+
+  const targets = [];
+  for (const characterId of fs.readdirSync(charactersRoot).sort()) {
+    const projectilesRoot = path.join(charactersRoot, characterId, 'projectiles');
+    if (!fs.existsSync(projectilesRoot)) continue;
+    for (const projectileId of fs.readdirSync(projectilesRoot).sort()) {
+      const id = `${characterId}/projectiles/${projectileId}`;
+      if (requestedIds.length > 0 && !requestedIds.includes(characterId) && !requestedIds.includes(id)) continue;
+      const voxelDir = path.join(projectilesRoot, projectileId, 'voxels-hd');
+      if (fs.existsSync(voxelDir)) targets.push({ id, voxelDir });
+    }
+  }
+  return targets;
+}
+
+function assertPackMatchesSource(targetId, frameFiles, manifest, records) {
+  if (manifest.format !== 'kore-voxel-pack-v1') throw new Error(`${targetId}: invalid pack format`);
+  if (manifest.recordType !== 'float64-le') throw new Error(`${targetId}: invalid record type`);
+  if (manifest.recordFields !== recordFields) throw new Error(`${targetId}: invalid record field count`);
+  if (manifest.frames.length !== frameFiles.length) throw new Error(`${targetId}: frame count mismatch`);
   for (const [frameIndex, file] of frameFiles.entries()) {
     const payload = readJson(file);
     const frame = manifest.frames[frameIndex];
     const expectedFrameName = path.basename(file, '.json');
-    if (frame.frame !== expectedFrameName) throw new Error(`${characterId}/${expectedFrameName}: frame name mismatch`);
-    if (frame.count !== payload.voxels.length) throw new Error(`${characterId}/${expectedFrameName}: voxel count mismatch`);
+    if (frame.frame !== expectedFrameName) throw new Error(`${targetId}/${expectedFrameName}: frame name mismatch`);
+    if (frame.count !== payload.voxels.length) throw new Error(`${targetId}/${expectedFrameName}: voxel count mismatch`);
     for (let index = 0; index < payload.voxels.length; index += 1) {
       const voxel = payload.voxels[index];
       const base = (frame.offset + index) * recordFields;
@@ -103,16 +127,15 @@ function assertPackMatchesSource(characterId, frameFiles, manifest, records) {
         records[base + 7] !== voxel.h ||
         records[base + 8] !== voxel.d
       ) {
-        throw new Error(`${characterId}/${expectedFrameName}: voxel ${index} mismatch`);
+        throw new Error(`${targetId}/${expectedFrameName}: voxel ${index} mismatch`);
       }
     }
   }
 }
 
-for (const characterId of characterIdsFromArgs()) {
-  const voxelDir = path.join(charactersRoot, characterId, 'voxels-hd');
+for (const { id: targetId, voxelDir } of voxelTargets()) {
   if (!fs.existsSync(voxelDir)) {
-    console.warn(`[voxel-pack] skipped ${characterId}: missing voxels-hd`);
+    console.warn(`[voxel-pack] skipped ${targetId}: missing voxels-hd`);
     continue;
   }
   const frameFiles = fs.readdirSync(voxelDir)
@@ -120,13 +143,13 @@ for (const characterId of characterIdsFromArgs()) {
     .sort()
     .map((file) => path.join(voxelDir, file));
   if (frameFiles.length === 0) {
-    console.warn(`[voxel-pack] skipped ${characterId}: no frame JSON files`);
+    console.warn(`[voxel-pack] skipped ${targetId}: no frame JSON files`);
     continue;
   }
 
-  const { manifest, records } = buildVoxelPack(characterId, frameFiles);
+  const { manifest, records } = buildVoxelPack(targetId, frameFiles);
   fs.writeFileSync(path.join(voxelDir, 'voxel-pack-v1.json'), JSON.stringify(manifest));
   fs.writeFileSync(path.join(voxelDir, 'voxel-pack-v1.bin'), Buffer.from(records.buffer));
-  if (validate) assertPackMatchesSource(characterId, frameFiles, manifest, records);
-  console.log(`[voxel-pack] ${characterId}: ${manifest.frames.length} frames, ${records.length / recordFields} voxels`);
+  if (validate) assertPackMatchesSource(targetId, frameFiles, manifest, records);
+  console.log(`[voxel-pack] ${targetId}: ${manifest.frames.length} frames, ${records.length / recordFields} voxels`);
 }
