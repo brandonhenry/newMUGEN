@@ -278,6 +278,7 @@ async function importStage(stage) {
   await assertReadable(stage.source);
   const stageDir = join(publicStagesRoot, stage.id);
   await mkdir(stageDir, { recursive: true });
+  const existingManifest = await readJsonIfExists(join(stageDir, 'stage.json'));
   const rawGlbPath = join(stageDir, 'stage.raw.glb');
   const finalGlbPath = join(stageDir, stage.id === 'hidden-leaf-village' ? 'stage.flattened.glb' : 'stage.glb');
   const previewPath = join(stageDir, 'preview.png');
@@ -307,6 +308,7 @@ async function importStage(stage) {
     name: stage.manifest.name ?? stage.name,
     subtitle: stage.manifest.subtitle ?? stage.subtitle,
     ...stage.manifest,
+    ambiencePreset: stage.manifest.ambiencePreset ?? existingManifest?.ambiencePreset,
     model: {
       ...model,
       bounds: exportMeta?.bounds ?? stage.manifest.model?.bounds

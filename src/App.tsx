@@ -52,6 +52,7 @@ import { AdminDashboard } from './AdminDashboard';
 import { CustomMatchSpectator, CustomRoomsExperience, type CustomMatchLaunch } from './CustomRoomsExperience';
 import { SpectatorExperience, parseSpectatorRoute, shareSpectatorLink } from './SpectatorExperience';
 import { CharacterPreviewCanvas, GameScene, MenuAttractScene, MiniGameScene, MoveDemoCanvas, StagePreviewCanvas, UnlockRevealCanvas, UNLOCK_REVEAL_SEQUENCE_SECONDS, clearImageVoxelCacheForFrame, prewarmActiveFighterVoxels, type AssetLoadingState, type PreviewPose, type StagePreviewMode } from './components/GameScene';
+import { StageAmbiencePlayer } from './components/StageAmbiencePlayer';
 import { TouchControls } from './components/TouchControls';
 import { KORE_APP_VERSION } from './appVersion';
 import { starterCharacters } from './data/characters';
@@ -3161,6 +3162,7 @@ export default function App() {
   const [arcadeRunBestScore, setArcadeRunBestScore] = useState(0);
   const [musicStarted, setMusicStarted] = useState(true);
   const [fightPaused, setFightPaused] = useState(false);
+  const [miniGamePaused, setMiniGamePaused] = useState(false);
   const menuHoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const menuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
   const innerMenuSelectAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -5183,6 +5185,12 @@ export default function App() {
   const activeBgmTrackIndex = activeBgmSource?.lockToTrack
     ? activeBgmSource.trackIndex
     : normalizeBgmIndex(settings.audio.bgmTrackIndex, activeBgmSource?.tracks.length ?? 0);
+  const activeAmbienceStage = useMemo(() => {
+    if (!musicStarted) return null;
+    if (screen === 'fight' && !fightPaused) return selectedStage;
+    if (screen === 'miniGame' && !miniGamePaused) return activeArcadeMiniGame?.stage ?? null;
+    return null;
+  }, [activeArcadeMiniGame?.stage, fightPaused, miniGamePaused, musicStarted, screen, selectedStage]);
   const playDirectionalMenuNavigateSound = useCallback((activeScreen: Screen) => {
     if (activeScreen === 'select') playInnerMenuSelectSound();
   }, [playInnerMenuSelectSound]);
@@ -5380,6 +5388,7 @@ export default function App() {
         selectedTrackIndex={activeBgmTrackIndex}
         onTrackIndexChange={activeBgmSource?.lockToTrack ? undefined : updateBgmTrackIndex}
       />
+      <StageAmbiencePlayer audio={settings.audio} stage={activeAmbienceStage} active={Boolean(activeAmbienceStage)} />
       <section className={`screen-panel ${fullBleedScreen ? 'is-full-bleed' : ''}`}>
         {screen === 'title' && <TitleScreen onStart={startFromTitle} cpuAutoAccept={cpuAutoAccept} />}
         {screen === 'menu' && (
@@ -5966,6 +5975,7 @@ export default function App() {
               readInputsForStep={readInputsForStep}
               setVirtualAction={setVirtualAction}
               clearMenuInputs={clearMenuInputs}
+              onPausedChange={setMiniGamePaused}
               onMenu={() => {
                 captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
                 finishArcadeRun(arcadeRun);
@@ -6001,6 +6011,7 @@ export default function App() {
               readInputsForStep={readInputsForStep}
               setVirtualAction={setVirtualAction}
               clearMenuInputs={clearMenuInputs}
+              onPausedChange={setMiniGamePaused}
               onMenu={() => {
                 captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
                 finishArcadeRun(arcadeRun);
@@ -6035,6 +6046,7 @@ export default function App() {
               readInputsForStep={readInputsForStep}
               setVirtualAction={setVirtualAction}
               clearMenuInputs={clearMenuInputs}
+              onPausedChange={setMiniGamePaused}
               onMenu={() => {
                 captureAppAnalytics('pause_menu_action_clicked', { action: 'menu', source: 'minigame' });
                 finishArcadeRun(arcadeRun);
@@ -14869,6 +14881,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('audio', 'bgm_track_index', previous.audio.bgmTrackIndex, next.audio.bgmTrackIndex);
   add('audio', 'master', previous.audio.master, next.audio.master);
   add('audio', 'music', previous.audio.music, next.audio.music);
+  add('audio', 'ambience', previous.audio.ambience, next.audio.ambience);
   add('audio', 'sfx', previous.audio.sfx, next.audio.sfx);
   add('audio', 'voices', previous.audio.voices, next.audio.voices);
   add('audio', 'hit_sfx', previous.audio.hitSfx, next.audio.hitSfx);
@@ -15472,6 +15485,7 @@ function SettingsScreen({
         <SettingsSection index={2} title="Mix" active={activeSectionIndex === 2}>
           <SettingSlider label="Master" value={settings.audio.master} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, master: value } }))} />
           <SettingSlider label="Music" value={settings.audio.music} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, music: value } }))} />
+          <SettingSlider label="Ambience" value={settings.audio.ambience} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, ambience: value } }))} />
           <SettingSlider label="SFX" value={settings.audio.sfx} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, sfx: value } }))} />
           <SettingSlider label="Voices" value={settings.audio.voices} min={0} max={1} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, voices: value } }))} />
           <SettingSlider label="Hit Effects" value={settings.audio.hitSfx} min={0} max={2} step={0.01} onChange={(value) => updateSettings((current) => ({ ...current, audio: { ...current.audio, hitSfx: value } }))} />
@@ -28260,6 +28274,7 @@ function BreakTargetMiniGameScreen({
   readInputsForStep,
   setVirtualAction,
   clearMenuInputs,
+  onPausedChange,
   onMenu,
   onComplete,
   onAnalytics
@@ -28271,6 +28286,7 @@ function BreakTargetMiniGameScreen({
   readInputsForStep: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
+  onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onComplete: (result: MiniGameResult) => void;
   onAnalytics: AnalyticsCapture;
@@ -28306,6 +28322,12 @@ function BreakTargetMiniGameScreen({
   useEffect(() => {
     pausedRef.current = paused;
   }, [paused]);
+
+  useEffect(() => {
+    onPausedChange(paused);
+  }, [onPausedChange, paused]);
+
+  useEffect(() => () => onPausedChange(false), [onPausedChange]);
 
   useEffect(() => {
     snapshotRef.current = snapshot;
@@ -28502,6 +28524,7 @@ function EnemyRushMiniGameScreen({
   readInputsForStep,
   setVirtualAction,
   clearMenuInputs,
+  onPausedChange,
   onMenu,
   onComplete,
   onAnalytics
@@ -28514,6 +28537,7 @@ function EnemyRushMiniGameScreen({
   readInputsForStep: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
+  onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onComplete: (result: MiniGameResult) => void;
   onAnalytics: AnalyticsCapture;
@@ -28580,6 +28604,12 @@ function EnemyRushMiniGameScreen({
   useEffect(() => {
     pausedRef.current = paused;
   }, [paused]);
+
+  useEffect(() => {
+    onPausedChange(paused);
+  }, [onPausedChange, paused]);
+
+  useEffect(() => () => onPausedChange(false), [onPausedChange]);
 
   useEffect(() => {
     snapshotRef.current = snapshot;
@@ -28763,6 +28793,7 @@ function TagMiniGameScreen({
   readInputsForStep,
   setVirtualAction,
   clearMenuInputs,
+  onPausedChange,
   onMenu,
   onComplete,
   onAnalytics
@@ -28776,6 +28807,7 @@ function TagMiniGameScreen({
   readInputsForStep: () => [InputFrame, InputFrame];
   setVirtualAction: (player: 1 | 2, action: ActionName, pressed: boolean) => void;
   clearMenuInputs: () => void;
+  onPausedChange: (paused: boolean) => void;
   onMenu: () => void;
   onComplete: (result: MiniGameResult) => void;
   onAnalytics: AnalyticsCapture;
@@ -28824,6 +28856,12 @@ function TagMiniGameScreen({
   useEffect(() => {
     pausedRef.current = paused;
   }, [paused]);
+
+  useEffect(() => {
+    onPausedChange(paused);
+  }, [onPausedChange, paused]);
+
+  useEffect(() => () => onPausedChange(false), [onPausedChange]);
 
   useEffect(() => {
     snapshotRef.current = snapshot;

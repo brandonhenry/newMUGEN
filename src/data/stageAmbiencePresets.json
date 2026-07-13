@@ -1,0 +1,117 @@
+{
+  "clean-tech": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/scifi-bunker.mp3", "volume": 0.4 },
+      { "path": "/sounds/stage-ambience/computer-idle-03.mp3", "volume": 0.12 }
+    ],
+    "cues": [
+      { "paths": ["/sounds/stage-ambience/computer-load.mp3"], "volume": 0.18, "minDelaySeconds": 45, "maxDelaySeconds": 90 }
+    ]
+  },
+  "energy-void": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/drone-eerie.mp3", "volume": 0.42 },
+      { "path": "/sounds/stage-ambience/neon-light-01.mp3", "volume": 0.12 }
+    ],
+    "cues": [
+      { "paths": ["/sounds/stage-ambience/nuc-on.mp3"], "volume": 0.14, "minDelaySeconds": 60, "maxDelaySeconds": 120 }
+    ]
+  },
+  "open-meadow": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/wind-calm.mp3", "volume": 0.32 },
+      { "path": "/sounds/stage-ambience/meadow-birds.mp3", "volume": 0.22 }
+    ]
+  },
+  "forest-garden": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/wind-forest.mp3", "volume": 0.28 },
+      { "path": "/sounds/stage-ambience/forest-birds.mp3", "volume": 0.2 },
+      { "path": "/sounds/stage-ambience/cicadas.mp3", "volume": 0.09 }
+    ]
+  },
+  "forest-waterfall": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/waterfall-calm.mp3", "volume": 0.34 },
+      { "path": "/sounds/stage-ambience/wind-forest.mp3", "volume": 0.2 },
+      { "path": "/sounds/stage-ambience/forest-birds.mp3", "volume": 0.12 }
+    ]
+  },
+  "dry-wind": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/wind-calm.mp3", "volume": 0.38 },
+      { "path": "/sounds/stage-ambience/cicadas.mp3", "volume": 0.1 }
+    ]
+  },
+  "snow-wind": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/wind-calm.mp3", "volume": 0.42 },
+      { "path": "/sounds/stage-ambience/drone-eerie.mp3", "volume": 0.08 }
+    ]
+  },
+  "storm-rain": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/rain-strong.mp3", "volume": 0.36 },
+      { "path": "/sounds/stage-ambience/rain-leaves.mp3", "volume": 0.18 },
+      { "path": "/sounds/stage-ambience/cave-deep.mp3", "volume": 0.06 }
+    ]
+  },
+  "coast-water": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/sea.mp3", "volume": 0.38 },
+      { "path": "/sounds/stage-ambience/wind-calm.mp3", "volume": 0.18 }
+    ]
+  },
+  "river-water": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/river-moderate.mp3", "volume": 0.34 },
+      { "path": "/sounds/stage-ambience/stream-calm.mp3", "volume": 0.18 },
+      { "path": "/sounds/stage-ambience/cave-drips.mp3", "volume": 0.08 }
+    ]
+  },
+  "urban": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/wind-calm.mp3", "volume": 0.18 },
+      { "path": "/sounds/stage-ambience/car-drive-exterior.mp3", "volume": 0.12 }
+    ],
+    "cues": [
+      { "paths": ["/sounds/stage-ambience/car-horn-exterior.mp3", "/sounds/stage-ambience/phone-pole-sequence.mp3"], "volume": 0.14, "minDelaySeconds": 50, "maxDelaySeconds": 110 }
+    ]
+  },
+  "indoor-quiet": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/drone-eerie.mp3", "volume": 0.16 },
+      { "path": "/sounds/stage-ambience/night.mp3", "volume": 0.12 }
+    ],
+    "cues": [
+      { "paths": ["/sounds/stage-ambience/door-wood-open.mp3"], "volume": 0.16, "minDelaySeconds": 70, "maxDelaySeconds": 140 }
+    ]
+  },
+  "cave-dark": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/cave-deep.mp3", "volume": 0.3 },
+      { "path": "/sounds/stage-ambience/cave-drips.mp3", "volume": 0.18 },
+      { "path": "/sounds/stage-ambience/cave-dark.mp3", "volume": 0.15 }
+    ],
+    "cues": [
+      { "paths": ["/sounds/stage-ambience/door-wood-open.mp3"], "volume": 0.12, "minDelaySeconds": 90, "maxDelaySeconds": 160 }
+    ]
+  },
+  "industrial-transit": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/scifi-bunker.mp3", "volume": 0.24 },
+      { "path": "/sounds/stage-ambience/truck-drive-interior-01.mp3", "volume": 0.1 },
+      { "path": "/sounds/stage-ambience/electric-box-01.mp3", "volume": 0.08 }
+    ],
+    "cues": [
+      { "paths": ["/sounds/stage-ambience/computer-load.mp3", "/sounds/stage-ambience/phone-pole-sequence.mp3"], "volume": 0.15, "minDelaySeconds": 45, "maxDelaySeconds": 95 }
+    ]
+  },
+  "fire-hell": {
+    "loops": [
+      { "path": "/sounds/stage-ambience/fire-big.mp3", "volume": 0.34 },
+      { "path": "/sounds/stage-ambience/cave-dark.mp3", "volume": 0.2 },
+      { "path": "/sounds/stage-ambience/drone-eerie.mp3", "volume": 0.08 }
+    ]
+  }
+}

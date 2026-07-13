@@ -252,6 +252,45 @@ async function startTraining(page: import('@playwright/test').Page) {
   await fightScreen.focus();
 }
 
+test('stage ambience follows fights and persists its independent mix level', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop audio lifecycle smoke test');
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Options' }).click();
+  await page.locator('.options-tabs button').filter({ hasText: /^Audio$/ }).click();
+  await page.locator('.options-sidebar button').filter({ hasText: /^Mix$/ }).click();
+  const ambienceSlider = page.locator('.setting-row').filter({ hasText: /^Ambience/ }).locator('input[type="range"]');
+  await expect(ambienceSlider).toBeVisible();
+  await ambienceSlider.evaluate((element) => {
+    const input = element as HTMLInputElement;
+    const valueSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
+    valueSetter?.call(input, '0.31');
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  await expect.poll(() => page.evaluate(() => {
+    const stored = JSON.parse(window.localStorage.getItem('kore.gameSettings') ?? '{}') as { settings?: { audio?: { ambience?: number } } };
+    return stored.settings?.audio?.ambience;
+  })).toBe(0.31);
+
+  await startFromSplash(page);
+  await page.getByRole('button', { name: 'Versus' }).click({ force: true });
+  await page.getByRole('button', { name: 'Stage' }).click();
+  await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
+  await page.getByRole('button', { name: 'Fight', exact: true }).click();
+  await expect(page.getByTestId('asset-warmup-screen')).toBeVisible({ timeout: 3000 });
+  await expect(page.locator('.fight-versus-screen')).toBeVisible({ timeout: 8000 });
+  await activateAnyInputScreen(page, '.fight-versus-screen');
+  await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 30_000 });
+  const ambiencePlayer = page.getByTestId('stage-ambience-player');
+  await expect(ambiencePlayer).toHaveAttribute('data-active', 'true');
+  await expect(ambiencePlayer).toHaveAttribute('data-preset', 'clean-tech');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('heading', { name: 'Paused' })).toBeVisible();
+  await expect(ambiencePlayer).toHaveAttribute('data-active', 'false');
+  await page.getByRole('button', { name: 'Resume' }).click();
+  await expect(ambiencePlayer).toHaveAttribute('data-active', 'true');
+});
+
 async function expectDocumentLocked(page: Page) {
   const metrics = await page.evaluate(() => {
     const scrollingElement = document.scrollingElement ?? document.documentElement;

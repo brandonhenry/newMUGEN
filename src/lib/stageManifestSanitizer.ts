@@ -1,3 +1,5 @@
+import { isStageAmbiencePresetId } from './stageAmbience';
+
 export function sanitizeStageManifest(stage: Record<string, unknown>, stageId: string) {
   const colors = {
     floor: typeof stage.floor === 'string' ? stage.floor : '#07182c',
@@ -12,6 +14,7 @@ export function sanitizeStageManifest(stage: Record<string, unknown>, stageId: s
     renderMode: sanitizeStageRenderMode(stage.renderMode),
     hidden: Boolean(stage.hidden),
     tournamentEligible: Boolean(stage.tournamentEligible),
+    ambiencePreset: isStageAmbiencePresetId(stage.ambiencePreset) ? stage.ambiencePreset : undefined,
     floor: colors.floor,
     floorAssetId: typeof stage.floorAssetId === 'string' ? stage.floorAssetId : undefined,
     floorTexturePath: typeof stage.floorTexturePath === 'string' ? stage.floorTexturePath : undefined,

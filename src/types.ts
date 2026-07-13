@@ -534,6 +534,40 @@ export type StagePlayableBoundsDefinition = {
   depth: number;
 };
 
+export type StageAmbiencePresetId =
+  | 'clean-tech'
+  | 'energy-void'
+  | 'open-meadow'
+  | 'forest-garden'
+  | 'forest-waterfall'
+  | 'dry-wind'
+  | 'snow-wind'
+  | 'storm-rain'
+  | 'coast-water'
+  | 'river-water'
+  | 'urban'
+  | 'indoor-quiet'
+  | 'cave-dark'
+  | 'industrial-transit'
+  | 'fire-hell';
+
+export type StageAmbienceLoopDefinition = {
+  path: string;
+  volume: number;
+};
+
+export type StageAmbienceCueDefinition = {
+  paths: string[];
+  volume: number;
+  minDelaySeconds: number;
+  maxDelaySeconds: number;
+};
+
+export type StageAmbiencePresetDefinition = {
+  loops: StageAmbienceLoopDefinition[];
+  cues?: StageAmbienceCueDefinition[];
+};
+
 export type StageDefinition = {
   id: string;
   name: string;
@@ -543,6 +577,7 @@ export type StageDefinition = {
   visualStyle?: StageVisualStyle;
   hidden?: boolean;
   tournamentEligible?: boolean;
+  ambiencePreset?: StageAmbiencePresetId;
   music?: {
     path?: string;
     trackIndex?: number;
@@ -1189,6 +1224,7 @@ export type GameSettings = {
   audio: {
     master: number;
     music: number;
+    ambience: number;
     sfx: number;
     voices: number;
     hitSfx: number;

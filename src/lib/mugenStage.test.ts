@@ -203,6 +203,21 @@ describe('MUGEN stage parsing', () => {
     });
   });
 
+  it('normalizes and sanitizes known stage ambience presets', () => {
+    const normalized = normalizeStage({
+      id: 'ambient-stage',
+      name: 'Ambient Stage',
+      subtitle: 'Audio',
+      floor: '#000000',
+      rail: '#ffffff',
+      light: '#ffffff',
+      ambiencePreset: 'forest-garden'
+    });
+    expect(normalized.ambiencePreset).toBe('forest-garden');
+    expect(sanitizeStageManifest({ name: 'Ambient Stage', ambiencePreset: 'urban' }, 'ambient-stage').ambiencePreset).toBe('urban');
+    expect(sanitizeStageManifest({ name: 'Bad Audio', ambiencePreset: 'loud-place' }, 'bad-audio').ambiencePreset).toBeUndefined();
+  });
+
   it('normalizes deterministic edge vegetation metadata', () => {
     const normalized = normalizeStage({
       id: 'forest-edge',

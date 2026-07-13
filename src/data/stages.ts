@@ -8,6 +8,7 @@ export const stages: StageDefinition[] = [
     renderMode: 'procedural',
     visualStylePreset: 'training-clean',
     tournamentEligible: true,
+    ambiencePreset: 'clean-tech',
     music: {
       path: 'sounds/0012 SEQ_BGMB_STG_01.mp3',
       trackIndex: 0,
@@ -32,6 +33,7 @@ export const stages: StageDefinition[] = [
     renderMode: 'procedural',
     visualStylePreset: 'training-clean',
     tournamentEligible: true,
+    ambiencePreset: 'clean-tech',
     music: {
       path: 'sounds/0013 SEQ_BGMB_STG_02.mp3',
       trackIndex: 1,
@@ -55,6 +57,7 @@ export const stages: StageDefinition[] = [
     subtitle: 'Wide procedural arena for movement testing',
     hidden: true,
     visualStylePreset: 'anime-night',
+    ambiencePreset: 'clean-tech',
     music: {
       path: 'sounds/0014 SEQ_BGMB_STG_03.mp3',
       trackIndex: 2,
@@ -70,6 +73,7 @@ export const stages: StageDefinition[] = [
     subtitle: 'Warm steel courtyard',
     hidden: true,
     visualStylePreset: 'dojo-sunset',
+    ambiencePreset: 'industrial-transit',
     music: {
       path: 'sounds/0015 SEQ_BGMB_STG_04.mp3',
       trackIndex: 3,

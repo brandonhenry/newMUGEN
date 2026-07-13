@@ -125,6 +125,7 @@ export const defaultGameSettings: GameSettings = {
   audio: {
     master: 1,
     music: 0.72,
+    ambience: 0.55,
     sfx: 0.85,
     voices: 0.85,
     hitSfx: 1.35,
@@ -239,6 +240,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
     audio: {
       master: clampNumber(audio.master, 0, 1, defaults.audio.master),
       music: clampNumber(audio.music, 0, 1, defaults.audio.music),
+      ambience: clampNumber(audio.ambience, 0, 1, defaults.audio.ambience),
       sfx: sanitizedSfx,
       voices: sanitizedVoices,
       hitSfx: clampNumber(audio.hitSfx, 0, 2, defaults.audio.hitSfx),

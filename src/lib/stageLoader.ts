@@ -1,5 +1,6 @@
 import { stages as fallbackStages } from '../data/stages';
 import type { StageDefinition, StageFloorEffects, StageModelDefinition, StagePropDefinition, Vec3Tuple } from '../types';
+import { isStageAmbiencePresetId } from './stageAmbience';
 import { inferStageVisualStylePreset, normalizeStageVisualStyle } from './stageVisualStyle';
 
 export type StageLoadResult = {
@@ -54,6 +55,10 @@ export async function loadStageRoster(): Promise<StageLoadResult> {
         })
       )
     ).filter((stage): stage is StageDefinition => Boolean(stage));
+    const sourceWarnings = new Map(loaded.map((stage) => [stage.id, validateStage(stage)]));
+    for (const stage of fallbackStages) {
+      if (!sourceWarnings.has(stage.id)) sourceWarnings.set(stage.id, validateStage(stage));
+    }
     const normalizedLoaded = loaded.map(normalizeStage);
     const modelStages = normalizedLoaded.filter((stage) => stage.renderMode === 'model' || Boolean(stage.model?.path ?? stage.model?.url));
     logStageModelDebug('GLB stage roster loaded', {
@@ -83,7 +88,10 @@ export async function loadStageRoster(): Promise<StageLoadResult> {
     const stages = normalizedLoaded.length > 0 ? [...normalizedLoaded, ...fallback] : fallback;
     return {
       stages,
-      warnings: Object.fromEntries(stages.map((stage) => [stage.id, validateStage(stage)]))
+      warnings: Object.fromEntries(stages.map((stage) => [
+        stage.id,
+        [...new Set([...(sourceWarnings.get(stage.id) ?? []), ...validateStage(stage)])]
+      ]))
     };
   } catch {
     const stages = fallbackStages.map(normalizeStage);
@@ -100,6 +108,7 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
     renderMode: stage.renderMode ?? 'procedural',
     hidden: stage.hidden === true,
     tournamentEligible: stage.tournamentEligible === true,
+    ambiencePreset: isStageAmbiencePresetId(stage.ambiencePreset) ? stage.ambiencePreset : undefined,
     floor: stage.floor ?? '#07182c',
     floorAssetId: stage.floorAssetId,
     floorTexturePath: stage.floorTexturePath,
@@ -142,6 +151,7 @@ function validateStage(stage: StageDefinition) {
   const warnings: string[] = [];
   if (!stage.id) warnings.push('Missing id.');
   if (!stage.name) warnings.push('Missing name.');
+  if (stage.ambiencePreset && !isStageAmbiencePresetId(stage.ambiencePreset)) warnings.push(`Unknown ambience preset: ${stage.ambiencePreset}.`);
   if (stage.renderMode === 'spriteCutout') {
     if (!stage.sourcePath) warnings.push('Sprite-cutout stage is missing sourcePath.');
     if (!stage.backgroundLayers?.length && !stage.props?.length) warnings.push('Sprite-cutout stage has no visual layers or props.');

@@ -202,6 +202,17 @@ describe('game settings', () => {
     expect(sanitizeGameSettings({ audio: { sfx: 0.4, voices: 5 } }).audio.voices).toBe(1);
   });
 
+  it('defaults, clamps, and independently clones ambience volume settings', () => {
+    expect(sanitizeGameSettings(null).audio.ambience).toBe(0.55);
+    expect(sanitizeGameSettings({ audio: { ambience: -1 } }).audio.ambience).toBe(0);
+    expect(sanitizeGameSettings({ audio: { ambience: 4 } }).audio.ambience).toBe(1);
+    expect(sanitizeGameSettings({ audio: {} }).audio.ambience).toBe(defaultGameSettings.audio.ambience);
+
+    const clone = cloneSettings(defaultGameSettings);
+    clone.audio.ambience = 0.2;
+    expect(defaultGameSettings.audio.ambience).toBe(0.55);
+  });
+
   it('clones audio settings independently', () => {
     const clone = cloneSettings(defaultGameSettings);
     clone.audio.voices = 0.2;

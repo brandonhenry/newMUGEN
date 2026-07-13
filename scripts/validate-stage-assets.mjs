@@ -6,7 +6,9 @@ import process from 'node:process';
 const root = process.cwd();
 const publicDir = path.join(root, 'public');
 const indexPath = path.join(publicDir, 'stages', 'index.json');
+const ambienceCatalogPath = path.join(root, 'src', 'data', 'stageAmbiencePresets.json');
 const modelBudgetMb = Number(process.env.KORE_STAGE_MODEL_BUDGET_MB ?? 35);
+const ambienceBudgetMb = Number(process.env.KORE_STAGE_AMBIENCE_BUDGET_MB ?? 25);
 
 function publicPathToFile(assetPath) {
   if (!assetPath || !assetPath.startsWith('/')) return null;
@@ -24,7 +26,44 @@ function readJson(filePath) {
 
 const failures = [];
 const index = await readJson(indexPath);
+const ambiencePresets = await readJson(ambienceCatalogPath);
 const ids = Array.isArray(index.stages) ? index.stages : [];
+const ambienceAssetPaths = new Set();
+
+for (const [presetId, preset] of Object.entries(ambiencePresets)) {
+  if (!Array.isArray(preset?.loops) || preset.loops.length === 0) {
+    failures.push(`ambience preset ${presetId}: requires at least one loop`);
+    continue;
+  }
+  for (const loop of preset.loops) {
+    if (typeof loop?.path !== 'string' || !loop.path.startsWith('/sounds/stage-ambience/')) {
+      failures.push(`ambience preset ${presetId}: invalid loop path ${String(loop?.path)}`);
+    } else {
+      ambienceAssetPaths.add(loop.path);
+    }
+    if (!Number.isFinite(loop?.volume) || loop.volume < 0 || loop.volume > 1) failures.push(`ambience preset ${presetId}: loop volume must be between 0 and 1`);
+  }
+  for (const cue of Array.isArray(preset?.cues) ? preset.cues : []) {
+    if (!Array.isArray(cue?.paths) || cue.paths.length === 0) failures.push(`ambience preset ${presetId}: cue requires at least one path`);
+    for (const cuePath of Array.isArray(cue?.paths) ? cue.paths : []) {
+      if (typeof cuePath !== 'string' || !cuePath.startsWith('/sounds/stage-ambience/')) failures.push(`ambience preset ${presetId}: invalid cue path ${String(cuePath)}`);
+      else ambienceAssetPaths.add(cuePath);
+    }
+    if (!Number.isFinite(cue?.volume) || cue.volume < 0 || cue.volume > 1) failures.push(`ambience preset ${presetId}: cue volume must be between 0 and 1`);
+    if (!Number.isFinite(cue?.minDelaySeconds) || !Number.isFinite(cue?.maxDelaySeconds) || cue.minDelaySeconds < 5 || cue.maxDelaySeconds < cue.minDelaySeconds) {
+      failures.push(`ambience preset ${presetId}: cue delay range is invalid`);
+    }
+  }
+}
+
+let ambienceBytes = 0;
+for (const assetPath of ambienceAssetPaths) {
+  const assetFile = publicPathToFile(assetPath);
+  if (!assetFile || !existsSync(assetFile)) failures.push(`stage ambience: missing asset ${assetPath}`);
+  else ambienceBytes += (await stat(assetFile)).size;
+}
+const ambienceSizeMb = ambienceBytes / 1024 / 1024;
+if (Number.isFinite(ambienceBudgetMb) && ambienceSizeMb > ambienceBudgetMb) failures.push(`stage ambience: ${ambienceSizeMb.toFixed(1)} MB exceeds the ${ambienceBudgetMb} MB budget`);
 
 for (const id of ids) {
   const stagePath = path.join(publicDir, 'stages', id, 'stage.json');
@@ -33,6 +72,9 @@ for (const id of ids) {
     continue;
   }
   const stage = await readJson(stagePath);
+  if (typeof stage.ambiencePreset !== 'string' || !Object.hasOwn(ambiencePresets, stage.ambiencePreset)) {
+    failures.push(`${id}: missing or unknown ambience preset ${String(stage.ambiencePreset)}`);
+  }
   const vegetationPath = stage.edgeVegetation?.packPath;
   if (vegetationPath) {
     const vegetationFile = publicPathToFile(vegetationPath);
@@ -67,4 +109,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`Stage asset validation passed for ${ids.length} indexed stages.`);
+console.log(`Stage asset validation passed for ${ids.length} indexed stages and ${ambienceAssetPaths.size} ambience assets (${ambienceSizeMb.toFixed(1)} MB).`);
