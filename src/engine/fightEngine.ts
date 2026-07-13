@@ -597,6 +597,7 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     jumpInputHeld: false,
     currentMove: null,
     moveInstanceId: 0,
+    projectileAimDirection: undefined,
     actionTimer: 0,
     actionFramesRemaining: 0,
     moveFrame: 0,
@@ -2267,6 +2268,11 @@ function startComboAttack(
 
   fighter.currentMove = resolvedMove;
   fighter.moveInstanceId += 1;
+  fighter.projectileAimDirection = unitFromTo(
+    getFighterCombatPosition(fighter),
+    getFighterCombatPosition(opponent),
+    fighter.facing
+  );
   fighter.state = 'attack';
   fighter.forcedCrouchFrames = 0;
   fighter.actionFramesRemaining = totalMoveFrames(resolvedMove);
@@ -3561,7 +3567,10 @@ function createProjectileRuntime(
   const spawnX = targetMode === 'targetLocation' ? targetPosition.x : attackerPosition.x + facing * instance.spawnOffset[2] * scale.width;
   const spawnY = (targetMode === 'targetLocation' ? targetPosition.y : attackerPosition.y) + instance.spawnOffset[1] * scale.height + PROJECTILE_SPAWN_VERTICAL_ALIGNMENT_OFFSET;
   const spawnZ = (targetMode === 'targetLocation' ? targetPosition.z : attackerPosition.z) + instance.spawnOffset[0] * scale.width + PROJECTILE_SPAWN_FRONT_DEPTH_OFFSET;
-  const forward = unitFromTo({ x: attackerPosition.x, z: attackerPosition.z }, { x: opponent.position.x, z: opponent.position.z }, facing);
+  const currentForward = unitFromTo({ x: attackerPosition.x, z: attackerPosition.z }, { x: opponent.position.x, z: opponent.position.z }, facing);
+  const forward = instance.homingMode === 'limited'
+    ? attacker.projectileAimDirection ?? currentForward
+    : currentForward;
   const blastLength = kind === 'blast' ? instance.blastRange ?? getBlastLengthToStageEdge(match, spawnX, facing) : 0;
   const runtimeHitbox = kind === 'blast' ? makeBlastRuntimeHitbox(instance.hitbox, blastLength) : instance.hitbox;
   const chargeDamageScale = getProjectileChargeDamageScale(instance, chargeFrames);
@@ -3641,8 +3650,6 @@ function updateProjectiles(match: MatchSnapshot, frameDelta: number) {
     if (projectile.expired) continue;
     projectile.previousPosition = { ...projectile.position };
     const owner = match.fighters[projectile.ownerSlot - 1];
-    const target = match.fighters[projectile.ownerSlot === 1 ? 1 : 0];
-    applyProjectileHoming(projectile, target, dt);
     if (projectile.gravity && projectile.gravity > 0) {
       projectile.velocity.y -= projectile.gravity * dt;
     }
@@ -3657,27 +3664,6 @@ function updateProjectiles(match: MatchSnapshot, frameDelta: number) {
     if (!isProjectileInStageBounds(match, projectile, owner)) projectile.expired = true;
   }
   match.projectiles = match.projectiles.filter((projectile) => !projectile.expired);
-}
-
-function applyProjectileHoming(projectile: ProjectileRuntime, target: FighterRuntime, dt: number) {
-  if (projectile.targetMode === 'targetLocation') return;
-  if (projectile.homingMode !== 'limited' || projectile.homingStrength <= 0) return;
-  if (projectile.homingEndFrame !== undefined && projectile.ageFrames > projectile.homingEndFrame) return;
-  const targetPosition = getFighterCombatPosition(target);
-  const dx = targetPosition.x - projectile.position.x;
-  const dy = targetPosition.y + 1.05 - projectile.position.y;
-  const dz = targetPosition.z - projectile.position.z;
-  const distance = Math.hypot(dx, dy, dz);
-  if (distance <= 0.001) return;
-  const speed = Math.max(0.01, Math.hypot(projectile.velocity.x, projectile.velocity.y, projectile.velocity.z));
-  const desired = { x: (dx / distance) * speed, y: (dy / distance) * speed, z: (dz / distance) * speed };
-  const turn = Math.min(1, projectile.homingTurnRate * dt);
-  projectile.velocity.x = lerp(projectile.velocity.x, desired.x, turn);
-  projectile.velocity.y = lerp(projectile.velocity.y, desired.y, turn * 0.45);
-  projectile.velocity.z = lerp(projectile.velocity.z, desired.z, turn);
-  const laneDelta = targetPosition.z - projectile.position.z;
-  const maxLaneCorrection = projectile.homingStrength * dt;
-  projectile.velocity.z += clamp(laneDelta, -maxLaneCorrection, maxLaneCorrection);
 }
 
 function getProjectilePhase(projectile: ProjectileRuntime): ProjectileRuntime['phase'] {
@@ -7873,6 +7859,7 @@ export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
       baseCharacter: fighter.baseCharacter,
       position: { ...fighter.position },
       currentMove: fighter.currentMove,
+      projectileAimDirection: fighter.projectileAimDirection ? { ...fighter.projectileAimDirection } : undefined,
       commandHistory: fighter.commandHistory.map((entry) => ({ ...entry })),
       comboSequence: [...fighter.comboSequence],
       comboIdentitySequence: [...fighter.comboIdentitySequence],

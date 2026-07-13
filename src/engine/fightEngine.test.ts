@@ -8459,6 +8459,27 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBe(match.fighters[1].maxHp);
   });
 
+  it('aims limited-homing projectiles once when the attack is pressed without following afterward', () => {
+    const shooter = makeProjectileCharacter('projectile-snapshot-aim-test', { startupFrames: 6 }, { spawnFrame: 6 });
+    const defender = normalizeCharacter(starterCharacters[1]);
+    let match = createMatch(shooter, defender, stages[0], 'training');
+    match.fighters[1].position.z = 2;
+
+    match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    match.fighters[1].position.z = -2;
+    match = stepFrames(match, 6);
+
+    const projectile = match.projectiles[0];
+    expect(projectile).toBeDefined();
+    expect(projectile.velocity.z).toBeGreaterThan(0);
+    const launchVelocity = { ...projectile.velocity };
+
+    match.fighters[1].position.z = 8;
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(match.projectiles[0]?.velocity).toEqual(launchVelocity);
+  });
+
   it('lets target-location projectiles hit stationary defenders after startup', () => {
     const shooter = makeProjectileCharacter('projectile-target-location-hit-test', {}, {
       targetMode: 'targetLocation',

@@ -1268,6 +1268,7 @@ export type FighterRuntime = {
   jumpInputHeld: boolean;
   currentMove: MoveDefinition | null;
   moveInstanceId: number;
+  projectileAimDirection?: { x: number; z: number };
   actionTimer: number;
   actionFramesRemaining: number;
   moveFrame: number;
