@@ -847,18 +847,29 @@
     {
       "index": 52,
       "path": "/characters/killua-zoldyck/frames/frame-052.png",
+      "sourceMode": "sheet",
       "sheetId": "main",
       "sheetPath": "/characters/killua-zoldyck/animation-sheet.png",
-      "sourceName": "new-killua.png",
+      "sourceName": "Main Sheet",
       "box": [
-        28,
+        19,
         559,
-        47,
+        58,
         608
       ],
-      "width": 19,
+      "width": 39,
       "height": 49,
-      "row": 10
+      "row": 10,
+      "rotation": 0,
+      "flipX": false,
+      "flipY": false,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1783969976433
     },
     {
       "index": 53,

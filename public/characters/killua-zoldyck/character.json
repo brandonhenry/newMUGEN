@@ -20,10 +20,12 @@
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
-      "/characters/killua-zoldyck/frames/frame-184.png",
-      "/characters/killua-zoldyck/frames/frame-185.png",
-      "/characters/killua-zoldyck/frames/frame-186.png",
-      "/characters/killua-zoldyck/frames/frame-185.png"
+      "/characters/killua-zoldyck/frames/frame-053.png",
+      "/characters/killua-zoldyck/frames/frame-054.png",
+      "/characters/killua-zoldyck/frames/frame-054.png",
+      "/characters/killua-zoldyck/frames/frame-054.png",
+      "/characters/killua-zoldyck/frames/frame-053.png",
+      "/characters/killua-zoldyck/frames/frame-053.png"
     ],
     "walkForward": [
       "/characters/killua-zoldyck/frames/frame-000.png",
@@ -1470,6 +1472,33 @@
   "effects": [],
   "moveEffects": {},
   "spriteFrameEdits": {
+    "52": {
+      "index": 52,
+      "path": "/characters/killua-zoldyck/frames/frame-052.png",
+      "sourceMode": "sheet",
+      "sheetId": "main",
+      "sheetPath": "/characters/killua-zoldyck/animation-sheet.png",
+      "sourceName": "Main Sheet",
+      "box": [
+        19,
+        559,
+        58,
+        608
+      ],
+      "width": 39,
+      "height": 49,
+      "row": 10,
+      "rotation": 0,
+      "flipX": false,
+      "flipY": false,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "hidden": false,
+      "revision": 1783969976433
+    },
     "184": {
       "index": 184,
       "path": "/characters/killua-zoldyck/frames/frame-184.png",
@@ -1750,13 +1779,6 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
-      },
-      "60": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
       }
     },
     "sprint": {
@@ -1818,13 +1840,6 @@
       }
     },
     "backHop": {
-      "127": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
-      },
       "220": {
         "width": 1.72,
         "height": 0.5,
@@ -1917,13 +1932,6 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
-      },
-      "157": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
       }
     },
     "sidestepRight": {
@@ -1975,13 +1983,6 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
-      },
-      "157": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
       }
     },
     "jump": {
@@ -2031,10 +2032,10 @@
       },
       "199": {
         "width": 0.86,
-        "height": 0.86367,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "height": 0.86,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "crouchBlock": {
@@ -2047,10 +2048,10 @@
       },
       "199": {
         "width": 1,
-        "height": 0.88424,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "height": 0.88,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "block": {
@@ -2081,13 +2082,6 @@
         "offsetX": 0,
         "flipX": false,
         "flipY": false
-      },
-      "189": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
       }
     },
     "chargeKi": {
@@ -2155,11 +2149,11 @@
         "flipY": false
       },
       "249": {
-        "width": 2.85265,
-        "height": 2.85265,
-        "voxelScaleX": 1.62198,
-        "voxelScaleY": 0.61653,
-        "offsetX": 0
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "jableft": {
@@ -2192,18 +2186,18 @@
         "flipY": false
       },
       "77": {
-        "width": 1.0112,
-        "height": 1.0112,
-        "voxelScaleX": 0.94547,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "78": {
-        "width": 1.01119,
-        "height": 1.01119,
-        "voxelScaleX": 0.94547,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "79": {
         "width": 1.05,
@@ -2213,18 +2207,18 @@
         "flipY": false
       },
       "80": {
-        "width": 1.01119,
-        "height": 1.01119,
-        "voxelScaleX": 0.94547,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "81": {
-        "width": 1.01119,
-        "height": 1.01119,
-        "voxelScaleX": 0.94547,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "jabright": {
@@ -2366,11 +2360,11 @@
     },
     "kickright": {
       "157": {
-        "width": 0.96625,
-        "height": 0.96625,
-        "voxelScaleX": 0.94547,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 0.97,
+        "height": 0.97,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "158": {
         "width": 0.96,
@@ -2436,25 +2430,25 @@
         "flipY": false
       },
       "167": {
-        "width": 1.01119,
-        "height": 1.01119,
-        "voxelScaleX": 0.94547,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 1.01,
+        "height": 1.01,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "168": {
-        "width": 0.98872,
-        "height": 0.98872,
-        "voxelScaleX": 0.94547,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "169": {
-        "width": 0.98874,
-        "height": 0.98874,
-        "voxelScaleX": 0.94548,
-        "voxelScaleY": 1.05766,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "170": {
         "width": 1,
@@ -2479,13 +2473,6 @@
       }
     },
     "hitLight": {
-      "154": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
-      },
       "187": {
         "width": 0.91,
         "height": 1.13,
@@ -2556,11 +2543,11 @@
     },
     "knockdown": {
       "180": {
-        "width": 1.06951,
-        "height": 1.06951,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
+        "width": 1.07,
+        "height": 1.07,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "187": {
         "width": 0.91,
@@ -2600,11 +2587,11 @@
     },
     "getupStand": {
       "183": {
-        "width": 1.0591,
-        "height": 1.0591,
-        "voxelScaleX": 2.34536,
-        "voxelScaleY": 0.42637,
-        "offsetX": 0
+        "width": 1.06,
+        "height": 1.06,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "186": {
         "width": 0.96,
@@ -2760,11 +2747,11 @@
     },
     "lose": {
       "183": {
-        "width": 1.0591,
-        "height": 1.0591,
-        "voxelScaleX": 2.34536,
-        "voxelScaleY": 0.42637,
-        "offsetX": 0
+        "width": 1.06,
+        "height": 1.06,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "190": {
         "width": 1.17,
@@ -3105,11 +3092,11 @@
         "flipY": false
       },
       "175": {
-        "width": 0.78652,
-        "height": 0.78652,
-        "voxelScaleX": 0.94552,
-        "voxelScaleY": 1.05762,
-        "offsetX": 0
+        "width": 0.79,
+        "height": 0.79,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "176": {
         "width": 0.96,
@@ -3133,11 +3120,11 @@
         "flipY": false
       },
       "179": {
-        "width": 0.92131,
-        "height": 0.92131,
-        "voxelScaleX": 0.94548,
-        "voxelScaleY": 1.05767,
-        "offsetX": 0
+        "width": 0.92,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:2+3": {
@@ -3330,11 +3317,11 @@
         "flipY": false
       },
       "249": {
-        "width": 2.85265,
-        "height": 2.85265,
-        "voxelScaleX": 1.62198,
-        "voxelScaleY": 0.61653,
-        "offsetX": 0
+        "width": 2.5,
+        "height": 2.5,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:1+4": {
@@ -3397,11 +3384,11 @@
         "flipY": false
       },
       "136": {
-        "width": 1.10107,
-        "height": 1.10107,
-        "voxelScaleX": 0.94546,
-        "voxelScaleY": 1.05769,
-        "offsetX": 0
+        "width": 1.1,
+        "height": 1.1,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "137": {
         "width": 1.16,
@@ -3513,18 +3500,18 @@
         "flipY": false
       },
       "306": {
-        "width": 0.89886,
-        "height": 0.89886,
-        "voxelScaleX": 0.9455,
-        "voxelScaleY": 1.05764,
-        "offsetX": 0
+        "width": 0.9,
+        "height": 0.9,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "307": {
-        "width": 0.98873,
-        "height": 0.98873,
-        "voxelScaleX": 0.94548,
-        "voxelScaleY": 1.05766,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     },
     "cmd:WS+2": {
@@ -3580,18 +3567,18 @@
         "flipY": false
       },
       "218": {
-        "width": 0.92133,
-        "height": 0.92133,
-        "voxelScaleX": 0.9455,
-        "voxelScaleY": 1.05765,
-        "offsetX": 0
+        "width": 0.92,
+        "height": 0.92,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "219": {
-        "width": 0.98873,
-        "height": 0.98873,
-        "voxelScaleX": 0.94548,
-        "voxelScaleY": 1.05766,
-        "offsetX": 0
+        "width": 0.99,
+        "height": 0.99,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       }
     }
   },
@@ -3619,7 +3606,6 @@
     {
       "id": "electric-yo-yo-orb",
       "name": "Electric Yo-Yo Orb",
-      "kind": "projectile",
       "sourcePath": "/characters/killua-zoldyck/animation-sheet.png",
       "frames": [
         "/characters/killua-zoldyck/projectiles/electric-yo-yo-orb/frames/frame-000.png",
@@ -3642,6 +3628,18 @@
       "billboard": false,
       "blendMode": "additive",
       "voxelProfile": "hd-image-source",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true,
+        "lod": {
+          "mobileStep": 2,
+          "farStep": 2
+        }
+      },
       "defaultScale": [
         0.46,
         0.46,
@@ -3652,16 +3650,9 @@
         0,
         0
       ],
-      "alignToVelocity": true,
       "color": "#43dfff",
-      "voxelFidelity": {
-        "resolutionScale": 1,
-        "maxRows": 64,
-        "depth": 0.14,
-        "alphaThreshold": 24,
-        "paletteSnap": 8,
-        "mergeRuns": true
-      }
+      "soundCues": [],
+      "proceduralLayers": []
     }
   ],
   "moveProjectiles": {
@@ -3669,7 +3660,6 @@
       {
         "id": "cmd-qcf-1-electric-yo-yo-orb",
         "projectileId": "electric-yo-yo-orb",
-        "kind": "projectile",
         "label": "Electric Yo-Yo Orb",
         "spawnFrame": 8,
         "spawnOffset": [
@@ -3705,8 +3695,9 @@
         "pushbackScale": 1,
         "blockPushbackScale": 1,
         "mirrorWithFacing": true,
-        "delivery": "replaceMoveHit",
-        "clash": true
+        "pierce": false,
+        "clash": true,
+        "kiBurst": false
       }
     ]
   }
