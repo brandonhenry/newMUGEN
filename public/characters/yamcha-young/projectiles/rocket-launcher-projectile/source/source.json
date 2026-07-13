@@ -1,0 +1,89 @@
+{
+  "characterId": "yamcha-young",
+  "assetId": "rocket-launcher-projectile",
+  "classification": "projectile",
+  "source": "yamcha-young original sprite sheet",
+  "sourceSheetPath": "/characters/yamcha-young/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 102,
+      "path": "/characters/yamcha-young/frames/frame-102.png",
+      "cropBox": [
+        14,
+        943,
+        64,
+        959
+      ],
+      "output": "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-000.png"
+    },
+    {
+      "index": 103,
+      "path": "/characters/yamcha-young/frames/frame-103.png",
+      "cropBox": [
+        79,
+        940,
+        131,
+        955
+      ],
+      "output": "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-001.png"
+    },
+    {
+      "index": 104,
+      "path": "/characters/yamcha-young/frames/frame-104.png",
+      "cropBox": [
+        6,
+        969,
+        61,
+        987
+      ],
+      "output": "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-002.png"
+    },
+    {
+      "index": 105,
+      "path": "/characters/yamcha-young/frames/frame-105.png",
+      "cropBox": [
+        82,
+        969,
+        128,
+        985
+      ],
+      "output": "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-003.png"
+    },
+    {
+      "index": 106,
+      "path": "/characters/yamcha-young/frames/frame-106.png",
+      "cropBox": [
+        150,
+        969,
+        200,
+        984
+      ],
+      "output": "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-004.png"
+    },
+    {
+      "index": 107,
+      "path": "/characters/yamcha-young/frames/frame-107.png",
+      "cropBox": [
+        231,
+        969,
+        268,
+        984
+      ],
+      "output": "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-005.png"
+    },
+    {
+      "index": 108,
+      "path": "/characters/yamcha-young/frames/frame-108.png",
+      "cropBox": [
+        8,
+        1006,
+        44,
+        1018
+      ],
+      "output": "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-006.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:1+2"
+  ]
+}

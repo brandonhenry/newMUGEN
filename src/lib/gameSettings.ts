@@ -4,7 +4,7 @@ import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 13;
+const settingsVersion = 14;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -80,6 +80,9 @@ export const defaultGameSettings: GameSettings = {
     inputAssist: true,
     controlScheme: 'kore'
   },
+  training: {
+    frameAdvantageNumbers: true
+  },
   controls: {
     keyboard: [p1Keyboard, p2Keyboard],
     gamepad: [defaultGamepad, defaultGamepad],
@@ -154,6 +157,7 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
   const source = isRecord(candidate) ? candidate : {};
   const defaults = cloneSettings(defaultGameSettings);
   const game = isRecord(source.game) ? source.game : {};
+  const training = isRecord(source.training) ? source.training : {};
   const camera = isRecord(source.camera) ? source.camera : {};
   const display = isRecord(source.display) ? source.display : {};
   const impactSparks = isRecord(display.impactSparks) ? display.impactSparks : {};
@@ -174,6 +178,9 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       trainingInfiniteHealth: booleanOr(game.trainingInfiniteHealth, defaults.game.trainingInfiniteHealth),
       inputAssist: booleanOr(game.inputAssist, defaults.game.inputAssist),
       controlScheme: game.controlScheme === 'beginner' ? 'beginner' : defaults.game.controlScheme
+    },
+    training: {
+      frameAdvantageNumbers: booleanOr(training.frameAdvantageNumbers, defaults.training.frameAdvantageNumbers)
     },
     controls: {
       keyboard: [
@@ -240,6 +247,7 @@ export function cloneSettings(settings: GameSettings): GameSettings {
   return {
     ...settings,
     game: { ...settings.game },
+    training: { ...settings.training },
     controls: {
       keyboard: [
         cloneKeyboardBindings(settings.controls.keyboard[0]),

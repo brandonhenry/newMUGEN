@@ -126,6 +126,7 @@ import {
   type HitLevel,
   type ImpactSparkEvent,
   type ImpactSparkShape,
+  type TrainingFrameEvent,
   type InputFrame,
   type MatchMode,
   type MatchSnapshot,
@@ -295,7 +296,7 @@ function isFullBleedScreen(screen: Screen) {
   );
 }
 
-type FightPauseMenuView = 'menu' | 'movelist' | 'trainingTrials';
+type FightPauseMenuView = 'menu' | 'movelist' | 'trainingTrials' | 'trainingSettings';
 type AnalyticsCapture = (name: AnalyticsEventName, properties?: AnalyticsProperties) => void;
 type AssetWarmupMatchOptions = NonNullable<Parameters<typeof createMatch>[5]>;
 type AssetWarmupIntent = {
@@ -372,6 +373,7 @@ function logStageModelDebug(event: string, payload: Record<string, unknown>) {
 }
 
 type ActiveCombatPopup = CombatPopupEvent & { uid: number };
+type ActiveTrainingFrameNumber = TrainingFrameEvent;
 type OnlineWins = [number, number];
 type OnlineTrainingChatEntry = {
   id: string;
@@ -6169,6 +6171,10 @@ export default function App() {
             cpuSlots={mode === 'tournamentLocal' ? localTournamentCpuSlots : undefined}
             preferredStartSide={startSide}
             settings={settings}
+            onTrainingSettingsChange={(frameAdvantageNumbers) => setSettings((current) => sanitizeGameSettings({
+              ...current,
+              training: { ...current.training, frameAdvantageNumbers }
+            }))}
             inputPromptMode={inputPromptMode}
             onInputPromptModeChange={setInputPromptMode}
             readInputsForStep={readInputsForStep}
@@ -14724,6 +14730,7 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('game', 'round_timer', previous.game.roundTimer, next.game.roundTimer);
   add('game', 'max_health', previous.game.maxHealth, next.game.maxHealth);
   add('game', 'training_infinite_health', previous.game.trainingInfiniteHealth, next.game.trainingInfiniteHealth);
+  add('game', 'training_frame_advantage_numbers', previous.training.frameAdvantageNumbers, next.training.frameAdvantageNumbers);
   add('game', 'input_assist', previous.game.inputAssist, next.game.inputAssist);
   add('game', 'control_scheme', previous.game.controlScheme, next.game.controlScheme);
   add('camera', 'distance', previous.camera.distance, next.camera.distance);
@@ -15041,6 +15048,7 @@ function SettingsScreen({
           </SettingsSection>
           <SettingsSection index={2} title="Training" active={activeSectionIndex === 2}>
             <SettingToggle label="Training Infinite Health" checked={settings.game.trainingInfiniteHealth} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, trainingInfiniteHealth: checked } }))} />
+            <SettingToggle label="Frame Advantage Numbers" checked={settings.training.frameAdvantageNumbers} onChange={(checked) => updateSettings((current) => ({ ...current, training: { ...current.training, frameAdvantageNumbers: checked } }))} />
           </SettingsSection>
           <SettingsSection index={3} title="Assist" active={activeSectionIndex === 3}>
             <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
@@ -15086,6 +15094,7 @@ function SettingsScreen({
               updateSettings((current) => ({
                 ...current,
                 game: cloneSettings(defaultGameSettings).game,
+                training: cloneSettings(defaultGameSettings).training,
                 performance: cloneSettings(defaultGameSettings).performance
               }));
             }}>
@@ -23694,6 +23703,7 @@ function FightScreen({
   cpuSlots,
   preferredStartSide,
   settings,
+  onTrainingSettingsChange,
   inputPromptMode,
   onInputPromptModeChange,
   readInputsForStep,
@@ -23734,6 +23744,7 @@ function FightScreen({
   cpuSlots?: Array<1 | 2>;
   preferredStartSide: StartSide;
   settings: GameSettings;
+  onTrainingSettingsChange: (frameAdvantageNumbers: boolean) => void;
   inputPromptMode: InputPromptMode;
   onInputPromptModeChange: (mode: InputPromptMode) => void;
   readInputsForStep: () => [InputFrame, InputFrame];
@@ -23828,6 +23839,7 @@ function FightScreen({
   const seenImpactScoreEventIds = useRef<Set<number>>(new Set());
   const seenImpactAudioEventIds = useRef<Set<number>>(new Set());
   const seenTrialImpactEventIds = useRef<Set<number>>(new Set());
+  const seenTrainingFrameEventIds = useRef<Set<number>>(new Set());
   const lastCombatEventId = useRef(0);
   const playedRoundAnnouncerKeyRef = useRef<string | null>(null);
   const playedWinVoiceKeyRef = useRef<string | null>(null);
@@ -23842,6 +23854,7 @@ function FightScreen({
   ]);
   const latestAudioSettingsRef = useRef(settings.audio);
   const [combatPopups, setCombatPopups] = useState<ActiveCombatPopup[]>([]);
+  const [trainingFrameNumbers, setTrainingFrameNumbers] = useState<ActiveTrainingFrameNumber[]>([]);
   const [onlineState, setOnlineState] = useState<OnlineConnectionState>(isOnline ? 'searching' : 'idle');
   const [onlineRole, setOnlineRole] = useState<OnlineRole | null>(null);
   const localPresentationSlot: 1 | 2 = isOnline && onlineRole === 'guest' ? 2 : 1;
@@ -23993,6 +24006,8 @@ function FightScreen({
     seenImpactScoreEventIds.current.clear();
     seenImpactAudioEventIds.current.clear();
     seenTrialImpactEventIds.current.clear();
+    seenTrainingFrameEventIds.current.clear();
+    setTrainingFrameNumbers([]);
     lastCombatEventId.current = freshMatch.lastHitId;
     playedRoundAnnouncerKeyRef.current = null;
     playedWinVoiceKeyRef.current = null;
@@ -24552,6 +24567,26 @@ function FightScreen({
       onlinePerformanceRef.current[index] = addImpactEventToOnlineStats(onlinePerformanceRef.current[index], event, event.attackerSlot);
     });
   }, [gameplayAudioEnabled, match.combatEvents, match.impactEvents, match.lastHitId, mode, settings.audio]);
+
+  useEffect(() => {
+    const trainingMatch = mode === 'training' || mode === 'trainingOnline';
+    if (!trainingMatch) {
+      setTrainingFrameNumbers([]);
+      return;
+    }
+
+    match.trainingFrameEvents.forEach((event) => {
+      if (seenTrainingFrameEventIds.current.has(event.id)) return;
+      seenTrainingFrameEventIds.current.add(event.id);
+      if (!settings.training.frameAdvantageNumbers) return;
+      setTrainingFrameNumbers((current) => [...current, event].slice(-8));
+      window.setTimeout(() => {
+        setTrainingFrameNumbers((current) => current.filter((item) => item.id !== event.id));
+      }, settings.display.reducedMotion ? 620 : 980);
+    });
+
+    if (!settings.training.frameAdvantageNumbers) setTrainingFrameNumbers([]);
+  }, [match.trainingFrameEvents, mode, settings.display.reducedMotion, settings.training.frameAdvantageNumbers]);
 
   useEffect(() => {
     if (mode !== 'training' || !activeTrainingTrial || !trainingTrialProgress || previewPlayback) return;
@@ -26848,6 +26883,14 @@ function FightScreen({
         sparkSettings={settings.display.impactSparks}
         movementSmokeStyle={settings.display.movementSmokeStyle}
         audioSettings={gameplayAudioEnabled ? settings.audio : undefined}
+        trainingFrameEvents={
+          (mode === 'training' || mode === 'trainingOnline') &&
+          settings.training.frameAdvantageNumbers &&
+          !paused &&
+          !onlineAssetGateActive
+            ? trainingFrameNumbers
+            : []
+        }
         reducedMotion={settings.display.reducedMotion}
         onAssetLoadingChange={setAssetLoadingState}
       />
@@ -26974,6 +27017,29 @@ function FightScreen({
                 </button>
               </div>
             </>
+          ) : pauseMenuView === 'trainingSettings' ? (
+            <>
+              <Settings size={32} />
+              <h2>Training Settings</h2>
+              <div className="training-settings-pause-panel">
+                <p>Choose the live feedback shown while practicing.</p>
+                <SettingToggle
+                  label="Frame Advantage Numbers"
+                  checked={settings.training.frameAdvantageNumbers}
+                  onChange={onTrainingSettingsChange}
+                />
+              </div>
+              <div className="overlay-actions pause-menu-actions">
+                <button className="secondary-button" onClick={() => setPauseMenuView('menu')}>
+                  <ChevronLeft size={18} />
+                  Back
+                </button>
+                <button className="primary-button" onClick={() => setPaused(false)}>
+                  <Play size={18} />
+                  Resume
+                </button>
+              </div>
+            </>
           ) : pauseMenuView === 'trainingTrials' ? (
             <>
               <TrainingTrialPanel
@@ -27036,13 +27102,22 @@ function FightScreen({
                   Move List
                 </button>
                 {mode === 'training' && (
-                  <button className="secondary-button" onClick={() => {
-                    captureFightAnalytics('pause_menu_action_clicked', { action: 'training_trials', phase: match.phase });
-                    setPauseMenuView('trainingTrials');
-                  }}>
-                    <Target size={18} />
-                    Training Mode
-                  </button>
+                  <>
+                    <button className="secondary-button" onClick={() => {
+                      captureFightAnalytics('pause_menu_action_clicked', { action: 'training_trials', phase: match.phase });
+                      setPauseMenuView('trainingTrials');
+                    }}>
+                      <Target size={18} />
+                      Training Mode
+                    </button>
+                    <button className="secondary-button" onClick={() => {
+                      captureFightAnalytics('pause_menu_action_clicked', { action: 'training_settings', phase: match.phase });
+                      setPauseMenuView('trainingSettings');
+                    }}>
+                      <Settings size={18} />
+                      Training Settings
+                    </button>
+                  </>
                 )}
                 {!isArcadeMatchMode(mode) && (
                   <button className="secondary-button" onClick={() => {

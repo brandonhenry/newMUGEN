@@ -487,6 +487,7 @@ export function checksumMatch(match: MatchSnapshot) {
     timer: roundNumber(match.timer),
     winnerSlot: match.winnerSlot,
     lastHitId: match.lastHitId,
+    lastTrainingFrameEventId: match.lastTrainingFrameEventId,
     timeStop: match.timeStop
       ? {
           ownerSlot: match.timeStop.ownerSlot,
@@ -519,6 +520,15 @@ export function checksumMatch(match: MatchSnapshot) {
     })),
     combatEvents: match.combatEvents.map((event) => ({ id: event.id, slot: event.slot, hits: event.hits, damage: roundNumber(event.damage) })),
     impactEvents: match.impactEvents.map((event) => ({ id: event.id, kind: event.kind, attackerSlot: event.attackerSlot, defenderSlot: event.defenderSlot })),
+    trainingFrameEvents: match.trainingFrameEvents.map((event) => ({
+      id: event.id,
+      kind: event.kind,
+      attackerSlot: event.attackerSlot,
+      defenderSlot: event.defenderSlot,
+      moveInstanceId: event.moveInstanceId,
+      frames: event.frames,
+      position: event.position.map(roundNumber)
+    })),
     clashState: {
       id: match.clashState.id,
       status: match.clashState.status,

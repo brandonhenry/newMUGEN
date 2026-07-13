@@ -14,9 +14,16 @@
       "path": "/characters/jotaro-kujo/animation-sheet.png",
       "frameStart": 0,
       "frameCount": 194
+    },
+    {
+      "id": "star-platinum",
+      "name": "Star Platinum",
+      "path": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "frameStart": 195,
+      "frameCount": 82
     }
   ],
-  "spriteFrameCount": 195,
+  "spriteFrameCount": 277,
   "voxelProfile": "hd-image-source",
   "animationFrames": {
     "idle": [
@@ -344,6 +351,11 @@
       "/characters/jotaro-kujo/frames/frame-102.png",
       "/characters/jotaro-kujo/frames/frame-103.png"
     ],
+    "cmd:O+3": [
+      "/characters/jotaro-kujo/frames/frame-195.png",
+      "/characters/jotaro-kujo/frames/frame-196.png",
+      "/characters/jotaro-kujo/frames/frame-197.png"
+    ],
     "crouchBlock": [
       "/characters/jotaro-kujo/frames/frame-194.png"
     ]
@@ -396,10 +408,209 @@
     "cmd:SS+4": 9,
     "cmd:O+1": 10,
     "cmd:O+4": 9,
+    "cmd:O+3": 8,
     "crouchBlock": 5,
     "cmd:FC+1": 9
   },
   "animationFps": 6,
+  "attackCompanion": {
+    "id": "star-platinum",
+    "displayName": "Star Platinum",
+    "animations": {
+      "quick-ora": [
+        "/characters/jotaro-kujo/frames/frame-198.png",
+        "/characters/jotaro-kujo/frames/frame-199.png",
+        "/characters/jotaro-kujo/frames/frame-200.png",
+        "/characters/jotaro-kujo/frames/frame-201.png",
+        "/characters/jotaro-kujo/frames/frame-202.png"
+      ],
+      "heavy-ora": [
+        "/characters/jotaro-kujo/frames/frame-203.png",
+        "/characters/jotaro-kujo/frames/frame-204.png",
+        "/characters/jotaro-kujo/frames/frame-205.png",
+        "/characters/jotaro-kujo/frames/frame-206.png"
+      ],
+      "aerial-rush": [
+        "/characters/jotaro-kujo/frames/frame-207.png",
+        "/characters/jotaro-kujo/frames/frame-208.png",
+        "/characters/jotaro-kujo/frames/frame-209.png"
+      ],
+      "low-rush": [
+        "/characters/jotaro-kujo/frames/frame-210.png",
+        "/characters/jotaro-kujo/frames/frame-211.png",
+        "/characters/jotaro-kujo/frames/frame-212.png",
+        "/characters/jotaro-kujo/frames/frame-213.png"
+      ],
+      "kick-chain": [
+        "/characters/jotaro-kujo/frames/frame-214.png",
+        "/characters/jotaro-kujo/frames/frame-215.png",
+        "/characters/jotaro-kujo/frames/frame-216.png",
+        "/characters/jotaro-kujo/frames/frame-217.png",
+        "/characters/jotaro-kujo/frames/frame-218.png",
+        "/characters/jotaro-kujo/frames/frame-219.png",
+        "/characters/jotaro-kujo/frames/frame-220.png"
+      ],
+      "star-smash": [
+        "/characters/jotaro-kujo/frames/frame-221.png",
+        "/characters/jotaro-kujo/frames/frame-222.png",
+        "/characters/jotaro-kujo/frames/frame-223.png",
+        "/characters/jotaro-kujo/frames/frame-224.png",
+        "/characters/jotaro-kujo/frames/frame-225.png",
+        "/characters/jotaro-kujo/frames/frame-226.png",
+        "/characters/jotaro-kujo/frames/frame-227.png",
+        "/characters/jotaro-kujo/frames/frame-228.png"
+      ],
+      "ora-barrage": [
+        "/characters/jotaro-kujo/frames/frame-229.png",
+        "/characters/jotaro-kujo/frames/frame-230.png",
+        "/characters/jotaro-kujo/frames/frame-231.png",
+        "/characters/jotaro-kujo/frames/frame-232.png",
+        "/characters/jotaro-kujo/frames/frame-233.png"
+      ],
+      "heavy-rush": [
+        "/characters/jotaro-kujo/frames/frame-234.png",
+        "/characters/jotaro-kujo/frames/frame-235.png",
+        "/characters/jotaro-kujo/frames/frame-236.png",
+        "/characters/jotaro-kujo/frames/frame-237.png",
+        "/characters/jotaro-kujo/frames/frame-238.png",
+        "/characters/jotaro-kujo/frames/frame-239.png",
+        "/characters/jotaro-kujo/frames/frame-240.png",
+        "/characters/jotaro-kujo/frames/frame-241.png"
+      ],
+      "extra-rush": [
+        "/characters/jotaro-kujo/frames/frame-242.png",
+        "/characters/jotaro-kujo/frames/frame-243.png",
+        "/characters/jotaro-kujo/frames/frame-244.png",
+        "/characters/jotaro-kujo/frames/frame-245.png",
+        "/characters/jotaro-kujo/frames/frame-246.png",
+        "/characters/jotaro-kujo/frames/frame-247.png",
+        "/characters/jotaro-kujo/frames/frame-248.png"
+      ],
+      "time-stop-pose": [
+        "/characters/jotaro-kujo/frames/frame-249.png",
+        "/characters/jotaro-kujo/frames/frame-250.png"
+      ],
+      "guard-break": [
+        "/characters/jotaro-kujo/frames/frame-251.png",
+        "/characters/jotaro-kujo/frames/frame-252.png"
+      ],
+      "final-rush": [
+        "/characters/jotaro-kujo/frames/frame-253.png",
+        "/characters/jotaro-kujo/frames/frame-254.png",
+        "/characters/jotaro-kujo/frames/frame-255.png",
+        "/characters/jotaro-kujo/frames/frame-256.png",
+        "/characters/jotaro-kujo/frames/frame-257.png",
+        "/characters/jotaro-kujo/frames/frame-258.png",
+        "/characters/jotaro-kujo/frames/frame-259.png",
+        "/characters/jotaro-kujo/frames/frame-260.png",
+        "/characters/jotaro-kujo/frames/frame-261.png",
+        "/characters/jotaro-kujo/frames/frame-262.png",
+        "/characters/jotaro-kujo/frames/frame-263.png",
+        "/characters/jotaro-kujo/frames/frame-264.png",
+        "/characters/jotaro-kujo/frames/frame-265.png",
+        "/characters/jotaro-kujo/frames/frame-266.png",
+        "/characters/jotaro-kujo/frames/frame-267.png"
+      ],
+      "final-finish": [
+        "/characters/jotaro-kujo/frames/frame-268.png",
+        "/characters/jotaro-kujo/frames/frame-269.png",
+        "/characters/jotaro-kujo/frames/frame-270.png",
+        "/characters/jotaro-kujo/frames/frame-271.png",
+        "/characters/jotaro-kujo/frames/frame-272.png",
+        "/characters/jotaro-kujo/frames/frame-273.png",
+        "/characters/jotaro-kujo/frames/frame-274.png",
+        "/characters/jotaro-kujo/frames/frame-275.png",
+        "/characters/jotaro-kujo/frames/frame-276.png"
+      ]
+    },
+    "moveAnimations": {
+      "jableft": "quick-ora",
+      "jabright": "heavy-ora",
+      "kickleft": "low-rush",
+      "kickright": "kick-chain",
+      "cmd:f+1": "quick-ora",
+      "cmd:d/f+2": "star-smash",
+      "cmd:qcf+4": "final-rush",
+      "cmd:WS+4": "kick-chain",
+      "cmd:FC+1": "quick-ora",
+      "cmd:FC+2": "low-rush",
+      "cmd:1+2": "ora-barrage",
+      "cmd:1+3": "kick-chain",
+      "cmd:2+3": "heavy-rush",
+      "cmd:2+4": "kick-chain",
+      "cmd:3+4": "star-smash",
+      "cmd:O+1": "quick-ora",
+      "cmd:O+2": "final-rush",
+      "cmd:O+3": "time-stop-pose",
+      "cmd:O+4": "final-finish",
+      "cmd:1+4": "kick-chain",
+      "cmd:f+2": "guard-break",
+      "cmd:f+3": "kick-chain",
+      "cmd:d+1": "low-rush",
+      "cmd:d+3": "low-rush",
+      "cmd:d/f+3": "low-rush",
+      "cmd:qcf+1": "quick-ora",
+      "cmd:qcf+3": "aerial-rush",
+      "cmd:WS+2": "heavy-ora",
+      "cmd:SS+3": "kick-chain",
+      "cmd:SS+4": "kick-chain",
+      "neutral:jab-jab": "quick-ora",
+      "neutral:jab-jab-heavy": "heavy-ora",
+      "neutral:jab-jab-kick": "kick-chain",
+      "neutral:jab-jab-special": "extra-rush",
+      "neutral:jab-heavy": "heavy-ora",
+      "neutral:jab-heavy-kick": "kick-chain",
+      "neutral:jab-heavy-special": "heavy-rush",
+      "neutral:jab-kick": "kick-chain",
+      "neutral:jab-kick-heavy": "heavy-ora",
+      "neutral:jab-kick-special": "extra-rush",
+      "neutral:jab-special": "extra-rush",
+      "neutral:jab-special-heavy": "star-smash",
+      "neutral:heavy-jab": "quick-ora",
+      "neutral:heavy-jab-heavy": "heavy-rush",
+      "neutral:heavy-jab-special": "extra-rush",
+      "neutral:heavy-kick": "kick-chain",
+      "neutral:heavy-kick-special": "extra-rush",
+      "neutral:heavy-special": "heavy-rush",
+      "neutral:heavy-special-kick": "kick-chain",
+      "neutral:kick-jab": "quick-ora",
+      "neutral:kick-jab-special": "extra-rush",
+      "neutral:kick-heavy": "heavy-ora",
+      "neutral:kick-heavy-special": "heavy-rush",
+      "neutral:kick-special": "extra-rush",
+      "neutral:kick-special-heavy": "star-smash",
+      "neutral:special-jab": "quick-ora",
+      "neutral:special-jab-heavy": "heavy-rush",
+      "neutral:special-heavy": "heavy-rush",
+      "neutral:special-kick": "kick-chain"
+    },
+    "inputFallbacks": {
+      "jab": "quick-ora",
+      "heavy": "heavy-ora",
+      "kick": "kick-chain",
+      "special": "extra-rush"
+    },
+    "animationFrameRates": {
+      "quick-ora": 12,
+      "heavy-ora": 10,
+      "aerial-rush": 11,
+      "low-rush": 10,
+      "kick-chain": 10,
+      "star-smash": 10,
+      "ora-barrage": 14,
+      "heavy-rush": 12,
+      "extra-rush": 12,
+      "time-stop-pose": 8,
+      "guard-break": 10,
+      "final-rush": 15,
+      "final-finish": 13
+    },
+    "modelScale": {
+      "width": 1.07,
+      "height": 1.13
+    },
+    "forwardOffset": 0.65
+  },
   "scale": 1.08,
   "cameraOffset": [
     0,
@@ -1836,6 +2047,45 @@
       "onJuggleHitFrames": 12,
       "comboRepeatPenaltyFrames": 4,
       "juggleRepeatPenaltyFrames": 7
+    },
+    "cmd:O+3": {
+      "startupFrames": 36,
+      "activeFrames": 1,
+      "recoveryFrames": 18,
+      "damage": 0,
+      "blockDamage": 0,
+      "onBlockFrames": 0,
+      "onHitFrames": 0,
+      "onCounterHitFrames": 0,
+      "whiffRecoveryFrames": 0,
+      "range": 0.1,
+      "pushback": 0,
+      "blockPushback": 0,
+      "label": "Star Platinum: The World",
+      "description": "Jotaro invokes Star Platinum to stop the opponent, round clock, and existing projectiles for 120 owner-action frames.",
+      "hitLevel": "special",
+      "tracking": "none",
+      "knockdown": false,
+      "cancelable": false,
+      "usesKi": true,
+      "kiCost": 100,
+      "timeStopFrames": 120,
+      "soundCues": [
+        {
+          "id": "time-stop-pulse",
+          "name": "Time Stop Pulse",
+          "path": "/sounds/ki/max-charge.wav",
+          "frame": 35,
+          "volume": 0.82,
+          "pitch": 0.72,
+          "pan": 0,
+          "retrigger": false
+        }
+      ],
+      "hitbox": {
+        "offset": [0, 1, 0],
+        "size": [0.1, 0.1, 0.1]
+      }
     },
     "cmd:O+4": {
       "startupFrames": 20,

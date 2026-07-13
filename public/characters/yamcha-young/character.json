@@ -2792,6 +2792,109 @@
     "height": 1.08
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "rocket-launcher-projectile",
+      "name": "Rocket Launcher",
+      "kind": "projectile",
+      "sourcePath": "/characters/yamcha-young/animation-sheet.png",
+      "frames": [
+        "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-000.png",
+        "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-001.png",
+        "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-002.png",
+        "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-003.png",
+        "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-004.png",
+        "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-005.png",
+        "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-006.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-000.png",
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-001.png",
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-002.png",
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-003.png",
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-004.png",
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-005.png",
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-006.png"
+        ],
+        "recovery": [
+          "/characters/yamcha-young/projectiles/rocket-launcher-projectile/frames/frame-006.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "hd-image-source",
+      "defaultScale": [
+        0.62,
+        0.62,
+        0.62
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ff9a2f",
+      "voxelFidelity": {
+        "resolutionScale": 1,
+        "maxRows": 64,
+        "depth": 0.14,
+        "alphaThreshold": 24,
+        "paletteSnap": 8,
+        "mergeRuns": true
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:1+2": [
+      {
+        "id": "cmd-1-2-rocket-launcher-projectile",
+        "projectileId": "rocket-launcher-projectile",
+        "kind": "projectile",
+        "label": "Rocket Launcher",
+        "spawnFrame": 24,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 11.5,
+        "forwardVelocity": 11.5,
+        "homingMode": "limited",
+        "homingStrength": 2.2,
+        "homingTurnRate": 2.8,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.52,
+            0.42,
+            0.9
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }

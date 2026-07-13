@@ -715,15 +715,27 @@ def main() -> None:
     voxels_dir = character_dir / "voxels-hd"
     voxels_dir.mkdir(parents=True, exist_ok=True)
     end = args.end if args.end is not None else max(frame_meta)
+    requested_indices = set(range(args.start, end + 1))
+    context_indices = {reference_frame}
+    animation_frames = character_manifest.get("animationFrames", {})
+    if isinstance(animation_frames, dict):
+        for animation in ["idle", "walkForward", "walkBack", "sidestepLeft", "sidestepRight", "block"]:
+            for frame_path_value in animation_frames.get(animation, []):
+                if isinstance(frame_path_value, str):
+                    frame_index = frame_index_from_path(frame_path_value)
+                    if frame_index is not None:
+                        context_indices.add(frame_index)
     frames: list[dict] = []
-    for index in range(args.start, end + 1):
+    for index in sorted(requested_indices | context_indices):
         frame_path = character_dir / "frames" / f"frame-{index:03d}.png"
         if not frame_path.exists():
             continue
         meta = frame_meta.get(index, {})
         box = meta.get("box") if isinstance(meta.get("box"), list) else None
         baseline_height = None
-        if box and len(box) == 4:
+        if isinstance(meta.get("targetForegroundHeight"), (int, float)) and float(meta["targetForegroundHeight"]) > 0:
+            baseline_height = max(1, round(float(meta["targetForegroundHeight"])))
+        elif box and len(box) == 4:
             baseline_height = max(1, round(float(box[3]) - float(box[1])))
         public_frame_path = f"/characters/{args.character}/frames/frame-{index:03d}.png"
         payload, metrics = build_payload(frame_path, public_frame_path, args.alpha_threshold, args.depth, args.max_rows, baseline_height)
@@ -732,8 +744,11 @@ def main() -> None:
     normalized_frames = normalize_payloads_to_idle_visual(character_manifest, normalized_frames)
     for frame in normalized_frames:
         index = int(frame["frameIndex"])
+        if index not in requested_indices:
+            continue
         (voxels_dir / f"frame-{index:03d}.json").write_text(json.dumps(frame["payload"], separators=(",", ":")) + "\n")
-    print(f"rebuilt={len(normalized_frames)} range={args.start}-{end} normalizeBody={normalization_enabled} referenceFrame={reference_frame}")
+    rebuilt_count = sum(1 for frame in normalized_frames if int(frame["frameIndex"]) in requested_indices)
+    print(f"rebuilt={rebuilt_count} range={args.start}-{end} normalizeBody={normalization_enabled} referenceFrame={reference_frame}")
 
 
 if __name__ == "__main__":

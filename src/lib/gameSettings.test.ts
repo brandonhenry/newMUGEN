@@ -2,6 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from './gameSettings';
 
 describe('game settings', () => {
+  it('defaults, sanitizes, and independently clones frame advantage numbers', () => {
+    expect(sanitizeGameSettings(null).training.frameAdvantageNumbers).toBe(true);
+    expect(sanitizeGameSettings({ training: { frameAdvantageNumbers: false } }).training.frameAdvantageNumbers).toBe(false);
+    expect(sanitizeGameSettings({ training: { frameAdvantageNumbers: 'sometimes' } }).training.frameAdvantageNumbers).toBe(true);
+
+    const clone = cloneSettings(defaultGameSettings);
+    clone.training.frameAdvantageNumbers = false;
+    expect(defaultGameSettings.training.frameAdvantageNumbers).toBe(true);
+  });
+
   it('defaults dedicated jump bindings for keyboard and gamepad', () => {
     const settings = sanitizeGameSettings(null);
 

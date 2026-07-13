@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const args = new Set(process.argv.slice(2));
 const apply = args.has('--apply');
+const selectedCharacter = process.argv.slice(2).find((arg) => arg.startsWith('--character='))?.slice('--character='.length);
 const repo = path.resolve(process.env.KORE_REPO ?? path.join(scriptDir, '..'));
 const charactersRoot = path.join(repo, 'public', 'characters');
 const reportRoot = path.join(repo, 'tmp', 'spritesheet-projectile-audit');
@@ -112,6 +113,7 @@ function projectileStyle(style) {
     'lightning-bolt': { color: '#ffe873', speed: 12.5, defaultScale: [0.5, 0.5, 0.5], hitboxSize: [0.46, 0.42, 0.76], homingStrength: 2.4 },
     'energy-shard': { color: '#78e8ff', speed: 12, defaultScale: [0.4, 0.4, 0.4], hitboxSize: [0.36, 0.34, 0.6], homingStrength: 2.6 },
     'flame-stream': { color: '#ff7b24', speed: 10.5, defaultScale: [0.58, 0.58, 0.58], hitboxSize: [0.58, 0.46, 0.82], homingStrength: 1.5, homingTurnRate: 2.2 },
+    'rocket': { color: '#ff9a2f', speed: 11.5, defaultScale: [0.62, 0.62, 0.62], hitboxSize: [0.52, 0.42, 0.9], homingStrength: 2.2, homingTurnRate: 2.8 },
     'sound-note': { color: '#ff69d4', speed: 8, defaultScale: [0.48, 0.48, 0.48], hitboxSize: [0.42, 0.48, 0.56], homingStrength: 4.2, homingTurnRate: 4.6 }
   };
   return { ...base, ...(styles[style] ?? {}) };
@@ -172,7 +174,7 @@ function sourceMetadata(match, outputs) {
 
 function createProjectileDefinition(match, outputs) {
   const style = projectileStyle(match.style);
-  return {
+  const definition = {
     id: match.assetId,
     name: match.name,
     kind: 'projectile',
@@ -183,12 +185,23 @@ function createProjectileDefinition(match, outputs) {
     loop: outputs.length > 1,
     billboard: false,
     blendMode: 'additive',
-    voxelProfile: 'image-source',
+    voxelProfile: match.voxelProfile ?? 'image-source',
     defaultScale: style.defaultScale,
     defaultRotation: [0, 0, 0],
     alignToVelocity: true,
     color: style.color
   };
+  if (match.voxelProfile === 'hd-image-source') {
+    definition.voxelFidelity = {
+      resolutionScale: 1,
+      maxRows: 64,
+      depth: 0.14,
+      alphaThreshold: 24,
+      paletteSnap: 8,
+      mergeRuns: true
+    };
+  }
+  return definition;
 }
 
 function createProjectileBinding(match, moveKey) {
@@ -361,7 +374,7 @@ function applyMatches(characters) {
   const changes = [];
   const removedAssetDirs = new Set();
   const changedCharacterIds = new Set();
-  for (const match of config.matches) {
+  for (const match of config.matches.filter((candidate) => !selectedCharacter || candidate.characterId === selectedCharacter)) {
     const loaded = characters.get(match.characterId);
     if (!loaded) throw new Error(`Unknown character ${match.characterId}`);
     const { character } = loaded;
@@ -457,6 +470,7 @@ const report = {
 };
 const reportFile = path.join(reportRoot, apply ? 'final-report.json' : 'dry-run-report.json');
 fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
-console.log(`${apply ? 'Applied' : 'Audited'} ${config.matches.length} sprite-sheet matches across ${playableCharacters.length} playable characters.`);
+const reportedMatchCount = selectedCharacter ? config.matches.filter((match) => match.characterId === selectedCharacter).length : config.matches.length;
+console.log(`${apply ? 'Applied' : 'Audited'} ${reportedMatchCount} sprite-sheet matches across ${playableCharacters.length} playable characters${selectedCharacter ? ` (filtered to ${selectedCharacter})` : ''}.`);
 console.log(`Protected blasts: ${Object.values(protectedBefore).reduce((count, entry) => count + entry.definitions.length, 0)} definitions verified unchanged.`);
 console.log(`Report: ${reportFile}`);

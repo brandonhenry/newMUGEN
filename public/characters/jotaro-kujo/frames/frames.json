@@ -1,6 +1,6 @@
 {
   "source": "Jotaro Kujo.png",
-  "count": 195,
+  "count": 277,
   "sheets": [
     {
       "id": "main",
@@ -8,6 +8,13 @@
       "path": "/characters/jotaro-kujo/animation-sheet.png",
       "frameStart": 0,
       "frameCount": 194
+    },
+    {
+      "id": "star-platinum",
+      "name": "Star Platinum",
+      "path": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "frameStart": 195,
+      "frameCount": 82
     }
   ],
   "frames": [
@@ -3141,6 +3148,1400 @@
       "generatedTransform": {
         "widthScale": 0.96
       }
+    },
+    {
+      "index": 195,
+      "path": "/characters/jotaro-kujo/frames/frame-195.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        4,
+        1423,
+        28,
+        1462
+      ],
+      "width": 35,
+      "height": 57,
+      "row": 0,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 196,
+      "path": "/characters/jotaro-kujo/frames/frame-196.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        40,
+        1420,
+        64,
+        1462
+      ],
+      "width": 33,
+      "height": 57,
+      "row": 1,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 197,
+      "path": "/characters/jotaro-kujo/frames/frame-197.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        73,
+        1423,
+        100,
+        1462
+      ],
+      "width": 39,
+      "height": 57,
+      "row": 2,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 198,
+      "path": "/characters/jotaro-kujo/frames/frame-198.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        169,
+        305,
+        202,
+        344
+      ],
+      "width": 48,
+      "height": 57,
+      "row": 3,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 199,
+      "path": "/characters/jotaro-kujo/frames/frame-199.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        213,
+        306,
+        254,
+        344
+      ],
+      "width": 62,
+      "height": 57,
+      "row": 4,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 200,
+      "path": "/characters/jotaro-kujo/frames/frame-200.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        273,
+        313,
+        297,
+        345
+      ],
+      "width": 44,
+      "height": 57,
+      "row": 5,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 201,
+      "path": "/characters/jotaro-kujo/frames/frame-201.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        318,
+        314,
+        347,
+        345
+      ],
+      "width": 53,
+      "height": 57,
+      "row": 6,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 202,
+      "path": "/characters/jotaro-kujo/frames/frame-202.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        351,
+        309,
+        378,
+        344
+      ],
+      "width": 44,
+      "height": 57,
+      "row": 7,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 203,
+      "path": "/characters/jotaro-kujo/frames/frame-203.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        176,
+        363,
+        202,
+        397
+      ],
+      "width": 44,
+      "height": 57,
+      "row": 8,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 204,
+      "path": "/characters/jotaro-kujo/frames/frame-204.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        226,
+        362,
+        261,
+        400
+      ],
+      "width": 52,
+      "height": 57,
+      "row": 9,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 205,
+      "path": "/characters/jotaro-kujo/frames/frame-205.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        281,
+        362,
+        316,
+        397
+      ],
+      "width": 57,
+      "height": 57,
+      "row": 10,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 206,
+      "path": "/characters/jotaro-kujo/frames/frame-206.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        321,
+        361,
+        350,
+        401
+      ],
+      "width": 41,
+      "height": 57,
+      "row": 11,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 207,
+      "path": "/characters/jotaro-kujo/frames/frame-207.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        156,
+        478,
+        204,
+        510
+      ],
+      "width": 88,
+      "height": 57,
+      "row": 12,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 208,
+      "path": "/characters/jotaro-kujo/frames/frame-208.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        219,
+        478,
+        246,
+        509
+      ],
+      "width": 50,
+      "height": 57,
+      "row": 13,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 209,
+      "path": "/characters/jotaro-kujo/frames/frame-209.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        250,
+        473,
+        276,
+        510
+      ],
+      "width": 41,
+      "height": 57,
+      "row": 14,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 210,
+      "path": "/characters/jotaro-kujo/frames/frame-210.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        69,
+        523,
+        102,
+        559
+      ],
+      "width": 52,
+      "height": 57,
+      "row": 15,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 211,
+      "path": "/characters/jotaro-kujo/frames/frame-211.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        106,
+        531,
+        133,
+        557
+      ],
+      "width": 59,
+      "height": 57,
+      "row": 16,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 212,
+      "path": "/characters/jotaro-kujo/frames/frame-212.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        161,
+        527,
+        208,
+        557
+      ],
+      "width": 89,
+      "height": 57,
+      "row": 17,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 213,
+      "path": "/characters/jotaro-kujo/frames/frame-213.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        215,
+        527,
+        254,
+        560
+      ],
+      "width": 66,
+      "height": 57,
+      "row": 18,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 214,
+      "path": "/characters/jotaro-kujo/frames/frame-214.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        173,
+        624,
+        203,
+        682
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 19,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 215,
+      "path": "/characters/jotaro-kujo/frames/frame-215.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        208,
+        626,
+        264,
+        656
+      ],
+      "width": 106,
+      "height": 57,
+      "row": 20,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 216,
+      "path": "/characters/jotaro-kujo/frames/frame-216.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        275,
+        624,
+        306,
+        669
+      ],
+      "width": 40,
+      "height": 57,
+      "row": 21,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 217,
+      "path": "/characters/jotaro-kujo/frames/frame-217.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        345,
+        626,
+        395,
+        656
+      ],
+      "width": 95,
+      "height": 57,
+      "row": 22,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 218,
+      "path": "/characters/jotaro-kujo/frames/frame-218.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        408,
+        624,
+        440,
+        667
+      ],
+      "width": 43,
+      "height": 57,
+      "row": 23,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 219,
+      "path": "/characters/jotaro-kujo/frames/frame-219.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        466,
+        625,
+        519,
+        653
+      ],
+      "width": 106,
+      "height": 57,
+      "row": 24,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 220,
+      "path": "/characters/jotaro-kujo/frames/frame-220.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        522,
+        615,
+        550,
+        656
+      ],
+      "width": 40,
+      "height": 57,
+      "row": 25,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 221,
+      "path": "/characters/jotaro-kujo/frames/frame-221.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        184,
+        703,
+        218,
+        741
+      ],
+      "width": 51,
+      "height": 57,
+      "row": 26,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 222,
+      "path": "/characters/jotaro-kujo/frames/frame-222.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        224,
+        706,
+        258,
+        744
+      ],
+      "width": 51,
+      "height": 57,
+      "row": 27,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 223,
+      "path": "/characters/jotaro-kujo/frames/frame-223.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        261,
+        710,
+        309,
+        744
+      ],
+      "width": 80,
+      "height": 57,
+      "row": 28,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 224,
+      "path": "/characters/jotaro-kujo/frames/frame-224.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        313,
+        711,
+        364,
+        744
+      ],
+      "width": 86,
+      "height": 57,
+      "row": 29,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 225,
+      "path": "/characters/jotaro-kujo/frames/frame-225.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        382,
+        711,
+        410,
+        740
+      ],
+      "width": 55,
+      "height": 57,
+      "row": 30,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 226,
+      "path": "/characters/jotaro-kujo/frames/frame-226.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        434,
+        711,
+        461,
+        741
+      ],
+      "width": 51,
+      "height": 57,
+      "row": 31,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 227,
+      "path": "/characters/jotaro-kujo/frames/frame-227.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        487,
+        708,
+        520,
+        741
+      ],
+      "width": 59,
+      "height": 57,
+      "row": 32,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 228,
+      "path": "/characters/jotaro-kujo/frames/frame-228.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        523,
+        705,
+        544,
+        742
+      ],
+      "width": 32,
+      "height": 57,
+      "row": 33,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 229,
+      "path": "/characters/jotaro-kujo/frames/frame-229.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        170,
+        788,
+        202,
+        819
+      ],
+      "width": 59,
+      "height": 57,
+      "row": 34,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 230,
+      "path": "/characters/jotaro-kujo/frames/frame-230.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        375,
+        778,
+        396,
+        818
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 35,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 231,
+      "path": "/characters/jotaro-kujo/frames/frame-231.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        492,
+        778,
+        515,
+        818
+      ],
+      "width": 33,
+      "height": 57,
+      "row": 36,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 232,
+      "path": "/characters/jotaro-kujo/frames/frame-232.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        553,
+        764,
+        573,
+        815
+      ],
+      "width": 23,
+      "height": 57,
+      "row": 37,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 233,
+      "path": "/characters/jotaro-kujo/frames/frame-233.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        612,
+        779,
+        642,
+        818
+      ],
+      "width": 44,
+      "height": 57,
+      "row": 38,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 234,
+      "path": "/characters/jotaro-kujo/frames/frame-234.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        204,
+        834,
+        232,
+        866
+      ],
+      "width": 50,
+      "height": 57,
+      "row": 39,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 235,
+      "path": "/characters/jotaro-kujo/frames/frame-235.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        242,
+        826,
+        272,
+        862
+      ],
+      "width": 48,
+      "height": 57,
+      "row": 40,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 236,
+      "path": "/characters/jotaro-kujo/frames/frame-236.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        209,
+        881,
+        262,
+        924
+      ],
+      "width": 70,
+      "height": 57,
+      "row": 41,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 237,
+      "path": "/characters/jotaro-kujo/frames/frame-237.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        269,
+        881,
+        315,
+        924
+      ],
+      "width": 61,
+      "height": 57,
+      "row": 42,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 238,
+      "path": "/characters/jotaro-kujo/frames/frame-238.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        322,
+        881,
+        354,
+        917
+      ],
+      "width": 51,
+      "height": 57,
+      "row": 43,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 239,
+      "path": "/characters/jotaro-kujo/frames/frame-239.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        386,
+        881,
+        440,
+        924
+      ],
+      "width": 70,
+      "height": 57,
+      "row": 44,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 240,
+      "path": "/characters/jotaro-kujo/frames/frame-240.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        445,
+        880,
+        503,
+        917
+      ],
+      "width": 92,
+      "height": 57,
+      "row": 45,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 241,
+      "path": "/characters/jotaro-kujo/frames/frame-241.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        508,
+        881,
+        556,
+        924
+      ],
+      "width": 62,
+      "height": 57,
+      "row": 46,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 242,
+      "path": "/characters/jotaro-kujo/frames/frame-242.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        833,
+        915,
+        855,
+        943
+      ],
+      "width": 43,
+      "height": 57,
+      "row": 47,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 243,
+      "path": "/characters/jotaro-kujo/frames/frame-243.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        897,
+        915,
+        949,
+        951
+      ],
+      "width": 81,
+      "height": 57,
+      "row": 48,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 244,
+      "path": "/characters/jotaro-kujo/frames/frame-244.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        955,
+        914,
+        999,
+        942
+      ],
+      "width": 90,
+      "height": 57,
+      "row": 49,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 245,
+      "path": "/characters/jotaro-kujo/frames/frame-245.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        1007,
+        903,
+        1065,
+        940
+      ],
+      "width": 89,
+      "height": 57,
+      "row": 50,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 246,
+      "path": "/characters/jotaro-kujo/frames/frame-246.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        1072,
+        914,
+        1113,
+        945
+      ],
+      "width": 75,
+      "height": 57,
+      "row": 51,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 247,
+      "path": "/characters/jotaro-kujo/frames/frame-247.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        1129,
+        911,
+        1185,
+        946
+      ],
+      "width": 91,
+      "height": 57,
+      "row": 52,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 248,
+      "path": "/characters/jotaro-kujo/frames/frame-248.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        1193,
+        915,
+        1253,
+        945
+      ],
+      "width": 114,
+      "height": 57,
+      "row": 53,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 249,
+      "path": "/characters/jotaro-kujo/frames/frame-249.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        312,
+        933,
+        346,
+        974
+      ],
+      "width": 47,
+      "height": 57,
+      "row": 54,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 250,
+      "path": "/characters/jotaro-kujo/frames/frame-250.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        351,
+        934,
+        374,
+        974
+      ],
+      "width": 33,
+      "height": 57,
+      "row": 55,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 251,
+      "path": "/characters/jotaro-kujo/frames/frame-251.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        286,
+        1042,
+        333,
+        1072
+      ],
+      "width": 89,
+      "height": 57,
+      "row": 56,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 252,
+      "path": "/characters/jotaro-kujo/frames/frame-252.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        349,
+        1042,
+        379,
+        1072
+      ],
+      "width": 57,
+      "height": 57,
+      "row": 57,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 253,
+      "path": "/characters/jotaro-kujo/frames/frame-253.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        234,
+        1429,
+        253,
+        1461
+      ],
+      "width": 35,
+      "height": 57,
+      "row": 58,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 254,
+      "path": "/characters/jotaro-kujo/frames/frame-254.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        262,
+        1430,
+        317,
+        1467
+      ],
+      "width": 83,
+      "height": 57,
+      "row": 59,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 255,
+      "path": "/characters/jotaro-kujo/frames/frame-255.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        321,
+        1430,
+        368,
+        1473
+      ],
+      "width": 62,
+      "height": 57,
+      "row": 60,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 256,
+      "path": "/characters/jotaro-kujo/frames/frame-256.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        378,
+        1430,
+        405,
+        1466
+      ],
+      "width": 43,
+      "height": 57,
+      "row": 61,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 257,
+      "path": "/characters/jotaro-kujo/frames/frame-257.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        438,
+        1430,
+        493,
+        1473
+      ],
+      "width": 72,
+      "height": 57,
+      "row": 62,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 258,
+      "path": "/characters/jotaro-kujo/frames/frame-258.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        500,
+        1430,
+        556,
+        1473
+      ],
+      "width": 73,
+      "height": 57,
+      "row": 63,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 259,
+      "path": "/characters/jotaro-kujo/frames/frame-259.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        560,
+        1430,
+        605,
+        1467
+      ],
+      "width": 69,
+      "height": 57,
+      "row": 64,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 260,
+      "path": "/characters/jotaro-kujo/frames/frame-260.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        613,
+        1430,
+        643,
+        1469
+      ],
+      "width": 42,
+      "height": 57,
+      "row": 65,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 261,
+      "path": "/characters/jotaro-kujo/frames/frame-261.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        673,
+        1430,
+        721,
+        1467
+      ],
+      "width": 74,
+      "height": 57,
+      "row": 66,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 262,
+      "path": "/characters/jotaro-kujo/frames/frame-262.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        726,
+        1430,
+        762,
+        1468
+      ],
+      "width": 54,
+      "height": 57,
+      "row": 67,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 263,
+      "path": "/characters/jotaro-kujo/frames/frame-263.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        785,
+        1430,
+        815,
+        1471
+      ],
+      "width": 42,
+      "height": 57,
+      "row": 68,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 264,
+      "path": "/characters/jotaro-kujo/frames/frame-264.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        841,
+        1426,
+        901,
+        1469
+      ],
+      "width": 80,
+      "height": 57,
+      "row": 69,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 265,
+      "path": "/characters/jotaro-kujo/frames/frame-265.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        907,
+        1420,
+        962,
+        1469
+      ],
+      "width": 64,
+      "height": 57,
+      "row": 70,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 266,
+      "path": "/characters/jotaro-kujo/frames/frame-266.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        970,
+        1409,
+        1011,
+        1447
+      ],
+      "width": 62,
+      "height": 57,
+      "row": 71,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 267,
+      "path": "/characters/jotaro-kujo/frames/frame-267.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        1016,
+        1430,
+        1051,
+        1469
+      ],
+      "width": 51,
+      "height": 57,
+      "row": 72,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 268,
+      "path": "/characters/jotaro-kujo/frames/frame-268.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        1,
+        1503,
+        46,
+        1550
+      ],
+      "width": 55,
+      "height": 57,
+      "row": 73,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 269,
+      "path": "/characters/jotaro-kujo/frames/frame-269.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        50,
+        1500,
+        106,
+        1550
+      ],
+      "width": 64,
+      "height": 57,
+      "row": 74,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 270,
+      "path": "/characters/jotaro-kujo/frames/frame-270.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        115,
+        1488,
+        163,
+        1550
+      ],
+      "width": 45,
+      "height": 57,
+      "row": 75,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 271,
+      "path": "/characters/jotaro-kujo/frames/frame-271.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        167,
+        1494,
+        204,
+        1549
+      ],
+      "width": 39,
+      "height": 57,
+      "row": 76,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 272,
+      "path": "/characters/jotaro-kujo/frames/frame-272.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        231,
+        1483,
+        283,
+        1550
+      ],
+      "width": 44,
+      "height": 57,
+      "row": 77,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 273,
+      "path": "/characters/jotaro-kujo/frames/frame-273.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        288,
+        1512,
+        326,
+        1553
+      ],
+      "width": 53,
+      "height": 57,
+      "row": 78,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 274,
+      "path": "/characters/jotaro-kujo/frames/frame-274.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        363,
+        1507,
+        386,
+        1550
+      ],
+      "width": 30,
+      "height": 57,
+      "row": 79,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 275,
+      "path": "/characters/jotaro-kujo/frames/frame-275.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        427,
+        1512,
+        460,
+        1550
+      ],
+      "width": 50,
+      "height": 57,
+      "row": 80,
+      "targetForegroundHeight": 57
+    },
+    {
+      "index": 276,
+      "path": "/characters/jotaro-kujo/frames/frame-276.png",
+      "sheetId": "star-platinum",
+      "sheetPath": "/characters/jotaro-kujo/star-platinum-sheet.png",
+      "sourceName": "jotaro_kujo_sprite_sheet_by_nicogamer337_dfdevh3-fullview.jpg",
+      "box": [
+        548,
+        1513,
+        570,
+        1551
+      ],
+      "width": 32,
+      "height": 57,
+      "row": 81,
+      "targetForegroundHeight": 57
     }
   ]
 }

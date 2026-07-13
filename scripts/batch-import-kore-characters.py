@@ -2275,7 +2275,8 @@ def select_append_sheet_boxes(image: Image.Image, character_id: str, crop_manife
     detected, _ = filtered_projection_boxes(image, character_id)
     regions = [tuple(int(value) for value in region) for region in crop_manifest.get("includeRegions", [])]
     selected: list[dict[str, Any]] = []
-    for entry in detected:
+    use_detected_boxes = bool(regions) or not crop_manifest.get("boxes")
+    for entry in detected if use_detected_boxes else []:
         x1, y1, x2, y2 = (int(value) for value in entry["box"])
         center_x = (x1 + x2) / 2
         center_y = (y1 + y2) / 2
@@ -2292,7 +2293,8 @@ def select_append_sheet_boxes(image: Image.Image, character_id: str, crop_manife
             raise RuntimeError(f"Invalid explicit append crop bounds at index {index}: {box}")
         selected.append({"box": (x1, y1, x2, y2), "row": explicit_row + index})
 
-    selected.sort(key=lambda entry: (entry["box"][1], entry["box"][0]))
+    if not crop_manifest.get("preserveBoxOrder", False):
+        selected.sort(key=lambda entry: (entry["box"][1], entry["box"][0]))
     return selected
 
 
@@ -2331,10 +2333,15 @@ def append_character_sheet(
         raise RuntimeError(f"Sheet output already exists: {output_path}")
 
     frame_start = int(existing_sheet["frameStart"]) if existing_sheet else max((int(frame.get("index", -1)) for frame in existing_frames), default=-1) + 1
-    if existing_sheet and int(existing_sheet.get("frameCount", -1)) != len(boxes):
-        raise RuntimeError(
-            f"Cannot refresh {sheet_id}: selected {len(boxes)} frames but existing sheet has {existing_sheet.get('frameCount')}"
-        )
+    old_frame_count = int(existing_sheet.get("frameCount", 0)) if existing_sheet else 0
+    if existing_sheet and old_frame_count != len(boxes):
+        old_frame_end = frame_start + old_frame_count
+        later_sheets = [
+            sheet for sheet in existing_sheets
+            if sheet.get("id") != sheet_id and int(sheet.get("frameStart", -1)) >= old_frame_end
+        ]
+        if later_sheets:
+            raise RuntimeError(f"Cannot resize non-final appended sheet {sheet_id}; later sheets would be reindexed")
     result = {
         "id": character_id,
         "sheetId": sheet_id,
@@ -2380,8 +2387,13 @@ def append_character_sheet(
         "frameCount": len(appended_frames),
     }
     if existing_sheet:
-        appended_by_index = {int(frame["index"]): frame for frame in appended_frames}
-        frames_json["frames"] = [appended_by_index.get(int(frame.get("index", -1)), frame) for frame in existing_frames]
+        old_frame_end = frame_start + old_frame_count
+        retained_frames = [frame for frame in existing_frames if not frame_start <= int(frame.get("index", -1)) < old_frame_end]
+        frames_json["frames"] = sorted([*retained_frames, *appended_frames], key=lambda frame: int(frame.get("index", -1)))
+        for obsolete_index in range(frame_start + len(appended_frames), old_frame_end):
+            obsolete_path = character_dir / "frames" / f"frame-{obsolete_index:03d}.png"
+            if obsolete_path.exists():
+                obsolete_path.unlink()
     else:
         frames_json["frames"] = [*existing_frames, *appended_frames]
     frames_json["count"] = len(frames_json["frames"])

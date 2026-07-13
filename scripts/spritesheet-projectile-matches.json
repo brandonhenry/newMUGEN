@@ -208,6 +208,17 @@
       "style": "sound-note"
     },
     {
+      "characterId": "yamcha-young",
+      "assetType": "projectile",
+      "assetId": "rocket-launcher-projectile",
+      "name": "Rocket Launcher",
+      "sourceFrames": [102, 103, 104, 105, 106, 107, 108],
+      "moveKeys": ["cmd:1+2"],
+      "spawnFrames": { "cmd:1+2": 24 },
+      "style": "rocket",
+      "voxelProfile": "hd-image-source"
+    },
+    {
       "characterId": "beetlemon",
       "assetType": "effect",
       "assetId": "beetlemon-aura-spark",

@@ -951,6 +951,33 @@ test('shows right-side button history in training only', async ({ page }) => {
   await keyUp(page, 'KeyU');
 });
 
+test('shows unsigned frame numbers by default and suppresses them from training settings', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Desktop keyboard training feedback is covered by the chromium project');
+  await startTraining(page);
+
+  await keyDown(page, 'KeyI');
+  await keyUp(page, 'KeyI');
+  const whiffNumber = page.locator('[data-testid="training-frame-number"][data-frame-kind="whiff"]').last();
+  await expect(whiffNumber).toBeVisible({ timeout: 4000 });
+  await expect(whiffNumber).not.toContainText(/[+-]/);
+  await expect(whiffNumber).toHaveClass(/negative/);
+
+  await page.waitForTimeout(1100);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Training Settings' }).click();
+  await expect(page.getByRole('heading', { name: 'Training Settings' })).toBeVisible();
+  const toggle = page.locator('.training-settings-pause-panel .toggle-switch');
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await page.getByRole('button', { name: 'Resume' }).click();
+
+  await keyDown(page, 'KeyI');
+  await keyUp(page, 'KeyI');
+  await page.waitForTimeout(1200);
+  await expect(page.getByTestId('training-frame-number')).toHaveCount(0);
+});
+
 test('same-stage rematch starts a fresh fight session', async ({ page }) => {
   await startTraining(page);
   const firstSession = await fightSessionId(page);

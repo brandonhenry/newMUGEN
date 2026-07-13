@@ -194,6 +194,16 @@ export type ImpactSparkEvent = {
   kiBurst?: boolean;
 };
 
+export type TrainingFrameEvent = {
+  id: number;
+  kind: 'hit' | 'block' | 'whiff';
+  position: Vec3Tuple;
+  attackerSlot: 1 | 2;
+  defenderSlot: 1 | 2;
+  moveInstanceId: number;
+  frames: number;
+};
+
 export type RoundFinisherState = {
   attackerSlot: 1 | 2;
   defenderSlot: 1 | 2;
@@ -1127,6 +1137,9 @@ export type GameSettings = {
     inputAssist: boolean;
     controlScheme: ControlScheme;
   };
+  training: {
+    frameAdvantageNumbers: boolean;
+  };
   controls: ControlBindingMap;
   camera: {
     distance: number;
@@ -1389,9 +1402,11 @@ export type MatchSnapshot = {
   phase: 'intro' | 'fighting' | 'roundFinisher' | 'roundOver' | 'matchOver';
   message: string;
   lastHitId: number;
+  lastTrainingFrameEventId: number;
   projectiles: ProjectileRuntime[];
   combatEvents: CombatPopupEvent[];
   impactEvents: ImpactSparkEvent[];
+  trainingFrameEvents: TrainingFrameEvent[];
   clashState: ClashState;
   roundFinisher: RoundFinisherState | null;
   timeStop: MatchTimeStopRuntime | null;

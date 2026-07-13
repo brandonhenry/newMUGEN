@@ -140,9 +140,11 @@ export type CompactMatchSnapshot = {
   phase: MatchSnapshot['phase'];
   message: string;
   lastHitId: number;
+  lastTrainingFrameEventId?: number;
   projectiles: MatchSnapshot['projectiles'];
   combatEvents: MatchSnapshot['combatEvents'];
   impactEvents: MatchSnapshot['impactEvents'];
+  trainingFrameEvents?: MatchSnapshot['trainingFrameEvents'];
   clashState: MatchSnapshot['clashState'];
   roundFinisher: MatchSnapshot['roundFinisher'];
   timeStop: MatchSnapshot['timeStop'];
@@ -191,9 +193,14 @@ export function compactMatchSnapshot(match: MatchSnapshot, sequence: number): Co
     phase: match.phase,
     message: match.message,
     lastHitId: match.lastHitId,
+    lastTrainingFrameEventId: match.lastTrainingFrameEventId,
     projectiles: (match.projectiles ?? []).map(compactProjectile),
     combatEvents: match.combatEvents.slice(-8),
     impactEvents: match.impactEvents.slice(-12),
+    trainingFrameEvents: match.trainingFrameEvents.slice(-16).map((event) => ({
+      ...event,
+      position: [...event.position]
+    })),
     clashState: match.clashState,
     roundFinisher: match.roundFinisher
       ? {
@@ -230,9 +237,14 @@ export function hydrateMatchSnapshot(base: MatchSnapshot, snapshot: CompactMatch
     phase: snapshot.phase,
     message: snapshot.message,
     lastHitId: snapshot.lastHitId,
+    lastTrainingFrameEventId: snapshot.lastTrainingFrameEventId ?? base.lastTrainingFrameEventId,
     projectiles: (snapshot.projectiles ?? []).map(hydrateProjectile),
     combatEvents: snapshot.combatEvents,
     impactEvents: snapshot.impactEvents,
+    trainingFrameEvents: (snapshot.trainingFrameEvents ?? base.trainingFrameEvents).map((event) => ({
+      ...event,
+      position: [...event.position]
+    })),
     clashState: snapshot.clashState ?? base.clashState,
     roundFinisher: snapshot.roundFinisher
       ? {

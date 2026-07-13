@@ -1,4 +1,4 @@
-import { Bounds, ContactShadows, Environment, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
+import { Bounds, ContactShadows, Environment, Html, OrbitControls, useAnimations, useGLTF, useProgress } from '@react-three/drei';
 import { Canvas, useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Component, Suspense, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ErrorInfo, type MutableRefObject, type ReactNode, type RefObject } from 'react';
 import * as THREE from 'three';
@@ -25,6 +25,7 @@ import type {
   GetupAction,
   InputFrame,
   ImpactSparkEvent,
+  TrainingFrameEvent,
   MenuAttractPerformanceMode,
   MatchSnapshot,
   MoveEffectInstance,
@@ -88,6 +89,7 @@ type GameSceneProps = {
   sparkSettings?: GameSettings['display']['impactSparks'];
   movementSmokeStyle?: GameSettings['display']['movementSmokeStyle'];
   audioSettings?: GameSettings['audio'];
+  trainingFrameEvents?: TrainingFrameEvent[];
   reducedMotion?: boolean;
   onAssetLoadingChange?: (state: AssetLoadingState) => void;
 };
@@ -670,7 +672,7 @@ function GameEnvironment({ background = false }: { background?: boolean }) {
 
 export type PreviewPose = Exclude<FighterState, 'attack'> | MoveInput;
 
-export function GameScene({ match, presentationMirrored = false, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, movementSmokeStyle = defaultMovementSmokeStyle, audioSettings, reducedMotion = false, onAssetLoadingChange }: GameSceneProps) {
+export function GameScene({ match, presentationMirrored = false, cameraSettings = defaultCameraSettings, sparkSettings = defaultSparkSettings, movementSmokeStyle = defaultMovementSmokeStyle, audioSettings, trainingFrameEvents = [], reducedMotion = false, onAssetLoadingChange }: GameSceneProps) {
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   const cameraFrameRef = useRef<FightCameraFrame>(makeFightCameraFrame());
   const fighterRenderStyles = useMemo(() => ([
@@ -730,6 +732,7 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
           <GameEnvironment />
           <StageVisualStyleRig stage={match.stage} fighters={match.fighters} includeBackdrop={false} />
           <FightCameraFrameReader frameRef={cameraFrameRef} />
+          <TrainingFrameNumberLayer events={trainingFrameEvents} reducedMotion={reducedMotion} />
           <FighterRig fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
           <FighterRig fighter={match.fighters[1]} timeScale={fighterTimeScales[1]} stage={match.stage} renderStyle={fighterRenderStyles[1]} />
           <AttackCompanionLayer fighter={match.fighters[0]} timeScale={fighterTimeScales[0]} stage={match.stage} renderStyle={fighterRenderStyles[0]} />
@@ -741,6 +744,37 @@ export function GameScene({ match, presentationMirrored = false, cameraSettings 
       </div>
     </>
   );
+}
+
+function TrainingFrameNumberLayer({ events, reducedMotion }: { events: TrainingFrameEvent[]; reducedMotion: boolean }) {
+  if (events.length === 0) return null;
+  return (
+    <group>
+      {events.map((event) => (
+        <Html key={event.id} position={event.position} center zIndexRange={[18, 18]}>
+          <span
+            className={`training-frame-number ${trainingFrameNumberTone(event.frames)} ${reducedMotion ? 'reduced-motion' : ''}`}
+            data-testid="training-frame-number"
+            data-frame-kind={event.kind}
+            data-frame-value={event.frames}
+            aria-hidden="true"
+          >
+            {formatTrainingFrameNumber(event.frames)}
+          </span>
+        </Html>
+      ))}
+    </group>
+  );
+}
+
+export function formatTrainingFrameNumber(frames: number) {
+  return String(Math.abs(Math.round(frames)));
+}
+
+export function trainingFrameNumberTone(frames: number) {
+  if (frames > 0) return 'positive';
+  if (frames < 0) return 'negative';
+  return 'neutral';
 }
 
 function getMatchFighterTimeScale(match: MatchSnapshot, slot: 1 | 2) {

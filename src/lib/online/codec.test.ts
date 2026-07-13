@@ -95,6 +95,7 @@ describe('online codec', () => {
       elapsed: 0.24,
       cameraZoomScale: 0.78
     };
+    match.timeStop = { ownerSlot: 1, framesRemaining: 73, totalFrames: 120 };
     match.clashState = {
       id: 4,
       status: 'input',
@@ -109,6 +110,16 @@ describe('online codec', () => {
       p1: { progress: 1, inputs: ['jab'], completedFrame: null, failed: false, mistakes: 0, lastInput: 'jab' },
       p2: { progress: 0, inputs: [], completedFrame: null, failed: false, mistakes: 0, lastInput: null }
     };
+    match.lastTrainingFrameEventId = 8;
+    match.trainingFrameEvents = [{
+      id: 8,
+      kind: 'block',
+      position: [0.42, 1.18, -0.08],
+      attackerSlot: 1,
+      defenderSlot: 2,
+      moveInstanceId: 12,
+      frames: -3
+    }];
 
     const snapshot = compactMatchSnapshot(match, 7);
     const base = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'online');
@@ -122,6 +133,7 @@ describe('online codec', () => {
     expect(hydrated.roundFinisher?.impactPosition).toEqual([0.35, 1.2, -0.15]);
     expect(hydrated.roundFinisher?.elapsed).toBe(0.24);
     expect(hydrated.roundFinisher?.cameraZoomScale).toBe(0.78);
+    expect(hydrated.timeStop).toEqual({ ownerSlot: 1, framesRemaining: 73, totalFrames: 120 });
     expect(hydrated.fighters[0].hp).toBe(42);
     expect(hydrated.fighters[0].recoverableHp).toBe(11);
     expect(hydrated.fighters[0].displayRecoverableHp).toBe(7);
@@ -173,9 +185,14 @@ describe('online codec', () => {
     expect(hydrated.clashState.sequence).toEqual(['jab', 'heavy', 'special']);
     expect(hydrated.clashState.p1.progress).toBe(1);
     expect(hydrated.clashState.contactPoint).toEqual([0.2, 1.4, -0.1]);
+    expect(hydrated.lastTrainingFrameEventId).toBe(8);
+    expect(hydrated.trainingFrameEvents).toEqual(match.trainingFrameEvents);
 
     const legacySnapshot = { ...snapshot };
     delete (legacySnapshot as Partial<typeof snapshot>).roundsToWin;
+    delete (legacySnapshot as Partial<typeof snapshot>).lastTrainingFrameEventId;
+    delete (legacySnapshot as Partial<typeof snapshot>).trainingFrameEvents;
     expect(hydrateMatchSnapshot(base, legacySnapshot).roundsToWin).toBe(3);
+    expect(hydrateMatchSnapshot(base, legacySnapshot).trainingFrameEvents).toEqual([]);
   });
 });

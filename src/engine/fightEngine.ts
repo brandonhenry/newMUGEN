@@ -16,6 +16,7 @@ import type {
   MoveProjectileInstance,
   ImpactSparkKind,
   ImpactSparkEvent,
+  TrainingFrameEvent,
   ProjectileRuntime,
   StageDefinition,
   Vec3Tuple
@@ -234,9 +235,11 @@ export function createMatch(
     phase: 'fighting',
     message: '',
     lastHitId: 0,
+    lastTrainingFrameEventId: 0,
     projectiles: [],
     combatEvents: [],
     impactEvents: [],
+    trainingFrameEvents: [],
     clashState: createEmptyClashState(),
     roundFinisher: null,
     timeStop: null,
@@ -254,6 +257,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   const next = cloneMatch(match);
   next.cameraShake = 0;
   const frameDelta = secondsToFrames(dt);
+  const trainingImpactStartId = next.lastHitId;
 
   if (next.phase === 'matchOver') return next;
 
@@ -348,6 +352,7 @@ export function stepMatch(match: MatchSnapshot, p1Input: InputFrame, p2Input: In
   updateControlSideSigns(next);
   if (next.timeStop) resolveTimeStopHits(next, frameDelta);
   else resolveHits(next, frameDelta);
+  finalizeTrainingFrameEvents(next, trainingImpactStartId);
   constrainFightersToStageBounds(next);
   updateControlSideSigns(next);
 
@@ -406,6 +411,16 @@ function releaseTimeStopActivator(fighter: FighterRuntime) {
   fighter.hitConnected = false;
   fighter.hitConfirmed = false;
   fighter.whiffRecoveryApplied = false;
+  fighter.comboTimer = 0;
+  fighter.comboStep = 0;
+  fighter.comboSequence = [];
+  fighter.comboIdentitySequence = [];
+  fighter.comboFamilySequence = [];
+  fighter.comboVisualFamilySequence = [];
+  fighter.comboUsedKeys = [];
+  fighter.comboHits = 0;
+  fighter.comboDamage = 0;
+  fighter.aiActiveComboRouteId = null;
   clearBufferedMoveInput(fighter);
 }
 
@@ -939,7 +954,7 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     if (shouldHoldCurrentAttack(fighter, input)) {
       fighter.actionFramesRemaining = Math.max(fighter.actionFramesRemaining, 2);
     }
-    applyWhiffRecoveryIfNeeded(fighter);
+    applyWhiffRecoveryIfNeeded(match, fighter, opponent);
     fighter.actionTimer = framesToSeconds(fighter.actionFramesRemaining);
     if (fighter.actionFramesRemaining === 0 && fighter.state !== 'knockdown' && fighter.state !== 'getup') {
       completeActionLock(fighter, input);
@@ -4098,6 +4113,14 @@ function getAabbOverlapCenter(a: Aabb, b: Aabb): [number, number, number] {
   return [(minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2];
 }
 
+function getAabbCenter(box: Aabb): [number, number, number] {
+  return [
+    (box.minX + box.maxX) / 2,
+    (box.minY + box.maxY) / 2,
+    (box.minZ + box.maxZ) / 2
+  ];
+}
+
 function resolveClashOutcome(match: MatchSnapshot) {
   const clash = match.clashState;
   const p1Done = clash.p1.completedFrame;
@@ -4940,13 +4963,71 @@ function applyJuggleLandingRecovery(fighter: FighterRuntime) {
   fighter.actionTimer = framesToSeconds(recoveryFrames);
 }
 
-function applyWhiffRecoveryIfNeeded(fighter: FighterRuntime) {
+function applyWhiffRecoveryIfNeeded(match: MatchSnapshot, fighter: FighterRuntime, opponent: FighterRuntime) {
   const move = fighter.currentMove;
   if (!move || fighter.state !== 'attack' || fighter.hitConnected || fighter.whiffRecoveryApplied) return;
   if (fighter.moveFrame < move.startupFrames + move.activeFrames) return;
   const extraFrames = getWhiffRecoveryFrames(move);
   fighter.actionFramesRemaining += extraFrames;
   fighter.whiffRecoveryApplied = true;
+  if (isTrainingInfiniteHealthMode(match)) {
+    const activeFrame = Math.max(move.startupFrames, move.startupFrames + move.activeFrames - 1);
+    const attackBox = getActiveAttackAabbs(fighter, move, true, activeFrame)[0];
+    pushTrainingFrameEvent(match, {
+      kind: 'whiff',
+      position: attackBox ? getAabbCenter(attackBox) : getImpactPosition(fighter, opponent, move),
+      attackerSlot: fighter.slot,
+      defenderSlot: opponent.slot,
+      moveInstanceId: fighter.moveInstanceId,
+      frames: -Math.max(0, Math.round(fighter.actionFramesRemaining))
+    });
+  }
+}
+
+function finalizeTrainingFrameEvents(match: MatchSnapshot, impactStartId: number) {
+  if (!isTrainingInfiniteHealthMode(match)) return;
+  const newImpacts = match.impactEvents.filter((event) => event.id > impactStartId && event.kind !== 'clash');
+  if (newImpacts.length === 0) return;
+
+  const connectedMoveKeys = new Set(newImpacts.flatMap((event) => {
+    const attacker = match.fighters[event.attackerSlot - 1];
+    return attacker.hitConnected ? [`${event.attackerSlot}:${attacker.moveInstanceId}`] : [];
+  }));
+  match.trainingFrameEvents = match.trainingFrameEvents.filter((event) => (
+    event.kind !== 'whiff' || !connectedMoveKeys.has(`${event.attackerSlot}:${event.moveInstanceId}`)
+  ));
+
+  newImpacts.forEach((impact) => {
+    const attacker = match.fighters[impact.attackerSlot - 1];
+    const defender = match.fighters[impact.defenderSlot - 1];
+    pushTrainingFrameEvent(match, {
+      kind: impact.kind === 'block' ? 'block' : 'hit',
+      position: [...impact.position],
+      attackerSlot: impact.attackerSlot,
+      defenderSlot: impact.defenderSlot,
+      moveInstanceId: attacker.moveInstanceId,
+      frames: getFighterActionLockFrames(defender) - getFighterActionLockFrames(attacker)
+    });
+  });
+}
+
+function getFighterActionLockFrames(fighter: FighterRuntime) {
+  return Math.max(
+    0,
+    Math.round(fighter.actionFramesRemaining),
+    Math.round(fighter.stunFramesRemaining),
+    Math.round(fighter.blockstunFramesRemaining),
+    secondsToFrames(fighter.actionTimer),
+    secondsToFrames(fighter.stunTimer)
+  );
+}
+
+function pushTrainingFrameEvent(match: MatchSnapshot, event: Omit<TrainingFrameEvent, 'id'>) {
+  match.lastTrainingFrameEventId += 1;
+  match.trainingFrameEvents = [
+    ...match.trainingFrameEvents,
+    { ...event, id: match.lastTrainingFrameEventId }
+  ].slice(-16);
 }
 
 function getWhiffRecoveryFrames(move: MoveDefinition) {
@@ -5736,6 +5817,7 @@ function resetRound(match: MatchSnapshot) {
   match.message = '';
   match.combatEvents = [];
   match.impactEvents = [];
+  match.trainingFrameEvents = [];
   match.projectiles = [];
   match.clashState = createEmptyClashState();
   match.roundFinisher = null;
@@ -7982,6 +8064,10 @@ export function cloneMatchSnapshot(match: MatchSnapshot): MatchSnapshot {
     trainingDummyInput: match.trainingDummyInput ? cloneInputFrame(match.trainingDummyInput) : null,
     combatEvents: [...match.combatEvents],
     impactEvents: [...match.impactEvents],
+    trainingFrameEvents: match.trainingFrameEvents.map((event) => ({
+      ...event,
+      position: [...event.position]
+    })),
     projectiles: (match.projectiles ?? []).map(cloneProjectileRuntime),
     clashState: cloneClashState(match.clashState),
     roundFinisher: match.roundFinisher

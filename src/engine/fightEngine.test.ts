@@ -7739,6 +7739,101 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('idle');
   });
 
+  it('emits one unsigned-ready negative recovery event for each training whiff from either fighter', () => {
+    const runWhiff = (mode: 'training' | 'trainingOnline', attackerSlot: 1 | 2) => {
+      let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], mode);
+      match.fighters[0].position.x = -5;
+      match.fighters[1].position.x = 5;
+      const attack = emptyInputFrame();
+      attack.heavy = true;
+      match = stepMatch(
+        match,
+        attackerSlot === 1 ? attack : emptyInputFrame(),
+        attackerSlot === 2 ? attack : emptyInputFrame(),
+        1 / 60
+      );
+      for (let frame = 0; frame < 120 && match.trainingFrameEvents.length === 0; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+      return match;
+    };
+
+    const p1Whiff = runWhiff('training', 1);
+    expect(p1Whiff.trainingFrameEvents).toHaveLength(1);
+    expect(p1Whiff.trainingFrameEvents[0]).toMatchObject({ kind: 'whiff', attackerSlot: 1, defenderSlot: 2 });
+    expect(p1Whiff.trainingFrameEvents[0].frames).toBeLessThan(0);
+    expect(p1Whiff.trainingFrameEvents[0].position.every(Number.isFinite)).toBe(true);
+
+    const p2Whiff = runWhiff('trainingOnline', 2);
+    expect(p2Whiff.trainingFrameEvents).toHaveLength(1);
+    expect(p2Whiff.trainingFrameEvents[0]).toMatchObject({ kind: 'whiff', attackerSlot: 2, defenderSlot: 1 });
+
+    let versus = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    versus.fighters[0].position.x = -5;
+    versus.fighters[1].position.x = 5;
+    const attack = emptyInputFrame();
+    attack.heavy = true;
+    versus = stepMatch(versus, attack, emptyInputFrame(), 1 / 60);
+    for (let frame = 0; frame < 120; frame += 1) versus = stepMatch(versus, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    expect(versus.trainingFrameEvents).toEqual([]);
+  });
+
+  it('records actual attacker-perspective action gaps for training hits and blocks', () => {
+    const base = normalizeCharacter(starterCharacters[0]);
+    const jab = normalizeMove({
+      ...base.moves.find((move) => move.input === 'jab')!,
+      id: 'training-frame-gap-jab',
+      input: 'jab',
+      animationKey: 'jableft',
+      startupFrames: 2,
+      activeFrames: 2,
+      recoveryFrames: 8,
+      onHitFrames: 5,
+      onBlockFrames: -3,
+      hitLevel: 'high',
+      range: 3,
+      hitbox: { offset: [0, 1, 0.5], size: [2, 2, 3] }
+    });
+    const attacker = normalizeCharacter({
+      ...base,
+      id: 'training-frame-gap-attacker',
+      moves: [jab, ...base.moves.filter((move) => move.input !== 'jab')],
+      moveOverrides: {}
+    });
+    const actionLock = (fighter: MatchSnapshot['fighters'][number]) => Math.max(
+      fighter.actionFramesRemaining,
+      fighter.stunFramesRemaining,
+      fighter.blockstunFramesRemaining,
+      Math.round(fighter.actionTimer * 60),
+      Math.round(fighter.stunTimer * 60)
+    );
+    const connect = (blocked: boolean) => {
+      let match = createMatch(attacker, starterCharacters[1], stages[0], blocked ? 'trainingOnline' : 'training');
+      match.fighters[0].position.x = -0.35;
+      match.fighters[1].position.x = 0.35;
+      const jabInput = emptyInputFrame();
+      jabInput.jab = true;
+      const blockInput = emptyInputFrame();
+      blockInput.block = blocked;
+      match = stepMatch(match, jabInput, blockInput, 1 / 60);
+      for (let frame = 0; frame < 12 && match.trainingFrameEvents.length === 0; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), blockInput, 1 / 60);
+      }
+      return match;
+    };
+
+    const hit = connect(false);
+    expect(hit.trainingFrameEvents).toHaveLength(1);
+    expect(hit.trainingFrameEvents[0].kind).toBe('hit');
+    expect(hit.trainingFrameEvents[0].frames).toBe(actionLock(hit.fighters[1]) - actionLock(hit.fighters[0]));
+    expect(hit.trainingFrameEvents.some((event) => event.kind === 'whiff')).toBe(false);
+
+    const block = connect(true);
+    expect(block.trainingFrameEvents).toHaveLength(1);
+    expect(block.trainingFrameEvents[0].kind).toBe('block');
+    expect(block.trainingFrameEvents[0].frames).toBe(actionLock(block.fighters[1]) - actionLock(block.fighters[0]));
+  });
+
   it('does not allow movement or a second attack during whiff penalty recovery', () => {
     let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
     match.phase = 'fighting';
