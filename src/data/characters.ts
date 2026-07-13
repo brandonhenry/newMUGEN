@@ -89,7 +89,7 @@ const rivenAnimationFrames = {
   jab: [78, 79, 80, 81].map(rivenFrame),
   kick: [120, 121, 122, 123, 124].map(rivenFrame),
   heavy: [130, 131, 132, 133, 134, 135].map(rivenFrame),
-  special: [145, 146, 147, 148].map(rivenFrame),
+  special: [193, 194, 195, 196, 197, 198].map(rivenFrame),
   hitLight: [29, 30, 31].map(rivenFrame),
   hitHeavy: [32, 33, 34, 35].map(rivenFrame),
   knockdown: [31, 32, 33, 34, 35].map(rivenFrame),
@@ -417,6 +417,61 @@ export const starterCharacters: CharacterDefinition[] = [
       'neutral:special-jab-heavy': { label: 'Naraka Path Bind' },
       'neutral:special-heavy': { label: 'Human Path Draw' },
       'neutral:special-kick': { label: 'Snake Summoning Technique' }
+    },
+    projectiles: [
+      {
+        id: 'sasuke-grand-fireball',
+        name: 'Fire Release: Grand Fireball Skill',
+        kind: 'projectile',
+        sourcePath: '/characters/sasuke-curse-mark/animation-sheet.png',
+        frames: Array.from({ length: 12 }, (_, index) => `/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-${index.toString().padStart(3, '0')}.png`),
+        animationFrames: {
+          startup: ['/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-000.png'],
+          active: Array.from({ length: 6 }, (_, index) => `/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-${index.toString().padStart(3, '0')}.png`),
+          recovery: Array.from({ length: 6 }, (_, index) => `/characters/sasuke-curse-mark/projectiles/fireball-jutsu/frames/frame-${(index + 6).toString().padStart(3, '0')}.png`)
+        },
+        fps: 18,
+        loop: true,
+        billboard: false,
+        blendMode: 'normal',
+        voxelProfile: 'image-source',
+        defaultScale: [0.72, 0.72, 0.72],
+        defaultRotation: [0, 0, 0],
+        alignToVelocity: false,
+        color: '#ffffff'
+      }
+    ],
+    moveProjectiles: {
+      special: [
+        {
+          id: 'special-sasuke-grand-fireball',
+          projectileId: 'sasuke-grand-fireball',
+          kind: 'projectile',
+          label: 'Fire Release: Grand Fireball Skill',
+          spawnFrame: 11,
+          spawnOffset: [0, 1.08, 1.08],
+          startupFrames: 0,
+          activeFrames: 84,
+          recoveryFrames: 20,
+          lifetimeFrames: 104,
+          speed: 8.5,
+          forwardVelocity: 8.5,
+          homingMode: 'limited',
+          homingStrength: 2.8,
+          homingTurnRate: 3.2,
+          homingEndFrame: 42,
+          nearMissRadius: 0.72,
+          hitbox: { offset: [0, 0, 0], size: [0.65, 0.65, 0.9] },
+          damageScale: 1,
+          blockDamageScale: 1,
+          pushbackScale: 1.1,
+          blockPushbackScale: 1.15,
+          mirrorWithFacing: true,
+          delivery: 'replaceMoveHit',
+          pierce: false,
+          clash: true
+        }
+      ]
     },
     aiProfile: { aggression: 0.74, guard: 0.34, spacing: 1.38, specialChance: 0.28 }
   }

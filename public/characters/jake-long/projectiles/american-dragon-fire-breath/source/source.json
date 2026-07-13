@@ -1,0 +1,122 @@
+{
+  "characterId": "jake-long",
+  "assetId": "american-dragon-fire-breath",
+  "classification": "projectile",
+  "source": "jake-long original sprite sheet",
+  "sourceSheetPath": "/characters/jake-long/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 290,
+      "path": "/characters/jake-long/frames/frame-290.png",
+      "cropBox": [
+        22,
+        2030,
+        51,
+        2050
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-000.png"
+    },
+    {
+      "index": 291,
+      "path": "/characters/jake-long/frames/frame-291.png",
+      "cropBox": [
+        56,
+        2028,
+        118,
+        2054
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-001.png"
+    },
+    {
+      "index": 292,
+      "path": "/characters/jake-long/frames/frame-292.png",
+      "cropBox": [
+        121,
+        2029,
+        185,
+        2053
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-002.png"
+    },
+    {
+      "index": 293,
+      "path": "/characters/jake-long/frames/frame-293.png",
+      "cropBox": [
+        185,
+        2027,
+        250,
+        2054
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-003.png"
+    },
+    {
+      "index": 294,
+      "path": "/characters/jake-long/frames/frame-294.png",
+      "cropBox": [
+        252,
+        2029,
+        314,
+        2053
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-004.png"
+    },
+    {
+      "index": 295,
+      "path": "/characters/jake-long/frames/frame-295.png",
+      "cropBox": [
+        317,
+        2026,
+        372,
+        2057
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-005.png"
+    },
+    {
+      "index": 296,
+      "path": "/characters/jake-long/frames/frame-296.png",
+      "cropBox": [
+        384,
+        2029,
+        446,
+        2053
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-006.png"
+    },
+    {
+      "index": 297,
+      "path": "/characters/jake-long/frames/frame-297.png",
+      "cropBox": [
+        449,
+        2027,
+        514,
+        2054
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-007.png"
+    },
+    {
+      "index": 298,
+      "path": "/characters/jake-long/frames/frame-298.png",
+      "cropBox": [
+        516,
+        2031,
+        579,
+        2057
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-008.png"
+    },
+    {
+      "index": 299,
+      "path": "/characters/jake-long/frames/frame-299.png",
+      "cropBox": [
+        2,
+        2075,
+        18,
+        2091
+      ],
+      "output": "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-009.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:O+2"
+  ]
+}

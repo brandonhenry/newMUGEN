@@ -11,7 +11,7 @@ const character = JSON.parse(readFileSync(
 describe('Sasuke Curse Mark fireball configuration', () => {
   it('uses the hand-seal and release sequence for Fireball Jutsu', () => {
     expect(character.animationFrames?.['cmd:qcf+4']).toEqual(
-      Array.from({ length: 14 }, (_, index) => (
+      Array.from({ length: 15 }, (_, index) => (
         `/characters/sasuke-curse-mark/frames/frame-${String(180 + index).padStart(3, '0')}.png`
       ))
     );

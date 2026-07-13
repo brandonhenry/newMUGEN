@@ -1613,11 +1613,11 @@
     },
     "crouch": {
       "75": {
-        "width": 1.0,
+        "width": 1,
         "height": 0.87461,
         "voxelScaleX": 1,
         "voxelScaleY": 1,
-        "offsetX": 0.0
+        "offsetX": 0
       },
       "196": {
         "width": 0.25,
@@ -1666,7 +1666,7 @@
       "624": {
         "width": 0.96,
         "height": 0.87462,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       },

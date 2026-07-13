@@ -2074,7 +2074,7 @@
       "17": {
         "width": 1.13,
         "height": 0.62308,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
@@ -2125,7 +2125,7 @@
       "17": {
         "width": 0.56402,
         "height": 0.60624,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false,
         "voxelScaleX": 1.60251,
@@ -5589,6 +5589,107 @@
     "height": 1.21
   },
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "american-dragon-fire-breath",
+      "name": "American Dragon Fire Breath",
+      "kind": "projectile",
+      "sourcePath": "/characters/jake-long/animation-sheet.png",
+      "frames": [
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-000.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-001.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-002.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-003.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-004.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-005.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-006.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-007.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-008.png",
+        "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-009.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-000.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-001.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-002.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-003.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-004.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-005.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-006.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-007.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-008.png",
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-009.png"
+        ],
+        "recovery": [
+          "/characters/jake-long/projectiles/american-dragon-fire-breath/frames/frame-009.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        0.58,
+        0.58,
+        0.58
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "alignToVelocity": true,
+      "color": "#ff7b24"
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-american-dragon-fire-breath",
+        "projectileId": "american-dragon-fire-breath",
+        "kind": "projectile",
+        "label": "American Dragon Fire Breath",
+        "spawnFrame": 21,
+        "spawnOffset": [
+          0,
+          1.05,
+          0.92
+        ],
+        "startupFrames": 0,
+        "activeFrames": 86,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 96,
+        "speed": 10.5,
+        "forwardVelocity": 10.5,
+        "homingMode": "limited",
+        "homingStrength": 1.5,
+        "homingTurnRate": 2.2,
+        "homingEndFrame": 48,
+        "nearMissRadius": 0.52,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.58,
+            0.46,
+            0.82
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "clash": true
+      }
+    ]
+  }
 }
