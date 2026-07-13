@@ -164,6 +164,7 @@ export type CombatPopupEvent = {
   slot: 1 | 2;
   kind: CombatPopupKind;
   hits: number;
+  contactHits?: number;
   damage: number;
   moveLabel: string;
   moveInput?: MoveInput;
@@ -1151,6 +1152,9 @@ export type GameSettings = {
   };
   training: {
     frameAdvantageNumbers: boolean;
+    blockAfterFirstHit: boolean;
+    autoAttack: boolean;
+    autoAttackDifficulty: CpuDifficulty;
   };
   controls: ControlBindingMap;
   camera: {
@@ -1206,6 +1210,7 @@ export type ShadowCloneRuntime = {
   moveFrame: number;
   actionFramesRemaining: number;
   hitConnected: boolean;
+  hitConfirmed?: boolean;
   attackConsumed: boolean;
   vanishOnLanding: boolean;
   visualHitstop: VisualHitstopRuntime;
@@ -1267,6 +1272,9 @@ export type MatchOptions = {
   roundsToWin?: number;
   maxHealth?: number;
   trainingInfiniteHealth?: boolean;
+  trainingBlockAfterFirstHit?: boolean;
+  trainingAutoAttack?: boolean;
+  trainingAutoAttackDifficulty?: CpuDifficulty;
   controlScheme?: ControlScheme;
   playIntro?: boolean;
   aiSeed?: number;
@@ -1340,6 +1348,7 @@ export type FighterRuntime = {
   comboVisualFamilySequence: string[];
   comboUsedKeys: string[];
   comboHits: number;
+  comboContactHits: number;
   comboDamage: number;
   bufferedMoveInput: MoveInput | null;
   bufferedMoveFrames: number;
@@ -1406,6 +1415,11 @@ export type MatchSnapshot = {
   trainingInfiniteHealth: boolean;
   controlScheme: ControlScheme;
   trainingDummyInput?: InputFrame | null;
+  trainingBlockAfterFirstHit?: boolean;
+  trainingBlockAfterFirstHitFrames?: number;
+  trainingAutoAttack?: boolean;
+  trainingAutoAttackDifficulty?: CpuDifficulty;
+  trainingAutoAttackElapsedFrames?: number;
   introEnabled: boolean;
   timer: number;
   round: number;

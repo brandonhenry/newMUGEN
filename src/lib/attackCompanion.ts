@@ -47,6 +47,14 @@ export function resolveAttackCompanionAnimation(
   };
 }
 
+export function getAttackCompanionRenderSignature(
+  fighter: Pick<FighterRuntime, 'state' | 'currentMove' | 'moveInstanceId' | 'character'>
+) {
+  if (fighter.state !== 'attack' || !fighter.currentMove) return '';
+  const animation = resolveAttackCompanionAnimation(fighter.character, fighter.currentMove);
+  return animation ? `${fighter.moveInstanceId}:${animation.key}` : '';
+}
+
 export function getAttackCompanionPosition(fighter: Pick<FighterRuntime, 'character' | 'position' | 'facingYaw'>) {
   const companion = fighter.character.attackCompanion;
   if (!companion) return { ...fighter.position };

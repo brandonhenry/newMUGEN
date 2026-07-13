@@ -1,10 +1,10 @@
-import type { ActionName, GameSettings, MenuAttractPerformanceMode, MenuMotionPerformanceMode, PlayerControlBindings, PlayerGamepadBindings, PlayerGamepadComboBindings, PlayerKeyboardComboBindings } from '../types';
+import type { ActionName, CpuDifficulty, GameSettings, MenuAttractPerformanceMode, MenuMotionPerformanceMode, PlayerControlBindings, PlayerGamepadBindings, PlayerGamepadComboBindings, PlayerKeyboardComboBindings } from '../types';
 import { KORE_DEFAULT_CURSOR_ID, isKoreCursorId } from '../data/cursors';
 import { keybindableButtonComboIds } from './buttonCombos';
 import { emptyInputFrame } from '../types';
 
 const SETTINGS_STORAGE_KEY = 'kore.gameSettings';
-const settingsVersion = 14;
+const settingsVersion = 16;
 const legacySmallDefaultCursorId = 'Basic/Default/pointer_a.png';
 const actions = Object.keys(emptyInputFrame()) as ActionName[];
 
@@ -81,7 +81,10 @@ export const defaultGameSettings: GameSettings = {
     controlScheme: 'kore'
   },
   training: {
-    frameAdvantageNumbers: true
+    frameAdvantageNumbers: true,
+    blockAfterFirstHit: false,
+    autoAttack: false,
+    autoAttackDifficulty: 3
   },
   controls: {
     keyboard: [p1Keyboard, p2Keyboard],
@@ -180,7 +183,10 @@ export function sanitizeGameSettings(raw: unknown): GameSettings {
       controlScheme: game.controlScheme === 'beginner' ? 'beginner' : defaults.game.controlScheme
     },
     training: {
-      frameAdvantageNumbers: booleanOr(training.frameAdvantageNumbers, defaults.training.frameAdvantageNumbers)
+      frameAdvantageNumbers: booleanOr(training.frameAdvantageNumbers, defaults.training.frameAdvantageNumbers),
+      blockAfterFirstHit: booleanOr(training.blockAfterFirstHit, defaults.training.blockAfterFirstHit),
+      autoAttack: booleanOr(training.autoAttack, defaults.training.autoAttack),
+      autoAttackDifficulty: sanitizeCpuDifficulty(training.autoAttackDifficulty, defaults.training.autoAttackDifficulty)
     },
     controls: {
       keyboard: [
@@ -461,6 +467,10 @@ function sanitizeMaxHealth(value: unknown, fallback: number) {
   if (!Number.isFinite(numeric)) return fallback;
   if (numeric <= 0) return 0;
   return Math.round(clampNumber(numeric, 1, 999, fallback));
+}
+
+function sanitizeCpuDifficulty(value: unknown, fallback: CpuDifficulty): CpuDifficulty {
+  return Math.round(clampNumber(value, 1, 5, fallback)) as CpuDifficulty;
 }
 
 function clampNumber(value: unknown, min: number, max: number, fallback: number) {

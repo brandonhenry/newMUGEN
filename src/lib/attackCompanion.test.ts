@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { CharacterDefinition, FighterRuntime, MoveDefinition } from '../types';
-import { getAttackCompanionPosition, resolveAttackCompanionAnimation } from './attackCompanion';
+import { getAttackCompanionPosition, getAttackCompanionRenderSignature, resolveAttackCompanionAnimation } from './attackCompanion';
 
 const move = {
   id: 'test-jab',
@@ -47,5 +47,23 @@ describe('attack companion resolution', () => {
       facingYaw: Math.PI / 2
     } as FighterRuntime;
     expect(getAttackCompanionPosition(fighter)).toEqual({ x: 2.65, y: 0.35, z: -1 });
+  });
+
+  it('changes the attract-render signature when a mapped companion attack starts and ends', () => {
+    const idle = {
+      character,
+      state: 'idle',
+      currentMove: null,
+      moveInstanceId: 4
+    } as const;
+    const attacking = {
+      ...idle,
+      state: 'attack',
+      currentMove: move
+    } as const;
+
+    expect(getAttackCompanionRenderSignature(idle)).toBe('');
+    expect(getAttackCompanionRenderSignature(attacking)).toBe('4:straight');
+    expect(getAttackCompanionRenderSignature({ ...attacking, moveInstanceId: 5 })).toBe('5:straight');
   });
 });

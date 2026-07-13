@@ -518,7 +518,7 @@ export function checksumMatch(match: MatchSnapshot) {
       hitConnected: projectile.hitConnected,
       expired: projectile.expired
     })),
-    combatEvents: match.combatEvents.map((event) => ({ id: event.id, slot: event.slot, hits: event.hits, damage: roundNumber(event.damage) })),
+    combatEvents: match.combatEvents.map((event) => ({ id: event.id, slot: event.slot, hits: event.hits, contactHits: event.contactHits, damage: roundNumber(event.damage) })),
     impactEvents: match.impactEvents.map((event) => ({ id: event.id, kind: event.kind, attackerSlot: event.attackerSlot, defenderSlot: event.defenderSlot })),
     trainingFrameEvents: match.trainingFrameEvents.map((event) => ({
       id: event.id,
@@ -557,6 +557,7 @@ export function checksumMatch(match: MatchSnapshot) {
       stunFramesRemaining: fighter.stunFramesRemaining,
       blockstunFramesRemaining: fighter.blockstunFramesRemaining,
       comboHits: fighter.comboHits,
+      comboContactHits: fighter.comboContactHits,
       comboDamage: roundNumber(fighter.comboDamage),
       roundsWon: fighter.roundsWon,
       shadowClone: fighter.shadowClone
@@ -566,7 +567,9 @@ export function checksumMatch(match: MatchSnapshot) {
             y: roundNumber(fighter.shadowClone.position.y),
             z: roundNumber(fighter.shadowClone.position.z),
             state: fighter.shadowClone.state,
-            moveFrame: fighter.shadowClone.moveFrame
+            moveFrame: fighter.shadowClone.moveFrame,
+            hitConnected: fighter.shadowClone.hitConnected,
+            hitConfirmed: fighter.shadowClone.hitConfirmed
           }
         : null
     }))

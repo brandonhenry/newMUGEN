@@ -36,6 +36,8 @@ describe('online codec', () => {
     match.fighters[0].controlSideSign = -1;
     match.fighters[0].state = 'juggle';
     match.fighters[0].moveInstanceId = 12;
+    match.fighters[0].comboHits = 2;
+    match.fighters[0].comboContactHits = 7;
     match.fighters[0].dashForwardFrames = 11;
     match.fighters[0].dashForwardCooldownFrames = 7;
     match.fighters[0].backHopFrames = 6;
@@ -76,6 +78,7 @@ describe('online codec', () => {
       moveFrame: 6,
       actionFramesRemaining: 14,
       hitConnected: false,
+      hitConfirmed: true,
       attackConsumed: true,
       vanishOnLanding: false,
       visualHitstop: { framesRemaining: 5, animationKey: 'jabright', progress: 0.38 },
@@ -146,6 +149,8 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].position.x).toBe(1.25);
     expect(hydrated.fighters[0].controlSideSign).toBe(-1);
     expect(hydrated.fighters[0].moveInstanceId).toBe(12);
+    expect(hydrated.fighters[0].comboHits).toBe(2);
+    expect(hydrated.fighters[0].comboContactHits).toBe(7);
     expect(hydrated.fighters[0].dashForwardFrames).toBe(11);
     expect(hydrated.fighters[0].dashForwardCooldownFrames).toBe(7);
     expect(hydrated.fighters[0].backHopFrames).toBe(6);
@@ -165,6 +170,7 @@ describe('online codec', () => {
     expect(hydrated.fighters[0].throwJabCooldownFrames).toBe(9);
     expect(hydrated.fighters[0].throwJabHitConnected).toBe(true);
     expect(hydrated.fighters[0].visualHitstop).toEqual({ framesRemaining: 4, animationKey: 'jableft', progress: 0.45 });
+    expect(hydrated.fighters[0].shadowClone?.hitConfirmed).toBe(true);
     expect(hydrated.fighters[1].state).toBe('throwHeld');
     expect(hydrated.fighters[1].throwCaptorSlot).toBe(1);
     expect(hydrated.fighters[1].throwEscapeProgress).toBe(3);

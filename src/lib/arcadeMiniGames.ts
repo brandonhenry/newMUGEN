@@ -852,6 +852,7 @@ function createMiniGameFighter(character: CharacterDefinition, position: { x: nu
     comboVisualFamilySequence: [],
     comboUsedKeys: [],
     comboHits: 0,
+    comboContactHits: 0,
     comboDamage: 0,
     bufferedMoveInput: null,
     bufferedMoveFrames: 0,

@@ -81,6 +81,20 @@ async function expectMainMenu(page: Page) {
   await expect(page.getByRole('button', { name: 'Arcade' })).toBeVisible({ timeout: 10000 });
 }
 
+test('main-menu CPU attract renders mapped attack companions', async ({ page }) => {
+  await page.addInitScript(() => {
+    (window as typeof window & { __KORE_FORCE_MENU_ATTRACT_IDS__?: [string, string] }).__KORE_FORCE_MENU_ATTRACT_IDS__ = ['jotaro-kujo', 'dio'];
+  });
+  await startFromSplash(page);
+
+  const canvas = page.getByTestId('menu-attract-canvas');
+  await expect(canvas).toBeVisible();
+  await expect.poll(
+    () => canvas.getAttribute('data-active-attack-companion-slots'),
+    { timeout: 30_000 }
+  ).not.toBe('');
+});
+
 async function expectNoHdProceduralFallback(page: Page) {
   await expect.poll(() => page.evaluate(() => (window as typeof window & { __KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__?: number }).__KORE_HD_VOXEL_PROCEDURAL_FALLBACKS__ ?? 0)).toBe(0);
 }
@@ -969,10 +983,29 @@ test('shows unsigned frame numbers by default and suppresses them from training 
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Training Settings' }).click();
   await expect(page.getByRole('heading', { name: 'Training Settings' })).toBeVisible();
-  const toggle = page.locator('.training-settings-pause-panel .toggle-switch');
-  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
-  await toggle.click();
-  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  const frameAdvantageToggle = page.getByRole('button', { name: 'Frame Advantage Numbers' });
+  const blockAfterFirstHitToggle = page.getByRole('button', { name: 'Block After First Hit' });
+  const autoAttackToggle = page.getByRole('button', { name: 'Auto-Attack' });
+  await expect(frameAdvantageToggle).toHaveAttribute('aria-pressed', 'true');
+  await expect(blockAfterFirstHitToggle).toHaveAttribute('aria-pressed', 'false');
+  await expect(autoAttackToggle).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.getByRole('group', { name: 'CPU difficulty' })).toHaveCount(0);
+  await autoAttackToggle.click();
+  const autoAttackDifficulty = page.getByRole('group', { name: 'CPU difficulty' });
+  await expect(autoAttackDifficulty).toBeVisible();
+  await expect(autoAttackDifficulty).toContainText('Normal');
+  await autoAttackDifficulty.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(autoAttackDifficulty).toContainText('Hard');
+  await page.keyboard.press('ArrowLeft');
+  await expect(autoAttackDifficulty).toContainText('Normal');
+  await autoAttackToggle.click();
+  await expect(autoAttackDifficulty).toHaveCount(0);
+  await blockAfterFirstHitToggle.click();
+  await expect(blockAfterFirstHitToggle).toHaveAttribute('aria-pressed', 'true');
+  await blockAfterFirstHitToggle.click();
+  await frameAdvantageToggle.click();
+  await expect(frameAdvantageToggle).toHaveAttribute('aria-pressed', 'false');
   await page.getByRole('button', { name: 'Resume' }).click();
 
   await keyDown(page, 'KeyI');

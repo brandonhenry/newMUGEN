@@ -328,6 +328,7 @@ function primeDirectHpRegressionHit(match: MatchSnapshot) {
   attacker.whiffRecoveryApplied = false;
   attacker.comboTimer = 0;
   attacker.comboHits = 0;
+  attacker.comboContactHits = 0;
   attacker.comboDamage = 0;
   attacker.comboSequence = [];
   attacker.comboIdentitySequence = [];
@@ -7739,6 +7740,111 @@ describe('fight engine', () => {
     expect(match.fighters[0].state).toBe('idle');
   });
 
+  it('makes the training dummy block after an opening hit, then re-arms after the guard window', () => {
+    const base = normalizeCharacter(starterCharacters[0]);
+    const jab = normalizeMove({
+      ...base.moves.find((move) => move.input === 'jab')!,
+      id: 'training-block-after-hit-jab',
+      input: 'jab',
+      animationKey: 'jableft',
+      startupFrames: 2,
+      activeFrames: 2,
+      recoveryFrames: 5,
+      onHitFrames: 3,
+      onBlockFrames: -2,
+      hitLevel: 'mid',
+      range: 3,
+      hitbox: { offset: [0, 1, 0.5], size: [2, 2, 3] }
+    });
+    const attacker = normalizeCharacter({
+      ...base,
+      id: 'training-block-after-hit-attacker',
+      moves: [jab, ...base.moves.filter((move) => move.input !== 'jab')],
+      moveOverrides: {}
+    });
+    let match = createMatch(attacker, starterCharacters[1], stages[0], 'training', 3, { trainingBlockAfterFirstHit: true });
+    match.fighters[0].position.x = -0.35;
+    match.fighters[1].position.x = 0.35;
+
+    const strike = () => {
+      const previousHitId = match.lastHitId;
+      match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
+      for (let frame = 0; frame < 30 && match.lastHitId === previousHitId; frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+      return match.impactEvents.find((event) => event.id > previousHitId);
+    };
+    const waitUntilActionable = () => {
+      for (let frame = 0; frame < 40 && match.fighters.some((fighter) => (
+        fighter.actionFramesRemaining > 0 || fighter.stunFramesRemaining > 0 || fighter.blockstunFramesRemaining > 0
+      )); frame += 1) {
+        match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      }
+    };
+
+    expect(strike()?.kind).toBe('hit');
+    expect(match.trainingBlockAfterFirstHitFrames).toBeGreaterThan(0);
+    waitUntilActionable();
+    expect(strike()?.kind).toBe('block');
+    expect(match.trainingBlockAfterFirstHitFrames).toBeGreaterThan(0);
+
+    for (let frame = 0; frame < 120 && (match.trainingBlockAfterFirstHitFrames ?? 0) > 0; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    waitUntilActionable();
+    expect(match.trainingBlockAfterFirstHitFrames).toBe(0);
+    expect(strike()?.kind).toBe('hit');
+    expect(match.trainingBlockAfterFirstHitFrames).toBeGreaterThan(0);
+
+    expect(createMatch(attacker, starterCharacters[1], stages[0], 'training').trainingBlockAfterFirstHit).toBe(false);
+    expect(createMatch(attacker, starterCharacters[1], stages[0], 'trainingOnline', 3, { trainingBlockAfterFirstHit: true }).trainingBlockAfterFirstHit).toBe(false);
+  });
+
+  it('runs the normal CPU controller for training Auto-Attack and returns to a dummy when disabled', () => {
+    let dummy = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training');
+    const dummyStart = { ...dummy.fighters[1].position };
+    for (let frame = 0; frame < 180; frame += 1) {
+      dummy = stepMatch(dummy, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(dummy.trainingAutoAttack).toBe(false);
+    expect(dummy.fighters[1].currentMove).toBeNull();
+    expect(dummy.fighters[1].position.x).toBe(dummyStart.x);
+    expect(dummy.fighters[1].position.z).toBe(dummyStart.z);
+
+    let auto = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'training', 3, {
+      trainingAutoAttack: true,
+      trainingAutoAttackDifficulty: 5
+    });
+    let cpuAttackFrames = 0;
+    let cpuMovementFrames = 0;
+    for (let frame = 0; frame < 420; frame += 1) {
+      auto = stepMatch(auto, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (auto.fighters[1].state === 'attack') cpuAttackFrames += 1;
+      if (auto.fighters[1].state === 'walk' || auto.fighters[1].state === 'sidestep') cpuMovementFrames += 1;
+    }
+    expect(auto.trainingAutoAttackDifficulty).toBe(5);
+    expect(auto.trainingAutoAttackElapsedFrames).toBeGreaterThan(0);
+    expect(cpuAttackFrames).toBeGreaterThan(20);
+    expect(cpuMovementFrames).toBeGreaterThan(5);
+
+    auto.trainingAutoAttack = false;
+    for (let frame = 0; frame < 180; frame += 1) {
+      auto = stepMatch(auto, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+    expect(auto.trainingAutoAttackElapsedFrames).toBe(0);
+    expect(auto.fighters[1].currentMove).toBeNull();
+    let attacksAfterDisable = 0;
+    for (let frame = 0; frame < 120; frame += 1) {
+      auto = stepMatch(auto, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+      if (auto.fighters[1].state === 'attack') attacksAfterDisable += 1;
+    }
+    expect(attacksAfterDisable).toBe(0);
+
+    expect(createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'trainingOnline', 3, {
+      trainingAutoAttack: true
+    }).trainingAutoAttack).toBe(false);
+  });
+
   it('emits one unsigned-ready negative recovery event for each training whiff from either fighter', () => {
     const runWhiff = (mode: 'training' | 'trainingOnline', attackerSlot: 1 | 2) => {
       let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], mode);
@@ -7957,6 +8063,76 @@ describe('fight engine', () => {
     expect(match.phase).toBe('fighting');
     expect(match.roundFinisher).toBeNull();
     expect(match.fighters[0].roundsWon).toBe(0);
+  });
+
+  it('counts every overlapping active frame for the display without repeating combat effects', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveTestHit(match, { activeFrames: 4, recoveryFrames: 12, pushback: 0, blockPushback: 0 });
+    const defenderHpBefore = match.fighters[1].hp;
+    const attackerKiBefore = match.fighters[0].ki;
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    const hpAfterDamage = match.fighters[1].hp;
+    const kiAfterDamage = match.fighters[0].ki;
+    const comboDamageAfterHit = match.fighters[0].comboDamage;
+    const defenderPositionAfterHit = { ...match.fighters[1].position };
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+
+    expect(hpAfterDamage).toBeLessThan(defenderHpBefore);
+    expect(kiAfterDamage).toBeGreaterThan(attackerKiBefore);
+    expect(match.fighters[0].comboHits).toBe(1);
+    expect(match.fighters[0].comboContactHits).toBe(4);
+    expect(match.fighters[0].comboDamage).toBe(comboDamageAfterHit);
+    expect(match.fighters[1].hp).toBe(hpAfterDamage);
+    expect(match.fighters[0].ki).toBe(kiAfterDamage);
+    expect(match.fighters[1].position).toEqual(defenderPositionAfterHit);
+    expect(match.impactEvents).toHaveLength(1);
+    expect(match.combatEvents[match.combatEvents.length - 1]).toMatchObject({
+      kind: 'combo',
+      hits: 1,
+      contactHits: 4,
+      damage: comboDamageAfterHit
+    });
+
+    match = stepFrames(match, 120);
+    expect(match.fighters[0].comboHits).toBe(0);
+    expect(match.fighters[0].comboContactHits).toBe(0);
+  });
+
+  it('counts a long-active move only while its hitbox is actually touching', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveTestHit(match, { activeFrames: 6, recoveryFrames: 12, pushback: 0 });
+
+    match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    match.fighters[1].position.x = 8;
+    for (let frame = 0; frame < 5; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+    }
+
+    expect(match.fighters[0].comboHits).toBe(1);
+    expect(match.fighters[0].comboContactHits).toBe(1);
+    expect(match.impactEvents).toHaveLength(1);
+    expect(match.combatEvents).toHaveLength(0);
+  });
+
+  it('does not count blocked active-frame overlap as display hits', () => {
+    let match = createMatch(starterCharacters[0], starterCharacters[1], stages[0], 'local2p');
+    startActiveTestHit(match, { activeFrames: 4, recoveryFrames: 12, blockDamage: 0, blockPushback: 0, hitLevel: 'high' });
+    const block = { ...emptyInputFrame(), block: true };
+
+    for (let frame = 0; frame < 4; frame += 1) {
+      match = stepMatch(match, emptyInputFrame(), block, 1 / 60);
+    }
+
+    expect(match.fighters[0].hitConnected).toBe(true);
+    expect(match.fighters[0].hitConfirmed).toBe(false);
+    expect(match.fighters[0].comboHits).toBe(0);
+    expect(match.fighters[0].comboContactHits).toBe(0);
+    expect(match.impactEvents).toHaveLength(1);
+    expect(match.combatEvents).toHaveLength(0);
   });
 
   it('emits a combo popup event on multi-hit combos', () => {
@@ -8469,6 +8645,8 @@ describe('fight engine', () => {
     expect(match.fighters[1].hp).toBeLessThan(match.fighters[1].maxHp);
     expect(match.projectiles).toHaveLength(0);
     expect(match.impactEvents[match.impactEvents.length - 1]?.moveLabel).toBe('Test Shot');
+    expect(match.fighters[0].comboHits).toBe(1);
+    expect(match.fighters[0].comboContactHits).toBe(1);
     const hpAfterHit = match.fighters[1].hp;
     match = stepFrames(match, 20);
     expect(match.fighters[1].hp).toBe(hpAfterHit);

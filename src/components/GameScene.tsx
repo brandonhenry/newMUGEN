@@ -46,7 +46,7 @@ import { getCharacterGlobalScale } from '../lib/characterScale';
 import { debugLogThrottled } from '../lib/debugLogger';
 import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
-import { getAttackCompanionPosition, resolveAttackCompanionAnimation } from '../lib/attackCompanion';
+import { getAttackCompanionPosition, getAttackCompanionRenderSignature, resolveAttackCompanionAnimation } from '../lib/attackCompanion';
 import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, stableControlAlignedFightCameraSide } from '../lib/fightCamera';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
@@ -1991,16 +1991,18 @@ function AttackCompanionLayer({
   fighter,
   timeScale,
   stage,
-  renderStyle
+  renderStyle,
+  visualScale
 }: {
   fighter: FighterRuntime;
   timeScale: number;
   stage?: StageDefinition;
   renderStyle?: Partial<FighterRenderStyle>;
+  visualScale?: number;
 }) {
   const companionFighter = makeAttackCompanionRenderFighter(fighter);
   if (!companionFighter) return null;
-  return <FighterRig fighter={companionFighter} timeScale={timeScale} stage={stage} renderStyle={renderStyle} />;
+  return <FighterRig fighter={companionFighter} timeScale={timeScale} stage={stage} renderStyle={renderStyle} visualScale={visualScale} />;
 }
 
 export function makeAttackCompanionRenderFighter(fighter: FighterRuntime): FighterRuntime | null {
@@ -4306,6 +4308,10 @@ export function MenuAttractScene({
   const cameraCollisionRegistry = useMemo<StageCameraCollisionRegistry>(() => ({ colliders: new Set<StageCameraColliderEntry>(), occluders: new Set<StageCameraColliderEntry>() }), [match.stage.id]);
   const snappy = performanceMode === 'snappy';
   const dpr: [number, number] = snappy ? [0.42, 0.6] : [0.55, 0.75];
+  const activeCompanionSlots = match.fighters
+    .filter((fighter) => getAttackCompanionRenderSignature(fighter))
+    .map((fighter) => fighter.slot)
+    .join(',');
   const stableScene = useMemo(() => (
     <>
       {!isModelStage(match.stage) && <DefaultSkybox imagePath={match.stage.skyboxPath ?? DEFAULT_SKYBOX_PATH} />}
@@ -4324,9 +4330,12 @@ export function MenuAttractScene({
       camera={{ position: [0, 2.55, 7.8], fov: 42 }}
       gl={{ antialias: false, powerPreference: 'high-performance' }}
       data-testid="menu-attract-canvas"
+      data-active-attack-companion-slots={activeCompanionSlots}
     >
       <StageCameraCollisionContext.Provider value={cameraCollisionRegistry}>
         {stableScene}
+        <AttackCompanionLayer fighter={match.fighters[0]} timeScale={1} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} visualScale={MENU_ATTRACT_FIGHTER_VISUAL_SCALE} />
+        <AttackCompanionLayer fighter={match.fighters[1]} timeScale={1} stage={match.stage} renderStyle={MENU_ATTRACT_FIGHTER_RENDER_STYLE} visualScale={MENU_ATTRACT_FIGHTER_VISUAL_SCALE} />
         {!snappy && <>
           <EffectLayer match={match} reducedMotion={reducedMotion} renderTick={renderTick} />
           <ProjectileLayer match={match} stage={match.stage} reducedMotion={reducedMotion} renderTick={renderTick} />
@@ -5052,6 +5061,7 @@ function createPreviewFighter(character: CharacterDefinition): FighterRuntime {
     comboVisualFamilySequence: [],
     comboUsedKeys: [],
     comboHits: 0,
+    comboContactHits: 0,
     comboDamage: 0,
     bufferedMoveInput: null,
     bufferedMoveFrames: 0,

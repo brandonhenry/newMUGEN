@@ -2,14 +2,28 @@ import { describe, expect, it } from 'vitest';
 import { cloneSettings, defaultGameSettings, sanitizeGameSettings } from './gameSettings';
 
 describe('game settings', () => {
-  it('defaults, sanitizes, and independently clones frame advantage numbers', () => {
+  it('defaults, sanitizes, and independently clones training settings', () => {
     expect(sanitizeGameSettings(null).training.frameAdvantageNumbers).toBe(true);
     expect(sanitizeGameSettings({ training: { frameAdvantageNumbers: false } }).training.frameAdvantageNumbers).toBe(false);
     expect(sanitizeGameSettings({ training: { frameAdvantageNumbers: 'sometimes' } }).training.frameAdvantageNumbers).toBe(true);
+    expect(sanitizeGameSettings(null).training.blockAfterFirstHit).toBe(false);
+    expect(sanitizeGameSettings({ training: { blockAfterFirstHit: true } }).training.blockAfterFirstHit).toBe(true);
+    expect(sanitizeGameSettings({ training: { blockAfterFirstHit: 'sometimes' } }).training.blockAfterFirstHit).toBe(false);
+    expect(sanitizeGameSettings(null).training.autoAttack).toBe(false);
+    expect(sanitizeGameSettings({ training: { autoAttack: true } }).training.autoAttack).toBe(true);
+    expect(sanitizeGameSettings({ training: { autoAttackDifficulty: 5 } }).training.autoAttackDifficulty).toBe(5);
+    expect(sanitizeGameSettings({ training: { autoAttackDifficulty: 99 } }).training.autoAttackDifficulty).toBe(5);
+    expect(sanitizeGameSettings({ training: { autoAttackDifficulty: 'hard' } }).training.autoAttackDifficulty).toBe(3);
 
     const clone = cloneSettings(defaultGameSettings);
     clone.training.frameAdvantageNumbers = false;
+    clone.training.blockAfterFirstHit = true;
+    clone.training.autoAttack = true;
+    clone.training.autoAttackDifficulty = 5;
     expect(defaultGameSettings.training.frameAdvantageNumbers).toBe(true);
+    expect(defaultGameSettings.training.blockAfterFirstHit).toBe(false);
+    expect(defaultGameSettings.training.autoAttack).toBe(false);
+    expect(defaultGameSettings.training.autoAttackDifficulty).toBe(3);
   });
 
   it('defaults dedicated jump bindings for keyboard and gamepad', () => {

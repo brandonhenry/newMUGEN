@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 21;
+export const ONLINE_PROTOCOL_VERSION = 22;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -78,6 +78,7 @@ export type CompactFighterSnapshot = {
   comboStep: number;
   comboSequence: MoveInput[];
   comboHits: number;
+  comboContactHits?: number;
   comboDamage: number;
   wasCrouching: boolean;
   roundsWon: number;
@@ -331,6 +332,7 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
     comboStep: fighter.comboStep,
     comboSequence: [...fighter.comboSequence],
     comboHits: fighter.comboHits,
+    comboContactHits: fighter.comboContactHits,
     comboDamage: fighter.comboDamage,
     wasCrouching: fighter.wasCrouching,
     roundsWon: fighter.roundsWon,
@@ -432,6 +434,7 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
     comboStep: snapshot.comboStep,
     comboSequence: [...snapshot.comboSequence],
     comboHits: snapshot.comboHits,
+    comboContactHits: snapshot.comboContactHits ?? snapshot.comboHits,
     comboDamage: snapshot.comboDamage,
     wasCrouching: snapshot.wasCrouching,
     roundsWon: snapshot.roundsWon,

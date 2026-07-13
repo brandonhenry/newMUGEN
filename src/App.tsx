@@ -152,6 +152,7 @@ import {
   type VoxelFidelitySettings
 } from './types';
 import { getCharacterGlobalScale, normalizeCharacterModelScale } from './lib/characterScale';
+import { getAttackCompanionRenderSignature } from './lib/attackCompanion';
 import { captureAnalyticsError, captureAnalyticsEvent, getPostHogDeviceId, type AnalyticsEventName, type AnalyticsProperties } from './lib/analytics';
 import { createFightAnalyticsState, recordFightAnalyticsSnapshot, resetFightAnalyticsState, type FightAnalyticsActorType } from './lib/fightAnalytics';
 import {
@@ -6171,9 +6172,9 @@ export default function App() {
             cpuSlots={mode === 'tournamentLocal' ? localTournamentCpuSlots : undefined}
             preferredStartSide={startSide}
             settings={settings}
-            onTrainingSettingsChange={(frameAdvantageNumbers) => setSettings((current) => sanitizeGameSettings({
+            onTrainingSettingsChange={(trainingSettings) => setSettings((current) => sanitizeGameSettings({
               ...current,
-              training: { ...current.training, frameAdvantageNumbers }
+              training: { ...current.training, ...trainingSettings }
             }))}
             inputPromptMode={inputPromptMode}
             onInputPromptModeChange={setInputPromptMode}
@@ -7337,6 +7338,7 @@ function MenuAttractBackground({
     let last = performance.now();
     let lastStageRotationAt = last;
     let accumulator = 0;
+    let snappyCompanionRenderSteps = 0;
     const fixedStep = 1 / 60;
     const maxSimulationCatchupSteps = 3;
 
@@ -7355,18 +7357,34 @@ function MenuAttractBackground({
         return;
       }
       let steps = 0;
+      let companionRenderChanged = false;
+      let companionActive = false;
       while (accumulator >= fixedStep && steps < maxSimulationCatchupSteps) {
         const current = matchRef.current ?? makeFreshMatch();
+        const previousCompanionSignature = current.fighters.map(getAttackCompanionRenderSignature).join('|');
         if (current.phase !== 'fighting' || current.timer < 42 || current.fighters.some((fighter) => fighter.hp <= 0)) {
           copyMenuAttractMatchInto(current, makeFreshMatch(current.stage));
         } else {
           copyMenuAttractMatchInto(current, stepMatch(current, emptyInputFrame(), emptyInputFrame(), fixedStep));
         }
+        const nextCompanionSignature = current.fighters.map(getAttackCompanionRenderSignature).join('|');
+        companionRenderChanged ||= previousCompanionSignature !== nextCompanionSignature;
+        companionActive ||= nextCompanionSignature.split('|').some(Boolean);
         accumulator -= fixedStep;
         steps += 1;
       }
       if (steps >= maxSimulationCatchupSteps) accumulator = 0;
-      if (steps > 0 && attractMode !== 'snappy') setVisualFrame((current) => (current + steps) % 1_000_000);
+      if (steps > 0) {
+        if (attractMode !== 'snappy') {
+          setVisualFrame((current) => (current + steps) % 1_000_000);
+        } else {
+          snappyCompanionRenderSteps = companionActive ? snappyCompanionRenderSteps + steps : 0;
+          if (companionRenderChanged || snappyCompanionRenderSteps >= 3) {
+            snappyCompanionRenderSteps = 0;
+            setVisualFrame((current) => (current + steps) % 1_000_000);
+          }
+        }
+      }
       frame = requestAnimationFrame(tick);
     };
 
@@ -7386,7 +7404,10 @@ function MenuAttractBackground({
 }
 
 function collectCharacterAnimationFrameSources(character: CharacterDefinition) {
-  return Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []);
+  return [
+    ...Object.values(character.animationFrames ?? {}).flatMap((frames) => frames ?? []),
+    ...Object.values(character.attackCompanion?.animations ?? {}).flatMap((frames) => frames ?? [])
+  ];
 }
 
 function collectCharacterPriorityFrameSources(character: CharacterDefinition, animationKeys: string[] = []) {
@@ -14731,6 +14752,9 @@ function collectTrackedSettingChanges(previous: GameSettings, next: GameSettings
   add('game', 'max_health', previous.game.maxHealth, next.game.maxHealth);
   add('game', 'training_infinite_health', previous.game.trainingInfiniteHealth, next.game.trainingInfiniteHealth);
   add('game', 'training_frame_advantage_numbers', previous.training.frameAdvantageNumbers, next.training.frameAdvantageNumbers);
+  add('game', 'training_block_after_first_hit', previous.training.blockAfterFirstHit, next.training.blockAfterFirstHit);
+  add('game', 'training_auto_attack', previous.training.autoAttack, next.training.autoAttack);
+  add('game', 'training_auto_attack_difficulty', previous.training.autoAttackDifficulty, next.training.autoAttackDifficulty);
   add('game', 'input_assist', previous.game.inputAssist, next.game.inputAssist);
   add('game', 'control_scheme', previous.game.controlScheme, next.game.controlScheme);
   add('camera', 'distance', previous.camera.distance, next.camera.distance);
@@ -15049,6 +15073,17 @@ function SettingsScreen({
           <SettingsSection index={2} title="Training" active={activeSectionIndex === 2}>
             <SettingToggle label="Training Infinite Health" checked={settings.game.trainingInfiniteHealth} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, trainingInfiniteHealth: checked } }))} />
             <SettingToggle label="Frame Advantage Numbers" checked={settings.training.frameAdvantageNumbers} onChange={(checked) => updateSettings((current) => ({ ...current, training: { ...current.training, frameAdvantageNumbers: checked } }))} />
+            <SettingToggle label="Block After First Hit" checked={settings.training.blockAfterFirstHit} onChange={(checked) => updateSettings((current) => ({ ...current, training: { ...current.training, blockAfterFirstHit: checked } }))} />
+            <SettingToggle label="Auto-Attack" checked={settings.training.autoAttack} onChange={(checked) => updateSettings((current) => ({ ...current, training: { ...current.training, autoAttack: checked } }))} />
+            {settings.training.autoAttack && (
+              <SettingRow label="Auto-Attack Difficulty" value={cpuDifficultyLabels[settings.training.autoAttackDifficulty]}>
+                <CpuDifficultyControl
+                  value={settings.training.autoAttackDifficulty}
+                  setValue={(autoAttackDifficulty) => updateSettings((current) => ({ ...current, training: { ...current.training, autoAttackDifficulty } }))}
+                  compact
+                />
+              </SettingRow>
+            )}
           </SettingsSection>
           <SettingsSection index={3} title="Assist" active={activeSectionIndex === 3}>
             <SettingToggle label="Input Assist" checked={settings.game.inputAssist} onChange={(checked) => updateSettings((current) => ({ ...current, game: { ...current.game, inputAssist: checked } }))} />
@@ -16076,7 +16111,7 @@ function SettingToggle({ label, checked, onChange }: { label: string; checked: b
         <strong>{label}</strong>
         <small>{checked ? 'On' : 'Off'}</small>
       </div>
-      <button className={`toggle-switch ${checked ? 'is-on' : ''}`} onClick={() => onChange(!checked)} aria-pressed={checked}>
+      <button className={`toggle-switch ${checked ? 'is-on' : ''}`} onClick={() => onChange(!checked)} aria-label={label} aria-pressed={checked}>
         <span />
       </button>
     </article>
@@ -23744,7 +23779,7 @@ function FightScreen({
   cpuSlots?: Array<1 | 2>;
   preferredStartSide: StartSide;
   settings: GameSettings;
-  onTrainingSettingsChange: (frameAdvantageNumbers: boolean) => void;
+  onTrainingSettingsChange: (settings: Partial<GameSettings['training']>) => void;
   inputPromptMode: InputPromptMode;
   onInputPromptModeChange: (mode: InputPromptMode) => void;
   readInputsForStep: () => [InputFrame, InputFrame];
@@ -23810,12 +23845,15 @@ function FightScreen({
       roundsToWin: isCustom ? customRoomContext?.match.rules.roundsToWin ?? ROUNDS_TO_WIN : ROUNDS_TO_WIN,
       maxHealth: isOnline ? defaultGameSettings.game.maxHealth : settings.game.maxHealth,
       trainingInfiniteHealth: settings.game.trainingInfiniteHealth,
+      trainingBlockAfterFirstHit: mode === 'training' && settings.training.blockAfterFirstHit,
+      trainingAutoAttack: mode === 'training' && settings.training.autoAttack,
+      trainingAutoAttackDifficulty: settings.training.autoAttackDifficulty,
       controlScheme: settings.game.controlScheme,
       playIntro: mode !== 'training' && !isTrainingOnline,
       roster,
       cpuSlots
     }),
-    [cpuSlots, customRoomContext?.match.rules.roundTimer, customRoomContext?.match.rules.roundsToWin, isCustom, isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth]
+    [cpuSlots, customRoomContext?.match.rules.roundTimer, customRoomContext?.match.rules.roundsToWin, isCustom, isOnline, isTrainingOnline, mode, roster, settings.game.controlScheme, settings.game.maxHealth, settings.game.roundTimer, settings.game.trainingInfiniteHealth, settings.training.autoAttack, settings.training.autoAttackDifficulty, settings.training.blockAfterFirstHit]
   );
   const initialTrialStage = useMemo(() => {
     const trial = activeTrainingTrials.find((t) => t.id === activeTrainingTrialId) ?? activeTrainingTrials[0] ?? null;
@@ -24305,6 +24343,15 @@ function FightScreen({
     pausedRef.current = paused;
     onPausedChange(paused);
   }, [onPausedChange, paused]);
+
+  useEffect(() => {
+    if (mode !== 'training') return;
+    matchRef.current.trainingBlockAfterFirstHit = settings.training.blockAfterFirstHit;
+    if (!settings.training.blockAfterFirstHit) matchRef.current.trainingBlockAfterFirstHitFrames = 0;
+    matchRef.current.trainingAutoAttack = settings.training.autoAttack;
+    matchRef.current.trainingAutoAttackDifficulty = settings.training.autoAttackDifficulty;
+    if (!settings.training.autoAttack) matchRef.current.trainingAutoAttackElapsedFrames = 0;
+  }, [mode, settings.training.autoAttack, settings.training.autoAttackDifficulty, settings.training.blockAfterFirstHit]);
 
   useEffect(() => {
     if (pauseAnalyticsRef.current === paused) return;
@@ -27022,12 +27069,31 @@ function FightScreen({
               <Settings size={32} />
               <h2>Training Settings</h2>
               <div className="training-settings-pause-panel">
-                <p>Choose the live feedback shown while practicing.</p>
+                <p>Choose live feedback and CPU dummy behavior while practicing.</p>
                 <SettingToggle
                   label="Frame Advantage Numbers"
                   checked={settings.training.frameAdvantageNumbers}
-                  onChange={onTrainingSettingsChange}
+                  onChange={(checked) => onTrainingSettingsChange({ frameAdvantageNumbers: checked })}
                 />
+                <SettingToggle
+                  label="Block After First Hit"
+                  checked={settings.training.blockAfterFirstHit}
+                  onChange={(checked) => onTrainingSettingsChange({ blockAfterFirstHit: checked })}
+                />
+                <SettingToggle
+                  label="Auto-Attack"
+                  checked={settings.training.autoAttack}
+                  onChange={(checked) => onTrainingSettingsChange({ autoAttack: checked })}
+                />
+                {settings.training.autoAttack && (
+                  <SettingRow label="Auto-Attack Difficulty" value={cpuDifficultyLabels[settings.training.autoAttackDifficulty]}>
+                    <CpuDifficultyControl
+                      value={settings.training.autoAttackDifficulty}
+                      setValue={(autoAttackDifficulty) => onTrainingSettingsChange({ autoAttackDifficulty })}
+                      compact
+                    />
+                  </SettingRow>
+                )}
               </div>
               <div className="overlay-actions pause-menu-actions">
                 <button className="secondary-button" onClick={() => setPauseMenuView('menu')}>
@@ -29446,6 +29512,7 @@ function CombatPopupLayer({ popups }: { popups: ActiveCombatPopup[] }) {
 }
 
 function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
+  const displayedHits = popup.contactHits ?? popup.hits;
   const punishLabel = popup.kind === 'whiffPunish' ? 'Whiff Punish' : popup.kind === 'punish' ? 'Punish' : '';
   const counterHitLabel = popup.kind === 'counterHit' ? 'Counter Hit' : '';
   const clashLabel =
@@ -29465,10 +29532,10 @@ function CombatPopupCard({ popup }: { popup: ActiveCombatPopup }) {
             </div>
           )}
         </>
-      ) : popup.hits >= 2 && (
+      ) : displayedHits >= 2 && (
         <>
           <div className="combo-line">
-            <strong>{popup.hits}</strong>
+            <strong>{displayedHits}</strong>
             <span>Hit Combo</span>
           </div>
           <div className="damage-line">
