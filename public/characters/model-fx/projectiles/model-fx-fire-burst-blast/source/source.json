@@ -1,0 +1,80 @@
+{
+  "characterId": "model-fx",
+  "assetId": "model-fx-fire-burst-blast",
+  "classification": "blast",
+  "source": "model-fx original sprite sheet",
+  "sourceSheetPath": "/characters/model-fx/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 343,
+      "path": "/characters/model-fx/frames/frame-343.png",
+      "cropBox": [
+        667,
+        1582,
+        675,
+        1590
+      ],
+      "output": "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-000.png"
+    },
+    {
+      "index": 344,
+      "path": "/characters/model-fx/frames/frame-344.png",
+      "cropBox": [
+        697,
+        1582,
+        705,
+        1590
+      ],
+      "output": "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-001.png"
+    },
+    {
+      "index": 345,
+      "path": "/characters/model-fx/frames/frame-345.png",
+      "cropBox": [
+        131,
+        1637,
+        143,
+        1649
+      ],
+      "output": "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-002.png"
+    },
+    {
+      "index": 346,
+      "path": "/characters/model-fx/frames/frame-346.png",
+      "cropBox": [
+        145,
+        1637,
+        157,
+        1649
+      ],
+      "output": "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-003.png"
+    },
+    {
+      "index": 347,
+      "path": "/characters/model-fx/frames/frame-347.png",
+      "cropBox": [
+        159,
+        1637,
+        171,
+        1649
+      ],
+      "output": "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-004.png"
+    },
+    {
+      "index": 348,
+      "path": "/characters/model-fx/frames/frame-348.png",
+      "cropBox": [
+        173,
+        1637,
+        185,
+        1649
+      ],
+      "output": "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-005.png"
+    }
+  ],
+  "matchedMoves": [
+    "jabright",
+    "cmd:2+4",
+    "cmd:qcf+4"
+  ]
+}

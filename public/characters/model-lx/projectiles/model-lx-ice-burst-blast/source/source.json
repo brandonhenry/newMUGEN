@@ -1,0 +1,95 @@
+{
+  "characterId": "model-lx",
+  "assetId": "model-lx-ice-burst-blast",
+  "classification": "blast",
+  "source": "model-lx original sprite sheet",
+  "sourceSheetPath": "/characters/model-lx/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 272,
+      "path": "/characters/model-lx/frames/frame-272.png",
+      "cropBox": [
+        604,
+        1434,
+        636,
+        1450
+      ],
+      "output": "/characters/model-lx/projectiles/model-lx-ice-burst-blast/frames/frame-000.png"
+    },
+    {
+      "index": 273,
+      "path": "/characters/model-lx/frames/frame-273.png",
+      "cropBox": [
+        638,
+        1438,
+        647,
+        1450
+      ],
+      "output": "/characters/model-lx/projectiles/model-lx-ice-burst-blast/frames/frame-001.png"
+    },
+    {
+      "index": 274,
+      "path": "/characters/model-lx/frames/frame-274.png",
+      "cropBox": [
+        649,
+        1440,
+        656,
+        1450
+      ],
+      "output": "/characters/model-lx/projectiles/model-lx-ice-burst-blast/frames/frame-002.png"
+    },
+    {
+      "index": 275,
+      "path": "/characters/model-lx/frames/frame-275.png",
+      "cropBox": [
+        658,
+        1437,
+        668,
+        1450
+      ],
+      "output": "/characters/model-lx/projectiles/model-lx-ice-burst-blast/frames/frame-003.png"
+    },
+    {
+      "index": 276,
+      "path": "/characters/model-lx/frames/frame-276.png",
+      "cropBox": [
+        680,
+        1435,
+        703,
+        1448
+      ],
+      "output": "/characters/model-lx/projectiles/model-lx-ice-burst-blast/frames/frame-004.png"
+    },
+    {
+      "index": 277,
+      "path": "/characters/model-lx/frames/frame-277.png",
+      "cropBox": [
+        705,
+        1433,
+        723,
+        1450
+      ],
+      "output": "/characters/model-lx/projectiles/model-lx-ice-burst-blast/frames/frame-005.png"
+    },
+    {
+      "index": 278,
+      "path": "/characters/model-lx/frames/frame-278.png",
+      "cropBox": [
+        725,
+        1429,
+        753,
+        1450
+      ],
+      "output": "/characters/model-lx/projectiles/model-lx-ice-burst-blast/frames/frame-006.png"
+    }
+  ],
+  "matchedMoves": [
+    "jableft",
+    "cmd:d/f+2",
+    "cmd:WS+4",
+    "cmd:FC+2",
+    "cmd:2+4",
+    "cmd:3+4",
+    "cmd:O+2"
+  ]
+}

@@ -68,6 +68,25 @@ function protectedBlastSnapshot(characters) {
   return snapshot;
 }
 
+function unmanagedProtectedBlastSnapshot(snapshot) {
+  const managedIds = new Set(config.matches.filter((match) => match.assetType === 'blast').map((match) => `${match.characterId}:${match.assetId}`));
+  const filtered = {};
+  for (const [characterId, entry] of Object.entries(snapshot)) {
+    const definitions = entry.definitions.filter((definition) => !managedIds.has(`${characterId}:${definition.id}`));
+    const definitionIds = new Set(definitions.map((definition) => definition.id));
+    const bindings = Object.fromEntries(Object.entries(entry.bindings).flatMap(([moveKey, instances]) => {
+      const kept = instances.filter((instance) => definitionIds.has(instance.projectileId));
+      return kept.length ? [[moveKey, kept]] : [];
+    }));
+    const managedPaths = config.matches
+      .filter((match) => match.assetType === 'blast' && match.characterId === characterId)
+      .flatMap((match) => assetFramePaths(match));
+    const assets = entry.assets.filter((asset) => !managedPaths.includes(asset.path));
+    if (definitions.length) filtered[characterId] = { definitions, bindings, assets };
+  }
+  return filtered;
+}
+
 function ensureConfiguredMove(character, moveKey) {
   if (['jableft', 'jabright', 'kickleft', 'kickright'].includes(moveKey)) return;
   if (!character.moveOverrides?.[moveKey]) throw new Error(`${character.id}: ${moveKey} is not a configured move`);
@@ -96,6 +115,20 @@ function projectileStyle(style) {
     'sound-note': { color: '#ff69d4', speed: 8, defaultScale: [0.48, 0.48, 0.48], hitboxSize: [0.42, 0.48, 0.56], homingStrength: 4.2, homingTurnRate: 4.6 }
   };
   return { ...base, ...(styles[style] ?? {}) };
+}
+
+function blastStyle(style) {
+  const styles = {
+    'fx-fire-blast': { color: '#ff9a32', outerColor: '#ff3d16', impactColor: '#fff2a6', radius: 0.32, range: 4.2, activeFrames: 12, hitboxSize: [0.5, 0.52, 1] },
+    'hx-wind-blast': { color: '#d95cff', outerColor: '#6d2dff', impactColor: '#f8e8ff', radius: 0.3, range: 4.6, activeFrames: 12, hitboxSize: [0.46, 0.5, 1] },
+    'lx-ice-blast': { color: '#75efff', outerColor: '#58a8ff', impactColor: '#ffffff', radius: 0.31, range: 4.5, activeFrames: 12, hitboxSize: [0.48, 0.52, 1] },
+    'ox-buster-blast': { color: '#62eaff', outerColor: '#35e956', impactColor: '#ffffff', radius: 0.34, range: 5, activeFrames: 14, hitboxSize: [0.52, 0.56, 1] },
+    'px-orb-blast': { color: '#e65dff', outerColor: '#6230ff', impactColor: '#fff0ff', radius: 0.33, range: 4.3, activeFrames: 12, hitboxSize: [0.5, 0.54, 1] },
+    'x-buster-blast': { color: '#9dff68', outerColor: '#10d983', impactColor: '#ffffff', radius: 0.32, range: 4.8, activeFrames: 12, hitboxSize: [0.48, 0.52, 1] }
+  };
+  const selected = styles[style];
+  if (!selected) throw new Error(`Unknown blast style ${style}`);
+  return selected;
 }
 
 function assetFramePaths(match) {
@@ -189,6 +222,75 @@ function createProjectileBinding(match, moveKey) {
   };
 }
 
+function createBlastDefinition(match, outputs) {
+  const style = blastStyle(match.style);
+  return {
+    id: match.assetId,
+    name: match.name,
+    kind: 'blast',
+    sourcePath: `/characters/${match.characterId}/animation-sheet.png`,
+    frames: outputs,
+    animationFrames: { startup: [outputs[0]], active: outputs, recovery: [outputs.at(-1)] },
+    fps: 18,
+    loop: outputs.length > 1,
+    billboard: false,
+    blendMode: 'additive',
+    voxelProfile: 'image-source',
+    defaultScale: [1, 1, 1],
+    defaultRotation: [0, 0, 0],
+    color: style.color,
+    blastVisual: {
+      coreColor: '#ffffff',
+      glowColor: style.color,
+      outerColor: style.outerColor,
+      impactColor: style.impactColor,
+      radius: style.radius,
+      growFrames: 4,
+      fadeFrames: 8,
+      shake: 0.12
+    }
+  };
+}
+
+function createBlastBinding(match, moveKey) {
+  const style = blastStyle(match.style);
+  const activeFrames = match.activeFrames?.[moveKey] ?? style.activeFrames;
+  const recoveryFrames = 6;
+  return {
+    id: `${moveKey.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase()}-${match.assetId}`,
+    projectileId: match.assetId,
+    kind: 'blast',
+    label: match.name,
+    spawnFrame: match.spawnFrames?.[moveKey] ?? 1,
+    spawnOffset: match.spawnOffsets?.[moveKey] ?? [0, 1.02, 0.78],
+    startupFrames: 0,
+    activeFrames,
+    recoveryFrames,
+    lifetimeFrames: activeFrames + recoveryFrames,
+    speed: 0,
+    forwardVelocity: 0,
+    blastRange: match.blastRanges?.[moveKey] ?? style.range,
+    homingMode: 'none',
+    homingStrength: 0,
+    homingTurnRate: 0,
+    homingEndFrame: 0,
+    nearMissRadius: 0.34,
+    hitbox: { offset: [0, 0, 0], size: style.hitboxSize },
+    damageScale: 1,
+    blockDamageScale: 1,
+    pushbackScale: 1,
+    blockPushbackScale: 1,
+    mirrorWithFacing: true,
+    delivery: 'replaceMoveHit',
+    pierce: true,
+    clash: true,
+    kiBurst: true,
+    releaseGated: false,
+    minDamageScale: 1,
+    maxDamageScale: 1
+  };
+}
+
 function createEffectDefinition(match, outputs) {
   const slash = match.style === 'slash';
   return {
@@ -270,14 +372,14 @@ function applyMatches(characters) {
     const replacedIds = removeReplacedProjectiles(character, match.replaceProjectileIds);
     for (const id of replacedIds) removedAssetDirs.add(path.join(charactersRoot, match.characterId, 'projectiles', id));
     stripAnimationFrames(character, match.stripMoveFrames);
-    if (match.assetType === 'projectile') {
+    if (match.assetType === 'projectile' || match.assetType === 'blast') {
       character.projectiles ??= [];
       character.projectiles = character.projectiles.filter((definition) => definition.id !== match.assetId);
-      character.projectiles.push(createProjectileDefinition(match, outputs));
+      character.projectiles.push(match.assetType === 'blast' ? createBlastDefinition(match, outputs) : createProjectileDefinition(match, outputs));
       character.moveProjectiles ??= {};
       for (const moveKey of match.moveKeys) {
         const existing = (character.moveProjectiles[moveKey] ?? []).filter((instance) => instance.projectileId !== match.assetId);
-        character.moveProjectiles[moveKey] = [...existing, createProjectileBinding(match, moveKey)];
+        character.moveProjectiles[moveKey] = [...existing, match.assetType === 'blast' ? createBlastBinding(match, moveKey) : createProjectileBinding(match, moveKey)];
       }
     } else {
       character.effects ??= [];
@@ -339,7 +441,7 @@ let changes = [];
 if (apply) changes = applyMatches(loadCharacters());
 const afterCharacters = apply ? loadCharacters() : originalCharacters;
 const protectedAfter = protectedBlastSnapshot(afterCharacters);
-if (stable(protectedBefore) !== stable(protectedAfter)) throw new Error('Protected blast definitions, bindings, or assets changed');
+if (stable(unmanagedProtectedBlastSnapshot(protectedBefore)) !== stable(unmanagedProtectedBlastSnapshot(protectedAfter))) throw new Error('Protected blast definitions, bindings, or assets changed');
 
 const report = {
   generatedAt: new Date().toISOString(),

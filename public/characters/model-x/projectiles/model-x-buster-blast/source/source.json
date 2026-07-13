@@ -1,0 +1,106 @@
+{
+  "characterId": "model-x",
+  "assetId": "model-x-buster-blast",
+  "classification": "blast",
+  "source": "model-x original sprite sheet",
+  "sourceSheetPath": "/characters/model-x/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 232,
+      "path": "/characters/model-x/frames/frame-232.png",
+      "cropBox": [
+        329,
+        1368,
+        337,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-000.png"
+    },
+    {
+      "index": 233,
+      "path": "/characters/model-x/frames/frame-233.png",
+      "cropBox": [
+        402,
+        1356,
+        412,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-001.png"
+    },
+    {
+      "index": 234,
+      "path": "/characters/model-x/frames/frame-234.png",
+      "cropBox": [
+        474,
+        1364,
+        487,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-002.png"
+    },
+    {
+      "index": 235,
+      "path": "/characters/model-x/frames/frame-235.png",
+      "cropBox": [
+        545,
+        1362,
+        564,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-003.png"
+    },
+    {
+      "index": 236,
+      "path": "/characters/model-x/frames/frame-236.png",
+      "cropBox": [
+        619,
+        1362,
+        639,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-004.png"
+    },
+    {
+      "index": 237,
+      "path": "/characters/model-x/frames/frame-237.png",
+      "cropBox": [
+        693,
+        1362,
+        712,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-005.png"
+    },
+    {
+      "index": 238,
+      "path": "/characters/model-x/frames/frame-238.png",
+      "cropBox": [
+        768,
+        1364,
+        786,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-006.png"
+    },
+    {
+      "index": 239,
+      "path": "/characters/model-x/frames/frame-239.png",
+      "cropBox": [
+        840,
+        1362,
+        861,
+        1376
+      ],
+      "output": "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-007.png"
+    }
+  ],
+  "matchedMoves": [
+    "jableft",
+    "jabright",
+    "kickleft",
+    "kickright",
+    "cmd:FC+1",
+    "cmd:2+3",
+    "cmd:3+4"
+  ]
+}

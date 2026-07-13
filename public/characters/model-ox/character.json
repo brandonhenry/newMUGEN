@@ -1771,7 +1771,7 @@
       "266": {
         "width": 0.97,
         "height": 0.76145,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       }
@@ -1780,7 +1780,7 @@
       "266": {
         "width": 0.97,
         "height": 0.76145,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       }
@@ -5367,6 +5367,212 @@
   "unplayable": false,
   "hasTransform": false,
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "model-ox-buster-blast",
+      "name": "Model OX Buster Blast",
+      "kind": "blast",
+      "sourcePath": "/characters/model-ox/animation-sheet.png",
+      "frames": [
+        "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-000.png",
+        "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-001.png",
+        "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-002.png",
+        "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-003.png",
+        "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-004.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-000.png",
+          "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-001.png",
+          "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-002.png",
+          "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-003.png",
+          "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-004.png"
+        ],
+        "recovery": [
+          "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-004.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#62eaff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#62eaff",
+        "outerColor": "#35e956",
+        "impactColor": "#ffffff",
+        "radius": 0.34,
+        "growFrames": 4,
+        "fadeFrames": 8,
+        "shake": 0.12
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "cmd:2+4": [
+      {
+        "id": "cmd-2-4-model-ox-buster-blast",
+        "projectileId": "model-ox-buster-blast",
+        "kind": "blast",
+        "label": "Model OX Buster Blast",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 14,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 20,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 5,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.52,
+            0.56,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "cmd-3-4-model-ox-buster-blast",
+        "projectileId": "model-ox-buster-blast",
+        "kind": "blast",
+        "label": "Model OX Buster Blast",
+        "spawnFrame": 25,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 14,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 20,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 5,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.52,
+            0.56,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-model-ox-buster-blast",
+        "projectileId": "model-ox-buster-blast",
+        "kind": "blast",
+        "label": "Model OX Buster Blast",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 14,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 20,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 5,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.52,
+            0.56,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }

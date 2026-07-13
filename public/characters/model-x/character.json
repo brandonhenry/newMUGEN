@@ -1850,7 +1850,7 @@
       "200": {
         "width": 0.72,
         "height": 0.46782,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       }
@@ -1861,7 +1861,7 @@
         "height": 0.51621,
         "voxelScaleX": 1.00393,
         "voxelScaleY": 0.99609,
-        "offsetX": 0.0
+        "offsetX": 0
       },
       "276": {
         "width": 0.84,
@@ -5648,6 +5648,418 @@
   "unplayable": false,
   "hasTransform": false,
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "model-x-buster-blast",
+      "name": "Model X Buster Blast",
+      "kind": "blast",
+      "sourcePath": "/characters/model-x/animation-sheet.png",
+      "frames": [
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-000.png",
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-001.png",
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-002.png",
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-003.png",
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-004.png",
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-005.png",
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-006.png",
+        "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-007.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-000.png",
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-001.png",
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-002.png",
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-003.png",
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-004.png",
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-005.png",
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-006.png",
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-007.png"
+        ],
+        "recovery": [
+          "/characters/model-x/projectiles/model-x-buster-blast/frames/frame-007.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#9dff68",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#9dff68",
+        "outerColor": "#10d983",
+        "impactColor": "#ffffff",
+        "radius": 0.32,
+        "growFrames": 4,
+        "fadeFrames": 8,
+        "shake": 0.12
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "jableft": [
+      {
+        "id": "jableft-model-x-buster-blast",
+        "projectileId": "model-x-buster-blast",
+        "kind": "blast",
+        "label": "Model X Buster Blast",
+        "spawnFrame": 9,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "jabright": [
+      {
+        "id": "jabright-model-x-buster-blast",
+        "projectileId": "model-x-buster-blast",
+        "kind": "blast",
+        "label": "Model X Buster Blast",
+        "spawnFrame": 15,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "kickleft": [
+      {
+        "id": "kickleft-model-x-buster-blast",
+        "projectileId": "model-x-buster-blast",
+        "kind": "blast",
+        "label": "Model X Buster Blast",
+        "spawnFrame": 19,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "kickright": [
+      {
+        "id": "kickright-model-x-buster-blast",
+        "projectileId": "model-x-buster-blast",
+        "kind": "blast",
+        "label": "Model X Buster Blast",
+        "spawnFrame": 14,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:FC+1": [
+      {
+        "id": "cmd-fc-1-model-x-buster-blast",
+        "projectileId": "model-x-buster-blast",
+        "kind": "blast",
+        "label": "Model X Buster Blast",
+        "spawnFrame": 15,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:2+3": [
+      {
+        "id": "cmd-2-3-model-x-buster-blast",
+        "projectileId": "model-x-buster-blast",
+        "kind": "blast",
+        "label": "Model X Buster Blast",
+        "spawnFrame": 18,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:3+4": [
+      {
+        "id": "cmd-3-4-model-x-buster-blast",
+        "projectileId": "model-x-buster-blast",
+        "kind": "blast",
+        "label": "Model X Buster Blast",
+        "spawnFrame": 21,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.8,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.48,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }

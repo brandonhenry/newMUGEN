@@ -1,0 +1,83 @@
+{
+  "characterId": "model-hx",
+  "assetId": "model-hx-wind-burst-blast",
+  "classification": "blast",
+  "source": "model-hx original sprite sheet",
+  "sourceSheetPath": "/characters/model-hx/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 295,
+      "path": "/characters/model-hx/frames/frame-295.png",
+      "cropBox": [
+        719,
+        3265,
+        751,
+        3296
+      ],
+      "output": "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-000.png"
+    },
+    {
+      "index": 296,
+      "path": "/characters/model-hx/frames/frame-296.png",
+      "cropBox": [
+        817,
+        3264,
+        849,
+        3296
+      ],
+      "output": "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-001.png"
+    },
+    {
+      "index": 297,
+      "path": "/characters/model-hx/frames/frame-297.png",
+      "cropBox": [
+        915,
+        3266,
+        947,
+        3296
+      ],
+      "output": "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-002.png"
+    },
+    {
+      "index": 298,
+      "path": "/characters/model-hx/frames/frame-298.png",
+      "cropBox": [
+        1013,
+        3264,
+        1045,
+        3296
+      ],
+      "output": "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-003.png"
+    },
+    {
+      "index": 299,
+      "path": "/characters/model-hx/frames/frame-299.png",
+      "cropBox": [
+        1111,
+        3266,
+        1143,
+        3296
+      ],
+      "output": "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-004.png"
+    },
+    {
+      "index": 300,
+      "path": "/characters/model-hx/frames/frame-300.png",
+      "cropBox": [
+        33,
+        3396,
+        65,
+        3428
+      ],
+      "output": "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-005.png"
+    }
+  ],
+  "matchedMoves": [
+    "jableft",
+    "jabright",
+    "cmd:d/f+2",
+    "cmd:WS+4",
+    "cmd:FC+2",
+    "cmd:O+2"
+  ]
+}

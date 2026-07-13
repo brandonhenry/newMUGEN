@@ -1931,7 +1931,7 @@
       "191": {
         "width": 0.83,
         "height": 0.6779,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       }
@@ -1940,7 +1940,7 @@
       "191": {
         "width": 0.83,
         "height": 0.6779,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       },
@@ -5554,6 +5554,214 @@
   "unplayable": false,
   "hasTransform": false,
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "model-fx-fire-burst-blast",
+      "name": "Model FX Fire Burst",
+      "kind": "blast",
+      "sourcePath": "/characters/model-fx/animation-sheet.png",
+      "frames": [
+        "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-000.png",
+        "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-001.png",
+        "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-002.png",
+        "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-003.png",
+        "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-004.png",
+        "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-005.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-000.png",
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-001.png",
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-002.png",
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-003.png",
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-004.png",
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-005.png"
+        ],
+        "recovery": [
+          "/characters/model-fx/projectiles/model-fx-fire-burst-blast/frames/frame-005.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#ff9a32",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#ff9a32",
+        "outerColor": "#ff3d16",
+        "impactColor": "#fff2a6",
+        "radius": 0.32,
+        "growFrames": 4,
+        "fadeFrames": 8,
+        "shake": 0.12
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "jabright": [
+      {
+        "id": "jabright-model-fx-fire-burst-blast",
+        "projectileId": "model-fx-fire-burst-blast",
+        "kind": "blast",
+        "label": "Model FX Fire Burst",
+        "spawnFrame": 14,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.2,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:2+4": [
+      {
+        "id": "cmd-2-4-model-fx-fire-burst-blast",
+        "projectileId": "model-fx-fire-burst-blast",
+        "kind": "blast",
+        "label": "Model FX Fire Burst",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.2,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:qcf+4": [
+      {
+        "id": "cmd-qcf-4-model-fx-fire-burst-blast",
+        "projectileId": "model-fx-fire-burst-blast",
+        "kind": "blast",
+        "label": "Model FX Fire Burst",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.2,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.5,
+            0.52,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }

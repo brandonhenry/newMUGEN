@@ -1,0 +1,91 @@
+{
+  "characterId": "model-px",
+  "assetId": "model-px-orb-burst-blast",
+  "classification": "blast",
+  "source": "model-px original sprite sheet",
+  "sourceSheetPath": "/characters/model-px/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 353,
+      "path": "/characters/model-px/frames/frame-353.png",
+      "cropBox": [
+        482,
+        2018,
+        530,
+        2066
+      ],
+      "output": "/characters/model-px/projectiles/model-px-orb-burst-blast/frames/frame-000.png"
+    },
+    {
+      "index": 354,
+      "path": "/characters/model-px/frames/frame-354.png",
+      "cropBox": [
+        574,
+        2018,
+        622,
+        2066
+      ],
+      "output": "/characters/model-px/projectiles/model-px-orb-burst-blast/frames/frame-001.png"
+    },
+    {
+      "index": 355,
+      "path": "/characters/model-px/frames/frame-355.png",
+      "cropBox": [
+        666,
+        2018,
+        714,
+        2066
+      ],
+      "output": "/characters/model-px/projectiles/model-px-orb-burst-blast/frames/frame-002.png"
+    },
+    {
+      "index": 356,
+      "path": "/characters/model-px/frames/frame-356.png",
+      "cropBox": [
+        759,
+        2020,
+        805,
+        2066
+      ],
+      "output": "/characters/model-px/projectiles/model-px-orb-burst-blast/frames/frame-003.png"
+    },
+    {
+      "index": 357,
+      "path": "/characters/model-px/frames/frame-357.png",
+      "cropBox": [
+        850,
+        2018,
+        898,
+        2066
+      ],
+      "output": "/characters/model-px/projectiles/model-px-orb-burst-blast/frames/frame-004.png"
+    },
+    {
+      "index": 358,
+      "path": "/characters/model-px/frames/frame-358.png",
+      "cropBox": [
+        943,
+        2020,
+        989,
+        2066
+      ],
+      "output": "/characters/model-px/projectiles/model-px-orb-burst-blast/frames/frame-005.png"
+    },
+    {
+      "index": 359,
+      "path": "/characters/model-px/frames/frame-359.png",
+      "cropBox": [
+        1034,
+        2018,
+        1082,
+        2066
+      ],
+      "output": "/characters/model-px/projectiles/model-px-orb-burst-blast/frames/frame-006.png"
+    }
+  ],
+  "matchedMoves": [
+    "kickright",
+    "cmd:d/f+2",
+    "cmd:WS+4"
+  ]
+}

@@ -96,6 +96,66 @@
       "style": "electric-orb"
     },
     {
+      "characterId": "model-fx",
+      "assetType": "blast",
+      "assetId": "model-fx-fire-burst-blast",
+      "name": "Model FX Fire Burst",
+      "sourceFrames": [343, 344, 345, 346, 347, 348],
+      "moveKeys": ["jabright", "cmd:2+4", "cmd:qcf+4"],
+      "spawnFrames": { "jabright": 14, "cmd:2+4": 30, "cmd:qcf+4": 30 },
+      "style": "fx-fire-blast"
+    },
+    {
+      "characterId": "model-hx",
+      "assetType": "blast",
+      "assetId": "model-hx-wind-burst-blast",
+      "name": "Model HX Wind Burst",
+      "sourceFrames": [295, 296, 297, 298, 299, 300],
+      "moveKeys": ["jableft", "jabright", "cmd:d/f+2", "cmd:WS+4", "cmd:FC+2", "cmd:O+2"],
+      "spawnFrames": { "jableft": 10, "jabright": 15, "cmd:d/f+2": 19, "cmd:WS+4": 15, "cmd:FC+2": 19, "cmd:O+2": 30 },
+      "style": "hx-wind-blast"
+    },
+    {
+      "characterId": "model-lx",
+      "assetType": "blast",
+      "assetId": "model-lx-ice-burst-blast",
+      "name": "Model LX Ice Burst",
+      "sourceFrames": [272, 273, 274, 275, 276, 277, 278],
+      "moveKeys": ["jableft", "cmd:d/f+2", "cmd:WS+4", "cmd:FC+2", "cmd:2+4", "cmd:3+4", "cmd:O+2"],
+      "spawnFrames": { "jableft": 9, "cmd:d/f+2": 19, "cmd:WS+4": 15, "cmd:FC+2": 19, "cmd:2+4": 30, "cmd:3+4": 25, "cmd:O+2": 30 },
+      "style": "lx-ice-blast"
+    },
+    {
+      "characterId": "model-ox",
+      "assetType": "blast",
+      "assetId": "model-ox-buster-blast",
+      "name": "Model OX Buster Blast",
+      "sourceFrames": [429, 430, 431, 432, 433],
+      "moveKeys": ["cmd:2+4", "cmd:3+4", "cmd:qcf+4"],
+      "spawnFrames": { "cmd:2+4": 30, "cmd:3+4": 25, "cmd:qcf+4": 30 },
+      "style": "ox-buster-blast"
+    },
+    {
+      "characterId": "model-px",
+      "assetType": "blast",
+      "assetId": "model-px-orb-burst-blast",
+      "name": "Model PX Orb Burst",
+      "sourceFrames": [353, 354, 355, 356, 357, 358, 359],
+      "moveKeys": ["kickright", "cmd:d/f+2", "cmd:WS+4"],
+      "spawnFrames": { "kickright": 14, "cmd:d/f+2": 19, "cmd:WS+4": 15 },
+      "style": "px-orb-blast"
+    },
+    {
+      "characterId": "model-x",
+      "assetType": "blast",
+      "assetId": "model-x-buster-blast",
+      "name": "Model X Buster Blast",
+      "sourceFrames": [232, 233, 234, 235, 236, 237, 238, 239],
+      "moveKeys": ["jableft", "jabright", "kickleft", "kickright", "cmd:FC+1", "cmd:2+3", "cmd:3+4"],
+      "spawnFrames": { "jableft": 9, "jabright": 15, "kickleft": 19, "kickright": 14, "cmd:FC+1": 15, "cmd:2+3": 18, "cmd:3+4": 21 },
+      "style": "x-buster-blast"
+    },
+    {
       "characterId": "renamon",
       "assetType": "projectile",
       "assetId": "diamond-storm-shard",

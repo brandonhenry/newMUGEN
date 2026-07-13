@@ -1780,7 +1780,7 @@
       "249": {
         "width": 0.47,
         "height": 0.46698,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       }
@@ -1789,7 +1789,7 @@
       "249": {
         "width": 0.47,
         "height": 0.46698,
-        "offsetX": 0.0,
+        "offsetX": 0,
         "flipX": false,
         "flipY": false
       }
@@ -5565,6 +5565,364 @@
   "unplayable": false,
   "hasTransform": false,
   "animationScales": {},
-  "projectiles": [],
-  "moveProjectiles": {}
+  "projectiles": [
+    {
+      "id": "model-hx-wind-burst-blast",
+      "name": "Model HX Wind Burst",
+      "kind": "blast",
+      "sourcePath": "/characters/model-hx/animation-sheet.png",
+      "frames": [
+        "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-000.png",
+        "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-001.png",
+        "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-002.png",
+        "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-003.png",
+        "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-004.png",
+        "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-005.png"
+      ],
+      "animationFrames": {
+        "startup": [
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-000.png"
+        ],
+        "active": [
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-000.png",
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-001.png",
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-002.png",
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-003.png",
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-004.png",
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-005.png"
+        ],
+        "recovery": [
+          "/characters/model-hx/projectiles/model-hx-wind-burst-blast/frames/frame-005.png"
+        ]
+      },
+      "fps": 18,
+      "loop": true,
+      "billboard": false,
+      "blendMode": "additive",
+      "voxelProfile": "image-source",
+      "defaultScale": [
+        1,
+        1,
+        1
+      ],
+      "defaultRotation": [
+        0,
+        0,
+        0
+      ],
+      "color": "#d95cff",
+      "blastVisual": {
+        "coreColor": "#ffffff",
+        "glowColor": "#d95cff",
+        "outerColor": "#6d2dff",
+        "impactColor": "#f8e8ff",
+        "radius": 0.3,
+        "growFrames": 4,
+        "fadeFrames": 8,
+        "shake": 0.12
+      }
+    }
+  ],
+  "moveProjectiles": {
+    "jableft": [
+      {
+        "id": "jableft-model-hx-wind-burst-blast",
+        "projectileId": "model-hx-wind-burst-blast",
+        "kind": "blast",
+        "label": "Model HX Wind Burst",
+        "spawnFrame": 10,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.5,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "jabright": [
+      {
+        "id": "jabright-model-hx-wind-burst-blast",
+        "projectileId": "model-hx-wind-burst-blast",
+        "kind": "blast",
+        "label": "Model HX Wind Burst",
+        "spawnFrame": 15,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.5,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:d/f+2": [
+      {
+        "id": "cmd-d-f-2-model-hx-wind-burst-blast",
+        "projectileId": "model-hx-wind-burst-blast",
+        "kind": "blast",
+        "label": "Model HX Wind Burst",
+        "spawnFrame": 19,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.5,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:WS+4": [
+      {
+        "id": "cmd-ws-4-model-hx-wind-burst-blast",
+        "projectileId": "model-hx-wind-burst-blast",
+        "kind": "blast",
+        "label": "Model HX Wind Burst",
+        "spawnFrame": 15,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.5,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:FC+2": [
+      {
+        "id": "cmd-fc-2-model-hx-wind-burst-blast",
+        "projectileId": "model-hx-wind-burst-blast",
+        "kind": "blast",
+        "label": "Model HX Wind Burst",
+        "spawnFrame": 19,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.5,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ],
+    "cmd:O+2": [
+      {
+        "id": "cmd-o-2-model-hx-wind-burst-blast",
+        "projectileId": "model-hx-wind-burst-blast",
+        "kind": "blast",
+        "label": "Model HX Wind Burst",
+        "spawnFrame": 30,
+        "spawnOffset": [
+          0,
+          1.02,
+          0.78
+        ],
+        "startupFrames": 0,
+        "activeFrames": 12,
+        "recoveryFrames": 6,
+        "lifetimeFrames": 18,
+        "speed": 0,
+        "forwardVelocity": 0,
+        "blastRange": 4.6,
+        "homingMode": "none",
+        "homingStrength": 0,
+        "homingTurnRate": 0,
+        "homingEndFrame": 0,
+        "nearMissRadius": 0.34,
+        "hitbox": {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0.46,
+            0.5,
+            1
+          ]
+        },
+        "damageScale": 1,
+        "blockDamageScale": 1,
+        "pushbackScale": 1,
+        "blockPushbackScale": 1,
+        "mirrorWithFacing": true,
+        "delivery": "replaceMoveHit",
+        "pierce": true,
+        "clash": true,
+        "kiBurst": true,
+        "releaseGated": false,
+        "minDamageScale": 1,
+        "maxDamageScale": 1
+      }
+    ]
+  }
 }

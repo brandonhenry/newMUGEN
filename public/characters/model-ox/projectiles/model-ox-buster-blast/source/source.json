@@ -1,0 +1,69 @@
+{
+  "characterId": "model-ox",
+  "assetId": "model-ox-buster-blast",
+  "classification": "blast",
+  "source": "model-ox original sprite sheet",
+  "sourceSheetPath": "/characters/model-ox/animation-sheet.png",
+  "sourceFrames": [
+    {
+      "index": 429,
+      "path": "/characters/model-ox/frames/frame-429.png",
+      "cropBox": [
+        890,
+        3428,
+        914,
+        3452
+      ],
+      "output": "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-000.png"
+    },
+    {
+      "index": 430,
+      "path": "/characters/model-ox/frames/frame-430.png",
+      "cropBox": [
+        987,
+        3436,
+        1007,
+        3452
+      ],
+      "output": "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-001.png"
+    },
+    {
+      "index": 431,
+      "path": "/characters/model-ox/frames/frame-431.png",
+      "cropBox": [
+        1084,
+        3444,
+        1101,
+        3452
+      ],
+      "output": "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-002.png"
+    },
+    {
+      "index": 432,
+      "path": "/characters/model-ox/frames/frame-432.png",
+      "cropBox": [
+        35,
+        3532,
+        59,
+        3548
+      ],
+      "output": "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-003.png"
+    },
+    {
+      "index": 433,
+      "path": "/characters/model-ox/frames/frame-433.png",
+      "cropBox": [
+        135,
+        3538,
+        149,
+        3548
+      ],
+      "output": "/characters/model-ox/projectiles/model-ox-buster-blast/frames/frame-004.png"
+    }
+  ],
+  "matchedMoves": [
+    "cmd:2+4",
+    "cmd:3+4",
+    "cmd:qcf+4"
+  ]
+}

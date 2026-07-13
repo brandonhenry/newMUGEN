@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 type Match = {
   characterId: string;
-  assetType: 'projectile' | 'effect';
+  assetType: 'projectile' | 'blast' | 'effect';
   assetId: string;
   sourceFrames: number[];
   moveKeys: string[];
@@ -26,8 +26,8 @@ describe('sprite-sheet projectile conversion', () => {
     for (const match of config.matches) {
       const character = loadCharacter(match.characterId);
       expect(character.unplayable, match.characterId).not.toBe(true);
-      const definitions = match.assetType === 'projectile' ? character.projectiles : character.effects;
-      const bindings = match.assetType === 'projectile' ? character.moveProjectiles : character.moveEffects;
+      const definitions = match.assetType === 'effect' ? character.effects : character.projectiles;
+      const bindings = match.assetType === 'effect' ? character.moveEffects : character.moveProjectiles;
       expect(definitions.some((definition: { id: string }) => definition.id === match.assetId), `${match.characterId}:${match.assetId}`).toBe(true);
       for (const moveKey of match.moveKeys) {
         const configured = ['jableft', 'jabright', 'kickleft', 'kickright'].includes(moveKey) || Boolean(character.moveOverrides?.[moveKey]);
@@ -39,7 +39,7 @@ describe('sprite-sheet projectile conversion', () => {
 
   it('keeps every extracted source frame non-empty and records its original sheet crop', () => {
     for (const match of config.matches) {
-      const assetFolder = match.assetType === 'projectile' ? 'projectiles' : 'effects';
+      const assetFolder = match.assetType === 'effect' ? 'effects' : 'projectiles';
       const source = JSON.parse(readFileSync(path.join(root, 'public', 'characters', match.characterId, assetFolder, match.assetId, 'source', 'source.json'), 'utf8'));
       expect(source.sourceSheetPath).toBe(`/characters/${match.characterId}/animation-sheet.png`);
       expect(source.sourceFrames).toHaveLength(match.sourceFrames.length);
@@ -86,5 +86,25 @@ describe('sprite-sheet projectile conversion', () => {
       for (const replacedId of match.replaceProjectileIds ?? []) expect(protectedIds.has(replacedId), `${match.characterId}:${replacedId}`).toBe(false);
     }
     expect(config.ambiguousSkipped.some((entry) => entry.characterId === 'train-heartnet')).toBe(true);
+  });
+
+  it('adds sprite-informed blasts only to Mega Man fighters with clear firing moves', () => {
+    const blastMatches = config.matches.filter((match) => match.assetType === 'blast');
+    expect(blastMatches.map((match) => match.characterId).sort()).toEqual(['model-fx', 'model-hx', 'model-lx', 'model-ox', 'model-px', 'model-x']);
+    for (const match of blastMatches) {
+      const character = loadCharacter(match.characterId);
+      const definition = character.projectiles.find((candidate: { id: string }) => candidate.id === match.assetId);
+      expect(definition?.kind, `${match.characterId}:${match.assetId}`).toBe('blast');
+      for (const moveKey of match.moveKeys) {
+        const binding = character.moveProjectiles?.[moveKey]?.find((candidate: { projectileId: string }) => candidate.projectileId === match.assetId);
+        expect(binding?.kind, `${match.characterId}:${moveKey}`).toBe('blast');
+        expect(binding?.delivery, `${match.characterId}:${moveKey}`).toBe('replaceMoveHit');
+        expect(binding?.releaseGated, `${match.characterId}:${moveKey}`).toBe(false);
+      }
+    }
+    for (const characterId of ['model-zx', 'omega-zero', 'purprill']) {
+      const character = loadCharacter(characterId);
+      expect((character.projectiles ?? []).filter((definition: { kind?: string }) => definition.kind === 'blast'), characterId).toHaveLength(0);
+    }
   });
 });
