@@ -1899,7 +1899,7 @@ test('gamepad back-back back-hops with a forgiving controller window', async ({ 
 });
 
 test('mobile touch controls drive movement, attacks, and clear released inputs', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
+  test.skip(!['mobile', 'mobile-webkit'].includes(testInfo.project.name), 'Requires coarse pointer mobile viewport');
   await startFight(page, true);
   await expect(page.locator('.touch-controls')).toBeVisible();
   await setFightPositions(page, { p1: { x: -1.3, y: 0, z: 0 }, p2: { x: 1.3, y: 0, z: 0 } });
@@ -1935,7 +1935,7 @@ test('mobile touch controls drive movement, attacks, and clear released inputs',
 });
 
 test('mobile touch controls keep forward and back correct after side swaps', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
+  test.skip(!['mobile', 'mobile-webkit'].includes(testInfo.project.name), 'Requires coarse pointer mobile viewport');
   await startFight(page, true);
   await expect(page.locator('.touch-controls')).toBeVisible();
   await setFightPositions(page, { p1: { x: 1.3, y: 0, z: 0 }, p2: { x: -1.3, y: 0, z: 0 } });
@@ -1954,7 +1954,7 @@ test('mobile touch controls keep forward and back correct after side swaps', asy
 });
 
 test('mobile touch controls allow movement while tapping attacks', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', 'Requires coarse pointer mobile viewport');
+  test.skip(!['mobile', 'mobile-webkit'].includes(testInfo.project.name), 'Requires coarse pointer mobile viewport');
   await startFight(page, true);
   await setFightPositions(page, { p1: { x: -1.3, y: 0, z: 0 }, p2: { x: 1.3, y: 0, z: 0 } });
   const before = xFromPosition(await page.getByTestId('p1-position').innerText());
@@ -1975,6 +1975,54 @@ test('mobile touch controls allow movement while tapping attacks', async ({ page
 
   await expect.poll(async () => xFromPosition(await page.getByTestId('p1-position').innerText()), { timeout: 3_000 }).toBeGreaterThan(before + 0.18);
   await expectNoHeldFightInput(page);
+});
+
+test('mobile attack surface accepts gap taps, preserves target sizes, shows notation colors, and pauses', async ({ page }, testInfo) => {
+  test.skip(!['mobile', 'mobile-webkit'].includes(testInfo.project.name), 'Requires coarse pointer mobile viewport');
+  await startFight(page, true);
+
+  const cluster = page.getByLabel('Attack controls');
+  const clusterBox = await cluster.boundingBox();
+  if (!clusterBox) throw new Error('Missing attack control bounds');
+  expect(clusterBox.width / 3).toBeGreaterThanOrEqual(48);
+  expect(clusterBox.height / 2).toBeGreaterThanOrEqual(48);
+
+  for (const testId of ['touch-up', 'touch-down', 'touch-left', 'touch-right', 'touch-jab', 'touch-heavy', 'touch-kick', 'touch-special', 'touch-pause']) {
+    const box = await page.getByTestId(testId).boundingBox();
+    expect(box, `${testId} should have bounds`).not.toBeNull();
+    expect(box?.width ?? 0, `${testId} width`).toBeGreaterThanOrEqual(48);
+    expect(box?.height ?? 0, `${testId} height`).toBeGreaterThanOrEqual(48);
+  }
+
+  const colors = await page.evaluate(() => ['jab', 'heavy', 'kick', 'special'].map((action) => {
+    const button = document.querySelector<HTMLElement>(`.touch-${action}`);
+    return button ? getComputedStyle(button).backgroundColor : '';
+  }));
+  expect(colors).toEqual(['rgb(216, 77, 77)', 'rgb(63, 120, 255)', 'rgb(40, 169, 111)', 'rgb(210, 138, 35)']);
+  expect(await page.getByTestId('touch-jab').innerText()).toBe('1');
+  expect(await page.getByTestId('touch-special').innerText()).toBe('4');
+
+  const client = await page.context().newCDPSession(page);
+  const gapPoint = {
+    x: clusterBox.x + clusterBox.width / 3,
+    y: clusterBox.y + clusterBox.height / 4,
+    id: 71,
+    radiusX: 18,
+    radiusY: 18,
+    force: 1
+  };
+  await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [gapPoint] });
+  await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
+  await expect(page.getByTestId('touch-jab')).toHaveClass(/is-active/);
+  await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await expect(page.getByTestId('touch-jab')).not.toHaveClass(/is-active/);
+  await client.detach();
+  await expectNoHeldFightInput(page);
+
+  await touchHold(page, 'touch-pause', 40);
+  await expect(page.getByRole('heading', { name: 'Paused' })).toBeVisible();
+  await page.getByRole('button', { name: 'Resume' }).click();
+  await expect(page.getByRole('heading', { name: 'Paused' })).not.toBeVisible();
 });
 
 test('pause move list shows active move and combo previews', async ({ page }, testInfo) => {

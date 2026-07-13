@@ -20,6 +20,12 @@ export default defineConfig({
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
+    {
+      name: 'mobile-webkit',
+      testMatch: /app\.spec\.ts/,
+      grep: /mobile (touch controls|attack surface)/,
+      use: { ...devices['iPhone 13'], browserName: 'webkit' }
+    },
     { name: 'compat-iphone-se', testMatch: /device-compat\.spec\.ts/, use: { ...devices['iPhone SE'], browserName: 'chromium', defaultBrowserType: 'chromium', deviceScaleFactor: 1 } },
     { name: 'compat-iphone-13', testMatch: /device-compat\.spec\.ts/, use: { ...devices['iPhone 13'], browserName: 'chromium', defaultBrowserType: 'chromium', deviceScaleFactor: 1 } },
     { name: 'compat-pixel-5', testMatch: /device-compat\.spec\.ts/, use: { ...devices['Pixel 5'] } },

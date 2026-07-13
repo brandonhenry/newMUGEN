@@ -26879,7 +26879,7 @@ function FightScreen({
         {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
       </button>
       {settings.display.debugOverlay && !onlineAssetGateActive && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
-      {settings.display.touchControls !== 'off' && !onlineAssetGateActive && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} />}
+      {settings.display.touchControls !== 'off' && !onlineAssetGateActive && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} showPause={!isOnline || onlineState !== 'connected'} />}
       {showLateAssetFallback && !onlineAssetGateActive && (assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}
       {onlineAssetGate && <OnlineAssetWarmupOverlay gate={onlineAssetGate} displayMode={mode} privateRoomName={privateRoomName} privateRoomPassword={privateRoomPassword} />}
       {match.message && !onlineAssetGateActive && mode !== 'training' && !isTrainingOnline && match.clashState.status === 'none' && (

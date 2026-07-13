@@ -17,6 +17,10 @@
   --panel: rgba(18, 19, 23, 0.78);
   --panel-strong: rgba(24, 26, 31, 0.94);
   --text-muted: rgba(247, 247, 242, 0.66);
+  --attack-1-color: #d84d4d;
+  --attack-2-color: #3f78ff;
+  --attack-3-color: #28a96f;
+  --attack-4-color: #d28a23;
   --shadow-lg:
     0 22px 80px rgba(0, 0, 0, 0.38),
     0 1px 0 rgba(255, 255, 255, 0.08) inset;
@@ -6972,19 +6976,19 @@ button {
 }
 
 .token-1 {
-  background: #d84d4d;
+  background: var(--attack-1-color);
 }
 
 .token-2 {
-  background: #3f78ff;
+  background: var(--attack-2-color);
 }
 
 .token-3 {
-  background: #28a96f;
+  background: var(--attack-3-color);
 }
 
 .token-4 {
-  background: #d28a23;
+  background: var(--attack-4-color);
 }
 
 .token-hit,
@@ -9621,6 +9625,8 @@ button {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
 }
 
@@ -13766,6 +13772,15 @@ button {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch-controls,
+.touch-controls * {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .touch-controls.force-visible {
@@ -13774,15 +13789,28 @@ button {
 
 .touch-pad {
   position: relative;
-  width: 148px;
-  height: 148px;
+  flex: 0 0 clamp(132px, 36vw, 164px);
+  width: clamp(132px, 36vw, 164px);
+  height: clamp(132px, 36vw, 164px);
+  border-radius: 50%;
+  pointer-events: auto;
+  touch-action: none;
+  background: radial-gradient(circle, rgba(247, 247, 242, 0.08) 0 28%, rgba(247, 247, 242, 0.025) 29% 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.07) inset,
+    0 12px 32px rgba(0, 0, 0, 0.16);
 }
 
 .touch-actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(48px, 1fr));
-  gap: 8px;
-  max-width: 220px;
+  flex: 0 0 clamp(156px, 42vw, 198px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(48px, 1fr));
+  width: clamp(156px, 42vw, 198px);
+  min-height: 102px;
+  gap: 6px;
+  pointer-events: auto;
+  touch-action: none;
 }
 
 .touch-button {
@@ -13797,30 +13825,126 @@ button {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
   touch-action: none;
   -webkit-tap-highlight-color: transparent;
+  transition-property: transform, background-color, box-shadow, filter;
+  transition-duration: 70ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.touch-button.is-active {
+  transform: scale(0.96);
+  background-color: rgba(247, 247, 242, 0.34);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 0 0 2px rgba(255, 255, 255, 0.18),
+    0 0 22px rgba(46, 230, 255, 0.24);
+  filter: brightness(1.14);
 }
 
 .touch-pad .touch-button {
   position: absolute;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
 }
 
 .touch-up {
   top: 0;
-  left: 50px;
+  left: 50%;
+  translate: -50% 0;
 }
 
 .touch-down {
   bottom: 0;
-  left: 50px;
+  left: 50%;
+  translate: -50% 0;
 }
 
 .touch-left {
   left: 0;
-  top: 50px;
+  top: 50%;
+  translate: 0 -50%;
 }
 
 .touch-right {
   right: 0;
-  top: 50px;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.touch-actions .touch-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  pointer-events: none;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.touch-actions .touch-number {
+  justify-self: center;
+  align-self: center;
+  width: min(100%, 56px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  color: #fff;
+  font-size: clamp(20px, 5.5vw, 28px);
+  font-weight: 950;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.46);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 3px 0 rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.touch-actions .touch-number-1 {
+  background: var(--attack-1-color);
+}
+
+.touch-actions .touch-number-2 {
+  background: var(--attack-2-color);
+}
+
+.touch-actions .touch-number-3 {
+  background: var(--attack-3-color);
+}
+
+.touch-actions .touch-number-4 {
+  background: var(--attack-4-color);
+}
+
+.touch-actions .touch-number.is-active {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.42) inset,
+    0 1px 0 rgba(0, 0, 0, 0.22),
+    0 0 0 3px rgba(255, 255, 255, 0.32),
+    0 0 26px color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.touch-pause {
+  position: fixed;
+  top: max(82px, calc(env(safe-area-inset-top) + 68px));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 21;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(5, 10, 16, 0.68);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.16) inset,
+    0 10px 28px rgba(0, 0, 0, 0.24),
+    0 0 0 1px rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 360px) {
+  .touch-controls {
+    left: 8px;
+    right: 8px;
+    gap: 8px;
+  }
 }
 
 @media (max-width: 1120px) {
@@ -14459,8 +14583,11 @@ button {
   }
 
   .touch-controls {
-    transform: scale(0.84);
-    transform-origin: bottom center;
+    bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .touch-pause {
+    top: max(58px, calc(env(safe-area-inset-top) + 50px));
   }
 
   .match-message {
