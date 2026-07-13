@@ -47,7 +47,7 @@ import { debugLogThrottled } from '../lib/debugLogger';
 import { findCameraSightlineBlockers, isCameraOutsideStageSafetyEnvelope, resolveCameraBoundaryNudge, type CameraSafetyCollider } from '../lib/cameraSafety';
 import { effectIsVisibleAt, effectTransformAt, shouldFireEffectCue } from '../lib/effects';
 import { getAttackCompanionPosition, getAttackCompanionRenderSignature, resolveAttackCompanionAnimation } from '../lib/attackCompanion';
-import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, stableControlAlignedFightCameraSide } from '../lib/fightCamera';
+import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, stableControlAlignedFightCameraSide, stageFightCameraSide } from '../lib/fightCamera';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
 import { buildMergedEdgeVegetationGeometry, createEdgeVegetationPlacements } from '../lib/edgeVegetation';
@@ -5558,7 +5558,10 @@ function CameraRig({ match, settings, presentationMirrored = false, reducedMotio
     const dx = p2x - p1x;
     const dz = p2z - p1z;
     const distance = Math.hypot(dx, dz);
-    const [cameraX, cameraZ] = stableControlAlignedFightCameraSide(dx, dz, side, match.stage);
+    const sidestepping = isFighterLaneOrbitCameraActive(p1) || isFighterLaneOrbitCameraActive(p2);
+    const [cameraX, cameraZ] = sidestepping
+      ? stableControlAlignedFightCameraSide(dx, dz, side, match.stage)
+      : stageFightCameraSide(match.stage);
     rawSide.set(cameraX, 0, cameraZ).normalize();
     if (rawSide.lengthSq() < 0.0001) rawSide.copy(side.lengthSq() > 0.0001 ? side : rawSide.set(0, 0, 1));
     if (presentationMirrored) rawSide.multiplyScalar(-1);
@@ -5618,7 +5621,6 @@ function CameraRig({ match, settings, presentationMirrored = false, reducedMotio
     }
 
     const smoothing = Math.max(0.35, settings.smoothing);
-    const sidestepping = isFighterLaneOrbitCameraActive(p1) || isFighterLaneOrbitCameraActive(p2);
     const sidestepCameraBoost = sidestepping ? 4.5 : 1;
     const sidestepRigBoost = sidestepping ? 2.4 : 1;
     focus.lerp(rawFocus, cameraDamp(delta, 4.25 * smoothing * sidestepCameraBoost));

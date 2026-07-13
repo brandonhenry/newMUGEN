@@ -10665,12 +10665,6 @@ button {
   height: 76%;
   object-fit: contain;
   image-rendering: pixelated;
-  filter:
-    brightness(0) invert(1)
-    drop-shadow(1px 0 0 #000)
-    drop-shadow(-1px 0 0 #000)
-    drop-shadow(0 1px 0 #000)
-    drop-shadow(0 -1px 0 #000);
 }
 
 .round-box-infinity {
@@ -11209,6 +11203,7 @@ button {
 .match-message {
   position: absolute;
   inset: 0;
+  z-index: 14;
   display: grid;
   place-items: center;
   pointer-events: none;

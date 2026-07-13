@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { StageDefinition } from '../types';
-import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, shouldFlipCameraSideForControls, stableControlAlignedFightCameraSide, stableFightCameraSide, stageControlAxis } from './fightCamera';
+import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, shouldFlipCameraSideForControls, stableControlAlignedFightCameraSide, stableFightCameraSide, stageControlAxis, stageFightCameraSide } from './fightCamera';
 
 const baseStage: StageDefinition = {
   id: 'test-stage',
@@ -35,6 +35,20 @@ describe('fightCamera', () => {
 
     expect(cameraScreenRightStageAlignment(side, rotatedStage)).toBeLessThan(0);
     expect(shouldFlipCameraSideForControls(side, undefined, rotatedStage)).toBe(true);
+  });
+
+  it('provides a resting camera side whose screen plane is parallel to the lane', () => {
+    const rotatedStage: StageDefinition = {
+      ...baseStage,
+      fightPlane: { ...baseStage.fightPlane!, rotationY: Math.PI / 3 }
+    };
+    const [cameraX, cameraZ] = stageFightCameraSide(rotatedStage);
+    const [laneX, laneZ] = stageControlAxis(rotatedStage);
+    const screenRight = { x: cameraZ, z: -cameraX };
+
+    expect(screenRight.x).toBeCloseTo(laneX, 8);
+    expect(screenRight.z).toBeCloseTo(laneZ, 8);
+    expect(cameraScreenRightStageAlignment({ x: cameraX, z: cameraZ }, rotatedStage)).toBeCloseTo(1, 8);
   });
 
   it('falls back to previous camera continuity when stage-side alignment is tied', () => {

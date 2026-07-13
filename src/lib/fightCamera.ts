@@ -22,6 +22,11 @@ export function stageControlAxis(stage?: StageDefinition): [number, number] {
   return [Math.cos(rotationY), -Math.sin(rotationY)];
 }
 
+export function stageFightCameraSide(stage?: StageDefinition): [number, number] {
+  const [stageRightX, stageRightZ] = stageControlAxis(stage);
+  return [-stageRightZ, stageRightX];
+}
+
 export function cameraScreenRightStageAlignment(cameraSide: HorizontalVector, stage?: StageDefinition) {
   const [stageRightX, stageRightZ] = stageControlAxis(stage);
   const screenRightX = cameraSide.z;
@@ -58,9 +63,7 @@ export function stableControlAlignedFightCameraSide(
   const blendProgress = Math.max(0, Math.min(1, (alignment - CAMERA_ORBIT_AXIS_BLEND_START) / blendRange));
   const smoothBlend = blendProgress * blendProgress * (3 - 2 * blendProgress);
   const perpendicularWeight = CAMERA_MIN_PERPENDICULAR_WEIGHT + (1 - CAMERA_MIN_PERPENDICULAR_WEIGHT) * smoothBlend;
-  const [stageRightX, stageRightZ] = stageControlAxis(stage);
-  const stageCameraX = -stageRightZ;
-  const stageCameraZ = stageRightX;
+  const [stageCameraX, stageCameraZ] = stageFightCameraSide(stage);
   const blendedX = stageCameraX * (1 - perpendicularWeight) + cameraX * perpendicularWeight;
   const blendedZ = stageCameraZ * (1 - perpendicularWeight) + cameraZ * perpendicularWeight;
   const length = Math.hypot(blendedX, blendedZ) || 1;
