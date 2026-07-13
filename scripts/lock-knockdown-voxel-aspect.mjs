@@ -115,23 +115,27 @@ for (const entry of entries) {
     const voxels = Array.isArray(payload) ? payload : payload.voxels;
     const normalization = payload.source?.idleVisualNormalization;
     const currentBounds = bounds(voxels ?? []);
-    const oldScaleX = Number(normalization?.scaleX);
-    const oldScaleY = Number(normalization?.scaleY);
     const targetHeight = Number(normalization?.targetHeight);
-    if (!currentBounds || !normalization?.enabled || !(oldScaleX > 0) || !(oldScaleY > 0) || !(targetHeight > 0)) {
+    const sourceWidth = Number(payload.source?.foregroundWidth);
+    const sourceHeight = Number(payload.source?.foregroundHeight);
+    if (!currentBounds || !normalization?.enabled || !(targetHeight > 0) || !(sourceWidth > 0) || !(sourceHeight > 0)) {
       skipped.push({ id, frame: index, reason: 'missing-visual-normalization' });
       continue;
     }
     const currentWidth = currentBounds.maxX - currentBounds.minX;
     const currentHeight = currentBounds.maxY - currentBounds.minY;
-    const originalWidth = currentWidth / oldScaleX;
-    const originalHeight = currentHeight / oldScaleY;
-    const horizontal = originalWidth > originalHeight;
-    const proneReferenceSize = horizontal ? originalWidth : originalHeight;
-    const proneTargetSize = horizontal ? targetHeight * (globalHeight / Math.max(0.001, globalWidth)) : targetHeight;
-    const proneScale = clamp(proneTargetSize / proneReferenceSize, 0.1, Number(normalization.maxScale) || 6);
-    const voxelScaleX = proneScale / oldScaleX;
-    const voxelScaleY = proneScale / oldScaleY;
+    const horizontal = sourceWidth > sourceHeight;
+    const desiredWidth = horizontal
+      ? targetHeight * (globalHeight / Math.max(0.001, globalWidth))
+      : targetHeight * (sourceWidth / sourceHeight);
+    const desiredHeight = horizontal
+      ? desiredWidth * (sourceHeight / sourceWidth)
+      : targetHeight;
+    // Always correct from the currently stored geometry to absolute measured
+    // target bounds. This makes repeated workflow runs idempotent even when an
+    // older run wrote stale normalization scale metadata.
+    const voxelScaleX = clamp(desiredWidth / Math.max(0.001, currentWidth), 0.01, 100);
+    const voxelScaleY = clamp(desiredHeight / Math.max(0.001, currentHeight), 0.01, 100);
     const nextPayload = transformPayload(payload, voxelScaleX, voxelScaleY, currentBounds.minY);
     const nextBounds = bounds(nextPayload.voxels);
     const correctedLongWorldSize = horizontal
@@ -149,12 +153,15 @@ for (const entry of entries) {
         idleVisualHeight: round(nextBounds.maxY - nextBounds.minY),
         idleVisualNormalization: {
           ...normalization,
-          scaleX: round(proneScale),
-          scaleY: round(proneScale),
-          rawScaleX: round(proneScale),
-          rawScaleY: round(proneScale),
+          scaleX: round(desiredWidth / Math.max(0.001, Number(payload.source?.modelWidth) || sourceWidth)),
+          scaleY: round(desiredHeight / Math.max(0.001, Number(payload.source?.modelHeight) || sourceHeight)),
+          rawScaleX: round(desiredWidth / Math.max(0.001, Number(payload.source?.modelWidth) || sourceWidth)),
+          rawScaleY: round(desiredHeight / Math.max(0.001, Number(payload.source?.modelHeight) || sourceHeight)),
           wideException: false,
-          proneException: true
+          proneException: true,
+          proneTargetWidth: round(desiredWidth),
+          proneTargetHeight: round(desiredHeight),
+          proneSourceAspect: round(sourceWidth / sourceHeight)
         }
       };
     }
@@ -196,8 +203,8 @@ for (const entry of entries) {
     changes.push({
       id,
       frame: index,
-      voxelScaleBefore: { width: round(oldScaleX), height: round(oldScaleY) },
-      voxelScaleAfter: { width: round(proneScale), height: round(proneScale) },
+      geometryCorrection: { width: round(voxelScaleX), height: round(voxelScaleY) },
+      targetVoxelBounds: { width: round(desiredWidth), height: round(desiredHeight) },
       orientation: horizontal ? 'horizontal' : 'vertical',
       sharedNonProneFrame: otherUses.length > 0,
       otherUses,
