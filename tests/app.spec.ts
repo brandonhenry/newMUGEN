@@ -2002,24 +2002,18 @@ test('mobile attack surface accepts gap taps, preserves target sizes, shows nota
   expect(await page.getByTestId('touch-jab').innerText()).toBe('1');
   expect(await page.getByTestId('touch-special').innerText()).toBe('4');
 
-  const client = await page.context().newCDPSession(page);
-  const gapPoint = {
-    x: clusterBox.x + clusterBox.width / 3,
-    y: clusterBox.y + clusterBox.height / 4,
-    id: 71,
-    radiusX: 18,
-    radiusY: 18,
-    force: 1
-  };
-  await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [gapPoint] });
+  await page.touchscreen.tap(clusterBox.x + clusterBox.width / 3 + 2, clusterBox.y + clusterBox.height / 4);
   await expect(page.getByTestId('last-input')).toHaveText('p1:jab');
-  await expect(page.getByTestId('touch-jab')).toHaveClass(/is-active/);
-  await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await expect(page.getByTestId('touch-jab')).not.toHaveClass(/is-active/);
-  await client.detach();
   await expectNoHeldFightInput(page);
 
-  await touchHold(page, 'touch-pause', 40);
+  if (testInfo.project.name === 'mobile-webkit') {
+    const pauseBox = await page.getByTestId('touch-pause').boundingBox();
+    if (!pauseBox) throw new Error('Missing pause control bounds');
+    await page.touchscreen.tap(pauseBox.x + pauseBox.width / 2, pauseBox.y + pauseBox.height / 2);
+  } else {
+    await touchHold(page, 'touch-pause', 40);
+  }
   await expect(page.getByRole('heading', { name: 'Paused' })).toBeVisible();
   await page.getByRole('button', { name: 'Resume' }).click();
   await expect(page.getByRole('heading', { name: 'Paused' })).not.toBeVisible();

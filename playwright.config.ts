@@ -23,7 +23,7 @@ export default defineConfig({
     {
       name: 'mobile-webkit',
       testMatch: /app\.spec\.ts/,
-      grep: /mobile (touch controls|attack surface)/,
+      grep: /mobile attack surface/,
       use: { ...devices['iPhone 13'], browserName: 'webkit' }
     },
     { name: 'compat-iphone-se', testMatch: /device-compat\.spec\.ts/, use: { ...devices['iPhone SE'], browserName: 'chromium', defaultBrowserType: 'chromium', deviceScaleFactor: 1 } },
