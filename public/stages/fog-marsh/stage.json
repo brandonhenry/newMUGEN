@@ -47,6 +47,18 @@
     "backgroundColor": "#7ec9a4"
   },
   "props": [],
+  "edgeVegetation": {
+    "packPath": "/stage-props/tree-pack-1.1/tree-pack.glb",
+    "seed": 4404,
+    "count": 48,
+    "variants": [
+      "tree05", "tree12", "tree14", "tree21", "tree22", "tree26", "tree27", "tree35", "bush04", "bush06", "bush08"
+    ],
+    "clearMargin": 16,
+    "bandDepth": 12,
+    "treeHeightRange": [10, 16],
+    "bushHeightRange": [3, 5.5]
+  },
   "playableBounds": {
     "shape": "box",
     "width": 109.6,

@@ -33,6 +33,18 @@ for (const id of ids) {
     continue;
   }
   const stage = await readJson(stagePath);
+  const vegetationPath = stage.edgeVegetation?.packPath;
+  if (vegetationPath) {
+    const vegetationFile = publicPathToFile(vegetationPath);
+    if (!vegetationFile || !existsSync(vegetationFile)) {
+      failures.push(`${id}: missing edge vegetation asset ${vegetationPath}`);
+    } else {
+      const header = await readFile(vegetationFile, { encoding: null, flag: 'r' }).then((buffer) => buffer.subarray(0, 4).toString('utf8'));
+      if (header !== 'glTF') failures.push(`${id}: ${vegetationPath} does not start with GLB magic bytes`);
+      const sizeMb = (await stat(vegetationFile)).size / 1024 / 1024;
+      if (sizeMb > 2) failures.push(`${id}: ${vegetationPath} is ${sizeMb.toFixed(1)} MB, above the 2 MB vegetation budget`);
+    }
+  }
   if (!isLocalStageModel(stage)) continue;
   const modelPath = stage.model?.path || stage.model?.url || `/stages/${id}/stage.glb`;
   const modelFile = publicPathToFile(modelPath);

@@ -203,6 +203,68 @@ describe('MUGEN stage parsing', () => {
     });
   });
 
+  it('normalizes deterministic edge vegetation metadata', () => {
+    const normalized = normalizeStage({
+      id: 'forest-edge',
+      name: 'Forest Edge',
+      subtitle: 'Trees',
+      floor: '#335533',
+      rail: '#ffffff',
+      light: '#ffffff',
+      edgeVegetation: {
+        packPath: '/stage-props/tree-pack-1.1/tree-pack.glb',
+        seed: 14.4,
+        count: 1,
+        variants: ['tree01', 'tree01', 'invalid', 'bush02'],
+        clearMargin: 100,
+        bandDepth: -2,
+        treeHeightRange: [18, 8],
+        bushHeightRange: [5, 3]
+      }
+    });
+
+    expect(normalized.edgeVegetation).toEqual({
+      packPath: '/stage-props/tree-pack-1.1/tree-pack.glb',
+      seed: 14,
+      count: 2,
+      variants: ['tree01', 'bush02'],
+      clearMargin: 40,
+      bandDepth: 1,
+      treeHeightRange: [8, 18],
+      bushHeightRange: [3, 5]
+    });
+  });
+
+  it('sanitizes malformed edge vegetation metadata and drops unusable configs', () => {
+    const sanitized = sanitizeStageManifest({
+      name: 'Forest Edge',
+      floor: '#335533',
+      rail: '#ffffff',
+      light: '#ffffff',
+      edgeVegetation: {
+        packPath: '/stage-props/tree-pack-1.1/tree-pack.glb',
+        seed: '22',
+        count: 999,
+        variants: ['tree03', null, 'tree03', 'bush08'],
+        clearMargin: 0,
+        bandDepth: 99,
+        treeHeightRange: [-5, 100],
+        bushHeightRange: [20, -2]
+      }
+    }, 'forest-edge');
+    expect(sanitized.edgeVegetation).toEqual({
+      packPath: '/stage-props/tree-pack-1.1/tree-pack.glb',
+      seed: 22,
+      count: 128,
+      variants: ['tree03', 'bush08'],
+      clearMargin: 4,
+      bandDepth: 30,
+      treeHeightRange: [2, 30],
+      bushHeightRange: [1, 16]
+    });
+    expect(sanitizeStageManifest({ name: 'No Pack', edgeVegetation: { variants: ['tree01'] } }, 'no-pack').edgeVegetation).toBeUndefined();
+  });
+
   it('normalizes model-backed stages without dropping model metadata', () => {
     const normalized = normalizeStage({
       id: 'hidden-leaf-village',

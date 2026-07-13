@@ -127,7 +127,8 @@ export function normalizeStage(stage: StageDefinition): StageDefinition {
         }
       : undefined,
     backgroundLayers: Array.isArray(stage.backgroundLayers) ? stage.backgroundLayers : [],
-    props: Array.isArray(stage.props) ? stage.props : []
+    props: Array.isArray(stage.props) ? stage.props : [],
+    edgeVegetation: normalizeEdgeVegetation(stage.edgeVegetation)
   };
   const visualStylePreset = inferStageVisualStylePreset(normalized);
   return {
@@ -236,6 +237,33 @@ function normalizePlayableBounds(value: unknown): StageDefinition['playableBound
     width: clamp(finiteOr(source.width, 24), 4, 220),
     depth: clamp(finiteOr(source.depth, 16), 4, 220)
   };
+}
+
+function normalizeEdgeVegetation(value: unknown): StageDefinition['edgeVegetation'] {
+  if (!value || typeof value !== 'object') return undefined;
+  const source = value as Record<string, unknown>;
+  const packPath = typeof source.packPath === 'string' ? source.packPath.trim() : '';
+  const variants = Array.isArray(source.variants)
+    ? [...new Set(source.variants.filter((variant): variant is string => typeof variant === 'string' && /^(tree|bush)\d{2}$/.test(variant)))]
+    : [];
+  if (!packPath || variants.length === 0) return undefined;
+  return {
+    packPath,
+    seed: Math.round(finiteOr(source.seed, 1)),
+    count: Math.round(clamp(finiteOr(source.count, variants.length), variants.length, 128)),
+    variants,
+    clearMargin: clamp(finiteOr(source.clearMargin, 16), 4, 40),
+    bandDepth: clamp(finiteOr(source.bandDepth, 12), 1, 30),
+    treeHeightRange: normalizeOrderedRange(source.treeHeightRange, [10, 16], 2, 30),
+    bushHeightRange: normalizeOrderedRange(source.bushHeightRange, [3, 6], 1, 16)
+  };
+}
+
+function normalizeOrderedRange(value: unknown, fallback: [number, number], min: number, max: number): [number, number] {
+  if (!Array.isArray(value) || value.length < 2) return fallback;
+  const first = clamp(finiteOr(value[0], fallback[0]), min, max);
+  const second = clamp(finiteOr(value[1], fallback[1]), min, max);
+  return first <= second ? [first, second] : [second, first];
 }
 
 function normalizeVec3(value: unknown, fallback: Vec3Tuple): Vec3Tuple {

@@ -96,7 +96,7 @@ async function enterMainMenu(page: Page) {
   await expect(arcade).toBeVisible({ timeout: 30_000 });
 }
 
-async function startLocalFight(page: Page) {
+async function startLocalFight(page: Page, stageName?: string) {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await enterMainMenu(page);
   await page.getByRole('button', { name: 'Versus' }).click({ force: true });
@@ -104,11 +104,21 @@ async function startLocalFight(page: Page) {
   await page.locator('.versus-target-tabs button').nth(1).click();
   await page.locator('.versus-roster-tile:not(.versus-random-tile)').nth(1).click();
   await page.getByRole('button', { name: 'Stage' }).click();
-  await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
+  if (stageName) {
+    await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').filter({ hasText: stageName }).click();
+  } else {
+    await page.locator('.stage-thumbnail:not(.stage-random-thumbnail)').first().click();
+  }
   await page.getByRole('button', { name: 'Fight', exact: true }).click();
   const versusScreen = page.locator('.fight-versus-screen');
   await expect(versusScreen).toBeVisible({ timeout: 5_000 });
   await versusScreen.press('Enter');
+  const assetWarmup = page.getByTestId('asset-warmup-screen');
+  await page.waitForTimeout(600);
+  if (await assetWarmup.isVisible().catch(() => false)) {
+    await expect(assetWarmup).toContainText('Entering stage', { timeout: 15_000 });
+    await assetWarmup.press('Enter');
+  }
   await expect(page.getByTestId('match-phase')).toHaveText('fighting', { timeout: 15_000 });
   await expect(page.getByTestId('frame-input')).toHaveText('none', { timeout: 3_000 });
   await expect(page.getByTestId('fight-canvas')).toBeVisible({ timeout: 15_000 });
@@ -484,6 +494,8 @@ test.describe('in-game fight performance', () => {
   test('keeps local playable fights smooth after warmup', async ({ page }, testInfo) => {
     const responses: ResourceRecord[] = [];
     page.on('response', (response) => recordResponse(responses, response));
+    await forceSnappyMenuPerformance(page);
+    await page.addInitScript(() => window.localStorage.setItem('kore.starterGuide.dismissed.v1', '1'));
     await installLongTaskCollector(page);
     await startLocalFight(page);
     const loadedFightAssets = responses
@@ -515,6 +527,29 @@ test.describe('in-game fight performance', () => {
       contentType: 'application/json'
     });
     expect(postWarmupRequests.filter((url) => /\/voxels-hd\/frame-\d+\.json/.test(url)).length).toBe(0);
+  });
+
+  test('keeps batched natural-stage tree borders smooth after warmup', async ({ page }, testInfo) => {
+    test.setTimeout(90_000);
+    await forceSnappyMenuPerformance(page);
+    await page.addInitScript(() => window.localStorage.setItem('kore.starterGuide.dismissed.v1', '1'));
+    const stages = process.env.KORE_PERF_TREE_STAGES?.split(',').map((name) => name.trim()).filter(Boolean)
+      ?? ['Grasslands', 'Fog Marsh'];
+    for (const stageName of stages) {
+      const responses: ResourceRecord[] = [];
+      page.on('response', (response) => recordResponse(responses, response));
+      await installLongTaskCollector(page);
+      await startLocalFight(page, stageName);
+      expect(responses.some((entry) => entry.url.includes('/stage-props/tree-pack-1.1/tree-pack.glb')), `${stageName}\n${responses.map((entry) => entry.url).join('\n')}`).toBe(true);
+      await resetLongTaskCollector(page);
+      const stats = await sampleFramePacing(page, 6_000);
+      testInfo.attach(`${stageName.toLowerCase().replace(/\s+/g, '-')}-tree-border-frame-stats.json`, {
+        body: JSON.stringify(stats, null, 2),
+        contentType: 'application/json'
+      });
+      expectSmoothFight(stats);
+      page.removeAllListeners('response');
+    }
   });
 
   test('keeps training trials smooth after repeated success transitions', async ({ page }, testInfo) => {

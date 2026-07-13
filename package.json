@@ -38,6 +38,7 @@
     "preview:crouch-scale": "node scripts/lock-crouch-voxel-height.mjs",
     "import:kore-stages": "node scripts/import-kore-stages.mjs",
     "import:naruto-stages": "node scripts/import-naruto-stages.mjs",
+    "import:tree-pack": "node scripts/import-tree-pack.mjs",
     "tag:patch": "node scripts/bump-version.mjs patch",
     "tag:minor": "node scripts/bump-version.mjs minor",
     "tag:major": "node scripts/bump-version.mjs major"

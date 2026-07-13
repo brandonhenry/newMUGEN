@@ -115,6 +115,7 @@ function GrassChunk({
       uniform float uWindSpeed;
       uniform vec2 uWindDirection;
       uniform float uNoiseScale;
+      attribute vec3 instanceColor;
       varying vec2 vUv;
       varying vec3 vInstanceColor;
 

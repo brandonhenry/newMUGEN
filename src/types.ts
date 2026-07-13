@@ -598,6 +598,18 @@ export type StageDefinition = {
   mugen?: MugenStageMetadata;
   backgroundLayers?: StageLayerDefinition[];
   props?: StagePropDefinition[];
+  edgeVegetation?: StageEdgeVegetationDefinition;
+};
+
+export type StageEdgeVegetationDefinition = {
+  packPath: string;
+  seed: number;
+  count: number;
+  variants: string[];
+  clearMargin: number;
+  bandDepth: number;
+  treeHeightRange: [number, number];
+  bushHeightRange: [number, number];
 };
 
 export type StageVisualStylePreset =

@@ -1,0 +1,1254 @@
+{
+  "id": "tree-pack-1.1",
+  "version": 1,
+  "sourceArchive": "tree_pack_1.1.zip",
+  "sourceRoot": "tree_pack_1.1",
+  "license": null,
+  "modelPath": "/stage-props/tree-pack-1.1/tree-pack.glb",
+  "sizeBytes": 1080432,
+  "assetCount": 44,
+  "treeCount": 36,
+  "bushCount": 8,
+  "atlas": {
+    "embedded": true,
+    "width": 1024,
+    "height": 1024,
+    "columns": 8,
+    "rows": 8,
+    "tileSize": 128
+  },
+  "assets": [
+    {
+      "id": "tree01",
+      "kind": "tree",
+      "meshName": "tree01",
+      "sourceModel": "tree01.fbx",
+      "sourceTexture": "tree01.png",
+      "atlasTile": [
+        0,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree02",
+      "kind": "tree",
+      "meshName": "tree02",
+      "sourceModel": "tree02.fbx",
+      "sourceTexture": "tree02.png",
+      "atlasTile": [
+        1,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree03",
+      "kind": "tree",
+      "meshName": "tree03",
+      "sourceModel": "tree03.fbx",
+      "sourceTexture": "tree03.png",
+      "atlasTile": [
+        2,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree04",
+      "kind": "tree",
+      "meshName": "tree04",
+      "sourceModel": "tree04.fbx",
+      "sourceTexture": "tree04.png",
+      "atlasTile": [
+        3,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree05",
+      "kind": "tree",
+      "meshName": "tree05",
+      "sourceModel": "tree05.fbx",
+      "sourceTexture": "tree05.png",
+      "atlasTile": [
+        4,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -2.935,
+          0,
+          -3
+        ],
+        "max": [
+          3.065,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree06",
+      "kind": "tree",
+      "meshName": "tree06",
+      "sourceModel": "tree06.fbx",
+      "sourceTexture": "tree06.png",
+      "atlasTile": [
+        5,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree07",
+      "kind": "tree",
+      "meshName": "tree07",
+      "sourceModel": "tree07.fbx",
+      "sourceTexture": "tree07.png",
+      "atlasTile": [
+        6,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree08",
+      "kind": "tree",
+      "meshName": "tree08",
+      "sourceModel": "tree08.fbx",
+      "sourceTexture": "tree08.png",
+      "atlasTile": [
+        7,
+        0
+      ],
+      "bounds": {
+        "min": [
+          -3.6,
+          0,
+          -3.6
+        ],
+        "max": [
+          3.6,
+          12.5,
+          3.6
+        ],
+        "size": [
+          7.2,
+          12.5,
+          7.2
+        ]
+      }
+    },
+    {
+      "id": "tree09",
+      "kind": "tree",
+      "meshName": "tree09",
+      "sourceModel": "tree09.fbx",
+      "sourceTexture": "tree09.png",
+      "atlasTile": [
+        0,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree10",
+      "kind": "tree",
+      "meshName": "tree10",
+      "sourceModel": "tree10.fbx",
+      "sourceTexture": "tree10.png",
+      "atlasTile": [
+        1,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree11",
+      "kind": "tree",
+      "meshName": "tree11",
+      "sourceModel": "tree11.fbx",
+      "sourceTexture": "tree11.png",
+      "atlasTile": [
+        2,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -3.6,
+          0,
+          -3.6
+        ],
+        "max": [
+          3.6,
+          12.5,
+          3.6
+        ],
+        "size": [
+          7.2,
+          12.5,
+          7.2
+        ]
+      }
+    },
+    {
+      "id": "tree12",
+      "kind": "tree",
+      "meshName": "tree12",
+      "sourceModel": "tree12.fbx",
+      "sourceTexture": "tree12.png",
+      "atlasTile": [
+        3,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree13",
+      "kind": "tree",
+      "meshName": "tree13",
+      "sourceModel": "tree13.fbx",
+      "sourceTexture": "tree13.png",
+      "atlasTile": [
+        4,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -3,
+          0,
+          -3
+        ],
+        "max": [
+          3,
+          12.5,
+          3
+        ],
+        "size": [
+          6,
+          12.5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "tree14",
+      "kind": "tree",
+      "meshName": "tree14",
+      "sourceModel": "tree14.fbx",
+      "sourceTexture": "tree14.png",
+      "atlasTile": [
+        5,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -6,
+          0,
+          -6
+        ],
+        "max": [
+          6,
+          12.5,
+          6
+        ],
+        "size": [
+          12,
+          12.5,
+          12
+        ]
+      }
+    },
+    {
+      "id": "tree15",
+      "kind": "tree",
+      "meshName": "tree15",
+      "sourceModel": "tree15.fbx",
+      "sourceTexture": "tree15.png",
+      "atlasTile": [
+        6,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -3.9,
+          0,
+          -3.9
+        ],
+        "max": [
+          3.9,
+          12.5,
+          3.9
+        ],
+        "size": [
+          7.8,
+          12.5,
+          7.8
+        ]
+      }
+    },
+    {
+      "id": "tree16",
+      "kind": "tree",
+      "meshName": "tree16",
+      "sourceModel": "tree16.fbx",
+      "sourceTexture": "tree16.png",
+      "atlasTile": [
+        7,
+        1
+      ],
+      "bounds": {
+        "min": [
+          -5.07,
+          0,
+          -5.07
+        ],
+        "max": [
+          5.07,
+          12.5,
+          5.07
+        ],
+        "size": [
+          10.14,
+          12.5,
+          10.14
+        ]
+      }
+    },
+    {
+      "id": "tree17",
+      "kind": "tree",
+      "meshName": "tree17",
+      "sourceModel": "tree17.fbx",
+      "sourceTexture": "tree17.png",
+      "atlasTile": [
+        0,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -6,
+          0,
+          -6
+        ],
+        "max": [
+          6,
+          12.5,
+          6
+        ],
+        "size": [
+          12,
+          12.5,
+          12
+        ]
+      }
+    },
+    {
+      "id": "tree18",
+      "kind": "tree",
+      "meshName": "tree18",
+      "sourceModel": "tree18.fbx",
+      "sourceTexture": "tree18.png",
+      "atlasTile": [
+        1,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -4.423,
+          0,
+          -4.493
+        ],
+        "max": [
+          4.563,
+          12.5,
+          4.493
+        ],
+        "size": [
+          8.985,
+          12.5,
+          8.985
+        ]
+      }
+    },
+    {
+      "id": "tree19",
+      "kind": "tree",
+      "meshName": "tree19",
+      "sourceModel": "tree19.fbx",
+      "sourceTexture": "tree19.png",
+      "atlasTile": [
+        2,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -6,
+          0,
+          -6
+        ],
+        "max": [
+          6,
+          12.5,
+          6
+        ],
+        "size": [
+          12,
+          12.5,
+          12
+        ]
+      }
+    },
+    {
+      "id": "tree20",
+      "kind": "tree",
+      "meshName": "tree20",
+      "sourceModel": "tree20.fbx",
+      "sourceTexture": "tree20.png",
+      "atlasTile": [
+        3,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -5.465,
+          0,
+          -5.445
+        ],
+        "max": [
+          5.425,
+          13,
+          5.445
+        ],
+        "size": [
+          10.89,
+          13,
+          10.89
+        ]
+      }
+    },
+    {
+      "id": "tree21",
+      "kind": "tree",
+      "meshName": "tree21",
+      "sourceModel": "tree21.fbx",
+      "sourceTexture": "tree21.png",
+      "atlasTile": [
+        4,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -6,
+          0,
+          -6
+        ],
+        "max": [
+          6,
+          12.5,
+          6
+        ],
+        "size": [
+          12,
+          12.5,
+          12
+        ]
+      }
+    },
+    {
+      "id": "tree22",
+      "kind": "tree",
+      "meshName": "tree22",
+      "sourceModel": "tree22.fbx",
+      "sourceTexture": "tree22.png",
+      "atlasTile": [
+        5,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -7.2,
+          0,
+          -7.2
+        ],
+        "max": [
+          7.2,
+          12.5,
+          7.2
+        ],
+        "size": [
+          14.4,
+          12.5,
+          14.4
+        ]
+      }
+    },
+    {
+      "id": "tree23",
+      "kind": "tree",
+      "meshName": "tree23",
+      "sourceModel": "tree23.fbx",
+      "sourceTexture": "tree23.png",
+      "atlasTile": [
+        6,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -6.6,
+          0,
+          -6.6
+        ],
+        "max": [
+          6.6,
+          12.5,
+          6.6
+        ],
+        "size": [
+          13.2,
+          12.5,
+          13.2
+        ]
+      }
+    },
+    {
+      "id": "tree24",
+      "kind": "tree",
+      "meshName": "tree24",
+      "sourceModel": "tree24.fbx",
+      "sourceTexture": "tree24.png",
+      "atlasTile": [
+        7,
+        2
+      ],
+      "bounds": {
+        "min": [
+          -6.6,
+          0,
+          -6.6
+        ],
+        "max": [
+          6.6,
+          12.5,
+          6.6
+        ],
+        "size": [
+          13.2,
+          12.5,
+          13.2
+        ]
+      }
+    },
+    {
+      "id": "tree25",
+      "kind": "tree",
+      "meshName": "tree25",
+      "sourceModel": "tree25.fbx",
+      "sourceTexture": "tree25.png",
+      "atlasTile": [
+        0,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -4.423,
+          0,
+          -4.493
+        ],
+        "max": [
+          4.563,
+          12.5,
+          4.493
+        ],
+        "size": [
+          8.985,
+          12.5,
+          8.985
+        ]
+      }
+    },
+    {
+      "id": "tree26",
+      "kind": "tree",
+      "meshName": "tree26",
+      "sourceModel": "tree26.fbx",
+      "sourceTexture": "tree26.png",
+      "atlasTile": [
+        1,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -3.95,
+          0,
+          -3.9
+        ],
+        "max": [
+          3.85,
+          13.9,
+          3.9
+        ],
+        "size": [
+          7.8,
+          13.9,
+          7.8
+        ]
+      }
+    },
+    {
+      "id": "tree27",
+      "kind": "tree",
+      "meshName": "tree27",
+      "sourceModel": "tree27.fbx",
+      "sourceTexture": "tree27.png",
+      "atlasTile": [
+        2,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -3.9,
+          0,
+          -3.9
+        ],
+        "max": [
+          3.9,
+          9,
+          3.9
+        ],
+        "size": [
+          7.8,
+          9,
+          7.8
+        ]
+      }
+    },
+    {
+      "id": "tree28",
+      "kind": "tree",
+      "meshName": "tree28",
+      "sourceModel": "tree28.fbx",
+      "sourceTexture": "tree28.png",
+      "atlasTile": [
+        3,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -5.04,
+          0,
+          -5.04
+        ],
+        "max": [
+          5.04,
+          12.5,
+          5.04
+        ],
+        "size": [
+          10.08,
+          12.5,
+          10.08
+        ]
+      }
+    },
+    {
+      "id": "tree29",
+      "kind": "tree",
+      "meshName": "tree29",
+      "sourceModel": "tree29.fbx",
+      "sourceTexture": "tree29.png",
+      "atlasTile": [
+        4,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -5.1,
+          0,
+          -5.1
+        ],
+        "max": [
+          5.1,
+          12.5,
+          5.1
+        ],
+        "size": [
+          10.2,
+          12.5,
+          10.2
+        ]
+      }
+    },
+    {
+      "id": "tree30",
+      "kind": "tree",
+      "meshName": "tree30",
+      "sourceModel": "tree30.fbx",
+      "sourceTexture": "tree30.png",
+      "atlasTile": [
+        5,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -4.5,
+          0,
+          -4.5
+        ],
+        "max": [
+          4.5,
+          12.5,
+          4.5
+        ],
+        "size": [
+          9,
+          12.5,
+          9
+        ]
+      }
+    },
+    {
+      "id": "tree31",
+      "kind": "tree",
+      "meshName": "tree31",
+      "sourceModel": "tree31.fbx",
+      "sourceTexture": "tree31.png",
+      "atlasTile": [
+        6,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -4.5,
+          0,
+          -4.5
+        ],
+        "max": [
+          4.5,
+          12.5,
+          4.5
+        ],
+        "size": [
+          9,
+          12.5,
+          9
+        ]
+      }
+    },
+    {
+      "id": "tree32",
+      "kind": "tree",
+      "meshName": "tree32",
+      "sourceModel": "tree32.fbx",
+      "sourceTexture": "tree32.png",
+      "atlasTile": [
+        7,
+        3
+      ],
+      "bounds": {
+        "min": [
+          -4.5,
+          0,
+          -4.5
+        ],
+        "max": [
+          4.5,
+          12.5,
+          4.5
+        ],
+        "size": [
+          9,
+          12.5,
+          9
+        ]
+      }
+    },
+    {
+      "id": "tree33",
+      "kind": "tree",
+      "meshName": "tree33",
+      "sourceModel": "tree33.fbx",
+      "sourceTexture": "tree33.png",
+      "atlasTile": [
+        0,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -4.5,
+          0,
+          -4.5
+        ],
+        "max": [
+          4.5,
+          12.5,
+          4.5
+        ],
+        "size": [
+          9,
+          12.5,
+          9
+        ]
+      }
+    },
+    {
+      "id": "tree34",
+      "kind": "tree",
+      "meshName": "tree34",
+      "sourceModel": "tree34.fbx",
+      "sourceTexture": "tree34.png",
+      "atlasTile": [
+        1,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -14.4,
+          0,
+          -14.4
+        ],
+        "max": [
+          14.4,
+          25,
+          14.4
+        ],
+        "size": [
+          28.8,
+          25,
+          28.8
+        ]
+      }
+    },
+    {
+      "id": "tree35",
+      "kind": "tree",
+      "meshName": "tree35",
+      "sourceModel": "tree35.fbx",
+      "sourceTexture": "tree35.png",
+      "atlasTile": [
+        2,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -5.1,
+          0,
+          -5.1
+        ],
+        "max": [
+          5.1,
+          12.5,
+          5.1
+        ],
+        "size": [
+          10.2,
+          12.5,
+          10.2
+        ]
+      }
+    },
+    {
+      "id": "tree36",
+      "kind": "tree",
+      "meshName": "tree36",
+      "sourceModel": "tree36.fbx",
+      "sourceTexture": "tree36.png",
+      "atlasTile": [
+        3,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -5.1,
+          0,
+          -5.1
+        ],
+        "max": [
+          5.1,
+          12.5,
+          5.1
+        ],
+        "size": [
+          10.2,
+          12.5,
+          10.2
+        ]
+      }
+    },
+    {
+      "id": "bush01",
+      "kind": "bush",
+      "meshName": "bush01",
+      "sourceModel": "bush01.fbx",
+      "sourceTexture": "bush01.png",
+      "atlasTile": [
+        4,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -4.2,
+          0,
+          -4.2
+        ],
+        "max": [
+          4.2,
+          7.5,
+          4.2
+        ],
+        "size": [
+          8.4,
+          7.5,
+          8.4
+        ]
+      }
+    },
+    {
+      "id": "bush02",
+      "kind": "bush",
+      "meshName": "bush02",
+      "sourceModel": "bush02.fbx",
+      "sourceTexture": "bush02.png",
+      "atlasTile": [
+        5,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -6,
+          0,
+          -6
+        ],
+        "max": [
+          6,
+          7.5,
+          6
+        ],
+        "size": [
+          12,
+          7.5,
+          12
+        ]
+      }
+    },
+    {
+      "id": "bush03",
+      "kind": "bush",
+      "meshName": "bush03",
+      "sourceModel": "bush03.fbx",
+      "sourceTexture": "bush03.png",
+      "atlasTile": [
+        6,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -3.6,
+          0,
+          -3.6
+        ],
+        "max": [
+          3.6,
+          7.5,
+          3.6
+        ],
+        "size": [
+          7.2,
+          7.5,
+          7.2
+        ]
+      }
+    },
+    {
+      "id": "bush04",
+      "kind": "bush",
+      "meshName": "bush04",
+      "sourceModel": "bush04.fbx",
+      "sourceTexture": "bush04.png",
+      "atlasTile": [
+        7,
+        4
+      ],
+      "bounds": {
+        "min": [
+          -4.5,
+          0,
+          -4.5
+        ],
+        "max": [
+          4.5,
+          7.5,
+          4.5
+        ],
+        "size": [
+          9,
+          7.5,
+          9
+        ]
+      }
+    },
+    {
+      "id": "bush05",
+      "kind": "bush",
+      "meshName": "bush05",
+      "sourceModel": "bush05.fbx",
+      "sourceTexture": "bush05.png",
+      "atlasTile": [
+        0,
+        5
+      ],
+      "bounds": {
+        "min": [
+          -4.8,
+          0,
+          -4.8
+        ],
+        "max": [
+          4.8,
+          7.5,
+          4.8
+        ],
+        "size": [
+          9.6,
+          7.5,
+          9.6
+        ]
+      }
+    },
+    {
+      "id": "bush06",
+      "kind": "bush",
+      "meshName": "bush06",
+      "sourceModel": "bush06.fbx",
+      "sourceTexture": "bush06.png",
+      "atlasTile": [
+        1,
+        5
+      ],
+      "bounds": {
+        "min": [
+          -4.2,
+          0,
+          -4.2
+        ],
+        "max": [
+          4.2,
+          7.5,
+          4.2
+        ],
+        "size": [
+          8.4,
+          7.5,
+          8.4
+        ]
+      }
+    },
+    {
+      "id": "bush07",
+      "kind": "bush",
+      "meshName": "bush07",
+      "sourceModel": "bush07.fbx",
+      "sourceTexture": "bush07.png",
+      "atlasTile": [
+        2,
+        5
+      ],
+      "bounds": {
+        "min": [
+          -5.46,
+          0,
+          -5.46
+        ],
+        "max": [
+          5.46,
+          7.5,
+          5.46
+        ],
+        "size": [
+          10.92,
+          7.5,
+          10.92
+        ]
+      }
+    },
+    {
+      "id": "bush08",
+      "kind": "bush",
+      "meshName": "bush08",
+      "sourceModel": "bush08.fbx",
+      "sourceTexture": "bush08.png",
+      "atlasTile": [
+        3,
+        5
+      ],
+      "bounds": {
+        "min": [
+          -4.368,
+          0,
+          -4.368
+        ],
+        "max": [
+          4.368,
+          7.5,
+          4.368
+        ],
+        "size": [
+          8.736,
+          7.5,
+          8.736
+        ]
+      }
+    }
+  ]
+}

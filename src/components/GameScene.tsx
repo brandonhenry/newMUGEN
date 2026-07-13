@@ -50,6 +50,7 @@ import { getAttackCompanionPosition, resolveAttackCompanionAnimation } from '../
 import { cameraScreenRightStageAlignment, fightCameraSideFollowAlpha, stableControlAlignedFightCameraSide } from '../lib/fightCamera';
 import { defaultGameSettings } from '../lib/gameSettings';
 import { getStageVisualStylePresetDefaults, resolveStageVisualStyle } from '../lib/stageVisualStyle';
+import { buildMergedEdgeVegetationGeometry, createEdgeVegetationPlacements } from '../lib/edgeVegetation';
 import { getDuplicateFighterHueShift, shiftHueColor } from '../lib/fighterHue';
 import { normalizeHdVoxelPayload, type VoxelPackPart } from '../lib/voxelPack';
 import { getPrecomputedVoxelPath, getVoxelPackFrameName } from '../lib/voxelAssetPaths';
@@ -79,7 +80,8 @@ import {
   prefetchStageModelDecoders,
   preloadStageModel,
   resolveStageModelDefinition,
-  resolveStageModelUrl
+  resolveStageModelUrl,
+  withStageAssetVersion
 } from '../lib/stageAssets';
 
 type GameSceneProps = {
@@ -5725,8 +5727,84 @@ function Arena({
       </mesh>
       <StageSafePlatform stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
+      {stage.edgeVegetation && (
+        <Suspense fallback={null}>
+          <EdgeVegetationBorder stage={stage} />
+        </Suspense>
+      )}
     </group>
   );
+}
+
+function EdgeVegetationBorder({ stage }: { stage: StageDefinition }) {
+  const config = stage.edgeVegetation;
+  const packPath = withStageAssetVersion(config?.packPath ?? '');
+  const gltf = useGLTF(packPath);
+  const placementKey = JSON.stringify([
+    stage.id,
+    stage.world?.width,
+    stage.world?.depth,
+    stage.world?.floorY,
+    stage.playableBounds?.width,
+    stage.playableBounds?.depth,
+    stage.fightPlane?.center,
+    stage.fightPlane?.width,
+    stage.fightPlane?.depth,
+    config?.seed,
+    config?.count,
+    config?.variants,
+    config?.clearMargin,
+    config?.bandDepth,
+    config?.treeHeightRange,
+    config?.bushHeightRange
+  ]);
+  const placements = useMemo(() => createEdgeVegetationPlacements(stage), [placementKey]);
+  const packed = useMemo(() => {
+    gltf.scene.updateWorldMatrix(true, true);
+    const sources = new Map<string, THREE.BufferGeometry>();
+    const result: { geometry: THREE.BufferGeometry | null; atlas: THREE.Texture | null } = { geometry: null, atlas: null };
+    gltf.scene.traverse((object) => {
+      if (!(object instanceof THREE.Mesh) || !object.geometry) return;
+      const variant = object.name.match(/^(tree|bush)\d{2}$/)?.[0];
+      if (!variant) return;
+      const geometry = object.geometry.clone();
+      geometry.applyMatrix4(object.matrixWorld);
+      sources.set(variant, geometry);
+      const sourceMaterial = Array.isArray(object.material) ? object.material[0] : object.material;
+      if (!result.atlas && sourceMaterial && 'map' in sourceMaterial) result.atlas = sourceMaterial.map as THREE.Texture | null;
+    });
+    result.geometry = buildMergedEdgeVegetationGeometry(sources, placements);
+    sources.forEach((source) => source.dispose());
+    return result;
+  }, [gltf.scene, placements]);
+  const material = useMemo(() => new THREE.MeshBasicMaterial({
+    color: '#ffffff',
+    map: packed.atlas,
+    alphaTest: 0.45,
+    transparent: false,
+    depthTest: true,
+    depthWrite: true,
+    side: THREE.DoubleSide,
+    fog: true,
+    toneMapped: true
+  }), [packed.atlas]);
+
+  useEffect(() => {
+    if (packed.atlas) {
+      packed.atlas.colorSpace = THREE.SRGBColorSpace;
+      packed.atlas.magFilter = THREE.LinearFilter;
+      packed.atlas.minFilter = THREE.LinearMipmapLinearFilter;
+      packed.atlas.anisotropy = Math.max(packed.atlas.anisotropy, 4);
+      packed.atlas.needsUpdate = true;
+    }
+    return () => {
+      packed.geometry?.dispose();
+      material.dispose();
+    };
+  }, [material, packed.atlas, packed.geometry]);
+
+  if (!packed.geometry || !packed.atlas) return null;
+  return <mesh geometry={packed.geometry} material={material} castShadow={false} receiveShadow={false} />;
 }
 
 function ModelStage({
@@ -6494,6 +6572,11 @@ function TexturedInfiniteArena({
       {showFightLaneMarkers && <StageFightLaneMarkers stage={stage} />}
       <StageSafePlatform stage={stage} />
       <UpgradedStageFloorEffects stage={stage} fighters={fighters} impactEvents={impactEvents} />
+      {stage.edgeVegetation && (
+        <Suspense fallback={null}>
+          <EdgeVegetationBorder stage={stage} />
+        </Suspense>
+      )}
     </group>
   );
 }
