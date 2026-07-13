@@ -201,7 +201,11 @@ def build_payload(
     }
 
 
-def projectile_assets(repo: Path) -> list[tuple[str, str, Path, list[Path]]]:
+def projectile_assets(
+    repo: Path,
+    character_filter: str | None = None,
+    projectile_filter: str | None = None,
+) -> list[tuple[str, str, Path, list[Path]]]:
     assets: list[tuple[str, str, Path, list[Path]]] = []
     characters_root = repo / "public" / "characters"
     for frames_dir in sorted(characters_root.glob("*/projectiles/*/frames")):
@@ -210,6 +214,10 @@ def projectile_assets(repo: Path) -> list[tuple[str, str, Path, list[Path]]]:
             continue
         projectile_dir = frames_dir.parent
         character_id = projectile_dir.parent.parent.name
+        if character_filter and character_id != character_filter:
+            continue
+        if projectile_filter and projectile_dir.name != projectile_filter:
+            continue
         assets.append((character_id, projectile_dir.name, projectile_dir, frames))
     return assets
 
@@ -234,15 +242,21 @@ def scan_manifests(
     repo: Path,
     settings: dict[str, Any],
     apply: bool,
+    character_filter: str | None = None,
+    projectile_filter: str | None = None,
 ) -> tuple[int, set[str], list[str], list[str]]:
     upgraded = 0
     referenced: set[str] = set()
     missing: list[str] = []
     validation_errors: list[str] = []
     for manifest_path in sorted((repo / "public" / "characters").glob("*/character.json")):
+        if character_filter and manifest_path.parent.name != character_filter:
+            continue
         character = json.loads(manifest_path.read_text())
         changed = False
         for definition in character.get("projectiles", []):
+            if projectile_filter and definition.get("id") != projectile_filter:
+                continue
             paths = manifest_frame_paths(definition)
             referenced.update(paths)
             for public_path in paths:
@@ -317,7 +331,7 @@ def validate_pack(projectile_dir: Path, payloads: dict[str, dict[str, Any]]) -> 
 def run(args: argparse.Namespace) -> dict[str, Any]:
     repo = args.repo.resolve()
     settings = fidelity_settings(args.target_rows, args.depth, args.alpha_threshold, args.palette_snap)
-    assets = projectile_assets(repo)
+    assets = projectile_assets(repo, args.character, args.projectile)
     frames_built = 0
     transparent_frames: list[str] = []
     validation_errors: list[str] = []
@@ -365,7 +379,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if args.validate:
             validation_errors.extend(validate_pack(projectile_dir, payloads))
 
-    upgraded, referenced, missing, manifest_errors = scan_manifests(repo, settings, args.apply)
+    upgraded, referenced, missing, manifest_errors = scan_manifests(
+        repo,
+        settings,
+        args.apply,
+        args.character,
+        args.projectile,
+    )
     if args.validate:
         validation_errors.extend(manifest_errors)
     orphan_frames = sorted(filesystem_frames - referenced)
@@ -401,6 +421,8 @@ def main() -> None:
     parser.add_argument("--depth", type=float, default=DEFAULT_DEPTH)
     parser.add_argument("--alpha-threshold", type=int, default=DEFAULT_ALPHA_THRESHOLD)
     parser.add_argument("--palette-snap", type=int, default=DEFAULT_PALETTE_SNAP)
+    parser.add_argument("--character", help="Only rebuild projectile assets for this character id")
+    parser.add_argument("--projectile", help="Only rebuild this projectile id")
     args = parser.parse_args()
     args.target_rows = int(clamp(args.target_rows, 24, 128))
     args.depth = float(clamp(args.depth, 0.04, 0.5))
