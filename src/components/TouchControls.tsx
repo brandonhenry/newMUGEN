@@ -23,18 +23,6 @@ const attackNumbers: Partial<Record<ActionName, string>> = {
   kick: '3',
   special: '4'
 };
-const koreAttackLabels: Partial<Record<ActionName, string>> = {
-  jab: '1 Left Hand',
-  heavy: '2 Right Hand',
-  kick: '3 Left Foot',
-  special: '4 Right Foot'
-};
-const beginnerAttackLabels: Partial<Record<ActionName, string>> = {
-  jab: '1 Light',
-  heavy: '2 Medium',
-  kick: '3 Heavy',
-  special: '4 Special'
-};
 const movementIcons = {
   up: <ChevronUp size={22} />,
   down: <ChevronDown size={22} />,
@@ -89,7 +77,6 @@ export function TouchControls({
   onAction,
   onUse,
   forceVisible = false,
-  controlScheme = 'kore',
   showPause = true
 }: TouchControlsProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -198,8 +185,6 @@ export function TouchControls({
     };
   }, []);
 
-  const attackLabels = controlScheme === 'beginner' ? beginnerAttackLabels : koreAttackLabels;
-
   return (
     <div ref={rootRef} className={`touch-controls ${forceVisible ? 'force-visible' : ''}`} aria-label="Touch controls">
       <div
@@ -252,7 +237,7 @@ export function TouchControls({
       >
         {attackCells.map((action) => {
           const number = attackNumbers[action];
-          const label = action === 'jump' ? 'Jump' : action === 'charge' ? 'Charge Ki' : attackLabels[action] ?? action;
+          const label = action === 'jump' ? 'Jump' : action === 'charge' ? 'Charge Ki' : number ?? action;
           return (
             <button
               key={action}

@@ -117,7 +117,7 @@ describe('TouchControls', () => {
     render(<TouchControls onAction={onAction} forceVisible controlScheme="beginner" />);
 
     expect(screen.getByTestId('touch-jab').textContent).toBe('1');
-    expect(screen.getByTestId('touch-jab').getAttribute('aria-label')).toBe('1 Light');
+    expect(screen.getByTestId('touch-jab').getAttribute('aria-label')).toBe('1');
     expect(screen.getByTestId('touch-heavy').classList.contains('touch-number-2')).toBe(true);
 
     const pause = screen.getByTestId('touch-pause');
