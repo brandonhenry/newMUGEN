@@ -47,28 +47,17 @@
       "/characters/giran/frames/frame-022.png"
     ],
     "walkBack": [
-      "/characters/giran/frames/frame-041.png",
-      "/characters/giran/frames/frame-039.png",
-      "/characters/giran/frames/frame-038.png",
-      "/characters/giran/frames/frame-036.png",
-      "/characters/giran/frames/frame-035.png",
-      "/characters/giran/frames/frame-033.png",
-      "/characters/giran/frames/frame-031.png",
-      "/characters/giran/frames/frame-030.png",
-      "/characters/giran/frames/frame-028.png",
-      "/characters/giran/frames/frame-027.png"
+      "/characters/giran/frames/frame-031.png"
     ],
     "sprint": [
-      "/characters/giran/frames/frame-043.png",
-      "/characters/giran/frames/frame-044.png",
-      "/characters/giran/frames/frame-046.png",
-      "/characters/giran/frames/frame-048.png",
-      "/characters/giran/frames/frame-049.png",
-      "/characters/giran/frames/frame-051.png",
-      "/characters/giran/frames/frame-053.png",
-      "/characters/giran/frames/frame-054.png",
-      "/characters/giran/frames/frame-056.png",
-      "/characters/giran/frames/frame-058.png"
+      "/characters/giran/frames/frame-015.png",
+      "/characters/giran/frames/frame-016.png",
+      "/characters/giran/frames/frame-017.png",
+      "/characters/giran/frames/frame-018.png",
+      "/characters/giran/frames/frame-019.png",
+      "/characters/giran/frames/frame-020.png",
+      "/characters/giran/frames/frame-021.png",
+      "/characters/giran/frames/frame-022.png"
     ],
     "backHop": [
       "/characters/giran/frames/frame-046.png"
@@ -80,9 +69,7 @@
       "/characters/giran/frames/frame-090.png"
     ],
     "jump": [
-      "/characters/giran/frames/frame-053.png",
-      "/characters/giran/frames/frame-054.png",
-      "/characters/giran/frames/frame-055.png"
+      "/characters/giran/frames/frame-034.png"
     ],
     "crouch": [
       "/characters/giran/frames/frame-049.png"
@@ -100,43 +87,32 @@
     ],
     "jableft": [
       "/characters/giran/frames/frame-075.png",
-      "/characters/giran/frames/frame-076.png",
-      "/characters/giran/frames/frame-078.png",
-      "/characters/giran/frames/frame-080.png",
-      "/characters/giran/frames/frame-082.png",
-      "/characters/giran/frames/frame-084.png",
-      "/characters/giran/frames/frame-086.png",
-      "/characters/giran/frames/frame-088.png"
+      "/characters/giran/frames/frame-076.png"
     ],
     "jabright": [
-      "/characters/giran/frames/frame-090.png",
       "/characters/giran/frames/frame-091.png",
       "/characters/giran/frames/frame-093.png",
       "/characters/giran/frames/frame-095.png",
       "/characters/giran/frames/frame-097.png",
-      "/characters/giran/frames/frame-098.png",
-      "/characters/giran/frames/frame-100.png",
-      "/characters/giran/frames/frame-102.png"
+      "/characters/giran/frames/frame-098.png"
     ],
     "kickleft": [
-      "/characters/giran/frames/frame-075.png",
-      "/characters/giran/frames/frame-076.png",
-      "/characters/giran/frames/frame-078.png",
-      "/characters/giran/frames/frame-080.png",
-      "/characters/giran/frames/frame-082.png",
       "/characters/giran/frames/frame-084.png",
       "/characters/giran/frames/frame-086.png",
       "/characters/giran/frames/frame-088.png"
     ],
     "kickright": [
+      "/characters/giran/frames/frame-067.png",
+      "/characters/giran/frames/frame-068.png",
+      "/characters/giran/frames/frame-069.png",
+      "/characters/giran/frames/frame-070.png",
+      "/characters/giran/frames/frame-071.png",
+      "/characters/giran/frames/frame-072.png",
+      "/characters/giran/frames/frame-073.png",
+      "/characters/giran/frames/frame-074.png",
       "/characters/giran/frames/frame-075.png",
       "/characters/giran/frames/frame-076.png",
-      "/characters/giran/frames/frame-078.png",
-      "/characters/giran/frames/frame-080.png",
-      "/characters/giran/frames/frame-082.png",
-      "/characters/giran/frames/frame-084.png",
-      "/characters/giran/frames/frame-086.png",
-      "/characters/giran/frames/frame-088.png"
+      "/characters/giran/frames/frame-077.png"
     ],
     "hitLight": [
       "/characters/giran/frames/frame-052.png"
@@ -145,15 +121,18 @@
       "/characters/giran/frames/frame-060.png"
     ],
     "juggle": [
-      "/characters/giran/frames/frame-053.png"
+      "/characters/giran/frames/frame-059.png"
     ],
     "knockdown": [
-      "/characters/giran/frames/frame-060.png",
-      "/characters/giran/frames/frame-061.png",
-      "/characters/giran/frames/frame-064.png",
       "/characters/giran/frames/frame-065.png"
     ],
-    "getupStand": [],
+    "getupStand": [
+      "/characters/giran/frames/frame-064.png",
+      "/characters/giran/frames/frame-065.png",
+      "/characters/giran/frames/frame-066.png",
+      "/characters/giran/frames/frame-067.png",
+      "/characters/giran/frames/frame-068.png"
+    ],
     "getupRollUp": [],
     "win": [
       "/characters/giran/frames/frame-003.png",
@@ -1152,13 +1131,6 @@
       }
     },
     "backHop": {
-      "46": {
-        "width": 1,
-        "height": 1,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1,
-        "offsetX": 0
-      },
       "53": {
         "width": 1.14,
         "height": 1.56,
@@ -1484,7 +1456,7 @@
       },
       "49": {
         "width": 1.21,
-        "height": 1.05407,
+        "height": 1.05,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -1500,7 +1472,7 @@
     "crouchBlock": {
       "69": {
         "width": 1.21,
-        "height": 1.05407,
+        "height": 1.05,
         "offsetX": 0,
         "flipX": false,
         "flipY": false
@@ -2438,36 +2410,30 @@
       "60": {
         "width": 1.23,
         "height": 1.23,
-        "voxelScaleX": 0.96946,
-        "voxelScaleY": 0.67164,
-        "offsetX": 0
-      },
-      "61": {
-        "width": 1.22999,
-        "height": 1.22999,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
+      },
+      "61": {
+        "width": 1.23,
+        "height": 1.23,
+        "offsetX": 0,
+        "flipX": false,
+        "flipY": false
       },
       "64": {
         "width": 1.23,
         "height": 1.23,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "65": {
         "width": 1.23,
         "height": 1.23,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       }
     },
     "getupStand": {
@@ -2678,9 +2644,7 @@
         "height": 1.23,
         "offsetX": 0,
         "flipX": false,
-        "flipY": false,
-        "voxelScaleX": 1,
-        "voxelScaleY": 1
+        "flipY": false
       },
       "104": {
         "width": 1.5,

@@ -21,7 +21,6 @@ import {
   Laptop,
   List,
   Maximize2,
-  Minimize2,
   Package,
   Pause,
   Play,
@@ -24064,7 +24063,6 @@ function FightScreen({
   const moveListTabAnalyticsRef = useRef('');
   const completedTrainingTrialAnalyticsRef = useRef<Set<string>>(new Set());
   const firstTimeTrainingTrialCompletionRef = useRef<Set<string>>(new Set());
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [assetLoadingState, setAssetLoadingState] = useState<AssetLoadingState>({
     active: true,
     progress: 0,
@@ -24419,13 +24417,6 @@ function FightScreen({
   useEffect(() => {
     previewPlaybackRef.current = previewPlayback;
   }, [previewPlayback]);
-
-  useEffect(() => {
-    const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-    onFullscreenChange();
-    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
-  }, []);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -26926,25 +26917,6 @@ function FightScreen({
     onlineSessionRef.current?.send(message);
   }, [isTrainingOnline]);
 
-  const toggleFullscreen = () => {
-    captureFightAnalytics('fullscreen_clicked', { entering_fullscreen: !document.fullscreenElement });
-    const target = screenRef.current;
-    const request = document.fullscreenElement
-      ? document.exitFullscreen()
-      : target?.requestFullscreen();
-    void request?.catch((error) => {
-      captureAnalyticsError(error, {
-        source: 'fullscreen',
-        app_version: KORE_APP_VERSION,
-        mode,
-        stage_id: stage.id,
-        p1_character_id: p1.id,
-        p2_character_id: p2.id,
-        cpu_difficulty: cpuDifficulty
-      });
-    });
-  };
-
   const tournamentFriendTarget = useMemo<MatchHistoryOpponent | null>(() => {
     if (mode !== 'tournamentOnline' || !onlineTournamentStatus?.assignedMatch || !onlineTournamentStatus.entry) return null;
     const opponent = getTournamentOpponentEntry(onlineTournamentStatus.bracket, onlineTournamentStatus.assignedMatch, onlineTournamentStatus.entry.id);
@@ -27071,15 +27043,6 @@ function FightScreen({
       {!onlineAssetGateActive && <CombatPopupLayer popups={combatPopups} />}
       {!onlineAssetGateActive && <ClashOverlay match={match} />}
       {!onlineAssetGateActive && <TimeStopOverlay match={match} />}
-      <button
-        type="button"
-        className="fight-fullscreen-button"
-        onClick={toggleFullscreen}
-        aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-        title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-      >
-        {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
-      </button>
       {settings.display.debugOverlay && !onlineAssetGateActive && <FightDebug match={match} paused={paused} lastInput={getLastInput()} frameInput={frameInputRef.current} />}
       {settings.display.touchControls !== 'off' && !onlineAssetGateActive && <TouchControls onAction={setVirtualAction} onUse={trackMobileControlsUsed} forceVisible={settings.display.touchControls === 'on'} controlScheme={settings.game.controlScheme} showPause={!isOnline || onlineState !== 'connected'} />}
       {showLateAssetFallback && !onlineAssetGateActive && (assetLoadingState.active || !assetLoadingState.ready) && <FightAssetLoadingOverlay state={assetLoadingState} />}

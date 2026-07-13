@@ -9970,28 +9970,6 @@ button {
   }
 }
 
-.fight-fullscreen-button {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  z-index: 18;
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  background: rgba(5, 10, 16, 0.54);
-  color: #f7fbff;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(10px);
-}
-
-.fight-fullscreen-button:hover {
-  border-color: rgba(255, 255, 255, 0.38);
-  background: rgba(18, 28, 40, 0.72);
-}
-
 .fight-asset-loading-overlay {
   position: absolute;
   left: 50%;
@@ -14184,10 +14162,6 @@ button {
 @media (hover: none), (pointer: coarse) {
   .touch-controls {
     display: flex;
-  }
-
-  .fight-fullscreen-button {
-    display: none;
   }
 }
 

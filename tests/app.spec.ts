@@ -2074,7 +2074,7 @@ test('mobile attack surface accepts gap taps, preserves target sizes, shows nota
   test.skip(!['mobile', 'mobile-webkit'].includes(testInfo.project.name), 'Requires coarse pointer mobile viewport');
   await startFight(page, true);
 
-  await expect(page.locator('.fight-fullscreen-button')).toBeHidden();
+  await expect(page.locator('.fight-fullscreen-button')).toHaveCount(0);
 
   const cluster = page.getByLabel('Attack controls');
   const clusterBox = await cluster.boundingBox();
