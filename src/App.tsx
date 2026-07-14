@@ -89,7 +89,7 @@ import { createOnlinePeerSession, type OnlinePeerSession } from './lib/online/pe
 import { addAttackAttemptToOnlineStats, addCombatPopupEventToOnlineStats, addFramePressureToOnlineStats, addImpactEventToOnlineStats, addMatchDurationToOnlineStats, addWhiffToOnlineStats, calculateOnlinePerformancePoints, emptyOnlinePerformancePair, setOnlinePerformanceRoundsWon } from './lib/online/performanceScoring';
 import { createPrivateRoom, generatePrivateRoomPassword, joinPrivateRoom, leavePrivateRoom, listPrivateRooms, normalizePrivateRoomPassword, type PrivateRoomIntent, type PrivateRoomResult, type PrivateRoomSummary } from './lib/online/privateRooms';
 import { createCustomRoom, customMatchWebSocketUrl, fetchCustomRoom, findFriendCustomRooms, joinCustomRoom, sendCustomRoomCommand, storeCustomRoomSession } from './lib/online/customRoomClient';
-import type { CustomRoomSession } from './lib/online/customRooms';
+import { addCustomRoomMember, applyCustomRoomCommand, makeCustomRoomState, type CustomRoomSession } from './lib/online/customRooms';
 import { emptyRankedKrScores, fetchRankedProfile, rankedKrKeys, rankedKrLabels, submitRankedMatchReport, type RankedKrScores, type RankedMatchReport, type RankedPlayerResult, type RankedProfile, type RankedSubmitResult } from './lib/online/ranked';
 import type { OnlineAssetWarmupReadyMessage, OnlineConnectionState, OnlineMessage, OnlineRole } from './lib/online/messages';
 import { checksumMatch, createRollbackSession, type RollbackSession } from './lib/online/rollback';
@@ -280,7 +280,35 @@ const MOVEMENT_SMOKE_STYLE_OPTIONS: ReadonlyArray<{ value: MovementSmokeStyle; l
 ];
 
 type Screen = 'boot' | 'title' | 'menu' | 'friends' | 'leaderboard' | 'matchHistory' | 'privateRooms' | 'customRooms' | 'select' | 'training' | 'tournament' | 'tournamentLobby' | 'tournamentBracket' | 'tournamentAdvancement' | 'stage' | 'assetWarmup' | 'versus' | 'fight' | 'arcadeTransition' | 'miniGame' | 'miniGameResult' | 'arcadeGameOver' | 'unlockReveal' | 'settings' | 'viewer' | 'stageEditor';
-type E2EAuditScreen = Exclude<Screen, 'boot'> | 'tournamentLobbyLocal' | 'tournamentLobbyFreeOnline' | 'tournamentLobbyPrizepool' | 'tournamentLobbyPrizepoolCheckout' | 'tournamentLobbyPrizepoolClaim' | 'tournamentLobbyPrizepoolReview' | 'tournamentLobbyPaidRecovery' | 'tournamentBracketLocal' | 'tournamentBracketOnline' | 'tournamentFightResult';
+type E2EAuditScreen = Exclude<Screen, 'boot'>
+  | 'selectOnline'
+  | 'selectRanked'
+  | 'trainingFree'
+  | 'trainingBasics'
+  | 'trainingCombos'
+  | 'trainingOnline'
+  | 'fightTrainingFree'
+  | 'fightTrainingBasics'
+  | 'fightTrainingCombos'
+  | 'fightTouch'
+  | 'miniGameBreakTargets'
+  | 'miniGameEnemyRush'
+  | 'miniGameTag'
+  | 'customRoomLobby'
+  | 'customRoomCharacterSelect'
+  | 'customRoomStageSelect'
+  | 'customRoomLive'
+  | 'tournamentInfinite'
+  | 'tournamentLobbyLocal'
+  | 'tournamentLobbyFreeOnline'
+  | 'tournamentLobbyPrizepool'
+  | 'tournamentLobbyPrizepoolCheckout'
+  | 'tournamentLobbyPrizepoolClaim'
+  | 'tournamentLobbyPrizepoolReview'
+  | 'tournamentLobbyPaidRecovery'
+  | 'tournamentBracketLocal'
+  | 'tournamentBracketOnline'
+  | 'tournamentFightResult';
 
 function isFullBleedScreen(screen: Screen) {
   return (
@@ -2978,9 +3006,15 @@ export function sortRosterByUnlockState(
   });
 }
 
+function isTutorialCaptureMode() {
+  return Boolean((import.meta as unknown as { env?: { DEV?: boolean; VITE_KORE_TUTORIAL_CAPTURE?: string } }).env?.DEV)
+    && (import.meta as unknown as { env?: { VITE_KORE_TUTORIAL_CAPTURE?: string } }).env?.VITE_KORE_TUTORIAL_CAPTURE === '1';
+}
+
 function isLocalDevHost() {
   const isViteDev = Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
-  return isViteDev && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+  const tutorialCapture = isTutorialCaptureMode();
+  return isViteDev && !tutorialCapture && ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
 }
 
 function readCharacterViewerViewMode(): CharacterViewerViewMode {
@@ -3910,6 +3944,7 @@ export default function App() {
       setScreen('fight');
     };
     testWindow.__koreE2EOpenAuditScreen = (targetScreen) => {
+      testWindow.__KORE_E2E_SUPPRESS_BOOT_TITLE__ = true;
       const firstCharacter = roster[0];
       const secondCharacter = roster.find((character) => character.id !== firstCharacter?.id) ?? roster[1] ?? firstCharacter;
       const auditStage = playableStageRoster.find((item) => item.id === 'the-chamber') ?? playableStageRoster[0] ?? stages[0];
@@ -4084,9 +4119,102 @@ export default function App() {
         allClear: true,
         completedReason: 'all-clear'
       };
+      const makeAuditCustomSession = (variant: 'lobby' | 'characterSelect' | 'stageSelect' | 'live') => {
+        const host = { playerId: 'tutorial-host', displayName: 'KORE HOST' };
+        const rival = { playerId: 'tutorial-rival', displayName: 'RIVAL PLAYER' };
+        const viewer = { playerId: 'tutorial-viewer', displayName: 'YOU' };
+        let room = makeCustomRoomState({
+          roomId: 'tutorial-custom-room',
+          roomName: 'KORE TRAINING ROOM',
+          visibility: 'public',
+          stationCount: 2,
+          appVersion: KORE_APP_VERSION,
+          host,
+          now: now - 12_000
+        });
+        room = addCustomRoomMember(room, rival, now - 11_000);
+        room = addCustomRoomMember(room, viewer, now - 10_000);
+        room = applyCustomRoomCommand(room, host.playerId, { type: 'joinStation', stationId: 'station-1' }, now - 9_000);
+        room = applyCustomRoomCommand(room, rival.playerId, { type: 'joinStation', stationId: 'station-1' }, now - 8_500);
+        room = applyCustomRoomCommand(room, viewer.playerId, { type: 'joinStation', stationId: 'station-1' }, now - 8_000);
+        room = applyCustomRoomCommand(room, host.playerId, { type: 'setReady', ready: true }, now - 7_500);
+        room = applyCustomRoomCommand(room, rival.playerId, { type: 'setReady', ready: true }, now - 7_000);
+        room = applyCustomRoomCommand(room, host.playerId, { type: 'sendChat', text: 'Welcome! Winner stays on Station A.' }, now - 6_500);
+        if (variant !== 'lobby') {
+          room = applyCustomRoomCommand(room, host.playerId, { type: 'startMatch', stationId: 'station-1' }, now - 6_000);
+        }
+        if (variant === 'stageSelect' || variant === 'live') {
+          room = applyCustomRoomCommand(room, host.playerId, { type: 'lockCharacter', stationId: 'station-1', characterId: firstCharacter.id }, now - 5_500);
+          room = applyCustomRoomCommand(room, rival.playerId, { type: 'lockCharacter', stationId: 'station-1', characterId: secondCharacter.id }, now - 5_000);
+        }
+        if (variant === 'live') {
+          const stagePool = playableStageRoster.map((stage) => stage.id);
+          room = applyCustomRoomCommand(room, host.playerId, { type: 'lockStage', stationId: 'station-1', choice: { kind: 'stage', stageId: auditStage.id }, stagePool }, now - 4_500);
+          room = applyCustomRoomCommand(room, rival.playerId, { type: 'lockStage', stationId: 'station-1', choice: { kind: 'random' }, stagePool }, now - 4_000);
+          room = applyCustomRoomCommand(room, host.playerId, { type: 'setMatchLive', stationId: 'station-1' }, now - 3_500);
+        }
+        return {
+          profile: variant === 'live' ? viewer : host,
+          session: { room, memberToken: `tutorial-token-${variant}`, ownerToken: variant === 'live' ? undefined : 'tutorial-owner' } satisfies CustomRoomSession
+        };
+      };
       setP1Id(firstCharacter.id);
       setP2Id(secondCharacter.id);
       setStageId(auditStage.id);
+      if (targetScreen === 'selectOnline' || targetScreen === 'selectRanked') {
+        setOnlineProfile({ playerId: 'tutorial-player', displayName: 'KORE PLAYER' });
+        setMode(targetScreen === 'selectRanked' ? 'ranked' : 'online');
+        setScreen('select');
+        return;
+      }
+      if (targetScreen === 'trainingFree' || targetScreen === 'trainingBasics' || targetScreen === 'trainingCombos' || targetScreen === 'trainingOnline') {
+        const trainingMode = targetScreen === 'trainingBasics' ? 'basics' : targetScreen === 'trainingCombos' ? 'combos' : targetScreen === 'trainingOnline' ? 'online' : 'free';
+        setSelectedTrainingMode(trainingMode);
+        setMode(trainingMode === 'online' ? 'trainingOnline' : 'training');
+        if (trainingMode === 'online') setOnlineProfile({ playerId: 'tutorial-player', displayName: 'KORE PLAYER' });
+        setScreen('training');
+        return;
+      }
+      if (targetScreen === 'fightTrainingFree' || targetScreen === 'fightTrainingBasics' || targetScreen === 'fightTrainingCombos' || targetScreen === 'fightTouch') {
+        const trainingMode = targetScreen === 'fightTrainingBasics' ? 'basics' : targetScreen === 'fightTrainingCombos' ? 'combos' : 'free';
+        setSelectedTrainingMode(trainingMode);
+        setMode('training');
+        if (targetScreen === 'fightTouch') {
+          setSettings((current) => sanitizeGameSettings({ ...current, display: { ...current.display, touchControls: 'on' } }));
+        }
+        setScreen('fight');
+        return;
+      }
+      if (targetScreen === 'miniGameBreakTargets' || targetScreen === 'miniGameEnemyRush' || targetScreen === 'miniGameTag') {
+        const kind = targetScreen === 'miniGameEnemyRush' ? ENEMY_RUSH_GAME_ID : targetScreen === 'miniGameTag' ? TAG_GAME_ID : BREAK_TARGET_GAME_ID;
+        setActiveArcadeMiniGame({
+          ...auditMiniGame,
+          kind,
+          ...(kind === TAG_GAME_ID ? { tagOpponent: secondCharacter, tagRole: 'player-it' as const } : {})
+        });
+        setMode('ai');
+        setScreen('miniGame');
+        return;
+      }
+      if (targetScreen === 'customRoomLobby' || targetScreen === 'customRoomCharacterSelect' || targetScreen === 'customRoomStageSelect' || targetScreen === 'customRoomLive') {
+        const variant = targetScreen === 'customRoomCharacterSelect' ? 'characterSelect' : targetScreen === 'customRoomStageSelect' ? 'stageSelect' : targetScreen === 'customRoomLive' ? 'live' : 'lobby';
+        const fixture = makeAuditCustomSession(variant);
+        setOnlineProfile(fixture.profile);
+        setCustomRoomSession(fixture.session);
+        setCustomSpectatorLaunch(null);
+        setMode('custom');
+        setScreen('customRooms');
+        return;
+      }
+      if (targetScreen === 'tournamentInfinite') {
+        const bracket = createInfiniteTournamentBracket(auditFighters, now - 5_000);
+        setLocalTournamentBracket(bracket);
+        setOnlineTournamentStatus(null);
+        setTournamentStatusText('Infinite tournament loops automatically after every final.');
+        setMode('tournamentInfinite');
+        setScreen('tournamentLobby');
+        return;
+      }
       if (targetScreen === 'tournament') {
         setSelectedTournamentMode('online');
         setOnlineTournamentStatus(null);
@@ -5701,6 +5829,7 @@ export default function App() {
               continueWhenAssetsReady(stage, 'fight', () => setScreen('fight'), 'customRooms', { roster }, { p1: fighterOne, p2: fighterTwo }, 'custom');
             }}
             onWatchMatch={(launch) => setCustomSpectatorLaunch(launch)}
+            fixtureMode={isTutorialCaptureMode()}
           />
         )}
         {screen === 'matchHistory' && (

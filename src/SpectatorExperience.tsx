@@ -24,7 +24,7 @@ import {
 import { loadStageRoster } from './lib/stageLoader';
 import { fetchPublicTournament } from './lib/tournament/client';
 import type { PublicTournamentEntry, PublicTournamentMatch, TournamentPublicView } from './lib/tournament/types';
-import type { CharacterDefinition, MatchSnapshot, StageDefinition } from './types';
+import { emptyInputFrame, type CharacterDefinition, type MatchSnapshot, type StageDefinition } from './types';
 
 export type SpectatorRoute =
   | { kind: 'tournament'; slug: string }
@@ -51,15 +51,23 @@ export async function shareSpectatorLink(title: string, text: string, url: strin
 }
 
 export function SpectatorExperience({ route }: { route: SpectatorRoute }) {
-  const [tournament, setTournament] = useState<TournamentPublicView | null>(null);
-  const [streams, setStreams] = useState<SpectatorStreamSummary[]>([]);
-  const [loading, setLoading] = useState(true);
+  const tutorialFixture = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('koreTutorial') === '1';
+  const fixture = useMemo(() => tutorialFixture ? makeTutorialSpectatorFixture(route.slug) : null, [route.slug, tutorialFixture]);
+  const [tournament, setTournament] = useState<TournamentPublicView | null>(() => fixture?.tournament ?? null);
+  const [streams, setStreams] = useState<SpectatorStreamSummary[]>(() => fixture?.streams ?? []);
+  const [loading, setLoading] = useState(!tutorialFixture);
   const [error, setError] = useState('');
   const [watchStarted, setWatchStarted] = useState(false);
   const [autoFollow, setAutoFollow] = useState(true);
   const [shareStatus, setShareStatus] = useState('');
 
   const refreshTournament = useCallback(async () => {
+    if (fixture) {
+      setTournament(fixture.tournament);
+      setStreams(fixture.streams);
+      setLoading(false);
+      return;
+    }
     try {
       const next = await fetchPublicTournament(route.slug);
       setTournament(next);
@@ -71,11 +79,11 @@ export function SpectatorExperience({ route }: { route: SpectatorRoute }) {
     } finally {
       setLoading(false);
     }
-  }, [route.slug]);
+  }, [fixture, route.slug]);
 
   useEffect(() => { void refreshTournament(); }, [refreshTournament]);
   useEffect(() => {
-    if (!tournament) return undefined;
+    if (!tournament || tutorialFixture) return undefined;
     const timer = window.setInterval(() => void refreshTournament(), 10_000);
     const url = spectatorDirectoryWebSocketUrl(tournament.id);
     if (!url) return () => window.clearInterval(timer);
@@ -91,7 +99,7 @@ export function SpectatorExperience({ route }: { route: SpectatorRoute }) {
       } catch { /* ignore malformed directory events */ }
     };
     return () => { window.clearInterval(timer); socket.close(); };
-  }, [refreshTournament, tournament?.id]);
+  }, [refreshTournament, tournament?.id, tutorialFixture]);
 
   const streamByMatch = useMemo(() => new Map(streams.map((stream) => [stream.matchId, stream])), [streams]);
   const liveMatches = useMemo(() => tournament?.matches
@@ -105,6 +113,9 @@ export function SpectatorExperience({ route }: { route: SpectatorRoute }) {
   if (error || !tournament) return <PublicTournamentState icon={<Wifi size={34} />} title="Tournament unavailable" detail={error || 'The tournament could not be found.'} />;
 
   if ((route.kind === 'match' || route.kind === 'watch') && featuredMatch && watchStarted && featuredStream?.state === 'live') {
+    if (tutorialFixture) {
+      return <TutorialSpectatorMatchViewer tournament={tournament} match={featuredMatch} viewerCount={featuredStream.viewerCount} />;
+    }
     return (
       <SpectatorMatchViewer
         key={featuredMatch.id}
@@ -204,6 +215,97 @@ function PublicMatchLanding({ tournament, match, stream, onWatch, onShare, share
       <a className="secondary-button spectator-action-link" href={tournamentUrl(tournament)}><ChevronLeft size={18} /> Back to Tournament</a>
     </>}
   />;
+}
+
+function makeTutorialSpectatorFixture(slug: string) {
+  const now = Date.now();
+  const entries: PublicTournamentEntry[] = [
+    { id: 'tutorial-entry-1', displayName: 'KORE PLAYER', characterId: 'naruto', seed: 1 },
+    { id: 'tutorial-entry-2', displayName: 'RIVAL ACE', characterId: 'sasuke', seed: 2 },
+    { id: 'tutorial-entry-3', displayName: 'ARENA KING', characterId: 'rock-lee', seed: 3 },
+    { id: 'tutorial-entry-4', displayName: 'VOXEL QUEEN', characterId: 'sakura', seed: 4 }
+  ];
+  const matches: PublicTournamentMatch[] = [
+    { id: 'tutorial-semifinal-1', round: 1, index: 0, entryAId: entries[0].id, entryBId: entries[3].id, winnerEntryId: entries[0].id, status: 'completed', stageId: 'the-chamber', roomStatus: 'closed', reportedAt: now - 30_000 },
+    { id: 'tutorial-semifinal-2', round: 1, index: 1, entryAId: entries[1].id, entryBId: entries[2].id, winnerEntryId: entries[1].id, status: 'completed', stageId: 'the-chamber', roomStatus: 'closed', reportedAt: now - 24_000 },
+    { id: 'tutorial-final', round: 2, index: 0, entryAId: entries[0].id, entryBId: entries[1].id, status: 'ready', stageId: 'the-chamber', roomStatus: 'ready' }
+  ];
+  const tournament: TournamentPublicView = {
+    id: 'tutorial-tournament',
+    slug,
+    name: 'KORE OPEN FINALS',
+    kind: 'freeOnline',
+    status: 'roundActive',
+    entries,
+    matches,
+    currentRound: 2,
+    capacity: 4,
+    minEntries: 4,
+    createdAt: now - 120_000,
+    updatedAt: now,
+    rewardLabel: 'KORE tournament crown'
+  };
+  const streams: SpectatorStreamSummary[] = [{
+    tournamentId: tournament.id,
+    matchId: 'tutorial-final',
+    state: 'live',
+    viewerCount: 128,
+    latestConfirmedFrame: 1_800,
+    updatedAt: now
+  }];
+  return { tournament, streams };
+}
+
+function TutorialSpectatorMatchViewer({ tournament, match, viewerCount }: { tournament: TournamentPublicView; match: PublicTournamentMatch; viewerCount: number }) {
+  const [renderedMatch, setRenderedMatch] = useState<MatchSnapshot | null>(null);
+  const matchRef = useRef<MatchSnapshot | null>(null);
+  const settings = useMemo(() => readGameSettings(), []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void Promise.all([loadCharacterRoster(), loadStageRoster()]).then(([characters, loadedStages]) => {
+      if (cancelled) return;
+      const p1 = characters.characters.find((character) => character.id === findEntry(tournament, match.entryAId)?.characterId) ?? characters.characters[0];
+      const p2 = characters.characters.find((character) => character.id === findEntry(tournament, match.entryBId)?.characterId) ?? characters.characters.find((character) => character.id !== p1?.id) ?? characters.characters[1];
+      const stage = loadedStages.stages.find((candidate) => candidate.id === match.stageId) ?? loadedStages.stages[0];
+      if (!p1 || !p2 || !stage) return;
+      matchRef.current = createMatch(p1, p2, stage, 'online', 3, { roster: characters.characters, playIntro: false });
+      setRenderedMatch(matchRef.current);
+    });
+    return () => { cancelled = true; };
+  }, [match.entryAId, match.entryBId, match.stageId, tournament]);
+
+  useEffect(() => {
+    let frame = 0;
+    let previous = performance.now();
+    let accumulator = 0;
+    const tick = (now: number) => {
+      accumulator += Math.min(0.1, (now - previous) / 1000);
+      previous = now;
+      while (matchRef.current && accumulator >= 1 / 60) {
+        matchRef.current = stepMatch(matchRef.current, emptyInputFrame(), emptyInputFrame(), 1 / 60);
+        accumulator -= 1 / 60;
+      }
+      if (matchRef.current) setRenderedMatch(matchRef.current);
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  if (!renderedMatch) return <PublicTournamentState icon={<Wifi size={34} />} title="Loading live match" detail="Building the tutorial spectator view…" />;
+  return (
+    <main className="fight-screen spectator-fight-screen" data-testid="tutorial-spectator-live">
+      <GameScene match={renderedMatch} cameraSettings={settings.camera} sparkSettings={settings.display.impactSparks} movementSmokeStyle={settings.display.movementSmokeStyle} audioSettings={settings.audio} reducedMotion={settings.display.reducedMotion} />
+      <SpectatorHud match={renderedMatch} />
+      <div className="spectator-live-overlay">
+        <div className="spectator-live-label"><i /> SPECTATOR <span>LIVE · DELAYED</span></div>
+        <div className="spectator-viewers"><Users size={16} /><strong>{viewerCount.toLocaleString()}</strong></div>
+        <a href={tournamentUrl(tournament)} aria-label="Back to tournament"><ChevronLeft size={19} /></a>
+        <button aria-label="Share match"><Share2 size={18} /></button>
+      </div>
+    </main>
+  );
 }
 
 function SpectatorMatchViewer({ tournament, match, stream, onEnded }: { tournament: TournamentPublicView; match: PublicTournamentMatch; stream: SpectatorStreamSummary; onEnded: () => void }) {

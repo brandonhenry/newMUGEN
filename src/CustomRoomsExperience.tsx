@@ -20,7 +20,7 @@ import {
   customMatchWebSocketUrl
 } from './lib/online/customRoomClient';
 import type { CustomMatch, CustomRoomCommand, CustomRoomEvent, CustomRoomSession, CustomRoomState, CustomRoomSummary, CustomStageChoice, CustomStation } from './lib/online/customRooms';
-import { CUSTOM_SPECTATOR_DELAY_FRAMES } from './lib/online/customRooms';
+import { applyCustomRoomCommand, CUSTOM_SPECTATOR_DELAY_FRAMES } from './lib/online/customRooms';
 import { makeResyncRequest, parseSpectatorMessage } from './lib/spectator/client';
 import { createSpectatorPlayback } from './lib/spectator/playback';
 
@@ -32,7 +32,7 @@ export type CustomMatchLaunch = {
   localPlayerId: string;
 };
 
-export function CustomRoomsExperience({ profile, roster, stages, appVersion, session, setSession, onBack, onLaunchMatch, onWatchMatch }: {
+export function CustomRoomsExperience({ profile, roster, stages, appVersion, session, setSession, onBack, onLaunchMatch, onWatchMatch, fixtureMode = false }: {
   profile: OnlinePlayerProfile;
   roster: CharacterDefinition[];
   stages: StageDefinition[];
@@ -42,6 +42,7 @@ export function CustomRoomsExperience({ profile, roster, stages, appVersion, ses
   onBack: () => void;
   onLaunchMatch: (launch: CustomMatchLaunch) => void;
   onWatchMatch: (launch: CustomMatchLaunch) => void;
+  fixtureMode?: boolean;
 }) {
   const [busy, setBusy] = useState('');
   const [message, setMessage] = useState('');
@@ -73,7 +74,7 @@ export function CustomRoomsExperience({ profile, roster, stages, appVersion, ses
     finally { setBusy(''); }
   };
 
-  if (session) return <CustomRoomLobby profile={profile} roster={roster} stages={stages} session={session} setSession={commitSession} onBack={onBack} onLaunchMatch={onLaunchMatch} onWatchMatch={onWatchMatch} />;
+  if (session) return <CustomRoomLobby profile={profile} roster={roster} stages={stages} session={session} setSession={commitSession} onBack={onBack} onLaunchMatch={onLaunchMatch} onWatchMatch={onWatchMatch} fixtureMode={fixtureMode} />;
 
   return (
     <div className="custom-entry-screen">
@@ -111,7 +112,7 @@ export function CustomRoomsExperience({ profile, roster, stages, appVersion, ses
   );
 }
 
-function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack, onLaunchMatch, onWatchMatch }: {
+function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack, onLaunchMatch, onWatchMatch, fixtureMode }: {
   profile: OnlinePlayerProfile;
   roster: CharacterDefinition[];
   stages: StageDefinition[];
@@ -120,6 +121,7 @@ function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack,
   onBack: () => void;
   onLaunchMatch: (launch: CustomMatchLaunch) => void;
   onWatchMatch: (launch: CustomMatchLaunch) => void;
+  fixtureMode: boolean;
 }) {
   const [room, setRoom] = useState(session.room);
   const [selectedStationId, setSelectedStationId] = useState(session.room.stations[0]?.id ?? 'station-1');
@@ -138,6 +140,7 @@ function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack,
   const localIsFighter = Boolean(localMatch?.fighterPlayerIds.includes(playerId));
 
   useEffect(() => {
+    if (fixtureMode) return undefined;
     const applyEvent = (event: CustomRoomEvent) => {
       if (event.type === 'snapshot') { setRoom(event.room); setSession({ ...session, room: event.room }); setError(''); }
       if (event.type === 'error') setError(event.message);
@@ -146,7 +149,7 @@ function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack,
     const socket = connectCustomRoom(room.roomId, session.memberToken, applyEvent);
     const poll = window.setInterval(() => void fetchCustomRoom(room.roomId, session.memberToken).then((next) => applyEvent({ type: 'snapshot', room: next })).catch((reason) => setError(reason instanceof Error ? reason.message : 'Room connection interrupted')), socket ? 10_000 : 1_000);
     return () => { window.clearInterval(poll); socket?.close(); };
-  }, [room.roomId, session.memberToken, setSession]);
+  }, [fixtureMode, room.roomId, session.memberToken, setSession]);
 
   useEffect(() => {
     if (!localIsFighter || !localStation || !localMatch?.characterIds || !localMatch.stageId || localStation.phase !== 'loading' || launchedMatchRef.current === localMatch.id) return;
@@ -157,14 +160,17 @@ function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack,
   const command = async (value: CustomRoomCommand) => {
     setError('');
     try {
-      const next = await sendCustomRoomCommand(room.roomId, session.memberToken, value);
+      const next = fixtureMode
+        ? applyCustomRoomCommand(room, playerId, value)
+        : await sendCustomRoomCommand(room.roomId, session.memberToken, value);
       setRoom(next); setSession({ ...session, room: next });
     } catch (reason) { setError(reason instanceof Error ? reason.message : 'Room action failed'); }
   };
 
   const leave = async () => {
-    await leaveCustomRoom(room.roomId, session.memberToken).catch(() => undefined);
-    clearCustomRoomSession(room.roomId); setSession(null); onBack();
+    if (!fixtureMode) await leaveCustomRoom(room.roomId, session.memberToken).catch(() => undefined);
+    if (!fixtureMode) clearCustomRoomSession(room.roomId);
+    setSession(null); onBack();
   };
 
   if (localIsFighter && localStation?.phase === 'characterSelect' && localMatch) {
