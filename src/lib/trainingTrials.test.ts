@@ -881,6 +881,10 @@ describe('training trial catalog', () => {
     expect(beginnerAttacks[0].notation).toEqual(['Light']);
     expect(koreAttacks.map((step) => step.command)).toEqual(beginnerRouteSteps(character, beginner.sourceBeginnerRoute!).map((step) => step.command));
     expect(koreAttacks.map((step) => step.animationKey)).toEqual(beginnerAttacks.map((step) => step.animationKey));
+    expect(beginnerAttacks.every((step) => (step.windowBefore ?? 0) >= 24 && (step.windowAfter ?? 0) >= 36)).toBe(true);
+    expect(koreAttacks.map((step) => [step.windowBefore, step.windowAfter])).toEqual(
+      beginnerRouteSteps(character, beginner.sourceBeginnerRoute!).map((step) => [step.windowBefore, step.windowAfter])
+    );
   });
 
   it('adds a recoverable health combo lesson for every combo-capable character', () => {

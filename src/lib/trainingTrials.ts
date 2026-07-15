@@ -466,6 +466,8 @@ export function generateBasicTrainingTrials(character: CharacterDefinition, rost
 }
 
 export function generateComboTrainingTrials(character: CharacterDefinition, controlScheme: ControlScheme = 'beginner'): TrainingTrialDefinition[] {
+  const beginnerWindowBefore = 24;
+  const beginnerWindowAfter = 36;
   const systemTrial = makeRecoverableHealthTrial(character);
   const catalog = character.beginnerComboRoutes ?? [];
   const routeVariants = catalog.flatMap((route) => {
@@ -530,8 +532,8 @@ export function generateComboTrainingTrials(character: CharacterDefinition, cont
         actions,
         kind: 'impact',
         targetFrame: index === 0 ? 18 : Math.max(8, step.windowBefore),
-        windowBefore: step.windowBefore,
-        windowAfter: step.windowAfter,
+        windowBefore: controlScheme === 'beginner' ? Math.max(beginnerWindowBefore, step.windowBefore) : step.windowBefore,
+        windowAfter: controlScheme === 'beginner' ? Math.max(beginnerWindowAfter, step.windowAfter) : step.windowAfter,
         expectImpact: step.expect === 'launch' ? { launched: true } : step.expect === 'juggle' ? { juggled: true } : undefined,
         expectImpactKinds: ['hit', 'counterHit', 'punish', 'whiffPunish'],
         reason: step.expect === 'knockdown' ? 'Confirm the route finisher and knock the dummy down.' : 'Confirm this hit inside its authored link window.'

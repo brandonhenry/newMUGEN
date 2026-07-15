@@ -125,6 +125,7 @@ const KI_BLOCK_GAIN = 4;
 const KI_DEFENDER_BLOCK_GAIN = 5;
 const KI_BURST_COST = 35;
 const ATTACK_BUFFER_FRAMES = 16;
+const BEGINNER_ATTACK_BUFFER_FRAMES = 60;
 const MAX_COMBO_STEPS = 30;
 const COMBO_SEQUENCE_MEMORY = 30;
 const JUGGLE_REPEAT_LOOP_UNIQUE_LIMIT = 3;
@@ -1723,7 +1724,9 @@ function clearThrowRuntime(fighter: FighterRuntime) {
 }
 
 function bufferMoveIntent(fighter: FighterRuntime, intent: NonNullable<FighterRuntime['bufferedMoveIntent']>) {
-  const bufferFrames = Math.max(1, Math.min(ATTACK_BUFFER_FRAMES, Math.round(intent.beginnerWindowBefore ?? ATTACK_BUFFER_FRAMES)));
+  const bufferFrames = isBeginnerRouteIntent(intent)
+    ? BEGINNER_ATTACK_BUFFER_FRAMES
+    : Math.max(1, Math.min(ATTACK_BUFFER_FRAMES, Math.round(intent.beginnerWindowBefore ?? ATTACK_BUFFER_FRAMES)));
   fighter.bufferedMoveIntent = {
     moveInput: intent.moveInput,
     inputSnapshot: cloneInputFrame(intent.inputSnapshot),
@@ -1750,6 +1753,14 @@ function tickBufferedMoveIntent(fighter: FighterRuntime, frameDelta: number) {
     fighter.bufferedMoveFrames = 0;
     return;
   }
+  // Beginner players can press the next route button during startup. Keep that
+  // press alive until the current attack confirms; block and whiff handling reset
+  // the route and clear it instead. KORE intents continue to expire normally.
+  if (fighter.bufferedMoveIntent.beginnerAwaitingHitConfirm && fighter.state === 'attack' && !fighter.hitConfirmed) {
+    fighter.bufferedMoveFrames = fighter.bufferedMoveIntent.framesRemaining;
+    fighter.bufferedMoveInput = fighter.bufferedMoveIntent.moveInput;
+    return;
+  }
   fighter.bufferedMoveIntent.framesRemaining = Math.max(0, fighter.bufferedMoveIntent.framesRemaining - frameDelta);
   fighter.bufferedMoveFrames = fighter.bufferedMoveIntent.framesRemaining;
   fighter.bufferedMoveInput = fighter.bufferedMoveIntent.moveInput;
@@ -1763,13 +1774,20 @@ function clearBufferedMoveInput(fighter: FighterRuntime) {
 }
 
 function canBufferFreshMoveInput(fighter: FighterRuntime, intent?: FighterRuntime['bufferedMoveIntent']) {
-  // Recovery is a committed state: non-cancelable follow-ups must be pressed
-  // after the current attack has fully completed. Authored hit-cancels still
-  // use the fresh intent directly in the attack branch below.
-  if (fighter.state === 'attack') return Boolean(intent?.beginnerAwaitingHitConfirm);
+  // KORE recovery stays committed. Beginner route presses may be queued during
+  // recovery, while authored hit-cancels can still consume the fresh intent.
+  if (fighter.state === 'attack') return isBeginnerRouteIntent(intent);
   if (fighter.state === 'juggle' || fighter.state === 'knockdown' || fighter.state === 'transform' || fighter.state === 'throwHold' || fighter.state === 'throwHeld') return false;
   if (fighter.state === 'chargeKi' && (fighter.chargePhase === 'startup' || fighter.chargePhase === 'recovery')) return false;
   return true;
+}
+
+function isBeginnerRouteIntent(intent?: FighterRuntime['bufferedMoveIntent']) {
+  return Boolean(intent && (
+    intent.beginnerDamageScale !== undefined ||
+    intent.beginnerRouteId ||
+    intent.beginnerAwaitingHitConfirm
+  ));
 }
 
 function cloneInputFrame(input: InputFrame): InputFrame {

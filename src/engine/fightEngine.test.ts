@@ -1265,6 +1265,7 @@ describe('character manifests', () => {
       match.fighters[0].previousAttackInputs.jab = false;
       match = stepMatch(match, makeInput('jab'), emptyInputFrame(), 1 / 60);
       expect(match.fighters[0].bufferedMoveIntent?.beginnerAwaitingHitConfirm).toBe(true);
+      expect(match.fighters[0].bufferedMoveFrames).toBe(60);
       return stepFrames(match, 24);
     };
 
@@ -1275,6 +1276,39 @@ describe('character manifests', () => {
     const whiffed = run(8);
     expect(whiffed.fighters[0].beginnerGestureSequence).toEqual([]);
     expect(whiffed.fighters[0].bufferedMoveIntent).toBeNull();
+  });
+
+  it('queues Beginner follow-ups throughout confirmed recovery without changing KORE recovery timing', () => {
+    const character = makeBeginnerSchemeCharacter();
+    let beginner = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'beginner' });
+    beginner = stepMatch(beginner, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    beginner.fighters[0].hitConfirmed = true;
+    beginner.fighters[0].hitConnected = true;
+    beginner.fighters[0].whiffRecoveryApplied = true;
+    beginner.fighters[0].comboHits = 1;
+    beginner.fighters[0].comboTimer = 0.5;
+    beginner.fighters[0].currentMove = { ...beginner.fighters[0].currentMove!, cancelable: false };
+    beginner.fighters[0].actionFramesRemaining = 30;
+    beginner.fighters[0].actionTimer = 0.5;
+    beginner.fighters[0].previousAttackInputs.jab = false;
+    beginner.fighters[1].state = 'hit';
+    beginner.fighters[1].stunFramesRemaining = 90;
+    beginner.fighters[1].stunTimer = 1.5;
+
+    beginner = stepMatch(beginner, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    expect(beginner.fighters[0].bufferedMoveIntent?.beginnerRouteId).toBeTruthy();
+    expect(beginner.fighters[0].bufferedMoveFrames).toBe(60);
+    beginner = stepFrames(beginner, 31);
+    expect(beginner.fighters[0].currentMove?.input).toBe('heavy');
+
+    let kore = createMatch(character, starterCharacters[1], stages[0], 'local2p', 3, { controlScheme: 'kore' });
+    kore.fighters[0].state = 'hit';
+    kore.fighters[0].stunFramesRemaining = 30;
+    kore.fighters[0].stunTimer = 0.5;
+    kore = stepMatch(kore, makeInput('jab'), emptyInputFrame(), 1 / 60);
+    expect(kore.fighters[0].bufferedMoveFrames).toBe(16);
+    kore = stepFrames(kore, 16);
+    expect(kore.fighters[0].bufferedMoveIntent).toBeNull();
   });
 
   it('falls Beginner auto-combo finishers back to base special when preferred commands are missing', () => {
