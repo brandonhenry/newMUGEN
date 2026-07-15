@@ -3900,135 +3900,95 @@
   "beginnerComboRoutes": [
     {
       "id": "franky:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Weapons Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Quick Cyborg Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "franky:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Strong Right Drive",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Strong Right Hook",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "knockdown",
-          "kiCommand": "qcf+4",
-          "kiAnimationKey": "cmd:qcf+4",
-          "kiCost": 26,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
       ]
     },
     {
       "id": "franky:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Cyborg Shuffle",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Weapons Left",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "qcf+4",
-          "kiAnimationKey": "cmd:qcf+4",
-          "kiCost": 26,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
       ]
     },
     {
@@ -4040,40 +4000,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Cyborg Wheel Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Cyborg Wheel Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "qcf+4",
-          "kiAnimationKey": "cmd:qcf+4",
-          "kiCost": 26,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017"
       ]
     },
     {
@@ -4085,41 +4021,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Weapons Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Strong Right Drive",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "qcf+4",
-          "kiAnimationKey": "cmd:qcf+4",
-          "kiCost": 26,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -4131,41 +4042,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Cyborg Wheel Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Strong Right Drive",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "qcf+4",
-          "kiAnimationKey": "cmd:qcf+4",
-          "kiCost": 26,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0020",
+        "s0021",
+        "s0019"
       ]
     },
     {
@@ -4174,44 +4060,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Strong Right",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Cyborg Shuffle",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "qcf+4",
-          "kiAnimationKey": "cmd:qcf+4",
-          "kiCost": 26,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0023",
+        "s0024"
       ]
     },
     {
@@ -4220,45 +4081,6900 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "forward+light",
+        "special"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0024"
+      ]
+    },
+    {
+      "id": "franky:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "franky:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0030",
+        "s0031",
+        "s0029"
+      ]
+    },
+    {
+      "id": "franky:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0029"
+      ]
+    },
+    {
+      "id": "franky:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0034",
+        "s0021",
+        "s0019"
+      ]
+    },
+    {
+      "id": "franky:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Cyborg Shuffle",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Weapons Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Franky Ball Tornado",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "qcf+4",
-          "kiAnimationKey": "cmd:qcf+4",
-          "kiCost": 26,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0035",
+        "s0023",
+        "s0024"
+      ]
+    },
+    {
+      "id": "franky:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "forward+light",
+        "special"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0026",
+        "s0024"
+      ]
+    },
+    {
+      "id": "franky:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "franky:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "franky:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "franky:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "franky:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "franky:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "franky:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:001",
+      "title": "Cyborg Wheel Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:002",
+      "title": "Cyborg Wheel Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:003",
+      "title": "Low Weapons Left 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0039"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:004",
+      "title": "Low Weapons Left 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0044",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:005",
+      "title": "Quick Cyborg Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:006",
+      "title": "Quick Cyborg Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:007",
+      "title": "Strong Right Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:008",
+      "title": "Strong Right Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:009",
+      "title": "Cyborg Wheel Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0051",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:010",
+      "title": "Low Weapons Left 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "light",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0054",
+        "s0055",
+        "s0052"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:011",
+      "title": "Quick Cyborg Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0055",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:012",
+      "title": "Strong Right Hook 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0051",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:013",
+      "title": "Cyborg Wheel Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0051",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:014",
+      "title": "Low Weapons Left 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "light",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0054",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:015",
+      "title": "Quick Cyborg Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:basic:016",
+      "title": "Strong Right Hook 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0051",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:017",
+      "title": "Cyborg Wheel Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0057",
+        "s0049"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:018",
+      "title": "Cyborg Wheel Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0057",
+        "s0049"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:019",
+      "title": "Franky Guard Pump 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:020",
+      "title": "Franky Guard Pump 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:021",
+      "title": "Low Cyborg Shuffle 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:022",
+      "title": "Low Cyborg Shuffle 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:023",
+      "title": "Quick Cyborg Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0053",
+        "s0047"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:024",
+      "title": "Quick Cyborg Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0049"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:025",
+      "title": "Quick Cyborg Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0053",
+        "s0047"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:026",
+      "title": "Quick Cyborg Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0049"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:027",
+      "title": "Quick Weapons Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:028",
+      "title": "Quick Weapons Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:029",
+      "title": "Strong Right Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:030",
+      "title": "Strong Right Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:031",
+      "title": "Strong Right Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:032",
+      "title": "Strong Right Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:033",
+      "title": "Strong Right Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:034",
+      "title": "Strong Right Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0073",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:035",
+      "title": "Strong Right Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:036",
+      "title": "Strong Right Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0073",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:037",
+      "title": "Cyborg Wheel Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0075",
+        "s0047"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:038",
+      "title": "Cyborg Wheel Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0075",
+        "s0047"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:039",
+      "title": "Low Strong Right 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0078"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:040",
+      "title": "Low Strong Right 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0079",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:041",
+      "title": "Low Strong Right 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0078"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:042",
+      "title": "Low Strong Right 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0079",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:043",
+      "title": "Quick Weapons Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0080",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:advanced:044",
+      "title": "Quick Weapons Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0080",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:045",
+      "title": "Full Crouch Upper 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0068"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:046",
+      "title": "Full Crouch Upper 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0073",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:047",
+      "title": "Low Strong Right 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0083",
+        "s0078"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:048",
+      "title": "Low Strong Right 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0084",
+        "s0085"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:049",
+      "title": "Rising Cyborg Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0087",
+        "s0078"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:050",
+      "title": "Rising Cyborg Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0079",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:051",
+      "title": "While Rising Right 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0089",
+        "s0078"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:052",
+      "title": "While Rising Right 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0072",
+        "s0041"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:053",
+      "title": "Franky Rocket Upper Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5653846153846154,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0049",
+        "s0055",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:054",
+      "title": "Franky Rocket Upper Air Chase Launcher 16-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 16,
+      "estimatedDamage": 37,
+      "damageScale": 0.4323529411764706,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "down+light",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0049",
+        "s0055",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0096",
+        "s0073",
+        "s0055",
+        "s0097"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:055",
+      "title": "Franky Rocket Upper Air Chase Launcher 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0049",
+        "s0055",
+        "s0052",
+        "s0065"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:056",
+      "title": "Low Cyborg Shuffle 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "light",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0098",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0055"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:057",
+      "title": "Low Cyborg Shuffle 12-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 37,
+      "damageScale": 0.5485074626865671,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "light",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "light",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0098",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0055",
+        "s0052",
+        "s0061"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:058",
+      "title": "Low Cyborg Shuffle 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "light",
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0098",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:059",
+      "title": "Low Strong Right 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.57421875,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "special",
+        "light",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "light",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0084",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0099",
+        "s0058",
+        "s0061",
+        "s0055",
+        "s0052"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:060",
+      "title": "Low Strong Right 11-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 37,
+      "damageScale": 0.5485074626865671,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "special",
+        "light",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "light",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0084",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0099",
+        "s0058",
+        "s0061",
+        "s0055",
+        "s0052",
+        "s0061"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:061",
+      "title": "Low Strong Right 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "special",
+        "light",
+        "down+light",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0084",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0099"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:062",
+      "title": "Low Weapons Left 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.57421875,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "light",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0054",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0055"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:063",
+      "title": "Low Weapons Left 12-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 37,
+      "damageScale": 0.525,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "light",
+        "down+light",
+        "medium",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "light",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0054",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0055",
+        "s0052",
+        "s0061"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:crouch:064",
+      "title": "Low Weapons Left 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "light",
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0054",
+        "s0055",
+        "s0052",
+        "s0053",
+        "s0056"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:065",
+      "title": "Crouch Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:066",
+      "title": "Crouch Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0103",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:067",
+      "title": "Crouch Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:068",
+      "title": "Crouch Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0103",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:069",
+      "title": "Forward Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0105",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:070",
+      "title": "Forward Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:071",
+      "title": "Forward Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0105",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:072",
+      "title": "Forward Strong Right Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0074"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:073",
+      "title": "Franky Cannon Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0108",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:074",
+      "title": "Franky Cannon Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:075",
+      "title": "Franky Cannon Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0108",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:076",
+      "title": "Franky Cannon Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:077",
+      "title": "Franky Coup de Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:078",
+      "title": "Franky Coup de Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0113",
+        "s0110"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:079",
+      "title": "Franky Coup de Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:080",
+      "title": "Franky Coup de Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0113",
+        "s0110"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:081",
+      "title": "Franky Radical Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:082",
+      "title": "Franky Radical Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0113",
+        "s0110"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:083",
+      "title": "Franky Radical Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:084",
+      "title": "Franky Radical Laser Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0113",
+        "s0110"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:085",
+      "title": "Franky Rocket Upper Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0078",
+        "s0102"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:086",
+      "title": "Franky Rocket Upper Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0115",
+        "s0085"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:087",
+      "title": "Franky Coup de Burst Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 47,
+      "damageScale": 0.5558823529411765,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:088",
+      "title": "Franky Coup de Burst Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:089",
+      "title": "Franky Radical Laser Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 47,
+      "damageScale": 0.5494186046511628,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:090",
+      "title": "Franky Radical Laser Grounded Launcher 22-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.42567567567567566,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0118",
+        "s0119",
+        "s0058",
+        "s0118"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:091",
+      "title": "Franky Radical Laser Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 38,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:launcher:092",
+      "title": "Franky Radical Laser Hybrid Launcher 30-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 30,
+      "estimatedDamage": 47,
+      "damageScale": 0.36627906976744184,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "heavy",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0118",
+        "s0119",
+        "s0058",
+        "s0118",
+        "s0120",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:093",
+      "title": "Crouch Strong Right Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5485074626865671,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:094",
+      "title": "Crouch Strong Right Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 37,
+      "damageScale": 0.39095744680851063,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:095",
+      "title": "Crouch Strong Right Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0073"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:096",
+      "title": "Forward Strong Right Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5485074626865671,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0105",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:097",
+      "title": "Forward Strong Right Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 37,
+      "damageScale": 0.39095744680851063,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0105",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:098",
+      "title": "Forward Strong Right Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0105",
+        "s0073"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:099",
+      "title": "Franky Cannon Laser Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0108",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:100",
+      "title": "Franky Cannon Laser Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.48214285714285715,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0108",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:101",
+      "title": "Franky Cannon Laser Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0108",
+        "s0073"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:102",
+      "title": "Franky Coup de Burst Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:103",
+      "title": "Franky Coup de Burst Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.4772727272727273,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:104",
+      "title": "Franky Coup de Burst Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0073"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:105",
+      "title": "Franky Coup de Burst Hybrid Launcher 30-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "marathon",
+      "estimatedHits": 30,
+      "estimatedDamage": 47,
+      "damageScale": 0.369140625,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "heavy",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0111",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0118",
+        "s0119",
+        "s0058",
+        "s0118",
+        "s0120",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:106",
+      "title": "Franky Radical Laser Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:107",
+      "title": "Franky Radical Laser Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.4725,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:108",
+      "title": "Franky Radical Laser Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0073"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:109",
+      "title": "Franky Radical Laser Hybrid Launcher 30-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "marathon",
+      "estimatedHits": 30,
+      "estimatedDamage": 47,
+      "damageScale": 0.36627906976744184,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "heavy",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0114",
+        "s0112",
+        "s0116",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0118",
+        "s0119",
+        "s0058",
+        "s0118",
+        "s0120",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0117",
+        "s0073",
+        "s0055"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:110",
+      "title": "Franky Rocket Upper Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5653846153846154,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0049",
+        "s0055",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:111",
+      "title": "Franky Rocket Upper Air Chase Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 37,
+      "damageScale": 0.40384615384615385,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "down+light",
+        "special",
+        "light",
+        "special",
+        "down+light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0049",
+        "s0055",
+        "s0052",
+        "s0065",
+        "s0075",
+        "s0092",
+        "s0061",
+        "s0093",
+        "s0094",
+        "s0095",
+        "s0096",
+        "s0073",
+        "s0055",
+        "s0097",
+        "s0052",
+        "s0065"
+      ]
+    },
+    {
+      "id": "franky:beginner:advanced:tornado:112",
+      "title": "Franky Rocket Upper Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0078",
+        "s0073"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "franky:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n9",
+          "down+medium": "n9",
+          "special": "n25",
+          "special+light": "n25",
+          "forward+special+light": "n25",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "special+medium": "n32",
+          "down+special+medium": "n32",
+          "light": "n1",
+          "forward+light": "n1",
+          "down+light": "n152",
+          "forward+medium": "n145",
+          "forward+heavy": "n163",
+          "forward+special": "n175",
+          "down+heavy": "n114",
+          "down+special": "n109",
+          "down-forward+light": "n104",
+          "down-forward+medium": "n99",
+          "down-forward+special": "n189",
+          "forward+special+medium": "n184"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:027",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "special": "n173",
+          "heavy": "n240",
+          "forward+light": "n238",
+          "forward+medium": "n37",
+          "forward+heavy": "n157"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "franky:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "franky:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "franky:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "franky:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "franky:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "franky:beginner:light-core",
+        "edges": {
+          "medium": "n43",
+          "heavy": "n51",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "franky:beginner:light-core",
+        "edges": {}
+      },
+      "n43": {
+        "depth": 8,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 9,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 10,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 11,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 12,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 13,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 14,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91",
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 15,
+        "routeId": "franky:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n91": {
+        "depth": 15,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 16,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 17,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 18,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 19,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 20,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 21,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 22,
+        "routeId": "franky:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n51": {
+        "depth": 8,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 9,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 10,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 11,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 12,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 13,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 14,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 15,
+        "routeId": "franky:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "franky:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "franky:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "franky:beginner:forward-light-route",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "franky:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:043",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n238": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:launcher:073",
+        "edges": {
+          "special": "n291",
+          "light": "n239",
+          "medium": "n246"
+        }
+      },
+      "n239": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:launcher:073",
+        "edges": {}
+      },
+      "n246": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "down+light": "n247"
+        }
+      },
+      "n247": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "forward+medium": "n248"
+        }
+      },
+      "n248": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "medium": "n249"
+        }
+      },
+      "n249": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "forward+light": "n250"
+        }
+      },
+      "n250": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "light": "n251"
+        }
+      },
+      "n251": {
+        "depth": 8,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "medium": "n252"
+        }
+      },
+      "n252": {
+        "depth": 9,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "special": "n253"
+        }
+      },
+      "n253": {
+        "depth": 10,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "heavy": "n254"
+        }
+      },
+      "n254": {
+        "depth": 11,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "medium": "n255"
+        }
+      },
+      "n255": {
+        "depth": 12,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "special": "n256"
+        }
+      },
+      "n256": {
+        "depth": 13,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "light": "n257"
+        }
+      },
+      "n257": {
+        "depth": 14,
+        "routeId": "franky:beginner:advanced:launcher:087",
+        "edges": {
+          "special": "n258"
+        }
+      },
+      "n258": {
+        "depth": 15,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "down+light": "n259"
+        }
+      },
+      "n259": {
+        "depth": 16,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "forward+medium": "n260"
+        }
+      },
+      "n260": {
+        "depth": 17,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "medium": "n261"
+        }
+      },
+      "n261": {
+        "depth": 18,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "heavy": "n262"
+        }
+      },
+      "n262": {
+        "depth": 19,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "down+light": "n263"
+        }
+      },
+      "n263": {
+        "depth": 20,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "forward+light": "n264"
+        }
+      },
+      "n264": {
+        "depth": 21,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "heavy": "n265"
+        }
+      },
+      "n265": {
+        "depth": 22,
+        "routeId": "franky:beginner:advanced:launcher:090",
+        "edges": {
+          "special": "n266"
+        }
+      },
+      "n266": {
+        "depth": 23,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {
+          "light": "n267"
+        }
+      },
+      "n267": {
+        "depth": 24,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {
+          "medium": "n268"
+        }
+      },
+      "n268": {
+        "depth": 25,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {
+          "special": "n269"
+        }
+      },
+      "n269": {
+        "depth": 26,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {
+          "heavy": "n270"
+        }
+      },
+      "n270": {
+        "depth": 27,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {
+          "medium": "n271"
+        }
+      },
+      "n271": {
+        "depth": 28,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {
+          "special": "n272"
+        }
+      },
+      "n272": {
+        "depth": 29,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {
+          "light": "n273"
+        }
+      },
+      "n273": {
+        "depth": 30,
+        "routeId": "franky:beginner:advanced:launcher:092",
+        "edges": {}
+      },
+      "n291": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:tornado:101",
+        "edges": {}
+      },
+      "n240": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:launcher:074",
+        "edges": {
+          "special": "n241"
+        }
+      },
+      "n241": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:launcher:074",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:029",
+        "edges": {
+          "medium": "n10",
+          "special": "n236",
+          "light": "n234",
+          "down+light": "n159",
+          "heavy": "n161",
+          "forward+light": "n39"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "franky:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "franky:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "franky:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "franky:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "franky:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "franky:beginner:medium-core",
+        "edges": {
+          "heavy": "n67",
+          "light": "n59",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "franky:beginner:medium-core",
+        "edges": {}
+      },
+      "n59": {
+        "depth": 8,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 9,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 10,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 11,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 12,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 13,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 14,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 15,
+        "routeId": "franky:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n67": {
+        "depth": 8,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 9,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 10,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 11,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 12,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 13,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 14,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 15,
+        "routeId": "franky:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "franky:beginner:down-medium-route",
+        "edges": {
+          "special": "n40"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "franky:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n234": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:launcher:065",
+        "edges": {
+          "special": "n290",
+          "light": "n235",
+          "medium": "n274"
+        }
+      },
+      "n235": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n274": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "down+light": "n275"
+        }
+      },
+      "n275": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "forward+medium": "n276"
+        }
+      },
+      "n276": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "medium": "n277"
+        }
+      },
+      "n277": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "forward+light": "n278"
+        }
+      },
+      "n278": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "light": "n279"
+        }
+      },
+      "n279": {
+        "depth": 8,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "medium": "n280"
+        }
+      },
+      "n280": {
+        "depth": 9,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "special": "n281"
+        }
+      },
+      "n281": {
+        "depth": 10,
+        "routeId": "franky:beginner:advanced:tornado:093",
+        "edges": {
+          "heavy": "n282"
+        }
+      },
+      "n282": {
+        "depth": 11,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {
+          "medium": "n283"
+        }
+      },
+      "n283": {
+        "depth": 12,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {
+          "special": "n284"
+        }
+      },
+      "n284": {
+        "depth": 13,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {
+          "light": "n285"
+        }
+      },
+      "n285": {
+        "depth": 14,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {
+          "special": "n286"
+        }
+      },
+      "n286": {
+        "depth": 15,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {
+          "down+light": "n287"
+        }
+      },
+      "n287": {
+        "depth": 16,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {
+          "forward+medium": "n288"
+        }
+      },
+      "n288": {
+        "depth": 17,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {
+          "medium": "n289"
+        }
+      },
+      "n289": {
+        "depth": 18,
+        "routeId": "franky:beginner:advanced:tornado:094",
+        "edges": {}
+      },
+      "n290": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:tornado:095",
+        "edges": {}
+      },
+      "n236": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:launcher:066",
+        "edges": {
+          "special": "n237"
+        }
+      },
+      "n237": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:launcher:066",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:021",
+        "edges": {
+          "heavy": "n18",
+          "special": "n242",
+          "down+light": "n41",
+          "light": "n209",
+          "medium": "n150",
+          "forward+light": "n35",
+          "forward+medium": "n194",
+          "forward+heavy": "n244"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "franky:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "franky:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "franky:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "franky:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "franky:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "franky:beginner:heavy-core",
+        "edges": {
+          "medium": "n83",
+          "light": "n75",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "franky:beginner:heavy-core",
+        "edges": {}
+      },
+      "n75": {
+        "depth": 8,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 9,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 10,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 11,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 12,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 13,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 14,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 15,
+        "routeId": "franky:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n83": {
+        "depth": 8,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 9,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 10,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 11,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 12,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 13,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 14,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 15,
+        "routeId": "franky:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "franky:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "franky:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n42"
+        }
+      },
+      "n42": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n194": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "special": "n195"
+        }
+      },
+      "n195": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "light": "n196"
+        }
+      },
+      "n196": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "down+light": "n197"
+        }
+      },
+      "n197": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "forward+medium": "n198"
+        }
+      },
+      "n198": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "medium": "n199"
+        }
+      },
+      "n199": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "forward+light": "n200"
+        }
+      },
+      "n200": {
+        "depth": 8,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "light": "n201"
+        }
+      },
+      "n201": {
+        "depth": 9,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "medium": "n202"
+        }
+      },
+      "n202": {
+        "depth": 10,
+        "routeId": "franky:beginner:advanced:crouch:053",
+        "edges": {
+          "special": "n203"
+        }
+      },
+      "n203": {
+        "depth": 11,
+        "routeId": "franky:beginner:advanced:crouch:054",
+        "edges": {
+          "heavy": "n204"
+        }
+      },
+      "n204": {
+        "depth": 12,
+        "routeId": "franky:beginner:advanced:crouch:054",
+        "edges": {
+          "down+light": "n205"
+        }
+      },
+      "n205": {
+        "depth": 13,
+        "routeId": "franky:beginner:advanced:crouch:054",
+        "edges": {
+          "special": "n206"
+        }
+      },
+      "n206": {
+        "depth": 14,
+        "routeId": "franky:beginner:advanced:crouch:054",
+        "edges": {
+          "light": "n207"
+        }
+      },
+      "n207": {
+        "depth": 15,
+        "routeId": "franky:beginner:advanced:crouch:054",
+        "edges": {
+          "special": "n208"
+        }
+      },
+      "n208": {
+        "depth": 16,
+        "routeId": "franky:beginner:advanced:crouch:054",
+        "edges": {
+          "down+light": "n292"
+        }
+      },
+      "n292": {
+        "depth": 17,
+        "routeId": "franky:beginner:advanced:tornado:111",
+        "edges": {
+          "forward+medium": "n293"
+        }
+      },
+      "n293": {
+        "depth": 18,
+        "routeId": "franky:beginner:advanced:tornado:111",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "down+light": "n211"
+        }
+      },
+      "n211": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "medium": "n212"
+        }
+      },
+      "n212": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "special": "n213"
+        }
+      },
+      "n213": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "forward+medium": "n214"
+        }
+      },
+      "n214": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "forward+light": "n215"
+        }
+      },
+      "n215": {
+        "depth": 8,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "light": "n216"
+        }
+      },
+      "n216": {
+        "depth": 9,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "light": "n217"
+        }
+      },
+      "n217": {
+        "depth": 10,
+        "routeId": "franky:beginner:advanced:crouch:056",
+        "edges": {
+          "down+light": "n218"
+        }
+      },
+      "n218": {
+        "depth": 11,
+        "routeId": "franky:beginner:advanced:crouch:057",
+        "edges": {
+          "light": "n219"
+        }
+      },
+      "n219": {
+        "depth": 12,
+        "routeId": "franky:beginner:advanced:crouch:057",
+        "edges": {}
+      },
+      "n242": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:launcher:085",
+        "edges": {
+          "special": "n294",
+          "light": "n243"
+        }
+      },
+      "n243": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:launcher:085",
+        "edges": {}
+      },
+      "n294": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:tornado:112",
+        "edges": {}
+      },
+      "n244": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:launcher:086",
+        "edges": {
+          "special": "n245"
+        }
+      },
+      "n245": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:launcher:086",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n26",
+          "medium": "n30",
+          "forward+medium": "n143"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "franky:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "franky:beginner:special-core",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:037",
+        "edges": {
+          "special": "n168",
+          "heavy": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "franky:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:039",
+        "edges": {
+          "heavy": "n169",
+          "light": "n33",
+          "down-forward+medium": "n171",
+          "down+medium": "n180",
+          "special": "n182"
+        }
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "franky:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "franky:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:040",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:047",
+        "edges": {
+          "special": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n183",
+          "light": "n220"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n220": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "down+light": "n221"
+        }
+      },
+      "n221": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "medium": "n222"
+        }
+      },
+      "n222": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "forward+medium": "n223"
+        }
+      },
+      "n223": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "forward+light": "n224"
+        }
+      },
+      "n224": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "light": "n225"
+        }
+      },
+      "n225": {
+        "depth": 8,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "light": "n226"
+        }
+      },
+      "n226": {
+        "depth": 9,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "down+light": "n227"
+        }
+      },
+      "n227": {
+        "depth": 10,
+        "routeId": "franky:beginner:advanced:crouch:059",
+        "edges": {
+          "light": "n228"
+        }
+      },
+      "n228": {
+        "depth": 11,
+        "routeId": "franky:beginner:advanced:crouch:060",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:basic:001",
+        "edges": {
+          "down+light": "n100",
+          "light": "n102",
+          "medium": "n119"
+        }
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:009",
+        "edges": {
+          "down+light": "n120"
+        }
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:basic:013",
+        "edges": {
+          "forward+medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:basic:013",
+        "edges": {
+          "forward+light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n105",
+          "light": "n107",
+          "special": "n122"
+        }
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:010",
+        "edges": {
+          "down+light": "n124"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n134"
+        }
+      },
+      "n134": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:basic:014",
+        "edges": {
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:basic:014",
+        "edges": {
+          "forward+medium": "n136"
+        }
+      },
+      "n136": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:basic:014",
+        "edges": {
+          "forward+light": "n229"
+        }
+      },
+      "n229": {
+        "depth": 8,
+        "routeId": "franky:beginner:advanced:crouch:062",
+        "edges": {
+          "light": "n230"
+        }
+      },
+      "n230": {
+        "depth": 9,
+        "routeId": "franky:beginner:advanced:crouch:062",
+        "edges": {
+          "light": "n231"
+        }
+      },
+      "n231": {
+        "depth": 10,
+        "routeId": "franky:beginner:advanced:crouch:062",
+        "edges": {
+          "down+light": "n232"
+        }
+      },
+      "n232": {
+        "depth": 11,
+        "routeId": "franky:beginner:advanced:crouch:063",
+        "edges": {
+          "light": "n233"
+        }
+      },
+      "n233": {
+        "depth": 12,
+        "routeId": "franky:beginner:advanced:crouch:063",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n110",
+          "forward+medium": "n112",
+          "light": "n125"
+        }
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:011",
+        "edges": {
+          "down+light": "n126"
+        }
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:basic:015",
+        "edges": {
+          "forward+medium": "n138"
+        }
+      },
+      "n138": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:basic:015",
+        "edges": {
+          "forward+light": "n139"
+        }
+      },
+      "n139": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:basic:007",
+        "edges": {
+          "down+light": "n115",
+          "light": "n117",
+          "medium": "n128"
+        }
+      },
+      "n115": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n116"
+        }
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:basic:012",
+        "edges": {
+          "down+light": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 4,
+        "routeId": "franky:beginner:advanced:basic:012",
+        "edges": {
+          "special": "n140"
+        }
+      },
+      "n140": {
+        "depth": 5,
+        "routeId": "franky:beginner:advanced:basic:016",
+        "edges": {
+          "forward+medium": "n141"
+        }
+      },
+      "n141": {
+        "depth": 6,
+        "routeId": "franky:beginner:advanced:basic:016",
+        "edges": {
+          "forward+light": "n142"
+        }
+      },
+      "n142": {
+        "depth": 7,
+        "routeId": "franky:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:019",
+        "edges": {
+          "down+light": "n146",
+          "light": "n148"
+        }
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n153",
+          "forward+medium": "n155"
+        }
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n166",
+          "down-forward+medium": "n164"
+        }
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n178",
+          "light": "n176"
+        }
+      },
+      "n176": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n177"
+        }
+      },
+      "n177": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:crouch:049",
+        "edges": {
+          "heavy": "n185",
+          "down-forward+medium": "n187"
+        }
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:049",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:050",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 1,
+        "routeId": "franky:beginner:advanced:crouch:051",
+        "edges": {
+          "heavy": "n190",
+          "down-forward+medium": "n192"
+        }
+      },
+      "n190": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:051",
+        "edges": {
+          "special": "n191"
+        }
+      },
+      "n191": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:051",
+        "edges": {}
+      },
+      "n192": {
+        "depth": 2,
+        "routeId": "franky:beginner:advanced:crouch:052",
+        "edges": {
+          "special": "n193"
+        }
+      },
+      "n193": {
+        "depth": 3,
+        "routeId": "franky:beginner:advanced:crouch:052",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Franky Guard Pump",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "qcf+4",
+      "kiAnimationKey": "cmd:qcf+4",
+      "kiCost": 26,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Weapons Left",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown",
+      "kiCommand": "qcf+4",
+      "kiAnimationKey": "cmd:qcf+4",
+      "kiCost": 26,
+      "poweredKiFallback": true
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "qcf+4",
+      "kiAnimationKey": "cmd:qcf+4",
+      "kiCost": 26,
+      "poweredKiFallback": true
+    },
+    "s0018": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "qcf+4",
+      "kiAnimationKey": "cmd:qcf+4",
+      "kiCost": 26,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Strong Right",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown",
+      "kiCommand": "qcf+4",
+      "kiAnimationKey": "cmd:qcf+4",
+      "kiCost": 26,
+      "poweredKiFallback": true
+    },
+    "s0025": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0030": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Weapons Left",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Strong Right",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Weapons Left",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Strong Right Hook",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0050": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Cyborg Wheel",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Franky Guard Pump",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Franky Guard Pump",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0061": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0063": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0070": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "heavy",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Cyborg Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Strong Right",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Strong Right Drive",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Strong Right",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Franky Rocket Upper",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Strong Right",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Full Crouch Upper",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Strong Right",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Cyborg Wheel",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Cyborg Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Franky Rocket Upper",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "down-forward+special",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While Rising Right",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Franky Rocket Upper",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Franky Rocket Upper Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While Rising Right",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Franky Guard Pump",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0093": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Right Hook",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0095": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Weapons Left",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "juggle"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Full Crouch Upper",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Strong Right",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Full Crouch Upper",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Strong Right Hook",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Strong Right Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Forward Strong Right Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cyborg Wheel Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Franky Cannon Laser Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Strong Right",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Franky Coup de Burst Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Franky Ball Tornado",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Strong Right",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Franky Radical Laser Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0115": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Cyborg Wheel",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0116": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Weapons Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While Rising Right",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Cyborg Shuffle",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Full Crouch Upper",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0120": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Cyborg Wheel",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { emptyInputFrame, type ActionName, type CharacterDefinition, type ControlScheme, type FighterRuntime, type InputFrame, type MatchSnapshot, type MoveDefinition, type MoveInput } from '../../types';
 
-export const ONLINE_PROTOCOL_VERSION = 23;
+export const ONLINE_PROTOCOL_VERSION = 24;
 
 export const inputActions: ActionName[] = [
   'up',
@@ -85,6 +85,9 @@ export type CompactFighterSnapshot = {
   beginnerPendingRouteStep?: number;
   beginnerPendingSpecialIntent?: FighterRuntime['beginnerPendingSpecialIntent'];
   beginnerSpecialGraceFrames?: number;
+  beginnerGraphNodeId?: string;
+  beginnerAttackClass?: FighterRuntime['beginnerAttackClass'];
+  beginnerAttackClassStreak?: number;
   horizontalKnockback?: FighterRuntime['horizontalKnockback'];
   wasCrouching: boolean;
   roundsWon: number;
@@ -350,6 +353,9 @@ function compactFighter(fighter: FighterRuntime): CompactFighterSnapshot {
         }
       : null,
     beginnerSpecialGraceFrames: fighter.beginnerSpecialGraceFrames,
+    beginnerGraphNodeId: fighter.beginnerGraphNodeId,
+    beginnerAttackClass: fighter.beginnerAttackClass,
+    beginnerAttackClassStreak: fighter.beginnerAttackClassStreak,
     horizontalKnockback: fighter.horizontalKnockback ? { ...fighter.horizontalKnockback } : null,
     wasCrouching: fighter.wasCrouching,
     roundsWon: fighter.roundsWon,
@@ -463,6 +469,9 @@ function hydrateFighter(base: FighterRuntime, snapshot: CompactFighterSnapshot, 
         }
       : null,
     beginnerSpecialGraceFrames: snapshot.beginnerSpecialGraceFrames ?? 0,
+    beginnerGraphNodeId: snapshot.beginnerGraphNodeId ?? character.beginnerComboGraph?.rootId ?? 'n0',
+    beginnerAttackClass: snapshot.beginnerAttackClass ?? null,
+    beginnerAttackClassStreak: snapshot.beginnerAttackClassStreak ?? 0,
     horizontalKnockback: snapshot.horizontalKnockback ? { ...snapshot.horizontalKnockback } : null,
     wasCrouching: snapshot.wasCrouching,
     roundsWon: snapshot.roundsWon,

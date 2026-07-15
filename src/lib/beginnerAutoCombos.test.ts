@@ -7,6 +7,7 @@ import {
   BEGINNER_AUTO_COMBO_INPUTS,
   BEGINNER_AUTO_COMBO_KI_COST,
   BEGINNER_SPECIAL_CHORD_GRACE_FRAMES,
+  beginnerRouteSteps,
   beginnerMovementSatisfied,
   resolveBeginnerGesture,
   resolveBeginnerRouteStep
@@ -28,8 +29,8 @@ function inputFrame(actions: Partial<InputFrame>) {
 }
 
 describe('Beginner auto-combo routes', () => {
-  it('uses three-hit core routes and a six-frame Special chord grace', () => {
-    expect(BEGINNER_AUTO_COMBO_INPUTS).toEqual(['jab', 'jab', 'jab']);
+  it('uses eight-hit attack chains and a six-frame Special chord grace', () => {
+    expect(BEGINNER_AUTO_COMBO_INPUTS).toEqual(Array(8).fill('jab'));
     expect(BEGINNER_SPECIAL_CHORD_GRACE_FRAMES).toBe(6);
   });
 
@@ -41,28 +42,37 @@ describe('Beginner auto-combo routes', () => {
     expect(resolveBeginnerGesture(inputFrame({ special: true, jab: true }), 'jab')).toBe('special+light');
     expect(resolveBeginnerGesture(inputFrame({ special: true, heavy: true }), 'heavy')).toBe('special+medium');
     expect(resolveBeginnerGesture(inputFrame({ special: true, kick: true }), 'kick')).toBe('special+heavy');
+    expect(resolveBeginnerGesture(inputFrame({ right: true, jab: true }), 'jab', 1)).toBe('forward+light');
+    expect(resolveBeginnerGesture(inputFrame({ down: true, jab: true }), 'jab')).toBe('down+light');
+    expect(resolveBeginnerGesture(inputFrame({ down: true, right: true, special: true, kick: true }), 'kick', 1)).toBe('down-forward+special+heavy');
   });
 
   it('resolves only matching confirmed prefixes and preserves insufficient-Ki fallbacks', () => {
     const character = readPlayableRoster().find((candidate) =>
-      candidate.beginnerComboRoutes?.some((route) => route.steps.some((step) => step.kiCommand || step.poweredKiFallback))
+      candidate.beginnerComboRoutes?.some((route) => beginnerRouteSteps(candidate, route).some((step) => step.kiCommand || step.poweredKiFallback))
     );
     expect(character).toBeTruthy();
     if (!character) return;
     const medium = character.beginnerComboRoutes!.find((route) => route.id.endsWith('medium-core'))!;
     const first = resolveBeginnerRouteStep(character, [], 'medium', 0);
-    const second = resolveBeginnerRouteStep(character, ['medium'], 'medium', 0, medium.id);
-    const zeroKi = resolveBeginnerRouteStep(character, ['medium', 'medium'], 'medium', 0, medium.id);
-    const fullKi = resolveBeginnerRouteStep(character, ['medium', 'medium'], 'medium', 100, medium.id);
+    const second = resolveBeginnerRouteStep(character, ['medium'], 'medium', 0, medium.id, first?.nextGraphNodeId);
+    let node = second?.nextGraphNodeId;
+    let zeroKi = second;
+    let fullKi = second;
+    for (let index = 2; index < 8; index += 1) {
+      zeroKi = resolveBeginnerRouteStep(character, Array(index).fill('medium'), 'medium', 0, medium.id, node);
+      fullKi = resolveBeginnerRouteStep(character, Array(index).fill('medium'), 'medium', 100, medium.id, node);
+      node = zeroKi?.nextGraphNodeId;
+    }
 
     expect(first?.stepIndex).toBe(0);
     expect(second?.stepIndex).toBe(1);
-    expect(zeroKi?.stepIndex).toBe(2);
-    expect(zeroKi?.forcedCommand).toBe(medium.steps[2].command);
+    const mediumSteps = beginnerRouteSteps(character, medium);
+    expect(zeroKi?.stepIndex).toBe(7);
+    expect(zeroKi?.forcedCommand).toBe(mediumSteps[7].command);
     expect(zeroKi?.usePoweredKi).toBe(false);
-    expect(fullKi?.stepIndex).toBe(2);
-    expect(Boolean(fullKi?.forcedCommand === medium.steps[2].kiCommand || fullKi?.usePoweredKi)).toBe(true);
-    expect(resolveBeginnerRouteStep(character, ['medium'], 'light', 0, medium.id)).toBeNull();
+    expect(fullKi?.stepIndex).toBe(7);
+    expect(Boolean(fullKi?.forcedCommand === mediumSteps[7].kiCommand || fullKi?.usePoweredKi)).toBe(true);
   });
 
   it('requires authored movement bridges to be performed by the player', () => {
@@ -83,30 +93,45 @@ describe('Beginner auto-combo routes', () => {
       const routes = character.beginnerComboRoutes ?? [];
       const core = routes.filter((route) => route.family === 'core');
       const mixed = routes.filter((route) => route.family === 'mixed');
+      const advanced = routes.filter((route) => route.family === 'advanced');
       expect(core, character.id).toHaveLength(4);
       expect(mixed.length, character.id).toBeGreaterThanOrEqual(4);
+      expect(routes.length, character.id).toBeGreaterThanOrEqual(15);
+      expect(character.beginnerComboGraph?.version, character.id).toBe(2);
+      expect(advanced.length + mixed.length, character.id).toBeGreaterThanOrEqual(11);
 
       const coreGestures: BeginnerComboGesture[] = ['light', 'medium', 'heavy', 'special'];
       for (const gesture of coreGestures) {
         const route = core.find((candidate) => candidate.gestures.every((item) => item === gesture));
         expect(route, `${character.id}:${gesture}`).toBeTruthy();
-        expect(route?.steps, `${character.id}:${gesture}`).toHaveLength(3);
-        expect(route?.steps[route.steps.length - 1]?.expect, `${character.id}:${gesture}`).toBe('knockdown');
+        const steps = route ? beginnerRouteSteps(character, route) : [];
+        expect(steps, `${character.id}:${gesture}`).toHaveLength(gesture === 'special' ? 3 : 8);
+        expect(steps[steps.length - 1]?.expect, `${character.id}:${gesture}`).toBe('knockdown');
         if (gesture === 'light') {
-          expect(route?.steps.every((step) => !step.kiCommand && !step.poweredKiFallback), character.id).toBe(true);
+          expect(steps.every((step) => !step.kiCommand && !step.poweredKiFallback), character.id).toBe(true);
         }
       }
 
       for (const chord of ['special+light', 'special+medium', 'special+heavy'] as BeginnerComboGesture[]) {
         expect(mixed.some((route) => route.gestures.includes(chord)), `${character.id}:${chord}`).toBe(true);
       }
+      for (const gesture of ['forward+light', 'down+medium', 'down-forward+heavy', 'forward+special+light', 'down+special+medium', 'down-forward+special+heavy'] as BeginnerComboGesture[]) {
+        expect(routes.some((route) => route.gestures.includes(gesture)), `${character.id}:${gesture}`).toBe(true);
+      }
+      for (const [nodeId, node] of Object.entries(character.beginnerComboGraph?.nodes ?? {})) {
+        expect(routes.some((route) => route.id === node.routeId), `${character.id}:${nodeId}:route`).toBe(true);
+        for (const target of Object.values(node.edges)) {
+          expect(character.beginnerComboGraph?.nodes[target!], `${character.id}:${nodeId}:${target}`).toBeTruthy();
+        }
+      }
 
       for (const route of routes) {
-        expect(route.steps.length, route.id).toBeGreaterThanOrEqual(3);
-        expect(route.steps.length, route.id).toBeLessThanOrEqual(6);
-        expect(route.steps[route.steps.length - 1]?.expect, route.id).toBe('knockdown');
-        expect(route.steps.filter((step) => step.kiCommand || step.poweredKiFallback).length, route.id).toBeLessThanOrEqual(1);
-        for (const step of route.steps) {
+        const steps = beginnerRouteSteps(character, route);
+        expect(steps.length, route.id).toBeGreaterThanOrEqual(3);
+        expect(steps.length, route.id).toBeLessThanOrEqual(30);
+        if (route.family === 'core') expect(steps[steps.length - 1]?.expect, route.id).toBe('knockdown');
+        expect(steps.reduce((total, step) => total + (step.kiCost ?? 0), 0), route.id).toBeLessThanOrEqual(100);
+        for (const step of steps) {
           expect(step.label.trim().length, route.id).toBeGreaterThan(0);
           expect(step.windowBefore, route.id).toBeGreaterThan(0);
           expect(step.windowAfter, route.id).toBeGreaterThan(0);
@@ -120,5 +145,10 @@ describe('Beginner auto-combo routes', () => {
         }
       }
     }
+
+    const sasuke = characters.find((character) => character.id === 'riven');
+    expect(sasuke?.beginnerComboRoutes?.filter((route) => route.family === 'advanced').length).toBeGreaterThanOrEqual(106);
+    expect(Math.max(...(sasuke?.beginnerComboRoutes ?? []).map((route) => beginnerRouteSteps(sasuke!, route).length))).toBeGreaterThanOrEqual(22);
+    expect(sasuke?.beginnerComboRoutes?.some((route) => route.gestures.slice(0, 7).every((gesture) => gesture === 'light') && route.gestures[7] === 'medium' && route.steps?.length !== 8)).toBe(true);
   });
 });

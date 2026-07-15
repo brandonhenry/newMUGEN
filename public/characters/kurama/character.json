@@ -3936,136 +3936,95 @@
   "beginnerComboRoutes": [
     {
       "id": "kurama:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Rose Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Rose Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "kurama:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Demon Rose Step",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Rose Slash",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 36,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
       ]
     },
     {
       "id": "kurama:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Rose Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Rose Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 34,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
       ]
     },
     {
@@ -4077,41 +4036,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Demon Rose Crush",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0014",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -4123,41 +4057,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Rose Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Demon Rose Step",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0017",
+        "s0013"
       ]
     },
     {
@@ -4169,41 +4078,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Rose Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Demon Rose Step",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0018",
+        "s0017",
+        "s0013"
       ]
     },
     {
@@ -4215,41 +4099,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Demon Rose Step",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Rose Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0019",
+        "s0012",
+        "s0020"
       ]
     },
     {
@@ -4261,42 +4120,4399 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Demon Rose Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Rose Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Youko Burst",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0021",
+        "s0004",
+        "s0022"
+      ]
+    },
+    {
+      "id": "kurama:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0025"
+      ]
+    },
+    {
+      "id": "kurama:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0026",
+        "s0012",
+        "s0005"
+      ]
+    },
+    {
+      "id": "kurama:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0025"
+      ]
+    },
+    {
+      "id": "kurama:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0029",
+        "s0017",
+        "s0013"
+      ]
+    },
+    {
+      "id": "kurama:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0012",
+        "s0020"
+      ]
+    },
+    {
+      "id": "kurama:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0004",
+        "s0022"
+      ]
+    },
+    {
+      "id": "kurama:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "kurama:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "kurama:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "kurama:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "kurama:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "kurama:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "kurama:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:001",
+      "title": "Quick Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:002",
+      "title": "Quick Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0035",
+        "s0036"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:003",
+      "title": "Rose Whip Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:004",
+      "title": "Rose Whip Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:005",
+      "title": "Quick Rose Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0042",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:006",
+      "title": "Rose Whip Slash 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:007",
+      "title": "Quick Rose Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "medium",
+        "forward+medium",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0042",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:basic:008",
+      "title": "Rose Whip Slash 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0048"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:009",
+      "title": "Demon Rose Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:010",
+      "title": "Demon Rose Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:011",
+      "title": "Demon Rose Step 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0048",
+        "s0039"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:012",
+      "title": "Demon Rose Step 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0042",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:013",
+      "title": "Ducking Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:014",
+      "title": "Ducking Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0044",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:015",
+      "title": "Forward Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0056",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:016",
+      "title": "Forward Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0057",
+        "s0036"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:017",
+      "title": "Forward Rose Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0044",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:018",
+      "title": "Forward Rose Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0036"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:019",
+      "title": "Low Rose Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0048",
+        "s0039"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:020",
+      "title": "Low Rose Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0042",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:021",
+      "title": "Demon Rose Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:022",
+      "title": "Demon Rose Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:023",
+      "title": "Overdrive Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:024",
+      "title": "Overdrive Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:025",
+      "title": "Overdrive Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:026",
+      "title": "Overdrive Rose Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:027",
+      "title": "Rose Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0066",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:028",
+      "title": "Rose Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0067",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:029",
+      "title": "Rose Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0066",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:030",
+      "title": "Rose Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0067",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:031",
+      "title": "Rose Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0054",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:032",
+      "title": "Rose Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0044",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:033",
+      "title": "Youko Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0071"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:034",
+      "title": "Youko Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0072",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:035",
+      "title": "Youko Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0071"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:advanced:036",
+      "title": "Youko Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0072",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:crouch:037",
+      "title": "Crouching Rose Lash 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0074",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:crouch:038",
+      "title": "While-Rising Rose Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0074",
+        "s0051"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:crouch:039",
+      "title": "Crouching Rose Lash 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0044",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:crouch:040",
+      "title": "While-Rising Rose Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0044",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:crouch:041",
+      "title": "Youko Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:crouch:042",
+      "title": "Youko Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0078",
+        "s0071"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:043",
+      "title": "Crouch Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:044",
+      "title": "Crouch Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0081",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:045",
+      "title": "Crouch Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:046",
+      "title": "Crouch Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0081",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:047",
+      "title": "Diagonal Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0083",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:048",
+      "title": "Diagonal Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0084",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:049",
+      "title": "Diagonal Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0083",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:050",
+      "title": "Diagonal Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0084",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:051",
+      "title": "Rose Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0071",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:052",
+      "title": "Rose Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0086",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:053",
+      "title": "Rose Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0071",
+        "s0034"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:054",
+      "title": "Rose Whip Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0086",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:055",
+      "title": "Crouch Whip Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.57375,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0087",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089",
+        "s0090",
+        "s0036",
+        "s0042",
+        "s0091"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:056",
+      "title": "Crouch Whip Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.57375,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0087",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089",
+        "s0090",
+        "s0036",
+        "s0042",
+        "s0091"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:057",
+      "title": "Crouch Whip Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.57375,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0087",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089",
+        "s0090",
+        "s0036",
+        "s0042",
+        "s0091"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:058",
+      "title": "Crouch Whip Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0087",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:059",
+      "title": "Diagonal Whip Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.57375,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0042",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089",
+        "s0090",
+        "s0036",
+        "s0042",
+        "s0091"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:060",
+      "title": "Diagonal Whip Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.57375,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0042",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089",
+        "s0090",
+        "s0036",
+        "s0042",
+        "s0091"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:061",
+      "title": "Diagonal Whip Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.57375,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0042",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089",
+        "s0090",
+        "s0036",
+        "s0042",
+        "s0091"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:062",
+      "title": "Diagonal Whip Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0042",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:063",
+      "title": "Rose Whip Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.57375,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0092",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089",
+        "s0090",
+        "s0036",
+        "s0042",
+        "s0091"
+      ]
+    },
+    {
+      "id": "kurama:beginner:advanced:launcher:064",
+      "title": "Rose Whip Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0092",
+        "s0043",
+        "s0046",
+        "s0056",
+        "s0048",
+        "s0088",
+        "s0089"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "kurama:beginner:advanced:advanced:009",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+heavy": "n32",
+          "down-forward+special+heavy": "n32",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "special": "n25",
+          "down+light": "n123",
+          "forward+medium": "n128",
+          "forward+heavy": "n133",
+          "forward+special": "n157",
+          "down+heavy": "n101",
+          "down+special": "n96",
+          "down-forward+light": "n142",
+          "down-forward+medium": "n147",
+          "down-forward+special": "n160",
+          "forward+special+medium": "n167"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:031",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "forward+medium": "n35"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "kurama:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "kurama:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "kurama:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "kurama:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "kurama:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "kurama:beginner:light-core",
+        "edges": {
+          "medium": "n40",
+          "heavy": "n48",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "kurama:beginner:light-core",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 8,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 9,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 10,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 11,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 12,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 13,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 14,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88",
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 15,
+        "routeId": "kurama:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 16,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 17,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 18,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 19,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 20,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 21,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 22,
+        "routeId": "kurama:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n48": {
+        "depth": 8,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 9,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 10,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 11,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 12,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 13,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 14,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 15,
+        "routeId": "kurama:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:032",
+        "edges": {
+          "heavy": "n29",
+          "special": "n152"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "kurama:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:011",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n30",
+          "down+light": "n121",
+          "light": "n119",
+          "special": "n174",
+          "forward+light": "n172"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "kurama:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "kurama:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "kurama:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "kurama:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "kurama:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "kurama:beginner:medium-core",
+        "edges": {
+          "heavy": "n64",
+          "medium": "n16",
+          "light": "n56"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "kurama:beginner:medium-core",
+        "edges": {}
+      },
+      "n56": {
+        "depth": 8,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 9,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 10,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 11,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 12,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 13,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 14,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 15,
+        "routeId": "kurama:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n64": {
+        "depth": 8,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 9,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 10,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 11,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 12,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 13,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 14,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 15,
+        "routeId": "kurama:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "kurama:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n31",
+          "light": "n37"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "kurama:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "kurama:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:011",
+        "edges": {
+          "special": "n120"
+        }
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:011",
+        "edges": {}
+      },
+      "n121": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:012",
+        "edges": {
+          "light": "n180",
+          "special": "n122"
+        }
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:012",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "forward+light": "n181"
+        }
+      },
+      "n181": {
+        "depth": 4,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "medium": "n182"
+        }
+      },
+      "n182": {
+        "depth": 5,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "light": "n183"
+        }
+      },
+      "n183": {
+        "depth": 6,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "forward+medium": "n184"
+        }
+      },
+      "n184": {
+        "depth": 7,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "light": "n185"
+        }
+      },
+      "n185": {
+        "depth": 8,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "medium": "n186"
+        }
+      },
+      "n186": {
+        "depth": 9,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n187"
+        }
+      },
+      "n187": {
+        "depth": 10,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "down+light": "n188"
+        }
+      },
+      "n188": {
+        "depth": 11,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n189"
+        }
+      },
+      "n189": {
+        "depth": 12,
+        "routeId": "kurama:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:launcher:043",
+        "edges": {
+          "special": "n173"
+        }
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:launcher:043",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:launcher:044",
+        "edges": {
+          "special": "n175"
+        }
+      },
+      "n175": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:launcher:044",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:019",
+        "edges": {
+          "heavy": "n18",
+          "down+light": "n38",
+          "light": "n138",
+          "medium": "n178",
+          "special": "n176"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "kurama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "kurama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "kurama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "kurama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "kurama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "kurama:beginner:heavy-core",
+        "edges": {
+          "medium": "n80",
+          "heavy": "n24",
+          "light": "n72"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "kurama:beginner:heavy-core",
+        "edges": {}
+      },
+      "n72": {
+        "depth": 8,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 9,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 10,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 11,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 12,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 13,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 14,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 15,
+        "routeId": "kurama:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n80": {
+        "depth": 8,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 9,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 10,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 11,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 12,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 13,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 14,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 15,
+        "routeId": "kurama:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:020",
+        "edges": {
+          "light": "n190",
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "forward+light": "n191"
+        }
+      },
+      "n191": {
+        "depth": 4,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n192"
+        }
+      },
+      "n192": {
+        "depth": 5,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n193"
+        }
+      },
+      "n193": {
+        "depth": 6,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "forward+medium": "n194"
+        }
+      },
+      "n194": {
+        "depth": 7,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n195"
+        }
+      },
+      "n195": {
+        "depth": 8,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n196"
+        }
+      },
+      "n196": {
+        "depth": 9,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n197"
+        }
+      },
+      "n197": {
+        "depth": 10,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "down+light": "n198"
+        }
+      },
+      "n198": {
+        "depth": 11,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n199"
+        }
+      },
+      "n199": {
+        "depth": 12,
+        "routeId": "kurama:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n176": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:launcher:051",
+        "edges": {
+          "special": "n177"
+        }
+      },
+      "n177": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:launcher:051",
+        "edges": {}
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:launcher:052",
+        "edges": {
+          "special": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n26",
+          "heavy": "n153",
+          "down-forward+medium": "n155"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "kurama:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "kurama:beginner:special-core",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:009",
+        "edges": {
+          "down-forward+medium": "n140",
+          "forward+medium": "n117",
+          "light": "n33"
+        }
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "kurama:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "kurama:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:009",
+        "edges": {
+          "special": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:009",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:basic:001",
+        "edges": {
+          "medium": "n97",
+          "down+light": "n106",
+          "light": "n99"
+        }
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n98"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:basic:005",
+        "edges": {
+          "light": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n108"
+        }
+      },
+      "n108": {
+        "depth": 4,
+        "routeId": "kurama:beginner:advanced:basic:005",
+        "edges": {
+          "forward+medium": "n111"
+        }
+      },
+      "n111": {
+        "depth": 5,
+        "routeId": "kurama:beginner:advanced:basic:007",
+        "edges": {
+          "forward+light": "n112"
+        }
+      },
+      "n112": {
+        "depth": 6,
+        "routeId": "kurama:beginner:advanced:basic:007",
+        "edges": {
+          "medium": "n113"
+        }
+      },
+      "n113": {
+        "depth": 7,
+        "routeId": "kurama:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n104",
+          "light": "n102"
+        }
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:basic:004",
+        "edges": {
+          "light": "n109",
+          "special": "n105"
+        }
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:basic:006",
+        "edges": {
+          "medium": "n110"
+        }
+      },
+      "n110": {
+        "depth": 4,
+        "routeId": "kurama:beginner:advanced:basic:006",
+        "edges": {
+          "forward+medium": "n114"
+        }
+      },
+      "n114": {
+        "depth": 5,
+        "routeId": "kurama:beginner:advanced:basic:008",
+        "edges": {
+          "forward+light": "n115"
+        }
+      },
+      "n115": {
+        "depth": 6,
+        "routeId": "kurama:beginner:advanced:basic:008",
+        "edges": {
+          "light": "n116"
+        }
+      },
+      "n116": {
+        "depth": 7,
+        "routeId": "kurama:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:013",
+        "edges": {
+          "medium": "n126",
+          "forward+medium": "n124"
+        }
+      },
+      "n124": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:013",
+        "edges": {
+          "special": "n125"
+        }
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n126": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n127"
+        }
+      },
+      "n127": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:015",
+        "edges": {
+          "medium": "n129",
+          "light": "n131"
+        }
+      },
+      "n129": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n130"
+        }
+      },
+      "n130": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n131": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n132"
+        }
+      },
+      "n132": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n133": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n134",
+          "light": "n136"
+        }
+      },
+      "n134": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n136": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n145",
+          "forward+medium": "n143"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:advanced:027",
+        "edges": {
+          "medium": "n150",
+          "forward+medium": "n148"
+        }
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:crouch:037",
+        "edges": {
+          "medium": "n163",
+          "forward+medium": "n158"
+        }
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:crouch:037",
+        "edges": {
+          "special": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:crouch:037",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:crouch:039",
+        "edges": {
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:crouch:039",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:crouch:038",
+        "edges": {
+          "medium": "n165",
+          "forward+medium": "n161"
+        }
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:crouch:038",
+        "edges": {
+          "special": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:crouch:038",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:crouch:040",
+        "edges": {
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:crouch:040",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 1,
+        "routeId": "kurama:beginner:advanced:crouch:041",
+        "edges": {
+          "heavy": "n170",
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:crouch:041",
+        "edges": {
+          "special": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:crouch:041",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "kurama:beginner:advanced:crouch:042",
+        "edges": {
+          "special": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "kurama:beginner:advanced:crouch:042",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Rose Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Rose Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rose Whip Slash",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Rose Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Rose Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0014": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Demon Rose Crush",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Rose Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Demon Rose Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Rose Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0026": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Rose Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Rose Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Demon Rose Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0034": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0035": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rose Whip Slash",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0037": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rose Whip Slash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Rose Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rose Whip Slash",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Demon Rose Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rose Whip Slash",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0059": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rose Whip Slash",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Rose Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Whip Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "launch"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Rose Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demon Rose Step",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Rose Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rose Whip Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "launch"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Whip Launcher",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "launch"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Rose Lash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "down-forward+special",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While-Rising Rose Slash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Youko Rising Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rose Whip Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Whip Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Rose Jab",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diagonal Whip Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Youko Burst",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Rose Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Rose Whip Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Rose Jab",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Rose Jab",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rose Slash",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Rose Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0090": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rose Whip Slash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Demon Rose Crush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Rose Jab",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    }
+  }
 }

@@ -4350,135 +4350,95 @@
   "beginnerComboRoutes": [
     {
       "id": "majin-buu:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Majin Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Majin Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "majin-buu:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Stretchy Arm Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Stretch Punch",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
       ]
     },
     {
       "id": "majin-buu:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Candy Low Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Stretchy Low Kick",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -4490,39 +4450,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Majin Roundhouse",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Majin Roundhouse",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -4534,41 +4471,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Majin Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Stretchy Arm Sweep",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -4580,41 +4492,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Majin Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Stretchy Arm Sweep",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -4623,44 +4510,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Stretchy Arm Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Candy Low Feint",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0025"
       ]
     },
     {
@@ -4669,45 +4531,5838 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0026",
+        "s0027",
+        "s0028"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0031"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0035",
+        "s0031"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0020",
+        "s0021"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Majin Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Belly Knockdown",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0024",
+        "s0025"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0038",
+        "s0027",
+        "s0028"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:001",
+      "title": "Majin Roundhouse 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:002",
+      "title": "Majin Roundhouse 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:003",
+      "title": "Quick Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:004",
+      "title": "Quick Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:005",
+      "title": "Stretch Arm Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0050",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:006",
+      "title": "Stretch Arm Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0043"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:007",
+      "title": "Stretchy Low Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:008",
+      "title": "Stretchy Low Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0050",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:009",
+      "title": "Majin Roundhouse 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0042",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:010",
+      "title": "Quick Majin Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0056",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:011",
+      "title": "Stretch Arm Check 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:012",
+      "title": "Stretchy Low Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0051",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:013",
+      "title": "Majin Roundhouse 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0042",
+        "s0054",
+        "s0055",
+        "s0057",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:014",
+      "title": "Quick Majin Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0056",
+        "s0054",
+        "s0055",
+        "s0057",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:015",
+      "title": "Stretch Arm Check 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0054",
+        "s0055",
+        "s0057",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:basic:016",
+      "title": "Stretchy Low Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0051",
+        "s0054",
+        "s0055",
+        "s0057",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:017",
+      "title": "Belly Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0053",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:018",
+      "title": "Belly Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0050",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:019",
+      "title": "Belly Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0053",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:020",
+      "title": "Belly Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0050",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:021",
+      "title": "Buu Burst Roll 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0062",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:022",
+      "title": "Buu Burst Roll 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0062",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:023",
+      "title": "Ducking Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:024",
+      "title": "Ducking Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0066",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:025",
+      "title": "Forward Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0068",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:026",
+      "title": "Forward Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0069",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:027",
+      "title": "Forward Stretch Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:028",
+      "title": "Forward Stretch Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0073",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:029",
+      "title": "Low Buu Tornado Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:030",
+      "title": "Low Buu Tornado Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:031",
+      "title": "Stretchy Arm Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0041"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:032",
+      "title": "Stretchy Arm Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0056",
+        "s0043"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:033",
+      "title": "Buu Burst Roll 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0078",
+        "s0046"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:034",
+      "title": "Buu Burst Roll 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0078",
+        "s0046"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:035",
+      "title": "Candy Low Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:036",
+      "title": "Candy Low Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0073",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:037",
+      "title": "Majin Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:038",
+      "title": "Majin Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0064",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:039",
+      "title": "Majin Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:040",
+      "title": "Majin Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0064",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:041",
+      "title": "Overdrive Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0084",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:042",
+      "title": "Overdrive Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0085",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:043",
+      "title": "Overdrive Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0084",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:advanced:044",
+      "title": "Overdrive Majin Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0085",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:crouch:045",
+      "title": "Crouching Stretch Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0082",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:crouch:046",
+      "title": "Crouching Stretch Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0064",
+        "s0065"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:crouch:047",
+      "title": "While-Rising Stretch Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0089"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:crouch:048",
+      "title": "While-Rising Stretch Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0090",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:crouch:049",
+      "title": "While-Rising Tornado Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0092",
+        "s0089"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:crouch:050",
+      "title": "While-Rising Tornado Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0093",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:051",
+      "title": "Crouch Stretch Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:052",
+      "title": "Crouch Stretch Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0096",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:053",
+      "title": "Crouch Stretch Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:054",
+      "title": "Crouch Stretch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0097",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:055",
+      "title": "Crouch Stretch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0098",
+        "s0099"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:056",
+      "title": "Diagonal Stretch Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:057",
+      "title": "Diagonal Stretch Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0102",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:058",
+      "title": "Diagonal Stretch Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:059",
+      "title": "Diagonal Stretch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0103",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:060",
+      "title": "Diagonal Stretch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0104",
+        "s0099"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:061",
+      "title": "Stretch Arm Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:062",
+      "title": "Stretch Arm Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0107",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:063",
+      "title": "Stretch Arm Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0072"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:064",
+      "title": "Stretch Arm Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0108",
+        "s0048"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:065",
+      "title": "Stretch Arm Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0109",
+        "s0099"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:066",
+      "title": "Crouch Stretch Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5294117647058824,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "medium",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0110",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0071",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116",
+        "s0051"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:067",
+      "title": "Crouch Stretch Launcher Hybrid Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0110",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0118",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116",
+        "s0051",
+        "s0119"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:068",
+      "title": "Crouch Stretch Launcher Hybrid Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0110",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0118",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116",
+        "s0051",
+        "s0119"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:069",
+      "title": "Crouch Stretch Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "forward+medium",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0110",
+        "s0054",
+        "s0055",
+        "s0120",
+        "s0121",
+        "s0112",
+        "s0113"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:070",
+      "title": "Diagonal Stretch Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5294117647058824,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "medium",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0056",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0071",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116",
+        "s0051"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:071",
+      "title": "Diagonal Stretch Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "forward+medium",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0056",
+        "s0054",
+        "s0055",
+        "s0120",
+        "s0121",
+        "s0112",
+        "s0113"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:072",
+      "title": "Stretch Arm Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5769230769230769,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0071",
+        "s0112",
+        "s0123",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:073",
+      "title": "Stretch Arm Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5769230769230769,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:074",
+      "title": "Stretch Arm Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5769230769230769,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:launcher:075",
+      "title": "Stretch Arm Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "forward+medium",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0054",
+        "s0055",
+        "s0120",
+        "s0121",
+        "s0112",
+        "s0123"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:076",
+      "title": "Crouch Stretch Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0124"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:077",
+      "title": "Crouch Stretch Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0110",
+        "s0054",
+        "s0055",
+        "s0120",
+        "s0121",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0069"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:078",
+      "title": "Crouch Stretch Launcher Hybrid Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0110",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0118",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116",
+        "s0051",
+        "s0119"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:079",
+      "title": "Crouch Stretch Launcher Hybrid Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0110",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0118",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116",
+        "s0051",
+        "s0119"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:080",
+      "title": "Diagonal Stretch Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0124"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:081",
+      "title": "Diagonal Stretch Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0056",
+        "s0054",
+        "s0055",
+        "s0120",
+        "s0121",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0069"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:082",
+      "title": "Diagonal Stretch Launcher Hybrid Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0056",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0118",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116",
+        "s0051",
+        "s0119"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:083",
+      "title": "Stretch Arm Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0124"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:084",
+      "title": "Stretch Arm Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0054",
+        "s0055",
+        "s0120",
+        "s0121",
+        "s0112",
+        "s0123",
+        "s0069",
+        "s0047"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:085",
+      "title": "Stretch Arm Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5769230769230769,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "majin-buu:beginner:advanced:tornado:086",
+      "title": "Stretch Arm Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5769230769230769,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0054",
+        "s0055",
+        "s0111",
+        "s0112",
+        "s0117",
+        "s0114",
+        "s0069",
+        "s0047",
+        "s0115",
+        "s0116"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "majin-buu:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+heavy": "n32",
+          "down-forward+special+heavy": "n32",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "special": "n25",
+          "forward+medium": "n160",
+          "down+light": "n145",
+          "forward+heavy": "n150",
+          "forward+special": "n155",
+          "down+heavy": "n184",
+          "down+special": "n106",
+          "down-forward+light": "n101",
+          "down-forward+medium": "n111",
+          "down-forward+special": "n179",
+          "forward+special+medium": "n142"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:037",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "down-forward+medium": "n177",
+          "forward+medium": "n35",
+          "special": "n175"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:light-core",
+        "edges": {
+          "medium": "n41",
+          "heavy": "n49",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:light-core",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89",
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n89": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 16,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 17,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 18,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 19,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 20,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 21,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 22,
+        "routeId": "majin-buu:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n49": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:forward-light-route",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:037",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:031",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n189",
+          "special": "n197",
+          "light": "n30",
+          "forward+light": "n199",
+          "down+light": "n167",
+          "forward+medium": "n165",
+          "forward+heavy": "n37",
+          "forward+special": "n201",
+          "down+medium": "n191"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:medium-core",
+        "edges": {
+          "heavy": "n65",
+          "medium": "n16",
+          "light": "n57"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:medium-core",
+        "edges": {}
+      },
+      "n57": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n65": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:down-medium-route",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n168",
+          "light": "n209"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "forward+light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "forward+medium": "n211",
+          "special": "n231"
+        }
+      },
+      "n211": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "medium": "n221",
+          "special": "n212"
+        }
+      },
+      "n212": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "medium": "n213"
+        }
+      },
+      "n213": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "heavy": "n214"
+        }
+      },
+      "n214": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "light": "n215"
+        }
+      },
+      "n215": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "light": "n216"
+        }
+      },
+      "n216": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "medium": "n217"
+        }
+      },
+      "n217": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "special": "n218"
+        }
+      },
+      "n218": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "special": "n219"
+        }
+      },
+      "n219": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {
+          "down+light": "n220"
+        }
+      },
+      "n220": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:advanced:launcher:066",
+        "edges": {}
+      },
+      "n221": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n222"
+        }
+      },
+      "n222": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "heavy": "n223"
+        }
+      },
+      "n223": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n224"
+        }
+      },
+      "n224": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n225"
+        }
+      },
+      "n225": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "medium": "n226"
+        }
+      },
+      "n226": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n227"
+        }
+      },
+      "n227": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n228"
+        }
+      },
+      "n228": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "down+light": "n229"
+        }
+      },
+      "n229": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n230"
+        }
+      },
+      "n230": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:advanced:launcher:067",
+        "edges": {}
+      },
+      "n231": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:launcher:069",
+        "edges": {
+          "forward+medium": "n232"
+        }
+      },
+      "n232": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:launcher:069",
+        "edges": {
+          "medium": "n233"
+        }
+      },
+      "n233": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:launcher:069",
+        "edges": {
+          "heavy": "n234"
+        }
+      },
+      "n234": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:advanced:launcher:069",
+        "edges": {
+          "light": "n257"
+        }
+      },
+      "n257": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:advanced:tornado:077",
+        "edges": {
+          "light": "n258"
+        }
+      },
+      "n258": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:advanced:tornado:077",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:crouch:047",
+        "edges": {
+          "special": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n192",
+          "medium": "n256"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n256": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:tornado:076",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:launcher:052",
+        "edges": {
+          "special": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:launcher:054",
+        "edges": {
+          "special": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:054",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:035",
+        "edges": {
+          "heavy": "n18",
+          "special": "n203",
+          "light": "n205",
+          "down-forward+medium": "n173",
+          "down+light": "n39",
+          "medium": "n207",
+          "forward+light": "n171"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:heavy-core",
+        "edges": {
+          "medium": "n81",
+          "heavy": "n24",
+          "light": "n73"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:heavy-core",
+        "edges": {}
+      },
+      "n73": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n81": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 13,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 14,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "majin-buu:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "special": "n40",
+          "light": "n235"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n235": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "forward+light": "n236"
+        }
+      },
+      "n236": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "forward+medium": "n237",
+          "special": "n252"
+        }
+      },
+      "n237": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "medium": "n245",
+          "special": "n238"
+        }
+      },
+      "n238": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "medium": "n239"
+        }
+      },
+      "n239": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "light": "n240"
+        }
+      },
+      "n240": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "light": "n241"
+        }
+      },
+      "n241": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "medium": "n242"
+        }
+      },
+      "n242": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "special": "n243"
+        }
+      },
+      "n243": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {
+          "special": "n244"
+        }
+      },
+      "n244": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:advanced:launcher:072",
+        "edges": {}
+      },
+      "n245": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:launcher:073",
+        "edges": {
+          "special": "n246"
+        }
+      },
+      "n246": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:launcher:073",
+        "edges": {
+          "light": "n247"
+        }
+      },
+      "n247": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:advanced:launcher:073",
+        "edges": {
+          "light": "n248"
+        }
+      },
+      "n248": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:advanced:launcher:073",
+        "edges": {
+          "medium": "n249"
+        }
+      },
+      "n249": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:advanced:launcher:073",
+        "edges": {
+          "special": "n250"
+        }
+      },
+      "n250": {
+        "depth": 11,
+        "routeId": "majin-buu:beginner:advanced:launcher:073",
+        "edges": {
+          "special": "n251"
+        }
+      },
+      "n251": {
+        "depth": 12,
+        "routeId": "majin-buu:beginner:advanced:launcher:073",
+        "edges": {}
+      },
+      "n252": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:launcher:075",
+        "edges": {
+          "forward+medium": "n253"
+        }
+      },
+      "n253": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:launcher:075",
+        "edges": {
+          "medium": "n254"
+        }
+      },
+      "n254": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:launcher:075",
+        "edges": {
+          "light": "n255"
+        }
+      },
+      "n255": {
+        "depth": 8,
+        "routeId": "majin-buu:beginner:advanced:launcher:075",
+        "edges": {
+          "light": "n260"
+        }
+      },
+      "n260": {
+        "depth": 9,
+        "routeId": "majin-buu:beginner:advanced:tornado:084",
+        "edges": {
+          "medium": "n261"
+        }
+      },
+      "n261": {
+        "depth": 10,
+        "routeId": "majin-buu:beginner:advanced:tornado:084",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n172",
+          "medium": "n259"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n259": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:tornado:083",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:036",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:launcher:062",
+        "edges": {
+          "special": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:062",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:launcher:064",
+        "edges": {
+          "special": "n206"
+        }
+      },
+      "n206": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:064",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:launcher:065",
+        "edges": {
+          "special": "n208"
+        }
+      },
+      "n208": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n26",
+          "heavy": "n193",
+          "down+light": "n99",
+          "light": "n97",
+          "medium": "n195"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:special-core",
+        "edges": {}
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n98"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n100",
+          "light": "n116"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n117"
+        }
+      },
+      "n117": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n126"
+        }
+      },
+      "n126": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:basic:013",
+        "edges": {
+          "forward+medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:basic:013",
+        "edges": {
+          "heavy": "n128"
+        }
+      },
+      "n128": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:crouch:049",
+        "edges": {
+          "special": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:crouch:050",
+        "edges": {
+          "special": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n138",
+          "light": "n140",
+          "heavy": "n33"
+        }
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n118",
+          "forward+light": "n102",
+          "medium": "n104"
+        }
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n105"
+        }
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:010",
+        "edges": {
+          "forward+light": "n120"
+        }
+      },
+      "n120": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:basic:014",
+        "edges": {
+          "forward+medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:basic:014",
+        "edges": {
+          "heavy": "n131"
+        }
+      },
+      "n131": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:basic:005",
+        "edges": {
+          "down+light": "n109",
+          "light": "n107"
+        }
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n110",
+          "light": "n121"
+        }
+      },
+      "n110": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n121": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:011",
+        "edges": {
+          "forward+light": "n122"
+        }
+      },
+      "n122": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:basic:015",
+        "edges": {
+          "forward+medium": "n133"
+        }
+      },
+      "n133": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:basic:015",
+        "edges": {
+          "heavy": "n134"
+        }
+      },
+      "n134": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n111": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:basic:007",
+        "edges": {
+          "down+light": "n123",
+          "medium": "n112",
+          "light": "n114"
+        }
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n115"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:basic:012",
+        "edges": {
+          "light": "n124"
+        }
+      },
+      "n124": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:basic:012",
+        "edges": {
+          "forward+light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 4,
+        "routeId": "majin-buu:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n135"
+        }
+      },
+      "n135": {
+        "depth": 5,
+        "routeId": "majin-buu:beginner:advanced:basic:016",
+        "edges": {
+          "forward+medium": "n136"
+        }
+      },
+      "n136": {
+        "depth": 6,
+        "routeId": "majin-buu:beginner:advanced:basic:016",
+        "edges": {
+          "heavy": "n137"
+        }
+      },
+      "n137": {
+        "depth": 7,
+        "routeId": "majin-buu:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:021",
+        "edges": {
+          "forward+light": "n169",
+          "medium": "n143"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n148",
+          "down-forward+medium": "n146"
+        }
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:025",
+        "edges": {
+          "medium": "n151",
+          "light": "n153"
+        }
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:027",
+        "edges": {
+          "down-forward+medium": "n158",
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:029",
+        "edges": {
+          "medium": "n161",
+          "light": "n163"
+        }
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:advanced:041",
+        "edges": {
+          "medium": "n182",
+          "down-forward+medium": "n180"
+        }
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:041",
+        "edges": {
+          "special": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:041",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:advanced:042",
+        "edges": {
+          "special": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:advanced:042",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 1,
+        "routeId": "majin-buu:beginner:advanced:crouch:045",
+        "edges": {
+          "down-forward+medium": "n187",
+          "special": "n185"
+        }
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "majin-buu:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "majin-buu:beginner:advanced:crouch:046",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Stretch Punch",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Stretch Arm Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Stretchy Low Kick",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Majin Roundhouse",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Majin Roundhouse",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0026": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0029": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Stretch Punch",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Stretchy Low Kick",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Majin Roundhouse",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Majin Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0047": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Stretch Arm Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0049": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+special",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Stretch Arm Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0050": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Stretchy Low Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0053": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Stretch Arm Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Stretch Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Buu Burst Roll",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0062": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Stretch Arm Check",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Stretch Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0068": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Stretch Arm Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0069": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Stretch Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Stretch Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "forward+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Buu Tornado Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0075": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0077": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Majin Jab",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Majin Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Stretch Launcher",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Stretch Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "While-Rising Stretch Punch Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Stretch Arm Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "down+medium",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0091": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "While-Rising Tornado Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Stretch Arm Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Stretch Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "down+medium",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Majin Tornado Kick",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "juggle"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Majin Jab",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diagonal Stretch Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "down+medium",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Majin Tornado Kick",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Stretch Arm Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Majin Tornado Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Majin Jab",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Stretch Punch",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Stretchy Arm Sweep",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0115": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Majin Roundhouse",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0116": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Belly Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Candy Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Buu Burst Roll",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0120": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tornado Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0121": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Stretch Punch",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0122": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Majin Jab",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0123": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Majin Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0124": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Majin Aura Tornado",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

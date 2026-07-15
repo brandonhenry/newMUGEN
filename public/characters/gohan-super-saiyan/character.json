@@ -3212,134 +3212,95 @@
   "beginnerComboRoutes": [
     {
       "id": "gohan-super-saiyan:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Quick Aura Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Saiyan Body Poke",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 26,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
       ]
     },
     {
       "id": "gohan-super-saiyan:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Saiyan Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Aura Hook",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "3+4",
-          "kiAnimationKey": "cmd:3+4",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
       ]
     },
     {
       "id": "gohan-super-saiyan:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Sliding Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Sliding Kick",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown",
-          "kiCommand": "3+4",
-          "kiAnimationKey": "cmd:3+4",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
       ]
     },
     {
@@ -3351,41 +3312,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Saiyan Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Aura Hook",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "3+4",
-          "kiAnimationKey": "cmd:3+4",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0014",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -3397,41 +3333,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Quick Aura Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Saiyan Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "3+4",
-          "kiAnimationKey": "cmd:3+4",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3443,41 +3354,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Quick Aura Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Saiyan Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "3+4",
-          "kiAnimationKey": "cmd:3+4",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0019",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3489,40 +3375,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Saiyan Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Sliding Kick",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown",
-          "kiCommand": "3+4",
-          "kiAnimationKey": "cmd:3+4",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0020",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -3534,41 +3396,4894 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Sliding Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Quick Aura Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Saiyan Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "3+4",
-          "kiAnimationKey": "cmd:3+4",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0016"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0004"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0012",
+        "s0004"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0028",
+        "s0029",
+        "s0004"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0017",
+        "s0018"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0021",
+        "s0022"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0024",
+        "s0016"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:001",
+      "title": "Kamehameha 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:002",
+      "title": "Kamehameha 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0036",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:003",
+      "title": "Low Sliding Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:004",
+      "title": "Low Sliding Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0039",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:005",
+      "title": "Quick Saiyan Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:006",
+      "title": "Quick Saiyan Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0042",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:007",
+      "title": "Saiyan Body Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:008",
+      "title": "Saiyan Body Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0045",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:009",
+      "title": "Kamehameha 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "down+light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0046",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:010",
+      "title": "Low Sliding Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0049",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:011",
+      "title": "Quick Saiyan Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0050",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:012",
+      "title": "Saiyan Body Hook 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0051",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:013",
+      "title": "Kamehameha 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0046",
+        "s0047",
+        "s0048",
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:014",
+      "title": "Low Sliding Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0049",
+        "s0047",
+        "s0048",
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:015",
+      "title": "Quick Saiyan Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0050",
+        "s0047",
+        "s0048",
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:basic:016",
+      "title": "Saiyan Body Hook 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0051",
+        "s0047",
+        "s0048",
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:017",
+      "title": "Forward Aura Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:018",
+      "title": "Forward Aura Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down-forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0058",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:019",
+      "title": "Forward Low Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0060",
+        "s0057"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:020",
+      "title": "Forward Low Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down-forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0061",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:021",
+      "title": "Low Burst Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0060",
+        "s0057"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:022",
+      "title": "Low Burst Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0061",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:023",
+      "title": "Saiyan Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:024",
+      "title": "Super Saiyan Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:025",
+      "title": "Low Forward Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:026",
+      "title": "Low Forward Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down-forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0058",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:027",
+      "title": "Low Saiyan Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0053",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:028",
+      "title": "Low Saiyan Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0068",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:029",
+      "title": "Low Vanish Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:030",
+      "title": "Low Vanish Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down-forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0058",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:031",
+      "title": "Masenko 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:032",
+      "title": "Masenko 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0053",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:033",
+      "title": "Quick Aura Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0048",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:034",
+      "title": "Quick Aura Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:035",
+      "title": "Quick Saiyan Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:036",
+      "title": "Quick Saiyan Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0048",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:037",
+      "title": "Saiyan Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0076",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:038",
+      "title": "Sidestep Low Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0078",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:039",
+      "title": "Sidestep Low Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0079",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:040",
+      "title": "Super Saiyan Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0081",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:041",
+      "title": "Super Saiyan Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0082",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:042",
+      "title": "Super Saiyan Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0083",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:043",
+      "title": "Super Saiyan Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:advanced:044",
+      "title": "Super Saiyan Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0086",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:crouch:045",
+      "title": "Crouch Aura Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0061",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:crouch:046",
+      "title": "Crouch Aura Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:crouch:047",
+      "title": "Rising Aura Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:crouch:048",
+      "title": "Rising Aura Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0053",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:crouch:049",
+      "title": "While Rising Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0092",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:crouch:050",
+      "title": "While Rising Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0093",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:051",
+      "title": "Crouch Saiyan Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:052",
+      "title": "Crouch Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0096",
+        "s0083"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:053",
+      "title": "Crouch Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0097",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:054",
+      "title": "Crouch Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0096",
+        "s0083"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:055",
+      "title": "Crouch Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0097",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:056",
+      "title": "Forward Saiyan Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0099",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:057",
+      "title": "Forward Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0100",
+        "s0083"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:058",
+      "title": "Forward Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0076",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:059",
+      "title": "Forward Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0100",
+        "s0083"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:060",
+      "title": "Forward Saiyan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0076",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:061",
+      "title": "Rising Saiyan Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0102",
+        "s0083"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:062",
+      "title": "Rising Saiyan Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0103",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:063",
+      "title": "Rising Saiyan Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0104",
+        "s0035"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:064",
+      "title": "Crouch Saiyan Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0105",
+        "s0047",
+        "s0073",
+        "s0088",
+        "s0064",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:065",
+      "title": "Crouch Saiyan Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.556875,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "light",
+        "down+light",
+        "special",
+        "heavy",
+        "down-forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0105",
+        "s0047",
+        "s0073",
+        "s0088",
+        "s0064",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0050",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0112"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:068",
+      "title": "Forward Saiyan Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0050",
+        "s0047",
+        "s0073",
+        "s0088",
+        "s0064",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:069",
+      "title": "Forward Saiyan Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.556875,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "light",
+        "down+light",
+        "special",
+        "heavy",
+        "down-forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0050",
+        "s0047",
+        "s0073",
+        "s0088",
+        "s0064",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0050",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0112"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:070",
+      "title": "Rising Saiyan Kick Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.556875,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "light",
+        "down+light",
+        "special",
+        "heavy",
+        "down-forward+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0113",
+        "s0047",
+        "s0073",
+        "s0088",
+        "s0064",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0050",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0114"
+      ]
+    },
+    {
+      "id": "gohan-super-saiyan:beginner:advanced:launcher:073",
+      "title": "Rising Saiyan Kick Air Chase Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0113",
+        "s0047",
+        "s0073",
+        "s0088",
+        "s0064",
+        "s0106",
+        "s0107"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n9",
+          "special": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "forward+medium": "n165",
+          "forward+heavy": "n170",
+          "forward+special": "n152",
+          "down+light": "n155",
+          "down+heavy": "n145",
+          "down+special": "n135",
+          "down-forward+light": "n140",
+          "down-forward+medium": "n107",
+          "down-forward+special": "n102",
+          "forward+special+medium": "n93",
+          "forward+special+heavy": "n175",
+          "down+special+light": "n160"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:035",
+        "edges": {
+          "light": "n2",
+          "medium": "n26",
+          "down-forward+medium": "n180",
+          "forward+medium": "n32"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:light-core",
+        "edges": {
+          "medium": "n37",
+          "heavy": "n45",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:light-core",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39"
+        }
+      },
+      "n39": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44",
+          "heavy": "n85"
+        }
+      },
+      "n44": {
+        "depth": 15,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n85": {
+        "depth": 15,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n86"
+        }
+      },
+      "n86": {
+        "depth": 16,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87"
+        }
+      },
+      "n87": {
+        "depth": 17,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 18,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 19,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 20,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 21,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 22,
+        "routeId": "gohan-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n45": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 15,
+        "routeId": "gohan-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:036",
+        "edges": {
+          "heavy": "n27",
+          "light": "n182"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:forward-light-route",
+        "edges": {
+          "light": "n33"
+        }
+      },
+      "n33": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:035",
+        "edges": {
+          "light": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n10",
+          "special": "n10",
+          "special+light": "n203",
+          "down-forward+heavy": "n201",
+          "down+light": "n207",
+          "light": "n150",
+          "heavy": "n28",
+          "forward+light": "n199",
+          "forward+medium": "n183"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:medium-core",
+        "edges": {
+          "special": "n25",
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n16",
+          "light": "n53",
+          "heavy": "n61"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:medium-core",
+        "edges": {}
+      },
+      "n53": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 15,
+        "routeId": "gohan-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n61": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n62"
+        }
+      },
+      "n62": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n63"
+        }
+      },
+      "n63": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 15,
+        "routeId": "gohan-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:special-core",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n29",
+          "light": "n34"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:023",
+        "edges": {
+          "light": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:037",
+        "edges": {
+          "light": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:crouch:049",
+        "edges": {
+          "light": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:crouch:050",
+        "edges": {
+          "light": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:052",
+        "edges": {
+          "light": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:064",
+        "edges": {
+          "forward+light": "n208"
+        }
+      },
+      "n208": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:064",
+        "edges": {
+          "forward+medium": "n209"
+        }
+      },
+      "n209": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:064",
+        "edges": {
+          "medium": "n210"
+        }
+      },
+      "n210": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:064",
+        "edges": {
+          "light": "n211"
+        }
+      },
+      "n211": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:064",
+        "edges": {
+          "light": "n212"
+        }
+      },
+      "n212": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:064",
+        "edges": {
+          "medium": "n213"
+        }
+      },
+      "n213": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:064",
+        "edges": {
+          "light": "n214"
+        }
+      },
+      "n214": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:065",
+        "edges": {
+          "down+light": "n215"
+        }
+      },
+      "n215": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:065",
+        "edges": {
+          "special": "n216"
+        }
+      },
+      "n216": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:065",
+        "edges": {
+          "heavy": "n217"
+        }
+      },
+      "n217": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:065",
+        "edges": {
+          "down-forward+heavy": "n218"
+        }
+      },
+      "n218": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:065",
+        "edges": {
+          "heavy": "n219"
+        }
+      },
+      "n219": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:038",
+        "edges": {
+          "heavy": "n18",
+          "special": "n205",
+          "down-forward+heavy": "n187",
+          "light": "n30",
+          "forward+light": "n35",
+          "medium": "n100",
+          "forward+medium": "n185",
+          "forward+heavy": "n98"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "medium": "n77",
+          "heavy": "n24",
+          "light": "n69"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:heavy-core",
+        "edges": {}
+      },
+      "n69": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n70"
+        }
+      },
+      "n70": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n71"
+        }
+      },
+      "n71": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 15,
+        "routeId": "gohan-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n77": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n78"
+        }
+      },
+      "n78": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n79"
+        }
+      },
+      "n79": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 15,
+        "routeId": "gohan-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n31",
+          "forward+light": "n115"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n116",
+          "forward+medium": "n220"
+        }
+      },
+      "n116": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:010",
+        "edges": {
+          "forward+medium": "n126"
+        }
+      },
+      "n126": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:014",
+        "edges": {
+          "light": "n127"
+        }
+      },
+      "n127": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:014",
+        "edges": {
+          "down-forward+heavy": "n128"
+        }
+      },
+      "n128": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n220": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n221"
+        }
+      },
+      "n221": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n222"
+        }
+      },
+      "n222": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n223"
+        }
+      },
+      "n223": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n224"
+        }
+      },
+      "n224": {
+        "depth": 8,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n225"
+        }
+      },
+      "n225": {
+        "depth": 9,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "down+light": "n226"
+        }
+      },
+      "n226": {
+        "depth": 10,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n227"
+        }
+      },
+      "n227": {
+        "depth": 11,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "heavy": "n228"
+        }
+      },
+      "n228": {
+        "depth": 12,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "down-forward+heavy": "n229"
+        }
+      },
+      "n229": {
+        "depth": 13,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {
+          "forward+heavy": "n230"
+        }
+      },
+      "n230": {
+        "depth": 14,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:070",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:down-forward-heavy-route",
+        "edges": {
+          "light": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:003",
+        "edges": {
+          "light": "n99"
+        }
+      },
+      "n99": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:004",
+        "edges": {
+          "light": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:038",
+        "edges": {
+          "light": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:039",
+        "edges": {
+          "light": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n206"
+        }
+      },
+      "n206": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:launcher:061",
+        "edges": {}
+      },
+      "n93": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:040",
+        "edges": {
+          "medium": "n195",
+          "heavy": "n189",
+          "down+light": "n112",
+          "forward+light": "n94",
+          "forward+medium": "n197",
+          "light": "n191",
+          "special": "n96"
+        }
+      },
+      "n94": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:001",
+        "edges": {
+          "light": "n95"
+        }
+      },
+      "n95": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:002",
+        "edges": {
+          "light": "n97"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n114"
+        }
+      },
+      "n114": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:009",
+        "edges": {
+          "forward+medium": "n123"
+        }
+      },
+      "n123": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:013",
+        "edges": {
+          "light": "n124"
+        }
+      },
+      "n124": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:013",
+        "edges": {
+          "down-forward+heavy": "n125"
+        }
+      },
+      "n125": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:040",
+        "edges": {
+          "light": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:041",
+        "edges": {
+          "light": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:041",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:043",
+        "edges": {
+          "light": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:044",
+        "edges": {
+          "light": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:044",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n103",
+          "down+light": "n117",
+          "forward+medium": "n105"
+        }
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:005",
+        "edges": {
+          "light": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:006",
+        "edges": {
+          "light": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:011",
+        "edges": {
+          "forward+light": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n119"
+        }
+      },
+      "n119": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:011",
+        "edges": {
+          "forward+medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:015",
+        "edges": {
+          "light": "n130"
+        }
+      },
+      "n130": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:015",
+        "edges": {
+          "down-forward+heavy": "n131"
+        }
+      },
+      "n131": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:007",
+        "edges": {
+          "down+light": "n120",
+          "light": "n110",
+          "medium": "n108"
+        }
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:007",
+        "edges": {
+          "light": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:008",
+        "edges": {
+          "light": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:012",
+        "edges": {
+          "forward+light": "n121"
+        }
+      },
+      "n121": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n122"
+        }
+      },
+      "n122": {
+        "depth": 4,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:012",
+        "edges": {
+          "forward+medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 5,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:016",
+        "edges": {
+          "light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 6,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:016",
+        "edges": {
+          "down-forward+heavy": "n134"
+        }
+      },
+      "n134": {
+        "depth": 7,
+        "routeId": "gohan-super-saiyan:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n135": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {
+          "heavy": "n136",
+          "down-forward+medium": "n138"
+        }
+      },
+      "n136": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {
+          "light": "n137"
+        }
+      },
+      "n137": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:018",
+        "edges": {
+          "light": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:019",
+        "edges": {
+          "heavy": "n141",
+          "down-forward+medium": "n143"
+        }
+      },
+      "n141": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:019",
+        "edges": {
+          "light": "n142"
+        }
+      },
+      "n142": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:020",
+        "edges": {
+          "light": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:021",
+        "edges": {
+          "heavy": "n146",
+          "down-forward+medium": "n148"
+        }
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:021",
+        "edges": {
+          "light": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:022",
+        "edges": {
+          "light": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:024",
+        "edges": {
+          "forward+light": "n153",
+          "light": "n193"
+        }
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:024",
+        "edges": {
+          "light": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:042",
+        "edges": {
+          "light": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:042",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:025",
+        "edges": {
+          "heavy": "n156",
+          "down-forward+medium": "n158"
+        }
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:025",
+        "edges": {
+          "light": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:026",
+        "edges": {
+          "light": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:027",
+        "edges": {
+          "down-forward+heavy": "n163",
+          "light": "n161"
+        }
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:027",
+        "edges": {
+          "light": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:028",
+        "edges": {
+          "light": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:029",
+        "edges": {
+          "heavy": "n166",
+          "down-forward+medium": "n168"
+        }
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:029",
+        "edges": {
+          "light": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:030",
+        "edges": {
+          "light": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:031",
+        "edges": {
+          "heavy": "n171",
+          "light": "n173"
+        }
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:031",
+        "edges": {
+          "light": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:032",
+        "edges": {
+          "light": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 1,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:033",
+        "edges": {
+          "medium": "n176",
+          "forward+medium": "n178"
+        }
+      },
+      "n176": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:033",
+        "edges": {
+          "light": "n177"
+        }
+      },
+      "n177": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:034",
+        "edges": {
+          "light": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "gohan-super-saiyan:beginner:advanced:advanced:034",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Saiyan Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Saiyan Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Saiyan Body Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0014": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0019": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Saiyan Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special+medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Kamehameha",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiAnimationKey": "kickright",
+      "kiCost": 35
+    },
+    "s0034": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Saiyan Body Poke",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0035": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "special",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0037": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0039": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Saiyan Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Saiyan Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Saiyan Body Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Saiyan Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Saiyan Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "down+special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rising Saiyan Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Saiyan Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Forward Low Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rising Saiyan Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Saiyan Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Burst Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Saiyan Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Super Saiyan Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down+light",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "down+special+light",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Saiyan Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Vanish Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0070": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Masenko",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "2+4",
+      "kiAnimationKey": "cmd:2+4",
+      "kiCost": 35
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Vanish Sweep",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+special+heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Saiyan Check Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Saiyan Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0077": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sidestep Low Burst Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0080": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special+medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Super Saiyan Burst Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiAnimationKey": "kickright",
+      "kiCost": 35
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Vanish Sweep",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0084": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special+medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Super Saiyan Drive Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiAnimationKey": "kickright",
+      "kiCost": 35
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Aura Hook",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Crouch Aura Jab Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Saiyan Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special+medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Rising Aura Strike Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiAnimationKey": "kickright",
+      "kiCost": 35
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Vanish Sweep",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "While Rising Hook Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Saiyan Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0096": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Super Saiyan Crush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Forward Saiyan Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Super Saiyan Crush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35
+    },
+    "s0101": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Rising Saiyan Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0102": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Super Saiyan Crush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "3+4",
+      "kiAnimationKey": "cmd:3+4",
+      "kiCost": 35
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0107": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Saiyan Body Hook",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Saiyan Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0109": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Kamehameha",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle",
+      "kiAnimationKey": "kickright",
+      "kiCost": 35
+    },
+    "s0110": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sliding Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Forward Burst",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Vanish Sweep",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Aura Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Forward Low Burst",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    }
+  }
 }

@@ -3213,133 +3213,95 @@
   "beginnerComboRoutes": [
     {
       "id": "anna-kyoyama:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Quick Itako Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Quick Itako Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 30,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
       ]
     },
     {
       "id": "anna-kyoyama:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Rosary Frame Strike",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Rosary Arc",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
       ]
     },
     {
       "id": "anna-kyoyama:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Spirit Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Sandal Kick",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
       ]
     },
     {
@@ -3351,41 +3313,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Rosary Frame Strike",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Rosary Arc",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0014",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -3397,40 +3334,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Quick Itako Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Rosary Frame Strike",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0017",
+        "s0013"
       ]
     },
     {
@@ -3442,40 +3355,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Quick Itako Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Rosary Frame Strike",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0018",
+        "s0017",
+        "s0013"
       ]
     },
     {
@@ -3487,41 +3376,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Rosary Frame Strike",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Spirit Feint",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0019",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -3531,43 +3395,4528 @@
       "gestures": [
         "special+heavy",
         "light",
+        "light"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0001",
+        "s0023"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Spirit Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Quick Itako Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Oni Hand Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0026"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0001",
+        "s0030"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0017",
+        "s0013"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0020",
+        "s0021"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "light"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0033",
+        "s0001",
+        "s0023"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:001",
+      "title": "Low Sandal Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0035",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:002",
+      "title": "Low Sandal Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:003",
+      "title": "Quick Itako Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:004",
+      "title": "Quick Itako Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0042",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:005",
+      "title": "Rising Bead Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:006",
+      "title": "Rising Bead Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0045",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:007",
+      "title": "Rosary Arc 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:008",
+      "title": "Low Sandal Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0048",
+        "s0049",
+        "s0037"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:009",
+      "title": "Quick Itako Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+medium",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:010",
+      "title": "Rising Bead Kick Grounded Launcher 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0051",
+        "s0052",
+        "s0037"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:011",
+      "title": "Rosary Arc 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0053",
+        "s0052",
+        "s0054"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:012",
+      "title": "Low Sandal Kick 5-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0048",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:013",
+      "title": "Rising Bead Kick Grounded Launcher 5-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+light",
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0051",
+        "s0052",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:basic:014",
+      "title": "Rosary Arc 5-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0053",
+        "s0052",
+        "s0054",
+        "s0037"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:015",
+      "title": "Forward Bead Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:016",
+      "title": "Forward Bead Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:017",
+      "title": "Forward Rosary Arc 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:018",
+      "title": "Forward Rosary Arc 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:019",
+      "title": "Forward Rosary Arc 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:020",
+      "title": "Forward Rosary Arc 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:021",
+      "title": "Low Spirit Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:022",
+      "title": "Low Spirit Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:023",
+      "title": "Itako Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:024",
+      "title": "Itako Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0064",
+        "s0059"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:025",
+      "title": "Itako Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:026",
+      "title": "Itako Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0064",
+        "s0059"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:027",
+      "title": "Rosary Frame Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0066",
+        "s0060"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:028",
+      "title": "Rosary Frame Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0067",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:029",
+      "title": "Rosary Frame Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0066",
+        "s0060"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:030",
+      "title": "Rosary Frame Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0067",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:031",
+      "title": "Forward Rosary Arc 4-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:032",
+      "title": "Low Spirit Feint 6-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0068",
+        "s0052",
+        "s0054",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:033",
+      "title": "Forward Bead Rush 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "forward+medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0037",
+        "s0048",
+        "s0054",
+        "s0069"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:034",
+      "title": "Forward Bead Rush 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "forward+medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0037",
+        "s0048",
+        "s0054",
+        "s0069"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:035",
+      "title": "Itako Aura Drive 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0064",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:036",
+      "title": "Itako Aura Drive 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0064",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:037",
+      "title": "Low Spirit Feint 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0068",
+        "s0052",
+        "s0054",
+        "s0037"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:038",
+      "title": "Rosary Frame Strike 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0070",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:advanced:039",
+      "title": "Rosary Frame Strike 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0070",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:040",
+      "title": "While-Rising Rosary 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0058"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:041",
+      "title": "Crouching Bead Tap 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:042",
+      "title": "Crouching Bead Tap 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0074",
+        "s0075"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:043",
+      "title": "Crouching Bead Tap 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0074",
+        "s0075"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:044",
+      "title": "Crouching Bead Tap 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:045",
+      "title": "While-Rising Rosary 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0078",
+        "s0060"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:046",
+      "title": "Crouching Bead Tap 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0079",
+        "s0080",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:crouch:047",
+      "title": "Crouching Bead Tap 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "forward+medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0079",
+        "s0080",
+        "s0049",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:048",
+      "title": "Bead Snare Sweep Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:049",
+      "title": "Bead Snare Sweep Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0083",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:050",
+      "title": "Bead Snare Sweep Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:051",
+      "title": "Bead Snare Sweep Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0083",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:052",
+      "title": "Crouch Spirit Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:053",
+      "title": "Crouch Spirit Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0086",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:054",
+      "title": "Crouch Spirit Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:055",
+      "title": "Crouch Spirit Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0086",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:056",
+      "title": "Forward Rosary Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:057",
+      "title": "Forward Rosary Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0035",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:058",
+      "title": "Forward Rosary Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:059",
+      "title": "Forward Rosary Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0035",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:060",
+      "title": "Itako Flip Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0085",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:061",
+      "title": "Itako Flip Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0086",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:062",
+      "title": "Oni Hand Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:063",
+      "title": "Oni Hand Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0091",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:064",
+      "title": "Oni Hand Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:065",
+      "title": "Oni Hand Burst Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0091",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:066",
+      "title": "Rising Bead Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0045",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:067",
+      "title": "Rising Bead Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:068",
+      "title": "Rising Spirit Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:069",
+      "title": "Rising Spirit Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0094",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:070",
+      "title": "Rosary Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0082",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:071",
+      "title": "Rosary Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0083",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:072",
+      "title": "Rosary Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0082",
+        "s0038"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:073",
+      "title": "Rosary Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0083",
+        "s0036"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:074",
+      "title": "Bead Snare Sweep Grounded Launcher 5-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "forward+light",
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0096",
+        "s0052",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "anna-kyoyama:beginner:advanced:launcher:075",
+      "title": "Rosary Power Crush Grounded Launcher 5-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+light",
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0052",
+        "s0037",
+        "s0035"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:015",
+        "edges": {
+          "medium": "n9",
+          "special": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "forward+medium": "n191",
+          "forward+heavy": "n176",
+          "down-forward+medium": "n186",
+          "forward+special": "n124",
+          "down+light": "n127",
+          "down+heavy": "n162",
+          "down+special": "n181",
+          "down-forward+light": "n107",
+          "down-forward+special": "n93",
+          "forward+special+medium": "n133",
+          "forward+special+heavy": "n102",
+          "down+special+light": "n159"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:003",
+        "edges": {
+          "light": "n2",
+          "medium": "n26",
+          "forward+light": "n98",
+          "forward+medium": "n32",
+          "heavy": "n100"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "anna-kyoyama:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "anna-kyoyama:beginner:light-core",
+        "edges": {
+          "medium": "n37",
+          "heavy": "n45",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:light-core",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 9,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39"
+        }
+      },
+      "n39": {
+        "depth": 10,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 11,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 12,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 13,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 14,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n85",
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 15,
+        "routeId": "anna-kyoyama:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n85": {
+        "depth": 15,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n86"
+        }
+      },
+      "n86": {
+        "depth": 16,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87"
+        }
+      },
+      "n87": {
+        "depth": 17,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 18,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 19,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 20,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 21,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 22,
+        "routeId": "anna-kyoyama:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n45": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 9,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 10,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 11,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 12,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 13,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 14,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 15,
+        "routeId": "anna-kyoyama:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n113",
+          "special": "n33"
+        }
+      },
+      "n33": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n114"
+        }
+      },
+      "n114": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:009",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n99"
+        }
+      },
+      "n99": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:027",
+        "edges": {
+          "medium": "n10",
+          "special": "n10",
+          "heavy": "n28",
+          "light": "n138",
+          "down-forward+medium": "n140",
+          "forward+light": "n34"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:038",
+        "edges": {
+          "medium": "n11",
+          "special": "n25",
+          "forward+light": "n156"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "anna-kyoyama:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "anna-kyoyama:beginner:medium-core",
+        "edges": {
+          "heavy": "n61",
+          "light": "n53",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:medium-core",
+        "edges": {}
+      },
+      "n53": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 9,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 10,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 11,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 12,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 13,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 14,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 15,
+        "routeId": "anna-kyoyama:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n61": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n62"
+        }
+      },
+      "n62": {
+        "depth": 9,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n63"
+        }
+      },
+      "n63": {
+        "depth": 10,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 11,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 12,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 13,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 14,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 15,
+        "routeId": "anna-kyoyama:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:special-core",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:038",
+        "edges": {
+          "light": "n157"
+        }
+      },
+      "n157": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:038",
+        "edges": {
+          "medium": "n158"
+        }
+      },
+      "n158": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:down-medium-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:021",
+        "edges": {
+          "heavy": "n18",
+          "forward+light": "n145",
+          "light": "n30"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "anna-kyoyama:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "anna-kyoyama:beginner:heavy-core",
+        "edges": {
+          "medium": "n77",
+          "light": "n69",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:heavy-core",
+        "edges": {}
+      },
+      "n69": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n70"
+        }
+      },
+      "n70": {
+        "depth": 9,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n71"
+        }
+      },
+      "n71": {
+        "depth": 10,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 11,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 12,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 13,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 14,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 15,
+        "routeId": "anna-kyoyama:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n77": {
+        "depth": 8,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n78"
+        }
+      },
+      "n78": {
+        "depth": 9,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n79"
+        }
+      },
+      "n79": {
+        "depth": 10,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 11,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 12,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 13,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 14,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 15,
+        "routeId": "anna-kyoyama:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n132",
+          "light": "n31",
+          "medium": "n36"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n132": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:032",
+        "edges": {
+          "forward+medium": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:032",
+        "edges": {
+          "medium": "n147"
+        }
+      },
+      "n147": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:032",
+        "edges": {
+          "light": "n148"
+        }
+      },
+      "n148": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:032",
+        "edges": {
+          "medium": "n149"
+        }
+      },
+      "n149": {
+        "depth": 6,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n93": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:001",
+        "edges": {
+          "forward+medium": "n110",
+          "medium": "n94",
+          "light": "n96"
+        }
+      },
+      "n94": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n95"
+        }
+      },
+      "n95": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n97"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:008",
+        "edges": {
+          "forward+light": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:008",
+        "edges": {
+          "light": "n112"
+        }
+      },
+      "n112": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:008",
+        "edges": {
+          "medium": "n121"
+        }
+      },
+      "n121": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:012",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:005",
+        "edges": {
+          "forward+light": "n115",
+          "medium": "n103",
+          "light": "n105"
+        }
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:010",
+        "edges": {
+          "forward+medium": "n116"
+        }
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n117"
+        }
+      },
+      "n117": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n122"
+        }
+      },
+      "n122": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:007",
+        "edges": {
+          "forward+light": "n118",
+          "light": "n108"
+        }
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:011",
+        "edges": {
+          "forward+medium": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n120"
+        }
+      },
+      "n120": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:011",
+        "edges": {
+          "light": "n123"
+        }
+      },
+      "n123": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:015",
+        "edges": {
+          "light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n126",
+          "forward+medium": "n150"
+        }
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:033",
+        "edges": {
+          "medium": "n151"
+        }
+      },
+      "n151": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:033",
+        "edges": {
+          "medium": "n152"
+        }
+      },
+      "n152": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n130",
+          "forward+light": "n142",
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n130": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n131"
+        }
+      },
+      "n131": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:031",
+        "edges": {
+          "light": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:031",
+        "edges": {
+          "medium": "n144"
+        }
+      },
+      "n144": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n133": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:023",
+        "edges": {
+          "down-forward+medium": "n134",
+          "forward+medium": "n136"
+        }
+      },
+      "n134": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n136": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n137",
+          "forward+light": "n153"
+        }
+      },
+      "n137": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:035",
+        "edges": {
+          "light": "n154"
+        }
+      },
+      "n154": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:035",
+        "edges": {
+          "medium": "n155"
+        }
+      },
+      "n155": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:040",
+        "edges": {
+          "special": "n169",
+          "light": "n160"
+        }
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:040",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:040",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:041",
+        "edges": {
+          "special": "n163",
+          "down+medium": "n167",
+          "medium": "n171",
+          "light": "n165"
+        }
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:041",
+        "edges": {
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:041",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:042",
+        "edges": {
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:042",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:044",
+        "edges": {
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:044",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:046",
+        "edges": {
+          "forward+medium": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:046",
+        "edges": {
+          "forward+light": "n173"
+        }
+      },
+      "n173": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:046",
+        "edges": {
+          "light": "n174"
+        }
+      },
+      "n174": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:046",
+        "edges": {
+          "medium": "n175"
+        }
+      },
+      "n175": {
+        "depth": 6,
+        "routeId": "anna-kyoyama:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n176": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:048",
+        "edges": {
+          "forward+light": "n196",
+          "medium": "n179",
+          "light": "n177"
+        }
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:048",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:048",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:049",
+        "edges": {
+          "special": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:049",
+        "edges": {}
+      },
+      "n196": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:074",
+        "edges": {
+          "forward+medium": "n197"
+        }
+      },
+      "n197": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:074",
+        "edges": {
+          "light": "n198"
+        }
+      },
+      "n198": {
+        "depth": 4,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:074",
+        "edges": {
+          "medium": "n199"
+        }
+      },
+      "n199": {
+        "depth": 5,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:074",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:052",
+        "edges": {
+          "medium": "n184",
+          "light": "n182"
+        }
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:052",
+        "edges": {
+          "special": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:053",
+        "edges": {
+          "special": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:053",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:056",
+        "edges": {
+          "medium": "n189",
+          "light": "n187"
+        }
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:056",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:056",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:057",
+        "edges": {
+          "special": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:057",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 1,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:060",
+        "edges": {
+          "medium": "n194",
+          "light": "n192"
+        }
+      },
+      "n192": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:060",
+        "edges": {
+          "special": "n193"
+        }
+      },
+      "n193": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:060",
+        "edges": {}
+      },
+      "n194": {
+        "depth": 2,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:061",
+        "edges": {
+          "special": "n195"
+        }
+      },
+      "n195": {
+        "depth": 3,
+        "routeId": "anna-kyoyama:beginner:advanced:launcher:061",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0003": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0009": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sandal Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0014": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0024": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0027": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sandal Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Oni Hand Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0031": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Sandal Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0037": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0039": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Bead Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Bead Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0044": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down-forward+light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0047": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Bead Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Bead Rush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Bead Rush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Bead Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "down+light",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0057": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Bead Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Itako Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Rosary Launcher",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "launch"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rosary Frame Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Rosary Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Bead Rush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0069": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "down+special+light",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While-Rising Rosary",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0072": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Bead Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Bead Tap",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Spirit Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "launch"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Spirit Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Rosary Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While-Rising Rosary",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rosary Arc",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Bead Snare Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0082": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+special",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Spirit Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0086": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Rosary Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Itako Flip Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0089": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Oni Hand Burst Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0090": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0091": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0092": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Spirit Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0093": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Itako Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rosary Arc",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0095": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rosary Power Crush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Bead Rush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle"
+    }
+  }
 }

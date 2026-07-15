@@ -3578,136 +3578,95 @@
   "beginnerComboRoutes": [
     {
       "id": "frieza:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Death Tail Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Quick Tail Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
       ]
     },
     {
       "id": "frieza:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Tail Swipe",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Cruel Tail Spin",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 31,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
       ]
     },
     {
       "id": "frieza:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Death Tail Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Tail Swipe",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
       ]
     },
     {
@@ -3719,40 +3678,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Heavy Tail Wheel",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Tail Wheel",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0021",
+        "s0022",
+        "s0023"
       ]
     },
     {
@@ -3761,44 +3696,19 @@
       "family": "mixed",
       "gestures": [
         "light",
-        "medium",
-        "heavy"
+        "heavy",
+        "special"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Death Tail Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Tail Swipe",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0014",
+        "s0024"
       ]
     },
     {
@@ -3810,41 +3720,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Heavy Tail Wheel",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Tail Swipe",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0011",
+        "s0026"
       ]
     },
     {
@@ -3856,41 +3741,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Tail Knockdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Death Tail Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0029"
       ]
     },
     {
@@ -3902,42 +3762,5419 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Death Tail Smash",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Death Tail Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Death Tail Ender",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0000",
+        "s0029"
+      ]
+    },
+    {
+      "id": "frieza:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0031",
+        "s0008",
+        "s0032"
+      ]
+    },
+    {
+      "id": "frieza:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0032"
+      ]
+    },
+    {
+      "id": "frieza:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0001",
+        "s0032"
+      ]
+    },
+    {
+      "id": "frieza:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0011",
+        "s0026"
+      ]
+    },
+    {
+      "id": "frieza:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "frieza:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0038",
+        "s0000",
+        "s0029"
+      ]
+    },
+    {
+      "id": "frieza:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "frieza:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
+      ]
+    },
+    {
+      "id": "frieza:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "frieza:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
+      ]
+    },
+    {
+      "id": "frieza:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "frieza:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "frieza:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:001",
+      "title": "Heavy Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:002",
+      "title": "Low Tail Scythe 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:003",
+      "title": "Low Tail Scythe 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0045",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:004",
+      "title": "Quick Tail Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:005",
+      "title": "Quick Tail Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:006",
+      "title": "Tail Backhand 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:007",
+      "title": "Tail Backhand 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0045",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:008",
+      "title": "Heavy Tail Wheel 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:009",
+      "title": "Low Tail Scythe 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0055",
+        "s0054",
+        "s0056"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:010",
+      "title": "Quick Tail Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "light",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0057",
+        "s0056"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:011",
+      "title": "Tail Backhand 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0055",
+        "s0054",
+        "s0056"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:012",
+      "title": "Heavy Tail Wheel 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down+light",
+        "special",
+        "special",
+        "light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0052",
+        "s0053",
+        "s0054",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:013",
+      "title": "Low Tail Scythe 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0055",
+        "s0054",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:014",
+      "title": "Quick Tail Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0057",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:basic:015",
+      "title": "Tail Backhand 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0055",
+        "s0054",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:016",
+      "title": "Cruel Tail Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0053",
+        "s0048"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:017",
+      "title": "Cruel Tail Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0062",
+        "s0050"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:018",
+      "title": "Cruel Tail Spin 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0056",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:019",
+      "title": "Death Tail Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:020",
+      "title": "Death Tail Smash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:021",
+      "title": "Emperor Tail Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:022",
+      "title": "Forward Tail Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0072"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:023",
+      "title": "Forward Tail Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0073",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:024",
+      "title": "Low Tyrant Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0052",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:025",
+      "title": "Quick Tail Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0053",
+        "s0048"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:026",
+      "title": "Quick Tail Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0062",
+        "s0050"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:027",
+      "title": "Cruel Tail Spin 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0058",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:028",
+      "title": "Death Tail Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0053",
+        "s0048"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:029",
+      "title": "Death Tail Ender 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:030",
+      "title": "Death Tail Ender 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:031",
+      "title": "Death Tail Smash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0045",
+        "s0080"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:032",
+      "title": "Emperor Tail Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0081",
+        "s0048"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:033",
+      "title": "Heavy Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0083",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:034",
+      "title": "Heavy Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0071",
+        "s0072"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:035",
+      "title": "Heavy Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:036",
+      "title": "Heavy Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0086",
+        "s0079"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:037",
+      "title": "Low Tail Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0085",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:038",
+      "title": "Low Tail Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0079"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:039",
+      "title": "Low Tyrant Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0089",
+        "s0044"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:040",
+      "title": "Quick Tail Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0055",
+        "s0048"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:041",
+      "title": "Quick Tail Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0050"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:042",
+      "title": "Sidestep Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:advanced:043",
+      "title": "Sidestep Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0095",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:crouch:044",
+      "title": "Rising Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0097",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:crouch:045",
+      "title": "Rising Tail Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0098",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:crouch:046",
+      "title": "While Rising Tail 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0085",
+        "s0066"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:crouch:047",
+      "title": "While Rising Tail 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0100",
+        "s0079"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:crouch:048",
+      "title": "Low Tyrant Slide 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special",
+        "special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0101",
+        "s0102",
+        "s0054",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060",
+        "s0103",
+        "s0104"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:crouch:049",
+      "title": "Low Tyrant Slide 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special",
+        "special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0101",
+        "s0102",
+        "s0054",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060",
+        "s0103",
+        "s0104"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:crouch:050",
+      "title": "Low Tyrant Slide 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special",
+        "special",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0101",
+        "s0102",
+        "s0054",
+        "s0056",
+        "s0058"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:051",
+      "title": "Crouch Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:052",
+      "title": "Crouch Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0108",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:053",
+      "title": "Crouch Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:054",
+      "title": "Crouch Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0108",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:055",
+      "title": "Crouch Tail Spiral Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0110",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:056",
+      "title": "Crouch Tail Spiral Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0111",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:057",
+      "title": "Crouch Tail Spiral Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0110",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:058",
+      "title": "Crouch Tail Spiral Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0111",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:059",
+      "title": "Forward Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0113",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:060",
+      "title": "Forward Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0114",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:061",
+      "title": "Forward Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0113",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:062",
+      "title": "Forward Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0114",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:063",
+      "title": "Rising Death Tail Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0116",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:064",
+      "title": "Rising Death Tail Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0117",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:065",
+      "title": "Rising Death Tail Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0116",
+        "s0107"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:066",
+      "title": "Rising Death Tail Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0117",
+        "s0094"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:067",
+      "title": "Crouch Tail Launcher Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5267045454545455,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0118",
+        "s0058",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054",
+        "s0121",
+        "s0104",
+        "s0122",
+        "s0123",
+        "s0124",
+        "s0125"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:070",
+      "title": "Crouch Tail Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0118",
+        "s0058",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:071",
+      "title": "Crouch Tail Spiral Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5517857142857143,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "medium",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0126",
+        "s0127",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054",
+        "s0121",
+        "s0104",
+        "s0122",
+        "s0123",
+        "s0124",
+        "s0125"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:072",
+      "title": "Crouch Tail Spiral Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "light",
+        "medium",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0126",
+        "s0127",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:073",
+      "title": "Forward Tail Launcher Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5267045454545455,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0043",
+        "s0058",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054",
+        "s0121",
+        "s0104",
+        "s0122",
+        "s0123",
+        "s0124",
+        "s0125"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:074",
+      "title": "Forward Tail Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0043",
+        "s0058",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:075",
+      "title": "Rising Death Tail Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5267045454545455,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0128",
+        "s0058",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054",
+        "s0121",
+        "s0104",
+        "s0122",
+        "s0123",
+        "s0124",
+        "s0125"
+      ]
+    },
+    {
+      "id": "frieza:beginner:advanced:launcher:078",
+      "title": "Rising Death Tail Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0128",
+        "s0058",
+        "s0119",
+        "s0059",
+        "s0060",
+        "s0120",
+        "s0054"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "frieza:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n24",
+          "special+light": "n24",
+          "forward+special+light": "n24",
+          "special+medium": "n30",
+          "down+special+medium": "n30",
+          "special+heavy": "n33",
+          "down-forward+special+heavy": "n33",
+          "medium": "n9",
+          "down+medium": "n9",
+          "light": "n1",
+          "heavy": "n1",
+          "forward+light": "n1",
+          "down-forward+heavy": "n1",
+          "forward+medium": "n142",
+          "forward+heavy": "n156",
+          "down+light": "n159",
+          "forward+special": "n137",
+          "down+heavy": "n109",
+          "down+special": "n104",
+          "down-forward+light": "n99",
+          "down-forward+medium": "n149",
+          "down-forward+special": "n168",
+          "forward+special+medium": "n96"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:019",
+        "edges": {
+          "light": "n2",
+          "heavy": "n17",
+          "medium": "n36",
+          "special": "n166",
+          "forward+light": "n145",
+          "forward+medium": "n211",
+          "forward+heavy": "n213"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n3",
+          "medium": "n232",
+          "special": "n40"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "frieza:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "frieza:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "frieza:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "frieza:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "frieza:beginner:light-core",
+        "edges": {
+          "medium": "n41",
+          "heavy": "n49",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "frieza:beginner:light-core",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 8,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 9,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 10,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 11,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 12,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 13,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 14,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48",
+          "heavy": "n88"
+        }
+      },
+      "n48": {
+        "depth": 15,
+        "routeId": "frieza:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 16,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 17,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 18,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 19,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 20,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 21,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 22,
+        "routeId": "frieza:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n49": {
+        "depth": 8,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 9,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 10,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 11,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 12,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 13,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 14,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 15,
+        "routeId": "frieza:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "frieza:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n232": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+light": "n233"
+        }
+      },
+      "n233": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+medium": "n234"
+        }
+      },
+      "n234": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n235"
+        }
+      },
+      "n235": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n236"
+        }
+      },
+      "n236": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n237"
+        }
+      },
+      "n237": {
+        "depth": 8,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n238"
+        }
+      },
+      "n238": {
+        "depth": 9,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n239"
+        }
+      },
+      "n239": {
+        "depth": 10,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n240"
+        }
+      },
+      "n240": {
+        "depth": 11,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n241"
+        }
+      },
+      "n241": {
+        "depth": 12,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n242"
+        }
+      },
+      "n242": {
+        "depth": 13,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {
+          "heavy": "n243"
+        }
+      },
+      "n243": {
+        "depth": 14,
+        "routeId": "frieza:beginner:advanced:launcher:071",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 2,
+        "routeId": "frieza:beginner:heavy-core",
+        "edges": {
+          "heavy": "n18",
+          "special": "n27"
+        }
+      },
+      "n18": {
+        "depth": 3,
+        "routeId": "frieza:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 4,
+        "routeId": "frieza:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 5,
+        "routeId": "frieza:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 6,
+        "routeId": "frieza:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 7,
+        "routeId": "frieza:beginner:heavy-core",
+        "edges": {
+          "medium": "n80",
+          "heavy": "n23",
+          "light": "n72"
+        }
+      },
+      "n23": {
+        "depth": 8,
+        "routeId": "frieza:beginner:heavy-core",
+        "edges": {}
+      },
+      "n72": {
+        "depth": 8,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 9,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 10,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 11,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 12,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 13,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 14,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 15,
+        "routeId": "frieza:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n80": {
+        "depth": 8,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 9,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 10,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 11,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 12,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 13,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 14,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 15,
+        "routeId": "frieza:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "frieza:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "frieza:beginner:forward-light-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "frieza:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n211": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n212"
+        }
+      },
+      "n212": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n213": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:056",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:056",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:022",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n152",
+          "down-forward+medium": "n194",
+          "down+light": "n219",
+          "forward+medium": "n38",
+          "light": "n154",
+          "special": "n207",
+          "forward+light": "n196",
+          "forward+heavy": "n209"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "frieza:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "frieza:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "frieza:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "frieza:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "frieza:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "frieza:beginner:medium-core",
+        "edges": {
+          "medium": "n16",
+          "light": "n57",
+          "heavy": "n57"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "frieza:beginner:medium-core",
+        "edges": {}
+      },
+      "n57": {
+        "depth": 8,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {
+          "light": "n58",
+          "heavy": "n65"
+        }
+      },
+      "n58": {
+        "depth": 9,
+        "routeId": "frieza:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 10,
+        "routeId": "frieza:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 11,
+        "routeId": "frieza:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 12,
+        "routeId": "frieza:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 13,
+        "routeId": "frieza:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 14,
+        "routeId": "frieza:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 15,
+        "routeId": "frieza:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n65": {
+        "depth": 9,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 10,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 11,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 12,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 13,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 14,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 15,
+        "routeId": "frieza:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "frieza:beginner:down-medium-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "frieza:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n194": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n195"
+        }
+      },
+      "n195": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n196": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:crouch:047",
+        "edges": {
+          "special": "n197"
+        }
+      },
+      "n197": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:051",
+        "edges": {
+          "special": "n208"
+        }
+      },
+      "n208": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:051",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:052",
+        "edges": {
+          "special": "n210"
+        }
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n219": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n220"
+        }
+      },
+      "n220": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "forward+light": "n221"
+        }
+      },
+      "n221": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "forward+medium": "n222"
+        }
+      },
+      "n222": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "medium": "n223"
+        }
+      },
+      "n223": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n224"
+        }
+      },
+      "n224": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n225"
+        }
+      },
+      "n225": {
+        "depth": 8,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n226"
+        }
+      },
+      "n226": {
+        "depth": 9,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n227"
+        }
+      },
+      "n227": {
+        "depth": 10,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n228"
+        }
+      },
+      "n228": {
+        "depth": 11,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "medium": "n229"
+        }
+      },
+      "n229": {
+        "depth": 12,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n230"
+        }
+      },
+      "n230": {
+        "depth": 13,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {
+          "heavy": "n231"
+        }
+      },
+      "n231": {
+        "depth": 14,
+        "routeId": "frieza:beginner:advanced:launcher:067",
+        "edges": {}
+      },
+      "n24": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n25",
+          "down-forward+medium": "n180",
+          "medium": "n28",
+          "light": "n182",
+          "heavy": "n192"
+        }
+      },
+      "n25": {
+        "depth": 2,
+        "routeId": "frieza:beginner:special-core",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 3,
+        "routeId": "frieza:beginner:special-core",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "frieza:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "frieza:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:036",
+        "edges": {
+          "special": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n192": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:042",
+        "edges": {
+          "special": "n193"
+        }
+      },
+      "n193": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:042",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:037",
+        "edges": {
+          "down-forward+medium": "n184",
+          "special": "n186",
+          "heavy": "n31"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "frieza:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "frieza:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:037",
+        "edges": {
+          "special": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n187"
+        }
+      },
+      "n187": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:020",
+        "edges": {
+          "down+light": "n147",
+          "light": "n34"
+        }
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n35",
+          "light": "n173"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "frieza:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n148"
+        }
+      },
+      "n148": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:basic:001",
+        "edges": {
+          "down+light": "n114",
+          "light": "n97"
+        }
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n98"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n115"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n116"
+        }
+      },
+      "n116": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:basic:008",
+        "edges": {
+          "light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:basic:012",
+        "edges": {
+          "forward+medium": "n126"
+        }
+      },
+      "n126": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:basic:012",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n117",
+          "down+light": "n100",
+          "medium": "n215",
+          "light": "n102",
+          "heavy": "n217"
+        }
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:002",
+        "edges": {
+          "light": "n244",
+          "special": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n244": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "forward+light": "n245"
+        }
+      },
+      "n245": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "forward+medium": "n246"
+        }
+      },
+      "n246": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "medium": "n247"
+        }
+      },
+      "n247": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "special": "n248"
+        }
+      },
+      "n248": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "special": "n249"
+        }
+      },
+      "n249": {
+        "depth": 8,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "special": "n250"
+        }
+      },
+      "n250": {
+        "depth": 9,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "light": "n251"
+        }
+      },
+      "n251": {
+        "depth": 10,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "light": "n252"
+        }
+      },
+      "n252": {
+        "depth": 11,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "medium": "n253"
+        }
+      },
+      "n253": {
+        "depth": 12,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "special": "n254"
+        }
+      },
+      "n254": {
+        "depth": 13,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {
+          "heavy": "n255"
+        }
+      },
+      "n255": {
+        "depth": 14,
+        "routeId": "frieza:beginner:advanced:launcher:075",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:009",
+        "edges": {
+          "down+light": "n119"
+        }
+      },
+      "n119": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:basic:009",
+        "edges": {
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:basic:013",
+        "edges": {
+          "forward+medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:basic:013",
+        "edges": {
+          "medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n215": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n216"
+        }
+      },
+      "n216": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n217": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:launcher:064",
+        "edges": {
+          "special": "n218"
+        }
+      },
+      "n218": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:launcher:064",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n105",
+          "light": "n107"
+        }
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n106",
+          "light": "n120"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:010",
+        "edges": {
+          "down+light": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:basic:014",
+        "edges": {
+          "forward+medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:basic:014",
+        "edges": {
+          "medium": "n133"
+        }
+      },
+      "n133": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n122",
+          "down+light": "n110",
+          "light": "n112"
+        }
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:basic:011",
+        "edges": {
+          "down+light": "n124"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:basic:011",
+        "edges": {
+          "light": "n134"
+        }
+      },
+      "n134": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:basic:015",
+        "edges": {
+          "forward+medium": "n135"
+        }
+      },
+      "n135": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:basic:015",
+        "edges": {
+          "medium": "n136"
+        }
+      },
+      "n136": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n137": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n138",
+          "light": "n140"
+        }
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:018",
+        "edges": {
+          "down+light": "n143",
+          "light": "n164"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n149": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:021",
+        "edges": {
+          "heavy": "n178",
+          "special": "n174",
+          "down-forward+medium": "n176",
+          "light": "n150",
+          "medium": "n190"
+        }
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n175"
+        }
+      },
+      "n175": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n176": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n177"
+        }
+      },
+      "n177": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n190": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:041",
+        "edges": {
+          "special": "n191"
+        }
+      },
+      "n191": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:041",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:024",
+        "edges": {
+          "down+light": "n157",
+          "light": "n188",
+          "special": "n198"
+        }
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n188": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n189"
+        }
+      },
+      "n189": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n198": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n199"
+        }
+      },
+      "n199": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n200"
+        }
+      },
+      "n200": {
+        "depth": 4,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "down+light": "n201"
+        }
+      },
+      "n201": {
+        "depth": 5,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "light": "n202"
+        }
+      },
+      "n202": {
+        "depth": 6,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "forward+medium": "n203"
+        }
+      },
+      "n203": {
+        "depth": 7,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "medium": "n204"
+        }
+      },
+      "n204": {
+        "depth": 8,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "forward+light": "n205"
+        }
+      },
+      "n205": {
+        "depth": 9,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {
+          "light": "n206"
+        }
+      },
+      "n206": {
+        "depth": 10,
+        "routeId": "frieza:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n160",
+          "light": "n162"
+        }
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 1,
+        "routeId": "frieza:beginner:advanced:advanced:029",
+        "edges": {
+          "down-forward+medium": "n169",
+          "special": "n171"
+        }
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "frieza:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "frieza:beginner:advanced:advanced:030",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Cruel Tail Poke",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Tail Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cruel Tail Spin",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Tail Backhand",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cruel Tail Spin",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Cruel Tail Poke",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0024": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0025": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0027": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Tail Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0030": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Death Tail Smash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0033": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down-forward+heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Tail Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Death Tail Smash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Tail Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Scythe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Tail Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tail Wheel",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0051": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Tail Backhand",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cruel Tail Spin",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Cruel Tail Poke",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cruel Tail Spin",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0065": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Scythe",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Death Tail Smash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Emperor Tail Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0069": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Scythe",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Swipe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rising Death Tail",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0073": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Scythe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Low Tyrant Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiCommand": "2+3",
+      "kiAnimationKey": "cmd:2+3",
+      "kiCost": 35
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Tail Launcher",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "launch"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Heavy Tail Wheel Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Tail Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Quick Tail Check Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Tail Wheel",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Sidestep Tail Wheel Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rising Tail Wheel Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "While Rising Tail Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Tail Wheel",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Cruel Tail Poke",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0104": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Tail Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Crouch Tail Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "special",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Emperor Tail Rush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouch Tail Spiral Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Emperor Tail Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Tail Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "special",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Emperor Tail Rush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0115": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Rising Death Tail Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0116": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Emperor Tail Rush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Death Tail Ender",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Cruel Tail Poke",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0120": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0121": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0122": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0123": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Tail Backhand",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0124": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Tail Wheel",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0125": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Scythe",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0126": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0127": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Death Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0128": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Tail Check",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    }
+  }
 }

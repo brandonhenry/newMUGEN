@@ -3148,135 +3148,95 @@
   "beginnerComboRoutes": [
     {
       "id": "nico-robin:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hana Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Hana Jab",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
       ]
     },
     {
       "id": "nico-robin:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Hana-Hana Twin Slap",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Nico Robin Right Check",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 36,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
       ]
     },
     {
       "id": "nico-robin:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Fleur Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Fleur Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 34,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
       ]
     },
     {
@@ -3288,41 +3248,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+2+4",
-          "animationKey": "cmd:1+2+4",
-          "label": "Seis Fleur Flip",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Cien Fleur Wheel",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 19,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017"
       ]
     },
     {
@@ -3334,41 +3269,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hana Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Hana-Hana Twin Slap",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0010",
+        "s0014"
       ]
     },
     {
@@ -3380,41 +3290,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Cien Fleur Wheel",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Hana-Hana Twin Slap",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0018",
+        "s0019",
+        "s0014"
       ]
     },
     {
@@ -3426,41 +3311,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Clutch Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Fleur Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0020",
+        "s0013",
+        "s0021"
       ]
     },
     {
@@ -3472,42 +3332,4942 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hana Rush Jab",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cien Fleur Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0023",
+        "s0021"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0013",
+        "s0026"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0028",
+        "s0029",
+        "s0026"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0019",
+        "s0014"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0013",
+        "s0021"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0023",
+        "s0021"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:001",
+      "title": "Nico Robin Right Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:002",
+      "title": "Nico Robin Right Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:003",
+      "title": "Nico Robin Right Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:004",
+      "title": "Nico Robin Right Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0041",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:005",
+      "title": "Quick Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:006",
+      "title": "Quick Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:007",
+      "title": "Nico Robin Right Check 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0044",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:008",
+      "title": "Nico Robin Right Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0047",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:009",
+      "title": "Quick Hana Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0044",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:010",
+      "title": "Nico Robin Right Check 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:011",
+      "title": "Nico Robin Right Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0047",
+        "s0045",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:basic:012",
+      "title": "Quick Hana Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:013",
+      "title": "Cien Fleur Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0052",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:014",
+      "title": "Cien Fleur Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0053",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:015",
+      "title": "Cien Fleur Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0035"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:016",
+      "title": "Cien Fleur Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0056",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:017",
+      "title": "Ducking Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0049",
+        "s0035"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:018",
+      "title": "Ducking Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0058",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:019",
+      "title": "Forward Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0060",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:020",
+      "title": "Forward Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0046",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:021",
+      "title": "Hana-Hana Twin Slap 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0046",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:022",
+      "title": "Low Clutch Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:023",
+      "title": "Low Clutch Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0064",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:024",
+      "title": "Low Fleur Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0046",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:025",
+      "title": "Overdrive Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0040"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:026",
+      "title": "Cien Fleur Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0070"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:027",
+      "title": "Cien Fleur Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0071",
+        "s0072"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:028",
+      "title": "Cien Fleur Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0070"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:029",
+      "title": "Cien Fleur Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0071",
+        "s0072"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:030",
+      "title": "Clutch Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0047",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:031",
+      "title": "Clutch Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0075",
+        "s0076"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:032",
+      "title": "Clutch Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0047",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:033",
+      "title": "Clutch Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0075",
+        "s0076"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:034",
+      "title": "Hana Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0078",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:035",
+      "title": "Hana Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0079",
+        "s0076"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:036",
+      "title": "Hana-Hana Twin Slap 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0080",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:037",
+      "title": "Low Fleur Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0048",
+        "s0037"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:038",
+      "title": "Overdrive Hana Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0081",
+        "s0035"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:039",
+      "title": "Seis Fleur Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0083",
+        "s0070"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:advanced:040",
+      "title": "Seis Fleur Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0084",
+        "s0072"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:041",
+      "title": "Crouching Fleur Guard 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0086",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:042",
+      "title": "Crouching Fleur Guard 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0087",
+        "s0076"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:043",
+      "title": "Seis Fleur Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0088",
+        "s0072"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:044",
+      "title": "Seis Fleur Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0089",
+        "s0090"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:045",
+      "title": "While-Rising Fleur Bloom 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0092",
+        "s0070"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:046",
+      "title": "While-Rising Fleur Bloom 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0093",
+        "s0072"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:047",
+      "title": "Seis Fleur Flip 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 36,
+      "damageScale": 0.5492307692307692,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0036",
+        "s0048",
+        "s0094"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:048",
+      "title": "Seis Fleur Flip 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 36,
+      "damageScale": 0.5492307692307692,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0036",
+        "s0048",
+        "s0094"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:crouch:049",
+      "title": "Seis Fleur Flip 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:050",
+      "title": "Crouch Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0097"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:051",
+      "title": "Crouch Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0098",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:052",
+      "title": "Crouch Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0097"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:053",
+      "title": "Crouch Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0098",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:054",
+      "title": "Diagonal Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0100",
+        "s0097"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:055",
+      "title": "Diagonal Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0101",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:056",
+      "title": "Diagonal Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0100",
+        "s0097"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:057",
+      "title": "Diagonal Fleur Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0101",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:058",
+      "title": "Hana-Hana Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0103",
+        "s0097"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:059",
+      "title": "Hana-Hana Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0104",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:060",
+      "title": "Hana-Hana Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0103",
+        "s0097"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:061",
+      "title": "Hana-Hana Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0104",
+        "s0074"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:062",
+      "title": "Crouch Fleur Launcher Grounded Launcher 13-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 13,
+      "estimatedDamage": 46,
+      "damageScale": 0.54,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0098",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0043",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:063",
+      "title": "Crouch Fleur Launcher Grounded Launcher 13-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 13,
+      "estimatedDamage": 46,
+      "damageScale": 0.54,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0098",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0043",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:064",
+      "title": "Crouch Fleur Launcher Grounded Launcher 13-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 13,
+      "estimatedDamage": 46,
+      "damageScale": 0.54,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0098",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0043",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:065",
+      "title": "Crouch Fleur Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0098",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:066",
+      "title": "Diagonal Fleur Launcher Grounded Launcher 13-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 13,
+      "estimatedDamage": 46,
+      "damageScale": 0.54,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0101",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0043",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:067",
+      "title": "Diagonal Fleur Launcher Grounded Launcher 13-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 13,
+      "estimatedDamage": 46,
+      "damageScale": 0.54,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0101",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0043",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:068",
+      "title": "Diagonal Fleur Launcher Grounded Launcher 13-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 13,
+      "estimatedDamage": 46,
+      "damageScale": 0.54,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0101",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0043",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:069",
+      "title": "Diagonal Fleur Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0101",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:070",
+      "title": "Hana-Hana Launcher Grounded Launcher 13-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 13,
+      "estimatedDamage": 46,
+      "damageScale": 0.54,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0104",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094",
+        "s0043",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108"
+      ]
+    },
+    {
+      "id": "nico-robin:beginner:advanced:launcher:071",
+      "title": "Hana-Hana Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0104",
+        "s0089",
+        "s0046",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0094"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "nico-robin:beginner:advanced:advanced:013",
+        "edges": {
+          "medium": "n9",
+          "down+medium": "n9",
+          "special": "n25",
+          "special+light": "n30",
+          "forward+special+light": "n30",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+medium": "n33",
+          "down+special+medium": "n33",
+          "special+heavy": "n36",
+          "down-forward+special+heavy": "n36",
+          "light": "n1",
+          "forward+light": "n1",
+          "down+light": "n142",
+          "forward+medium": "n147",
+          "forward+heavy": "n101",
+          "forward+special": "n111",
+          "down+heavy": "n158",
+          "down+special": "n166",
+          "down-forward+light": "n161",
+          "down-forward+medium": "n106"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:034",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "special": "n171",
+          "heavy": "n173",
+          "forward+light": "n39"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:light-core",
+        "edges": {
+          "medium": "n45",
+          "heavy": "n53",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:light-core",
+        "edges": {}
+      },
+      "n45": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n51"
+        }
+      },
+      "n51": {
+        "depth": 14,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93",
+          "medium": "n52"
+        }
+      },
+      "n52": {
+        "depth": 15,
+        "routeId": "nico-robin:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n93": {
+        "depth": 15,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 16,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 17,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 18,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 19,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 20,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n99"
+        }
+      },
+      "n99": {
+        "depth": 21,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n100"
+        }
+      },
+      "n100": {
+        "depth": 22,
+        "routeId": "nico-robin:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n53": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 14,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n60"
+        }
+      },
+      "n60": {
+        "depth": 15,
+        "routeId": "nico-robin:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:forward-light-route",
+        "edges": {
+          "special": "n40"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:021",
+        "edges": {
+          "medium": "n10",
+          "special": "n199",
+          "heavy": "n41",
+          "down+light": "n152",
+          "light": "n197",
+          "forward+light": "n175"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:medium-core",
+        "edges": {
+          "heavy": "n69",
+          "medium": "n16",
+          "light": "n61"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:medium-core",
+        "edges": {}
+      },
+      "n61": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 14,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n68"
+        }
+      },
+      "n68": {
+        "depth": 15,
+        "routeId": "nico-robin:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n69": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n75"
+        }
+      },
+      "n75": {
+        "depth": 14,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n76"
+        }
+      },
+      "n76": {
+        "depth": 15,
+        "routeId": "nico-robin:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:down-medium-route",
+        "edges": {
+          "special": "n42"
+        }
+      },
+      "n42": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:036",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:launcher:050",
+        "edges": {
+          "special": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:launcher:050",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:launcher:051",
+        "edges": {
+          "special": "n200",
+          "light": "n205"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:launcher:051",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "down+light": "n206"
+        }
+      },
+      "n206": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "light": "n207"
+        }
+      },
+      "n207": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "forward+light": "n208"
+        }
+      },
+      "n208": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "medium": "n209"
+        }
+      },
+      "n209": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "medium": "n211"
+        }
+      },
+      "n211": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "special": "n212"
+        }
+      },
+      "n212": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "light": "n213"
+        }
+      },
+      "n213": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {
+          "medium": "n215"
+        }
+      },
+      "n215": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:advanced:launcher:062",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:024",
+        "edges": {
+          "heavy": "n18",
+          "special": "n203",
+          "down+light": "n43",
+          "medium": "n201",
+          "light": "n177"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:heavy-core",
+        "edges": {
+          "medium": "n85",
+          "heavy": "n24",
+          "light": "n77"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:heavy-core",
+        "edges": {}
+      },
+      "n77": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n83"
+        }
+      },
+      "n83": {
+        "depth": 14,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n84"
+        }
+      },
+      "n84": {
+        "depth": 15,
+        "routeId": "nico-robin:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n85": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n91"
+        }
+      },
+      "n91": {
+        "depth": 14,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n92"
+        }
+      },
+      "n92": {
+        "depth": 15,
+        "routeId": "nico-robin:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n43": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n44"
+        }
+      },
+      "n44": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:037",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:launcher:058",
+        "edges": {
+          "special": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:launcher:058",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:launcher:059",
+        "edges": {
+          "special": "n204",
+          "light": "n216"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:launcher:059",
+        "edges": {}
+      },
+      "n216": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "down+light": "n217"
+        }
+      },
+      "n217": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n218"
+        }
+      },
+      "n218": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "forward+light": "n219"
+        }
+      },
+      "n219": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n220"
+        }
+      },
+      "n220": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n221"
+        }
+      },
+      "n221": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n222"
+        }
+      },
+      "n222": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n223"
+        }
+      },
+      "n223": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n224"
+        }
+      },
+      "n224": {
+        "depth": 11,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n225"
+        }
+      },
+      "n225": {
+        "depth": 12,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n226"
+        }
+      },
+      "n226": {
+        "depth": 13,
+        "routeId": "nico-robin:beginner:advanced:launcher:070",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n26",
+          "heavy": "n183",
+          "down-forward+medium": "n181",
+          "down+medium": "n185",
+          "light": "n187"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:special-core",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:040",
+        "edges": {
+          "special": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:crouch:043",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:crouch:043",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:crouch:044",
+        "edges": {
+          "special": "n188",
+          "down+light": "n189"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:crouch:044",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {
+          "light": "n190"
+        }
+      },
+      "n190": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {
+          "forward+light": "n191"
+        }
+      },
+      "n191": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {
+          "medium": "n192"
+        }
+      },
+      "n192": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {
+          "light": "n193"
+        }
+      },
+      "n193": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {
+          "down+light": "n194"
+        }
+      },
+      "n194": {
+        "depth": 8,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {
+          "light": "n195"
+        }
+      },
+      "n195": {
+        "depth": 9,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {
+          "light": "n196"
+        }
+      },
+      "n196": {
+        "depth": 10,
+        "routeId": "nico-robin:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:015",
+        "edges": {
+          "medium": "n31",
+          "forward+light": "n138",
+          "light": "n140"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:022",
+        "edges": {
+          "heavy": "n34",
+          "down+light": "n156",
+          "medium": "n154"
+        }
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:013",
+        "edges": {
+          "down+light": "n136",
+          "medium": "n134",
+          "light": "n37"
+        }
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n134": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:013",
+        "edges": {
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n136": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n116",
+          "down+light": "n104",
+          "forward+light": "n102"
+        }
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n105"
+        }
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:007",
+        "edges": {
+          "down+light": "n118"
+        }
+      },
+      "n118": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:advanced:basic:007",
+        "edges": {
+          "light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:advanced:basic:010",
+        "edges": {
+          "forward+light": "n126"
+        }
+      },
+      "n126": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:advanced:basic:010",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n119",
+          "down+light": "n109",
+          "medium": "n107"
+        }
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n110"
+        }
+      },
+      "n110": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n120"
+        }
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:008",
+        "edges": {
+          "down+light": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:advanced:basic:008",
+        "edges": {
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:advanced:basic:011",
+        "edges": {
+          "forward+light": "n129"
+        }
+      },
+      "n129": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:advanced:basic:011",
+        "edges": {}
+      },
+      "n111": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n122",
+          "forward+light": "n112",
+          "medium": "n114"
+        }
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n115"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:basic:009",
+        "edges": {
+          "down+light": "n124"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "nico-robin:beginner:advanced:basic:009",
+        "edges": {
+          "light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "nico-robin:beginner:advanced:basic:012",
+        "edges": {
+          "forward+light": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "nico-robin:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n133"
+        }
+      },
+      "n133": {
+        "depth": 7,
+        "routeId": "nico-robin:beginner:advanced:basic:012",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:017",
+        "edges": {
+          "forward+light": "n143",
+          "medium": "n145"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:019",
+        "edges": {
+          "down+light": "n150",
+          "medium": "n148"
+        }
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:025",
+        "edges": {
+          "forward+light": "n179",
+          "medium": "n159"
+        }
+      },
+      "n159": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n161": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:026",
+        "edges": {
+          "heavy": "n164",
+          "down-forward+medium": "n162"
+        }
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 1,
+        "routeId": "nico-robin:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n167",
+          "light": "n169"
+        }
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "nico-robin:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "nico-robin:beginner:advanced:advanced:031",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Hana-Hana Twin Slap",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Hana-Hana Twin Slap",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Hana-Hana Twin Slap",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Fleur Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Fleur Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0018": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Hana-Hana Twin Slap",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Clutch Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "forward+light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0027": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Hana-Hana Twin Slap",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Fleur Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Clutch Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hana Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0035": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0038": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nico Robin Right Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "While-Rising Fleur Bloom",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Hana-Hana Twin Slap",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0052": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0058": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0060": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Hana-Hana Twin Slap",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Clutch Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0063": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Fleur Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0067": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Nico Robin Right Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Cien Fleur Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Fleur Launcher",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "launch"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hana-Hana Launcher",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "launch"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down+special",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Clutch Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "heavy",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hana Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hana Jab",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Fleur Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hana-Hana Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouching Fleur Guard Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "heavy",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Fleur Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "While-Rising Fleur Bloom",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "While-Rising Fleur Bloom Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Fleur Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hana-Hana Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0094": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hana Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Fleur Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Clutch Aura Drive",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cien Fleur Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diagonal Fleur Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Clutch Aura Drive",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hana-Hana Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Clutch Aura Drive",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:1+2+4:1+2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+2+4",
+      "animationKey": "cmd:1+2+4",
+      "label": "Seis Fleur Flip",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nico Robin Right Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hana Jab",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cien Fleur Wheel",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Clutch Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

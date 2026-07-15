@@ -2236,135 +2236,95 @@
   "beginnerComboRoutes": [
     {
       "id": "gotenks:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Fusion Body Poke",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 27,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "gotenks:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Fusion Body Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Forward Fusion Launcher",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "launch"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 30,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
       ]
     },
     {
       "id": "gotenks:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Fusion Body Poke",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -2376,41 +2336,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Fusion Body Poke",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0020",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -2419,43 +2354,19 @@
       "family": "mixed",
       "gestures": [
         "light",
-        "medium",
+        "forward+light",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Fusion Body Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0023",
+        "s0024"
       ]
     },
     {
@@ -2464,43 +2375,19 @@
       "family": "mixed",
       "gestures": [
         "special+light",
-        "medium",
+        "forward+light",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Fusion Body Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0023",
+        "s0024"
       ]
     },
     {
@@ -2512,40 +2399,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Fusion Body Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0026",
+        "s0018",
+        "s0027"
       ]
     },
     {
@@ -2557,42 +2420,5119 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Fusion Body Poke",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Fusion Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0028",
+        "s0001",
+        "s0022"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "down-forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0031"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0001",
+        "s0031"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "forward+light",
+        "heavy"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0035",
+        "s0023",
+        "s0024"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0018",
+        "s0027"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0001",
+        "s0022"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:001",
+      "title": "Fusion Body Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:002",
+      "title": "Fusion Body Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:003",
+      "title": "Quick Fusion Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0040",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:004",
+      "title": "Quick Fusion Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:005",
+      "title": "Fusion Body Check 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0041",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:006",
+      "title": "Quick Fusion Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0049",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:007",
+      "title": "Fusion Body Check 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0041",
+        "s0047",
+        "s0048",
+        "s0050",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:basic:008",
+      "title": "Quick Fusion Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0049",
+        "s0047",
+        "s0048",
+        "s0050",
+        "s0051",
+        "s0053"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:009",
+      "title": "Forward Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down-forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0040"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:010",
+      "title": "Forward Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:011",
+      "title": "Forward Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down-forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0040"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:012",
+      "title": "Forward Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:013",
+      "title": "Fusion Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0044",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:014",
+      "title": "Fusion Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0046"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:015",
+      "title": "Fusion Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0044",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:016",
+      "title": "Fusion Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0046"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:017",
+      "title": "Fusion Hop Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0052",
+        "s0040"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:018",
+      "title": "Fusion Hop Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0049",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:019",
+      "title": "Fusion Hop Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0052",
+        "s0040"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:020",
+      "title": "Fusion Hop Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0049",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:021",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0042",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:022",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0048",
+        "s0046"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:023",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0042",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:024",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0048",
+        "s0046"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:025",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0044",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:026",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0059",
+        "s0046"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:027",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0065"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:028",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0042",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:029",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0044",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:030",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0059",
+        "s0046"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:031",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0065"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:032",
+      "title": "Instant Fusion Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0042",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:033",
+      "title": "Forward Fusion Check 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0049",
+        "s0047",
+        "s0048",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:034",
+      "title": "Instant Fusion Check 12-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "down+light",
+        "forward+medium",
+        "light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0049",
+        "s0047",
+        "s0048",
+        "s0050",
+        "s0052",
+        "s0066",
+        "s0041",
+        "s0042",
+        "s0047",
+        "s0048",
+        "s0052"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:035",
+      "title": "Instant Fusion Check 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0049",
+        "s0047",
+        "s0048",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:advanced:036",
+      "title": "Instant Fusion Check 9-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "medium",
+      "estimatedHits": 9,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light",
+        "medium",
+        "down+light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0049",
+        "s0047",
+        "s0048",
+        "s0050",
+        "s0052",
+        "s0066",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:crouch:037",
+      "title": "Crouch Fusion Flurry 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0042",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:crouch:038",
+      "title": "Crouch Fusion Flurry 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0068",
+        "s0065"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:crouch:039",
+      "title": "While Rising Fusion 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:crouch:040",
+      "title": "While Rising Fusion 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "down-forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0071",
+        "s0040"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:041",
+      "title": "Crouch Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:042",
+      "title": "Crouch Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:043",
+      "title": "Forward Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0040",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:044",
+      "title": "Forward Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0040",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:045",
+      "title": "Gotenks Cross Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0057",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:046",
+      "title": "Low Fusion Pop-Up Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+medium",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0065",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:047",
+      "title": "Crouch Fusion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0076",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:048",
+      "title": "Crouch Fusion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0076",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:049",
+      "title": "Crouch Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0077",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:050",
+      "title": "Forward Fusion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0078",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:051",
+      "title": "Forward Fusion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0078",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:052",
+      "title": "Forward Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0079",
+        "s0044"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:053",
+      "title": "Gotenks Cross Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0080",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:054",
+      "title": "Gotenks Cross Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0080",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:055",
+      "title": "Low Fusion Pop-Up Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0081",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:056",
+      "title": "Low Fusion Pop-Up Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0081",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:057",
+      "title": "Crouch Fusion Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5452941176470588,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0082",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:060",
+      "title": "Crouch Fusion Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0082",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:061",
+      "title": "Forward Fusion Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5452941176470588,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0049",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:064",
+      "title": "Forward Fusion Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0049",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:065",
+      "title": "Gotenks Cross Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5452941176470588,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0085",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:066",
+      "title": "Gotenks Cross Launcher Air Chase Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0085",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:067",
+      "title": "Low Fusion Pop-Up Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 46,
+      "damageScale": 0.5452941176470588,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0086",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:launcher:068",
+      "title": "Low Fusion Pop-Up Air Chase Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0086",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:069",
+      "title": "Crouch Fusion Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0076",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:070",
+      "title": "Forward Fusion Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0078",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:071",
+      "title": "Gotenks Cross Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0080",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:072",
+      "title": "Low Fusion Pop-Up Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0081",
+        "s0042"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:073",
+      "title": "Crouch Fusion Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 41,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0082",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:074",
+      "title": "Crouch Fusion Launcher Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 46,
+      "damageScale": 0.4778350515463918,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0082",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0066",
+        "s0084",
+        "s0049"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:076",
+      "title": "Forward Fusion Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 41,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0049",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:077",
+      "title": "Forward Fusion Launcher Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 46,
+      "damageScale": 0.4778350515463918,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0049",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0066",
+        "s0084",
+        "s0049"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:079",
+      "title": "Gotenks Cross Launcher Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 41,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0085",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:080",
+      "title": "Gotenks Cross Launcher Air Chase Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 46,
+      "damageScale": 0.4778350515463918,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0085",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0066",
+        "s0084",
+        "s0049"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:081",
+      "title": "Low Fusion Pop-Up Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 41,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0086",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049"
+      ]
+    },
+    {
+      "id": "gotenks:beginner:advanced:tornado:082",
+      "title": "Low Fusion Pop-Up Air Chase Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 46,
+      "damageScale": 0.4778350515463918,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "special",
+        "medium",
+        "forward+medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+light",
+        "light",
+        "light",
+        "medium",
+        "forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0086",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0078",
+        "s0053",
+        "s0084",
+        "s0049",
+        "s0048",
+        "s0047",
+        "s0083",
+        "s0051",
+        "s0052",
+        "s0066",
+        "s0084",
+        "s0049"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "gotenks:beginner:advanced:advanced:009",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "heavy": "n1",
+          "special": "n1",
+          "special+light": "n1",
+          "special+heavy": "n1",
+          "forward+light": "n1",
+          "down-forward+heavy": "n1",
+          "forward+special+light": "n1",
+          "down-forward+special+heavy": "n1",
+          "forward+medium": "n115",
+          "forward+heavy": "n165",
+          "forward+special": "n168",
+          "down-forward+medium": "n162",
+          "down+light": "n120",
+          "down+heavy": "n110",
+          "down+special": "n105",
+          "down-forward+light": "n149",
+          "down-forward+special": "n159",
+          "forward+special+medium": "n89",
+          "forward+special+heavy": "n125",
+          "down+special+light": "n154"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:advanced:027",
+        "edges": {
+          "light": "n2",
+          "heavy": "n2",
+          "special": "n2",
+          "medium": "n130",
+          "down-forward+medium": "n27",
+          "forward+medium": "n132",
+          "forward+light": "n23"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:directional-special-heavy-route",
+        "edges": {
+          "light": "n3",
+          "heavy": "n3",
+          "special": "n22",
+          "forward+medium": "n31"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:heavy-core",
+        "edges": {
+          "heavy": "n17",
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:light-core",
+        "edges": {
+          "light": "n8",
+          "medium": "n32",
+          "heavy": "n40"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:light-core",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n33"
+        }
+      },
+      "n33": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n34"
+        }
+      },
+      "n34": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n35"
+        }
+      },
+      "n35": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n36"
+        }
+      },
+      "n36": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n37"
+        }
+      },
+      "n37": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39",
+          "heavy": "n77"
+        }
+      },
+      "n39": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n77": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n78"
+        }
+      },
+      "n78": {
+        "depth": 16,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n79"
+        }
+      },
+      "n79": {
+        "depth": 17,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n80"
+        }
+      },
+      "n80": {
+        "depth": 18,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n81"
+        }
+      },
+      "n81": {
+        "depth": 19,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n82"
+        }
+      },
+      "n82": {
+        "depth": 20,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n83"
+        }
+      },
+      "n83": {
+        "depth": 21,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n84"
+        }
+      },
+      "n84": {
+        "depth": 22,
+        "routeId": "gotenks:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n41"
+        }
+      },
+      "n41": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n42"
+        }
+      },
+      "n42": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n43"
+        }
+      },
+      "n43": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n44"
+        }
+      },
+      "n44": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n45"
+        }
+      },
+      "n45": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:heavy-core",
+        "edges": {
+          "heavy": "n18"
+        }
+      },
+      "n18": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:heavy-core",
+        "edges": {
+          "medium": "n69",
+          "heavy": "n21",
+          "light": "n61"
+        }
+      },
+      "n21": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:heavy-core",
+        "edges": {}
+      },
+      "n61": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n68"
+        }
+      },
+      "n68": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n69": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n70"
+        }
+      },
+      "n70": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n71"
+        }
+      },
+      "n71": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n72"
+        }
+      },
+      "n72": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n73"
+        }
+      },
+      "n73": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n74"
+        }
+      },
+      "n74": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n75"
+        }
+      },
+      "n75": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n76"
+        }
+      },
+      "n76": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n22": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n23": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n27": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:forward-light-route",
+        "edges": {
+          "forward+medium": "n28"
+        }
+      },
+      "n28": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n130": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:027",
+        "edges": {
+          "forward+medium": "n131"
+        }
+      },
+      "n131": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n132": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:028",
+        "edges": {
+          "forward+medium": "n133"
+        }
+      },
+      "n133": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:basic:001",
+        "edges": {
+          "medium": "n10",
+          "down+light": "n87",
+          "forward+light": "n29",
+          "light": "n85",
+          "heavy": "n25"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:medium-core",
+        "edges": {
+          "medium": "n16",
+          "light": "n48",
+          "heavy": "n48"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:medium-core",
+        "edges": {}
+      },
+      "n48": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {
+          "light": "n49",
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {
+          "light": "n50",
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n56",
+          "light": "n51"
+        }
+      },
+      "n51": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n52"
+        }
+      },
+      "n52": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n53"
+        }
+      },
+      "n53": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n56": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n60"
+        }
+      },
+      "n60": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n29": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:down-medium-route",
+        "edges": {
+          "forward+medium": "n30"
+        }
+      },
+      "n30": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n85": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:basic:001",
+        "edges": {
+          "forward+medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n87": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:basic:002",
+        "edges": {
+          "forward+medium": "n88",
+          "light": "n94"
+        }
+      },
+      "n88": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n94": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n95"
+        }
+      },
+      "n95": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:basic:005",
+        "edges": {
+          "forward+light": "n99"
+        }
+      },
+      "n99": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:basic:007",
+        "edges": {
+          "light": "n100"
+        }
+      },
+      "n100": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:advanced:basic:007",
+        "edges": {
+          "light": "n101"
+        }
+      },
+      "n101": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n89": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:basic:003",
+        "edges": {
+          "medium": "n92",
+          "down+light": "n96",
+          "forward+medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:basic:003",
+        "edges": {
+          "forward+medium": "n91"
+        }
+      },
+      "n91": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n92": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:basic:004",
+        "edges": {
+          "forward+medium": "n93"
+        }
+      },
+      "n93": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:basic:006",
+        "edges": {
+          "light": "n97"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:basic:006",
+        "edges": {
+          "medium": "n98"
+        }
+      },
+      "n98": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:basic:006",
+        "edges": {
+          "forward+light": "n102"
+        }
+      },
+      "n102": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:basic:008",
+        "edges": {
+          "light": "n103"
+        }
+      },
+      "n103": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:advanced:basic:008",
+        "edges": {
+          "medium": "n104"
+        }
+      },
+      "n104": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:advanced:009",
+        "edges": {
+          "heavy": "n108",
+          "down-forward+medium": "n106",
+          "down+light": "n134"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:009",
+        "edges": {
+          "forward+medium": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:009",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:010",
+        "edges": {
+          "forward+medium": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:010",
+        "edges": {}
+      },
+      "n134": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:033",
+        "edges": {
+          "light": "n135"
+        }
+      },
+      "n135": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:033",
+        "edges": {
+          "medium": "n136"
+        }
+      },
+      "n136": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:advanced:033",
+        "edges": {
+          "forward+light": "n137"
+        }
+      },
+      "n137": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:advanced:013",
+        "edges": {
+          "medium": "n113",
+          "forward+medium": "n111"
+        }
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:013",
+        "edges": {
+          "forward+medium": "n112"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:014",
+        "edges": {
+          "forward+medium": "n114"
+        }
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:advanced:017",
+        "edges": {
+          "down+light": "n118",
+          "light": "n116"
+        }
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:017",
+        "edges": {
+          "forward+medium": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:018",
+        "edges": {
+          "forward+medium": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:advanced:021",
+        "edges": {
+          "medium": "n123",
+          "forward+medium": "n121"
+        }
+      },
+      "n121": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:021",
+        "edges": {
+          "forward+medium": "n122"
+        }
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:022",
+        "edges": {
+          "forward+medium": "n124"
+        }
+      },
+      "n124": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:advanced:025",
+        "edges": {
+          "medium": "n128",
+          "down+light": "n138",
+          "forward+medium": "n126"
+        }
+      },
+      "n126": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:025",
+        "edges": {
+          "forward+medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:026",
+        "edges": {
+          "forward+medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "light": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "medium": "n140"
+        }
+      },
+      "n140": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "forward+light": "n141"
+        }
+      },
+      "n141": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "light": "n142"
+        }
+      },
+      "n142": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "medium": "n143"
+        }
+      },
+      "n143": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "down+light": "n144"
+        }
+      },
+      "n144": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "forward+medium": "n145"
+        }
+      },
+      "n145": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "light": "n146"
+        }
+      },
+      "n146": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "medium": "n147"
+        }
+      },
+      "n147": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {
+          "light": "n148"
+        }
+      },
+      "n148": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n149": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:crouch:037",
+        "edges": {
+          "heavy": "n152",
+          "forward+medium": "n150"
+        }
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:crouch:037",
+        "edges": {
+          "forward+medium": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:crouch:037",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:crouch:038",
+        "edges": {
+          "forward+medium": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:crouch:038",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:crouch:039",
+        "edges": {
+          "down-forward+medium": "n157",
+          "light": "n155"
+        }
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:crouch:039",
+        "edges": {
+          "forward+medium": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:crouch:039",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:crouch:040",
+        "edges": {
+          "forward+medium": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:crouch:040",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:launcher:041",
+        "edges": {
+          "special": "n171",
+          "down+light": "n183",
+          "forward+medium": "n160",
+          "light": "n173"
+        }
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:041",
+        "edges": {
+          "forward+medium": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:041",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:047",
+        "edges": {
+          "forward+medium": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:047",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:049",
+        "edges": {
+          "forward+medium": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:049",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "light": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "forward+light": "n185"
+        }
+      },
+      "n185": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "light": "n186"
+        }
+      },
+      "n186": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "light": "n187"
+        }
+      },
+      "n187": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "medium": "n189"
+        }
+      },
+      "n189": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "forward+medium": "n190"
+        }
+      },
+      "n190": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "down+light": "n191"
+        }
+      },
+      "n191": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "medium": "n192"
+        }
+      },
+      "n192": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "light": "n193"
+        }
+      },
+      "n193": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "forward+light": "n194"
+        }
+      },
+      "n194": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "light": "n195"
+        }
+      },
+      "n195": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:advanced:launcher:057",
+        "edges": {
+          "light": "n235"
+        }
+      },
+      "n235": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:advanced:tornado:074",
+        "edges": {
+          "medium": "n236"
+        }
+      },
+      "n236": {
+        "depth": 16,
+        "routeId": "gotenks:beginner:advanced:tornado:074",
+        "edges": {
+          "forward+medium": "n237"
+        }
+      },
+      "n237": {
+        "depth": 17,
+        "routeId": "gotenks:beginner:advanced:tornado:074",
+        "edges": {
+          "down+light": "n238"
+        }
+      },
+      "n238": {
+        "depth": 18,
+        "routeId": "gotenks:beginner:advanced:tornado:074",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:launcher:043",
+        "edges": {
+          "special": "n175",
+          "down+light": "n196",
+          "forward+medium": "n163",
+          "light": "n177"
+        }
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:043",
+        "edges": {
+          "forward+medium": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:043",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:050",
+        "edges": {
+          "forward+medium": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:050",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:052",
+        "edges": {
+          "forward+medium": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n196": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n197"
+        }
+      },
+      "n197": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "forward+light": "n198"
+        }
+      },
+      "n198": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n199"
+        }
+      },
+      "n199": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n200"
+        }
+      },
+      "n200": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "special": "n201"
+        }
+      },
+      "n201": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "medium": "n202"
+        }
+      },
+      "n202": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "forward+medium": "n203"
+        }
+      },
+      "n203": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "down+light": "n204"
+        }
+      },
+      "n204": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "medium": "n205"
+        }
+      },
+      "n205": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n206"
+        }
+      },
+      "n206": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "forward+light": "n207"
+        }
+      },
+      "n207": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n208"
+        }
+      },
+      "n208": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n239"
+        }
+      },
+      "n239": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:advanced:tornado:077",
+        "edges": {
+          "medium": "n240"
+        }
+      },
+      "n240": {
+        "depth": 16,
+        "routeId": "gotenks:beginner:advanced:tornado:077",
+        "edges": {
+          "forward+medium": "n241"
+        }
+      },
+      "n241": {
+        "depth": 17,
+        "routeId": "gotenks:beginner:advanced:tornado:077",
+        "edges": {
+          "down+light": "n242"
+        }
+      },
+      "n242": {
+        "depth": 18,
+        "routeId": "gotenks:beginner:advanced:tornado:077",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:launcher:045",
+        "edges": {
+          "special": "n179",
+          "down+light": "n209",
+          "forward+medium": "n166"
+        }
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:045",
+        "edges": {
+          "forward+medium": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:045",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:053",
+        "edges": {
+          "forward+medium": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:053",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "forward+light": "n211"
+        }
+      },
+      "n211": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n212"
+        }
+      },
+      "n212": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n213"
+        }
+      },
+      "n213": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "medium": "n215"
+        }
+      },
+      "n215": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "forward+medium": "n216"
+        }
+      },
+      "n216": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "down+light": "n217"
+        }
+      },
+      "n217": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "medium": "n218"
+        }
+      },
+      "n218": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n219"
+        }
+      },
+      "n219": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "forward+light": "n220"
+        }
+      },
+      "n220": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n221"
+        }
+      },
+      "n221": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n243"
+        }
+      },
+      "n243": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:advanced:tornado:080",
+        "edges": {
+          "medium": "n244"
+        }
+      },
+      "n244": {
+        "depth": 16,
+        "routeId": "gotenks:beginner:advanced:tornado:080",
+        "edges": {
+          "forward+medium": "n245"
+        }
+      },
+      "n245": {
+        "depth": 17,
+        "routeId": "gotenks:beginner:advanced:tornado:080",
+        "edges": {
+          "down+light": "n246"
+        }
+      },
+      "n246": {
+        "depth": 18,
+        "routeId": "gotenks:beginner:advanced:tornado:080",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 1,
+        "routeId": "gotenks:beginner:advanced:launcher:046",
+        "edges": {
+          "special": "n181",
+          "down+light": "n222",
+          "forward+medium": "n169"
+        }
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:046",
+        "edges": {
+          "forward+medium": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:046",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:055",
+        "edges": {
+          "forward+medium": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n222": {
+        "depth": 2,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n223"
+        }
+      },
+      "n223": {
+        "depth": 3,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "forward+light": "n224"
+        }
+      },
+      "n224": {
+        "depth": 4,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n225"
+        }
+      },
+      "n225": {
+        "depth": 5,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n226"
+        }
+      },
+      "n226": {
+        "depth": 6,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n227"
+        }
+      },
+      "n227": {
+        "depth": 7,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "medium": "n228"
+        }
+      },
+      "n228": {
+        "depth": 8,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "forward+medium": "n229"
+        }
+      },
+      "n229": {
+        "depth": 9,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "down+light": "n230"
+        }
+      },
+      "n230": {
+        "depth": 10,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "medium": "n231"
+        }
+      },
+      "n231": {
+        "depth": 11,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n232"
+        }
+      },
+      "n232": {
+        "depth": 12,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "forward+light": "n233"
+        }
+      },
+      "n233": {
+        "depth": 13,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n234"
+        }
+      },
+      "n234": {
+        "depth": 14,
+        "routeId": "gotenks:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n247"
+        }
+      },
+      "n247": {
+        "depth": 15,
+        "routeId": "gotenks:beginner:advanced:tornado:082",
+        "edges": {
+          "medium": "n248"
+        }
+      },
+      "n248": {
+        "depth": 16,
+        "routeId": "gotenks:beginner:advanced:tornado:082",
+        "edges": {
+          "forward+medium": "n249"
+        }
+      },
+      "n249": {
+        "depth": 17,
+        "routeId": "gotenks:beginner:advanced:tornado:082",
+        "edges": {
+          "down+light": "n250"
+        }
+      },
+      "n250": {
+        "depth": 18,
+        "routeId": "gotenks:beginner:advanced:tornado:082",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Fusion Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Fusion Launcher",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "launch"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Fusion Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Fusion Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "launch"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "forward+light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0025": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0028": {
+      "gesture": "special+heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Fusion Launcher",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "launch"
+    },
+    "s0031": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down-forward+special+heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Fusion Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0043": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special+medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Fusion Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Fusion Hop Strike",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Fusion Hop Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0052": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Fusion Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "down+special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Gotenks Cross Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Fusion Hop Strike",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Fusion Hop Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+special+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "medium",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Fusion Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0066": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Fusion Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Fusion Flurry",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Fusion Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "down+special+light",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While Rising Fusion",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down-forward+special",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Gotenks Cross Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "forward+special",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Fusion Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Galactic Spin Kick",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "juggle"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Galactic Spin Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Galactic Spin Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Galactic Spin Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Fusion Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Fusion Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Fusion Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    }
+  }
 }

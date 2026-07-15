@@ -3258,121 +3258,95 @@
   "beginnerComboRoutes": [
     {
       "id": "terriermon:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Terriermon Left Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Terriermon Left Check",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
       ]
     },
     {
       "id": "terriermon:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Terriermon Right Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Terriermon Right Check",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 27,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "terriermon:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Terriermon Left Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Terriermon Left Kick",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
       ]
     },
     {
@@ -3384,35 +3358,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011"
       ]
     },
     {
@@ -3424,35 +3379,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Terriermon Left Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Terriermon Right Check",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0012",
+        "s0008"
       ]
     },
     {
@@ -3464,35 +3400,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Terriermon Left Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Terriermon Right Check",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0013",
+        "s0012",
+        "s0008"
       ]
     },
     {
@@ -3504,35 +3421,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Terriermon Right Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Terriermon Left Kick",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0014",
+        "s0007",
+        "s0011"
       ]
     },
     {
@@ -3544,36 +3442,1342 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Terriermon Left Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Terriermon Left Check",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Terriermon Right Kick",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0018",
+        "s0004",
+        "s0019"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0020",
+        "s0007",
+        "s0021"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0022",
+        "s0001",
+        "s0021"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0012",
+        "s0008"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0024",
+        "s0007",
+        "s0011"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0016",
+        "s0017"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "terriermon:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "terriermon:beginner:directional-special-heavy-route",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "special": "n25"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "terriermon:beginner:directional-special-light-route",
+        "edges": {
+          "light": "n2",
+          "medium": "n28"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "terriermon:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "terriermon:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "terriermon:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "terriermon:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "terriermon:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "terriermon:beginner:light-core",
+        "edges": {
+          "medium": "n34",
+          "heavy": "n42",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:light-core",
+        "edges": {}
+      },
+      "n34": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n35"
+        }
+      },
+      "n35": {
+        "depth": 9,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n36"
+        }
+      },
+      "n36": {
+        "depth": 10,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n37"
+        }
+      },
+      "n37": {
+        "depth": 11,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 12,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39"
+        }
+      },
+      "n39": {
+        "depth": 13,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 14,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n82",
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 15,
+        "routeId": "terriermon:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n82": {
+        "depth": 15,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n83"
+        }
+      },
+      "n83": {
+        "depth": 16,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n84"
+        }
+      },
+      "n84": {
+        "depth": 17,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n85"
+        }
+      },
+      "n85": {
+        "depth": 18,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n86"
+        }
+      },
+      "n86": {
+        "depth": 19,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87"
+        }
+      },
+      "n87": {
+        "depth": 20,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 21,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 22,
+        "routeId": "terriermon:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n43"
+        }
+      },
+      "n43": {
+        "depth": 9,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n44"
+        }
+      },
+      "n44": {
+        "depth": 10,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n45"
+        }
+      },
+      "n45": {
+        "depth": 11,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 12,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 13,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 14,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 15,
+        "routeId": "terriermon:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "terriermon:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "terriermon:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "terriermon:beginner:directional-special-medium-route",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n30"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "terriermon:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "terriermon:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "terriermon:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "terriermon:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "terriermon:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "terriermon:beginner:medium-core",
+        "edges": {
+          "light": "n50",
+          "heavy": "n58",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:medium-core",
+        "edges": {}
+      },
+      "n50": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n51"
+        }
+      },
+      "n51": {
+        "depth": 9,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n52"
+        }
+      },
+      "n52": {
+        "depth": 10,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n53"
+        }
+      },
+      "n53": {
+        "depth": 11,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 12,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 13,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 14,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 15,
+        "routeId": "terriermon:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n58": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 9,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n60"
+        }
+      },
+      "n60": {
+        "depth": 10,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n61"
+        }
+      },
+      "n61": {
+        "depth": 11,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n62"
+        }
+      },
+      "n62": {
+        "depth": 12,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n63"
+        }
+      },
+      "n63": {
+        "depth": 13,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 14,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 15,
+        "routeId": "terriermon:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "terriermon:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "terriermon:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "terriermon:beginner:directional-special-heavy-route",
+        "edges": {
+          "heavy": "n18",
+          "light": "n32"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "terriermon:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "terriermon:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "terriermon:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "terriermon:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "terriermon:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "terriermon:beginner:heavy-core",
+        "edges": {
+          "medium": "n74",
+          "light": "n66",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:heavy-core",
+        "edges": {}
+      },
+      "n66": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 9,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n68"
+        }
+      },
+      "n68": {
+        "depth": 10,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n69"
+        }
+      },
+      "n69": {
+        "depth": 11,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n70"
+        }
+      },
+      "n70": {
+        "depth": 12,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n71"
+        }
+      },
+      "n71": {
+        "depth": 13,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 14,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 15,
+        "routeId": "terriermon:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n74": {
+        "depth": 8,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n75"
+        }
+      },
+      "n75": {
+        "depth": 9,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n76"
+        }
+      },
+      "n76": {
+        "depth": 10,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n77"
+        }
+      },
+      "n77": {
+        "depth": 11,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n78"
+        }
+      },
+      "n78": {
+        "depth": 12,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n79"
+        }
+      },
+      "n79": {
+        "depth": 13,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 14,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 15,
+        "routeId": "terriermon:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 2,
+        "routeId": "terriermon:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n33"
+        }
+      },
+      "n33": {
+        "depth": 3,
+        "routeId": "terriermon:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "terriermon:beginner:special-core",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "terriermon:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "terriermon:beginner:special-core",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Terriermon Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Terriermon Left Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0003": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Terriermon Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Terriermon Right Check",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0006": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Terriermon Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Terriermon Left Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0009": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0012": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Terriermon Right Check",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Terriermon Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Terriermon Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Terriermon Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Terriermon Left Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0018": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Terriermon Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0020": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Terriermon Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Terriermon Right Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0022": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Terriermon Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Terriermon Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Terriermon Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Terriermon Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    }
+  }
 }

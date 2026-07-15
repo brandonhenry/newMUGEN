@@ -26,9 +26,11 @@ import { getCharacterCombatScale, getCharacterGlobalScale } from '../lib/charact
 import {
   BEGINNER_AUTO_COMBO_KI_COST,
   BEGINNER_SPECIAL_CHORD_GRACE_FRAMES,
+  beginnerGestureAttackClass,
   beginnerMovementSatisfied,
   resolveBeginnerGesture,
-  resolveBeginnerRouteStep
+  resolveBeginnerRouteStep,
+  resolveBeginnerSafeEnder
 } from '../lib/beginnerAutoCombos';
 import { scaledComboDamage } from '../lib/comboDamage';
 import { contextualComboFrameData, contextualHitAdvantage } from '../lib/comboFrameMath';
@@ -451,6 +453,9 @@ function releaseTimeStopActivator(fighter: FighterRuntime) {
   fighter.beginnerPendingRouteStep = -1;
   fighter.beginnerPendingSpecialIntent = null;
   fighter.beginnerSpecialGraceFrames = 0;
+  fighter.beginnerGraphNodeId = fighter.character.beginnerComboGraph?.rootId ?? 'n0';
+  fighter.beginnerAttackClass = null;
+  fighter.beginnerAttackClassStreak = 0;
   fighter.horizontalKnockback = null;
   fighter.comboIdentitySequence = [];
   fighter.comboFamilySequence = [];
@@ -785,6 +790,9 @@ function createFighter(slot: 1 | 2, character: CharacterDefinition, x: number, m
     beginnerPendingRouteStep: -1,
     beginnerPendingSpecialIntent: null,
     beginnerSpecialGraceFrames: 0,
+    beginnerGraphNodeId: character.beginnerComboGraph?.rootId ?? 'n0',
+    beginnerAttackClass: null,
+    beginnerAttackClassStreak: 0,
     horizontalKnockback: null,
     bufferedMoveInput: null,
     bufferedMoveFrames: 0,
@@ -973,6 +981,9 @@ function applyFighterStep(match: MatchSnapshot, fighterIndex: 0 | 1, input: Inpu
     fighter.beginnerGestureSequence = [];
     fighter.beginnerActiveRouteId = null;
     fighter.beginnerPendingRouteStep = -1;
+    fighter.beginnerGraphNodeId = fighter.character.beginnerComboGraph?.rootId ?? 'n0';
+    fighter.beginnerAttackClass = null;
+    fighter.beginnerAttackClassStreak = 0;
     fighter.aiActiveComboRouteId = null;
   }
   fighter.aiJuggleLockoutFrames = Math.max(0, fighter.aiJuggleLockoutFrames - frameDelta);
@@ -1726,7 +1737,8 @@ function bufferMoveIntent(fighter: FighterRuntime, intent: NonNullable<FighterRu
     beginnerGesture: intent.beginnerGesture,
     beginnerWindowBefore: intent.beginnerWindowBefore,
     beginnerWindowAfter: intent.beginnerWindowAfter,
-    beginnerAwaitingHitConfirm: intent.beginnerAwaitingHitConfirm
+    beginnerAwaitingHitConfirm: intent.beginnerAwaitingHitConfirm,
+    beginnerGraphNodeId: intent.beginnerGraphNodeId
   };
   fighter.bufferedMoveInput = intent.moveInput;
   fighter.bufferedMoveFrames = bufferFrames;
@@ -1872,6 +1884,9 @@ function completeTransform(fighter: FighterRuntime, target: CharacterDefinition,
   fighter.beginnerPendingRouteStep = -1;
   fighter.beginnerPendingSpecialIntent = null;
   fighter.beginnerSpecialGraceFrames = 0;
+  fighter.beginnerGraphNodeId = target.beginnerComboGraph?.rootId ?? 'n0';
+  fighter.beginnerAttackClass = null;
+  fighter.beginnerAttackClassStreak = 0;
   fighter.comboIdentitySequence = [];
   fighter.comboFamilySequence = [];
   fighter.comboVisualFamilySequence = [];
@@ -2283,20 +2298,43 @@ function resolveControlSchemeMoveIntent(
     return null;
   }
   const confirmedGestures = fighter.beginnerGestureSequence.slice(0, fighter.comboHits);
-  const gesture = resolveBeginnerGesture(intent.inputSnapshot, intent.moveInput);
-  let resolution = resolveBeginnerRouteStep(
-    fighter.character,
-    confirmedGestures,
-    gesture,
-    fighter.ki,
-    fighter.beginnerActiveRouteId
-  );
+  const forwardDirection = resolveForwardInput(fighter, opponent, intent.inputSnapshot);
+  const gesture = resolveBeginnerGesture(intent.inputSnapshot, intent.moveInput, forwardDirection);
+  const attackClass = beginnerGestureAttackClass(gesture);
+  if (fighter.comboHits >= 30) {
+    resetBeginnerRoute(fighter);
+    return null;
+  }
+  let resolution = attackClass && fighter.beginnerAttackClass === attackClass && fighter.beginnerAttackClassStreak >= 7
+    ? resolveBeginnerSafeEnder(fighter.character, gesture, fighter.ki)
+    : resolveBeginnerRouteStep(
+      fighter.character,
+      confirmedGestures,
+      gesture,
+      fighter.ki,
+      fighter.beginnerActiveRouteId,
+      fighter.beginnerGraphNodeId
+    );
   if (!resolution && confirmedGestures.length > 0) {
     resetBeginnerRoute(fighter);
-    resolution = resolveBeginnerRouteStep(fighter.character, [], gesture, fighter.ki);
+    resolution = resolveBeginnerRouteStep(
+      fighter.character,
+      [],
+      gesture,
+      fighter.ki,
+      undefined,
+      fighter.character.beginnerComboGraph?.rootId
+    );
   }
   if (!resolution) return { ...intent, beginnerDamageScale: BEGINNER_DAMAGE_SCALE };
-  if (!beginnerMovementSatisfied(resolution.step.movementBefore, fighter, intent.inputSnapshot)) {
+  const unexpectedMovement = (forwardDirection < 0 && resolution.movementBefore !== 'dashBack') ||
+    (intent.inputSnapshot.up && resolution.movementBefore !== 'jump');
+  if (unexpectedMovement) {
+    resetBeginnerRoute(fighter);
+    return null;
+  }
+  if (!beginnerMovementSatisfied(resolution.movementBefore, fighter, intent.inputSnapshot)) {
+    resetBeginnerRoute(fighter);
     return null;
   }
   const moveInput = resolution.moveInput;
@@ -2309,14 +2347,15 @@ function resolveControlSchemeMoveIntent(
     ...intent,
     moveInput,
     inputSnapshot,
-    beginnerDamageScale: BEGINNER_DAMAGE_SCALE,
+    beginnerDamageScale: resolution.damageScale,
     beginnerForcedCommand,
     beginnerUseKiBurst: resolution.usePoweredKi,
     beginnerRouteId: resolution.route.id,
     beginnerRouteStep: resolution.stepIndex,
     beginnerGesture: resolution.gesture,
     beginnerWindowBefore: resolution.step.windowBefore,
-    beginnerWindowAfter: resolution.step.windowAfter
+    beginnerWindowAfter: resolution.step.windowAfter,
+    beginnerGraphNodeId: resolution.nextGraphNodeId
   };
 }
 
@@ -2336,6 +2375,11 @@ function resolveBeginnerSpecialChordGrace(
       inputSnapshot: cloneInputFrame(intent.inputSnapshot)
     };
     chordIntent.inputSnapshot.special = true;
+    if (!chordIntent.inputSnapshot.left && !chordIntent.inputSnapshot.right) {
+      chordIntent.inputSnapshot.left = pending.inputSnapshot.left;
+      chordIntent.inputSnapshot.right = pending.inputSnapshot.right;
+    }
+    if (!chordIntent.inputSnapshot.down) chordIntent.inputSnapshot.down = pending.inputSnapshot.down;
     fighter.beginnerPendingSpecialIntent = null;
     fighter.beginnerSpecialGraceFrames = 0;
     return chordIntent;
@@ -2374,6 +2418,9 @@ function resetBeginnerRoute(fighter: FighterRuntime) {
   fighter.beginnerPendingRouteStep = -1;
   fighter.beginnerPendingSpecialIntent = null;
   fighter.beginnerSpecialGraceFrames = 0;
+  fighter.beginnerGraphNodeId = fighter.character.beginnerComboGraph?.rootId ?? 'n0';
+  fighter.beginnerAttackClass = null;
+  fighter.beginnerAttackClassStreak = 0;
   if (fighter.bufferedMoveIntent?.beginnerAwaitingHitConfirm) clearBufferedMoveInput(fighter);
 }
 
@@ -2576,6 +2623,12 @@ function startComboAttack(
     fighter.beginnerGestureSequence = [...fighter.beginnerGestureSequence.slice(0, fighter.comboHits), intent.beginnerGesture];
     fighter.beginnerActiveRouteId = intent.beginnerRouteId;
     fighter.beginnerPendingRouteStep = intent.beginnerRouteStep ?? fighter.beginnerGestureSequence.length - 1;
+    fighter.beginnerGraphNodeId = intent.beginnerGraphNodeId ?? fighter.beginnerGraphNodeId;
+    const attackClass = beginnerGestureAttackClass(intent.beginnerGesture);
+    if (attackClass) {
+      fighter.beginnerAttackClassStreak = fighter.beginnerAttackClass === attackClass ? fighter.beginnerAttackClassStreak + 1 : 1;
+      fighter.beginnerAttackClass = attackClass;
+    }
   }
   if (!continuing) {
     fighter.comboUsedKeys = [];

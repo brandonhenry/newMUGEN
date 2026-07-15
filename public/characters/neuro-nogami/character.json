@@ -2862,134 +2862,95 @@
   "beginnerComboRoutes": [
     {
       "id": "neuro-nogami:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Demon Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Demon Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 27,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
       ]
     },
     {
       "id": "neuro-nogami:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Neuro Nogami Right Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Neuro Nogami Right Check",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0007"
       ]
     },
     {
       "id": "neuro-nogami:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Mystery Snare",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Mystery Snare",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
       ]
     },
     {
@@ -3001,39 +2962,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Neuro Nogami Right Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Neuro Nogami Right Kick",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013"
       ]
     },
     {
@@ -3042,43 +2980,19 @@
       "family": "mixed",
       "gestures": [
         "light",
-        "medium",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Demon Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Neuro Nogami Right Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0014",
+        "s0015"
       ]
     },
     {
@@ -3090,40 +3004,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Neuro Nogami Right Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0016",
+        "s0017",
+        "s0015"
       ]
     },
     {
@@ -3133,42 +3023,18 @@
       "gestures": [
         "special+medium",
         "heavy",
-        "special"
+        "light"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Neuro Nogami Right Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Mystery Snare",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0018",
+        "s0019",
+        "s0020"
       ]
     },
     {
@@ -3177,45 +3043,3837 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "forward+heavy",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0021",
+        "s0022",
+        "s0023"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0009",
+        "s0026"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0028",
+        "s0029",
+        "s0026"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0017",
+        "s0015"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "light"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0019",
+        "s0020"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "forward+heavy",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0022",
+        "s0023"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0007"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0007"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:001",
+      "title": "Neuro Nogami Right Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:002",
+      "title": "Neuro Nogami Right Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:003",
+      "title": "Neuro Nogami Right Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Mystery Snare",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Demon Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Green Talon Kick",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:004",
+      "title": "Neuro Nogami Right Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0040",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:005",
+      "title": "Quick Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:006",
+      "title": "Quick Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:007",
+      "title": "Neuro Nogami Right Check 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0042",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:008",
+      "title": "Neuro Nogami Right Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0040",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:009",
+      "title": "Quick Demon Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0042",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:010",
+      "title": "Neuro Nogami Right Check 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0042",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:011",
+      "title": "Neuro Nogami Right Kick 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0040",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:basic:012",
+      "title": "Quick Demon Jab 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0042",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0047"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:013",
+      "title": "Demon Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0049",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:014",
+      "title": "Demon Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0049",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:015",
+      "title": "Demon Flight Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0046",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:016",
+      "title": "Demon Flight Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0042",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:017",
+      "title": "Demon Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0052",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:018",
+      "title": "Demon Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0052",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:019",
+      "title": "Demon Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:020",
+      "title": "Demon Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:021",
+      "title": "Demonic Twin Drill 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0046",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:022",
+      "title": "Demonic Twin Drill 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0042",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:023",
+      "title": "Ducking Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:024",
+      "title": "Ducking Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0059",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:025",
+      "title": "Green Talon Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0037"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:026",
+      "title": "Green Talon Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0046",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:027",
+      "title": "Green Talon Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0037"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:028",
+      "title": "Green Talon Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0046",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:029",
+      "title": "Overdrive Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:030",
+      "title": "Overdrive Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:031",
+      "title": "Demon Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0064",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:032",
+      "title": "Demon Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0064",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:033",
+      "title": "Demon Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0065",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:034",
+      "title": "Demon Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0065",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:035",
+      "title": "Demon Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0044",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:036",
+      "title": "Demon Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0044",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:037",
+      "title": "Low Mystery Snare 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:038",
+      "title": "Low Mystery Snare 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0044",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:039",
+      "title": "Overdrive Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0069",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:advanced:040",
+      "title": "Overdrive Demon Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0069",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:crouch:041",
+      "title": "Crouching Demon Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0034"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:crouch:042",
+      "title": "Crouching Demon Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0044",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:crouch:043",
+      "title": "While-Rising Demon Claw 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0068"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:crouch:044",
+      "title": "While-Rising Demon Claw 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0044",
+        "s0058"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:045",
+      "title": "Crouch Talon Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:046",
+      "title": "Crouch Talon Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:047",
+      "title": "Crouch Talon Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0076",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:048",
+      "title": "Crouch Talon Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0076",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:049",
+      "title": "Crouch Talon Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0077",
+        "s0037"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:050",
+      "title": "Demon Hand Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:051",
+      "title": "Demon Hand Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:052",
+      "title": "Demon Hand Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0068",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:053",
+      "title": "Demon Hand Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0068",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:launcher:054",
+      "title": "Demon Hand Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0080",
+        "s0037"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:tornado:055",
+      "title": "Crouch Talon Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0035"
+      ]
+    },
+    {
+      "id": "neuro-nogami:beginner:advanced:tornado:056",
+      "title": "Demon Hand Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0035"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:013",
+        "edges": {
+          "special+light": "n30",
+          "forward+special+light": "n30",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "forward+light": "n1",
+          "special": "n25",
+          "forward+medium": "n135",
+          "forward+heavy": "n132",
+          "down+light": "n140",
+          "forward+special": "n127",
+          "down+heavy": "n164",
+          "down+special": "n174",
+          "down-forward+light": "n105",
+          "down-forward+medium": "n149",
+          "down-forward+special": "n124",
+          "forward+special+medium": "n169"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:019",
+        "edges": {
+          "light": "n2",
+          "medium": "n156",
+          "heavy": "n28"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "neuro-nogami:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "neuro-nogami:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "neuro-nogami:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "neuro-nogami:beginner:light-core",
+        "edges": {
+          "light": "n8",
+          "heavy": "n49",
+          "medium": "n41"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:light-core",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 9,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 10,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 11,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 12,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 13,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 14,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89",
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 15,
+        "routeId": "neuro-nogami:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n89": {
+        "depth": 15,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 16,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 17,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 18,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 19,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 20,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 21,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 22,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n49": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 9,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 10,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 11,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 12,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 13,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 14,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 15,
+        "routeId": "neuro-nogami:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n37",
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:basic:001",
+        "edges": {
+          "medium": "n10",
+          "special": "n97",
+          "heavy": "n33",
+          "down+light": "n110",
+          "forward+light": "n99"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "neuro-nogami:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "neuro-nogami:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "neuro-nogami:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "neuro-nogami:beginner:medium-core",
+        "edges": {
+          "heavy": "n65",
+          "medium": "n16",
+          "light": "n57"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:medium-core",
+        "edges": {}
+      },
+      "n57": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 9,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 10,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 11,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 12,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 13,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 14,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 15,
+        "routeId": "neuro-nogami:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n65": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 9,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 10,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 11,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 12,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 13,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 14,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 15,
+        "routeId": "neuro-nogami:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n38",
+          "light": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n98"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:007",
+        "edges": {
+          "light": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:007",
+        "edges": {
+          "medium": "n112"
+        }
+      },
+      "n112": {
+        "depth": 4,
+        "routeId": "neuro-nogami:beginner:advanced:basic:007",
+        "edges": {
+          "forward+light": "n118"
+        }
+      },
+      "n118": {
+        "depth": 5,
+        "routeId": "neuro-nogami:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n119"
+        }
+      },
+      "n119": {
+        "depth": 6,
+        "routeId": "neuro-nogami:beginner:advanced:basic:010",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:037",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n160",
+          "light": "n158",
+          "special": "n183",
+          "forward+light": "n181",
+          "down+light": "n39",
+          "forward+medium": "n185",
+          "forward+heavy": "n35"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "neuro-nogami:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "neuro-nogami:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "neuro-nogami:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "neuro-nogami:beginner:heavy-core",
+        "edges": {
+          "medium": "n81",
+          "heavy": "n24",
+          "light": "n73"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:heavy-core",
+        "edges": {}
+      },
+      "n73": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 9,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 10,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 11,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 12,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 13,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 14,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 15,
+        "routeId": "neuro-nogami:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n81": {
+        "depth": 8,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 9,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 10,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 11,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 12,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 13,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 14,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "neuro-nogami:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n40"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:037",
+        "edges": {
+          "special": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:050",
+        "edges": {
+          "special": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:050",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:052",
+        "edges": {
+          "special": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:054",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:054",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n26",
+          "down+light": "n103",
+          "light": "n101"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:special-core",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n104",
+          "light": "n113"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:008",
+        "edges": {
+          "medium": "n114"
+        }
+      },
+      "n114": {
+        "depth": 4,
+        "routeId": "neuro-nogami:beginner:advanced:basic:008",
+        "edges": {
+          "forward+light": "n120"
+        }
+      },
+      "n120": {
+        "depth": 5,
+        "routeId": "neuro-nogami:beginner:advanced:basic:011",
+        "edges": {
+          "light": "n121"
+        }
+      },
+      "n121": {
+        "depth": 6,
+        "routeId": "neuro-nogami:beginner:advanced:basic:011",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:025",
+        "edges": {
+          "forward+light": "n145",
+          "medium": "n31",
+          "light": "n147"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n148"
+        }
+      },
+      "n148": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n106",
+          "down+light": "n115",
+          "forward+light": "n108"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:basic:009",
+        "edges": {
+          "light": "n116"
+        }
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n117"
+        }
+      },
+      "n117": {
+        "depth": 4,
+        "routeId": "neuro-nogami:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n122"
+        }
+      },
+      "n122": {
+        "depth": 5,
+        "routeId": "neuro-nogami:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n123"
+        }
+      },
+      "n123": {
+        "depth": 6,
+        "routeId": "neuro-nogami:beginner:advanced:basic:012",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:013",
+        "edges": {
+          "medium": "n152",
+          "light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:013",
+        "edges": {
+          "special": "n126"
+        }
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:015",
+        "edges": {
+          "down+light": "n130",
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n130": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n131"
+        }
+      },
+      "n131": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n132": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n154",
+          "light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n134"
+        }
+      },
+      "n134": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n135": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:021",
+        "edges": {
+          "down+light": "n138",
+          "light": "n136"
+        }
+      },
+      "n136": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n141",
+          "light": "n143"
+        }
+      },
+      "n141": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n142"
+        }
+      },
+      "n142": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n149": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:029",
+        "edges": {
+          "medium": "n162",
+          "light": "n150"
+        }
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:041",
+        "edges": {
+          "medium": "n167",
+          "light": "n165"
+        }
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:041",
+        "edges": {
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:041",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:042",
+        "edges": {
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:042",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:043",
+        "edges": {
+          "medium": "n172",
+          "heavy": "n170"
+        }
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:043",
+        "edges": {
+          "special": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:043",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:044",
+        "edges": {
+          "special": "n173"
+        }
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:crouch:044",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 1,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:045",
+        "edges": {
+          "special": "n177",
+          "light": "n175",
+          "medium": "n179"
+        }
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:045",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:045",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:047",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:047",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:049",
+        "edges": {
+          "special": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "neuro-nogami:beginner:advanced:launcher:049",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Demon Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Demon Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0008": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mystery Snare",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mystery Snare",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Neuro Nogami Right Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Neuro Nogami Right Kick",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0016": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mystery Snare",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mystery Snare",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Demon Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0024": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Demon Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0027": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mystery Snare",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mystery Snare",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0035": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Demon Flight Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0038": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Neuro Nogami Right Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Demon Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demonic Twin Drill",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Demon Flight Rush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down-forward+special",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Demon Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0049": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Demon Flight Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Demon Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0052": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Demon Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0054": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demonic Twin Drill",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demonic Twin Drill",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0059": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Demon Flight Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Demon Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0063": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demonic Twin Drill",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demonic Twin Drill",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mystery Snare",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Demon Hand Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Demonic Twin Drill",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Demon Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0071": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Neuro Nogami Right Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "While-Rising Demon Claw",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Demon Hand Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+special",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Talon Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Demonic Tornado Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Green Talon Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Demon Jab",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Demon Hand Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Demonic Tornado Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Demon Jab",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    }
+  }
 }

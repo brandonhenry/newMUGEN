@@ -473,11 +473,32 @@ export type BeginnerComboGesture =
   | 'medium'
   | 'heavy'
   | 'special'
+  | 'forward+light'
+  | 'forward+medium'
+  | 'forward+heavy'
+  | 'forward+special'
+  | 'down+light'
+  | 'down+medium'
+  | 'down+heavy'
+  | 'down+special'
+  | 'down-forward+light'
+  | 'down-forward+medium'
+  | 'down-forward+heavy'
+  | 'down-forward+special'
   | 'special+light'
   | 'special+medium'
-  | 'special+heavy';
+  | 'special+heavy'
+  | 'forward+special+light'
+  | 'forward+special+medium'
+  | 'forward+special+heavy'
+  | 'down+special+light'
+  | 'down+special+medium'
+  | 'down+special+heavy'
+  | 'down-forward+special+light'
+  | 'down-forward+special+medium'
+  | 'down-forward+special+heavy';
 
-export type BeginnerComboMovement = 'dashForward' | 'dashBack' | 'jump' | 'neutral';
+export type BeginnerComboMovement = 'dashForward' | 'dashBack' | 'jump' | 'crouch' | 'sidestepUp' | 'sidestepDown' | 'neutral';
 
 export type BeginnerComboRouteStep = {
   routeKey?: string;
@@ -496,15 +517,36 @@ export type BeginnerComboRouteStep = {
   kiAnimationKey?: string;
   kiCost?: number;
   poweredKiFallback?: boolean;
+  kiMovementBefore?: BeginnerComboMovement;
+  kiMovementMinFrames?: number;
+  kiMovementMaxFrames?: number;
 };
 
 export type BeginnerComboRoute = {
   id: string;
   title: string;
-  family: 'core' | 'mixed';
+  family: 'core' | 'mixed' | 'advanced';
   gestures: BeginnerComboGesture[];
   steps: BeginnerComboRouteStep[];
+  stepKeys?: string[];
   tier?: 'short' | 'medium' | 'long' | 'marathon';
+  category?: 'basic' | 'advanced' | 'crouch' | 'launcher' | 'tornado' | 'counterHit';
+  estimatedHits?: number;
+  estimatedDamage?: number;
+  damageScale?: number;
+  requiresKi?: boolean;
+};
+
+export type BeginnerComboGraphNode = {
+  depth: number;
+  routeId: string;
+  edges: Partial<Record<BeginnerComboGesture, string>>;
+};
+
+export type BeginnerComboGraph = {
+  version: 2;
+  rootId: string;
+  nodes: Record<string, BeginnerComboGraphNode>;
 };
 
 export type CharacterDefinition = {
@@ -547,6 +589,8 @@ export type CharacterDefinition = {
   moves: MoveDefinition[];
   moveOverrides?: Record<string, MoveOverride>;
   beginnerComboRoutes?: BeginnerComboRoute[];
+  beginnerComboMoves?: Record<string, BeginnerComboRouteStep>;
+  beginnerComboGraph?: BeginnerComboGraph;
   getupFrameOverrides?: GetupFrameOverrides;
   effects?: CharacterEffectDefinition[];
   moveEffects?: Record<string, MoveEffectInstance[]>;
@@ -1192,6 +1236,7 @@ export type BufferedMoveIntent = {
   beginnerWindowBefore?: number;
   beginnerWindowAfter?: number;
   beginnerAwaitingHitConfirm?: boolean;
+  beginnerGraphNodeId?: string;
 };
 
 export type MatchMode = 'ai' | 'cpuArcade' | 'versusCpu' | 'local2p' | 'cpu' | 'training' | 'trainingOnline' | 'online' | 'ranked' | 'private' | 'custom' | 'tournamentLocal' | 'tournamentOnline' | 'tournamentInfinite';
@@ -1438,6 +1483,9 @@ export type FighterRuntime = {
   beginnerPendingRouteStep: number;
   beginnerPendingSpecialIntent: BufferedMoveIntent | null;
   beginnerSpecialGraceFrames: number;
+  beginnerGraphNodeId: string;
+  beginnerAttackClass: 'light' | 'medium' | 'heavy' | null;
+  beginnerAttackClassStreak: number;
   horizontalKnockback: {
     x: number;
     z: number;

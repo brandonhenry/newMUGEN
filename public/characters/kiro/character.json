@@ -13038,135 +13038,95 @@
   "beginnerComboRoutes": [
     {
       "id": "kiro:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Shadow Clone Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Forward Clone Strike",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "kiro:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Rasengan Palm",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Quick Rasengan Palm",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+3",
-          "kiAnimationKey": "cmd:O+3",
-          "kiCost": 32,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
       ]
     },
     {
       "id": "kiro:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Uzumaki Rush Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "d/f+3",
-          "animationKey": "cmd:d/f+3",
-          "label": "Diagonal Barrage Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+3",
-          "kiAnimationKey": "cmd:O+3",
-          "kiCost": 32,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0011",
+        "s0017"
       ]
     },
     {
@@ -13178,40 +13138,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Rasenshuriken Step",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Rasenshuriken Arc",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+3",
-          "kiAnimationKey": "cmd:O+3",
-          "kiCost": 32,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0018",
+        "s0019",
+        "s0020"
       ]
     },
     {
@@ -13220,44 +13156,19 @@
       "family": "mixed",
       "gestures": [
         "light",
-        "medium",
+        "forward+medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Shadow Clone Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Rasengan Palm",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+3",
-          "kiAnimationKey": "cmd:O+3",
-          "kiCost": 32,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -13266,44 +13177,19 @@
       "family": "mixed",
       "gestures": [
         "special+light",
-        "medium",
+        "forward+medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Rasenshuriken Smash",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Rasengan Palm",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+3",
-          "kiAnimationKey": "cmd:O+3",
-          "kiCost": 32,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -13312,44 +13198,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "forward+medium",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Rasenshuriken Step",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Uzumaki Rush Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+3",
-          "kiAnimationKey": "cmd:O+3",
-          "kiCost": 32,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0026"
       ]
     },
     {
@@ -13361,45 +13222,7087 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Shadow Clone Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "movementBefore": "dashForward",
-          "movementMinFrames": 1,
-          "movementMaxFrames": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Homing Low Sweep",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+3",
-          "kiAnimationKey": "cmd:O+3",
-          "kiCost": 32,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "kiro:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0030",
+        "s0031",
+        "s0032"
+      ]
+    },
+    {
+      "id": "kiro:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0032"
+      ]
+    },
+    {
+      "id": "kiro:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0032"
+      ]
+    },
+    {
+      "id": "kiro:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "forward+medium",
+        "heavy"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0021",
+        "s0022"
+      ]
+    },
+    {
+      "id": "kiro:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0038",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "kiro:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0039",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "kiro:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "kiro:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0011",
+        "s0017"
+      ]
+    },
+    {
+      "id": "kiro:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "kiro:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0011",
+        "s0017"
+      ]
+    },
+    {
+      "id": "kiro:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0011",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "kiro:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0011",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "kiro:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0011",
+        "s0017"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:001",
+      "title": "Quick Rasengan Palm 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:002",
+      "title": "Quick Rasengan Palm 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:003",
+      "title": "Rasenshuriken Arc 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0046",
+        "s0042"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:004",
+      "title": "Rasenshuriken Arc 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0047",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:005",
+      "title": "Shadow Clone Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:006",
+      "title": "Shadow Clone Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:007",
+      "title": "Uzumaki Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:008",
+      "title": "Uzumaki Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0055",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:009",
+      "title": "Quick Rasengan Palm 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "heavy",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:010",
+      "title": "Rasenshuriken Arc 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0046",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:011",
+      "title": "Shadow Clone Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down+light",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0058",
+        "s0057",
+        "s0059"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:012",
+      "title": "Uzumaki Barrage Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0060",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:013",
+      "title": "Quick Rasengan Palm 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "heavy",
+        "down+light",
+        "medium",
+        "down-forward+heavy",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0056",
+        "s0057",
+        "s0061",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:014",
+      "title": "Rasenshuriken Arc 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "down+light",
+        "medium",
+        "down-forward+heavy",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0046",
+        "s0056",
+        "s0057",
+        "s0061",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:015",
+      "title": "Shadow Clone Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down+light",
+        "medium",
+        "heavy",
+        "down-forward+heavy",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0058",
+        "s0057",
+        "s0059",
+        "s0061",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:basic:016",
+      "title": "Uzumaki Barrage Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "down+light",
+        "medium",
+        "down-forward+heavy",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0060",
+        "s0056",
+        "s0057",
+        "s0061",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:017",
+      "title": "Advancing Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:018",
+      "title": "Ducking Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:019",
+      "title": "Forward Rasengan Palm 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:020",
+      "title": "Low Uzumaki Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:021",
+      "title": "Rasengan Knockdown Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0074"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:022",
+      "title": "Sidestep Rasenshuriken 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:023",
+      "title": "Advancing Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:024",
+      "title": "Diagonal Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0081",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:025",
+      "title": "Diagonal Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:026",
+      "title": "Ducking Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:027",
+      "title": "Forward Rasengan Palm 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0082",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:028",
+      "title": "Homing Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0084",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:029",
+      "title": "Homing Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0085",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:030",
+      "title": "Low Clone Hop 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0087",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:031",
+      "title": "Low Clone Hop 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0088",
+        "s0050"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:032",
+      "title": "Low Uzumaki Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0089",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:033",
+      "title": "Overdrive Clone Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:034",
+      "title": "Overdrive Clone Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0050"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:035",
+      "title": "Rasengan Knockdown Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0093",
+        "s0052"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:036",
+      "title": "Rasenshuriken Smash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:037",
+      "title": "Rasenshuriken Smash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0084",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:038",
+      "title": "Rasenshuriken Step 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0097",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:039",
+      "title": "Rasenshuriken Step 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0098",
+        "s0050"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:040",
+      "title": "Sidestep Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0100",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:041",
+      "title": "Sidestep Barrage Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0071",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:042",
+      "title": "Sidestep Rasenshuriken 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0101",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:043",
+      "title": "Uzumaki Rush Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0081",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:advanced:044",
+      "title": "Uzumaki Rush Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:045",
+      "title": "Low Clone Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0104",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:046",
+      "title": "Low Rasenshuriken Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:047",
+      "title": "While-Rising Jump Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0108",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:048",
+      "title": "Crouch Rasenshuriken 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0110",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:049",
+      "title": "Crouch Rasenshuriken 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0109",
+        "s0111",
+        "s0044"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:050",
+      "title": "Crouching Clone Combo 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0113",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:051",
+      "title": "Crouching Clone Combo 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0112",
+        "s0114",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:052",
+      "title": "Full-Crouch Low Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0116",
+        "s0117"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:053",
+      "title": "Full-Crouch Low Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0100",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:054",
+      "title": "Full-Crouch Low Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0116",
+        "s0117"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:055",
+      "title": "Full-Crouch Low Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0115",
+        "s0104",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:056",
+      "title": "Homing Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0118",
+        "s0042"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:057",
+      "title": "Homing Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0119",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:058",
+      "title": "Low Clone Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0120",
+        "s0121"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:059",
+      "title": "Low Rasenshuriken Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0122",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:060",
+      "title": "Low Rasenshuriken Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0123",
+        "s0042"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:061",
+      "title": "Low Rasenshuriken Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0104",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:062",
+      "title": "While-Rising Jump Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0107",
+        "s0124",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:063",
+      "title": "While-Rising Rasengan 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0125",
+        "s0126",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:064",
+      "title": "While-Rising Rasengan 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0125",
+        "s0069",
+        "s0066"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:065",
+      "title": "Homing Low Sweep 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 36,
+      "damageScale": 0.52,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "down+light",
+        "special",
+        "heavy",
+        "down-forward+heavy",
+        "light",
+        "forward+medium",
+        "down+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0127",
+        "s0056",
+        "s0128",
+        "s0059",
+        "s0061",
+        "s0062",
+        "s0063",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:crouch:066",
+      "title": "Homing Low Sweep 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "down+light",
+        "special",
+        "heavy",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0127",
+        "s0056",
+        "s0128",
+        "s0059",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:067",
+      "title": "Clone Upper Barrage Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0130",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:068",
+      "title": "Clone Upper Barrage Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0131",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:069",
+      "title": "Clone Upper Barrage Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0130",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:070",
+      "title": "Crouch Rasengan Pop-Up Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0133",
+        "s0134"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:071",
+      "title": "Crouch Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0135",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:072",
+      "title": "Crouch Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0136",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:073",
+      "title": "Crouch Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0135",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:074",
+      "title": "Crouch Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0136",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:075",
+      "title": "Diagonal Rasengan Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0138",
+        "s0134"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:076",
+      "title": "Diagonal Rasengan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0139",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:077",
+      "title": "Diagonal Rasengan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0140",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:078",
+      "title": "Diagonal Rasengan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0139",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:079",
+      "title": "Diagonal Rasengan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0140",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:080",
+      "title": "Rasengan Pop-Up Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0138",
+        "s0134"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:081",
+      "title": "Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0139",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:082",
+      "title": "Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0140",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:083",
+      "title": "Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0139",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:084",
+      "title": "Rasengan Pop-Up Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0140",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:085",
+      "title": "Running Rasenshuriken Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0133",
+        "s0134"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:086",
+      "title": "Running Rasenshuriken Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0143",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:087",
+      "title": "Running Rasenshuriken Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0144",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:088",
+      "title": "Running Rasenshuriken Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0143",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:089",
+      "title": "Running Rasenshuriken Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0144",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:090",
+      "title": "Uzumaki Chakra Tempest Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0146",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:091",
+      "title": "Uzumaki Chakra Tempest Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0147",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:092",
+      "title": "Uzumaki Chakra Tempest Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0148",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:093",
+      "title": "Uzumaki Chakra Tempest Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0147",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:launcher:094",
+      "title": "Uzumaki Chakra Tempest Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0148",
+        "s0079"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:095",
+      "title": "Clone Upper Barrage Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 36,
+      "damageScale": 0.5126760563380282,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0131",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:096",
+      "title": "Clone Upper Barrage Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.45000000000000007,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "special",
+        "special",
+        "heavy",
+        "forward+light",
+        "light",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0131",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111",
+        "s0149",
+        "s0150",
+        "s0151",
+        "s0152",
+        "s0076",
+        "s0153",
+        "s0154",
+        "s0155"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:097",
+      "title": "Clone Upper Barrage Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0130",
+        "s0156"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:098",
+      "title": "Crouch Rasengan Pop-Up Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 36,
+      "damageScale": 0.5126760563380282,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0136",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:099",
+      "title": "Crouch Rasengan Pop-Up Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.45000000000000007,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "special",
+        "special",
+        "heavy",
+        "forward+light",
+        "light",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0136",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111",
+        "s0149",
+        "s0150",
+        "s0151",
+        "s0152",
+        "s0076",
+        "s0153",
+        "s0154",
+        "s0155"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:100",
+      "title": "Crouch Rasengan Pop-Up Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0132",
+        "s0135",
+        "s0156"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:101",
+      "title": "Diagonal Rasengan Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 36,
+      "damageScale": 0.5126760563380282,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0140",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:102",
+      "title": "Diagonal Rasengan Launcher Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.45000000000000007,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "special",
+        "special",
+        "heavy",
+        "forward+light",
+        "light",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0140",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111",
+        "s0149",
+        "s0150",
+        "s0151",
+        "s0152",
+        "s0076",
+        "s0153",
+        "s0154",
+        "s0155"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:103",
+      "title": "Diagonal Rasengan Launcher Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0137",
+        "s0139",
+        "s0156"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:104",
+      "title": "Rasengan Pop-Up Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 36,
+      "damageScale": 0.5126760563380282,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0140",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:105",
+      "title": "Rasengan Pop-Up Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.45000000000000007,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "special",
+        "special",
+        "heavy",
+        "forward+light",
+        "light",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0140",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111",
+        "s0149",
+        "s0150",
+        "s0151",
+        "s0152",
+        "s0076",
+        "s0153",
+        "s0154",
+        "s0155"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:106",
+      "title": "Rasengan Pop-Up Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0141",
+        "s0139",
+        "s0156"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:107",
+      "title": "Running Rasenshuriken Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0143",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:108",
+      "title": "Running Rasenshuriken Launcher Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.4373831775700935,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "special",
+        "special",
+        "heavy",
+        "forward+light",
+        "light",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0143",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111",
+        "s0149",
+        "s0150",
+        "s0151",
+        "s0152",
+        "s0076",
+        "s0153",
+        "s0154",
+        "s0155"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:109",
+      "title": "Running Rasenshuriken Launcher Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0142",
+        "s0143",
+        "s0156"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:111",
+      "title": "Uzumaki Chakra Tempest Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0148",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:112",
+      "title": "Uzumaki Chakra Tempest Grounded Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 47,
+      "damageScale": 0.4254545454545455,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+heavy",
+        "down+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "down-forward+heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "special",
+        "special",
+        "heavy",
+        "forward+light",
+        "light",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0148",
+        "s0056",
+        "s0057",
+        "s0062",
+        "s0063",
+        "s0059",
+        "s0061",
+        "s0110",
+        "s0111",
+        "s0149",
+        "s0150",
+        "s0151",
+        "s0152",
+        "s0076",
+        "s0153",
+        "s0154",
+        "s0155"
+      ]
+    },
+    {
+      "id": "kiro:beginner:advanced:tornado:113",
+      "title": "Uzumaki Chakra Tempest Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0145",
+        "s0147",
+        "s0156"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "kiro:beginner:advanced:advanced:017",
+        "edges": {
+          "special+light": "n30",
+          "forward+special+light": "n30",
+          "special": "n25",
+          "special+medium": "n25",
+          "down+special+medium": "n25",
+          "special+heavy": "n35",
+          "down-forward+special+heavy": "n35",
+          "medium": "n9",
+          "down+medium": "n9",
+          "light": "n1",
+          "forward+light": "n1",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down+heavy": "n145",
+          "forward+medium": "n150",
+          "forward+heavy": "n142",
+          "forward+special": "n100",
+          "down+light": "n110",
+          "down+special": "n115",
+          "down-forward+light": "n153",
+          "down-forward+medium": "n105",
+          "down-forward+special": "n156"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:crouch:045",
+        "edges": {
+          "light": "n2",
+          "medium": "n203",
+          "special": "n242",
+          "down-forward+medium": "n205",
+          "forward+medium": "n28",
+          "down+medium": "n195",
+          "down+special": "n215",
+          "heavy": "n38",
+          "forward+light": "n244",
+          "forward+heavy": "n246"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "kiro:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "kiro:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "kiro:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "kiro:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "kiro:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "kiro:beginner:light-core",
+        "edges": {
+          "light": "n8",
+          "medium": "n44",
+          "heavy": "n52"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "kiro:beginner:light-core",
+        "edges": {}
+      },
+      "n44": {
+        "depth": 8,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 9,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 10,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 11,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 12,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 13,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 14,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n51",
+          "heavy": "n92"
+        }
+      },
+      "n51": {
+        "depth": 15,
+        "routeId": "kiro:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n92": {
+        "depth": 15,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 16,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 17,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 18,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 19,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 20,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 21,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n99"
+        }
+      },
+      "n99": {
+        "depth": 22,
+        "routeId": "kiro:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n52": {
+        "depth": 8,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 9,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 10,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 11,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 12,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 13,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 14,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 15,
+        "routeId": "kiro:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "kiro:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "kiro:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "kiro:beginner:forward-light-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "kiro:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:050",
+        "edges": {
+          "special": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:051",
+        "edges": {
+          "special": "n206"
+        }
+      },
+      "n206": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:051",
+        "edges": {}
+      },
+      "n215": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:058",
+        "edges": {
+          "special": "n216"
+        }
+      },
+      "n216": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:058",
+        "edges": {}
+      },
+      "n242": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:090",
+        "edges": {
+          "special": "n243"
+        }
+      },
+      "n243": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:090",
+        "edges": {}
+      },
+      "n244": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:091",
+        "edges": {
+          "special": "n245",
+          "light": "n315"
+        }
+      },
+      "n245": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:091",
+        "edges": {}
+      },
+      "n315": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:113",
+        "edges": {}
+      },
+      "n246": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:092",
+        "edges": {
+          "special": "n247",
+          "down+light": "n299"
+        }
+      },
+      "n247": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:092",
+        "edges": {}
+      },
+      "n299": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "medium": "n300"
+        }
+      },
+      "n300": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "light": "n301"
+        }
+      },
+      "n301": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "forward+medium": "n302"
+        }
+      },
+      "n302": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "heavy": "n303"
+        }
+      },
+      "n303": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "down-forward+heavy": "n304"
+        }
+      },
+      "n304": {
+        "depth": 8,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "down+heavy": "n305"
+        }
+      },
+      "n305": {
+        "depth": 9,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "forward+heavy": "n306"
+        }
+      },
+      "n306": {
+        "depth": 10,
+        "routeId": "kiro:beginner:advanced:tornado:111",
+        "edges": {
+          "heavy": "n307"
+        }
+      },
+      "n307": {
+        "depth": 11,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {
+          "special": "n308"
+        }
+      },
+      "n308": {
+        "depth": 12,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {
+          "special": "n309"
+        }
+      },
+      "n309": {
+        "depth": 13,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {
+          "heavy": "n310"
+        }
+      },
+      "n310": {
+        "depth": 14,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {
+          "forward+light": "n311"
+        }
+      },
+      "n311": {
+        "depth": 15,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {
+          "light": "n312"
+        }
+      },
+      "n312": {
+        "depth": 16,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {
+          "light": "n313"
+        }
+      },
+      "n313": {
+        "depth": 17,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {
+          "heavy": "n314"
+        }
+      },
+      "n314": {
+        "depth": 18,
+        "routeId": "kiro:beginner:advanced:tornado:112",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:019",
+        "edges": {
+          "medium": "n10",
+          "light": "n148",
+          "heavy": "n234",
+          "down-forward+heavy": "n40",
+          "special": "n236",
+          "forward+light": "n167"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "kiro:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "kiro:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "kiro:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "kiro:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "kiro:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "kiro:beginner:medium-core",
+        "edges": {
+          "medium": "n16",
+          "light": "n60",
+          "heavy": "n68"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "kiro:beginner:medium-core",
+        "edges": {}
+      },
+      "n60": {
+        "depth": 8,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 9,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 10,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 11,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 12,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 13,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 14,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 15,
+        "routeId": "kiro:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n68": {
+        "depth": 8,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 9,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 10,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 11,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 12,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 13,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 14,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n75"
+        }
+      },
+      "n75": {
+        "depth": 15,
+        "routeId": "kiro:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 2,
+        "routeId": "kiro:beginner:down-medium-route",
+        "edges": {
+          "special": "n41"
+        }
+      },
+      "n41": {
+        "depth": 3,
+        "routeId": "kiro:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n168",
+          "down+light": "n265"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n265": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "medium": "n266"
+        }
+      },
+      "n266": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "light": "n267"
+        }
+      },
+      "n267": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "forward+medium": "n268"
+        }
+      },
+      "n268": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "heavy": "n269"
+        }
+      },
+      "n269": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "down-forward+heavy": "n270"
+        }
+      },
+      "n270": {
+        "depth": 8,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "down+heavy": "n271"
+        }
+      },
+      "n271": {
+        "depth": 9,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "forward+heavy": "n272"
+        }
+      },
+      "n272": {
+        "depth": 10,
+        "routeId": "kiro:beginner:advanced:tornado:098",
+        "edges": {
+          "heavy": "n273"
+        }
+      },
+      "n273": {
+        "depth": 11,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {
+          "special": "n274"
+        }
+      },
+      "n274": {
+        "depth": 12,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {
+          "special": "n275"
+        }
+      },
+      "n275": {
+        "depth": 13,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {
+          "heavy": "n276"
+        }
+      },
+      "n276": {
+        "depth": 14,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {
+          "forward+light": "n277"
+        }
+      },
+      "n277": {
+        "depth": 15,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {
+          "light": "n278"
+        }
+      },
+      "n278": {
+        "depth": 16,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {
+          "light": "n279"
+        }
+      },
+      "n279": {
+        "depth": 17,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {
+          "heavy": "n280"
+        }
+      },
+      "n280": {
+        "depth": 18,
+        "routeId": "kiro:beginner:advanced:tornado:099",
+        "edges": {}
+      },
+      "n234": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n235"
+        }
+      },
+      "n235": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:070",
+        "edges": {}
+      },
+      "n236": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n237",
+          "light": "n281"
+        }
+      },
+      "n237": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:071",
+        "edges": {}
+      },
+      "n281": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:100",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:024",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n163",
+          "forward+light": "n42",
+          "down+medium": "n209",
+          "down+special": "n207",
+          "special": "n232",
+          "light": "n161",
+          "forward+medium": "n175",
+          "forward+special": "n173"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "kiro:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "kiro:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "kiro:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "kiro:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "kiro:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "kiro:beginner:heavy-core",
+        "edges": {
+          "medium": "n84",
+          "heavy": "n24",
+          "light": "n76"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "kiro:beginner:heavy-core",
+        "edges": {}
+      },
+      "n76": {
+        "depth": 8,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 9,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 10,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 11,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 12,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 13,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 14,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n83"
+        }
+      },
+      "n83": {
+        "depth": 15,
+        "routeId": "kiro:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n84": {
+        "depth": 8,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 9,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 10,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 11,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 12,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 13,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 14,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n91"
+        }
+      },
+      "n91": {
+        "depth": 15,
+        "routeId": "kiro:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 2,
+        "routeId": "kiro:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n43"
+        }
+      },
+      "n43": {
+        "depth": 3,
+        "routeId": "kiro:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n162",
+          "down+light": "n248"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n248": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "medium": "n249"
+        }
+      },
+      "n249": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "light": "n250"
+        }
+      },
+      "n250": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "forward+medium": "n251"
+        }
+      },
+      "n251": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "heavy": "n252"
+        }
+      },
+      "n252": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "down-forward+heavy": "n253"
+        }
+      },
+      "n253": {
+        "depth": 8,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "down+heavy": "n254"
+        }
+      },
+      "n254": {
+        "depth": 9,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "forward+heavy": "n255"
+        }
+      },
+      "n255": {
+        "depth": 10,
+        "routeId": "kiro:beginner:advanced:tornado:095",
+        "edges": {
+          "heavy": "n256"
+        }
+      },
+      "n256": {
+        "depth": 11,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {
+          "special": "n257"
+        }
+      },
+      "n257": {
+        "depth": 12,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {
+          "special": "n258"
+        }
+      },
+      "n258": {
+        "depth": 13,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {
+          "heavy": "n259"
+        }
+      },
+      "n259": {
+        "depth": 14,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {
+          "forward+light": "n260"
+        }
+      },
+      "n260": {
+        "depth": 15,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {
+          "light": "n261"
+        }
+      },
+      "n261": {
+        "depth": 16,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {
+          "light": "n262"
+        }
+      },
+      "n262": {
+        "depth": 17,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {
+          "heavy": "n263"
+        }
+      },
+      "n263": {
+        "depth": 18,
+        "routeId": "kiro:beginner:advanced:tornado:096",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:052",
+        "edges": {
+          "special": "n208"
+        }
+      },
+      "n208": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:052",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:055",
+        "edges": {
+          "special": "n210"
+        }
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:055",
+        "edges": {}
+      },
+      "n232": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n233",
+          "light": "n264"
+        }
+      },
+      "n233": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:067",
+        "edges": {}
+      },
+      "n264": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:097",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n26",
+          "heavy": "n238",
+          "down+heavy": "n199",
+          "forward+light": "n197",
+          "forward+heavy": "n201",
+          "down+medium": "n221",
+          "light": "n219",
+          "medium": "n217",
+          "forward+medium": "n33",
+          "forward+special": "n240",
+          "down+light": "n191",
+          "down+special": "n189"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "kiro:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "kiro:beginner:special-core",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "kiro:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "kiro:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:049",
+        "edges": {
+          "special": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n217": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:059",
+        "edges": {
+          "special": "n218",
+          "down+light": "n282",
+          "light": "n298"
+        }
+      },
+      "n218": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:059",
+        "edges": {}
+      },
+      "n282": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "medium": "n283"
+        }
+      },
+      "n283": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "light": "n284"
+        }
+      },
+      "n284": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "forward+medium": "n285"
+        }
+      },
+      "n285": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "heavy": "n286"
+        }
+      },
+      "n286": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "down-forward+heavy": "n287"
+        }
+      },
+      "n287": {
+        "depth": 8,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "down+heavy": "n288"
+        }
+      },
+      "n288": {
+        "depth": 9,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "forward+heavy": "n289"
+        }
+      },
+      "n289": {
+        "depth": 10,
+        "routeId": "kiro:beginner:advanced:tornado:107",
+        "edges": {
+          "heavy": "n290"
+        }
+      },
+      "n290": {
+        "depth": 11,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {
+          "special": "n291"
+        }
+      },
+      "n291": {
+        "depth": 12,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {
+          "special": "n292"
+        }
+      },
+      "n292": {
+        "depth": 13,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {
+          "heavy": "n293"
+        }
+      },
+      "n293": {
+        "depth": 14,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {
+          "forward+light": "n294"
+        }
+      },
+      "n294": {
+        "depth": 15,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {
+          "light": "n295"
+        }
+      },
+      "n295": {
+        "depth": 16,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {
+          "light": "n296"
+        }
+      },
+      "n296": {
+        "depth": 17,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {
+          "heavy": "n297"
+        }
+      },
+      "n297": {
+        "depth": 18,
+        "routeId": "kiro:beginner:advanced:tornado:108",
+        "edges": {}
+      },
+      "n298": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:tornado:109",
+        "edges": {}
+      },
+      "n219": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:060",
+        "edges": {
+          "special": "n220"
+        }
+      },
+      "n220": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:060",
+        "edges": {}
+      },
+      "n221": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:061",
+        "edges": {
+          "special": "n222"
+        }
+      },
+      "n222": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:061",
+        "edges": {}
+      },
+      "n238": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:085",
+        "edges": {
+          "special": "n239"
+        }
+      },
+      "n239": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:085",
+        "edges": {}
+      },
+      "n240": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:launcher:087",
+        "edges": {
+          "special": "n241"
+        }
+      },
+      "n241": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:launcher:087",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:036",
+        "edges": {
+          "medium": "n187",
+          "forward+medium": "n31",
+          "special": "n185"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "kiro:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "kiro:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:036",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:037",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:028",
+        "edges": {
+          "medium": "n169",
+          "down-forward+medium": "n171",
+          "down+medium": "n213",
+          "down+heavy": "n211",
+          "light": "n36",
+          "heavy": "n223"
+        }
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "kiro:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "kiro:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n211": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:056",
+        "edges": {
+          "special": "n212"
+        }
+      },
+      "n212": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:056",
+        "edges": {}
+      },
+      "n213": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:057",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:057",
+        "edges": {}
+      },
+      "n223": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "down+light": "n224"
+        }
+      },
+      "n224": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "special": "n225"
+        }
+      },
+      "n225": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "heavy": "n226"
+        }
+      },
+      "n226": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "down-forward+heavy": "n227"
+        }
+      },
+      "n227": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "light": "n228"
+        }
+      },
+      "n228": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "forward+medium": "n229"
+        }
+      },
+      "n229": {
+        "depth": 8,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "down+heavy": "n230"
+        }
+      },
+      "n230": {
+        "depth": 9,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {
+          "forward+heavy": "n231"
+        }
+      },
+      "n231": {
+        "depth": 10,
+        "routeId": "kiro:beginner:advanced:crouch:065",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:basic:001",
+        "edges": {
+          "down-forward+heavy": "n103",
+          "heavy": "n101"
+        }
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n102",
+          "down+light": "n120"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:basic:009",
+        "edges": {
+          "down-forward+heavy": "n130"
+        }
+      },
+      "n130": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:basic:013",
+        "edges": {
+          "light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:basic:013",
+        "edges": {
+          "forward+medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:basic:003",
+        "edges": {
+          "down-forward+heavy": "n108",
+          "heavy": "n106"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n107",
+          "down+light": "n122"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n123"
+        }
+      },
+      "n123": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:basic:010",
+        "edges": {
+          "down-forward+heavy": "n133"
+        }
+      },
+      "n133": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:basic:014",
+        "edges": {
+          "light": "n134"
+        }
+      },
+      "n134": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:basic:014",
+        "edges": {
+          "forward+medium": "n135"
+        }
+      },
+      "n135": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n113",
+          "down+light": "n124",
+          "light": "n111"
+        }
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n112"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n114"
+        }
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n125"
+        }
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:011",
+        "edges": {
+          "heavy": "n126"
+        }
+      },
+      "n126": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:basic:011",
+        "edges": {
+          "down-forward+heavy": "n136"
+        }
+      },
+      "n136": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:basic:015",
+        "edges": {
+          "light": "n137"
+        }
+      },
+      "n137": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:basic:015",
+        "edges": {
+          "forward+medium": "n138"
+        }
+      },
+      "n138": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:basic:007",
+        "edges": {
+          "down+heavy": "n116",
+          "forward+heavy": "n118",
+          "heavy": "n127"
+        }
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:basic:012",
+        "edges": {
+          "down+light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 4,
+        "routeId": "kiro:beginner:advanced:basic:012",
+        "edges": {
+          "down-forward+heavy": "n139"
+        }
+      },
+      "n139": {
+        "depth": 5,
+        "routeId": "kiro:beginner:advanced:basic:016",
+        "edges": {
+          "light": "n140"
+        }
+      },
+      "n140": {
+        "depth": 6,
+        "routeId": "kiro:beginner:advanced:basic:016",
+        "edges": {
+          "forward+medium": "n141"
+        }
+      },
+      "n141": {
+        "depth": 7,
+        "routeId": "kiro:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n143",
+          "special": "n159"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:018",
+        "edges": {
+          "medium": "n146",
+          "special": "n165"
+        }
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:020",
+        "edges": {
+          "medium": "n151",
+          "special": "n177"
+        }
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n183",
+          "light": "n154",
+          "medium": "n181",
+          "forward+special": "n179"
+        }
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 1,
+        "routeId": "kiro:beginner:advanced:advanced:022",
+        "edges": {
+          "forward+light": "n157",
+          "special": "n193"
+        }
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "kiro:beginner:advanced:advanced:042",
+        "edges": {
+          "special": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "kiro:beginner:advanced:advanced:042",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Shadow Clone Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clone Strike",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low Clone Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Shadow Clone Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Shadow Clone Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Quick Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+3",
+      "kiAnimationKey": "cmd:O+3",
+      "kiCost": 32,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Uzumaki Rush Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "D+3",
+      "animationKey": "cmd:D+3",
+      "label": "Low Uzumaki Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Uzumaki Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "O+3",
+      "kiAnimationKey": "cmd:O+3",
+      "kiCost": 32,
+      "poweredKiFallback": true
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Rasenshuriken Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rasenshuriken Arc",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+3",
+      "kiAnimationKey": "cmd:O+3",
+      "kiCost": 32,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+3",
+      "kiAnimationKey": "cmd:O+3",
+      "kiCost": 32,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Rasenshuriken Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Uzumaki Rush Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "O+3",
+      "kiAnimationKey": "cmd:O+3",
+      "kiCost": 32,
+      "poweredKiFallback": true
+    },
+    "s0027": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Shadow Clone Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown",
+      "kiCommand": "O+3",
+      "kiAnimationKey": "cmd:O+3",
+      "kiCost": 32,
+      "poweredKiFallback": true
+    },
+    "s0030": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Shadow Clone Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Quick Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0033": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Uzumaki Rush Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clone Strike",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Rasenshuriken Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "forward+special",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Quick Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rasenshuriken Arc",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Shadow Clone Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Rasenshuriken",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Rasenshuriken Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0053": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down+special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Uzumaki Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low Clone Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While-Rising Rasengan",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low Clone Jab",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Shadow Clone Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rasengan Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Rasengan Palm",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rasengan Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:D+3:D+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "D+3",
+      "animationKey": "cmd:D+3",
+      "label": "Low Uzumaki Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rasengan Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "down-forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rasengan Knockdown Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0073": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rasenshuriken Arc",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Rasenshuriken",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clone Strike",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Diagonal Barrage Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rasengan Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Rasengan Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Clone Hop Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:WR+4:WR+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "WR+4",
+      "animationKey": "cmd:WR+4",
+      "label": "Running Rasenshuriken Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "forward+medium",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Rasenshuriken",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "down-forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Overdrive Clone Jab Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:WR+4:WR+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "WR+4",
+      "animationKey": "cmd:WR+4",
+      "label": "Running Rasenshuriken Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Rasenshuriken",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Rasenshuriken Step",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Rasenshuriken Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:WR+4:WR+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "WR+4",
+      "animationKey": "cmd:WR+4",
+      "label": "Running Rasenshuriken Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "down+light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Rasenshuriken",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Sidestep Barrage Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Uzumaki Rush Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0103": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Low Clone Jab Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Rasengan Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Rasenshuriken Feint Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clone Strike",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "While-Rising Jump Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clone Strike",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Crouch Rasenshuriken Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouching Clone Combo Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rasengan Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Rasengan Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0115": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Full-Crouch Low Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0116": {
+      "routeKey": "cmd:cmd:FC+4:FC+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "FC+4",
+      "animationKey": "cmd:FC+4",
+      "label": "Low Rasenshuriken Feint",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:FC+3:FC+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "FC+3",
+      "animationKey": "cmd:FC+3",
+      "label": "Full-Crouch Low Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Rasengan Pop-Up",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0120": {
+      "routeKey": "cmd:cmd:FC+3+4:FC+3+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "FC+3+4",
+      "animationKey": "cmd:FC+3+4",
+      "label": "Crouch Rasenshuriken",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0121": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0122": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0123": {
+      "routeKey": "cmd:cmd:FC+3:FC+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "FC+3",
+      "animationKey": "cmd:FC+3",
+      "label": "Full-Crouch Low Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0124": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0125": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "While-Rising Rasengan Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0126": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0127": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While-Rising Rasengan",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0128": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "While-Rising Jump Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0129": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Clone Upper Barrage Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0130": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0131": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0132": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Crouch Rasengan Pop-Up Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0133": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Clone Hop",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0134": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rasenshuriken Smash",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0135": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0136": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0137": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Diagonal Rasengan Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0138": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Clone Hop",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0139": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0140": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0141": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Rasengan Pop-Up Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0142": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Running Rasenshuriken Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0143": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0144": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0145": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Uzumaki Chakra Tempest Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0146": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Homing Low Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0147": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Overdrive Rasenshuriken Tornado",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0148": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0149": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Uzumaki Rush Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0150": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Rasenshuriken Step",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0151": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Rasenshuriken",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0152": {
+      "routeKey": "cmd:cmd:D+3:D+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "D+3",
+      "animationKey": "cmd:D+3",
+      "label": "Low Uzumaki Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0153": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Overdrive Clone Jab",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0154": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Shadow Clone Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0155": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Uzumaki Barrage Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0156": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rasenshuriken Tornado",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    }
+  }
 }

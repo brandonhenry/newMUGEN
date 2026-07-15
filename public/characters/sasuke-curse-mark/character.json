@@ -3423,133 +3423,95 @@
   "beginnerComboRoutes": [
     {
       "id": "sasuke-curse-mark:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sasuke Curse Mark Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Sasuke Curse Mark Left Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 36,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.5599999999999999,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0003"
       ]
     },
     {
       "id": "sasuke-curse-mark:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sasuke Curse Mark Twin Assault",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Sasuke Curse Mark Right Check",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 43,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
       ]
     },
     {
       "id": "sasuke-curse-mark:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Sasuke Curse Mark Low Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Sasuke Curse Mark Left Kick",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
       ]
     },
     {
@@ -3561,41 +3523,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sasuke Curse Mark Twin Assault",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Sasuke Curse Mark Low Feint",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0014",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -3607,41 +3544,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sasuke Curse Mark Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sasuke Curse Mark Twin Assault",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3653,41 +3565,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sasuke Curse Mark Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sasuke Curse Mark Twin Assault",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0019",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3696,44 +3583,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sasuke Curse Mark Twin Assault",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Sasuke Curse Mark Low Feint",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0020",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -3745,42 +3607,2847 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Sasuke Curse Mark Low Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sasuke Curse Mark Rush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Sasuke Curse Mark Power Crush",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 19,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0021",
+        "s0002",
+        "s0022"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0025"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0026",
+        "s0010",
+        "s0025"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0025"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0029",
+        "s0017",
+        "s0018"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "special",
+        "special"
+      ],
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 19,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0002",
+        "s0022"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.5599999999999999,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.5599999999999999,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.5599999999999999,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0003"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.5599999999999999,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0003"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 43,
+      "damageScale": 0.5599999999999999,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0002",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0012",
+        "s0013"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:basic:001",
+      "title": "Sasuke Curse Mark Right Kick Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:advanced:002",
+      "title": "Sasuke Curse Mark Twin Assault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:advanced:003",
+      "title": "Sasuke Curse Mark Twin Assault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:advanced:004",
+      "title": "Sasuke Curse Mark Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:advanced:005",
+      "title": "Sasuke Curse Mark Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:advanced:006",
+      "title": "Sasuke Curse Mark Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:advanced:007",
+      "title": "Sasuke Curse Mark Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:advanced:008",
+      "title": "Sasuke Curse Mark Aura Drive 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0036"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:009",
+      "title": "Fire Style: Fireball Jutsu Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:010",
+      "title": "Fire Style: Fireball Jutsu Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0045",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:011",
+      "title": "Fire Style: Fireball Jutsu Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:012",
+      "title": "Fire Style: Fireball Jutsu Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0045",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:013",
+      "title": "Sasuke Curse Mark Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:014",
+      "title": "Sasuke Curse Mark Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0048",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:015",
+      "title": "Sasuke Curse Mark Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:016",
+      "title": "Sasuke Curse Mark Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0048",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:017",
+      "title": "Sasuke Curse Mark Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0050",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:018",
+      "title": "Sasuke Curse Mark Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:019",
+      "title": "Sasuke Curse Mark Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0050",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:020",
+      "title": "Sasuke Curse Mark Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:021",
+      "title": "Sasuke Curse Mark Driving Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0044",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:022",
+      "title": "Sasuke Curse Mark Driving Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0045",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:023",
+      "title": "Sasuke Curse Mark Driving Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0044",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:024",
+      "title": "Sasuke Curse Mark Driving Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0045",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:025",
+      "title": "Sasuke Curse Mark Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:026",
+      "title": "Sasuke Curse Mark Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0055",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:027",
+      "title": "Sasuke Curse Mark Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:028",
+      "title": "Sasuke Curse Mark Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0055",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:029",
+      "title": "Sasuke Curse Mark Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0044",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:030",
+      "title": "Sasuke Curse Mark Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0045",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:031",
+      "title": "Sasuke Curse Mark Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0044",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:032",
+      "title": "Sasuke Curse Mark Power Crush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0045",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:033",
+      "title": "Sasuke Curse Mark Rising Strike Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0058",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:034",
+      "title": "Sasuke Curse Mark Rising Strike Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0059",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:035",
+      "title": "Sasuke Curse Mark Rising Strike Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0058",
+        "s0041"
+      ]
+    },
+    {
+      "id": "sasuke-curse-mark:beginner:advanced:launcher:036",
+      "title": "Sasuke Curse Mark Rising Strike Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0059",
+        "s0040"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:002",
+        "edges": {
+          "medium": "n9",
+          "special": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "forward+medium": "n109",
+          "forward+heavy": "n119",
+          "forward+special": "n129",
+          "down-forward+medium": "n124",
+          "down+light": "n114",
+          "down+heavy": "n98",
+          "down+special": "n104",
+          "down-forward+light": "n93",
+          "down-forward+special": "n134"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-light-route",
+        "edges": {
+          "light": "n2",
+          "medium": "n27",
+          "heavy": "n31"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "sasuke-curse-mark:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "sasuke-curse-mark:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "sasuke-curse-mark:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "sasuke-curse-mark:beginner:light-core",
+        "edges": {
+          "medium": "n37",
+          "heavy": "n45",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:light-core",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 9,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39"
+        }
+      },
+      "n39": {
+        "depth": 10,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 11,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 12,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 13,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 14,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n85",
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 15,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n85": {
+        "depth": 15,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n86"
+        }
+      },
+      "n86": {
+        "depth": 16,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87"
+        }
+      },
+      "n87": {
+        "depth": 17,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 18,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 19,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 20,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 21,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 22,
+        "routeId": "sasuke-curse-mark:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n45": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 9,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 10,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 11,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 12,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 13,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 14,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 15,
+        "routeId": "sasuke-curse-mark:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n27": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n28"
+        }
+      },
+      "n28": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:forward-light-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:002",
+        "edges": {
+          "special": "n25",
+          "medium": "n10",
+          "light": "n96",
+          "heavy": "n33"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "sasuke-curse-mark:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "sasuke-curse-mark:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "sasuke-curse-mark:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "sasuke-curse-mark:beginner:medium-core",
+        "edges": {
+          "heavy": "n61",
+          "light": "n53",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:medium-core",
+        "edges": {}
+      },
+      "n53": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 9,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 10,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 11,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 12,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 13,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 14,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 15,
+        "routeId": "sasuke-curse-mark:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n61": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n62"
+        }
+      },
+      "n62": {
+        "depth": 9,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n63"
+        }
+      },
+      "n63": {
+        "depth": 10,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 11,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 12,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 13,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 14,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 15,
+        "routeId": "sasuke-curse-mark:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:down-medium-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:002",
+        "edges": {
+          "special": "n97"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:002",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-heavy-route",
+        "edges": {
+          "heavy": "n18",
+          "light": "n29",
+          "medium": "n35"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "sasuke-curse-mark:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "sasuke-curse-mark:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "sasuke-curse-mark:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "sasuke-curse-mark:beginner:heavy-core",
+        "edges": {
+          "medium": "n77",
+          "light": "n69",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:heavy-core",
+        "edges": {}
+      },
+      "n69": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n70"
+        }
+      },
+      "n70": {
+        "depth": 9,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n71"
+        }
+      },
+      "n71": {
+        "depth": 10,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 11,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 12,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 13,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 14,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 15,
+        "routeId": "sasuke-curse-mark:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n77": {
+        "depth": 8,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n78"
+        }
+      },
+      "n78": {
+        "depth": 9,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n79"
+        }
+      },
+      "n79": {
+        "depth": 10,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 11,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 12,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 13,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 14,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 15,
+        "routeId": "sasuke-curse-mark:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n29": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n30"
+        }
+      },
+      "n30": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n93": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:basic:001",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:basic:001",
+        "edges": {
+          "light": "n95"
+        }
+      },
+      "n95": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:004",
+        "edges": {
+          "medium": "n99",
+          "special": "n101"
+        }
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:004",
+        "edges": {
+          "special": "n100",
+          "light": "n103"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:004",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:008",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:005",
+        "edges": {
+          "special": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:advanced:005",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:009",
+        "edges": {
+          "medium": "n107",
+          "light": "n105"
+        }
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:009",
+        "edges": {
+          "special": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:009",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:010",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:010",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:013",
+        "edges": {
+          "medium": "n112",
+          "light": "n110"
+        }
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:013",
+        "edges": {
+          "special": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:013",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:014",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:014",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:017",
+        "edges": {
+          "medium": "n117",
+          "light": "n115"
+        }
+      },
+      "n115": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:017",
+        "edges": {
+          "special": "n116"
+        }
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:017",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:018",
+        "edges": {
+          "special": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:018",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:021",
+        "edges": {
+          "medium": "n122",
+          "light": "n120"
+        }
+      },
+      "n120": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:021",
+        "edges": {
+          "special": "n121"
+        }
+      },
+      "n121": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:021",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:022",
+        "edges": {
+          "special": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:022",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:025",
+        "edges": {
+          "medium": "n127",
+          "light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:025",
+        "edges": {
+          "special": "n126"
+        }
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:025",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:026",
+        "edges": {
+          "special": "n128"
+        }
+      },
+      "n128": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:026",
+        "edges": {}
+      },
+      "n129": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:029",
+        "edges": {
+          "medium": "n132",
+          "light": "n130"
+        }
+      },
+      "n130": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:029",
+        "edges": {
+          "special": "n131"
+        }
+      },
+      "n131": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:029",
+        "edges": {}
+      },
+      "n132": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:030",
+        "edges": {
+          "special": "n133"
+        }
+      },
+      "n133": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:030",
+        "edges": {}
+      },
+      "n134": {
+        "depth": 1,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:033",
+        "edges": {
+          "medium": "n137",
+          "light": "n135"
+        }
+      },
+      "n135": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:033",
+        "edges": {
+          "special": "n136"
+        }
+      },
+      "n136": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:033",
+        "edges": {}
+      },
+      "n137": {
+        "depth": 2,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:034",
+        "edges": {
+          "special": "n138"
+        }
+      },
+      "n138": {
+        "depth": 3,
+        "routeId": "sasuke-curse-mark:beginner:advanced:launcher:034",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sasuke Curse Mark Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Sasuke Curse Mark Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sasuke Curse Mark Rush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0004": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Sasuke Curse Mark Right Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0009": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sasuke Curse Mark Left Kick",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0014": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0019": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sasuke Curse Mark Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sasuke Curse Mark Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Sasuke Curse Mark Right Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0026": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Sasuke Curse Mark Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sasuke Curse Mark Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sasuke Curse Mark Right Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0033": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sasuke Curse Mark Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0034": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Sasuke Curse Mark Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0035": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Sasuke Curse Mark Left Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Fire Style: Fireball Jutsu",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Aura Drive",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Sasuke Curse Mark Cross Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Aura Drive",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+light",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Sasuke Curse Mark Crouch Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Aura Drive",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sasuke Curse Mark Driving Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sasuke Curse Mark Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Aura Drive",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Sasuke Curse Mark Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Sasuke Curse Mark Rising Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "launch"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Aura Drive",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sasuke Curse Mark Twin Assault",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    }
+  }
 }

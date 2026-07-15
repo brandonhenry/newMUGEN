@@ -3285,136 +3285,95 @@
   "beginnerComboRoutes": [
     {
       "id": "pegasus-seiya:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Pegasus Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Pegasus Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "pegasus-seiya:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Pegasus Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Body Punch",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
       ]
     },
     {
       "id": "pegasus-seiya:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Pegasus Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Pegasus Low Rush",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 30,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3426,40 +3385,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Pegasus Step Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Golden Pegasus Rush",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0019",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -3471,41 +3406,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Pegasus Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Pegasus Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0022",
+        "s0018"
       ]
     },
     {
@@ -3517,41 +3427,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Pegasus Step Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Pegasus Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0018"
       ]
     },
     {
@@ -3560,44 +3445,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Pegasus Low Drive",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Pegasus Feint",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0021"
       ]
     },
     {
@@ -3609,42 +3469,4993 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Pegasus Rolling Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Pegasus Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Pegasus Meteor Burst",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0027",
+        "s0004",
+        "s0028"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0031"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0035",
+        "s0031"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0024",
+        "s0018"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0026",
+        "s0021"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0038",
+        "s0004",
+        "s0028"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:001",
+      "title": "Golden Pegasus Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:002",
+      "title": "Golden Pegasus Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:003",
+      "title": "Low Pegasus Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:004",
+      "title": "Low Pegasus Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:005",
+      "title": "Pegasus Body Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0050",
+        "s0046"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:006",
+      "title": "Pegasus Body Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0048"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:007",
+      "title": "Quick Pegasus Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:008",
+      "title": "Quick Pegasus Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0055",
+        "s0041"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:009",
+      "title": "Golden Pegasus Rush 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0051",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:010",
+      "title": "Low Pegasus Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0047",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:011",
+      "title": "Pegasus Body Punch 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:012",
+      "title": "Quick Pegasus Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0058",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:013",
+      "title": "Golden Pegasus Rush 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "special",
+        "forward+light",
+        "medium",
+        "down+medium"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0051",
+        "s0056",
+        "s0057",
+        "s0059",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:014",
+      "title": "Low Pegasus Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "special",
+        "forward+light",
+        "medium",
+        "down+medium"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0047",
+        "s0056",
+        "s0057",
+        "s0059",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:015",
+      "title": "Pegasus Body Punch 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "special",
+        "forward+light",
+        "medium",
+        "down+medium"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0056",
+        "s0057",
+        "s0059",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:basic:016",
+      "title": "Quick Pegasus Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down+light",
+        "light",
+        "special",
+        "forward+light",
+        "medium",
+        "down+medium"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0058",
+        "s0056",
+        "s0057",
+        "s0059",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:017",
+      "title": "Advancing Low Pegasus 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:018",
+      "title": "Advancing Low Pegasus 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:019",
+      "title": "Forward Body Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:020",
+      "title": "Forward Body Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:021",
+      "title": "Low Pegasus Step 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:022",
+      "title": "Low Pegasus Step 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0065",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:023",
+      "title": "Overdrive Pegasus Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0071"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:024",
+      "title": "Pegasus Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0071"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:025",
+      "title": "Pegasus Clinch Toss 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:026",
+      "title": "Pegasus Clinch Toss 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:027",
+      "title": "Pegasus Flash Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0041"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:028",
+      "title": "Pegasus Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0046"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:029",
+      "title": "Pegasus Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0058",
+        "s0048"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:030",
+      "title": "Sidestep Low Pegasus 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0081",
+        "s0082"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:031",
+      "title": "Diagonal Low Pegasus 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:032",
+      "title": "Diagonal Low Pegasus 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0084",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:033",
+      "title": "Overdrive Pegasus Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0085",
+        "s0054"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:034",
+      "title": "Pegasus Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0086",
+        "s0054"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:035",
+      "title": "Pegasus Flash Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0087",
+        "s0054"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:036",
+      "title": "Pegasus Low Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0041",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:037",
+      "title": "Pegasus Low Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:038",
+      "title": "Pegasus Meteor Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0071",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:039",
+      "title": "Pegasus Meteor Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:040",
+      "title": "Pegasus Rolling Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0092",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:041",
+      "title": "Pegasus Rolling Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0093",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:042",
+      "title": "Pegasus Step Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0041",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:043",
+      "title": "Pegasus Step Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:advanced:044",
+      "title": "Sidestep Low Pegasus 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:crouch:045",
+      "title": "Crouching Pegasus Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:crouch:046",
+      "title": "Crouching Pegasus Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0097",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:crouch:047",
+      "title": "Pegasus Rising Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0099",
+        "s0054"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:crouch:048",
+      "title": "Pegasus Rising Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0098",
+        "s0100",
+        "s0082"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:crouch:049",
+      "title": "While-Rising Body Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0063",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:crouch:050",
+      "title": "While-Rising Body Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0075",
+        "s0066"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:051",
+      "title": "Crouch Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0103",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:052",
+      "title": "Crouch Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0104",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:053",
+      "title": "Crouch Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0103",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:054",
+      "title": "Crouch Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0104",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:055",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:056",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0064",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:057",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0106",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:058",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0064",
+        "s0064"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:059",
+      "title": "Crouch Pegasus Launcher Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 44,
+      "damageScale": 0.5668831168831169,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0107",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0081",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0099"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:060",
+      "title": "Crouch Pegasus Launcher Grounded Launcher 22-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 44,
+      "damageScale": 0.41971153846153847,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "down-forward+heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "heavy",
+        "special",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0107",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0081",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0099",
+        "s0079",
+        "s0115",
+        "s0116",
+        "s0117",
+        "s0118",
+        "s0119",
+        "s0051",
+        "s0120"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:061",
+      "title": "Crouch Pegasus Launcher Grounded Launcher 22-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 44,
+      "damageScale": 0.41971153846153847,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "down-forward+heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "heavy",
+        "special",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0107",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0081",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0099",
+        "s0079",
+        "s0115",
+        "s0116",
+        "s0117",
+        "s0118",
+        "s0119",
+        "s0051",
+        "s0120"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:062",
+      "title": "Crouch Pegasus Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0107",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:063",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 44,
+      "damageScale": 0.5668831168831169,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "down-forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0058",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0081",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0099"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:064",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher 22-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 44,
+      "damageScale": 0.41971153846153847,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "down-forward+heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "heavy",
+        "special",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0058",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0081",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0099",
+        "s0079",
+        "s0115",
+        "s0116",
+        "s0117",
+        "s0118",
+        "s0119",
+        "s0051",
+        "s0120"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:065",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher 22-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 44,
+      "damageScale": 0.41971153846153847,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "forward+heavy",
+        "heavy",
+        "down-forward+heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "heavy",
+        "special",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0058",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111",
+        "s0081",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0099",
+        "s0079",
+        "s0115",
+        "s0116",
+        "s0117",
+        "s0118",
+        "s0119",
+        "s0051",
+        "s0120"
+      ]
+    },
+    {
+      "id": "pegasus-seiya:beginner:advanced:launcher:066",
+      "title": "Diagonal Pegasus Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "special",
+        "down+medium",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0058",
+        "s0056",
+        "s0059",
+        "s0057",
+        "s0108",
+        "s0109",
+        "s0110"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n9",
+          "down+medium": "n9",
+          "special": "n25",
+          "special+light": "n25",
+          "forward+special+light": "n25",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+medium": "n32",
+          "down+special+medium": "n32",
+          "special+heavy": "n35",
+          "down-forward+special+heavy": "n35",
+          "light": "n1",
+          "forward+light": "n1",
+          "down+heavy": "n152",
+          "forward+medium": "n147",
+          "forward+heavy": "n142",
+          "forward+special": "n110",
+          "down+light": "n115",
+          "down+special": "n105",
+          "down-forward+light": "n157",
+          "down-forward+medium": "n160",
+          "down-forward+special": "n100"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:045",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "down-forward+medium": "n197",
+          "forward+medium": "n38",
+          "heavy": "n199"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:light-core",
+        "edges": {
+          "medium": "n44",
+          "heavy": "n52",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:light-core",
+        "edges": {}
+      },
+      "n44": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 9,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 10,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 11,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 12,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 13,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 14,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92",
+          "medium": "n51"
+        }
+      },
+      "n51": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n92": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 16,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 17,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 18,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 19,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 20,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 21,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n99"
+        }
+      },
+      "n99": {
+        "depth": 22,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n52": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 9,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 10,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 11,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 12,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 13,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 14,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:forward-light-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:045",
+        "edges": {
+          "heavy": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:046",
+        "edges": {
+          "heavy": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:025",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n207",
+          "special": "n205",
+          "down-forward+medium": "n163",
+          "down+light": "n171",
+          "light": "n169",
+          "forward+light": "n40",
+          "forward+medium": "n165"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:medium-core",
+        "edges": {
+          "heavy": "n68",
+          "medium": "n16",
+          "light": "n60"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:medium-core",
+        "edges": {}
+      },
+      "n60": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 9,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 10,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 11,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 12,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 13,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 14,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n68": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 9,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 10,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 11,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 12,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 13,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 14,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n75"
+        }
+      },
+      "n75": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:down-medium-route",
+        "edges": {
+          "special": "n41"
+        }
+      },
+      "n41": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:025",
+        "edges": {
+          "heavy": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:026",
+        "edges": {
+          "heavy": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:028",
+        "edges": {
+          "heavy": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:029",
+        "edges": {
+          "heavy": "n172",
+          "light": "n209"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "forward+light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "special": "n211"
+        }
+      },
+      "n211": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "down+medium": "n212"
+        }
+      },
+      "n212": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "forward+medium": "n213"
+        }
+      },
+      "n213": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "medium": "n214"
+        }
+      },
+      "n214": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "heavy": "n215"
+        }
+      },
+      "n215": {
+        "depth": 9,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "down+heavy": "n216"
+        }
+      },
+      "n216": {
+        "depth": 10,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "forward+heavy": "n217"
+        }
+      },
+      "n217": {
+        "depth": 11,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "heavy": "n218"
+        }
+      },
+      "n218": {
+        "depth": 12,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "down-forward+heavy": "n219"
+        }
+      },
+      "n219": {
+        "depth": 13,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "light": "n220"
+        }
+      },
+      "n220": {
+        "depth": 14,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:059",
+        "edges": {
+          "light": "n221"
+        }
+      },
+      "n221": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {
+          "medium": "n222"
+        }
+      },
+      "n222": {
+        "depth": 16,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {
+          "special": "n223"
+        }
+      },
+      "n223": {
+        "depth": 17,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {
+          "heavy": "n224"
+        }
+      },
+      "n224": {
+        "depth": 18,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {
+          "heavy": "n225"
+        }
+      },
+      "n225": {
+        "depth": 19,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {
+          "special": "n226"
+        }
+      },
+      "n226": {
+        "depth": 20,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {
+          "down+light": "n227"
+        }
+      },
+      "n227": {
+        "depth": 21,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {
+          "medium": "n228"
+        }
+      },
+      "n228": {
+        "depth": 22,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:060",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:051",
+        "edges": {
+          "heavy": "n206"
+        }
+      },
+      "n206": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:051",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:052",
+        "edges": {
+          "heavy": "n208"
+        }
+      },
+      "n208": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:027",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n183",
+          "down-forward+medium": "n175",
+          "down+light": "n42",
+          "down+medium": "n167",
+          "down+heavy": "n173",
+          "light": "n177"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:heavy-core",
+        "edges": {
+          "medium": "n84",
+          "heavy": "n24",
+          "light": "n76"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:heavy-core",
+        "edges": {}
+      },
+      "n76": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 9,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 10,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 11,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 12,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 13,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 14,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n83"
+        }
+      },
+      "n83": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n84": {
+        "depth": 8,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 9,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 10,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 11,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 12,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 13,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 14,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n91"
+        }
+      },
+      "n91": {
+        "depth": 15,
+        "routeId": "pegasus-seiya:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n43"
+        }
+      },
+      "n43": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:027",
+        "edges": {
+          "heavy": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:030",
+        "edges": {
+          "heavy": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:031",
+        "edges": {
+          "heavy": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:032",
+        "edges": {
+          "heavy": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:035",
+        "edges": {
+          "heavy": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n26",
+          "medium": "n30",
+          "heavy": "n189",
+          "down-forward+medium": "n191",
+          "down-forward+heavy": "n203",
+          "light": "n201"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:special-core",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:038",
+        "edges": {
+          "heavy": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:039",
+        "edges": {
+          "heavy": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:047",
+        "edges": {
+          "heavy": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:048",
+        "edges": {
+          "heavy": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:036",
+        "edges": {
+          "heavy": "n185",
+          "light": "n33",
+          "down-forward+medium": "n187"
+        }
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:036",
+        "edges": {
+          "heavy": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:037",
+        "edges": {
+          "heavy": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:040",
+        "edges": {
+          "down-forward+medium": "n193",
+          "light": "n36",
+          "heavy": "n195"
+        }
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:040",
+        "edges": {
+          "heavy": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:041",
+        "edges": {
+          "heavy": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:041",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n101",
+          "down+light": "n120",
+          "forward+light": "n103"
+        }
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:001",
+        "edges": {
+          "heavy": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:002",
+        "edges": {
+          "heavy": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:009",
+        "edges": {
+          "light": "n121"
+        }
+      },
+      "n121": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n122"
+        }
+      },
+      "n122": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n130"
+        }
+      },
+      "n130": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:013",
+        "edges": {
+          "medium": "n131"
+        }
+      },
+      "n131": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:013",
+        "edges": {
+          "down+medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n108",
+          "light": "n106"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:003",
+        "edges": {
+          "heavy": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:004",
+        "edges": {
+          "heavy": "n109",
+          "light": "n123"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n124"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:010",
+        "edges": {
+          "forward+light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:014",
+        "edges": {
+          "medium": "n134"
+        }
+      },
+      "n134": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:014",
+        "edges": {
+          "down+medium": "n135"
+        }
+      },
+      "n135": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:005",
+        "edges": {
+          "down+light": "n113",
+          "light": "n111"
+        }
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:005",
+        "edges": {
+          "heavy": "n112"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:006",
+        "edges": {
+          "heavy": "n114",
+          "light": "n125"
+        }
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n126"
+        }
+      },
+      "n126": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:011",
+        "edges": {
+          "forward+light": "n136"
+        }
+      },
+      "n136": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:015",
+        "edges": {
+          "medium": "n137"
+        }
+      },
+      "n137": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:015",
+        "edges": {
+          "down+medium": "n138"
+        }
+      },
+      "n138": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:007",
+        "edges": {
+          "medium": "n116",
+          "down+light": "n127",
+          "down+medium": "n118"
+        }
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:007",
+        "edges": {
+          "heavy": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:008",
+        "edges": {
+          "heavy": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:012",
+        "edges": {
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:012",
+        "edges": {
+          "special": "n129"
+        }
+      },
+      "n129": {
+        "depth": 4,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:012",
+        "edges": {
+          "forward+light": "n139"
+        }
+      },
+      "n139": {
+        "depth": 5,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:016",
+        "edges": {
+          "medium": "n140"
+        }
+      },
+      "n140": {
+        "depth": 6,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:016",
+        "edges": {
+          "down+medium": "n141"
+        }
+      },
+      "n141": {
+        "depth": 7,
+        "routeId": "pegasus-seiya:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:017",
+        "edges": {
+          "down-forward+medium": "n143",
+          "heavy": "n145"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:017",
+        "edges": {
+          "heavy": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:018",
+        "edges": {
+          "heavy": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:019",
+        "edges": {
+          "down-forward+medium": "n148",
+          "heavy": "n150"
+        }
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:019",
+        "edges": {
+          "heavy": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:020",
+        "edges": {
+          "heavy": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:021",
+        "edges": {
+          "down-forward+medium": "n153",
+          "heavy": "n155"
+        }
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:021",
+        "edges": {
+          "heavy": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:022",
+        "edges": {
+          "heavy": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n179",
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:033",
+        "edges": {
+          "heavy": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 1,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:024",
+        "edges": {
+          "medium": "n181",
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:024",
+        "edges": {
+          "heavy": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:034",
+        "edges": {
+          "heavy": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "pegasus-seiya:beginner:advanced:advanced:034",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Pegasus Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Pegasus Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Pegasus Meteor Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Body Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Pegasus Body Punch",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Pegasus Meteor Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Pegasus Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Pegasus Low Rush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Pegasus",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Pegasus Step",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Pegasus Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Pegasus Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Pegasus Meteor Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Step Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Golden Pegasus Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Pegasus Meteor Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Step Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Pegasus Low Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Pegasus Feint",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Pegasus Rolling Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Pegasus Meteor Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0029": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Pegasus Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Body Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Pegasus Meteor Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "forward+light",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Pegasus Low Rush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Pegasus Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Step Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Pegasus Low Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Pegasus Rolling Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Golden Pegasus Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Step Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Pegasus Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down+special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Pegasus Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0045": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0049": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "forward+special",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Pegasus Body Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0050": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:d+2:d+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "d+2",
+      "animationKey": "cmd:d+2",
+      "label": "Pegasus Clinch Toss",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Pegasus Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Step Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:d+2:d+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "d+2",
+      "animationKey": "cmd:d+2",
+      "label": "Pegasus Clinch Toss",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Pegasus Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Body Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Pegasus Step",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0070": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Golden Pegasus Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Pegasus Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0073": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Golden Pegasus Rush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Clinch Toss Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Pegasus Flash Knockdown Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:d+2:d+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "d+2",
+      "animationKey": "cmd:d+2",
+      "label": "Pegasus Clinch Toss",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0079": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0080": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Sidestep Low Pegasus Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Pegasus Step",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0083": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Diagonal Low Pegasus Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Pegasus Low Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Meteor Burst Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Pegasus Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "launch"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Pegasus Rolling Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Pegasus Launcher",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "launch"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Pegasus",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Step Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0095": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouching Pegasus Rush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Pegasus Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Pegasus Rising Rush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Pegasus Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "While-Rising Body Punch Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Pegasus Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Pegasus Rolling Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Pegasus Flash Knockdown",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diagonal Pegasus Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Pegasus Rolling Crush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Pegasus Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:d+2:d+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "d+2",
+      "animationKey": "cmd:d+2",
+      "label": "Pegasus Clinch Toss",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Body Punch",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Pegasus Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Pegasus",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Pegasus Low Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Pegasus",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0115": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Pegasus Body Punch",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0116": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Golden Pegasus Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0117": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Pegasus Kick",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Pegasus Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Pegasus Meteor Burst",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0120": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Pegasus Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

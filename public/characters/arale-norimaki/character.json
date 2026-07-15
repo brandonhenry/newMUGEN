@@ -2879,134 +2879,95 @@
   "beginnerComboRoutes": [
     {
       "id": "arale-norimaki:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Ncha Dash Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Low-Step Ncha Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "arale-norimaki:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Robot Hook",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Windup Robot Hook",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 27,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
       ]
     },
     {
       "id": "arale-norimaki:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Gadget Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Robot Slide",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 32,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0014"
       ]
     },
     {
@@ -3018,41 +2979,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Ncha Dash Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Robot Hook",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017"
       ]
     },
     {
@@ -3061,44 +2997,19 @@
       "family": "mixed",
       "gestures": [
         "light",
-        "medium",
-        "heavy"
+        "special",
+        "special"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Ncha Dash Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Robot Hook",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0016",
+        "s0017"
       ]
     },
     {
@@ -3107,44 +3018,19 @@
       "family": "mixed",
       "gestures": [
         "special+light",
-        "medium",
-        "heavy"
+        "special",
+        "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Ncha Dash Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Robot Hook",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0018",
+        "s0016",
+        "s0017"
       ]
     },
     {
@@ -3156,41 +3042,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Robot Hook",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Gadget Feint",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0019",
+        "s0020",
+        "s0017"
       ]
     },
     {
@@ -3202,42 +3063,5150 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Gadget Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Ncha Dash Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Penguin Village Link",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0021",
+        "s0004",
+        "s0022"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0023",
+        "s0007",
+        "s0024"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0024"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0024"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "special",
+        "special"
+      ],
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0029",
+        "s0016",
+        "s0017"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0020",
+        "s0017"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0004",
+        "s0022"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0014"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0014"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0014"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:001",
+      "title": "Gatchan Flip Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:002",
+      "title": "Gatchan Flip Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0035",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:003",
+      "title": "Low Robot Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:004",
+      "title": "Low Robot Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0039",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:005",
+      "title": "Ncha Quick Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0034",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:006",
+      "title": "Ncha Quick Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:007",
+      "title": "Windup Robot Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:008",
+      "title": "Windup Robot Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0035",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:009",
+      "title": "Gatchan Flip Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0035",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:010",
+      "title": "Low Robot Slide 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0039",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:011",
+      "title": "Ncha Quick Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0039",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:012",
+      "title": "Windup Robot Hook 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0035",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:013",
+      "title": "Gatchan Flip Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special+light",
+        "down+light",
+        "heavy",
+        "special",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0035",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:014",
+      "title": "Low Robot Slide 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "heavy",
+        "special",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0039",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:015",
+      "title": "Ncha Quick Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "heavy",
+        "special",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0039",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:basic:016",
+      "title": "Windup Robot Hook 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "heavy",
+        "special",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0035",
+        "s0043",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:017",
+      "title": "Charged Ncha Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:018",
+      "title": "Charged Ncha Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:019",
+      "title": "Forward Robot Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:020",
+      "title": "Forward Robot Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0054",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:021",
+      "title": "Forward Robot Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0056",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:022",
+      "title": "Forward Robot Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0057",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:023",
+      "title": "Low Gadget Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:024",
+      "title": "Low-Step Ncha Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:025",
+      "title": "Low-Step Ncha Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:026",
+      "title": "Ncha Dash Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:027",
+      "title": "Norimaki Power Crash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:028",
+      "title": "Norimaki Power Crash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0066",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:029",
+      "title": "Norimaki Power Crash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:030",
+      "title": "Norimaki Power Crash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0066",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:031",
+      "title": "Penguin Village Link 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0038",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:032",
+      "title": "Penguin Village Link 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0039",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:033",
+      "title": "Robot Aura Bonk 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:034",
+      "title": "Robot Aura Bonk 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0050"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:035",
+      "title": "Charged Ncha Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0056",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:036",
+      "title": "Charged Ncha Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0056",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:037",
+      "title": "Low Gadget Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:038",
+      "title": "Ncha Dash Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0070",
+        "s0053"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:039",
+      "title": "Penguin Village Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:040",
+      "title": "Penguin Village Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0073",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:041",
+      "title": "Penguin Village Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:042",
+      "title": "Penguin Village Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0073",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:043",
+      "title": "Robot Aura Bonk 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0072",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:advanced:044",
+      "title": "Robot Aura Bonk 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0072",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:045",
+      "title": "Crouch Robot Pester 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0076"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:046",
+      "title": "Crouch Robot Pester 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0077",
+        "s0053"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:047",
+      "title": "Crouch Robot Pester 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0076"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:048",
+      "title": "Crouch Robot Pester 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0078",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:049",
+      "title": "Low Gadget Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0079",
+        "s0076"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:050",
+      "title": "Low Gadget Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0078",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:051",
+      "title": "Rising Robot Tumble 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0081",
+        "s0082"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:052",
+      "title": "Rising Robot Tumble 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0083",
+        "s0036"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:053",
+      "title": "While-Rising Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0056"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:054",
+      "title": "While-Rising Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:055",
+      "title": "Crouch Robot Pester 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 38,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "heavy",
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "light",
+        "light",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0044",
+        "s0083",
+        "s0078",
+        "s0039",
+        "s0045",
+        "s0046",
+        "s0047",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:056",
+      "title": "Crouch Robot Pester 12-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "heavy",
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "light",
+        "light",
+        "down+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0044",
+        "s0083",
+        "s0078",
+        "s0039",
+        "s0045",
+        "s0046",
+        "s0047",
+        "s0038",
+        "s0039",
+        "s0045",
+        "s0038"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:057",
+      "title": "Crouch Robot Pester 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "heavy",
+        "medium",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0044",
+        "s0083",
+        "s0078",
+        "s0039",
+        "s0045"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:058",
+      "title": "Low Gadget Feint 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 40,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "down+light",
+        "light",
+        "forward+medium",
+        "light",
+        "light",
+        "down+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0086",
+        "s0039",
+        "s0045",
+        "s0046",
+        "s0047",
+        "s0038",
+        "s0039",
+        "s0087",
+        "s0088"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:059",
+      "title": "Low Gadget Feint 11-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 41,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "down+light",
+        "light",
+        "forward+medium",
+        "light",
+        "light",
+        "down+light",
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0086",
+        "s0039",
+        "s0045",
+        "s0046",
+        "s0047",
+        "s0038",
+        "s0039",
+        "s0087",
+        "s0088",
+        "s0038"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:crouch:060",
+      "title": "Low Gadget Feint 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "down+light",
+        "light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0086",
+        "s0039",
+        "s0045",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:061",
+      "title": "Crouch Spin Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0082"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:062",
+      "title": "Crouch Spin Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0082"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:063",
+      "title": "Crouch Spin Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0091",
+        "s0072"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:064",
+      "title": "Crouch Spin Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0091",
+        "s0072"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:065",
+      "title": "Crouch Spin Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0092",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:066",
+      "title": "Forward Spin Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0082"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:067",
+      "title": "Forward Spin Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0082"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:068",
+      "title": "Forward Spin Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0095",
+        "s0072"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:069",
+      "title": "Forward Spin Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0095",
+        "s0072"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:070",
+      "title": "Forward Spin Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0096",
+        "s0034"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:071",
+      "title": "Crouch Spin Launcher Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5844155844155844,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "forward+light",
+        "light",
+        "medium",
+        "heavy",
+        "medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0097",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047",
+        "s0099",
+        "s0038",
+        "s0100",
+        "s0101",
+        "s0034",
+        "s0039"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:072",
+      "title": "Crouch Spin Launcher Grounded Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5421686746987951,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "forward+light",
+        "light",
+        "medium",
+        "heavy",
+        "medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0097",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047",
+        "s0099",
+        "s0038",
+        "s0100",
+        "s0101",
+        "s0034",
+        "s0039",
+        "s0102"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:073",
+      "title": "Crouch Spin Launcher Grounded Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5421686746987951,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "forward+light",
+        "light",
+        "medium",
+        "heavy",
+        "medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0097",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047",
+        "s0099",
+        "s0038",
+        "s0100",
+        "s0101",
+        "s0034",
+        "s0039",
+        "s0102"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:074",
+      "title": "Crouch Spin Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0097",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:075",
+      "title": "Forward Spin Launcher Grounded Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5844155844155844,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "forward+light",
+        "light",
+        "medium",
+        "heavy",
+        "medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0039",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047",
+        "s0099",
+        "s0038",
+        "s0100",
+        "s0101",
+        "s0034",
+        "s0039"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:076",
+      "title": "Forward Spin Launcher Grounded Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5421686746987951,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "forward+light",
+        "light",
+        "medium",
+        "heavy",
+        "medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0039",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047",
+        "s0099",
+        "s0038",
+        "s0100",
+        "s0101",
+        "s0034",
+        "s0039",
+        "s0102"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:077",
+      "title": "Forward Spin Launcher Grounded Launcher 15-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.5421686746987951,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "forward+light",
+        "light",
+        "medium",
+        "heavy",
+        "medium",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0039",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047",
+        "s0099",
+        "s0038",
+        "s0100",
+        "s0101",
+        "s0034",
+        "s0039",
+        "s0102"
+      ]
+    },
+    {
+      "id": "arale-norimaki:beginner:advanced:launcher:078",
+      "title": "Forward Spin Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "heavy",
+        "down+light",
+        "medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0039",
+        "s0045",
+        "s0043",
+        "s0098",
+        "s0078",
+        "s0046",
+        "s0047"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:017",
+        "edges": {
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "special": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "forward+medium": "n160",
+          "forward+heavy": "n155",
+          "down+light": "n148",
+          "forward+special": "n141",
+          "down+heavy": "n181",
+          "down+special": "n108",
+          "down-forward+light": "n103",
+          "down-forward+medium": "n98",
+          "down-forward+special": "n134",
+          "forward+special+medium": "n165",
+          "forward+special+heavy": "n174",
+          "down+special+light": "n93"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:026",
+        "edges": {
+          "light": "n2",
+          "special": "n25",
+          "down-forward+medium": "n172",
+          "medium": "n31",
+          "heavy": "n153"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:light-core",
+        "edges": {
+          "light": "n8",
+          "heavy": "n45",
+          "medium": "n37"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:light-core",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39"
+        }
+      },
+      "n39": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 13,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 14,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n85",
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n85": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n86"
+        }
+      },
+      "n86": {
+        "depth": 16,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87"
+        }
+      },
+      "n87": {
+        "depth": 17,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 18,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 19,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 20,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 21,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 22,
+        "routeId": "arale-norimaki:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n45": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 13,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 14,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:directional-special-light-route",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:forward-light-route",
+        "edges": {
+          "medium": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:026",
+        "edges": {
+          "medium": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:038",
+        "edges": {
+          "medium": "n173"
+        }
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:019",
+        "edges": {
+          "medium": "n10",
+          "light": "n223",
+          "heavy": "n27",
+          "special": "n219",
+          "down-forward+medium": "n137",
+          "down+light": "n225",
+          "forward+light": "n33",
+          "forward+medium": "n196",
+          "forward+heavy": "n221",
+          "forward+special": "n139"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:medium-core",
+        "edges": {
+          "heavy": "n61",
+          "medium": "n16",
+          "light": "n53"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:medium-core",
+        "edges": {}
+      },
+      "n53": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 13,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 14,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n61": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n62"
+        }
+      },
+      "n62": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n63"
+        }
+      },
+      "n63": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 13,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 14,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n27": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n28"
+        }
+      },
+      "n28": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:down-medium-route",
+        "edges": {
+          "medium": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n137": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:019",
+        "edges": {
+          "medium": "n138"
+        }
+      },
+      "n138": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n139": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:020",
+        "edges": {
+          "medium": "n140"
+        }
+      },
+      "n140": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n196": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:053",
+        "edges": {
+          "medium": "n197"
+        }
+      },
+      "n197": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:053",
+        "edges": {}
+      },
+      "n219": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:061",
+        "edges": {
+          "medium": "n220"
+        }
+      },
+      "n220": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:061",
+        "edges": {}
+      },
+      "n221": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n222"
+        }
+      },
+      "n222": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n223": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:065",
+        "edges": {
+          "medium": "n224"
+        }
+      },
+      "n224": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n225": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n226"
+        }
+      },
+      "n226": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "heavy": "n227"
+        }
+      },
+      "n227": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "down+light": "n228"
+        }
+      },
+      "n228": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n229"
+        }
+      },
+      "n229": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+medium": "n230"
+        }
+      },
+      "n230": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n231"
+        }
+      },
+      "n231": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+light": "n232"
+        }
+      },
+      "n232": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n233"
+        }
+      },
+      "n233": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n234"
+        }
+      },
+      "n234": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "heavy": "n235"
+        }
+      },
+      "n235": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n236"
+        }
+      },
+      "n236": {
+        "depth": 13,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "down+light": "n237"
+        }
+      },
+      "n237": {
+        "depth": 14,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n238"
+        }
+      },
+      "n238": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:advanced:launcher:072",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n18",
+          "down-forward+medium": "n170",
+          "down+light": "n35",
+          "down+medium": "n188",
+          "light": "n29",
+          "special": "n146",
+          "medium": "n190",
+          "forward+light": "n209"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:heavy-core",
+        "edges": {
+          "medium": "n77",
+          "heavy": "n24",
+          "light": "n69"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:heavy-core",
+        "edges": {}
+      },
+      "n69": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n70"
+        }
+      },
+      "n70": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n71"
+        }
+      },
+      "n71": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 13,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 14,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n77": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n78"
+        }
+      },
+      "n78": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n79"
+        }
+      },
+      "n79": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 13,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 14,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 15,
+        "routeId": "arale-norimaki:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n29": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n30"
+        }
+      },
+      "n30": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:down-forward-heavy-route",
+        "edges": {
+          "medium": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:037",
+        "edges": {
+          "medium": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n188": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:049",
+        "edges": {
+          "medium": "n189"
+        }
+      },
+      "n189": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n190": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:050",
+        "edges": {
+          "medium": "n191"
+        }
+      },
+      "n191": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "down+light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "light": "n211"
+        }
+      },
+      "n211": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "forward+medium": "n212"
+        }
+      },
+      "n212": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "light": "n213"
+        }
+      },
+      "n213": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "light": "n214"
+        }
+      },
+      "n214": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "down+light": "n215"
+        }
+      },
+      "n215": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "medium": "n216"
+        }
+      },
+      "n216": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "light": "n217"
+        }
+      },
+      "n217": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:058",
+        "edges": {
+          "light": "n218"
+        }
+      },
+      "n218": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:059",
+        "edges": {}
+      },
+      "n93": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:basic:001",
+        "edges": {
+          "heavy": "n194",
+          "special": "n192",
+          "down+light": "n96",
+          "light": "n94"
+        }
+      },
+      "n94": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:001",
+        "edges": {
+          "medium": "n95"
+        }
+      },
+      "n95": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:002",
+        "edges": {
+          "medium": "n97",
+          "heavy": "n113"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n114"
+        }
+      },
+      "n114": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:advanced:basic:009",
+        "edges": {
+          "light": "n122"
+        }
+      },
+      "n122": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:advanced:basic:013",
+        "edges": {
+          "forward+medium": "n123"
+        }
+      },
+      "n123": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:advanced:basic:013",
+        "edges": {
+          "light": "n124"
+        }
+      },
+      "n124": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n192": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:051",
+        "edges": {
+          "medium": "n193"
+        }
+      },
+      "n193": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:051",
+        "edges": {}
+      },
+      "n194": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:052",
+        "edges": {
+          "medium": "n195"
+        }
+      },
+      "n195": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:052",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n101",
+          "light": "n99"
+        }
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:003",
+        "edges": {
+          "medium": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:004",
+        "edges": {
+          "medium": "n102",
+          "heavy": "n115"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n116"
+        }
+      },
+      "n116": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:advanced:basic:014",
+        "edges": {
+          "forward+medium": "n126"
+        }
+      },
+      "n126": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:advanced:basic:014",
+        "edges": {
+          "light": "n127"
+        }
+      },
+      "n127": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n104",
+          "down+light": "n117",
+          "forward+medium": "n106"
+        }
+      },
+      "n104": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n105"
+        }
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:006",
+        "edges": {
+          "medium": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:011",
+        "edges": {
+          "heavy": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n119"
+        }
+      },
+      "n119": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:advanced:basic:011",
+        "edges": {
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:advanced:basic:015",
+        "edges": {
+          "forward+medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:advanced:basic:015",
+        "edges": {
+          "light": "n130"
+        }
+      },
+      "n130": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:basic:007",
+        "edges": {
+          "down+light": "n111",
+          "light": "n109"
+        }
+      },
+      "n109": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:007",
+        "edges": {
+          "medium": "n110"
+        }
+      },
+      "n110": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:basic:008",
+        "edges": {
+          "medium": "n112",
+          "heavy": "n120"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:basic:012",
+        "edges": {
+          "special": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:advanced:basic:012",
+        "edges": {
+          "light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:advanced:basic:016",
+        "edges": {
+          "forward+medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:advanced:basic:016",
+        "edges": {
+          "light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n134": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n168",
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n136"
+        }
+      },
+      "n136": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:035",
+        "edges": {
+          "medium": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n141": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:021",
+        "edges": {
+          "medium": "n142",
+          "forward+medium": "n144"
+        }
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:021",
+        "edges": {
+          "medium": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:022",
+        "edges": {
+          "medium": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:024",
+        "edges": {
+          "medium": "n151",
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:024",
+        "edges": {
+          "medium": "n150"
+        }
+      },
+      "n150": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:025",
+        "edges": {
+          "medium": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:027",
+        "edges": {
+          "down+light": "n158",
+          "light": "n156"
+        }
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:027",
+        "edges": {
+          "medium": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:028",
+        "edges": {
+          "medium": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:031",
+        "edges": {
+          "down+light": "n163",
+          "light": "n161"
+        }
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:031",
+        "edges": {
+          "medium": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:032",
+        "edges": {
+          "medium": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:033",
+        "edges": {
+          "medium": "n179",
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:033",
+        "edges": {
+          "medium": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:043",
+        "edges": {
+          "medium": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:039",
+        "edges": {
+          "medium": "n175",
+          "forward+medium": "n177"
+        }
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:039",
+        "edges": {
+          "medium": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:040",
+        "edges": {
+          "medium": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 1,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:045",
+        "edges": {
+          "down-forward+medium": "n184",
+          "down+medium": "n182",
+          "medium": "n186",
+          "special": "n198"
+        }
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:045",
+        "edges": {
+          "medium": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:046",
+        "edges": {
+          "medium": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:048",
+        "edges": {
+          "medium": "n187"
+        }
+      },
+      "n187": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n198": {
+        "depth": 2,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "heavy": "n199"
+        }
+      },
+      "n199": {
+        "depth": 3,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "medium": "n200"
+        }
+      },
+      "n200": {
+        "depth": 4,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "down+light": "n201"
+        }
+      },
+      "n201": {
+        "depth": 5,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "light": "n202"
+        }
+      },
+      "n202": {
+        "depth": 6,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "forward+medium": "n203"
+        }
+      },
+      "n203": {
+        "depth": 7,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "light": "n204"
+        }
+      },
+      "n204": {
+        "depth": 8,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "light": "n205"
+        }
+      },
+      "n205": {
+        "depth": 9,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "down+light": "n206"
+        }
+      },
+      "n206": {
+        "depth": 10,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:055",
+        "edges": {
+          "light": "n207"
+        }
+      },
+      "n207": {
+        "depth": 11,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:056",
+        "edges": {
+          "light": "n208"
+        }
+      },
+      "n208": {
+        "depth": 12,
+        "routeId": "arale-norimaki:beginner:advanced:crouch:056",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low-Step Ncha Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Robot Poke",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Ncha Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Windup Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Robot Slide",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0018": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0025": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Robot Slide",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low-Step Ncha Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down+special+light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Gatchan Flip Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Ncha Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0034": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0035": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low-Step Ncha Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0037": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Robot Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Ncha Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low-Step Ncha Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Ncha Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+special",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Windup Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Robot Tumble",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Charged Ncha Jab",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "down-forward+special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Charged Ncha Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0049": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Gatchan Flip Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Spin Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0054": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Gatchan Flip Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Robot Poke",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0059": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Gatchan Flip Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low-Step Ncha Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0061": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Gatchan Flip Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0063": {
+      "routeKey": "base:kickright:special",
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Gatchan Flip Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Norimaki Power Crash",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0065": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Ncha Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low-Step Ncha Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "forward+special+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Robot Aura Bonk",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0069": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Gatchan Flip Kick",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Spin Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Penguin Village Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Robot Hook",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Robot Pester",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Spin Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Spin Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "While-Rising Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Spin Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0080": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down+special+light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Robot Tumble Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Norimaki Power Crash",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Gadget Feint",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "While-Rising Hook Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Charged Ncha Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Robot Tumble",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Windup Robot Hook",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ncha Dash Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Crouch Spin Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Norimaki Power Crash",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Robot Aura Bonk",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spin Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Norimaki Power Crash",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Robot Aura Bonk",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Penguin Village Link",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Low-Step Ncha Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Robot Pester",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Robot Poke",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Windup Robot Hook",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Robot Slide",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Robot Aura Bonk",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

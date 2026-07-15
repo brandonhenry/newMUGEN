@@ -3384,136 +3384,95 @@
   "beginnerComboRoutes": [
     {
       "id": "raoh:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hokuto Crescent Fist",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Crescent Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
       ]
     },
     {
       "id": "raoh:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hokuto Crescent Fist",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Seated King's Kick",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 34,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014"
       ]
     },
     {
       "id": "raoh:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Hokuto Low Slide",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "d/f+3",
-          "animationKey": "cmd:d/f+3",
-          "label": "Forward Low Slide",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -3525,41 +3484,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Seated King's Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Seated King's Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 19,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0025"
       ]
     },
     {
@@ -3571,41 +3505,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hokuto Crescent Fist",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Seated King's Kick",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0008",
+        "s0026"
       ]
     },
     {
@@ -3614,44 +3523,19 @@
       "family": "mixed",
       "gestures": [
         "special+light",
-        "medium",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Seated King's Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hokuto Crescent Fist",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0029"
       ]
     },
     {
@@ -3663,41 +3547,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Conqueror Driving Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Hokuto Low Slide",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0021",
+        "s0031"
       ]
     },
     {
@@ -3709,42 +3568,4976 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hokuto Crescent Fist",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Hokuto Power Crush",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0005",
+        "s0033"
+      ]
+    },
+    {
+      "id": "raoh:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0008",
+        "s0035"
+      ]
+    },
+    {
+      "id": "raoh:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0036",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "raoh:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0035"
+      ]
+    },
+    {
+      "id": "raoh:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "heavy",
+        "heavy"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0040",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "raoh:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0041",
+        "s0021",
+        "s0031"
+      ]
+    },
+    {
+      "id": "raoh:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0042",
+        "s0005",
+        "s0033"
+      ]
+    },
+    {
+      "id": "raoh:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "raoh:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020",
+        "s0021",
+        "s0022"
+      ]
+    },
+    {
+      "id": "raoh:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "raoh:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020",
+        "s0021",
+        "s0022"
+      ]
+    },
+    {
+      "id": "raoh:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020",
+        "s0021",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "raoh:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020",
+        "s0021",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "raoh:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020",
+        "s0021",
+        "s0022"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:basic:001",
+      "title": "Conqueror High Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0045"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:basic:002",
+      "title": "Conqueror High Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:basic:003",
+      "title": "Raoh Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:basic:004",
+      "title": "Conqueror High Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "light",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:basic:005",
+      "title": "Raoh Low Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0053",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:basic:006",
+      "title": "Conqueror High Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:basic:007",
+      "title": "Raoh Low Sweep 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "special",
+        "special",
+        "light",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0053",
+        "s0054",
+        "s0055",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:008",
+      "title": "Advancing Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:009",
+      "title": "Advancing Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0062",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:010",
+      "title": "Conqueror Leaping Clinch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0052",
+        "s0064"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:011",
+      "title": "Ducking Crescent Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0054",
+        "s0045"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:012",
+      "title": "Ducking Crescent Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0057",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:013",
+      "title": "Ducking Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:014",
+      "title": "Ducking Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0062",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:015",
+      "title": "Hokuto Crushing Hold 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0052",
+        "s0064"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:016",
+      "title": "Hokuto Iron Grip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0052",
+        "s0064"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:017",
+      "title": "Conqueror Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:018",
+      "title": "Conqueror Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0071",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:019",
+      "title": "Conqueror Driving Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:020",
+      "title": "Conqueror Driving Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:021",
+      "title": "Conqueror Leaping Clinch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0074",
+        "s0064"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:022",
+      "title": "Forward Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:023",
+      "title": "Forward Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0062",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:024",
+      "title": "Hokuto Crushing Hold 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0056",
+        "s0064"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:025",
+      "title": "Hokuto Iron Grip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0056",
+        "s0064"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:026",
+      "title": "Hokuto Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:027",
+      "title": "Hokuto Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:028",
+      "title": "Hokuto Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:029",
+      "title": "Hokuto Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0080",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:030",
+      "title": "Overdrive Crescent Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0045"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:031",
+      "title": "Overdrive Crescent Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0083",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:032",
+      "title": "Seated King's Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:033",
+      "title": "Seated King's Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:034",
+      "title": "Sidestep Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:advanced:035",
+      "title": "Sidestep Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0077",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:036",
+      "title": "Advancing Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0087",
+        "s0088"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:037",
+      "title": "Advancing Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0055",
+        "s0089"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:038",
+      "title": "Ducking Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0087",
+        "s0088"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:039",
+      "title": "Ducking Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0055",
+        "s0089"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:040",
+      "title": "Conqueror Driving Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0090",
+        "s0091"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:041",
+      "title": "Conqueror Driving Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0087",
+        "s0088"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:042",
+      "title": "Crouch Wheel Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:043",
+      "title": "Crouch Wheel Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0094",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:044",
+      "title": "Forward Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0087",
+        "s0088"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:045",
+      "title": "Forward Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0055",
+        "s0089"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:046",
+      "title": "Hokuto Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0095",
+        "s0091"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:047",
+      "title": "Hokuto Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0096",
+        "s0088"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:048",
+      "title": "Rising Body Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0098",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:049",
+      "title": "Rising Body Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:050",
+      "title": "Seated King's Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0095",
+        "s0091"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:051",
+      "title": "Seated King's Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0087",
+        "s0088"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:052",
+      "title": "Sidestep Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0099",
+        "s0091"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:053",
+      "title": "Sidestep Low Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0096",
+        "s0088"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:054",
+      "title": "Conqueror Driving Sweep 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5485074626865671,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "down+light",
+        "light",
+        "heavy",
+        "forward+light",
+        "medium",
+        "light",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0057",
+        "s0058",
+        "s0100",
+        "s0101",
+        "s0102",
+        "s0056"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:055",
+      "title": "Conqueror Driving Sweep 11-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 37,
+      "damageScale": 0.525,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "down+light",
+        "light",
+        "heavy",
+        "forward+light",
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0057",
+        "s0058",
+        "s0100",
+        "s0101",
+        "s0102",
+        "s0056",
+        "s0101"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:056",
+      "title": "Conqueror Driving Sweep 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "down+light",
+        "light",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:crouch:057",
+      "title": "Seated King's Kick 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "down+light",
+        "light",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0103",
+        "s0052",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:058",
+      "title": "Crouch Hokuto Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0070",
+        "s0061"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:059",
+      "title": "Crouch Hokuto Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0105",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:060",
+      "title": "Crouch Hokuto Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0045"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:061",
+      "title": "Crouch Hokuto Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0105",
+        "s0047"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:062",
+      "title": "Crouch Hokuto Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0045"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:063",
+      "title": "Crouch Hokuto Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0107",
+        "s0057",
+        "s0101"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:064",
+      "title": "Crouch Hokuto Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 37,
+      "damageScale": 0.4224137931034483,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "heavy",
+        "light",
+        "medium",
+        "heavy",
+        "heavy",
+        "down+light",
+        "down+heavy",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0107",
+        "s0057",
+        "s0101",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0087",
+        "s0111",
+        "s0112"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:065",
+      "title": "Crouch Hokuto Launcher Hybrid Launcher 19-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 19,
+      "estimatedDamage": 47,
+      "damageScale": 0.42954545454545456,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "heavy",
+        "light",
+        "medium",
+        "heavy",
+        "heavy",
+        "down+light",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy",
+        "heavy",
+        "light",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0107",
+        "s0057",
+        "s0101",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0087",
+        "s0111",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0115",
+        "s0116",
+        "s0117"
+      ]
+    },
+    {
+      "id": "raoh:beginner:advanced:launcher:066",
+      "title": "Crouch Hokuto Launcher Hybrid Launcher 19-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 19,
+      "estimatedDamage": 47,
+      "damageScale": 0.42954545454545456,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "heavy",
+        "light",
+        "medium",
+        "heavy",
+        "heavy",
+        "down+light",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy",
+        "heavy",
+        "light",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0104",
+        "s0106",
+        "s0051",
+        "s0052",
+        "s0056",
+        "s0107",
+        "s0057",
+        "s0101",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0087",
+        "s0111",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0115",
+        "s0116",
+        "s0117"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "raoh:beginner:advanced:advanced:008",
+        "edges": {
+          "special": "n24",
+          "special+light": "n24",
+          "forward+special+light": "n24",
+          "special+medium": "n30",
+          "down+special+medium": "n30",
+          "special+heavy": "n33",
+          "down-forward+special+heavy": "n33",
+          "light": "n1",
+          "medium": "n1",
+          "forward+light": "n1",
+          "down+medium": "n1",
+          "heavy": "n16",
+          "down-forward+heavy": "n16",
+          "forward+medium": "n120",
+          "forward+heavy": "n136",
+          "forward+special": "n133",
+          "down+light": "n150",
+          "down+heavy": "n123",
+          "down+special": "n128",
+          "down-forward+light": "n115",
+          "down-forward+medium": "n96",
+          "down-forward+special": "n101",
+          "forward+special+medium": "n139"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:crouch:042",
+        "edges": {
+          "medium": "n9",
+          "light": "n2",
+          "heavy": "n187",
+          "special": "n189",
+          "down-forward+heavy": "n37"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "raoh:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "raoh:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "raoh:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "raoh:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "raoh:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "raoh:beginner:light-core",
+        "edges": {
+          "light": "n8",
+          "medium": "n41",
+          "heavy": "n49"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "raoh:beginner:light-core",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 8,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 9,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 10,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 11,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 12,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 13,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 14,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48",
+          "heavy": "n88"
+        }
+      },
+      "n48": {
+        "depth": 15,
+        "routeId": "raoh:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 16,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 17,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 18,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 19,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 20,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 21,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 22,
+        "routeId": "raoh:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n49": {
+        "depth": 8,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 9,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 10,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 11,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 12,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 13,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 14,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 15,
+        "routeId": "raoh:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 2,
+        "routeId": "raoh:beginner:forward-light-route",
+        "edges": {
+          "medium": "n10",
+          "special": "n36",
+          "heavy": "n27"
+        }
+      },
+      "n10": {
+        "depth": 3,
+        "routeId": "raoh:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 4,
+        "routeId": "raoh:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 5,
+        "routeId": "raoh:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 6,
+        "routeId": "raoh:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 7,
+        "routeId": "raoh:beginner:medium-core",
+        "edges": {
+          "medium": "n15",
+          "light": "n57",
+          "heavy": "n65"
+        }
+      },
+      "n15": {
+        "depth": 8,
+        "routeId": "raoh:beginner:medium-core",
+        "edges": {}
+      },
+      "n57": {
+        "depth": 8,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 9,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 10,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 11,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 12,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 13,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 14,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 15,
+        "routeId": "raoh:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n65": {
+        "depth": 8,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 9,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 10,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 11,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 12,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 13,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 14,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 15,
+        "routeId": "raoh:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "raoh:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "raoh:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "raoh:beginner:down-medium-route",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "raoh:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:042",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:042",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:043",
+        "edges": {
+          "special": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:043",
+        "edges": {}
+      },
+      "n16": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:026",
+        "edges": {
+          "heavy": "n17",
+          "medium": "n159",
+          "light": "n161",
+          "down+light": "n39",
+          "special": "n197",
+          "down+medium": "n195"
+        }
+      },
+      "n17": {
+        "depth": 2,
+        "routeId": "raoh:beginner:heavy-core",
+        "edges": {
+          "heavy": "n18"
+        }
+      },
+      "n18": {
+        "depth": 3,
+        "routeId": "raoh:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 4,
+        "routeId": "raoh:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 5,
+        "routeId": "raoh:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 6,
+        "routeId": "raoh:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 7,
+        "routeId": "raoh:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23",
+          "light": "n73",
+          "medium": "n73"
+        }
+      },
+      "n23": {
+        "depth": 8,
+        "routeId": "raoh:beginner:heavy-core",
+        "edges": {}
+      },
+      "n73": {
+        "depth": 8,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {
+          "medium": "n81",
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 9,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 10,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 11,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 12,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 13,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 14,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 15,
+        "routeId": "raoh:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n81": {
+        "depth": 9,
+        "routeId": "raoh:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 10,
+        "routeId": "raoh:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 11,
+        "routeId": "raoh:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 12,
+        "routeId": "raoh:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 13,
+        "routeId": "raoh:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 14,
+        "routeId": "raoh:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 15,
+        "routeId": "raoh:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "raoh:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n40"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "raoh:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:047",
+        "edges": {
+          "special": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n24": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n25",
+          "medium": "n173",
+          "light": "n171",
+          "down+light": "n201",
+          "down+medium": "n199",
+          "heavy": "n28",
+          "forward+light": "n213"
+        }
+      },
+      "n25": {
+        "depth": 2,
+        "routeId": "raoh:beginner:special-core",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 3,
+        "routeId": "raoh:beginner:special-core",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "raoh:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "raoh:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:050",
+        "edges": {
+          "special": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:051",
+        "edges": {
+          "special": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:051",
+        "edges": {}
+      },
+      "n213": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:057",
+        "edges": {
+          "down+light": "n214"
+        }
+      },
+      "n214": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:057",
+        "edges": {
+          "light": "n215"
+        }
+      },
+      "n215": {
+        "depth": 4,
+        "routeId": "raoh:beginner:advanced:crouch:057",
+        "edges": {
+          "heavy": "n216"
+        }
+      },
+      "n216": {
+        "depth": 5,
+        "routeId": "raoh:beginner:advanced:crouch:057",
+        "edges": {
+          "forward+light": "n217"
+        }
+      },
+      "n217": {
+        "depth": 6,
+        "routeId": "raoh:beginner:advanced:crouch:057",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:019",
+        "edges": {
+          "medium": "n146",
+          "special": "n144",
+          "down+light": "n185",
+          "down+medium": "n183",
+          "heavy": "n31",
+          "light": "n203"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "raoh:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "raoh:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:040",
+        "edges": {
+          "special": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:040",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:041",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:041",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "down+light": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "light": "n205"
+        }
+      },
+      "n205": {
+        "depth": 4,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "heavy": "n206"
+        }
+      },
+      "n206": {
+        "depth": 5,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "forward+light": "n207"
+        }
+      },
+      "n207": {
+        "depth": 6,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "medium": "n208"
+        }
+      },
+      "n208": {
+        "depth": 7,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "light": "n209"
+        }
+      },
+      "n209": {
+        "depth": 8,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "down+light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 9,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "light": "n211"
+        }
+      },
+      "n211": {
+        "depth": 10,
+        "routeId": "raoh:beginner:advanced:crouch:054",
+        "edges": {
+          "light": "n212"
+        }
+      },
+      "n212": {
+        "depth": 11,
+        "routeId": "raoh:beginner:advanced:crouch:055",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:028",
+        "edges": {
+          "medium": "n163",
+          "heavy": "n165",
+          "light": "n34"
+        }
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "raoh:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "raoh:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:basic:001",
+        "edges": {
+          "heavy": "n99",
+          "special": "n97"
+        }
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n98",
+          "light": "n104"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:basic:004",
+        "edges": {
+          "down+light": "n105"
+        }
+      },
+      "n105": {
+        "depth": 4,
+        "routeId": "raoh:beginner:advanced:basic:004",
+        "edges": {
+          "light": "n109"
+        }
+      },
+      "n109": {
+        "depth": 5,
+        "routeId": "raoh:beginner:advanced:basic:006",
+        "edges": {
+          "heavy": "n110"
+        }
+      },
+      "n110": {
+        "depth": 6,
+        "routeId": "raoh:beginner:advanced:basic:006",
+        "edges": {
+          "forward+light": "n111"
+        }
+      },
+      "n111": {
+        "depth": 7,
+        "routeId": "raoh:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n106",
+          "light": "n102"
+        }
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 4,
+        "routeId": "raoh:beginner:advanced:basic:005",
+        "edges": {
+          "light": "n112"
+        }
+      },
+      "n112": {
+        "depth": 5,
+        "routeId": "raoh:beginner:advanced:basic:007",
+        "edges": {
+          "heavy": "n113"
+        }
+      },
+      "n113": {
+        "depth": 6,
+        "routeId": "raoh:beginner:advanced:basic:007",
+        "edges": {
+          "forward+light": "n114"
+        }
+      },
+      "n114": {
+        "depth": 7,
+        "routeId": "raoh:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:008",
+        "edges": {
+          "medium": "n116",
+          "heavy": "n118",
+          "down+light": "n175",
+          "special": "n177"
+        }
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:008",
+        "edges": {
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:008",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:009",
+        "edges": {
+          "special": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:009",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:036",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:036",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:037",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:037",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:010",
+        "edges": {
+          "medium": "n218",
+          "special": "n222",
+          "light": "n220",
+          "down+light": "n121",
+          "heavy": "n148"
+        }
+      },
+      "n121": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:010",
+        "edges": {
+          "special": "n122"
+        }
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:010",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n218": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:launcher:058",
+        "edges": {
+          "special": "n219"
+        }
+      },
+      "n219": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:launcher:058",
+        "edges": {}
+      },
+      "n220": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:launcher:059",
+        "edges": {
+          "special": "n221"
+        }
+      },
+      "n221": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:launcher:059",
+        "edges": {}
+      },
+      "n222": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:launcher:060",
+        "edges": {
+          "special": "n223",
+          "light": "n224"
+        }
+      },
+      "n223": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:launcher:060",
+        "edges": {}
+      },
+      "n224": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:launcher:063",
+        "edges": {
+          "down+light": "n225"
+        }
+      },
+      "n225": {
+        "depth": 4,
+        "routeId": "raoh:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n226"
+        }
+      },
+      "n226": {
+        "depth": 5,
+        "routeId": "raoh:beginner:advanced:launcher:063",
+        "edges": {
+          "forward+light": "n227"
+        }
+      },
+      "n227": {
+        "depth": 6,
+        "routeId": "raoh:beginner:advanced:launcher:063",
+        "edges": {
+          "heavy": "n228"
+        }
+      },
+      "n228": {
+        "depth": 7,
+        "routeId": "raoh:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n229"
+        }
+      },
+      "n229": {
+        "depth": 8,
+        "routeId": "raoh:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n230"
+        }
+      },
+      "n230": {
+        "depth": 9,
+        "routeId": "raoh:beginner:advanced:launcher:064",
+        "edges": {
+          "heavy": "n231"
+        }
+      },
+      "n231": {
+        "depth": 10,
+        "routeId": "raoh:beginner:advanced:launcher:064",
+        "edges": {
+          "heavy": "n232"
+        }
+      },
+      "n232": {
+        "depth": 11,
+        "routeId": "raoh:beginner:advanced:launcher:064",
+        "edges": {
+          "down+light": "n233"
+        }
+      },
+      "n233": {
+        "depth": 12,
+        "routeId": "raoh:beginner:advanced:launcher:064",
+        "edges": {
+          "down+heavy": "n234"
+        }
+      },
+      "n234": {
+        "depth": 13,
+        "routeId": "raoh:beginner:advanced:launcher:064",
+        "edges": {
+          "down-forward+heavy": "n235"
+        }
+      },
+      "n235": {
+        "depth": 14,
+        "routeId": "raoh:beginner:advanced:launcher:064",
+        "edges": {
+          "forward+heavy": "n236"
+        }
+      },
+      "n236": {
+        "depth": 15,
+        "routeId": "raoh:beginner:advanced:launcher:065",
+        "edges": {
+          "heavy": "n237"
+        }
+      },
+      "n237": {
+        "depth": 16,
+        "routeId": "raoh:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n238"
+        }
+      },
+      "n238": {
+        "depth": 17,
+        "routeId": "raoh:beginner:advanced:launcher:065",
+        "edges": {
+          "heavy": "n239"
+        }
+      },
+      "n239": {
+        "depth": 18,
+        "routeId": "raoh:beginner:advanced:launcher:065",
+        "edges": {
+          "medium": "n240"
+        }
+      },
+      "n240": {
+        "depth": 19,
+        "routeId": "raoh:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:011",
+        "edges": {
+          "heavy": "n126",
+          "special": "n124"
+        }
+      },
+      "n124": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:011",
+        "edges": {
+          "special": "n125"
+        }
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:011",
+        "edges": {}
+      },
+      "n126": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:012",
+        "edges": {
+          "special": "n127"
+        }
+      },
+      "n127": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:012",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:013",
+        "edges": {
+          "medium": "n129",
+          "heavy": "n131",
+          "down+light": "n179",
+          "special": "n181"
+        }
+      },
+      "n129": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:013",
+        "edges": {
+          "special": "n130"
+        }
+      },
+      "n130": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n131": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n132"
+        }
+      },
+      "n132": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:038",
+        "edges": {
+          "special": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:038",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:039",
+        "edges": {
+          "special": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:039",
+        "edges": {}
+      },
+      "n133": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:015",
+        "edges": {
+          "down+light": "n134",
+          "light": "n155"
+        }
+      },
+      "n134": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n136": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:016",
+        "edges": {
+          "down+light": "n137",
+          "light": "n157"
+        }
+      },
+      "n137": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n138"
+        }
+      },
+      "n138": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n139": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n140",
+          "heavy": "n169",
+          "special": "n167",
+          "light": "n142"
+        }
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 1,
+        "routeId": "raoh:beginner:advanced:advanced:022",
+        "edges": {
+          "medium": "n151",
+          "heavy": "n153",
+          "down+light": "n191",
+          "special": "n193"
+        }
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:044",
+        "edges": {
+          "special": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:044",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "raoh:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "raoh:beginner:advanced:crouch:045",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Conqueror High Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Hokuto Low Slide",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Forward Low Slide",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Slide",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "medium",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Low Slide",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Hokuto Low Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Forward Low Slide",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Slide",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Low Slide",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Raoh Low Sweep",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Hokuto Low Slide",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Hokuto Low Slide",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0026": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0027": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0030": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Conqueror Driving Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0032": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0034": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0036": {
+      "gesture": "down+medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Forward Low Slide",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Hokuto Low Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0040": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Conqueror Driving Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0042": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Conqueror High Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hokuto Iron Grip",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0048": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Raoh Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0049": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Conqueror High Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hokuto Iron Grip",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Conqueror Leaping Clinch",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hokuto Crushing Hold",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Conqueror Leaping Clinch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+special",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Low Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "forward+special",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hokuto Crushing Hold",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hokuto Iron Grip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "forward+special+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Conqueror Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Conqueror Leaping Clinch",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hokuto Crushing Hold",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Conqueror Driving Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hokuto Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down+light",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Forward Low Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Hokuto Low Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hokuto Crushing Hold",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Conqueror Leaping Clinch",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hokuto Crushing Hold",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "forward+special+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Overdrive Crescent Jab Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hokuto Iron Grip",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Sidestep Low Slide Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Wheel Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Hokuto Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0092": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouch Wheel Rush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Conqueror Leaping Clinch",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "special",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hokuto Crushing Hold",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Hokuto Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Wheel Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rising Body Strike Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Hokuto Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Conqueror Leaping Clinch",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Conqueror High Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Hokuto Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Hokuto Power Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Seated King's Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Crescent Fist",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Conqueror Leaping Clinch",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hokuto Crushing Hold",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Slide",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Low Slide",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Forward Low Slide",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Slide",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Hokuto Low Slide",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0115": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Crescent Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0116": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Raoh Low Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Conqueror Aura Drive",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

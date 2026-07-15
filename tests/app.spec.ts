@@ -2218,6 +2218,12 @@ test('opens training modes, starts a basic trial, and previews combo routes', as
   await expect(page.getByRole('heading', { name: 'Training Mode' })).toBeVisible({ timeout: 5000 });
   await page.getByRole('button', { name: /Combo Trials/ }).click();
   await expect(page.locator('.combo-trial-list')).toContainText('Combo Trials');
+  const routeSearch = page.getByRole('searchbox', { name: 'Search combo routes' });
+  await expect(routeSearch).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'Combo category' })).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'Combo length' })).toBeVisible();
+  await expect(page.getByRole('combobox', { name: 'Combo resource' })).toBeVisible();
+  await routeSearch.fill('Grounded Launcher');
   const groundedLauncherTrial = page.getByRole('button', { name: /Grounded Launcher/i }).first();
   await expect(groundedLauncherTrial).toBeVisible();
   await groundedLauncherTrial.click();

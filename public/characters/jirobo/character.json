@@ -3729,125 +3729,95 @@
   "beginnerComboRoutes": [
     {
       "id": "jirobo:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Jirobo Left Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Jirobo Left Check",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
       ]
     },
     {
       "id": "jirobo:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Jirobo Right Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Jirobo Launcher",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "launch"
-        },
-        {
-          "gesture": "medium",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 30,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0007"
       ]
     },
     {
       "id": "jirobo:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Jirobo Left Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Jirobo Left Kick",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
       ]
     },
     {
@@ -3859,36 +3829,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Jirobo Left Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Jirobo Right Check",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013"
       ]
     },
     {
@@ -3900,36 +3850,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Jirobo Left Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Jirobo Right Check",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0014",
+        "s0010"
       ]
     },
     {
@@ -3941,36 +3871,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Jirobo Left Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Jirobo Right Check",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0015",
+        "s0014",
+        "s0010"
       ]
     },
     {
@@ -3982,36 +3892,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Jirobo Right Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Jirobo Left Kick",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0016",
+        "s0009",
+        "s0013"
       ]
     },
     {
@@ -4023,37 +3913,1827 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Jirobo Left Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Jirobo Left Check",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Jirobo Rush",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "down-forward+medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0020",
+        "s0021",
+        "s0022"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0023",
+        "s0009",
+        "s0024"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0025",
+        "s0001",
+        "s0024"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0026",
+        "s0014",
+        "s0010"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0027",
+        "s0009",
+        "s0013"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0028",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0007"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0002"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0007"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0001",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:advanced:001",
+      "title": "Jirobo Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:advanced:002",
+      "title": "Jirobo Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:advanced:003",
+      "title": "Jirobo Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down-forward+medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0032",
+        "s0033"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:advanced:004",
+      "title": "Jirobo Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down-forward+medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0032",
+        "s0033"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:crouch:005",
+      "title": "Jirobo Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0035",
+        "s0031"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:crouch:006",
+      "title": "Jirobo Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:launcher:007",
+      "title": "Jirobo Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "forward+light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0033",
+        "s0039"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:launcher:008",
+      "title": "Jirobo Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "forward+light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0033",
+        "s0039"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:launcher:009",
+      "title": "Jirobo Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0040",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jirobo:beginner:advanced:launcher:010",
+      "title": "Jirobo Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0040",
+        "s0037"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "jirobo:beginner:advanced:advanced:001",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "heavy": "n17",
+          "special": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "down-forward+medium": "n101",
+          "forward+medium": "n91",
+          "forward+heavy": "n96"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "jirobo:beginner:directional-special-light-route",
+        "edges": {
+          "light": "n2",
+          "down-forward+medium": "n33",
+          "medium": "n27"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "jirobo:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "jirobo:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "jirobo:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "jirobo:beginner:light-core",
+        "edges": {
+          "light": "n8",
+          "medium": "n35",
+          "heavy": "n43"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:light-core",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n36"
+        }
+      },
+      "n36": {
+        "depth": 9,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n37"
+        }
+      },
+      "n37": {
+        "depth": 10,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 11,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39"
+        }
+      },
+      "n39": {
+        "depth": 12,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 13,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 14,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42",
+          "heavy": "n83"
+        }
+      },
+      "n42": {
+        "depth": 15,
+        "routeId": "jirobo:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n83": {
+        "depth": 15,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n84"
+        }
+      },
+      "n84": {
+        "depth": 16,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n85"
+        }
+      },
+      "n85": {
+        "depth": 17,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n86"
+        }
+      },
+      "n86": {
+        "depth": 18,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87"
+        }
+      },
+      "n87": {
+        "depth": 19,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 20,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 21,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 22,
+        "routeId": "jirobo:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n43": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n44"
+        }
+      },
+      "n44": {
+        "depth": 9,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n45"
+        }
+      },
+      "n45": {
+        "depth": 10,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 11,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 12,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 13,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 14,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 15,
+        "routeId": "jirobo:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n27": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n28"
+        }
+      },
+      "n28": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:forward-light-route",
+        "edges": {
+          "forward+light": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "jirobo:beginner:directional-special-medium-route",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n29"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "jirobo:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "jirobo:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "jirobo:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "jirobo:beginner:medium-core",
+        "edges": {
+          "medium": "n16",
+          "light": "n51",
+          "heavy": "n59"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:medium-core",
+        "edges": {}
+      },
+      "n51": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n52"
+        }
+      },
+      "n52": {
+        "depth": 9,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n53"
+        }
+      },
+      "n53": {
+        "depth": 10,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 11,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 12,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 13,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 14,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 15,
+        "routeId": "jirobo:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n59": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n60"
+        }
+      },
+      "n60": {
+        "depth": 9,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n61"
+        }
+      },
+      "n61": {
+        "depth": 10,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n62"
+        }
+      },
+      "n62": {
+        "depth": 11,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n63"
+        }
+      },
+      "n63": {
+        "depth": 12,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 13,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 14,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 15,
+        "routeId": "jirobo:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n29": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n30"
+        }
+      },
+      "n30": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "jirobo:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n25",
+          "heavy": "n18",
+          "light": "n31"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "jirobo:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "jirobo:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "jirobo:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "jirobo:beginner:heavy-core",
+        "edges": {
+          "heavy": "n24",
+          "medium": "n75",
+          "light": "n67"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:heavy-core",
+        "edges": {}
+      },
+      "n67": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n68"
+        }
+      },
+      "n68": {
+        "depth": 9,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n69"
+        }
+      },
+      "n69": {
+        "depth": 10,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n70"
+        }
+      },
+      "n70": {
+        "depth": 11,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n71"
+        }
+      },
+      "n71": {
+        "depth": 12,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 13,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 14,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 15,
+        "routeId": "jirobo:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n75": {
+        "depth": 8,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n76"
+        }
+      },
+      "n76": {
+        "depth": 9,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n77"
+        }
+      },
+      "n77": {
+        "depth": 10,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n78"
+        }
+      },
+      "n78": {
+        "depth": 11,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n79"
+        }
+      },
+      "n79": {
+        "depth": 12,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 13,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 14,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 15,
+        "routeId": "jirobo:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:special-core",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:special-core",
+        "edges": {}
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n91": {
+        "depth": 1,
+        "routeId": "jirobo:beginner:advanced:advanced:001",
+        "edges": {
+          "down-forward+medium": "n94",
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:advanced:advanced:001",
+        "edges": {
+          "forward+light": "n93"
+        }
+      },
+      "n93": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:advanced:advanced:001",
+        "edges": {}
+      },
+      "n94": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:advanced:advanced:003",
+        "edges": {
+          "forward+light": "n95"
+        }
+      },
+      "n95": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:advanced:advanced:003",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 1,
+        "routeId": "jirobo:beginner:advanced:crouch:005",
+        "edges": {
+          "heavy": "n97",
+          "special": "n99"
+        }
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:advanced:crouch:005",
+        "edges": {
+          "forward+light": "n98"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:advanced:crouch:005",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:advanced:crouch:006",
+        "edges": {
+          "forward+light": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:advanced:crouch:006",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 1,
+        "routeId": "jirobo:beginner:advanced:launcher:007",
+        "edges": {
+          "forward+light": "n102",
+          "special": "n104"
+        }
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:advanced:launcher:007",
+        "edges": {
+          "forward+light": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:advanced:launcher:007",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 2,
+        "routeId": "jirobo:beginner:advanced:launcher:009",
+        "edges": {
+          "forward+light": "n105"
+        }
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "jirobo:beginner:advanced:launcher:009",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Jirobo Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Jirobo Left Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0003": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jirobo Launcher",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "launch"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0008": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "special",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0014": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Jirobo Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Jirobo Left Check",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Jirobo Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jirobo Launcher",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "launch"
+    },
+    "s0022": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0023": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0025": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Jirobo Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Jirobo Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Jirobo Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0030": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0031": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jirobo Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0033": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0034": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Jirobo Rising Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0035": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Jirobo Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Jirobo Burst",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jirobo Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jirobo Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Jirobo Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    }
+  }
 }

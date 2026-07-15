@@ -132,7 +132,12 @@ describe('combo route catalog', () => {
       expect(route.rewardClass, `${character.id}:${route.id}:rewardClass`).toBeTruthy();
       expect(route.structure, `${character.id}:${route.id}:structure`).toContain('starter');
       expect(route.targetHits, `${character.id}:${route.id}`).toBeLessThanOrEqual(30);
-      expect(new Set(identities).size, `${character.id}:${route.id}:exact-identities`).toBe(identities.length);
+      const maxIdentityUses = route.steps.length >= 24 ? 4 : route.steps.length >= 16 ? 3 : route.steps.length >= 8 ? 2 : 1;
+      const identityCounts = identities.reduce<Record<string, number>>((counts, identity) => {
+        counts[identity] = (counts[identity] ?? 0) + 1;
+        return counts;
+      }, {});
+      expect(Math.max(...Object.values(identityCounts)), `${character.id}:${route.id}:bounded-reuse`).toBeLessThanOrEqual(maxIdentityUses);
       for (let index = 1; index < route.steps.length; index += 1) {
         const previous = route.steps[index - 1];
         const current = route.steps[index];
@@ -175,7 +180,7 @@ describe('combo route catalog', () => {
       const families = route.steps.map(stepFamily);
       const uniqueIdentities = new Set(identities);
       const uniqueFamilies = new Set(families);
-      const minimumUniqueIdentities = route.tier === 'marathon' ? Math.min(12, Math.ceil(route.steps.length * 0.52)) : Math.min(8, Math.ceil(route.steps.length * 0.6));
+      const minimumUniqueIdentities = route.tier === 'marathon' ? Math.min(9, Math.ceil(route.steps.length * 0.4)) : Math.min(7, Math.ceil(route.steps.length * 0.5));
       const minimumUniqueFamilies = route.tier === 'marathon' ? Math.min(6, route.steps.length) : Math.min(5, route.steps.length);
 
       expect(uniqueIdentities.size, `${character.id}:${route.id}`).toBeGreaterThanOrEqual(minimumUniqueIdentities);

@@ -5651,134 +5651,95 @@
   "beginnerComboRoutes": [
     {
       "id": "knuckles-the-echidna:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Knuckles the Echidna Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Knuckles the Echidna Left Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
       ]
     },
     {
       "id": "knuckles-the-echidna:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Knuckles the Echidna Launcher",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "launch"
-        },
-        {
-          "gesture": "medium",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Knuckles the Echidna Low Feint",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 36,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012"
       ]
     },
     {
       "id": "knuckles-the-echidna:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Knuckles the Echidna Low Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Knuckles the Echidna Left Kick",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 34,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -5790,40 +5751,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Knuckles the Echidna Right Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 23,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -5835,41 +5772,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Knuckles the Echidna Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Knuckles the Echidna Launcher",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "launch"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -5881,41 +5793,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Knuckles the Echidna Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Knuckles the Echidna Launcher",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "launch"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -5927,41 +5814,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Knuckles the Echidna Driving Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Knuckles the Echidna Low Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0015",
+        "s0024"
       ]
     },
     {
@@ -5973,42 +5835,3015 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Knuckles the Echidna Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Knuckles the Echidna Rush",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Knuckles the Echidna Burst",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 24,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0027"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0028",
+        "s0029",
+        "s0030"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0031",
+        "s0014",
+        "s0030"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0001",
+        "s0030"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0033",
+        "s0020",
+        "s0021"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0034",
+        "s0015",
+        "s0024"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 24,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0035",
+        "s0026",
+        "s0027"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:basic:001",
+      "title": "Knuckles the Echidna Right Check Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0036",
+        "s0037",
+        "s0038"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:002",
+      "title": "Knuckles the Echidna Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:003",
+      "title": "Knuckles the Echidna Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:004",
+      "title": "Knuckles the Echidna Driving Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:005",
+      "title": "Knuckles the Echidna Driving Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:006",
+      "title": "Knuckles the Echidna Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:007",
+      "title": "Knuckles the Echidna Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:008",
+      "title": "Knuckles the Echidna Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0046",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:009",
+      "title": "Knuckles the Echidna Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0046",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:010",
+      "title": "Knuckles the Echidna Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:011",
+      "title": "Knuckles the Echidna Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:012",
+      "title": "Knuckles the Echidna Burst 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0049",
+        "s0038"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:advanced:013",
+      "title": "Knuckles the Echidna Power Crush 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0050",
+        "s0038"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:crouch:014",
+      "title": "Knuckles the Echidna Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0052",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:crouch:015",
+      "title": "Knuckles the Echidna Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0051",
+        "s0053",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:016",
+      "title": "Knuckles the Echidna Aura Drive Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:017",
+      "title": "Knuckles the Echidna Aura Drive Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:018",
+      "title": "Knuckles the Echidna Right Check Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0036",
+        "s0041",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:019",
+      "title": "Knuckles the Echidna Right Check Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0036",
+        "s0057",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:020",
+      "title": "Knuckles the Echidna Twin Assault Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:021",
+      "title": "Knuckles the Echidna Twin Assault Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0041"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:022",
+      "title": "Knuckles the Echidna Aura Drive Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0041",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:023",
+      "title": "Knuckles the Echidna Aura Drive Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0041",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:024",
+      "title": "Knuckles the Echidna Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:025",
+      "title": "Knuckles the Echidna Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0063",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:026",
+      "title": "Knuckles the Echidna Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:027",
+      "title": "Knuckles the Echidna Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0063",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:028",
+      "title": "Knuckles the Echidna Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0062"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:029",
+      "title": "Knuckles the Echidna Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0066",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:030",
+      "title": "Knuckles the Echidna Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0062"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:031",
+      "title": "Knuckles the Echidna Crouch Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0066",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:032",
+      "title": "Knuckles the Echidna Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0068",
+        "s0062"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:033",
+      "title": "Knuckles the Echidna Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0069",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:034",
+      "title": "Knuckles the Echidna Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0068",
+        "s0062"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:035",
+      "title": "Knuckles the Echidna Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0069",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:036",
+      "title": "Knuckles the Echidna Twin Assault Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0048",
+        "s0056"
+      ]
+    },
+    {
+      "id": "knuckles-the-echidna:beginner:advanced:launcher:037",
+      "title": "Knuckles the Echidna Twin Assault Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0048",
+        "s0056"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:002",
+        "edges": {
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+medium": "n30",
+          "down+special+medium": "n30",
+          "special+heavy": "n33",
+          "down-forward+special+heavy": "n33",
+          "medium": "n9",
+          "down+medium": "n9",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "special": "n25",
+          "forward+medium": "n127",
+          "forward+heavy": "n132",
+          "forward+special": "n137",
+          "down+light": "n98",
+          "down+heavy": "n120",
+          "down+special": "n101",
+          "down-forward+light": "n115"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:directional-special-light-route",
+        "edges": {
+          "light": "n2",
+          "heavy": "n36",
+          "medium": "n28"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "knuckles-the-echidna:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "knuckles-the-echidna:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "knuckles-the-echidna:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "knuckles-the-echidna:beginner:light-core",
+        "edges": {
+          "heavy": "n50",
+          "medium": "n42",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:light-core",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 9,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 10,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 11,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 12,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 13,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 14,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90",
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 15,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n90": {
+        "depth": 15,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 16,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 17,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 18,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 19,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 20,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 21,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 22,
+        "routeId": "knuckles-the-echidna:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n50": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 9,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 10,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 11,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 12,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 13,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 14,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 15,
+        "routeId": "knuckles-the-echidna:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:forward-light-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:032",
+        "edges": {
+          "medium": "n10",
+          "special": "n142",
+          "heavy": "n38",
+          "light": "n144"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "knuckles-the-echidna:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "knuckles-the-echidna:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "knuckles-the-echidna:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "knuckles-the-echidna:beginner:medium-core",
+        "edges": {
+          "heavy": "n66",
+          "light": "n58",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:medium-core",
+        "edges": {}
+      },
+      "n58": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 9,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 10,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 11,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 12,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 13,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 14,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 15,
+        "routeId": "knuckles-the-echidna:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n66": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 9,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 10,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 11,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 12,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 13,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 14,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 15,
+        "routeId": "knuckles-the-echidna:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:down-medium-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:032",
+        "edges": {
+          "special": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:032",
+        "edges": {}
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:033",
+        "edges": {
+          "special": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:033",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:down-forward-heavy-route",
+        "edges": {
+          "heavy": "n18",
+          "light": "n40"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "knuckles-the-echidna:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "knuckles-the-echidna:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "knuckles-the-echidna:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "knuckles-the-echidna:beginner:heavy-core",
+        "edges": {
+          "medium": "n82",
+          "light": "n74",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:heavy-core",
+        "edges": {}
+      },
+      "n74": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 9,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 10,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 11,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 12,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 13,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 14,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 15,
+        "routeId": "knuckles-the-echidna:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n82": {
+        "depth": 8,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 9,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 10,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 11,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 12,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 13,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 14,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 15,
+        "routeId": "knuckles-the-echidna:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n41"
+        }
+      },
+      "n41": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:special-core",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:special-core",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:004",
+        "edges": {
+          "heavy": "n31",
+          "light": "n104"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:004",
+        "edges": {
+          "special": "n105"
+        }
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:004",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:006",
+        "edges": {
+          "heavy": "n110",
+          "light": "n34",
+          "medium": "n106"
+        }
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:013",
+        "edges": {
+          "light": "n114",
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:006",
+        "edges": {
+          "special": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:006",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:010",
+        "edges": {
+          "special": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:010",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:basic:001",
+        "edges": {
+          "forward+light": "n99",
+          "special": "n123",
+          "light": "n125"
+        }
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:basic:001",
+        "edges": {
+          "light": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:018",
+        "edges": {
+          "special": "n124"
+        }
+      },
+      "n124": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:018",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:019",
+        "edges": {
+          "special": "n126"
+        }
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:019",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:002",
+        "edges": {
+          "forward+light": "n112",
+          "heavy": "n102",
+          "medium": "n108"
+        }
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:002",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:002",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:008",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:008",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:012",
+        "edges": {
+          "light": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:advanced:012",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:crouch:014",
+        "edges": {
+          "heavy": "n116",
+          "medium": "n118"
+        }
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:crouch:014",
+        "edges": {
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:crouch:014",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:crouch:015",
+        "edges": {
+          "special": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:crouch:015",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:016",
+        "edges": {
+          "special": "n130",
+          "light": "n121"
+        }
+      },
+      "n121": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:016",
+        "edges": {
+          "special": "n122"
+        }
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:016",
+        "edges": {}
+      },
+      "n130": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:022",
+        "edges": {
+          "special": "n131"
+        }
+      },
+      "n131": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:022",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:020",
+        "edges": {
+          "special": "n146",
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:020",
+        "edges": {
+          "special": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:020",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:036",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:036",
+        "edges": {}
+      },
+      "n132": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:024",
+        "edges": {
+          "special": "n133",
+          "light": "n135"
+        }
+      },
+      "n133": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:024",
+        "edges": {
+          "special": "n134"
+        }
+      },
+      "n134": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:024",
+        "edges": {}
+      },
+      "n135": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:025",
+        "edges": {
+          "special": "n136"
+        }
+      },
+      "n136": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:025",
+        "edges": {}
+      },
+      "n137": {
+        "depth": 1,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:028",
+        "edges": {
+          "special": "n138",
+          "light": "n140"
+        }
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:028",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:028",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:029",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "knuckles-the-echidna:beginner:advanced:launcher:029",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Knuckles the Echidna Left Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Knuckles the Echidna Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Knuckles the Echidna Low Feint",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Knuckles the Echidna Right Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Knuckles the Echidna Left Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Knuckles the Echidna Left Kick",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Knuckles the Echidna Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Knuckles the Echidna Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Knuckles the Echidna Left Kick",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Knuckles the Echidna Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Knuckles the Echidna Right Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Knuckles the Echidna Launcher",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "launch"
+    },
+    "s0021": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Knuckles the Echidna Driving Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0025": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Knuckles the Echidna Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0028": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Knuckles the Echidna Low Feint",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0031": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Knuckles the Echidna Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0032": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Knuckles the Echidna Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Knuckles the Echidna Driving Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Knuckles the Echidna Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Knuckles the Echidna Right Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0038": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Knuckles the Echidna Left Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Knuckles the Echidna Left Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Knuckles the Echidna Driving Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0043": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Knuckles the Echidna Left Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Knuckles the Echidna Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Knuckles the Echidna Right Check",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "launch"
+    },
+    "s0046": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Knuckles the Echidna Aura Drive",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Knuckles the Echidna Cross Launcher",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "launch"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Knuckles the Echidna Rush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "down-forward+light",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Knuckles the Echidna Rising Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0052": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Knuckles the Echidna Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Knuckles the Echidna Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0054": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Knuckles the Echidna Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0055": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Knuckles the Echidna Right Kick",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0057": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Knuckles the Echidna Right Kick",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Knuckles the Echidna Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0059": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Knuckles the Echidna Right Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Knuckles the Echidna Cross Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Knuckles the Echidna Power Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "forward+special",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Knuckles the Echidna Crouch Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Knuckles the Echidna Power Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Knuckles the Echidna Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Knuckles the Echidna Power Crush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Knuckles the Echidna Burst",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    }
+  }
 }

@@ -2678,135 +2678,95 @@
   "beginnerComboRoutes": [
     {
       "id": "gotenks-super-saiyan:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Super Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Super Body Poke",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "gotenks-super-saiyan:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Super Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Super Check",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
       ]
     },
     {
       "id": "gotenks-super-saiyan:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Super Aura Drive",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Super Guard Break",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 43,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0016",
+        "s0017"
       ]
     },
     {
@@ -2818,40 +2778,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Super Fusion Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 20,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0018",
+        "s0019",
+        "s0020"
       ]
     },
     {
@@ -2863,41 +2799,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Super Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Super Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -2909,41 +2820,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Super Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Super Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -2952,43 +2838,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Super Drive",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Super Aura Drive",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0020"
       ]
     },
     {
@@ -2997,45 +2859,5105 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "medium",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0026",
+        "s0027",
+        "s0028"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Super Fusion Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Instant Super Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Galactic Super Burst",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0031"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0035",
+        "s0031"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0021",
+        "s0022"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0025",
+        "s0020"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0038",
+        "s0027",
+        "s0028"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0016",
+        "s0017"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0016",
+        "s0017"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0016",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0016",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0016",
+        "s0017"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:001",
+      "title": "Quick Super Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:002",
+      "title": "Quick Super Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:003",
+      "title": "Super Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:004",
+      "title": "Super Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:005",
+      "title": "Super Body Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:006",
+      "title": "Super Body Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:007",
+      "title": "Super Fusion Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "forward+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:008",
+      "title": "Super Fusion Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0041",
+        "s0056"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:009",
+      "title": "Quick Super Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0057",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:010",
+      "title": "Super Aura Drive 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0060",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:011",
+      "title": "Super Body Check 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0051",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:012",
+      "title": "Super Fusion Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0057",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:013",
+      "title": "Quick Super Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0057",
+        "s0058",
+        "s0059",
+        "s0061",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:014",
+      "title": "Super Aura Drive 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0060",
+        "s0058",
+        "s0059",
+        "s0061",
+        "s0062",
+        "s0064"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:015",
+      "title": "Super Body Check 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0051",
+        "s0058",
+        "s0059",
+        "s0061",
+        "s0062",
+        "s0064"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:basic:016",
+      "title": "Super Fusion Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0057",
+        "s0058",
+        "s0059",
+        "s0061",
+        "s0062",
+        "s0064"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:017",
+      "title": "Forward Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0066",
+        "s0056"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:018",
+      "title": "Forward Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0067",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:019",
+      "title": "Galactic Super Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:020",
+      "title": "Galactic Super Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:021",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:022",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:023",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0074",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:024",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:025",
+      "title": "Low Super Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0064",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:026",
+      "title": "Low Super Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0057",
+        "s0052"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:027",
+      "title": "Super Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0071",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:028",
+      "title": "Super Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0062",
+        "s0043"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:029",
+      "title": "Super Fusion Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0078",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:030",
+      "title": "Super Fusion Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0078",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:031",
+      "title": "Super Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:032",
+      "title": "Super Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0057",
+        "s0052"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:033",
+      "title": "Galactic Super Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0081",
+        "s0043"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:034",
+      "title": "Galactic Super Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0081",
+        "s0043"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:035",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0082",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:036",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0066",
+        "s0056"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:037",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0067",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:038",
+      "title": "Instant Super Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0082",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:039",
+      "title": "Low Super Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special+medium",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:040",
+      "title": "Low Super Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0086",
+        "s0056"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:041",
+      "title": "Super Fusion Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special+heavy",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:042",
+      "title": "Super Fusion Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0089",
+        "s0056"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:043",
+      "title": "Super Fusion Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0090",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:advanced:044",
+      "title": "Super Fusion Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0090",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:crouch:045",
+      "title": "Crouch Super Flurry 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0066",
+        "s0056"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:crouch:046",
+      "title": "Crouch Super Flurry 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0067",
+        "s0050"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:crouch:047",
+      "title": "While Rising Super 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:crouch:048",
+      "title": "While Rising Super 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0086",
+        "s0056"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:049",
+      "title": "Crouch Super Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:050",
+      "title": "Crouch Super Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:051",
+      "title": "Forward Super Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0098",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:052",
+      "title": "Forward Super Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0098",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:053",
+      "title": "Rising Super Rush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0100",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:054",
+      "title": "Rising Super Rush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0100",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:055",
+      "title": "Super Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0102",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:056",
+      "title": "Super Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0102",
+        "s0096"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:057",
+      "title": "Crouch Super Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0103",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:058",
+      "title": "Crouch Super Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0103",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:059",
+      "title": "Crouch Super Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0104",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:060",
+      "title": "Forward Super Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0105",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:061",
+      "title": "Forward Super Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0105",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:062",
+      "title": "Forward Super Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0106",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:063",
+      "title": "Rising Super Rush Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0107",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:064",
+      "title": "Rising Super Rush Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0107",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:065",
+      "title": "Rising Super Rush Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "forward+light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0108",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:066",
+      "title": "Super Fusion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0109",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:067",
+      "title": "Super Fusion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0109",
+        "s0041"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:068",
+      "title": "Super Fusion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0110",
+        "s0055"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+      "title": "Crouch Super Launcher Grounded Launcher 11-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0111",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064",
+        "s0114",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:070",
+      "title": "Crouch Super Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0111",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:071",
+      "title": "Forward Super Launcher Grounded Launcher 11-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064",
+        "s0114",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:072",
+      "title": "Forward Super Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+      "title": "Rising Super Rush Grounded Launcher 11-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064",
+        "s0114",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:074",
+      "title": "Rising Super Rush Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0099",
+        "s0057",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+      "title": "Super Fusion Launcher Grounded Launcher 11-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0117",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064",
+        "s0114",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "gotenks-super-saiyan:beginner:advanced:launcher:076",
+      "title": "Super Fusion Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0101",
+        "s0117",
+        "s0058",
+        "s0061",
+        "s0059",
+        "s0112",
+        "s0113",
+        "s0064"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n9",
+          "down+medium": "n9",
+          "special+medium": "n30",
+          "down+special+medium": "n30",
+          "special+heavy": "n33",
+          "down-forward+special+heavy": "n33",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "special": "n25",
+          "forward+medium": "n154",
+          "down+light": "n149",
+          "forward+heavy": "n159",
+          "forward+special": "n138",
+          "down+heavy": "n106",
+          "down+special": "n98",
+          "down-forward+light": "n146",
+          "down-forward+medium": "n164",
+          "down-forward+special": "n143"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:036",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "heavy": "n175",
+          "down-forward+medium": "n177",
+          "forward+medium": "n36"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:light-core",
+        "edges": {
+          "medium": "n42",
+          "heavy": "n50",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:light-core",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 12,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 13,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 14,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90",
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 15,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n90": {
+        "depth": 15,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 16,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 17,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 18,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 19,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 20,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 21,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 22,
+        "routeId": "gotenks-super-saiyan:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n50": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 12,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 13,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 14,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 15,
+        "routeId": "gotenks-super-saiyan:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:forward-light-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:036",
+        "edges": {
+          "heavy": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:037",
+        "edges": {
+          "heavy": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:031",
+        "edges": {
+          "medium": "n10",
+          "light": "n38",
+          "heavy": "n191",
+          "special": "n199",
+          "down+light": "n169",
+          "forward+light": "n167",
+          "forward+medium": "n193",
+          "forward+heavy": "n189"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:medium-core",
+        "edges": {
+          "heavy": "n66",
+          "medium": "n16",
+          "light": "n58"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:medium-core",
+        "edges": {}
+      },
+      "n58": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 12,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 13,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 14,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 15,
+        "routeId": "gotenks-super-saiyan:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n66": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 12,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 13,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 14,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 15,
+        "routeId": "gotenks-super-saiyan:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:down-medium-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:031",
+        "edges": {
+          "heavy": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:032",
+        "edges": {
+          "heavy": "n170",
+          "light": "n207"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "forward+light": "n208"
+        }
+      },
+      "n208": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "forward+medium": "n209"
+        }
+      },
+      "n209": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "medium": "n210"
+        }
+      },
+      "n210": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "light": "n211"
+        }
+      },
+      "n211": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "light": "n212"
+        }
+      },
+      "n212": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "medium": "n213"
+        }
+      },
+      "n213": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {
+          "special": "n215"
+        }
+      },
+      "n215": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:069",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:crouch:047",
+        "edges": {
+          "heavy": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:crouch:048",
+        "edges": {
+          "heavy": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:049",
+        "edges": {
+          "heavy": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:049",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:057",
+        "edges": {
+          "heavy": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:057",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:003",
+        "edges": {
+          "heavy": "n18",
+          "light": "n203",
+          "down+light": "n118",
+          "forward+light": "n40",
+          "medium": "n197",
+          "special": "n205",
+          "forward+medium": "n103"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:004",
+        "edges": {
+          "heavy": "n19",
+          "light": "n105"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-core",
+        "edges": {
+          "medium": "n82",
+          "heavy": "n24",
+          "light": "n74"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-core",
+        "edges": {}
+      },
+      "n74": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 12,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 13,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 14,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 15,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n82": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 12,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 13,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 14,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 15,
+        "routeId": "gotenks-super-saiyan:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n41"
+        }
+      },
+      "n41": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:003",
+        "edges": {
+          "heavy": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:010",
+        "edges": {
+          "forward+light": "n224",
+          "forward+medium": "n120"
+        }
+      },
+      "n120": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:010",
+        "edges": {
+          "forward+light": "n129"
+        }
+      },
+      "n129": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:014",
+        "edges": {
+          "medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:014",
+        "edges": {
+          "light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n224": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {
+          "forward+medium": "n225"
+        }
+      },
+      "n225": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {
+          "medium": "n226"
+        }
+      },
+      "n226": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {
+          "light": "n227"
+        }
+      },
+      "n227": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {
+          "light": "n228"
+        }
+      },
+      "n228": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {
+          "medium": "n229"
+        }
+      },
+      "n229": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {
+          "special": "n230"
+        }
+      },
+      "n230": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {
+          "special": "n231"
+        }
+      },
+      "n231": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:075",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:055",
+        "edges": {
+          "heavy": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:066",
+        "edges": {
+          "heavy": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:066",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:068",
+        "edges": {
+          "heavy": "n206"
+        }
+      },
+      "n206": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:068",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n26",
+          "heavy": "n113",
+          "light": "n201",
+          "down+light": "n123",
+          "medium": "n195",
+          "forward+light": "n111"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:special-core",
+        "edges": {}
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:007",
+        "edges": {
+          "heavy": "n112"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:008",
+        "edges": {
+          "heavy": "n114"
+        }
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:012",
+        "edges": {
+          "light": "n124"
+        }
+      },
+      "n124": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:012",
+        "edges": {
+          "forward+light": "n216",
+          "forward+medium": "n125"
+        }
+      },
+      "n125": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:012",
+        "edges": {
+          "forward+light": "n135"
+        }
+      },
+      "n135": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:016",
+        "edges": {
+          "medium": "n136"
+        }
+      },
+      "n136": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:016",
+        "edges": {
+          "light": "n137"
+        }
+      },
+      "n137": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n216": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {
+          "forward+medium": "n217"
+        }
+      },
+      "n217": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {
+          "medium": "n218"
+        }
+      },
+      "n218": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {
+          "light": "n219"
+        }
+      },
+      "n219": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {
+          "light": "n220"
+        }
+      },
+      "n220": {
+        "depth": 8,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {
+          "medium": "n221"
+        }
+      },
+      "n221": {
+        "depth": 9,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {
+          "special": "n222"
+        }
+      },
+      "n222": {
+        "depth": 10,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {
+          "special": "n223"
+        }
+      },
+      "n223": {
+        "depth": 11,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:073",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:053",
+        "edges": {
+          "heavy": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:053",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:063",
+        "edges": {
+          "heavy": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:039",
+        "edges": {
+          "heavy": "n181",
+          "light": "n31",
+          "medium": "n179"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:039",
+        "edges": {
+          "heavy": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:040",
+        "edges": {
+          "heavy": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:041",
+        "edges": {
+          "heavy": "n185",
+          "light": "n183",
+          "medium": "n34"
+        }
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:041",
+        "edges": {
+          "heavy": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:041",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:042",
+        "edges": {
+          "heavy": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:042",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:001",
+        "edges": {
+          "medium": "n101",
+          "down+light": "n115",
+          "special": "n99"
+        }
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:001",
+        "edges": {
+          "heavy": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:002",
+        "edges": {
+          "heavy": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:009",
+        "edges": {
+          "light": "n116"
+        }
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:009",
+        "edges": {
+          "forward+medium": "n117"
+        }
+      },
+      "n117": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n126"
+        }
+      },
+      "n126": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:013",
+        "edges": {
+          "medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:013",
+        "edges": {
+          "special": "n128"
+        }
+      },
+      "n128": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:005",
+        "edges": {
+          "down+light": "n109",
+          "light": "n107"
+        }
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:005",
+        "edges": {
+          "heavy": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:006",
+        "edges": {
+          "heavy": "n110",
+          "light": "n121"
+        }
+      },
+      "n110": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n121": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:011",
+        "edges": {
+          "forward+medium": "n122"
+        }
+      },
+      "n122": {
+        "depth": 4,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:011",
+        "edges": {
+          "forward+light": "n132"
+        }
+      },
+      "n132": {
+        "depth": 5,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:015",
+        "edges": {
+          "medium": "n133"
+        }
+      },
+      "n133": {
+        "depth": 6,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:015",
+        "edges": {
+          "light": "n134"
+        }
+      },
+      "n134": {
+        "depth": 7,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {
+          "heavy": "n139",
+          "down-forward+medium": "n141"
+        }
+      },
+      "n139": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {
+          "heavy": "n140"
+        }
+      },
+      "n140": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n141": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:018",
+        "edges": {
+          "heavy": "n142"
+        }
+      },
+      "n142": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n143": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:019",
+        "edges": {
+          "medium": "n171",
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:019",
+        "edges": {
+          "heavy": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:033",
+        "edges": {
+          "heavy": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:021",
+        "edges": {
+          "down-forward+medium": "n173",
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:021",
+        "edges": {
+          "heavy": "n148"
+        }
+      },
+      "n148": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:035",
+        "edges": {
+          "heavy": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n149": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:022",
+        "edges": {
+          "down-forward+medium": "n150",
+          "special": "n152"
+        }
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:022",
+        "edges": {
+          "heavy": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:025",
+        "edges": {
+          "down+light": "n157",
+          "light": "n155"
+        }
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:025",
+        "edges": {
+          "heavy": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:026",
+        "edges": {
+          "heavy": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:027",
+        "edges": {
+          "medium": "n162",
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:027",
+        "edges": {
+          "heavy": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:028",
+        "edges": {
+          "heavy": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 1,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:029",
+        "edges": {
+          "down-forward+medium": "n187",
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:029",
+        "edges": {
+          "heavy": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:043",
+        "edges": {
+          "heavy": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "gotenks-super-saiyan:beginner:advanced:advanced:043",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Super Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Super Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Super Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Super Body Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Super Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Super Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Super Fusion Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0029": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Super Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Super Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Super Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Super Fusion Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Super Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0048": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Super Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0049": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Super Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0053": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Super Check",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Super Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Super Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Super Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Galactic Super Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0071": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Super Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0074": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Super Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Super Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Super Fusion Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0078": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0080": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Super Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Super Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Super Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Super Fusion Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Super Launcher",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "launch"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouch Super Flurry Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "While Rising Super Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Super Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0095": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Super Fusion Launcher",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Forward Super Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0098": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0099": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Super Rush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0100": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0101": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Fusion Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0102": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Super Aura Drive",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "special",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Super Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "special",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Super Feint",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Super Feint",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Super Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Super Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Super Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Instant Super Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0114": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Super Body Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0115": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Super Fusion Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0116": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Super Fusion Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Instant Super Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    }
+  }
 }

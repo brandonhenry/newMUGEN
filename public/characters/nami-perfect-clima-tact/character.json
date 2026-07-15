@@ -3330,134 +3330,95 @@
   "beginnerComboRoutes": [
     {
       "id": "nami-perfect-clima-tact:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Clima Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Clima Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
       ]
     },
     {
       "id": "nami-perfect-clima-tact:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Staff Swipe",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Perfect Staff Swipe",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
       ]
     },
     {
       "id": "nami-perfect-clima-tact:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Mirage Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Gust Sweep",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -3469,40 +3430,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Blue Tempo Staff Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Weather Staff Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -3514,41 +3451,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Clima Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Staff Swipe",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -3557,44 +3469,19 @@
       "family": "mixed",
       "gestures": [
         "special+light",
-        "medium",
+        "forward+medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Blue Tempo Staff Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Staff Swipe",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0023",
+        "s0021"
       ]
     },
     {
@@ -3606,41 +3493,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Gust Knockdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Mirage Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0024",
+        "s0015",
+        "s0019"
       ]
     },
     {
@@ -3652,42 +3514,5168 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Cyclone Tempo Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Clima Rush Jab",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Perfect Cyclone Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0019"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0030",
+        "s0031",
+        "s0029"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0006"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "forward+medium",
+        "heavy"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0034",
+        "s0023",
+        "s0021"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0035",
+        "s0015",
+        "s0019"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0026",
+        "s0019"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:001",
+      "title": "Low Gust Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:002",
+      "title": "Low Gust Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:003",
+      "title": "Perfect Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:004",
+      "title": "Perfect Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0044",
+        "s0045"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:005",
+      "title": "Perfect Staff Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:006",
+      "title": "Perfect Staff Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0040",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:007",
+      "title": "Weather Staff Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:008",
+      "title": "Weather Staff Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0040",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:009",
+      "title": "Low Gust Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:010",
+      "title": "Perfect Clima Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0050",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:011",
+      "title": "Perfect Staff Swipe 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0038",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:012",
+      "title": "Weather Staff Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0038",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:013",
+      "title": "Low Gust Sweep 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:014",
+      "title": "Perfect Clima Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0050",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052",
+        "s0054"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:015",
+      "title": "Perfect Staff Swipe 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "light",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0038",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:basic:016",
+      "title": "Weather Staff Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "special",
+        "forward+medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0038",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052",
+        "s0053"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:017",
+      "title": "Blue Tempo Staff Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0051",
+        "s0045"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:018",
+      "title": "Blue Tempo Staff Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0056",
+        "s0057"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:019",
+      "title": "Clima Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0057"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:020",
+      "title": "Clima Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0057"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:021",
+      "title": "Ducking Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0049",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:022",
+      "title": "Ducking Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0045"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:023",
+      "title": "Forward Clima Guard 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0049",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:024",
+      "title": "Forward Clima Guard 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0061",
+        "s0045"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:025",
+      "title": "Forward Staff Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0065"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:026",
+      "title": "Forward Staff Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0066",
+        "s0057"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:027",
+      "title": "Low Gust Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0068",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:028",
+      "title": "Low Mirage Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0068",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:029",
+      "title": "Perfect Mirage Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0057"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:030",
+      "title": "Perfect Mirage Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0057"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:031",
+      "title": "Clima Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0049",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:032",
+      "title": "Clima Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0049",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:033",
+      "title": "Low Gust Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0048",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:034",
+      "title": "Low Mirage Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0048",
+        "s0039"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:035",
+      "title": "Overdrive Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:036",
+      "title": "Overdrive Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0074",
+        "s0045"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:037",
+      "title": "Overdrive Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0073",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:038",
+      "title": "Overdrive Clima Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0074",
+        "s0045"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:039",
+      "title": "Perfect Cyclone Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:040",
+      "title": "Perfect Cyclone Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:041",
+      "title": "Perfect Cyclone Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:042",
+      "title": "Perfect Cyclone Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:043",
+      "title": "Perfect Mirage Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0080",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:advanced:044",
+      "title": "Perfect Mirage Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0080",
+        "s0043"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:crouch:045",
+      "title": "Crouching Weather Staff 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0057"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:crouch:046",
+      "title": "Crouching Weather Staff 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0083",
+        "s0065"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:crouch:047",
+      "title": "Rising Gust Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0077"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:crouch:048",
+      "title": "Rising Gust Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0086",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:crouch:049",
+      "title": "While-Rising Staff Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0077"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:crouch:050",
+      "title": "While-Rising Staff Swipe 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0089",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:051",
+      "title": "Crouch Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0077",
+        "s0091"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:052",
+      "title": "Crouch Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:053",
+      "title": "Crouch Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0077",
+        "s0091"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:054",
+      "title": "Crouch Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:055",
+      "title": "Diagonal Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0065",
+        "s0091"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:056",
+      "title": "Diagonal Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:057",
+      "title": "Diagonal Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0065",
+        "s0091"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:058",
+      "title": "Diagonal Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:059",
+      "title": "Thunder Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0077",
+        "s0091"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:060",
+      "title": "Thunder Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:061",
+      "title": "Thunder Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0077",
+        "s0091"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:062",
+      "title": "Thunder Cloud Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0079"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+      "title": "Crouch Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:064",
+      "title": "Crouch Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:065",
+      "title": "Crouch Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:066",
+      "title": "Crouch Cloud Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:067",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:068",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:069",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:070",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+      "title": "Thunder Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:launcher:072",
+      "title": "Thunder Cloud Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:073",
+      "title": "Crouch Cloud Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5568181818181818,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:074",
+      "title": "Crouch Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:075",
+      "title": "Crouch Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:076",
+      "title": "Crouch Cloud Launcher Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0077",
+        "s0103"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:077",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5568181818181818,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:078",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:079",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:080",
+      "title": "Diagonal Cloud Launcher Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0065",
+        "s0103"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:081",
+      "title": "Thunder Cloud Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 37,
+      "damageScale": 0.5568181818181818,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:082",
+      "title": "Thunder Cloud Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 46,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0068",
+        "s0048",
+        "s0097",
+        "s0061",
+        "s0098",
+        "s0053",
+        "s0099",
+        "s0100",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "nami-perfect-clima-tact:beginner:advanced:tornado:083",
+      "title": "Thunder Cloud Launcher Grounded Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0077",
+        "s0103"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n25",
+          "special+light": "n25",
+          "forward+special+light": "n25",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+medium": "n32",
+          "down+special+medium": "n32",
+          "special+heavy": "n35",
+          "down-forward+special+heavy": "n35",
+          "medium": "n9",
+          "down+medium": "n9",
+          "light": "n1",
+          "forward+light": "n1",
+          "down+light": "n146",
+          "forward+medium": "n151",
+          "forward+heavy": "n110",
+          "forward+special": "n105",
+          "down+heavy": "n100",
+          "down+special": "n172",
+          "down-forward+light": "n163",
+          "down-forward+medium": "n177",
+          "down-forward+special": "n115"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:019",
+        "edges": {
+          "light": "n2",
+          "special": "n166",
+          "down-forward+medium": "n184",
+          "medium": "n28",
+          "heavy": "n38",
+          "forward+light": "n144"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:light-core",
+        "edges": {
+          "heavy": "n52",
+          "medium": "n44",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:light-core",
+        "edges": {}
+      },
+      "n44": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 13,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 14,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92",
+          "medium": "n51"
+        }
+      },
+      "n51": {
+        "depth": 15,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n92": {
+        "depth": 15,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 16,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 17,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 18,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 19,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 20,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 21,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n99"
+        }
+      },
+      "n99": {
+        "depth": 22,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n52": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 13,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 14,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 15,
+        "routeId": "nami-perfect-clima-tact:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:forward-light-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:025",
+        "edges": {
+          "medium": "n10",
+          "light": "n192",
+          "heavy": "n190",
+          "special": "n194",
+          "down-forward+medium": "n156",
+          "forward+light": "n40",
+          "forward+medium": "n158"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-core",
+        "edges": {
+          "heavy": "n68",
+          "medium": "n16",
+          "light": "n60"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-core",
+        "edges": {}
+      },
+      "n60": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 13,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 14,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 15,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n68": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 13,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 14,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n75"
+        }
+      },
+      "n75": {
+        "depth": 15,
+        "routeId": "nami-perfect-clima-tact:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:down-medium-route",
+        "edges": {
+          "special": "n41"
+        }
+      },
+      "n41": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n190": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:049",
+        "edges": {
+          "special": "n191"
+        }
+      },
+      "n191": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n192": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:050",
+        "edges": {
+          "special": "n193",
+          "down+light": "n200"
+        }
+      },
+      "n193": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n201"
+        }
+      },
+      "n201": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "forward+light": "n202"
+        }
+      },
+      "n202": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "forward+medium": "n203"
+        }
+      },
+      "n203": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n204"
+        }
+      },
+      "n204": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n205"
+        }
+      },
+      "n205": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n206"
+        }
+      },
+      "n206": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n207"
+        }
+      },
+      "n207": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n208"
+        }
+      },
+      "n208": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n209"
+        }
+      },
+      "n209": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n194": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:051",
+        "edges": {
+          "medium": "n220",
+          "special": "n195"
+        }
+      },
+      "n195": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:051",
+        "edges": {}
+      },
+      "n220": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:tornado:076",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:028",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n198",
+          "special": "n196",
+          "down+light": "n42",
+          "light": "n170"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-core",
+        "edges": {
+          "medium": "n84",
+          "heavy": "n24",
+          "light": "n76"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-core",
+        "edges": {}
+      },
+      "n76": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 13,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 14,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n83"
+        }
+      },
+      "n83": {
+        "depth": 15,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n84": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 13,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 14,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n91"
+        }
+      },
+      "n91": {
+        "depth": 15,
+        "routeId": "nami-perfect-clima-tact:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n162",
+          "light": "n43"
+        }
+      },
+      "n43": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n196": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:059",
+        "edges": {
+          "medium": "n221",
+          "special": "n197"
+        }
+      },
+      "n197": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:059",
+        "edges": {}
+      },
+      "n221": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:tornado:083",
+        "edges": {}
+      },
+      "n198": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:060",
+        "edges": {
+          "special": "n199",
+          "down+light": "n210"
+        }
+      },
+      "n199": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:060",
+        "edges": {}
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n211"
+        }
+      },
+      "n211": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+light": "n212"
+        }
+      },
+      "n212": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+medium": "n213"
+        }
+      },
+      "n213": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n215"
+        }
+      },
+      "n215": {
+        "depth": 8,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n216"
+        }
+      },
+      "n216": {
+        "depth": 9,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n217"
+        }
+      },
+      "n217": {
+        "depth": 10,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n218"
+        }
+      },
+      "n218": {
+        "depth": 11,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n219"
+        }
+      },
+      "n219": {
+        "depth": 12,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:launcher:071",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n26",
+          "medium": "n188",
+          "heavy": "n186",
+          "forward+medium": "n30",
+          "light": "n142"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:special-core",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n141",
+          "heavy": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:047",
+        "edges": {
+          "special": "n187"
+        }
+      },
+      "n187": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n188": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n189"
+        }
+      },
+      "n189": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:027",
+        "edges": {
+          "heavy": "n33",
+          "down+light": "n160",
+          "light": "n168"
+        }
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:directional-special-heavy-route",
+        "edges": {
+          "light": "n36"
+        }
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:001",
+        "edges": {
+          "down+light": "n101",
+          "light": "n103"
+        }
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n102",
+          "light": "n120"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:009",
+        "edges": {
+          "forward+medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:013",
+        "edges": {
+          "forward+light": "n130"
+        }
+      },
+      "n130": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:013",
+        "edges": {
+          "light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n106",
+          "down+light": "n122",
+          "forward+medium": "n108"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n124"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:010",
+        "edges": {
+          "forward+medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:014",
+        "edges": {
+          "forward+light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:014",
+        "edges": {
+          "medium": "n134"
+        }
+      },
+      "n134": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:005",
+        "edges": {
+          "down+light": "n111",
+          "light": "n113"
+        }
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n112",
+          "light": "n125"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n126"
+        }
+      },
+      "n126": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:011",
+        "edges": {
+          "forward+medium": "n135"
+        }
+      },
+      "n135": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:015",
+        "edges": {
+          "forward+light": "n136"
+        }
+      },
+      "n136": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:015",
+        "edges": {
+          "light": "n137"
+        }
+      },
+      "n137": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n114"
+        }
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:007",
+        "edges": {
+          "down+light": "n116",
+          "light": "n118"
+        }
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n117",
+          "light": "n127"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:012",
+        "edges": {
+          "special": "n128"
+        }
+      },
+      "n128": {
+        "depth": 4,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:012",
+        "edges": {
+          "forward+medium": "n138"
+        }
+      },
+      "n138": {
+        "depth": 5,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:016",
+        "edges": {
+          "forward+light": "n139"
+        }
+      },
+      "n139": {
+        "depth": 6,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:016",
+        "edges": {
+          "light": "n140"
+        }
+      },
+      "n140": {
+        "depth": 7,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n147",
+          "forward+medium": "n149"
+        }
+      },
+      "n147": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n148"
+        }
+      },
+      "n148": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n149": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n150"
+        }
+      },
+      "n150": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n151": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n152",
+          "forward+medium": "n154"
+        }
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n182",
+          "light": "n164"
+        }
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:043",
+        "edges": {
+          "special": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n173",
+          "forward+medium": "n175"
+        }
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:036",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 1,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:039",
+        "edges": {
+          "medium": "n180",
+          "heavy": "n178"
+        }
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:040",
+        "edges": {
+          "special": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "nami-perfect-clima-tact:beginner:advanced:advanced:040",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clima Guard",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Perfect Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Perfect Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mirage Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Gust Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mirage Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Weather Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Gust Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Perfect Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0030": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Gust Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mirage Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Gust Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Gust Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Perfect Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0046": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Perfect Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0047": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Weather Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clima Guard",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Perfect Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Perfect Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0056": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Perfect Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Clima Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0059": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Weather Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clima Guard",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Cloud Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0066": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Weather Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Gust Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Mirage Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "down-forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Perfect Mirage Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0071": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Weather Staff Kick",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Clima Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Swipe",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Perfect Cyclone Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Thunder Cloud Launcher",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "launch"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouching Weather Staff Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Weather Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Cloud Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rising Gust Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Thunder Cloud Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "While-Rising Staff Swipe Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Thunder Cloud Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Crouch Cloud Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Cyclone Tempo Crush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Diagonal Cloud Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Thunder Cloud Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "juggle"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Clima Guard",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Blue Tempo Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Perfect Staff Swipe",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Weather Staff Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Clima Jab",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Gust Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Cyclone Tempo Twirl",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    }
+  }
 }

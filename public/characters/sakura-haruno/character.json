@@ -3373,135 +3373,95 @@
   "beginnerComboRoutes": [
     {
       "id": "sakura-haruno:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Chakra Jab",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "sakura-haruno:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Twin Chakra Assault",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Twin Chakra Assault",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 37,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
       ]
     },
     {
       "id": "sakura-haruno:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Heel Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "1+3",
-          "animationKey": "cmd:1+3",
-          "label": "Chakra Uppercut Launcher",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "launch"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 32,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
       ]
     },
     {
@@ -3513,41 +3473,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Driving Sweep",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 20,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015"
       ]
     },
     {
@@ -3559,41 +3494,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Twin Chakra Assault",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0007",
+        "s0012"
       ]
     },
     {
@@ -3605,41 +3515,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Twin Chakra Assault",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0016",
+        "s0007",
+        "s0012"
       ]
     },
     {
@@ -3651,40 +3536,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Driving Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Heel Sweep",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -3696,42 +3557,2832 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Quick Jab",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Monster Strength Crush",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0020",
+        "s0004",
+        "s0019"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0021",
+        "s0007",
+        "s0022"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0023",
+        "s0010",
+        "s0022"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0022"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0026",
+        "s0007",
+        "s0012"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0027",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0028",
+        "s0004",
+        "s0019"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0011",
+        "s0012"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:basic:001",
+      "title": "Quick Chakra Jab 3-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:002",
+      "title": "Advancing Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:003",
+      "title": "Advancing Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:004",
+      "title": "Ducking Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:005",
+      "title": "Ducking Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:006",
+      "title": "Chakra Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:007",
+      "title": "Chakra Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:008",
+      "title": "Chakra Quick Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:009",
+      "title": "Chakra Quick Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:010",
+      "title": "Cherry Blossom Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:011",
+      "title": "Cherry Blossom Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:012",
+      "title": "Diagonal Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:013",
+      "title": "Diagonal Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:014",
+      "title": "Low Driving Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:015",
+      "title": "Low Driving Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:016",
+      "title": "Monster Strength Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:017",
+      "title": "Monster Strength Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:018",
+      "title": "Sidestep Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:019",
+      "title": "Sidestep Low Vault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:020",
+      "title": "Diagonal Low Vault 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0033",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:021",
+      "title": "Ducking Low Vault 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:022",
+      "title": "Monster Strength Crush 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0044",
+        "s0045",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:023",
+      "title": "Sidestep Low Vault 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0036",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:024",
+      "title": "Chakra Aura Drive 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:025",
+      "title": "Cherry Blossom Low Vault 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0033",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:026",
+      "title": "Overdrive Chakra Jab 3-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0048",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:advanced:027",
+      "title": "Low Driving Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special+medium",
+        "medium",
+        "down-forward+medium",
+        "down+light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0049",
+        "s0038",
+        "s0031"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:crouch:028",
+      "title": "Crouch Chakra Hook 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0051",
+        "s0034"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:launcher:029",
+      "title": "Chakra Uppercut Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:launcher:030",
+      "title": "Chakra Uppercut Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:launcher:031",
+      "title": "Crouch Chakra Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0056",
+        "s0054"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:launcher:032",
+      "title": "Crouch Chakra Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0055",
+        "s0056",
+        "s0054"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:launcher:033",
+      "title": "Sakura Haruno Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0058",
+        "s0054"
+      ]
+    },
+    {
+      "id": "sakura-haruno:beginner:advanced:launcher:034",
+      "title": "Sakura Haruno Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0058",
+        "s0054"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:002",
+        "edges": {
+          "medium": "n9",
+          "down+medium": "n9",
+          "special+medium": "n30",
+          "down+special+medium": "n30",
+          "special": "n25",
+          "special+heavy": "n25",
+          "down-forward+special+heavy": "n25",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "forward+medium": "n138",
+          "forward+heavy": "n113",
+          "down+heavy": "n102",
+          "forward+special": "n99",
+          "down+light": "n135",
+          "down+special": "n96",
+          "down-forward+light": "n129",
+          "down-forward+medium": "n105",
+          "down-forward+special": "n110",
+          "forward+special+medium": "n120"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:008",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "down-forward+medium": "n108"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "sakura-haruno:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "sakura-haruno:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "sakura-haruno:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "sakura-haruno:beginner:light-core",
+        "edges": {
+          "medium": "n40",
+          "light": "n8",
+          "heavy": "n48"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:light-core",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 9,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 10,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 11,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 12,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 13,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 14,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88",
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 15,
+        "routeId": "sakura-haruno:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 16,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 17,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 18,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 19,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 20,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 21,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 22,
+        "routeId": "sakura-haruno:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n48": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 9,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 10,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 11,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 12,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 13,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 14,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 15,
+        "routeId": "sakura-haruno:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:directional-special-light-route",
+        "edges": {
+          "special": "n35",
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:008",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:008",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:launcher:031",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n36",
+          "light": "n141"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "sakura-haruno:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "sakura-haruno:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "sakura-haruno:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "sakura-haruno:beginner:medium-core",
+        "edges": {
+          "heavy": "n64",
+          "medium": "n16",
+          "light": "n56"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:medium-core",
+        "edges": {}
+      },
+      "n56": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 9,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 10,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 11,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 12,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 13,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 14,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 15,
+        "routeId": "sakura-haruno:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n64": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 9,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 10,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 11,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 12,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 13,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 14,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 15,
+        "routeId": "sakura-haruno:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:down-medium-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n141": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:launcher:031",
+        "edges": {
+          "special": "n142"
+        }
+      },
+      "n142": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:launcher:031",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:down-forward-heavy-route",
+        "edges": {
+          "heavy": "n18",
+          "down+light": "n38"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "sakura-haruno:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "sakura-haruno:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "sakura-haruno:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "sakura-haruno:beginner:heavy-core",
+        "edges": {
+          "medium": "n80",
+          "heavy": "n24",
+          "light": "n72"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:heavy-core",
+        "edges": {}
+      },
+      "n72": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 9,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 10,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 11,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 12,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 13,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 14,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 15,
+        "routeId": "sakura-haruno:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n80": {
+        "depth": 8,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 9,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 10,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 11,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 12,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 13,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 14,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 15,
+        "routeId": "sakura-haruno:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n26",
+          "down-forward+medium": "n118",
+          "light": "n33"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:special-core",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n119",
+          "down+light": "n125"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:014",
+        "edges": {
+          "down-forward+medium": "n116",
+          "heavy": "n31",
+          "medium": "n132"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n132": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:027",
+        "edges": {
+          "down-forward+medium": "n133"
+        }
+      },
+      "n133": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:027",
+        "edges": {
+          "down+light": "n134"
+        }
+      },
+      "n134": {
+        "depth": 4,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:basic:001",
+        "edges": {
+          "down-forward+medium": "n97"
+        }
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:basic:001",
+        "edges": {
+          "down+light": "n98"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:002",
+        "edges": {
+          "down-forward+medium": "n100"
+        }
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:002",
+        "edges": {
+          "special": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:002",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:004",
+        "edges": {
+          "down-forward+medium": "n103"
+        }
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:004",
+        "edges": {
+          "special": "n104",
+          "down+light": "n124"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:004",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:006",
+        "edges": {
+          "down-forward+medium": "n106"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:006",
+        "edges": {
+          "special": "n107",
+          "down+light": "n127"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:006",
+        "edges": {}
+      },
+      "n127": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:010",
+        "edges": {
+          "down-forward+medium": "n111"
+        }
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:010",
+        "edges": {
+          "special": "n112",
+          "down+light": "n128"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:010",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:012",
+        "edges": {
+          "down-forward+medium": "n114"
+        }
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:012",
+        "edges": {
+          "special": "n115",
+          "down+light": "n123"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:012",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:018",
+        "edges": {
+          "down-forward+medium": "n121"
+        }
+      },
+      "n121": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n122",
+          "down+light": "n126"
+        }
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n129": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:026",
+        "edges": {
+          "down-forward+medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:026",
+        "edges": {
+          "down+light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n135": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:crouch:028",
+        "edges": {
+          "down-forward+medium": "n136"
+        }
+      },
+      "n136": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:crouch:028",
+        "edges": {
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:crouch:028",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 1,
+        "routeId": "sakura-haruno:beginner:advanced:launcher:029",
+        "edges": {
+          "medium": "n139"
+        }
+      },
+      "n139": {
+        "depth": 2,
+        "routeId": "sakura-haruno:beginner:advanced:launcher:029",
+        "edges": {
+          "special": "n140"
+        }
+      },
+      "n140": {
+        "depth": 3,
+        "routeId": "sakura-haruno:beginner:advanced:launcher:029",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Chakra Jab",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Chakra Punch",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Chakra Jab",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Quick Jab",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Twin Chakra Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Twin Chakra Assault",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0009": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Heel Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Chakra Uppercut Launcher",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "launch"
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Heel Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0013": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Driving Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0016": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Driving Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Heel Sweep",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0023": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Twin Chakra Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Heel Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Chakra Jab",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Driving Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Chakra Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "launch"
+    },
+    "s0031": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Chakra Jab",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0032": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+special",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Vault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0034": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0035": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Low Vault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Chakra Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "launch"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "launch"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "down-forward+special",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Cherry Blossom Low Vault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Vault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Driving Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "launch"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "forward+special+medium",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Vault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0047": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Overdrive Chakra Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "launch"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Chakra Aura Drive",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Chakra Hook",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Sakura Haruno Launcher",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "launch"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Chakra Uppercut Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Chakra Aura Drive",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Monster Strength Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0055": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Chakra Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Chakra Aura Drive",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0057": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sakura Haruno Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Chakra Aura Drive",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

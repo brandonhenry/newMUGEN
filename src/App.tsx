@@ -28192,6 +28192,10 @@ function TrainingTrialPanel({
   onBack: () => void;
   onResume: () => void;
 }) {
+  const [trialSearch, setTrialSearch] = useState('');
+  const [comboCategoryFilter, setComboCategoryFilter] = useState('all');
+  const [comboTierFilter, setComboTierFilter] = useState('all');
+  const [comboResourceFilter, setComboResourceFilter] = useState('all');
   const categoryOrder: TrainingTrialDefinition['category'][] = [
     'movement',
     'offense',
@@ -28206,9 +28210,21 @@ function TrainingTrialPanel({
     'oki',
     'combo'
   ];
+  const visibleTrials = trials.filter((trial) => {
+    if (mode !== 'combos') return true;
+    const route = trial.sourceBeginnerRoute;
+    const search = trialSearch.trim().toLowerCase();
+    if (search && !`${trial.title} ${route?.category ?? ''} ${route?.tier ?? ''}`.toLowerCase().includes(search)) return false;
+    if (comboCategoryFilter !== 'all' && route?.category !== comboCategoryFilter) return false;
+    if (comboTierFilter !== 'all' && route?.tier !== comboTierFilter) return false;
+    if (comboResourceFilter === 'zero' && !trial.id.endsWith(':no-ki')) return false;
+    if (comboResourceFilter === 'full' && !trial.id.endsWith(':ki')) return false;
+    if (comboResourceFilter === 'none' && (trial.id.endsWith(':ki') || trial.id.endsWith(':no-ki'))) return false;
+    return true;
+  });
   const groupedTrials = categoryOrder.map((category) => ({
     category,
-    trials: trials.filter((trial) => trial.category === category)
+    trials: visibleTrials.filter((trial) => trial.category === category)
   })).filter((group) => group.trials.length > 0);
   const modeLabels: Partial<Record<TrainingTrialMode, string>> = {
     free: 'Free Training',
@@ -28270,6 +28286,39 @@ function TrainingTrialPanel({
             </button>
           ))}
         </div>
+        {mode === 'combos' && (
+          <div className="combo-trial-filters" aria-label="Combo trial filters">
+            <input
+              type="search"
+              value={trialSearch}
+              onChange={(event) => setTrialSearch(event.target.value)}
+              placeholder="Search routes"
+              aria-label="Search combo routes"
+            />
+            <select value={comboCategoryFilter} onChange={(event) => setComboCategoryFilter(event.target.value)} aria-label="Combo category">
+              <option value="all">All categories</option>
+              <option value="basic">Basic links</option>
+              <option value="advanced">Advanced</option>
+              <option value="crouch">Crouch</option>
+              <option value="launcher">Launcher</option>
+              <option value="tornado">Tornado</option>
+              <option value="counterHit">Counter hit</option>
+            </select>
+            <select value={comboTierFilter} onChange={(event) => setComboTierFilter(event.target.value)} aria-label="Combo length">
+              <option value="all">All lengths</option>
+              <option value="short">Short</option>
+              <option value="medium">Medium</option>
+              <option value="long">Long</option>
+              <option value="marathon">Marathon</option>
+            </select>
+            <select value={comboResourceFilter} onChange={(event) => setComboResourceFilter(event.target.value)} aria-label="Combo resource">
+              <option value="all">All resources</option>
+              <option value="zero">Zero Ki</option>
+              <option value="full">Full Ki</option>
+              <option value="none">No Ki branch</option>
+            </select>
+          </div>
+        )}
         {mode === 'free' && (
           <section>
             <strong>Free Training</strong>
@@ -28299,7 +28348,9 @@ function TrainingTrialPanel({
                     <strong>{trial.title}</strong>
                     <small>
                       Lv {trial.difficulty}
-                      {trial.sourceComboRoute ? ` | ${trial.sourceComboRoute.estimatedHits} hits` : ` | ${trainingTrialCategoryLabels[trial.category]}`}
+                      {trial.sourceComboRoute ? ` | ${trial.sourceComboRoute.estimatedHits} hits`
+                        : trial.sourceBeginnerRoute ? ` | ${trial.sourceBeginnerRoute.estimatedHits ?? trial.steps.filter((step) => step.kind === 'impact').length} hits | ${trial.sourceBeginnerRoute.tier ?? 'short'}`
+                        : ` | ${trainingTrialCategoryLabels[trial.category]}`}
                     </small>
                   </span>
                 </button>

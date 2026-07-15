@@ -3596,135 +3596,95 @@
   "beginnerComboRoutes": [
     {
       "id": "train-heartnet:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hades Quick Shot",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Hades Shot",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "train-heartnet:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sweeper Slide Shot",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Hades Burst",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 34,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
       ]
     },
     {
       "id": "train-heartnet:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Homing Low Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Gunner Sweep",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 32,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
       ]
     },
     {
@@ -3736,39 +3696,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Sweeper Slide Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Sweeper Slide Kick",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0016",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3780,41 +3717,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hades Quick Shot",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sweeper Slide Shot",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0019",
+        "s0015"
       ]
     },
     {
@@ -3826,41 +3738,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hades Quick Shot",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sweeper Slide Shot",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0020",
+        "s0019",
+        "s0015"
       ]
     },
     {
@@ -3869,44 +3756,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Homing Low Feint",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0021",
+        "s0022",
+        "s0018"
       ]
     },
     {
@@ -3915,45 +3777,6077 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0018"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0027"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0028",
+        "s0029",
+        "s0027"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0030",
+        "s0031",
+        "s0027"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0019",
+        "s0015"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Homing Low Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Hades Quick Shot",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Sweeper Knockdown",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0033",
+        "s0022",
+        "s0018"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0034",
+        "s0024",
+        "s0018"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0010"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0006",
+        "s0006",
+        "s0006",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:001",
+      "title": "Hades Body Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:002",
+      "title": "Hades Body Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:003",
+      "title": "Low Gunner Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:004",
+      "title": "Low Gunner Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:005",
+      "title": "Quick Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:006",
+      "title": "Quick Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0044",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:007",
+      "title": "Sweeper Slide Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:008",
+      "title": "Sweeper Slide Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:009",
+      "title": "Hades Body Shot 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0038",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:010",
+      "title": "Low Gunner Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0038",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:011",
+      "title": "Quick Hades Shot 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0050",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:012",
+      "title": "Sweeper Slide Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0038",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:013",
+      "title": "Hades Body Shot 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0038",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:014",
+      "title": "Low Gunner Sweep 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0038",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:015",
+      "title": "Quick Hades Shot 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0050",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0053"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:basic:016",
+      "title": "Sweeper Slide Kick 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0038",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:017",
+      "title": "Black Cat Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:018",
+      "title": "Black Cat Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:019",
+      "title": "Ducking Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0057",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:020",
+      "title": "Ducking Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0049",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:021",
+      "title": "Forward Hades Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:022",
+      "title": "Forward Hades Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0057",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:023",
+      "title": "Forward Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0062",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:024",
+      "title": "Forward Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0063",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:025",
+      "title": "Hades Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:026",
+      "title": "Hades Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:027",
+      "title": "Hades Quick Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0057",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:028",
+      "title": "Homing Low Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0052",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:029",
+      "title": "Homing Low Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0050",
+        "s0068"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:030",
+      "title": "Overdrive Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:031",
+      "title": "Overdrive Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:032",
+      "title": "Sweeper Slide Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:033",
+      "title": "Sweeper Slide Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0050",
+        "s0039"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:034",
+      "title": "Black Cat Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0073",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:035",
+      "title": "Black Cat Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0073",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:036",
+      "title": "Hades Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0074",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:037",
+      "title": "Hades Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0074",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:038",
+      "title": "Hades Quick Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0049",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:039",
+      "title": "Low Sweeper Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0076",
+        "s0039"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:040",
+      "title": "Low Sweeper Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0077",
+        "s0078"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:041",
+      "title": "Low Sweeper Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0076",
+        "s0039"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:042",
+      "title": "Low Sweeper Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0075",
+        "s0077",
+        "s0078"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:043",
+      "title": "Overdrive Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:advanced:044",
+      "title": "Overdrive Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:045",
+      "title": "Crouch Hades Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0057",
+        "s0045"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:046",
+      "title": "Crouch Hades Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0049",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:047",
+      "title": "Rising Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0081",
+        "s0078"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:048",
+      "title": "Rising Hades Shot 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0082",
+        "s0060"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:049",
+      "title": "Rising Sweeper Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0084",
+        "s0039"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:050",
+      "title": "Rising Sweeper Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0085",
+        "s0078"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:051",
+      "title": "Homing Low Feint 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 35,
+      "damageScale": 0.5775,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light",
+        "down+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0086",
+        "s0050",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052",
+        "s0050",
+        "s0087",
+        "s0088"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:052",
+      "title": "Homing Low Feint 11-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 11,
+      "estimatedDamage": 35,
+      "damageScale": 0.5499999999999999,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light",
+        "light",
+        "down+light",
+        "medium",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0086",
+        "s0050",
+        "s0048",
+        "s0049",
+        "s0051",
+        "s0052",
+        "s0050",
+        "s0087",
+        "s0088",
+        "s0052"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:crouch:053",
+      "title": "Homing Low Feint 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "down+light",
+        "light",
+        "medium",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0067",
+        "s0086",
+        "s0050",
+        "s0048",
+        "s0049",
+        "s0051"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:054",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0091"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:055",
+      "title": "Crouch Hades Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0091"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:056",
+      "title": "Crouch Hades Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0091"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:057",
+      "title": "Crouch Hades Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0094",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:058",
+      "title": "Crouch Hades Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0094",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:059",
+      "title": "Crouch Hades Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0095",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:060",
+      "title": "Diagonal Hades Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0097",
+        "s0091"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:061",
+      "title": "Diagonal Hades Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0097",
+        "s0091"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:062",
+      "title": "Diagonal Hades Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0098",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:063",
+      "title": "Diagonal Hades Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0098",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:064",
+      "title": "Diagonal Hades Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0099",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:065",
+      "title": "Hades Launcher Shot Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0093",
+        "s0091"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:066",
+      "title": "Hades Launcher Shot Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0093",
+        "s0091"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:067",
+      "title": "Hades Launcher Shot Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:068",
+      "title": "Hades Launcher Shot Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0037"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:069",
+      "title": "Hades Launcher Shot Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0102",
+        "s0043"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:070",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5120689655172415,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:071",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5120689655172415,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "special",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:072",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5180232558139536,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0112",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0115",
+        "s0116",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:073",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.5974137931034482,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:074",
+      "title": "Crouch Hades Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0117",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:075",
+      "title": "Crouch Hades Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0117",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:076",
+      "title": "Crouch Hades Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0117",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:077",
+      "title": "Crouch Hades Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0117",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:078",
+      "title": "Diagonal Hades Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:079",
+      "title": "Diagonal Hades Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:080",
+      "title": "Hades Launcher Shot Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0118",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:launcher:081",
+      "title": "Hades Launcher Shot Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0118",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:082",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:083",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5120689655172415,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:084",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5180232558139536,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0112",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0115",
+        "s0116",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:085",
+      "title": "Black Cat Tornado Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0119"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:086",
+      "title": "Crouch Hades Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0119"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:087",
+      "title": "Crouch Hades Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0117",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:088",
+      "title": "Crouch Hades Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0117",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:089",
+      "title": "Crouch Hades Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0117",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:090",
+      "title": "Diagonal Hades Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0097",
+        "s0119"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:091",
+      "title": "Diagonal Hades Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:092",
+      "title": "Diagonal Hades Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0050",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:093",
+      "title": "Hades Launcher Shot Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0093",
+        "s0119"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:094",
+      "title": "Hades Launcher Shot Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0118",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "train-heartnet:beginner:advanced:tornado:095",
+      "title": "Hades Launcher Shot Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 45,
+      "damageScale": 0.5241176470588236,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0118",
+        "s0048",
+        "s0103",
+        "s0062",
+        "s0052",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0111"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "train-heartnet:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n9",
+          "down+medium": "n9",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "special+medium": "n30",
+          "down+special+medium": "n30",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "special": "n25",
+          "down+light": "n136",
+          "forward+medium": "n146",
+          "forward+heavy": "n141",
+          "forward+special": "n177",
+          "down+heavy": "n97",
+          "down+special": "n107",
+          "down-forward+light": "n102",
+          "down-forward+medium": "n159",
+          "down-forward+special": "n151",
+          "forward+special+medium": "n133"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:027",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "forward+medium": "n35",
+          "special": "n154"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:light-core",
+        "edges": {
+          "medium": "n41",
+          "heavy": "n49",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:light-core",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89",
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 15,
+        "routeId": "train-heartnet:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n89": {
+        "depth": 15,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 16,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 17,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 18,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 19,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 20,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 21,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 22,
+        "routeId": "train-heartnet:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n49": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 15,
+        "routeId": "train-heartnet:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:038",
+        "edges": {
+          "heavy": "n29",
+          "special": "n170"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:forward-light-route",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:032",
+        "edges": {
+          "medium": "n10",
+          "light": "n206",
+          "heavy": "n182",
+          "special": "n202",
+          "down-forward+medium": "n184",
+          "down+light": "n164",
+          "forward+light": "n162",
+          "forward+medium": "n37",
+          "forward+heavy": "n204"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:medium-core",
+        "edges": {
+          "heavy": "n65",
+          "medium": "n16",
+          "light": "n57"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:medium-core",
+        "edges": {}
+      },
+      "n57": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 15,
+        "routeId": "train-heartnet:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n65": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 15,
+        "routeId": "train-heartnet:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:down-medium-route",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:033",
+        "edges": {
+          "light": "n240",
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n240": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "forward+light": "n241"
+        }
+      },
+      "n241": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "medium": "n242"
+        }
+      },
+      "n242": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "light": "n243"
+        }
+      },
+      "n243": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "special": "n244"
+        }
+      },
+      "n244": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "forward+medium": "n245"
+        }
+      },
+      "n245": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "light": "n246"
+        }
+      },
+      "n246": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "medium": "n247"
+        }
+      },
+      "n247": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "special": "n248"
+        }
+      },
+      "n248": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "heavy": "n249"
+        }
+      },
+      "n249": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "medium": "n250"
+        }
+      },
+      "n250": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {
+          "special": "n251"
+        }
+      },
+      "n251": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:advanced:launcher:074",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:crouch:047",
+        "edges": {
+          "special": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n202": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:launcher:055",
+        "edges": {
+          "medium": "n265",
+          "special": "n203"
+        }
+      },
+      "n203": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n265": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:tornado:086",
+        "edges": {}
+      },
+      "n204": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:launcher:057",
+        "edges": {
+          "special": "n205"
+        }
+      },
+      "n205": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:057",
+        "edges": {}
+      },
+      "n206": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:launcher:059",
+        "edges": {
+          "special": "n207"
+        }
+      },
+      "n207": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:059",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:028",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n212",
+          "special": "n208",
+          "down+light": "n39",
+          "light": "n156",
+          "forward+light": "n210",
+          "forward+medium": "n33",
+          "forward+heavy": "n190"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:heavy-core",
+        "edges": {
+          "medium": "n81",
+          "heavy": "n24",
+          "light": "n73"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:heavy-core",
+        "edges": {}
+      },
+      "n73": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 15,
+        "routeId": "train-heartnet:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n81": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "train-heartnet:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n40",
+          "light": "n252",
+          "medium": "n158"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n252": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "forward+light": "n253"
+        }
+      },
+      "n253": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "medium": "n254"
+        }
+      },
+      "n254": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "light": "n255"
+        }
+      },
+      "n255": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "special": "n256"
+        }
+      },
+      "n256": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "forward+medium": "n257"
+        }
+      },
+      "n257": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "light": "n258"
+        }
+      },
+      "n258": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "medium": "n259"
+        }
+      },
+      "n259": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "special": "n260"
+        }
+      },
+      "n260": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "heavy": "n261"
+        }
+      },
+      "n261": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "medium": "n262"
+        }
+      },
+      "n262": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {
+          "special": "n263"
+        }
+      },
+      "n263": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:advanced:launcher:080",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n190": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "down+light": "n191"
+        }
+      },
+      "n191": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "light": "n192"
+        }
+      },
+      "n192": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "medium": "n193"
+        }
+      },
+      "n193": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "forward+light": "n194"
+        }
+      },
+      "n194": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "light": "n195"
+        }
+      },
+      "n195": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "down+light": "n196"
+        }
+      },
+      "n196": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "medium": "n197"
+        }
+      },
+      "n197": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "light": "n198"
+        }
+      },
+      "n198": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:advanced:crouch:051",
+        "edges": {
+          "light": "n199"
+        }
+      },
+      "n199": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:advanced:crouch:052",
+        "edges": {}
+      },
+      "n208": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:launcher:065",
+        "edges": {
+          "medium": "n266",
+          "special": "n209"
+        }
+      },
+      "n209": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n266": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:tornado:093",
+        "edges": {}
+      },
+      "n210": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n211"
+        }
+      },
+      "n211": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:067",
+        "edges": {}
+      },
+      "n212": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:launcher:069",
+        "edges": {
+          "special": "n213"
+        }
+      },
+      "n213": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:069",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n26",
+          "heavy": "n188",
+          "light": "n200",
+          "medium": "n186",
+          "down+light": "n114",
+          "forward+light": "n112"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:special-core",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:008",
+        "edges": {
+          "light": "n123",
+          "special": "n115"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n124",
+          "forward+light": "n214"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:basic:012",
+        "edges": {
+          "forward+light": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:basic:016",
+        "edges": {
+          "light": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n214": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n215"
+        }
+      },
+      "n215": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n216"
+        }
+      },
+      "n216": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n217",
+          "forward+medium": "n225"
+        }
+      },
+      "n217": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "forward+medium": "n218"
+        }
+      },
+      "n218": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n219"
+        }
+      },
+      "n219": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n220"
+        }
+      },
+      "n220": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n221"
+        }
+      },
+      "n221": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "heavy": "n222"
+        }
+      },
+      "n222": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "medium": "n223"
+        }
+      },
+      "n223": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n224"
+        }
+      },
+      "n224": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:advanced:launcher:070",
+        "edges": {}
+      },
+      "n225": {
+        "depth": 7,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n226",
+          "light": "n233"
+        }
+      },
+      "n226": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n227"
+        }
+      },
+      "n227": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n228"
+        }
+      },
+      "n228": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n229"
+        }
+      },
+      "n229": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {
+          "heavy": "n230"
+        }
+      },
+      "n230": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n231"
+        }
+      },
+      "n231": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n232"
+        }
+      },
+      "n232": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:advanced:launcher:071",
+        "edges": {}
+      },
+      "n233": {
+        "depth": 8,
+        "routeId": "train-heartnet:beginner:advanced:launcher:072",
+        "edges": {
+          "medium": "n234"
+        }
+      },
+      "n234": {
+        "depth": 9,
+        "routeId": "train-heartnet:beginner:advanced:launcher:072",
+        "edges": {
+          "special": "n235"
+        }
+      },
+      "n235": {
+        "depth": 10,
+        "routeId": "train-heartnet:beginner:advanced:launcher:072",
+        "edges": {
+          "special": "n236"
+        }
+      },
+      "n236": {
+        "depth": 11,
+        "routeId": "train-heartnet:beginner:advanced:launcher:072",
+        "edges": {
+          "heavy": "n237"
+        }
+      },
+      "n237": {
+        "depth": 12,
+        "routeId": "train-heartnet:beginner:advanced:launcher:072",
+        "edges": {
+          "medium": "n238"
+        }
+      },
+      "n238": {
+        "depth": 13,
+        "routeId": "train-heartnet:beginner:advanced:launcher:072",
+        "edges": {
+          "special": "n239"
+        }
+      },
+      "n239": {
+        "depth": 14,
+        "routeId": "train-heartnet:beginner:advanced:launcher:072",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:crouch:049",
+        "edges": {
+          "special": "n187"
+        }
+      },
+      "n187": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n188": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:crouch:050",
+        "edges": {
+          "special": "n189"
+        }
+      },
+      "n189": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n200": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:launcher:054",
+        "edges": {
+          "medium": "n264",
+          "special": "n201"
+        }
+      },
+      "n201": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:launcher:054",
+        "edges": {}
+      },
+      "n264": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:tornado:085",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:039",
+        "edges": {
+          "heavy": "n173",
+          "light": "n31",
+          "special": "n171"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:040",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n97": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:basic:001",
+        "edges": {
+          "down+light": "n100",
+          "light": "n98"
+        }
+      },
+      "n98": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n99"
+        }
+      },
+      "n99": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:002",
+        "edges": {
+          "light": "n116",
+          "special": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n117"
+        }
+      },
+      "n117": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n125"
+        }
+      },
+      "n125": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:basic:013",
+        "edges": {
+          "light": "n126"
+        }
+      },
+      "n126": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n105",
+          "light": "n103"
+        }
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:004",
+        "edges": {
+          "light": "n118",
+          "special": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n119"
+        }
+      },
+      "n119": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:basic:010",
+        "edges": {
+          "forward+light": "n127"
+        }
+      },
+      "n127": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:basic:014",
+        "edges": {
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n108",
+          "down+light": "n120",
+          "light": "n110"
+        }
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:basic:011",
+        "edges": {
+          "light": "n121"
+        }
+      },
+      "n121": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n122"
+        }
+      },
+      "n122": {
+        "depth": 4,
+        "routeId": "train-heartnet:beginner:advanced:basic:011",
+        "edges": {
+          "forward+light": "n129"
+        }
+      },
+      "n129": {
+        "depth": 5,
+        "routeId": "train-heartnet:beginner:advanced:basic:015",
+        "edges": {
+          "medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 6,
+        "routeId": "train-heartnet:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n133": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n166",
+          "light": "n134"
+        }
+      },
+      "n134": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n136": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:019",
+        "edges": {
+          "medium": "n139",
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n138"
+        }
+      },
+      "n138": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n139": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n140"
+        }
+      },
+      "n140": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n141": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:021",
+        "edges": {
+          "down-forward+medium": "n142",
+          "special": "n144"
+        }
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n147",
+          "light": "n149"
+        }
+      },
+      "n147": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n148"
+        }
+      },
+      "n148": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n149": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n150"
+        }
+      },
+      "n150": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n151": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:025",
+        "edges": {
+          "medium": "n168",
+          "special": "n152"
+        }
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:036",
+        "edges": {
+          "special": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:advanced:030",
+        "edges": {
+          "medium": "n175",
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:advanced:043",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 1,
+        "routeId": "train-heartnet:beginner:advanced:crouch:045",
+        "edges": {
+          "medium": "n180",
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "train-heartnet:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "train-heartnet:beginner:advanced:crouch:046",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Hades Burst",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Gunner Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sweeper Slide Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sweeper Slide Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0019": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Hades Burst",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0028": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Gunner Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Gunner Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0046": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sweeper Slide Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0047": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0055": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0057": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sweeper Slide Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Hades Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Hades Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "down-forward+special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Hades Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0065": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sweeper Slide Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0070": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sweeper Slide Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0072": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Sweeper Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Black Cat Tornado Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hades Launcher Shot",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Hades Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rising Hades Shot Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hades Launcher Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Hades Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0083": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Sweeper Rush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Black Cat Tornado Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Hades Launcher Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "Rising Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Hades Quick Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Black Cat Tornado Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Black Cat Tornado Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Hades Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Black Cat Tornado Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hades Shot",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diagonal Hades Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Black Cat Tornado Kick",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hades Shot",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Hades Launcher Shot Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hades Shot",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sweeper Slide Shot",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Black Cat Tornado Kick",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Hades Burst",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0107": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Hades Body Shot",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sweeper Slide Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "Rising Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Black Cat Knockdown",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Hades Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Black Cat Tornado Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Hades Shot",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0115": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Black Cat Tornado Kick",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "juggle"
+    },
+    "s0116": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Homing Low Feint",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hades Shot",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Hades Shot",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Hades Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

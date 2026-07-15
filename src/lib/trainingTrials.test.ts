@@ -19,6 +19,7 @@ import {
   trainingTrialCategoryLabels,
   writeTrainingTrialCompletion
 } from './trainingTrials';
+import { beginnerRouteSteps } from './beginnerAutoCombos';
 
 const repoRoot = process.cwd();
 
@@ -878,7 +879,7 @@ describe('training trial catalog', () => {
     const beginnerAttacks = beginner.steps.filter((step) => step.kind === 'impact');
     const koreAttacks = kore.steps.filter((step) => step.kind === 'impact');
     expect(beginnerAttacks[0].notation).toEqual(['Light']);
-    expect(koreAttacks.map((step) => step.command)).toEqual(beginner.sourceBeginnerRoute!.steps.map((step) => step.command));
+    expect(koreAttacks.map((step) => step.command)).toEqual(beginnerRouteSteps(character, beginner.sourceBeginnerRoute!).map((step) => step.command));
     expect(koreAttacks.map((step) => step.animationKey)).toEqual(beginnerAttacks.map((step) => step.animationKey));
   });
 
@@ -927,14 +928,14 @@ describe('training trial catalog', () => {
     if (!trial) return;
 
     expect(trial.title).toBe('Beginner Light Route');
-    expect(trial.steps).toHaveLength(3);
+    expect(trial.steps).toHaveLength(8);
     expect(trial.steps.every((step) => step.notation.includes('Light'))).toBe(true);
-    expect(trial.steps[2].label).toContain('Knockdown');
+    expect(trial.steps[7].label).toContain('Knockdown');
     expect(trial.sourceBeginnerRoute?.id).toBe(route.id);
     expect(trial.lesson).toContain('block or whiff resets');
 
     const attackPreviewFrames = trial.previewScript.filter((frame) => frame.actions.includes('jab'));
-    expect(attackPreviewFrames.length).toBeGreaterThanOrEqual(3);
+    expect(attackPreviewFrames.length).toBeGreaterThanOrEqual(8);
   });
 
   it('sets up ki and command-family combo trials with executable previews', () => {
@@ -948,7 +949,7 @@ describe('training trial catalog', () => {
     const kiTrial = trials.find((trial) => trial.id.endsWith(':ki'));
     expect(kiTrial?.setup.p1Ki).toBe(100);
     expect(kiTrial?.sourceBeginnerRoute).toBeTruthy();
-    expect(kiTrial?.steps.filter((step) => step.kind === 'impact')).toHaveLength(3);
+    expect(kiTrial?.steps.filter((step) => step.kind === 'impact').length).toBeGreaterThanOrEqual(3);
 
     const motionTrial = trials.find((trial) => trial.steps.some((step) => /^(qcf|qcb|hcf|hcb|dp|rdp|cd)\+/.test(step.command ?? '')));
     if (motionTrial) {
@@ -966,6 +967,20 @@ describe('training trial catalog', () => {
     }
   });
 
+  it('provides zero-Ki and full-Ki variants for every resource-sensitive advanced route', () => {
+    const character = readRosterCharacters().find((candidate) => candidate.id === 'riven')!;
+    const trials = generateComboTrainingTrials(character);
+    const trialIds = new Set(trials.map((trial) => trial.id));
+    const resourceRoutes = (character.beginnerComboRoutes ?? []).filter((route) =>
+      beginnerRouteSteps(character, route).some((step) => step.kiCommand || step.poweredKiFallback)
+    );
+    expect(resourceRoutes.length).toBeGreaterThan(0);
+    for (const route of resourceRoutes) {
+      expect(trialIds.has(`combo:${route.id}:no-ki`), route.id).toBe(true);
+      expect(trialIds.has(`combo:${route.id}:ki`), route.id).toBe(true);
+    }
+  });
+
   it('keeps grounded launcher trial previews free of jump inputs', () => {
     const character = readRosterCharacters().find((candidate) =>
       generateComboTrainingTrials(candidate).some((trial) => trial.steps.some((step) => step.kind === 'state'))
@@ -978,7 +993,7 @@ describe('training trial catalog', () => {
     if (!trial) return;
 
     const movement = trial.steps.find((step) => step.kind === 'state')!;
-    expect(movement.label).toMatch(/Neutral|Dash|Back Hop|Jump/);
+    expect(movement.label).toMatch(/Neutral|Dash|Back Hop|Jump|Crouch|Sidestep/);
     expect(trial.previewScript.some((frame) => movement.actions.every((action) => frame.actions.includes(action)))).toBe(true);
   });
 

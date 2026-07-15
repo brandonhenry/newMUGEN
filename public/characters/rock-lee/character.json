@@ -3788,122 +3788,95 @@
   "beginnerComboRoutes": [
     {
       "id": "rock-lee:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Leaf Intercept Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Leaf Intercept Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 23,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0001"
       ]
     },
     {
       "id": "rock-lee:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Strong Fist Body Blow",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Strong Fist Body Blow",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
       ]
     },
     {
       "id": "rock-lee:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Leaf Gale",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Leaf Rising Wind",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "launch"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
       ]
     },
     {
@@ -3915,35 +3888,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0010",
+        "s0011",
+        "s0012"
       ]
     },
     {
@@ -3955,35 +3909,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Leaf Intercept Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Strong Fist Body Blow",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0013",
+        "s0014"
       ]
     },
     {
@@ -3995,35 +3930,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Leaf Intercept Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Strong Fist Body Blow",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0015",
+        "s0013",
+        "s0014"
       ]
     },
     {
@@ -4035,35 +3951,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Strong Fist Body Blow",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Leaf Gale",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0016",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -4075,36 +3972,1894 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Leaf Gale",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Leaf Intercept Jab",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Leaf Whirlwind",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0019",
+        "s0020",
+        "s0021"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0022",
+        "s0003",
+        "s0023"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0000",
+        "s0026"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0028",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0029",
+        "s0017",
+        "s0018"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0020",
+        "s0021"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0001"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0001"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 42,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0000",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:basic:001",
+      "title": "Leaf Whirlwind 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0031",
+        "s0032",
+        "s0033"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:basic:002",
+      "title": "Leaf Whirlwind 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0031",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:basic:003",
+      "title": "Strong Fist Body Blow 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0036",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:basic:004",
+      "title": "Leaf Gale 3-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:basic:005",
+      "title": "Leaf Whirlwind 3-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0031",
+        "s0034",
+        "s0040"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:launcher:006",
+      "title": "Leaf Rising Wind Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:launcher:007",
+      "title": "Leaf Rising Wind Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:launcher:008",
+      "title": "Leaf Rising Wind Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0044",
+        "s0033"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:launcher:009",
+      "title": "Leaf Rising Wind Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:launcher:010",
+      "title": "Leaf Rising Wind Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "rock-lee:beginner:advanced:tornado:011",
+      "title": "Leaf Rising Wind Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0045",
+        "s0046"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "rock-lee:beginner:advanced:basic:001",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "special": "n25",
+          "forward+medium": "n100"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "rock-lee:beginner:directional-special-light-route",
+        "edges": {
+          "light": "n2",
+          "medium": "n28"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "rock-lee:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "rock-lee:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "rock-lee:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "rock-lee:beginner:light-core",
+        "edges": {
+          "medium": "n36",
+          "heavy": "n44",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:light-core",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n37"
+        }
+      },
+      "n37": {
+        "depth": 9,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 10,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n39"
+        }
+      },
+      "n39": {
+        "depth": 11,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 12,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 13,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 14,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n84",
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 15,
+        "routeId": "rock-lee:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n84": {
+        "depth": 15,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n85"
+        }
+      },
+      "n85": {
+        "depth": 16,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n86"
+        }
+      },
+      "n86": {
+        "depth": 17,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87"
+        }
+      },
+      "n87": {
+        "depth": 18,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 19,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 20,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 21,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 22,
+        "routeId": "rock-lee:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n44": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n45"
+        }
+      },
+      "n45": {
+        "depth": 9,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n46"
+        }
+      },
+      "n46": {
+        "depth": 10,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n47"
+        }
+      },
+      "n47": {
+        "depth": 11,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 12,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 13,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 14,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 15,
+        "routeId": "rock-lee:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "rock-lee:beginner:advanced:basic:003",
+        "edges": {
+          "medium": "n10",
+          "light": "n96",
+          "heavy": "n30",
+          "special": "n34"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "rock-lee:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "rock-lee:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "rock-lee:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "rock-lee:beginner:medium-core",
+        "edges": {
+          "light": "n52",
+          "heavy": "n60",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:medium-core",
+        "edges": {}
+      },
+      "n52": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n53"
+        }
+      },
+      "n53": {
+        "depth": 9,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n54"
+        }
+      },
+      "n54": {
+        "depth": 10,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n55"
+        }
+      },
+      "n55": {
+        "depth": 11,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 12,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 13,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 14,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 15,
+        "routeId": "rock-lee:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n60": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n61"
+        }
+      },
+      "n61": {
+        "depth": 9,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n62"
+        }
+      },
+      "n62": {
+        "depth": 10,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n63"
+        }
+      },
+      "n63": {
+        "depth": 11,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 12,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 13,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 14,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 15,
+        "routeId": "rock-lee:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:down-medium-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n97"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "rock-lee:beginner:advanced:basic:004",
+        "edges": {
+          "heavy": "n18",
+          "light": "n32"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "rock-lee:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "rock-lee:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "rock-lee:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "rock-lee:beginner:heavy-core",
+        "edges": {
+          "medium": "n76",
+          "light": "n68",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:heavy-core",
+        "edges": {}
+      },
+      "n68": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n69"
+        }
+      },
+      "n69": {
+        "depth": 9,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n70"
+        }
+      },
+      "n70": {
+        "depth": 10,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n71"
+        }
+      },
+      "n71": {
+        "depth": 11,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 12,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 13,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 14,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 15,
+        "routeId": "rock-lee:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n76": {
+        "depth": 8,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n77"
+        }
+      },
+      "n77": {
+        "depth": 9,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n78"
+        }
+      },
+      "n78": {
+        "depth": 10,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n79"
+        }
+      },
+      "n79": {
+        "depth": 11,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 12,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 13,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 14,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 15,
+        "routeId": "rock-lee:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:advanced:basic:004",
+        "edges": {
+          "medium": "n98",
+          "special": "n33"
+        }
+      },
+      "n33": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "rock-lee:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n26",
+          "medium": "n92",
+          "light": "n94"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:special-core",
+        "edges": {}
+      },
+      "n92": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n93"
+        }
+      },
+      "n93": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n94": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:advanced:basic:002",
+        "edges": {
+          "medium": "n99",
+          "special": "n95"
+        }
+      },
+      "n95": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 1,
+        "routeId": "rock-lee:beginner:advanced:launcher:006",
+        "edges": {
+          "medium": "n103",
+          "special": "n105",
+          "light": "n101"
+        }
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:advanced:launcher:006",
+        "edges": {
+          "special": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:launcher:006",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:advanced:launcher:008",
+        "edges": {
+          "special": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:launcher:008",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "rock-lee:beginner:advanced:launcher:009",
+        "edges": {
+          "special": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "rock-lee:beginner:advanced:launcher:009",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0002": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0005": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Leaf Rising Wind",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "launch"
+    },
+    "s0007": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0010": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0013": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0015": {
+      "gesture": "special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0019": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0024": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Leaf Rising Wind",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "launch"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0027": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0033": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0034": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0035": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0036": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0038": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Leaf Gale",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Leaf Intercept Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Leaf Rising Wind",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0042": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0043": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0044": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Strong Fist Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Front Lotus Spiral",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0046": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Leaf Whirlwind",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    }
+  }
 }

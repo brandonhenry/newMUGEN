@@ -5397,129 +5397,95 @@
   "beginnerComboRoutes": [
     {
       "id": "kid-goku:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcb+1",
-          "animationKey": "cmd:qcb+1",
-          "label": "Retreating Power Pole Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "b+1",
-          "animationKey": "cmd:b+1",
-          "label": "Reverse Power Pole Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 40,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.48299999999999993,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
       ]
     },
     {
       "id": "kid-goku:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Turtle School Body Blow",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Rising Tail Pop",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "launch"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 31,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
       ]
     },
     {
       "id": "kid-goku:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Power Pole Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "f+3",
-          "animationKey": "cmd:f+3",
-          "label": "Running Power Pole",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 40,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -5531,38 +5497,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Power Pole Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Cross Staff Swing",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 20,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0020",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -5574,37 +5518,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcb+1",
-          "animationKey": "cmd:qcb+1",
-          "label": "Retreating Power Pole Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Turtle School Body Blow",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0009",
+        "s0023"
       ]
     },
     {
@@ -5616,37 +5539,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Cross Staff Swing",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Turtle School Body Blow",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0023"
       ]
     },
     {
@@ -5658,38 +5560,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Power Pole Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0026",
+        "s0012",
+        "s0027"
       ]
     },
     {
@@ -5701,39 +5581,7458 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Tail Cyclone",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcb+1",
-          "animationKey": "cmd:qcb+1",
-          "label": "Retreating Power Pole Rush",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Sliding Monkey Trip",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 23,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0028",
+        "s0005",
+        "s0027"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0031"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0034",
+        "s0035",
+        "s0031"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0025",
+        "s0023"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0012",
+        "s0027"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 23,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0038",
+        "s0005",
+        "s0027"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 41,
+      "damageScale": 0.48299999999999993,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 41,
+      "damageScale": 0.48299999999999993,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 32,
+      "damageScale": 0.48299999999999993,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 41,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 32,
+      "damageScale": 0.48299999999999993,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 41,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 41,
+      "damageScale": 0.48299999999999993,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:basic:001",
+      "title": "Power Pole Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:basic:002",
+      "title": "Turtle School Body Blow 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 8,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:basic:003",
+      "title": "Power Pole Poke 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "down+light",
+        "down+medium"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0044",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:basic:004",
+      "title": "Power Pole Poke 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 40,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "down+light",
+        "down+medium",
+        "medium",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0039",
+        "s0044",
+        "s0045",
+        "s0046",
+        "s0047",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:005",
+      "title": "Cross Staff Swing 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0051",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:006",
+      "title": "Low Monkey Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:007",
+      "title": "Power Pole Barrage 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:008",
+      "title": "Running Monkey Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0057",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:009",
+      "title": "Tail Cyclone 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:010",
+      "title": "Tail Cyclone 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:011",
+      "title": "Cross Staff Swing 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:012",
+      "title": "Dash Staff Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0064",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:013",
+      "title": "Dash Staff Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0065",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:014",
+      "title": "Power Pole Barrage 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0064",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:015",
+      "title": "Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:016",
+      "title": "Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0069",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:017",
+      "title": "Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:018",
+      "title": "Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0069",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:019",
+      "title": "Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:020",
+      "title": "Retreating Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:021",
+      "title": "Retreating Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0069",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:022",
+      "title": "Retreating Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:023",
+      "title": "Retreating Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0069",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:024",
+      "title": "Reverse Power Pole Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0064",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:025",
+      "title": "Reverse Power Pole Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0065",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:026",
+      "title": "Running Monkey Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0073",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:027",
+      "title": "Sliding Monkey Trip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:028",
+      "title": "Sliding Monkey Trip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:029",
+      "title": "Tail Cyclone 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0078",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:030",
+      "title": "Tail Cyclone 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0078",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:031",
+      "title": "Turtle Dash Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0064",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:advanced:032",
+      "title": "Turtle Dash Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0065",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:033",
+      "title": "Crouching Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 7,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0080",
+        "s0053",
+        "s0041"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:034",
+      "title": "Running Power Pole 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0045",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:035",
+      "title": "Leaping Staff Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0084",
+        "s0085"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:036",
+      "title": "Leaping Staff Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0086",
+        "s0087"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:037",
+      "title": "Monkey Rising Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0089",
+        "s0085"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:038",
+      "title": "Monkey Rising Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0090",
+        "s0087"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:039",
+      "title": "Monkey Roll Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0092",
+        "s0087"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:040",
+      "title": "Monkey Roll Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0045",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:041",
+      "title": "Monkey Wheel Lift Grounded Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0085"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:042",
+      "title": "Monkey Wheel Lift Grounded Launcher Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0095",
+        "s0087"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:043",
+      "title": "Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0094",
+        "s0085"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:044",
+      "title": "Power Pole Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0095",
+        "s0087"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:045",
+      "title": "Running Monkey Slide 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0096",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:046",
+      "title": "Sliding Monkey Trip 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0097",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:047",
+      "title": "Leaping Staff Kick Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 32,
+      "damageScale": 0.4293333333333333,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0098",
+        "s0099",
+        "s0065",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:048",
+      "title": "Leaping Staff Kick Air Chase Launcher 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0098",
+        "s0099",
+        "s0065",
+        "s0100",
+        "s0053"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:049",
+      "title": "Monkey Roll Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 32,
+      "damageScale": 0.4293333333333333,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:050",
+      "title": "Monkey Roll Launcher Grounded Launcher 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0100",
+        "s0053"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:051",
+      "title": "Monkey Roll Launcher Hybrid Launcher 16-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 16,
+      "estimatedDamage": 41,
+      "damageScale": 0.38691588785046727,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:052",
+      "title": "Monkey Wheel Lift Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 32,
+      "damageScale": 0.39268292682926825,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103",
+        "s0104",
+        "s0112"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:053",
+      "title": "Monkey Wheel Lift Grounded Launcher 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:crouch:054",
+      "title": "Monkey Wheel Lift Hybrid Launcher 16-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 16,
+      "estimatedDamage": 41,
+      "damageScale": 0.3696428571428571,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103",
+        "s0104",
+        "s0112",
+        "s0113",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:055",
+      "title": "Leaping Staff Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0115",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:056",
+      "title": "Leaping Staff Kick Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0116",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:057",
+      "title": "Monkey Rising Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0117",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:058",
+      "title": "Monkey Rising Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0118",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:059",
+      "title": "Monkey Rising Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0117",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:060",
+      "title": "Monkey Rising Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0118",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:061",
+      "title": "Monkey Roll Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0119",
+        "s0120"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:062",
+      "title": "Monkey Roll Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0119",
+        "s0120"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:063",
+      "title": "Monkey Roll Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0121",
+        "s0122"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:064",
+      "title": "Monkey Roll Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0121",
+        "s0122"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:065",
+      "title": "Monkey Roll Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0123",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:066",
+      "title": "Monkey Wheel Lift Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 23,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0124",
+        "s0120"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:067",
+      "title": "Monkey Wheel Lift Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0125",
+        "s0122"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:068",
+      "title": "Monkey Wheel Lift Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0126",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:069",
+      "title": "Rising Monkey Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0127",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:070",
+      "title": "Rising Monkey Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0127",
+        "s0128",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:071",
+      "title": "Rising Monkey Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0127",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:072",
+      "title": "Rising Monkey Kick Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0127",
+        "s0128",
+        "s0062"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:073",
+      "title": "Rising Tail Pop Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0130",
+        "s0120"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:074",
+      "title": "Rising Tail Pop Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0130",
+        "s0120"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:075",
+      "title": "Rising Tail Pop Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0131",
+        "s0122"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:076",
+      "title": "Rising Tail Pop Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0131",
+        "s0122"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:077",
+      "title": "Rising Tail Pop Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0132",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:078",
+      "title": "Monkey Wheel Lift Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 32,
+      "damageScale": 0.48059701492537305,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:079",
+      "title": "Monkey Wheel Lift Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 41,
+      "damageScale": 0.3942857142857143,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special",
+        "medium",
+        "special",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103",
+        "s0104",
+        "s0112",
+        "s0113",
+        "s0107",
+        "s0108",
+        "s0109"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:080",
+      "title": "Monkey Wheel Lift Hybrid Launcher 22-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 41,
+      "damageScale": 0.3136363636363636,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "heavy",
+        "light",
+        "special",
+        "light",
+        "forward+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103",
+        "s0104",
+        "s0112",
+        "s0113",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0133",
+        "s0073",
+        "s0134",
+        "s0053",
+        "s0135",
+        "s0053"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:081",
+      "title": "Monkey Wheel Lift Hybrid Launcher 30-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 30,
+      "estimatedDamage": 41,
+      "damageScale": 0.2670967741935484,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "heavy",
+        "light",
+        "special",
+        "light",
+        "forward+heavy",
+        "light",
+        "special",
+        "forward+heavy",
+        "down+light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103",
+        "s0104",
+        "s0112",
+        "s0113",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0133",
+        "s0073",
+        "s0134",
+        "s0053",
+        "s0135",
+        "s0053",
+        "s0041",
+        "s0048",
+        "s0045",
+        "s0136",
+        "s0102",
+        "s0103",
+        "s0112",
+        "s0128"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:launcher:082",
+      "title": "Rising Tail Pop Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 32,
+      "damageScale": 0.5111111111111111,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "down+light",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0048",
+        "s0045",
+        "s0076",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:083",
+      "title": "Leaping Staff Kick Air Chase Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 41,
+      "damageScale": 0.36,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0098",
+        "s0099",
+        "s0065",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0137"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:084",
+      "title": "Leaping Staff Kick Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0138",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:085",
+      "title": "Monkey Rising Kick Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0139",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:086",
+      "title": "Monkey Rising Kick Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 41,
+      "damageScale": 0.3568965517241379,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "special",
+        "medium",
+        "light",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0140",
+        "s0099",
+        "s0141",
+        "s0103",
+        "s0104",
+        "s0049",
+        "s0142",
+        "s0143",
+        "s0107",
+        "s0144",
+        "s0053",
+        "s0145",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0146",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:087",
+      "title": "Monkey Roll Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0119",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:088",
+      "title": "Monkey Roll Launcher Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 41,
+      "damageScale": 0.36,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0137"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:089",
+      "title": "Monkey Wheel Lift Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0124",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:090",
+      "title": "Monkey Wheel Lift Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 41,
+      "damageScale": 0.3421487603305785,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103",
+        "s0104",
+        "s0112",
+        "s0113",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0133",
+        "s0073"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:091",
+      "title": "Monkey Wheel Lift Hybrid Launcher 30-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "marathon",
+      "estimatedHits": 30,
+      "estimatedDamage": 41,
+      "damageScale": 0.2670967741935484,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "heavy",
+        "light",
+        "special",
+        "light",
+        "forward+heavy",
+        "light",
+        "special",
+        "forward+heavy",
+        "down+light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "special",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0045",
+        "s0099",
+        "s0065",
+        "s0069",
+        "s0053",
+        "s0111",
+        "s0103",
+        "s0104",
+        "s0112",
+        "s0113",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0133",
+        "s0073",
+        "s0134",
+        "s0053",
+        "s0135",
+        "s0053",
+        "s0041",
+        "s0048",
+        "s0045",
+        "s0136",
+        "s0102",
+        "s0103",
+        "s0112",
+        "s0128"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:092",
+      "title": "Rising Monkey Kick Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0127",
+        "s0144",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:093",
+      "title": "Rising Monkey Kick Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 41,
+      "damageScale": 0.36,
+      "requiresKi": true,
+      "gestures": [
+        "special",
+        "forward+heavy",
+        "down+light",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0127",
+        "s0048",
+        "s0045",
+        "s0076",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0137"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:094",
+      "title": "Rising Tail Pop Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0130",
+        "s0061"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:095",
+      "title": "Rising Tail Pop Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 41,
+      "damageScale": 0.3538461538461538,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "down+light",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0048",
+        "s0045",
+        "s0076",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0137"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:tornado:096",
+      "title": "Rising Tail Pop Hybrid Launcher 30-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "marathon",
+      "estimatedHits": 30,
+      "estimatedDamage": 41,
+      "damageScale": 0.27599999999999997,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "down+light",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special",
+        "medium",
+        "light",
+        "special",
+        "light",
+        "forward+heavy",
+        "light",
+        "special",
+        "forward+heavy",
+        "down+light",
+        "heavy",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0129",
+        "s0048",
+        "s0045",
+        "s0076",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110",
+        "s0114",
+        "s0137",
+        "s0134",
+        "s0053",
+        "s0135",
+        "s0053",
+        "s0041",
+        "s0048",
+        "s0045",
+        "s0147",
+        "s0142",
+        "s0102",
+        "s0103",
+        "s0112"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:097",
+      "title": "Running Power Pole Counter Hit",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0148",
+        "s0082"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:098",
+      "title": "Tail Feint Sweep Counter Hit",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0149",
+        "s0142",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:099",
+      "title": "Running Power Pole Counter Hit",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0150",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:100",
+      "title": "Running Power Pole Counter Hit",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0150",
+        "s0060"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:101",
+      "title": "Tail Feint Sweep Counter Hit",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0149",
+        "s0151",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:102",
+      "title": "Tail Feint Sweep Counter Hit",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0149",
+        "s0151",
+        "s0068"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:103",
+      "title": "Running Power Pole 16-Hit Route",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "long",
+      "estimatedHits": 16,
+      "estimatedDamage": 41,
+      "damageScale": 0.38691588785046727,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down+medium",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "medium",
+        "special",
+        "special",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0045",
+        "s0046",
+        "s0128",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:104",
+      "title": "Running Power Pole 5-Hit Route",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down+medium",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0045",
+        "s0046",
+        "s0128",
+        "s0100"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:105",
+      "title": "Running Power Pole 9-Hit Route",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "medium",
+      "estimatedHits": 9,
+      "estimatedDamage": 32,
+      "damageScale": 0.4735294117647058,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down+medium",
+        "heavy",
+        "heavy",
+        "light",
+        "down+heavy",
+        "light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0045",
+        "s0046",
+        "s0128",
+        "s0100",
+        "s0053",
+        "s0101",
+        "s0102",
+        "s0103"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:106",
+      "title": "Tail Feint Sweep 16-Hit Route",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "long",
+      "estimatedHits": 16,
+      "estimatedDamage": 41,
+      "damageScale": 0.3833333333333333,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down+medium",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light",
+        "special",
+        "medium",
+        "special",
+        "light",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0149",
+        "s0096",
+        "s0046",
+        "s0048",
+        "s0065",
+        "s0069",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0112",
+        "s0113",
+        "s0107",
+        "s0053",
+        "s0145",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:107",
+      "title": "Tail Feint Sweep 5-Hit Route",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 26,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down+medium",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0149",
+        "s0096",
+        "s0046",
+        "s0048",
+        "s0065"
+      ]
+    },
+    {
+      "id": "kid-goku:beginner:advanced:counterHit:108",
+      "title": "Tail Feint Sweep 9-Hit Route",
+      "family": "advanced",
+      "category": "counterHit",
+      "tier": "medium",
+      "estimatedHits": 9,
+      "estimatedDamage": 32,
+      "damageScale": 0.45352112676056333,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down+medium",
+        "forward+heavy",
+        "heavy",
+        "down+heavy",
+        "light",
+        "forward+light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0149",
+        "s0096",
+        "s0046",
+        "s0048",
+        "s0065",
+        "s0069",
+        "s0102",
+        "s0103",
+        "s0104"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "kid-goku:beginner:advanced:advanced:005",
+        "edges": {
+          "special+light": "n30",
+          "forward+special+light": "n30",
+          "special+medium": "n33",
+          "down+special+medium": "n33",
+          "special+heavy": "n36",
+          "down-forward+special+heavy": "n36",
+          "medium": "n9",
+          "down+medium": "n9",
+          "light": "n1",
+          "forward+light": "n1",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special": "n25",
+          "forward+medium": "n116",
+          "forward+heavy": "n145",
+          "down+heavy": "n113",
+          "forward+special": "n126",
+          "down+light": "n157",
+          "down+special": "n162",
+          "down-forward+light": "n101",
+          "down-forward+medium": "n119"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:020",
+        "edges": {
+          "light": "n2",
+          "down-forward+medium": "n39",
+          "down-forward+heavy": "n141",
+          "down+heavy": "n143",
+          "medium": "n28"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:light-core",
+        "edges": {
+          "light": "n8",
+          "medium": "n45",
+          "heavy": "n53"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:light-core",
+        "edges": {}
+      },
+      "n45": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n51"
+        }
+      },
+      "n51": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n52",
+          "heavy": "n93"
+        }
+      },
+      "n52": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n93": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 17,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 18,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 19,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 20,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n99"
+        }
+      },
+      "n99": {
+        "depth": 21,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n100"
+        }
+      },
+      "n100": {
+        "depth": 22,
+        "routeId": "kid-goku:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n53": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n60"
+        }
+      },
+      "n60": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:forward-light-route",
+        "edges": {
+          "special": "n40"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n141": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n142"
+        }
+      },
+      "n142": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:basic:002",
+        "edges": {
+          "medium": "n10",
+          "special": "n221",
+          "light": "n219",
+          "forward+heavy": "n41",
+          "down+light": "n173",
+          "heavy": "n104",
+          "forward+light": "n217",
+          "forward+medium": "n171"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:medium-core",
+        "edges": {
+          "medium": "n16",
+          "light": "n61",
+          "heavy": "n69"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:medium-core",
+        "edges": {}
+      },
+      "n61": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n68"
+        }
+      },
+      "n68": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n69": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n75"
+        }
+      },
+      "n75": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n76"
+        }
+      },
+      "n76": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:082",
+        "edges": {
+          "special": "n42",
+          "down+light": "n247"
+        }
+      },
+      "n42": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n247": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:082",
+        "edges": {
+          "heavy": "n248"
+        }
+      },
+      "n248": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:launcher:082",
+        "edges": {
+          "heavy": "n249"
+        }
+      },
+      "n249": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:launcher:082",
+        "edges": {
+          "light": "n250"
+        }
+      },
+      "n250": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:launcher:082",
+        "edges": {
+          "down+heavy": "n251"
+        }
+      },
+      "n251": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:launcher:082",
+        "edges": {
+          "light": "n252"
+        }
+      },
+      "n252": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:launcher:082",
+        "edges": {
+          "forward+light": "n299"
+        }
+      },
+      "n299": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "forward+light": "n300"
+        }
+      },
+      "n300": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "medium": "n301"
+        }
+      },
+      "n301": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "special": "n302"
+        }
+      },
+      "n302": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "special": "n303"
+        }
+      },
+      "n303": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "heavy": "n304"
+        }
+      },
+      "n304": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "medium": "n305"
+        }
+      },
+      "n305": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "special": "n306"
+        }
+      },
+      "n306": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "medium": "n307"
+        }
+      },
+      "n307": {
+        "depth": 17,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "light": "n308"
+        }
+      },
+      "n308": {
+        "depth": 18,
+        "routeId": "kid-goku:beginner:advanced:tornado:095",
+        "edges": {
+          "special": "n309"
+        }
+      },
+      "n309": {
+        "depth": 19,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "light": "n310"
+        }
+      },
+      "n310": {
+        "depth": 20,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "forward+heavy": "n311"
+        }
+      },
+      "n311": {
+        "depth": 21,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "light": "n312"
+        }
+      },
+      "n312": {
+        "depth": 22,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "special": "n313"
+        }
+      },
+      "n313": {
+        "depth": 23,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "forward+heavy": "n314"
+        }
+      },
+      "n314": {
+        "depth": 24,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "down+light": "n315"
+        }
+      },
+      "n315": {
+        "depth": 25,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "heavy": "n316"
+        }
+      },
+      "n316": {
+        "depth": 26,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "down+heavy": "n317"
+        }
+      },
+      "n317": {
+        "depth": 27,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "light": "n318"
+        }
+      },
+      "n318": {
+        "depth": 28,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "forward+light": "n319"
+        }
+      },
+      "n319": {
+        "depth": 29,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {
+          "special": "n320"
+        }
+      },
+      "n320": {
+        "depth": 30,
+        "routeId": "kid-goku:beginner:advanced:tornado:096",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n105"
+        }
+      },
+      "n105": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:crouch:039",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:039",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:crouch:040",
+        "edges": {
+          "special": "n174",
+          "forward+heavy": "n187"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:040",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "heavy": "n188"
+        }
+      },
+      "n188": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "heavy": "n189"
+        }
+      },
+      "n189": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "light": "n190"
+        }
+      },
+      "n190": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "down+heavy": "n191"
+        }
+      },
+      "n191": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "light": "n192"
+        }
+      },
+      "n192": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "forward+light": "n193"
+        }
+      },
+      "n193": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "forward+light": "n194"
+        }
+      },
+      "n194": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:crouch:049",
+        "edges": {
+          "medium": "n195"
+        }
+      },
+      "n195": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:crouch:051",
+        "edges": {
+          "special": "n196"
+        }
+      },
+      "n196": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:crouch:051",
+        "edges": {
+          "special": "n197"
+        }
+      },
+      "n197": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:crouch:051",
+        "edges": {
+          "heavy": "n198"
+        }
+      },
+      "n198": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:crouch:051",
+        "edges": {
+          "medium": "n199"
+        }
+      },
+      "n199": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:crouch:051",
+        "edges": {
+          "special": "n200"
+        }
+      },
+      "n200": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:crouch:051",
+        "edges": {
+          "medium": "n278"
+        }
+      },
+      "n278": {
+        "depth": 17,
+        "routeId": "kid-goku:beginner:advanced:tornado:088",
+        "edges": {
+          "light": "n279"
+        }
+      },
+      "n279": {
+        "depth": 18,
+        "routeId": "kid-goku:beginner:advanced:tornado:088",
+        "edges": {}
+      },
+      "n217": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:061",
+        "edges": {
+          "special": "n218",
+          "light": "n277"
+        }
+      },
+      "n218": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:061",
+        "edges": {}
+      },
+      "n277": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:tornado:087",
+        "edges": {}
+      },
+      "n219": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n220"
+        }
+      },
+      "n220": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n221": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:065",
+        "edges": {
+          "special": "n222"
+        }
+      },
+      "n222": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:015",
+        "edges": {
+          "heavy": "n18",
+          "special": "n227",
+          "light": "n225",
+          "medium": "n43",
+          "down-forward+heavy": "n133",
+          "down+heavy": "n135",
+          "down+light": "n165",
+          "down+medium": "n167",
+          "forward+light": "n223",
+          "forward+medium": "n213",
+          "forward+heavy": "n215",
+          "forward+special": "n321",
+          "down+special": "n169"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:heavy-core",
+        "edges": {
+          "heavy": "n24",
+          "medium": "n85",
+          "light": "n77"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:heavy-core",
+        "edges": {}
+      },
+      "n77": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n83"
+        }
+      },
+      "n83": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n84"
+        }
+      },
+      "n84": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n85": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n91"
+        }
+      },
+      "n91": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n92"
+        }
+      },
+      "n92": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n43": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n44"
+        }
+      },
+      "n44": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n133": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n134"
+        }
+      },
+      "n134": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n135": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n136"
+        }
+      },
+      "n136": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "special": "n166",
+          "forward+heavy": "n179",
+          "down+medium": "n323"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:034",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "light": "n262",
+          "heavy": "n180"
+        }
+      },
+      "n180": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "heavy": "n181",
+          "down+heavy": "n201"
+        }
+      },
+      "n181": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "light": "n182"
+        }
+      },
+      "n182": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "down+heavy": "n183"
+        }
+      },
+      "n183": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "light": "n184"
+        }
+      },
+      "n184": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "forward+light": "n185"
+        }
+      },
+      "n185": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "forward+light": "n186"
+        }
+      },
+      "n186": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:crouch:047",
+        "edges": {
+          "medium": "n253"
+        }
+      },
+      "n253": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {
+          "special": "n254"
+        }
+      },
+      "n254": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {
+          "special": "n255"
+        }
+      },
+      "n255": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {
+          "heavy": "n256"
+        }
+      },
+      "n256": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {
+          "medium": "n257"
+        }
+      },
+      "n257": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {
+          "special": "n258"
+        }
+      },
+      "n258": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {
+          "medium": "n259"
+        }
+      },
+      "n259": {
+        "depth": 17,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {
+          "light": "n260"
+        }
+      },
+      "n260": {
+        "depth": 18,
+        "routeId": "kid-goku:beginner:advanced:tornado:083",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:crouch:052",
+        "edges": {
+          "light": "n202"
+        }
+      },
+      "n202": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:crouch:052",
+        "edges": {
+          "light": "n203"
+        }
+      },
+      "n203": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:crouch:052",
+        "edges": {
+          "forward+light": "n204"
+        }
+      },
+      "n204": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:crouch:052",
+        "edges": {
+          "forward+light": "n205"
+        }
+      },
+      "n205": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:crouch:052",
+        "edges": {
+          "special": "n206"
+        }
+      },
+      "n206": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:crouch:052",
+        "edges": {
+          "medium": "n207"
+        }
+      },
+      "n207": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:crouch:054",
+        "edges": {
+          "special": "n208"
+        }
+      },
+      "n208": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:crouch:054",
+        "edges": {
+          "heavy": "n209"
+        }
+      },
+      "n209": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:crouch:054",
+        "edges": {
+          "medium": "n210"
+        }
+      },
+      "n210": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:crouch:054",
+        "edges": {
+          "special": "n211"
+        }
+      },
+      "n211": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:crouch:054",
+        "edges": {
+          "medium": "n212"
+        }
+      },
+      "n212": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:crouch:054",
+        "edges": {
+          "heavy": "n233"
+        }
+      },
+      "n233": {
+        "depth": 17,
+        "routeId": "kid-goku:beginner:advanced:launcher:080",
+        "edges": {
+          "light": "n234"
+        }
+      },
+      "n234": {
+        "depth": 18,
+        "routeId": "kid-goku:beginner:advanced:launcher:080",
+        "edges": {
+          "special": "n235"
+        }
+      },
+      "n235": {
+        "depth": 19,
+        "routeId": "kid-goku:beginner:advanced:launcher:080",
+        "edges": {
+          "light": "n236"
+        }
+      },
+      "n236": {
+        "depth": 20,
+        "routeId": "kid-goku:beginner:advanced:launcher:080",
+        "edges": {
+          "forward+heavy": "n237"
+        }
+      },
+      "n237": {
+        "depth": 21,
+        "routeId": "kid-goku:beginner:advanced:launcher:080",
+        "edges": {
+          "light": "n238"
+        }
+      },
+      "n238": {
+        "depth": 22,
+        "routeId": "kid-goku:beginner:advanced:launcher:080",
+        "edges": {
+          "special": "n239"
+        }
+      },
+      "n239": {
+        "depth": 23,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {
+          "forward+heavy": "n240"
+        }
+      },
+      "n240": {
+        "depth": 24,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {
+          "down+light": "n241"
+        }
+      },
+      "n241": {
+        "depth": 25,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {
+          "down+heavy": "n242"
+        }
+      },
+      "n242": {
+        "depth": 26,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {
+          "light": "n243"
+        }
+      },
+      "n243": {
+        "depth": 27,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {
+          "forward+light": "n244"
+        }
+      },
+      "n244": {
+        "depth": 28,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {
+          "special": "n245"
+        }
+      },
+      "n245": {
+        "depth": 29,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {
+          "heavy": "n246"
+        }
+      },
+      "n246": {
+        "depth": 30,
+        "routeId": "kid-goku:beginner:advanced:launcher:081",
+        "edges": {}
+      },
+      "n262": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "forward+light": "n263"
+        }
+      },
+      "n263": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "forward+light": "n264"
+        }
+      },
+      "n264": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "heavy": "n265"
+        }
+      },
+      "n265": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "down+heavy": "n266"
+        }
+      },
+      "n266": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "special": "n267"
+        }
+      },
+      "n267": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "special": "n268"
+        }
+      },
+      "n268": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "medium": "n269"
+        }
+      },
+      "n269": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "light": "n270"
+        }
+      },
+      "n270": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "heavy": "n271"
+        }
+      },
+      "n271": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "medium": "n272"
+        }
+      },
+      "n272": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "special": "n273"
+        }
+      },
+      "n273": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "medium": "n274"
+        }
+      },
+      "n274": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "heavy": "n275"
+        }
+      },
+      "n275": {
+        "depth": 17,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {
+          "light": "n276"
+        }
+      },
+      "n276": {
+        "depth": 18,
+        "routeId": "kid-goku:beginner:advanced:tornado:086",
+        "edges": {}
+      },
+      "n323": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "forward+heavy": "n337",
+          "heavy": "n324"
+        }
+      },
+      "n324": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "heavy": "n325"
+        }
+      },
+      "n325": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "light": "n326"
+        }
+      },
+      "n326": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "down+heavy": "n327"
+        }
+      },
+      "n327": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "light": "n328"
+        }
+      },
+      "n328": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "forward+light": "n329"
+        }
+      },
+      "n329": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "forward+light": "n330"
+        }
+      },
+      "n330": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "medium": "n331"
+        }
+      },
+      "n331": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "special": "n332"
+        }
+      },
+      "n332": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "special": "n333"
+        }
+      },
+      "n333": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "heavy": "n334"
+        }
+      },
+      "n334": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "medium": "n335"
+        }
+      },
+      "n335": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {
+          "special": "n336"
+        }
+      },
+      "n336": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:counterHit:103",
+        "edges": {}
+      },
+      "n337": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "heavy": "n338"
+        }
+      },
+      "n338": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "down+heavy": "n339"
+        }
+      },
+      "n339": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "light": "n340"
+        }
+      },
+      "n340": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "forward+light": "n341"
+        }
+      },
+      "n341": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "forward+light": "n342"
+        }
+      },
+      "n342": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "special": "n343"
+        }
+      },
+      "n343": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "medium": "n344"
+        }
+      },
+      "n344": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "special": "n345"
+        }
+      },
+      "n345": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "light": "n346"
+        }
+      },
+      "n346": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "heavy": "n347"
+        }
+      },
+      "n347": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "medium": "n348"
+        }
+      },
+      "n348": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {
+          "special": "n349"
+        }
+      },
+      "n349": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:counterHit:106",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:crouch:035",
+        "edges": {
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:035",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:crouch:036",
+        "edges": {
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:036",
+        "edges": {}
+      },
+      "n213": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n215": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:056",
+        "edges": {
+          "special": "n216"
+        }
+      },
+      "n216": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:056",
+        "edges": {}
+      },
+      "n223": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:066",
+        "edges": {
+          "special": "n224",
+          "light": "n261"
+        }
+      },
+      "n224": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:066",
+        "edges": {}
+      },
+      "n261": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:tornado:084",
+        "edges": {}
+      },
+      "n225": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n226"
+        }
+      },
+      "n226": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:067",
+        "edges": {}
+      },
+      "n227": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:counterHit:097",
+        "edges": {
+          "special": "n228"
+        }
+      },
+      "n228": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:counterHit:097",
+        "edges": {}
+      },
+      "n321": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:counterHit:099",
+        "edges": {
+          "special": "n322"
+        }
+      },
+      "n322": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:counterHit:099",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n26",
+          "down-forward+heavy": "n137",
+          "down+heavy": "n139",
+          "forward+heavy": "n282",
+          "medium": "n280",
+          "light": "n229",
+          "heavy": "n231"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:special-core",
+        "edges": {}
+      },
+      "n137": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n138"
+        }
+      },
+      "n138": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n139": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n140"
+        }
+      },
+      "n140": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n229": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:069",
+        "edges": {
+          "special": "n230"
+        }
+      },
+      "n230": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:069",
+        "edges": {}
+      },
+      "n231": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n232"
+        }
+      },
+      "n232": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:launcher:070",
+        "edges": {}
+      },
+      "n280": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:tornado:092",
+        "edges": {
+          "light": "n281"
+        }
+      },
+      "n281": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:tornado:092",
+        "edges": {}
+      },
+      "n282": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "down+light": "n283"
+        }
+      },
+      "n283": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "heavy": "n284"
+        }
+      },
+      "n284": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "heavy": "n285"
+        }
+      },
+      "n285": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "light": "n286"
+        }
+      },
+      "n286": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "down+heavy": "n287"
+        }
+      },
+      "n287": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "light": "n288"
+        }
+      },
+      "n288": {
+        "depth": 8,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "forward+light": "n289"
+        }
+      },
+      "n289": {
+        "depth": 9,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "forward+light": "n290"
+        }
+      },
+      "n290": {
+        "depth": 10,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "medium": "n291"
+        }
+      },
+      "n291": {
+        "depth": 11,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "special": "n292"
+        }
+      },
+      "n292": {
+        "depth": 12,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "special": "n293"
+        }
+      },
+      "n293": {
+        "depth": 13,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "heavy": "n294"
+        }
+      },
+      "n294": {
+        "depth": 14,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "medium": "n295"
+        }
+      },
+      "n295": {
+        "depth": 15,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "special": "n296"
+        }
+      },
+      "n296": {
+        "depth": 16,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "medium": "n297"
+        }
+      },
+      "n297": {
+        "depth": 17,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {
+          "light": "n298"
+        }
+      },
+      "n298": {
+        "depth": 18,
+        "routeId": "kid-goku:beginner:advanced:tornado:093",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:005",
+        "edges": {
+          "medium": "n31",
+          "light": "n124"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:005",
+        "edges": {
+          "heavy": "n32",
+          "special": "n112"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:005",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:011",
+        "edges": {
+          "special": "n125"
+        }
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:011",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:027",
+        "edges": {
+          "down+light": "n177",
+          "light": "n152",
+          "heavy": "n34"
+        }
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n35",
+          "light": "n154"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:009",
+        "edges": {
+          "down-forward+heavy": "n155",
+          "down+heavy": "n122",
+          "light": "n37"
+        }
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:009",
+        "edges": {
+          "special": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:009",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:basic:001",
+        "edges": {
+          "light": "n102",
+          "heavy": "n106"
+        }
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:basic:003",
+        "edges": {
+          "down+medium": "n108"
+        }
+      },
+      "n108": {
+        "depth": 4,
+        "routeId": "kid-goku:beginner:advanced:basic:003",
+        "edges": {
+          "medium": "n109"
+        }
+      },
+      "n109": {
+        "depth": 5,
+        "routeId": "kid-goku:beginner:advanced:basic:004",
+        "edges": {
+          "forward+heavy": "n110"
+        }
+      },
+      "n110": {
+        "depth": 6,
+        "routeId": "kid-goku:beginner:advanced:basic:004",
+        "edges": {
+          "heavy": "n111"
+        }
+      },
+      "n111": {
+        "depth": 7,
+        "routeId": "kid-goku:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:006",
+        "edges": {
+          "light": "n114"
+        }
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:006",
+        "edges": {
+          "special": "n115"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:006",
+        "edges": {}
+      },
+      "n116": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:007",
+        "edges": {
+          "medium": "n117",
+          "light": "n131"
+        }
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:007",
+        "edges": {
+          "special": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:007",
+        "edges": {}
+      },
+      "n131": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n132"
+        }
+      },
+      "n132": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:008",
+        "edges": {
+          "down+light": "n175",
+          "medium": "n120",
+          "light": "n150"
+        }
+      },
+      "n120": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:008",
+        "edges": {
+          "special": "n121"
+        }
+      },
+      "n121": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:008",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n126": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:012",
+        "edges": {
+          "light": "n127",
+          "heavy": "n129"
+        }
+      },
+      "n127": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:012",
+        "edges": {
+          "special": "n128"
+        }
+      },
+      "n128": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:012",
+        "edges": {}
+      },
+      "n129": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:013",
+        "edges": {
+          "special": "n130"
+        }
+      },
+      "n130": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:024",
+        "edges": {
+          "light": "n146",
+          "heavy": "n148"
+        }
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:advanced:031",
+        "edges": {
+          "light": "n158",
+          "heavy": "n160"
+        }
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 1,
+        "routeId": "kid-goku:beginner:advanced:crouch:033",
+        "edges": {
+          "light": "n163"
+        }
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "kid-goku:beginner:advanced:crouch:033",
+        "edges": {
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "kid-goku:beginner:advanced:crouch:033",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "b+1",
+      "animationKey": "cmd:b+1",
+      "label": "Reverse Power Pole Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Turtle Dash Punch",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Turtle Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "light",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Rising Tail Pop",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "launch"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Running Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Monkey Sweep",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Tail Feint Sweep",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Trip",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cross Staff Swing",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0024": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cross Staff Swing",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0028": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Rising Tail Pop",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "launch"
+    },
+    "s0031": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Running Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "b+1",
+      "animationKey": "cmd:b+1",
+      "label": "Reverse Power Pole Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cross Staff Swing",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Power Pole Poke",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Turtle Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "heavy",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Turtle Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Monkey Roll Launcher",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Running Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Tail Feint Sweep",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cross Staff Swing",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0051": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Monkey Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0053": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Turtle Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Power Pole Barrage",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0055": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:WR+3:WR+3",
+      "gesture": "down-forward+medium",
+      "input": "kick",
+      "command": "WR+3",
+      "animationKey": "cmd:WR+3",
+      "label": "Running Monkey Slide",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown"
+    },
+    "s0057": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Monkey Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:f,f+1:f,f+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "f,f+1",
+      "animationKey": "cmd:f,f+1",
+      "label": "Dash Staff Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Leaping Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Monkey Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:b+1:b+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "b+1",
+      "animationKey": "cmd:b+1",
+      "label": "Reverse Power Pole Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Leaping Staff Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Turtle Dash Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+special",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Running Power Pole Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Leaping Staff Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Monkey Roll Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Monkey Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "launch"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Monkey Rising Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Monkey Roll Launcher",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Monkey Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "launch"
+    },
+    "s0091": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Monkey Roll Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+medium",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Monkey Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "launch"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Monkey Wheel Lift Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Monkey Roll Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Monkey Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "launch"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Running Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Tail Feint Sweep",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Monkey Sweep",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:b+1:b+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "b+1",
+      "animationKey": "cmd:b+1",
+      "label": "Reverse Power Pole Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Turtle Dash Punch",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:f,f+1:f,f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f,f+1",
+      "animationKey": "cmd:f,f+1",
+      "label": "Dash Staff Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Cross Staff Swing",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Trip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Power Pole Barrage",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0110": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Power Pole Poke",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:b+1:b+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "b+1",
+      "animationKey": "cmd:b+1",
+      "label": "Reverse Power Pole Check",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0114": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Turtle School Body Blow",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0115": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0116": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0120": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0121": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0122": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0123": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0124": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0125": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0126": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0127": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Rising Monkey Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0128": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0129": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Rising Tail Pop Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0130": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0131": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Tail Cyclone",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0132": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0133": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Tail Feint Sweep",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0134": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0135": {
+      "routeKey": "cmd:cmd:WR+3:WR+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "WR+3",
+      "animationKey": "cmd:WR+3",
+      "label": "Running Monkey Slide",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown"
+    },
+    "s0136": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Monkey Sweep",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0137": {
+      "routeKey": "cmd:cmd:qcb+1:qcb+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcb+1",
+      "animationKey": "cmd:qcb+1",
+      "label": "Retreating Power Pole Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0138": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0139": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0140": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouching Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0141": {
+      "routeKey": "cmd:cmd:b+1:b+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "b+1",
+      "animationKey": "cmd:b+1",
+      "label": "Reverse Power Pole Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0142": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Monkey Sweep",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0143": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Power Pole Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0144": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Afterimage Power Pole",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 45
+    },
+    "s0145": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Tail Trip",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle"
+    },
+    "s0146": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Power Pole Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0147": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Tail Feint Sweep",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0148": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Sliding Monkey Trip",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0149": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Tail Feint Sweep Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0150": {
+      "routeKey": "cmd:cmd:WR+3:WR+3",
+      "gesture": "forward+special",
+      "input": "kick",
+      "command": "WR+3",
+      "animationKey": "cmd:WR+3",
+      "label": "Running Monkey Slide",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "movementBefore": "dashForward",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown"
+    },
+    "s0151": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Leaping Staff Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "launch"
+    }
+  }
 }

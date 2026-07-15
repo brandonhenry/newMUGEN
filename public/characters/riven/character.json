@@ -4448,136 +4448,95 @@
   "beginnerComboRoutes": [
     {
       "id": "riven:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Sharingan Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d/f+1",
-          "animationKey": "cmd:d/f+1",
-          "label": "Phoenix Sage Slash",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 26,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007"
       ]
     },
     {
       "id": "riven:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sharingan Blade Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Chidori Cut",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0012"
       ]
     },
     {
       "id": "riven:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "d/f+3",
-          "animationKey": "cmd:d/f+3",
-          "label": "Diagonal Windmill Blade",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "f+3",
-          "animationKey": "cmd:f+3",
-          "label": "Advancing Windmill Blade",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 34,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
       ]
     },
     {
@@ -4589,41 +4548,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Sharingan Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "kick",
-          "command": "d/f+3",
-          "animationKey": "cmd:d/f+3",
-          "label": "Diagonal Windmill Blade",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0021",
+        "s0022",
+        "s0023"
       ]
     },
     {
@@ -4635,41 +4569,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Sharingan Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sharingan Blade Rush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0024",
+        "s0025"
       ]
     },
     {
@@ -4681,41 +4590,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Sharingan Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sharingan Blade Rush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0026",
+        "s0024",
+        "s0025"
       ]
     },
     {
@@ -4724,44 +4608,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "down-forward+heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sharingan Blade Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "d/f+3",
-          "animationKey": "cmd:d/f+3",
-          "label": "Diagonal Windmill Blade",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0023"
       ]
     },
     {
@@ -4770,45 +4629,7019 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "riven:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0034"
+      ]
+    },
+    {
+      "id": "riven:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "forward+heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0034"
+      ]
+    },
+    {
+      "id": "riven:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down-forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0034"
+      ]
+    },
+    {
+      "id": "riven:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0039",
+        "s0024",
+        "s0025"
+      ]
+    },
+    {
+      "id": "riven:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "down-forward+heavy",
+        "special"
+      ],
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0040",
+        "s0028",
+        "s0023"
+      ]
+    },
+    {
+      "id": "riven:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0041",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "riven:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0012"
+      ]
+    },
+    {
+      "id": "riven:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
+      ]
+    },
+    {
+      "id": "riven:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007"
+      ]
+    },
+    {
+      "id": "riven:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
+      ]
+    },
+    {
+      "id": "riven:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0007"
+      ]
+    },
+    {
+      "id": "riven:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0012"
+      ]
+    },
+    {
+      "id": "riven:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 44,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0006",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019",
+        "s0020"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:001",
+      "title": "Chidori Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:002",
+      "title": "Chidori Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0045",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:003",
+      "title": "Grand Fireball Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:004",
+      "title": "Grand Fireball Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0048",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:005",
+      "title": "Lion Combo Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0050",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:006",
+      "title": "Lion Combo Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0051",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:007",
+      "title": "Windmill Blade Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:008",
+      "title": "Windmill Blade Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0054",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:009",
+      "title": "Chidori Thrust 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0045",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:010",
+      "title": "Grand Fireball Wheel 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:011",
+      "title": "Lion Combo Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0057",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:012",
+      "title": "Windmill Blade Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:013",
+      "title": "Chidori Thrust 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+medium",
+        "light",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0045",
+        "s0055",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:014",
+      "title": "Grand Fireball Wheel 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0055",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:015",
+      "title": "Lion Combo Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0049",
+        "s0057",
+        "s0055",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:basic:016",
+      "title": "Windmill Blade Sweep 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0053",
+        "s0055",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:017",
+      "title": "Advancing Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:018",
+      "title": "Aerial Chidori Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:019",
+      "title": "Aerial Lion Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:020",
+      "title": "Ducking Lion Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:021",
+      "title": "Ducking Lion Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0044",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:022",
+      "title": "Ducking Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:023",
+      "title": "Forward Chidori Cut 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:024",
+      "title": "Low Flame Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0065",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:025",
+      "title": "Sidestep Chidori Lunge 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:026",
+      "title": "Advancing Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:027",
+      "title": "Aerial Chidori Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:028",
+      "title": "Aerial Lion Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0080",
+        "s0079"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:029",
+      "title": "Diagonal Chidori Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:030",
+      "title": "Diagonal Chidori Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0083",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:031",
+      "title": "Diagonal Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0085",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:032",
+      "title": "Diagonal Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0084",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:033",
+      "title": "Ducking Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:034",
+      "title": "Forward Chidori Cut 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0072",
+        "s0086",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:035",
+      "title": "Low Flame Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:036",
+      "title": "Low Sharingan Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:037",
+      "title": "Low Sharingan Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0089",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:038",
+      "title": "Overdrive Low Cutter 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:039",
+      "title": "Overdrive Low Cutter 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0092",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:040",
+      "title": "Phoenix Sage Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0069",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:041",
+      "title": "Phoenix Sage Slash 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0044",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:042",
+      "title": "Sidestep Chidori Lunge 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special+light",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0094",
+        "s0079"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:043",
+      "title": "Sidestep Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0079"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:advanced:044",
+      "title": "Sidestep Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0085",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:045",
+      "title": "Fire Release Flip Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0075",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:046",
+      "title": "Aerial Lion Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0098",
+        "s0099"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:047",
+      "title": "Aerial Lion Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0100",
+        "s0101"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:048",
+      "title": "Crouch Chidori Dash 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0086",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:049",
+      "title": "Crouch Chidori Dash 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0102",
+        "s0062",
+        "s0063"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:050",
+      "title": "Crouch Fireball Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0088",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:051",
+      "title": "Crouch Fireball Wheel 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0104",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:052",
+      "title": "Crouch Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0088",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:053",
+      "title": "Crouch Windmill Blade 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0105",
+        "s0089",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:054",
+      "title": "Fire Release Flip Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0094",
+        "s0079"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:055",
+      "title": "Overdrive Low Cutter 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0106",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:056",
+      "title": "Overdrive Low Cutter 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "down+special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0107",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:057",
+      "title": "Rising Chidori Check 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0108",
+        "s0078",
+        "s0079"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:058",
+      "title": "Rising Chidori Check 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0108",
+        "s0109",
+        "s0077"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:059",
+      "title": "Aerial Lion Drop 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.48309859154929574,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down+light",
+        "forward+light",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "d/f+3",
-          "animationKey": "cmd:d/f+3",
-          "label": "Diagonal Windmill Blade",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Sharingan Quick Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Chidori Check",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "knockdown",
-          "kiCommand": "O+1",
-          "kiAnimationKey": "cmd:O+1",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "stepKeys": [
+        "s0066",
+        "s0055",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0113"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:060",
+      "title": "Aerial Lion Drop 14-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 34,
+      "damageScale": 0.41325301204819276,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "special",
+        "down-forward+light",
+        "medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0055",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0069",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:061",
+      "title": "Aerial Lion Drop 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0055",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:062",
+      "title": "Overdrive Low Cutter 10-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 44,
+      "damageScale": 0.588,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special",
+        "down+heavy",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down+light",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0106",
+        "s0117",
+        "s0118",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060",
+        "s0110",
+        "s0111"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:063",
+      "title": "Overdrive Low Cutter 16-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "long",
+      "estimatedHits": 16,
+      "estimatedDamage": 44,
+      "damageScale": 0.46421052631578946,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special",
+        "down+heavy",
+        "heavy",
+        "down+heavy",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "special",
+        "down-forward+light",
+        "medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0106",
+        "s0117",
+        "s0118",
+        "s0056",
+        "s0058",
+        "s0059",
+        "s0060",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0113",
+        "s0114",
+        "s0069",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:crouch:064",
+      "title": "Overdrive Low Cutter 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special",
+        "down+heavy",
+        "heavy",
+        "down+heavy"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0106",
+        "s0117",
+        "s0118",
+        "s0056",
+        "s0058"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:065",
+      "title": "Chidori Rising Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0120",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:066",
+      "title": "Chidori Rising Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0077",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:067",
+      "title": "Chidori Rising Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0120",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:068",
+      "title": "Crouch Chidori Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0122",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:069",
+      "title": "Crouch Chidori Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0122",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:070",
+      "title": "Crouch Chidori Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0101",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:071",
+      "title": "Crouch Chidori Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0101",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:072",
+      "title": "Crouch Chidori Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0123",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:073",
+      "title": "Rising Fire Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0125",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:074",
+      "title": "Rising Fire Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0099",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:075",
+      "title": "Rising Fire Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0125",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:076",
+      "title": "Rising Lion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0127",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:077",
+      "title": "Rising Lion Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0127",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:078",
+      "title": "Rising Lion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0079",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:079",
+      "title": "Rising Lion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0079",
+        "s0070"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:080",
+      "title": "Rising Lion Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0128",
+        "s0044"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:081",
+      "title": "Chidori Rising Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 34,
+      "damageScale": 0.42345679012345677,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0129",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:082",
+      "title": "Chidori Rising Launcher Air Chase Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.5913793103448275,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0129",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:083",
+      "title": "Crouch Chidori Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 34,
+      "damageScale": 0.42345679012345677,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:084",
+      "title": "Crouch Chidori Launcher Hybrid Launcher 21-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 21,
+      "estimatedDamage": 44,
+      "damageScale": 0.4083333333333333,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium",
+        "down-forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133",
+        "s0079",
+        "s0113",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:085",
+      "title": "Crouch Chidori Launcher Hybrid Launcher 21-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 21,
+      "estimatedDamage": 44,
+      "damageScale": 0.4083333333333333,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium",
+        "down-forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133",
+        "s0079",
+        "s0113",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:086",
+      "title": "Crouch Chidori Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.5913793103448275,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:087",
+      "title": "Rising Fire Launcher Air Chase Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 34,
+      "damageScale": 0.41829268292682925,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0135",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:088",
+      "title": "Rising Fire Launcher Air Chase Launcher 21-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 21,
+      "estimatedDamage": 44,
+      "damageScale": 0.40458715596330275,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium",
+        "down-forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0135",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133",
+        "s0079",
+        "s0113",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:089",
+      "title": "Rising Fire Launcher Air Chase Launcher 21-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "marathon",
+      "estimatedHits": 21,
+      "estimatedDamage": 44,
+      "damageScale": 0.40458715596330275,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium",
+        "down-forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0135",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133",
+        "s0079",
+        "s0113",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:090",
+      "title": "Rising Fire Launcher Air Chase Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.5813559322033898,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0135",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:091",
+      "title": "Rising Lion Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 34,
+      "damageScale": 0.42345679012345677,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0136",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:launcher:092",
+      "title": "Rising Lion Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.5913793103448275,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0136",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:093",
+      "title": "Chidori Rising Launcher Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.5044117647058823,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0129",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:094",
+      "title": "Chidori Rising Launcher Air Chase Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 34,
+      "damageScale": 0.3572916666666666,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0129",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:095",
+      "title": "Chidori Rising Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0119",
+        "s0120",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:096",
+      "title": "Crouch Chidori Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0122",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:097",
+      "title": "Crouch Chidori Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.5044117647058823,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:098",
+      "title": "Crouch Chidori Launcher Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 34,
+      "damageScale": 0.3572916666666666,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:099",
+      "title": "Crouch Chidori Launcher Hybrid Launcher 21-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "marathon",
+      "estimatedHits": 21,
+      "estimatedDamage": 44,
+      "damageScale": 0.4083333333333333,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium",
+        "down-forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0121",
+        "s0110",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133",
+        "s0079",
+        "s0113",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:100",
+      "title": "Rising Fire Launcher Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.49710144927536226,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0135",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:101",
+      "title": "Rising Fire Launcher Air Chase Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 34,
+      "damageScale": 0.3536082474226804,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0135",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:102",
+      "title": "Rising Fire Launcher Air Chase Launcher 21-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "marathon",
+      "estimatedHits": 21,
+      "estimatedDamage": 44,
+      "damageScale": 0.40458715596330275,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "heavy",
+        "medium",
+        "down-forward+medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0135",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0132",
+        "s0133",
+        "s0079",
+        "s0113",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:103",
+      "title": "Rising Fire Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+special+heavy",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0124",
+        "s0125",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:104",
+      "title": "Rising Lion Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0127",
+        "s0134"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:105",
+      "title": "Rising Lion Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.5044117647058823,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0136",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114"
+      ]
+    },
+    {
+      "id": "riven:beginner:advanced:tornado:106",
+      "title": "Rising Lion Launcher Hybrid Launcher 18-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 18,
+      "estimatedDamage": 34,
+      "damageScale": 0.36105263157894735,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "forward+light",
+        "light",
+        "heavy",
+        "down+heavy",
+        "special",
+        "down-forward+heavy",
+        "forward+heavy",
+        "down-forward+light",
+        "medium",
+        "forward+medium",
+        "light",
+        "heavy",
+        "special",
+        "medium",
+        "medium",
+        "down-forward+medium"
+      ],
+      "stepKeys": [
+        "s0126",
+        "s0136",
+        "s0111",
+        "s0112",
+        "s0056",
+        "s0058",
+        "s0130",
+        "s0059",
+        "s0060",
+        "s0114",
+        "s0069",
+        "s0131",
+        "s0115",
+        "s0116",
+        "s0053",
+        "s0055",
+        "s0137",
+        "s0079"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "riven:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "light": "n1",
+          "special": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "forward+medium": "n139",
+          "forward+heavy": "n156",
+          "forward+special": "n142",
+          "down+light": "n145",
+          "down+heavy": "n150",
+          "down+special": "n153",
+          "down-forward+light": "n136",
+          "down-forward+medium": "n95",
+          "down-forward+special": "n105",
+          "forward+special+medium": "n110",
+          "forward+special+heavy": "n100",
+          "down+special+light": "n159"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:038",
+        "edges": {
+          "light": "n2",
+          "special": "n25",
+          "medium": "n27",
+          "down-forward+medium": "n187",
+          "forward+medium": "n33",
+          "down+special": "n207",
+          "heavy": "n199",
+          "forward+light": "n205"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "riven:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "riven:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "riven:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "riven:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "riven:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "riven:beginner:light-core",
+        "edges": {
+          "medium": "n39",
+          "light": "n8",
+          "heavy": "n47"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "riven:beginner:light-core",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 8,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n40"
+        }
+      },
+      "n40": {
+        "depth": 9,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 10,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 11,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 12,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 13,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 14,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n87",
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 15,
+        "routeId": "riven:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n87": {
+        "depth": 15,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88"
+        }
+      },
+      "n88": {
+        "depth": 16,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 17,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 18,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 19,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 20,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 21,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 22,
+        "routeId": "riven:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n47": {
+        "depth": 8,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n48"
+        }
+      },
+      "n48": {
+        "depth": 9,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 10,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 11,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 12,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 13,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 14,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 15,
+        "routeId": "riven:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 2,
+        "routeId": "riven:beginner:special-core",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 3,
+        "routeId": "riven:beginner:special-core",
+        "edges": {}
+      },
+      "n27": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:038",
+        "edges": {
+          "down-forward+medium": "n186",
+          "heavy": "n28"
+        }
+      },
+      "n28": {
+        "depth": 3,
+        "routeId": "riven:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "riven:beginner:forward-light-route",
+        "edges": {
+          "down-forward+medium": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "riven:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:039",
+        "edges": {
+          "down-forward+medium": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:048",
+        "edges": {
+          "down-forward+medium": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:055",
+        "edges": {
+          "special": "n224",
+          "down-forward+medium": "n206"
+        }
+      },
+      "n206": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:055",
+        "edges": {}
+      },
+      "n224": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "down+heavy": "n225"
+        }
+      },
+      "n225": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "heavy": "n226"
+        }
+      },
+      "n226": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "down+heavy": "n227"
+        }
+      },
+      "n227": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "down-forward+heavy": "n228"
+        }
+      },
+      "n228": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "forward+heavy": "n229"
+        }
+      },
+      "n229": {
+        "depth": 8,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "down+light": "n230"
+        }
+      },
+      "n230": {
+        "depth": 9,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "forward+light": "n231"
+        }
+      },
+      "n231": {
+        "depth": 10,
+        "routeId": "riven:beginner:advanced:crouch:062",
+        "edges": {
+          "light": "n232"
+        }
+      },
+      "n232": {
+        "depth": 11,
+        "routeId": "riven:beginner:advanced:crouch:063",
+        "edges": {
+          "special": "n233"
+        }
+      },
+      "n233": {
+        "depth": 12,
+        "routeId": "riven:beginner:advanced:crouch:063",
+        "edges": {
+          "down-forward+light": "n234"
+        }
+      },
+      "n234": {
+        "depth": 13,
+        "routeId": "riven:beginner:advanced:crouch:063",
+        "edges": {
+          "medium": "n235"
+        }
+      },
+      "n235": {
+        "depth": 14,
+        "routeId": "riven:beginner:advanced:crouch:063",
+        "edges": {
+          "light": "n236"
+        }
+      },
+      "n236": {
+        "depth": 15,
+        "routeId": "riven:beginner:advanced:crouch:063",
+        "edges": {
+          "heavy": "n237"
+        }
+      },
+      "n237": {
+        "depth": 16,
+        "routeId": "riven:beginner:advanced:crouch:063",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:056",
+        "edges": {
+          "down-forward+medium": "n208"
+        }
+      },
+      "n208": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:056",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:029",
+        "edges": {
+          "medium": "n10",
+          "light": "n170",
+          "heavy": "n209",
+          "down-forward+medium": "n244",
+          "down-forward+heavy": "n29",
+          "down+light": "n267",
+          "forward+heavy": "n35",
+          "special": "n168",
+          "forward+light": "n242",
+          "forward+medium": "n246"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "riven:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "riven:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "riven:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "riven:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "riven:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "riven:beginner:medium-core",
+        "edges": {
+          "heavy": "n63",
+          "medium": "n16",
+          "light": "n55"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "riven:beginner:medium-core",
+        "edges": {}
+      },
+      "n55": {
+        "depth": 8,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n56"
+        }
+      },
+      "n56": {
+        "depth": 9,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 10,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 11,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 12,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 13,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 14,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 15,
+        "routeId": "riven:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n63": {
+        "depth": 8,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n64"
+        }
+      },
+      "n64": {
+        "depth": 9,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 10,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 11,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 12,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 13,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 14,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 15,
+        "routeId": "riven:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n29": {
+        "depth": 2,
+        "routeId": "riven:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n30"
+        }
+      },
+      "n30": {
+        "depth": 3,
+        "routeId": "riven:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "riven:beginner:down-medium-route",
+        "edges": {
+          "down-forward+medium": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "riven:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:029",
+        "edges": {
+          "down-forward+medium": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:030",
+        "edges": {
+          "down-forward+medium": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:057",
+        "edges": {
+          "down-forward+medium": "n210"
+        }
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:057",
+        "edges": {}
+      },
+      "n242": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:068",
+        "edges": {
+          "down-forward+medium": "n243",
+          "light": "n312"
+        }
+      },
+      "n243": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:068",
+        "edges": {}
+      },
+      "n312": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:tornado:096",
+        "edges": {}
+      },
+      "n244": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:070",
+        "edges": {
+          "down-forward+medium": "n245"
+        }
+      },
+      "n245": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:070",
+        "edges": {}
+      },
+      "n246": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:072",
+        "edges": {
+          "down-forward+medium": "n247"
+        }
+      },
+      "n247": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:072",
+        "edges": {}
+      },
+      "n267": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "forward+light": "n268"
+        }
+      },
+      "n268": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "light": "n269"
+        }
+      },
+      "n269": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "heavy": "n270"
+        }
+      },
+      "n270": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "down+heavy": "n271"
+        }
+      },
+      "n271": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "special": "n272"
+        }
+      },
+      "n272": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "down-forward+heavy": "n273"
+        }
+      },
+      "n273": {
+        "depth": 8,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "forward+heavy": "n274"
+        }
+      },
+      "n274": {
+        "depth": 9,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "down-forward+light": "n275"
+        }
+      },
+      "n275": {
+        "depth": 10,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "medium": "n276"
+        }
+      },
+      "n276": {
+        "depth": 11,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "forward+medium": "n277"
+        }
+      },
+      "n277": {
+        "depth": 12,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "light": "n278"
+        }
+      },
+      "n278": {
+        "depth": 13,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "heavy": "n279"
+        }
+      },
+      "n279": {
+        "depth": 14,
+        "routeId": "riven:beginner:advanced:launcher:083",
+        "edges": {
+          "special": "n280"
+        }
+      },
+      "n280": {
+        "depth": 15,
+        "routeId": "riven:beginner:advanced:launcher:084",
+        "edges": {
+          "medium": "n281"
+        }
+      },
+      "n281": {
+        "depth": 16,
+        "routeId": "riven:beginner:advanced:launcher:084",
+        "edges": {
+          "heavy": "n282"
+        }
+      },
+      "n282": {
+        "depth": 17,
+        "routeId": "riven:beginner:advanced:launcher:084",
+        "edges": {
+          "medium": "n283"
+        }
+      },
+      "n283": {
+        "depth": 18,
+        "routeId": "riven:beginner:advanced:launcher:084",
+        "edges": {
+          "down-forward+medium": "n284"
+        }
+      },
+      "n284": {
+        "depth": 19,
+        "routeId": "riven:beginner:advanced:launcher:084",
+        "edges": {
+          "special": "n285"
+        }
+      },
+      "n285": {
+        "depth": 20,
+        "routeId": "riven:beginner:advanced:launcher:084",
+        "edges": {
+          "light": "n286"
+        }
+      },
+      "n286": {
+        "depth": 21,
+        "routeId": "riven:beginner:advanced:launcher:084",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:031",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n174",
+          "light": "n191",
+          "special": "n182",
+          "forward+light": "n184",
+          "down-forward+light": "n37",
+          "down-forward+medium": "n240",
+          "down+light": "n254",
+          "forward+medium": "n31",
+          "forward+heavy": "n172",
+          "forward+special": "n238",
+          "down+medium": "n252"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "riven:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "riven:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "riven:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "riven:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "riven:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "riven:beginner:heavy-core",
+        "edges": {
+          "medium": "n79",
+          "heavy": "n24",
+          "light": "n71"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "riven:beginner:heavy-core",
+        "edges": {}
+      },
+      "n71": {
+        "depth": 8,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n72"
+        }
+      },
+      "n72": {
+        "depth": 9,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 10,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 11,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 12,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 13,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 14,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 15,
+        "routeId": "riven:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n79": {
+        "depth": 8,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n80"
+        }
+      },
+      "n80": {
+        "depth": 9,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 10,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 11,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 12,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 13,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 14,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 15,
+        "routeId": "riven:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "riven:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "riven:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "riven:beginner:down-forward-heavy-route",
+        "edges": {
+          "down-forward+medium": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "riven:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:031",
+        "edges": {
+          "down-forward+medium": "n173"
+        }
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:032",
+        "edges": {
+          "down-forward+medium": "n175"
+        }
+      },
+      "n175": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:036",
+        "edges": {
+          "down-forward+medium": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:036",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:037",
+        "edges": {
+          "down-forward+medium": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:043",
+        "edges": {
+          "down-forward+medium": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n238": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:065",
+        "edges": {
+          "down-forward+medium": "n239",
+          "light": "n311"
+        }
+      },
+      "n239": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:065",
+        "edges": {}
+      },
+      "n311": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:tornado:095",
+        "edges": {}
+      },
+      "n240": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:066",
+        "edges": {
+          "down-forward+medium": "n241"
+        }
+      },
+      "n241": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:066",
+        "edges": {}
+      },
+      "n252": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:080",
+        "edges": {
+          "down-forward+medium": "n253"
+        }
+      },
+      "n253": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:080",
+        "edges": {}
+      },
+      "n254": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "forward+light": "n255"
+        }
+      },
+      "n255": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "light": "n256"
+        }
+      },
+      "n256": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "heavy": "n257"
+        }
+      },
+      "n257": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "down+heavy": "n258"
+        }
+      },
+      "n258": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "special": "n259"
+        }
+      },
+      "n259": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "down-forward+heavy": "n260"
+        }
+      },
+      "n260": {
+        "depth": 8,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "forward+heavy": "n261"
+        }
+      },
+      "n261": {
+        "depth": 9,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "down-forward+light": "n262"
+        }
+      },
+      "n262": {
+        "depth": 10,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "medium": "n263"
+        }
+      },
+      "n263": {
+        "depth": 11,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "forward+medium": "n264"
+        }
+      },
+      "n264": {
+        "depth": 12,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "light": "n265"
+        }
+      },
+      "n265": {
+        "depth": 13,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "heavy": "n266"
+        }
+      },
+      "n266": {
+        "depth": 14,
+        "routeId": "riven:beginner:advanced:launcher:081",
+        "edges": {
+          "special": "n307"
+        }
+      },
+      "n307": {
+        "depth": 15,
+        "routeId": "riven:beginner:advanced:tornado:094",
+        "edges": {
+          "medium": "n308"
+        }
+      },
+      "n308": {
+        "depth": 16,
+        "routeId": "riven:beginner:advanced:tornado:094",
+        "edges": {
+          "heavy": "n309",
+          "medium": "n314"
+        }
+      },
+      "n309": {
+        "depth": 17,
+        "routeId": "riven:beginner:advanced:tornado:094",
+        "edges": {
+          "medium": "n310"
+        }
+      },
+      "n310": {
+        "depth": 18,
+        "routeId": "riven:beginner:advanced:tornado:094",
+        "edges": {}
+      },
+      "n314": {
+        "depth": 17,
+        "routeId": "riven:beginner:advanced:tornado:106",
+        "edges": {
+          "down-forward+medium": "n315"
+        }
+      },
+      "n315": {
+        "depth": 18,
+        "routeId": "riven:beginner:advanced:tornado:106",
+        "edges": {}
+      },
+      "n95": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n96",
+          "light": "n98"
+        }
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:001",
+        "edges": {
+          "down-forward+medium": "n97"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:002",
+        "edges": {
+          "down-forward+medium": "n99",
+          "medium": "n115"
+        }
+      },
+      "n99": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:009",
+        "edges": {
+          "heavy": "n116"
+        }
+      },
+      "n116": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:basic:009",
+        "edges": {
+          "down+heavy": "n124"
+        }
+      },
+      "n124": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:basic:013",
+        "edges": {
+          "down-forward+heavy": "n125"
+        }
+      },
+      "n125": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:basic:013",
+        "edges": {
+          "forward+heavy": "n126"
+        }
+      },
+      "n126": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:basic:003",
+        "edges": {
+          "heavy": "n203",
+          "special": "n201",
+          "light": "n101",
+          "down-forward+medium": "n250",
+          "down+light": "n287",
+          "forward+medium": "n193",
+          "medium": "n248",
+          "forward+light": "n103"
+        }
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:003",
+        "edges": {
+          "down-forward+medium": "n102",
+          "medium": "n117"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:010",
+        "edges": {
+          "heavy": "n118"
+        }
+      },
+      "n118": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:basic:010",
+        "edges": {
+          "down+heavy": "n127"
+        }
+      },
+      "n127": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:basic:014",
+        "edges": {
+          "down-forward+heavy": "n128"
+        }
+      },
+      "n128": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:basic:014",
+        "edges": {
+          "forward+heavy": "n129"
+        }
+      },
+      "n129": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:004",
+        "edges": {
+          "down-forward+medium": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:045",
+        "edges": {
+          "down-forward+medium": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:050",
+        "edges": {
+          "down-forward+medium": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:050",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:054",
+        "edges": {
+          "down-forward+medium": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:054",
+        "edges": {}
+      },
+      "n248": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:073",
+        "edges": {
+          "down-forward+medium": "n249",
+          "light": "n313"
+        }
+      },
+      "n249": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:073",
+        "edges": {}
+      },
+      "n313": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:tornado:103",
+        "edges": {}
+      },
+      "n250": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:074",
+        "edges": {
+          "down-forward+medium": "n251"
+        }
+      },
+      "n251": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:074",
+        "edges": {}
+      },
+      "n287": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "forward+light": "n288"
+        }
+      },
+      "n288": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "light": "n289"
+        }
+      },
+      "n289": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "heavy": "n290"
+        }
+      },
+      "n290": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "down+heavy": "n291"
+        }
+      },
+      "n291": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "special": "n292"
+        }
+      },
+      "n292": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "down-forward+heavy": "n293"
+        }
+      },
+      "n293": {
+        "depth": 8,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "forward+heavy": "n294"
+        }
+      },
+      "n294": {
+        "depth": 9,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "down-forward+light": "n295"
+        }
+      },
+      "n295": {
+        "depth": 10,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "medium": "n296"
+        }
+      },
+      "n296": {
+        "depth": 11,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "forward+medium": "n297"
+        }
+      },
+      "n297": {
+        "depth": 12,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "light": "n298"
+        }
+      },
+      "n298": {
+        "depth": 13,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "heavy": "n299"
+        }
+      },
+      "n299": {
+        "depth": 14,
+        "routeId": "riven:beginner:advanced:launcher:087",
+        "edges": {
+          "special": "n300"
+        }
+      },
+      "n300": {
+        "depth": 15,
+        "routeId": "riven:beginner:advanced:launcher:088",
+        "edges": {
+          "medium": "n301"
+        }
+      },
+      "n301": {
+        "depth": 16,
+        "routeId": "riven:beginner:advanced:launcher:088",
+        "edges": {
+          "heavy": "n302"
+        }
+      },
+      "n302": {
+        "depth": 17,
+        "routeId": "riven:beginner:advanced:launcher:088",
+        "edges": {
+          "medium": "n303"
+        }
+      },
+      "n303": {
+        "depth": 18,
+        "routeId": "riven:beginner:advanced:launcher:088",
+        "edges": {
+          "down-forward+medium": "n304"
+        }
+      },
+      "n304": {
+        "depth": 19,
+        "routeId": "riven:beginner:advanced:launcher:088",
+        "edges": {
+          "special": "n305"
+        }
+      },
+      "n305": {
+        "depth": 20,
+        "routeId": "riven:beginner:advanced:launcher:088",
+        "edges": {
+          "light": "n306"
+        }
+      },
+      "n306": {
+        "depth": 21,
+        "routeId": "riven:beginner:advanced:launcher:088",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n119",
+          "down-forward+light": "n108",
+          "light": "n106"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:005",
+        "edges": {
+          "down-forward+medium": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:006",
+        "edges": {
+          "down-forward+medium": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n120"
+        }
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:011",
+        "edges": {
+          "heavy": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:basic:011",
+        "edges": {
+          "down+heavy": "n130"
+        }
+      },
+      "n130": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:basic:015",
+        "edges": {
+          "down-forward+heavy": "n131"
+        }
+      },
+      "n131": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:basic:015",
+        "edges": {
+          "forward+heavy": "n132"
+        }
+      },
+      "n132": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n111",
+          "heavy": "n113"
+        }
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:007",
+        "edges": {
+          "down-forward+medium": "n112",
+          "medium": "n122"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:012",
+        "edges": {
+          "heavy": "n123"
+        }
+      },
+      "n123": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:basic:012",
+        "edges": {
+          "down+heavy": "n133"
+        }
+      },
+      "n133": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:basic:016",
+        "edges": {
+          "down-forward+heavy": "n134"
+        }
+      },
+      "n134": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:basic:016",
+        "edges": {
+          "forward+heavy": "n135"
+        }
+      },
+      "n135": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:basic:008",
+        "edges": {
+          "down-forward+medium": "n114"
+        }
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n136": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n137",
+          "heavy": "n162"
+        }
+      },
+      "n137": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:017",
+        "edges": {
+          "down-forward+medium": "n138"
+        }
+      },
+      "n138": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:026",
+        "edges": {
+          "down-forward+medium": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n139": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:018",
+        "edges": {
+          "heavy": "n164",
+          "forward+medium": "n140"
+        }
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:018",
+        "edges": {
+          "down-forward+medium": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:027",
+        "edges": {
+          "down-forward+medium": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:019",
+        "edges": {
+          "heavy": "n166",
+          "forward+medium": "n143",
+          "down+medium": "n197",
+          "medium": "n211",
+          "special": "n195"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:019",
+        "edges": {
+          "down-forward+medium": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:028",
+        "edges": {
+          "down-forward+medium": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:046",
+        "edges": {
+          "down-forward+medium": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:047",
+        "edges": {
+          "down-forward+medium": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n211": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "heavy": "n212"
+        }
+      },
+      "n212": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "down+heavy": "n213"
+        }
+      },
+      "n213": {
+        "depth": 4,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "down-forward+heavy": "n214"
+        }
+      },
+      "n214": {
+        "depth": 5,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "forward+heavy": "n215"
+        }
+      },
+      "n215": {
+        "depth": 6,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "down+light": "n216"
+        }
+      },
+      "n216": {
+        "depth": 7,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "forward+light": "n217"
+        }
+      },
+      "n217": {
+        "depth": 8,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "light": "n218"
+        }
+      },
+      "n218": {
+        "depth": 9,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "special": "n219"
+        }
+      },
+      "n219": {
+        "depth": 10,
+        "routeId": "riven:beginner:advanced:crouch:059",
+        "edges": {
+          "down-forward+light": "n220"
+        }
+      },
+      "n220": {
+        "depth": 11,
+        "routeId": "riven:beginner:advanced:crouch:060",
+        "edges": {
+          "medium": "n221"
+        }
+      },
+      "n221": {
+        "depth": 12,
+        "routeId": "riven:beginner:advanced:crouch:060",
+        "edges": {
+          "light": "n222"
+        }
+      },
+      "n222": {
+        "depth": 13,
+        "routeId": "riven:beginner:advanced:crouch:060",
+        "edges": {
+          "heavy": "n223"
+        }
+      },
+      "n223": {
+        "depth": 14,
+        "routeId": "riven:beginner:advanced:crouch:060",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:020",
+        "edges": {
+          "medium": "n146",
+          "down-forward+medium": "n148"
+        }
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:020",
+        "edges": {
+          "down-forward+medium": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:021",
+        "edges": {
+          "down-forward+medium": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:022",
+        "edges": {
+          "medium": "n151",
+          "heavy": "n176"
+        }
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:022",
+        "edges": {
+          "down-forward+medium": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n176": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:033",
+        "edges": {
+          "down-forward+medium": "n177"
+        }
+      },
+      "n177": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:023",
+        "edges": {
+          "medium": "n154",
+          "heavy": "n178"
+        }
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:023",
+        "edges": {
+          "down-forward+medium": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:034",
+        "edges": {
+          "down-forward+medium": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:024",
+        "edges": {
+          "heavy": "n180",
+          "forward+medium": "n157"
+        }
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:024",
+        "edges": {
+          "down-forward+medium": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:035",
+        "edges": {
+          "down-forward+medium": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 1,
+        "routeId": "riven:beginner:advanced:advanced:025",
+        "edges": {
+          "heavy": "n189",
+          "forward+medium": "n160"
+        }
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:025",
+        "edges": {
+          "down-forward+medium": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "riven:beginner:advanced:advanced:042",
+        "edges": {
+          "down-forward+medium": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "riven:beginner:advanced:advanced:042",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d/f+1",
+      "animationKey": "cmd:d/f+1",
+      "label": "Phoenix Sage Slash",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Lion Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Lion Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Lion Combo Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "light",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Chidori Thrust",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Sharingan Feint",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Windmill Blade Sweep",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0024": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0026": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "special",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0032": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0035": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "d/f+1",
+      "animationKey": "cmd:d/f+1",
+      "label": "Phoenix Sage Slash",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0039": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0040": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0042": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Chidori Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Aerial Chidori Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Grand Fireball Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "forward+light",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Lion Combo Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Chidori Lunge",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:d/f+1:d/f+1",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "d/f+1",
+      "animationKey": "cmd:d/f+1",
+      "label": "Phoenix Sage Slash",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "forward+special+medium",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Windmill Blade Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "Rising Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "forward+medium",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Aerial Chidori Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Lion Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "down+special",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Flame Wheel",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "down+special+light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Chidori Lunge",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Chidori Rising Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rising Lion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rising Lion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0081": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diagonal Chidori Check Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "special",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Chidori Rising Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Chidori Rising Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Chidori Rising Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Low Sharingan Feint Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Aerial Chidori Thrust",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0090": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Overdrive Low Cutter Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sharingan Blade Rush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0093": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Phoenix Sage Slash Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rising Lion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Sidestep Windmill Blade Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Rising Lion Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0097": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Fire Release Flip Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Fire Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "launch"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Chidori Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Chidori Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0102": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouch Chidori Dash Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0103": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Crouch Fireball Wheel Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Crouch Windmill Blade Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:WS+2:WS+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "WS+2",
+      "animationKey": "cmd:WS+2",
+      "label": "Rising Chidori Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:FC+4:FC+4",
+      "gesture": "down+special",
+      "input": "special",
+      "command": "FC+4",
+      "animationKey": "cmd:FC+4",
+      "label": "Fire Release Flip Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0108": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Rising Chidori Check Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "special",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Chidori Rising Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Lion Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Lion Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Sharingan Quick Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Chidori Lunge",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:d/f+1:d/f+1",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "d/f+1",
+      "animationKey": "cmd:d/f+1",
+      "label": "Phoenix Sage Slash",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0115": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Lion Combo Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0116": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Windmill Blade Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0117": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Aerial Lion Drop",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0118": {
+      "routeKey": "cmd:cmd:FC+3:FC+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "FC+3",
+      "animationKey": "cmd:FC+3",
+      "label": "Crouch Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0119": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Chidori Rising Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0120": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Fire Tornado Wheel",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0121": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Chidori Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0122": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Fire Tornado Wheel",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle"
+    },
+    "s0123": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0124": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Fire Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0125": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Fire Tornado Wheel",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0126": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Rising Lion Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0127": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Fire Tornado Wheel",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "juggle"
+    },
+    "s0128": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "down+medium",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Windmill Blade",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0129": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Lion Jab",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0130": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Fire Tornado Wheel",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0131": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chidori Cut",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0132": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Sharingan Feint",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0133": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Chidori Thrust",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0134": {
+      "routeKey": "cmd:cmd:d/f+1:d/f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "d/f+1",
+      "animationKey": "cmd:d/f+1",
+      "label": "Overdrive Low Cutter",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0135": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Lion Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0136": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Lion Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0137": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Chidori Thrust",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    }
+  }
 }

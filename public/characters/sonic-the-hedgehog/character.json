@@ -3373,127 +3373,95 @@
   "beginnerComboRoutes": [
     {
       "id": "sonic-the-hedgehog:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sonic the Hedgehog Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Sonic the Hedgehog Left Check",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
       ]
     },
     {
       "id": "sonic-the-hedgehog:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sonic the Hedgehog Twin Assault",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Sonic the Hedgehog Right Check",
-          "windowBefore": 14,
-          "windowAfter": 18,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 42,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
       ]
     },
     {
       "id": "sonic-the-hedgehog:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Sonic the Hedgehog Left Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "1+3",
-          "animationKey": "cmd:1+3",
-          "label": "Sonic the Hedgehog Cross Launcher",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "launch"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 36,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
       ]
     },
     {
@@ -3505,37 +3473,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Sonic the Hedgehog Right Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 23,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0015",
+        "s0016",
+        "s0017"
       ]
     },
     {
@@ -3547,38 +3494,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sonic the Hedgehog Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sonic the Hedgehog Twin Assault",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0018",
+        "s0014"
       ]
     },
     {
@@ -3590,38 +3515,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sonic the Hedgehog Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sonic the Hedgehog Twin Assault",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0019",
+        "s0018",
+        "s0014"
       ]
     },
     {
@@ -3630,40 +3533,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Sonic the Hedgehog Twin Assault",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Sonic the Hedgehog Left Kick",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0020",
+        "s0021",
+        "s0017"
       ]
     },
     {
@@ -3675,38 +3557,2160 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Sonic the Hedgehog Left Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Sonic the Hedgehog Rush",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Sonic the Hedgehog Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 19,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0023",
+        "s0017"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0011",
+        "s0026"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0028",
+        "s0029",
+        "s0026"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 22,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0030",
+        "s0018",
+        "s0014"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "special",
+        "special"
+      ],
+      "estimatedDamage": 21,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0031",
+        "s0021",
+        "s0017"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 19,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0023",
+        "s0017"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 36,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 47,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0013",
+        "s0014"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:001",
+      "title": "Sonic the Hedgehog Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:002",
+      "title": "Sonic the Hedgehog Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:003",
+      "title": "Sonic the Hedgehog Twin Assault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0036",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:004",
+      "title": "Sonic the Hedgehog Twin Assault 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0036",
+        "s0037",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:005",
+      "title": "Sonic the Hedgehog Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0038",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:006",
+      "title": "Sonic the Hedgehog Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 18,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0038",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:007",
+      "title": "Sonic the Hedgehog Burst 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0039",
+        "s0040",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:advanced:008",
+      "title": "Sonic the Hedgehog Burst 5-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0039",
+        "s0040",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:crouch:009",
+      "title": "Sonic the Hedgehog Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:crouch:010",
+      "title": "Sonic the Hedgehog Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0039",
+        "s0045"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:crouch:011",
+      "title": "Sonic the Hedgehog Rising Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0046",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:crouch:012",
+      "title": "Sonic the Hedgehog Burst 5-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0039",
+        "s0040",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:crouch:013",
+      "title": "Sonic the Hedgehog Burst 5-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 33,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0039",
+        "s0040",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:launcher:014",
+      "title": "Sonic the Hedgehog Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0042",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:launcher:015",
+      "title": "Sonic the Hedgehog Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0042",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:launcher:016",
+      "title": "Sonic the Hedgehog Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0048",
+        "s0035"
+      ]
+    },
+    {
+      "id": "sonic-the-hedgehog:beginner:advanced:launcher:017",
+      "title": "Sonic the Hedgehog Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0048",
+        "s0035"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:001",
+        "edges": {
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "special": "n25",
+          "forward+medium": "n113",
+          "forward+heavy": "n96",
+          "forward+special": "n107"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-light-route",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "heavy": "n34"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "sonic-the-hedgehog:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "sonic-the-hedgehog:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "sonic-the-hedgehog:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "sonic-the-hedgehog:beginner:light-core",
+        "edges": {
+          "medium": "n40",
+          "heavy": "n48",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:light-core",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 9,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 10,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 11,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 12,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 13,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 14,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n88",
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 15,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 16,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 17,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 18,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 19,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 20,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 21,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 22,
+        "routeId": "sonic-the-hedgehog:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n48": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 9,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 10,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 11,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 12,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 13,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 14,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 15,
+        "routeId": "sonic-the-hedgehog:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:forward-light-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:003",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n36",
+          "light": "n99",
+          "special": "n30"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "sonic-the-hedgehog:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "sonic-the-hedgehog:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "sonic-the-hedgehog:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "sonic-the-hedgehog:beginner:medium-core",
+        "edges": {
+          "light": "n56",
+          "heavy": "n64",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:medium-core",
+        "edges": {}
+      },
+      "n56": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 9,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 10,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 11,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 12,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 13,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 14,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 15,
+        "routeId": "sonic-the-hedgehog:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n64": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 9,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 10,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 11,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 12,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 13,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 14,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 15,
+        "routeId": "sonic-the-hedgehog:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:down-medium-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:003",
+        "edges": {
+          "special": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:003",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-heavy-route",
+        "edges": {
+          "heavy": "n18",
+          "light": "n32",
+          "medium": "n38"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-core",
+        "edges": {
+          "medium": "n80",
+          "light": "n72",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-core",
+        "edges": {}
+      },
+      "n72": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 9,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 10,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 11,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 12,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 13,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 14,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 15,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n80": {
+        "depth": 8,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 9,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 10,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 11,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 12,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 13,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 14,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 15,
+        "routeId": "sonic-the-hedgehog:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n33"
+        }
+      },
+      "n33": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "sonic-the-hedgehog:beginner:special-core",
+        "edges": {
+          "special": "n26"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:special-core",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 1,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:001",
+        "edges": {
+          "heavy": "n101",
+          "medium": "n97",
+          "special": "n103"
+        }
+      },
+      "n97": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:001",
+        "edges": {
+          "special": "n98"
+        }
+      },
+      "n98": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:001",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:005",
+        "edges": {
+          "special": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:005",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:007",
+        "edges": {
+          "medium": "n104",
+          "special": "n110"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:007",
+        "edges": {
+          "forward+light": "n105"
+        }
+      },
+      "n105": {
+        "depth": 4,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:007",
+        "edges": {
+          "special": "n106"
+        }
+      },
+      "n106": {
+        "depth": 5,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:advanced:007",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:crouch:010",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 1,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:crouch:009",
+        "edges": {
+          "heavy": "n111",
+          "medium": "n108"
+        }
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:crouch:009",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:crouch:009",
+        "edges": {}
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:crouch:011",
+        "edges": {
+          "special": "n112"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:crouch:011",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 1,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:launcher:014",
+        "edges": {
+          "medium": "n116",
+          "special": "n114"
+        }
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:launcher:014",
+        "edges": {
+          "special": "n115"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:launcher:014",
+        "edges": {}
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:launcher:016",
+        "edges": {
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "sonic-the-hedgehog:beginner:advanced:launcher:016",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Sonic the Hedgehog Left Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Sonic the Hedgehog Right Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sonic the Hedgehog Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Sonic the Hedgehog Cross Launcher",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "launch"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sonic the Hedgehog Left Kick",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sonic the Hedgehog Left Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0015": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sonic the Hedgehog Right Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "poweredKiFallback": true
+    },
+    "s0018": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sonic the Hedgehog Left Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sonic the Hedgehog Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Sonic the Hedgehog Right Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0027": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sonic the Hedgehog Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "medium",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Sonic the Hedgehog Left Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Sonic the Hedgehog Left Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0034": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Sonic the Hedgehog Right Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0035": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Sonic the Hedgehog Left Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Sonic the Hedgehog Cross Launcher",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "launch"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Sonic the Hedgehog Rising Strike",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Sonic the Hedgehog Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Sonic the Hedgehog Right Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Sonic the Hedgehog Rising Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "hit"
+    },
+    "s0044": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Sonic the Hedgehog Right Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Sonic the Hedgehog Burst",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Sonic the Hedgehog Cross Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Sonic the Hedgehog Cross Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Sonic the Hedgehog Twin Assault",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    }
+  }
 }

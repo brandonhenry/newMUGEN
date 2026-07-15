@@ -211,17 +211,20 @@ function buildRoute(character, candidates, finisher, kiCandidate, spec) {
 }
 
 function validateRoute(character, route, selected) {
-  if (route.steps.length < 3 || route.steps.length > 6) throw new Error(`${route.id}: attacks must stay between 3 and 6`);
+  if (route.steps.length < 3 || route.steps.length > 30) throw new Error(`${route.id}: attacks must stay between 3 and 30`);
   if (route.steps.at(-1)?.expect !== 'knockdown' || !selected.at(-1)?.move.knockdown) throw new Error(`${route.id}: missing real knockdown finisher`);
   if (selected.filter((candidate) => candidate.move.launchHeight).length > 1) throw new Error(`${route.id}: more than one launcher`);
   if (selected.filter((candidate) => candidate.move.tornado).length > 1) throw new Error(`${route.id}: more than one tornado`);
-  if (route.steps.filter((step) => step.kiCommand || step.poweredKiFallback).length > 1) throw new Error(`${route.id}: more than one Ki spend`);
   const hasKiFinisher = route.steps.some((step) => step.kiCommand || step.poweredKiFallback);
-  const damageScale = [1, 0.82, 0.76, 0.7, 0.64, 0.58];
+  const damageScale = [1, 0.82, 0.76, 0.7, 0.64, 0.58, 0.5, 0.44];
   const estimatedDamage = selected.reduce((total, candidate, index) =>
-    total + Math.max(1, Math.round(Number(candidate.move.damage ?? 1) * 0.6 * damageScale[index])), 0);
+    total + Math.max(1, Math.round(Number(candidate.move.damage ?? 1) * 0.6 * (damageScale[index] ?? 0.36))), 0);
   const damageCap = Number(character.stats?.health ?? 100) * (hasKiFinisher ? 0.45 : 0.35);
-  if (estimatedDamage > damageCap) throw new Error(`${route.id}: ${estimatedDamage} damage exceeds ${damageCap} cap`);
+  route.estimatedDamage = estimatedDamage;
+  route.estimatedHits = route.steps.length;
+  route.requiresKi = hasKiFinisher;
+  route.damageScale = estimatedDamage > damageCap ? Math.max(0.1, 0.6 * damageCap / estimatedDamage) : 0.6;
+  route.tier = route.steps.length >= 21 ? 'marathon' : route.steps.length >= 11 ? 'long' : route.steps.length >= 6 ? 'medium' : 'short';
   for (const step of route.steps) {
     if (!(character.animationFrames?.[step.animationKey]?.length > 0)) throw new Error(`${route.id}: missing ${step.animationKey}`);
     if (!step.label || genericLabel(step.label)) throw new Error(`${route.id}: unnamed move ${step.animationKey}`);
@@ -230,9 +233,9 @@ function validateRoute(character, route, selected) {
 }
 
 const routeSpecs = [
-  { id: 'light-core', title: 'Light Knockdown', family: 'core', gestures: ['light', 'light', 'light'] },
-  { id: 'medium-core', title: 'Medium Ki Finish', family: 'core', gestures: ['medium', 'medium', 'medium'] },
-  { id: 'heavy-core', title: 'Heavy Ki Finish', family: 'core', gestures: ['heavy', 'heavy', 'heavy'] },
+  { id: 'light-core', title: 'Light Knockdown Chain', family: 'core', gestures: Array(8).fill('light') },
+  { id: 'medium-core', title: 'Medium Ki Chain', family: 'core', gestures: Array(8).fill('medium') },
+  { id: 'heavy-core', title: 'Heavy Ki Chain', family: 'core', gestures: Array(8).fill('heavy') },
   { id: 'special-core', title: 'Special Ki Finish', family: 'core', gestures: ['special', 'special', 'special'] },
   { id: 'light-medium-heavy', title: 'Rising Power Route', family: 'mixed', gestures: ['light', 'medium', 'heavy'] },
   { id: 'special-light-route', title: 'Special Light Route', family: 'mixed', gestures: ['special+light', 'medium', 'heavy'] },

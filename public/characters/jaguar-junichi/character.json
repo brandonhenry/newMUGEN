@@ -3688,136 +3688,95 @@
   "beginnerComboRoutes": [
     {
       "id": "jaguar-junichi:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Jaguar Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Quick Jaguar Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "jaguar-junichi:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Flute Thrust",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Offbeat Guard Break",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
       ]
     },
     {
       "id": "jaguar-junichi:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Flute Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "1+3",
-          "animationKey": "cmd:1+3",
-          "label": "Jaguar Cross Rush",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -3829,40 +3788,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Wild Rising Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Wild Step Kick",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -3871,44 +3806,19 @@
       "family": "mixed",
       "gestures": [
         "light",
-        "medium",
+        "forward+medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Jaguar Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Flute Thrust",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 14,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -3920,41 +3830,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Wild Rising Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Flute Thrust",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0010",
+        "s0021"
       ]
     },
     {
@@ -3966,41 +3851,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Flute Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0015",
+        "s0019"
       ]
     },
     {
@@ -4009,45 +3869,5220 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0024",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0007",
+        "s0028"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0013",
+        "s0028"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0030",
+        "s0031",
+        "s0028"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0010",
+        "s0021"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0033",
+        "s0015",
+        "s0019"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0034",
+        "s0025",
+        "s0026"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 48,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 48,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 48,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 37,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 48,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 48,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:001",
+      "title": "Flute Point Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Flute Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Quick Jaguar Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Homing Flip",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:002",
+      "title": "Flute Point Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:003",
+      "title": "Low Wild Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:004",
+      "title": "Low Wild Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:005",
+      "title": "Quick Jaguar Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:006",
+      "title": "Quick Jaguar Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:007",
+      "title": "Wild Step Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:008",
+      "title": "Wild Step Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:009",
+      "title": "Flute Point Thrust 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0049",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:010",
+      "title": "Low Wild Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0052",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:011",
+      "title": "Quick Jaguar Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0053",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:012",
+      "title": "Wild Step Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0052",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:013",
+      "title": "Flute Point Thrust 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "medium",
+        "down+light",
+        "special",
+        "medium",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0049",
+        "s0050",
+        "s0051",
+        "s0054",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:014",
+      "title": "Low Wild Sweep 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "down+light",
+        "special",
+        "medium",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0052",
+        "s0050",
+        "s0051",
+        "s0054",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:015",
+      "title": "Quick Jaguar Jab 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "down+light",
+        "special",
+        "medium",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0053",
+        "s0050",
+        "s0051",
+        "s0054",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:basic:016",
+      "title": "Wild Step Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 30,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "heavy",
+        "down+light",
+        "special",
+        "medium",
+        "heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0052",
+        "s0050",
+        "s0051",
+        "s0054",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:017",
+      "title": "Forward Flute Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0058",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:018",
+      "title": "Forward Flute Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0060",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:019",
+      "title": "Jaguar Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0062",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:020",
+      "title": "Jaguar Body Poke 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0061",
+        "s0063",
+        "s0042"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:021",
+      "title": "Jaguar Cross Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:022",
+      "title": "Jaguar Cross Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0050",
+        "s0039"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:023",
+      "title": "Low Flute Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0065",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:024",
+      "title": "Low Flute Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0050",
+        "s0067"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:025",
+      "title": "Low Homing Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0042"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:026",
+      "title": "Low Homing Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0065",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:027",
+      "title": "Offbeat Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0065",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:028",
+      "title": "Offbeat Guard Break 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0050",
+        "s0039"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:029",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0051",
+        "s0058"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:030",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:031",
+      "title": "Jaguar Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0074",
+        "s0058"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:032",
+      "title": "Jaguar Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0075",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:033",
+      "title": "Jaguar Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0074",
+        "s0058"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:034",
+      "title": "Jaguar Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0075",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:035",
+      "title": "Jaguar Burst Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:036",
+      "title": "Jaguar Burst Flip 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0078",
+        "s0047"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:037",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0058"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:038",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0055",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:039",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:040",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0051",
+        "s0058"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:041",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0058"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:042",
+      "title": "Quick Jaguar Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0055",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:043",
+      "title": "Wild Rising Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0084",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:advanced:044",
+      "title": "Wild Rising Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0083",
+        "s0060",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:crouch:045",
+      "title": "Crouch Wild Roll 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0060",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:crouch:046",
+      "title": "Crouch Wild Roll 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0086",
+        "s0058"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:crouch:047",
+      "title": "Rising Wild Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:crouch:048",
+      "title": "Rising Wild Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0089",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:crouch:049",
+      "title": "While Rising Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:crouch:050",
+      "title": "While Rising Thrust 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0089",
+        "s0037"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:051",
+      "title": "Crouch Flute Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:052",
+      "title": "Crouch Flute Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:053",
+      "title": "Crouch Flute Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0094",
+        "s0095"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:054",
+      "title": "Crouch Flute Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0094",
+        "s0095"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:055",
+      "title": "Crouch Flute Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0096",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:056",
+      "title": "Forward Flute Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0037",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:057",
+      "title": "Forward Flute Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0037",
+        "s0059"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:058",
+      "title": "Forward Flute Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0098",
+        "s0095"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:059",
+      "title": "Forward Flute Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0098",
+        "s0095"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:060",
+      "title": "Forward Flute Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0099",
+        "s0045"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:061",
+      "title": "Crouch Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0100",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0037",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0069",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:062",
+      "title": "Crouch Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0100",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0108",
+        "s0058",
+        "s0103",
+        "s0104",
+        "s0069",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:063",
+      "title": "Crouch Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "special",
+        "light",
+        "special",
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0100",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0108",
+        "s0103",
+        "s0080",
+        "s0109",
+        "s0045",
+        "s0110",
+        "s0105",
+        "s0111"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:064",
+      "title": "Crouch Flute Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "special",
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0100",
+        "s0050",
+        "s0101",
+        "s0047",
+        "s0054",
+        "s0112",
+        "s0103"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:065",
+      "title": "Forward Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0113",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0037",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0069",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:066",
+      "title": "Forward Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0113",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0108",
+        "s0058",
+        "s0103",
+        "s0104",
+        "s0069",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:067",
+      "title": "Forward Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "special",
+        "light",
+        "special",
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0113",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0108",
+        "s0103",
+        "s0080",
+        "s0109",
+        "s0045",
+        "s0110",
+        "s0105",
+        "s0111"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:launcher:068",
+      "title": "Forward Flute Launcher Hybrid Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "special",
+        "medium",
+        "forward+medium",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0113",
+        "s0050",
+        "s0101",
+        "s0047",
+        "s0054",
+        "s0112",
+        "s0103"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:069",
+      "title": "Crouch Flute Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0114"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:070",
+      "title": "Crouch Flute Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "special",
+        "medium",
+        "forward+medium",
+        "heavy",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0100",
+        "s0050",
+        "s0101",
+        "s0047",
+        "s0054",
+        "s0112",
+        "s0103",
+        "s0104",
+        "s0065"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:071",
+      "title": "Crouch Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0100",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0037",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0069",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:072",
+      "title": "Crouch Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "special",
+        "light",
+        "special",
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0100",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0108",
+        "s0103",
+        "s0080",
+        "s0109",
+        "s0045",
+        "s0110",
+        "s0105",
+        "s0111"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:073",
+      "title": "Forward Flute Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 22,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0037",
+        "s0114"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:074",
+      "title": "Forward Flute Launcher Hybrid Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "special",
+        "medium",
+        "forward+medium",
+        "heavy",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0113",
+        "s0050",
+        "s0101",
+        "s0047",
+        "s0054",
+        "s0112",
+        "s0103",
+        "s0104",
+        "s0065"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:075",
+      "title": "Forward Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "special",
+        "forward+medium",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0113",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0037",
+        "s0102",
+        "s0103",
+        "s0104",
+        "s0069",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "jaguar-junichi:beginner:advanced:tornado:076",
+      "title": "Forward Flute Launcher Hybrid Launcher 14-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "long",
+      "estimatedHits": 14,
+      "estimatedDamage": 48,
+      "damageScale": 0.5420454545454546,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "down+light",
+        "forward+light",
+        "medium",
+        "light",
+        "forward+medium",
+        "heavy",
+        "special",
+        "light",
+        "special",
+        "medium",
+        "special",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0113",
+        "s0050",
+        "s0101",
+        "s0062",
+        "s0065",
+        "s0108",
+        "s0103",
+        "s0080",
+        "s0109",
+        "s0045",
+        "s0110",
+        "s0105",
+        "s0111"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n25",
+          "special+light": "n25",
+          "forward+special+light": "n25",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "special+medium": "n32",
+          "down+special+medium": "n32",
+          "medium": "n9",
+          "down+medium": "n9",
+          "light": "n1",
+          "forward+light": "n1",
+          "forward+medium": "n164",
+          "forward+heavy": "n152",
+          "down+light": "n169",
+          "forward+special": "n147",
+          "down+heavy": "n99",
+          "down+special": "n109",
+          "down-forward+light": "n104",
+          "down-forward+medium": "n174",
+          "down-forward+special": "n179",
+          "forward+special+medium": "n114"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:039",
+        "edges": {
+          "light": "n2",
+          "medium": "n37",
+          "special": "n186",
+          "down-forward+medium": "n184",
+          "forward+medium": "n28"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:light-core",
+        "edges": {
+          "heavy": "n51",
+          "light": "n8",
+          "medium": "n43"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:light-core",
+        "edges": {}
+      },
+      "n43": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91",
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 15,
+        "routeId": "jaguar-junichi:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n91": {
+        "depth": 15,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 16,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 17,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 18,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 19,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 20,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 21,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 22,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n51": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 15,
+        "routeId": "jaguar-junichi:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:forward-light-route",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:040",
+        "edges": {
+          "special": "n187"
+        }
+      },
+      "n187": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:017",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n39",
+          "special": "n143",
+          "down-forward+medium": "n145",
+          "light": "n194",
+          "forward+light": "n192",
+          "forward+medium": "n196"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:medium-core",
+        "edges": {
+          "heavy": "n67",
+          "medium": "n16",
+          "light": "n59"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:medium-core",
+        "edges": {}
+      },
+      "n59": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 15,
+        "routeId": "jaguar-junichi:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n67": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 15,
+        "routeId": "jaguar-junichi:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:down-medium-route",
+        "edges": {
+          "special": "n40"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n144",
+          "medium": "n228"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n228": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:tornado:069",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n192": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:053",
+        "edges": {
+          "special": "n193"
+        }
+      },
+      "n193": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:053",
+        "edges": {}
+      },
+      "n194": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n195"
+        }
+      },
+      "n195": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n196": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "down+light": "n197"
+        }
+      },
+      "n197": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "forward+light": "n198"
+        }
+      },
+      "n198": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "medium": "n199",
+          "special": "n224"
+        }
+      },
+      "n199": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n200"
+        }
+      },
+      "n200": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "special": "n201",
+          "forward+medium": "n209"
+        }
+      },
+      "n201": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "forward+medium": "n202"
+        }
+      },
+      "n202": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "heavy": "n203"
+        }
+      },
+      "n203": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "light": "n204"
+        }
+      },
+      "n204": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "medium": "n205"
+        }
+      },
+      "n205": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "special": "n206"
+        }
+      },
+      "n206": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "special": "n207"
+        }
+      },
+      "n207": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {
+          "medium": "n208"
+        }
+      },
+      "n208": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:061",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {
+          "heavy": "n217",
+          "special": "n210"
+        }
+      },
+      "n210": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {
+          "heavy": "n211"
+        }
+      },
+      "n211": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {
+          "light": "n212"
+        }
+      },
+      "n212": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {
+          "medium": "n213"
+        }
+      },
+      "n213": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {
+          "special": "n215"
+        }
+      },
+      "n215": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {
+          "medium": "n216"
+        }
+      },
+      "n216": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:062",
+        "edges": {}
+      },
+      "n217": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n218"
+        }
+      },
+      "n218": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n219"
+        }
+      },
+      "n219": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n220"
+        }
+      },
+      "n220": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n221"
+        }
+      },
+      "n221": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n222"
+        }
+      },
+      "n222": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n223"
+        }
+      },
+      "n223": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n224": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:064",
+        "edges": {
+          "medium": "n225"
+        }
+      },
+      "n225": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:064",
+        "edges": {
+          "forward+medium": "n226"
+        }
+      },
+      "n226": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:064",
+        "edges": {
+          "heavy": "n227"
+        }
+      },
+      "n227": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:advanced:launcher:064",
+        "edges": {
+          "light": "n229"
+        }
+      },
+      "n229": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:advanced:tornado:070",
+        "edges": {
+          "light": "n230"
+        }
+      },
+      "n230": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:advanced:tornado:070",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n18",
+          "down+light": "n41",
+          "light": "n157",
+          "medium": "n35"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:heavy-core",
+        "edges": {
+          "medium": "n83",
+          "heavy": "n24",
+          "light": "n75"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:heavy-core",
+        "edges": {}
+      },
+      "n75": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 15,
+        "routeId": "jaguar-junichi:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n83": {
+        "depth": 8,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 9,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 10,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 11,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 12,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 13,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 14,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 15,
+        "routeId": "jaguar-junichi:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n42",
+          "light": "n159"
+        }
+      },
+      "n42": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:043",
+        "edges": {
+          "special": "n26",
+          "light": "n188",
+          "down-forward+medium": "n190",
+          "medium": "n30"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:special-core",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n188": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:043",
+        "edges": {
+          "special": "n189"
+        }
+      },
+      "n189": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n190": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:044",
+        "edges": {
+          "special": "n191"
+        }
+      },
+      "n191": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:044",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:025",
+        "edges": {
+          "heavy": "n33",
+          "medium": "n160",
+          "light": "n162"
+        }
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:001",
+        "edges": {
+          "down+light": "n102",
+          "light": "n100",
+          "medium": "n119"
+        }
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:009",
+        "edges": {
+          "down+light": "n120"
+        }
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:013",
+        "edges": {
+          "heavy": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:013",
+        "edges": {
+          "forward+light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:003",
+        "edges": {
+          "medium": "n105",
+          "light": "n107",
+          "heavy": "n122"
+        }
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:010",
+        "edges": {
+          "down+light": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n124"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n134"
+        }
+      },
+      "n134": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:014",
+        "edges": {
+          "heavy": "n135"
+        }
+      },
+      "n135": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:014",
+        "edges": {
+          "forward+light": "n136"
+        }
+      },
+      "n136": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:005",
+        "edges": {
+          "medium": "n110",
+          "forward+light": "n112",
+          "light": "n125"
+        }
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:011",
+        "edges": {
+          "down+light": "n126"
+        }
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n127"
+        }
+      },
+      "n127": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n137"
+        }
+      },
+      "n137": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:015",
+        "edges": {
+          "heavy": "n138"
+        }
+      },
+      "n138": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:015",
+        "edges": {
+          "forward+light": "n139"
+        }
+      },
+      "n139": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:007",
+        "edges": {
+          "medium": "n115",
+          "light": "n117",
+          "heavy": "n128"
+        }
+      },
+      "n115": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n116"
+        }
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:012",
+        "edges": {
+          "down+light": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:012",
+        "edges": {
+          "special": "n130"
+        }
+      },
+      "n130": {
+        "depth": 4,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n140"
+        }
+      },
+      "n140": {
+        "depth": 5,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:016",
+        "edges": {
+          "heavy": "n141"
+        }
+      },
+      "n141": {
+        "depth": 6,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:016",
+        "edges": {
+          "forward+light": "n142"
+        }
+      },
+      "n142": {
+        "depth": 7,
+        "routeId": "jaguar-junichi:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:019",
+        "edges": {
+          "medium": "n148",
+          "light": "n150"
+        }
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:021",
+        "edges": {
+          "down+light": "n155",
+          "light": "n153"
+        }
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:027",
+        "edges": {
+          "down+light": "n167",
+          "light": "n165"
+        }
+      },
+      "n165": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n166"
+        }
+      },
+      "n166": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:029",
+        "edges": {
+          "heavy": "n172",
+          "special": "n170"
+        }
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n173"
+        }
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:030",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:031",
+        "edges": {
+          "heavy": "n177",
+          "special": "n175"
+        }
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 1,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:035",
+        "edges": {
+          "medium": "n180",
+          "forward+light": "n182"
+        }
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:036",
+        "edges": {
+          "special": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "jaguar-junichi:beginner:advanced:advanced:036",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jaguar Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Jaguar Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Offbeat Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Flute Point Thrust",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Flute Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Jaguar Cross Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Wild Sweep",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Flute Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Wild Step Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Flute Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0027": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0029": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Flute Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Flute Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Flute Point Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Jaguar Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0038": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Wild Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Flute Point Thrust",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0043": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Jaguar Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Offbeat Guard Break",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jaguar Body Poke",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0048": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Wild Step Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "heavy",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Offbeat Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Jaguar Cross Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jaguar Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Flute Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+special",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jaguar Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Offbeat Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0063": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Flute Point Thrust",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Jaguar Cross Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0065": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Jaguar Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Flute Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "knockdown"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Homing Flip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Flute Point Thrust",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Offbeat Guard Break",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Jaguar Cross Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jaguar Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Jaguar Cross Rush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Jaguar Burst Flip",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Offbeat Guard Break",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jaguar Body Poke",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Quick Jaguar Check Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Flute Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "knockdown"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouch Wild Roll Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rising Wild Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Forward Flute Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "While Rising Thrust Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Crouch Flute Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jaguar Aura Drive",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Wild Tornado Flip",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "forward+light",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jaguar Aura Drive",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Jaguar Body Poke",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Jaguar Cross Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0105": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Wild Step Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Wild Rising Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jaguar Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0110": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Flute Point Thrust",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jaguar Aura Drive",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Flute Thrust",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Quick Jaguar Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0114": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Jaguar Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    }
+  }
 }

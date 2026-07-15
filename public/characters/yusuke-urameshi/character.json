@@ -3130,134 +3130,95 @@
   "beginnerComboRoutes": [
     {
       "id": "yusuke-urameshi:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Street Rush Punch",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Quick Spirit Jab",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 4,
-          "windowAfter": 8,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 28,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
       ]
     },
     {
       "id": "yusuke-urameshi:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Spirit Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Spirit Detective Body Blow",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 30,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
       ]
     },
     {
       "id": "yusuke-urameshi:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Spirit Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "1+2+3",
-          "animationKey": "cmd:1+2+3",
-          "label": "Low Spirit Sweep",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
       ]
     },
     {
@@ -3269,40 +3230,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Street Arc Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Street Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0016",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3314,41 +3251,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Street Rush Punch",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Spirit Check",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0019",
+        "s0020"
       ]
     },
     {
@@ -3360,41 +3272,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Street Arc Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Spirit Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0021",
+        "s0008",
+        "s0020"
       ]
     },
     {
@@ -3403,44 +3290,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "forward+medium",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Spirit Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Spirit Feint",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0023",
+        "s0024"
       ]
     },
     {
@@ -3452,42 +3314,4738 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Street Rush Punch",
-          "windowBefore": 15,
-          "windowAfter": 19,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Spirit Wave Crush",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0002",
+        "s0026"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0030",
+        "s0011",
+        "s0029"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0031",
+        "s0001",
+        "s0029"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0032",
+        "s0008",
+        "s0020"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0033",
+        "s0023",
+        "s0024"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0034",
+        "s0002",
+        "s0026"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0009"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0008",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:001",
+      "title": "Heavy Street Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0037"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:002",
+      "title": "Heavy Street Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:003",
+      "title": "Low Street Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0037"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:004",
+      "title": "Low Street Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0042",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:005",
+      "title": "Quick Spirit Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0044",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:006",
+      "title": "Quick Spirit Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0046",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:007",
+      "title": "Spirit Detective Body Blow 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:008",
+      "title": "Heavy Street Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "special",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:009",
+      "title": "Low Street Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+medium",
+        "special",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:010",
+      "title": "Quick Spirit Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+medium",
+        "special",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0041",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:011",
+      "title": "Spirit Detective Body Blow 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "forward+medium",
+        "special",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0036",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:012",
+      "title": "Heavy Street Kick 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0035",
+        "s0036",
+        "s0049",
+        "s0050",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:013",
+      "title": "Low Street Sweep 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+light",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0040",
+        "s0041",
+        "s0049",
+        "s0050",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:014",
+      "title": "Quick Spirit Jab 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0041",
+        "s0049",
+        "s0050",
+        "s0051",
+        "s0053"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:basic:015",
+      "title": "Spirit Detective Body Blow 6-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "medium",
+        "light"
+      ],
+      "stepKeys": [
+        "s0048",
+        "s0036",
+        "s0049",
+        "s0050",
+        "s0051",
+        "s0052"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:016",
+      "title": "Forward Spirit Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:017",
+      "title": "Forward Spirit Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0054",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:018",
+      "title": "Leaping Low Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:019",
+      "title": "Leaping Low Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:020",
+      "title": "Leaping Low Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0060",
+        "s0061"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:021",
+      "title": "Leaping Low Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:022",
+      "title": "Leaping Spirit Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:023",
+      "title": "Low Spirit Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0063",
+        "s0052",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:024",
+      "title": "Low Spirit Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:025",
+      "title": "Spirit Wave Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:026",
+      "title": "Spirit Wave Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:027",
+      "title": "Street Arc Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:028",
+      "title": "Street Arc Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0050",
+        "s0070"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:029",
+      "title": "Street Arc Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:030",
+      "title": "Street Arc Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0050",
+        "s0070"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:031",
+      "title": "Street Rush Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:032",
+      "title": "Street Rush Punch 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0073",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:033",
+      "title": "Low Spirit Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0049",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:034",
+      "title": "Spirit Gun Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:035",
+      "title": "Spirit Gun Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:036",
+      "title": "Spirit Gun Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:037",
+      "title": "Spirit Gun Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0076",
+        "s0077"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:038",
+      "title": "Spirit Wave Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0056"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:039",
+      "title": "Spirit Wave Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0080",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:040",
+      "title": "Spirit Wave Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0056"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:041",
+      "title": "Spirit Wave Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0080",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:042",
+      "title": "Spirit Wave Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0081",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:advanced:043",
+      "title": "Spirit Wave Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0081",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:crouch:044",
+      "title": "Crouch Spirit Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0083",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:crouch:045",
+      "title": "Crouch Spirit Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0084",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:crouch:046",
+      "title": "Rising Spirit Check 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0055",
+        "s0056"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:crouch:047",
+      "title": "Rising Spirit Check 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:crouch:048",
+      "title": "Rising Street Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0087",
+        "s0047"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:crouch:049",
+      "title": "Rising Street Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0088",
+        "s0077"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:050",
+      "title": "Crouch Reigan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0090",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:051",
+      "title": "Diagonal Spirit Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0092",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:052",
+      "title": "Spirit Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0094",
+        "s0039"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:053",
+      "title": "Crouch Reigan Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0095",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:054",
+      "title": "Crouch Reigan Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0095",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:055",
+      "title": "Crouch Reigan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0096",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:056",
+      "title": "Crouch Reigan Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0096",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:057",
+      "title": "Diagonal Spirit Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0097",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:058",
+      "title": "Diagonal Spirit Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0097",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:059",
+      "title": "Diagonal Spirit Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0098",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:060",
+      "title": "Diagonal Spirit Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0098",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:061",
+      "title": "Spirit Cross Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0099",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:062",
+      "title": "Spirit Cross Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0099",
+        "s0058"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:063",
+      "title": "Spirit Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0100",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:064",
+      "title": "Spirit Cross Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0100",
+        "s0045"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:065",
+      "title": "Crouch Reigan Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0101",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:066",
+      "title": "Crouch Reigan Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 35,
+      "damageScale": 0.44999999999999996,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0101",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:067",
+      "title": "Crouch Reigan Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 35,
+      "damageScale": 0.44999999999999996,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0101",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:068",
+      "title": "Crouch Reigan Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 35,
+      "damageScale": 0.44999999999999996,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0089",
+        "s0101",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:069",
+      "title": "Diagonal Spirit Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0108",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:070",
+      "title": "Diagonal Spirit Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 35,
+      "damageScale": 0.44999999999999996,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0108",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:071",
+      "title": "Diagonal Spirit Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 35,
+      "damageScale": 0.44999999999999996,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0108",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:072",
+      "title": "Diagonal Spirit Launcher Hybrid Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 35,
+      "damageScale": 0.44999999999999996,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0108",
+        "s0050",
+        "s0072",
+        "s0102",
+        "s0052",
+        "s0046",
+        "s0103",
+        "s0104",
+        "s0105",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "yusuke-urameshi:beginner:advanced:launcher:073",
+      "title": "Spirit Cross Launcher Grounded Launcher 5-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 25,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0093",
+        "s0109",
+        "s0050",
+        "s0072",
+        "s0052"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n25",
+          "special+light": "n25",
+          "forward+special+light": "n25",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+heavy": "n34",
+          "down-forward+special+heavy": "n34",
+          "light": "n1",
+          "forward+light": "n1",
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "forward+medium": "n144",
+          "forward+heavy": "n147",
+          "forward+special": "n139",
+          "down+light": "n172",
+          "down+heavy": "n114",
+          "down+special": "n109",
+          "down-forward+light": "n104",
+          "down-forward+medium": "n150",
+          "down-forward+special": "n161",
+          "forward+special+medium": "n99"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:031",
+        "edges": {
+          "light": "n2",
+          "special": "n157",
+          "medium": "n28",
+          "heavy": "n37"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "yusuke-urameshi:beginner:light-core",
+        "edges": {
+          "heavy": "n51",
+          "light": "n8",
+          "medium": "n43"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:light-core",
+        "edges": {}
+      },
+      "n43": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 9,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 10,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 11,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 12,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 13,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 14,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91",
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 15,
+        "routeId": "yusuke-urameshi:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n91": {
+        "depth": 15,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 16,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 17,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 18,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 19,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 20,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 21,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 22,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n51": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 9,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 10,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 11,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 12,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 13,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 14,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 15,
+        "routeId": "yusuke-urameshi:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n37": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n38"
+        }
+      },
+      "n38": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:016",
+        "edges": {
+          "medium": "n10",
+          "light": "n137",
+          "heavy": "n39",
+          "special": "n135",
+          "forward+light": "n183",
+          "forward+medium": "n32",
+          "forward+heavy": "n189",
+          "forward+special": "n181"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "yusuke-urameshi:beginner:medium-core",
+        "edges": {
+          "heavy": "n67",
+          "light": "n59",
+          "medium": "n16"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:medium-core",
+        "edges": {}
+      },
+      "n59": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 9,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 10,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 11,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 12,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 13,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 14,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 15,
+        "routeId": "yusuke-urameshi:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n67": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 9,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 10,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 11,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 12,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 13,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 14,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 15,
+        "routeId": "yusuke-urameshi:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n33"
+        }
+      },
+      "n33": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n39": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:down-medium-route",
+        "edges": {
+          "special": "n40"
+        }
+      },
+      "n40": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n135": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n136"
+        }
+      },
+      "n136": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n137": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n138"
+        }
+      },
+      "n138": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:050",
+        "edges": {
+          "special": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:050",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:065",
+        "edges": {
+          "forward+light": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:065",
+        "edges": {
+          "special": "n191"
+        }
+      },
+      "n191": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:065",
+        "edges": {
+          "heavy": "n192"
+        }
+      },
+      "n192": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:065",
+        "edges": {
+          "light": "n193"
+        }
+      },
+      "n193": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:065",
+        "edges": {
+          "medium": "n194"
+        }
+      },
+      "n194": {
+        "depth": 7,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:065",
+        "edges": {
+          "special": "n195"
+        }
+      },
+      "n195": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:065",
+        "edges": {
+          "heavy": "n196"
+        }
+      },
+      "n196": {
+        "depth": 9,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:066",
+        "edges": {
+          "medium": "n197"
+        }
+      },
+      "n197": {
+        "depth": 10,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:066",
+        "edges": {
+          "heavy": "n198"
+        }
+      },
+      "n198": {
+        "depth": 11,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:066",
+        "edges": {
+          "special": "n199"
+        }
+      },
+      "n199": {
+        "depth": 12,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:066",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n185",
+          "special": "n187",
+          "forward+medium": "n200",
+          "light": "n41"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "yusuke-urameshi:beginner:heavy-core",
+        "edges": {
+          "light": "n75",
+          "medium": "n83",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:heavy-core",
+        "edges": {}
+      },
+      "n75": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 9,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 10,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 11,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 12,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 13,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 14,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 15,
+        "routeId": "yusuke-urameshi:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n83": {
+        "depth": 8,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 9,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 10,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 11,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 12,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 13,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 14,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 15,
+        "routeId": "yusuke-urameshi:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n41": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n42"
+        }
+      },
+      "n42": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:061",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:061",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n200": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:073",
+        "edges": {
+          "forward+light": "n201"
+        }
+      },
+      "n201": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:073",
+        "edges": {
+          "special": "n202"
+        }
+      },
+      "n202": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:073",
+        "edges": {
+          "light": "n203"
+        }
+      },
+      "n203": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:advanced:launcher:073",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n26",
+          "heavy": "n179",
+          "down-forward+medium": "n177",
+          "forward+light": "n155",
+          "medium": "n30",
+          "light": "n153"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:special-core",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:048",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:048",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:049",
+        "edges": {
+          "special": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n34": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:038",
+        "edges": {
+          "medium": "n168",
+          "heavy": "n166",
+          "light": "n35"
+        }
+      },
+      "n35": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n36"
+        }
+      },
+      "n36": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n99": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:001",
+        "edges": {
+          "forward+medium": "n100",
+          "light": "n102"
+        }
+      },
+      "n100": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n117",
+          "light": "n101"
+        }
+      },
+      "n101": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:008",
+        "edges": {
+          "forward+light": "n118"
+        }
+      },
+      "n118": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:008",
+        "edges": {
+          "medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:012",
+        "edges": {
+          "light": "n128"
+        }
+      },
+      "n128": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:012",
+        "edges": {}
+      },
+      "n102": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n103"
+        }
+      },
+      "n103": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n104": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:003",
+        "edges": {
+          "forward+medium": "n105",
+          "light": "n107"
+        }
+      },
+      "n105": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n119",
+          "light": "n106"
+        }
+      },
+      "n106": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n120"
+        }
+      },
+      "n120": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:009",
+        "edges": {
+          "medium": "n129"
+        }
+      },
+      "n129": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:013",
+        "edges": {
+          "light": "n130"
+        }
+      },
+      "n130": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n110",
+          "forward+medium": "n121",
+          "medium": "n112"
+        }
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n112": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n113"
+        }
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n121": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n122"
+        }
+      },
+      "n122": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:010",
+        "edges": {
+          "forward+light": "n123"
+        }
+      },
+      "n123": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:010",
+        "edges": {
+          "medium": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:014",
+        "edges": {
+          "medium": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n114": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:007",
+        "edges": {
+          "forward+medium": "n124",
+          "light": "n115"
+        }
+      },
+      "n115": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n116"
+        }
+      },
+      "n116": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n125"
+        }
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:011",
+        "edges": {
+          "forward+light": "n126"
+        }
+      },
+      "n126": {
+        "depth": 4,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n133"
+        }
+      },
+      "n133": {
+        "depth": 5,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:015",
+        "edges": {
+          "light": "n134"
+        }
+      },
+      "n134": {
+        "depth": 6,
+        "routeId": "yusuke-urameshi:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n139": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:018",
+        "edges": {
+          "forward+medium": "n140",
+          "light": "n142"
+        }
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n144": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:022",
+        "edges": {
+          "light": "n145"
+        }
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n159",
+          "medium": "n148"
+        }
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:025",
+        "edges": {
+          "medium": "n170",
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:042",
+        "edges": {
+          "special": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:042",
+        "edges": {}
+      },
+      "n161": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:034",
+        "edges": {
+          "heavy": "n164",
+          "down-forward+medium": "n162"
+        }
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 1,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:044",
+        "edges": {
+          "medium": "n175",
+          "special": "n173"
+        }
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:044",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:044",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 2,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n176"
+        }
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "yusuke-urameshi:beginner:advanced:crouch:045",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Street Rush Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Street Rush Punch",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Street Rush Punch",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+2+3",
+      "animationKey": "cmd:1+2+3",
+      "label": "Low Spirit Sweep",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Street Sweep",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Street Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0019": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0025": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0027": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Street Rush Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0030": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Street Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0037": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0038": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down-forward+light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Street Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0046": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0048": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "down+heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Street Rush Punch",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "special",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Spirit Cross Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "forward+special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Leaping Low Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:1+2+3:1+2+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "1+2+3",
+      "animationKey": "cmd:1+2+3",
+      "label": "Low Spirit Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0065": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Spirit Wave Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0067": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Street Kick",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0069": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "light",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Street Rush Punch",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0073": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "heavy",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Spirit Detective Body Blow",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Spirit Gun Burst",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Spirit Launcher",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "launch"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:1+2+3:1+2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+2+3",
+      "animationKey": "cmd:1+2+3",
+      "label": "Low Spirit Sweep",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "knockdown"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Spirit Wave Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Spirit Cross Launcher",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "launch"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Spirit Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0083": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Street Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Rising Spirit Check Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rising Street Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Spirit Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:1+2+3:1+2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+2+3",
+      "animationKey": "cmd:1+2+3",
+      "label": "Low Spirit Sweep",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Crouch Reigan Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0090": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Diagonal Spirit Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0092": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Spirit Cross Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0094": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Spirit Jab",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "juggle"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Street Arc Kick",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:1+2+3:1+2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+2+3",
+      "animationKey": "cmd:1+2+3",
+      "label": "Low Spirit Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Street Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0104": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Street Sweep",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Leaping Spirit Check",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Spirit Feint",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Spirit Gun Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Spirit Check",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    }
+  }
 }

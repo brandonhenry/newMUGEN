@@ -13037,6 +13037,31 @@ button {
   text-transform: uppercase;
 }
 
+.combo-trial-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin: 0 0 14px;
+}
+
+.combo-trial-filters input,
+.combo-trial-filters select {
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid rgba(156, 216, 255, 0.24);
+  border-radius: 8px;
+  color: var(--text-main);
+  background: rgba(4, 12, 22, 0.92);
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.combo-trial-filters input {
+  grid-column: 1 / -1;
+}
+
 .trial-complete-mark {
   display: inline-grid;
   place-items: center;

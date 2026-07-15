@@ -101,9 +101,8 @@ export type CpuRouteContext = {
 
 const MAX_ROUTE_HITS = 30;
 const FRAME_LINK_GRACE = 2;
-const MAX_ROUTE_IDENTITY_USES = 1;
 const MAX_LAUNCHERS_PER_ROUTE = 1;
-const MAX_TORNADOES_PER_ROUTE = 2;
+const MAX_TORNADOES_PER_ROUTE = 1;
 
 const categoryLimits: Record<ComboRouteCategory, number> = {
   basic: 16,
@@ -949,7 +948,10 @@ function routeFamily(route: ResolvedMoveRoute) {
 }
 
 function maxIdentityUsesForRoute(routeHits: number) {
-  return MAX_ROUTE_IDENTITY_USES;
+  if (routeHits >= 24) return 4;
+  if (routeHits >= 16) return 3;
+  if (routeHits >= 8) return 2;
+  return 1;
 }
 
 function maxFamilyUsesForRoute(routeHits: number) {

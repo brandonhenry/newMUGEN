@@ -4129,131 +4129,95 @@
   "beginnerComboRoutes": [
     {
       "id": "sanji-vinsmoke:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Black Leg Rushdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "animationKey": "jableft",
-          "label": "Collier Spin Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 26,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
       ]
     },
     {
       "id": "sanji-vinsmoke:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Black Leg Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "d/f+2",
-          "animationKey": "cmd:d/f+2",
-          "label": "Diagonal Concasse Launcher",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "launch"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 30,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
       ]
     },
     {
       "id": "sanji-vinsmoke:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Black Leg Low Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "d/f+3",
-          "animationKey": "cmd:d/f+3",
-          "label": "Diagonal Low Sweep",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 36,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016"
       ]
     },
     {
@@ -4265,39 +4229,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Black Leg Low Sweep",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -4309,39 +4250,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Black Leg Rushdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Black Leg Rush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -4353,39 +4271,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Black Leg Rushdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Black Leg Rush",
-          "windowBefore": 16,
-          "windowAfter": 21,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0020",
+        "s0021"
       ]
     },
     {
@@ -4394,42 +4289,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "forward+medium",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Black Leg Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Black Leg Low Sweep",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0023",
+        "s0024",
+        "s0019"
       ]
     },
     {
@@ -4438,44 +4310,5366 @@
       "family": "mixed",
       "gestures": [
         "special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0027"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0028",
+        "s0029",
+        "s0030"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0031",
+        "s0032",
+        "s0030"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 27,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0030"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 13,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0035",
+        "s0020",
+        "s0021"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0024",
+        "s0019"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0026",
+        "s0027"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 34,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0004"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0008"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 43,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0003",
+        "s0005",
+        "s0006",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0007",
+        "s0009",
+        "s0010",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:001",
+      "title": "Black Leg Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:002",
+      "title": "Black Leg Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0041",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:003",
+      "title": "Collier Spin Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0042",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:004",
+      "title": "Heavy Chef Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0044",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:005",
+      "title": "Low Table Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Black Leg Low Sweep",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "f+1",
-          "animationKey": "cmd:f+1",
-          "label": "Black Leg Rushdown",
-          "windowBefore": 16,
-          "windowAfter": 22,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Heavy Chef Kick",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "stepKeys": [
+        "s0045",
+        "s0046",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:006",
+      "title": "Black Leg Rush 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0047",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:007",
+      "title": "Collier Spin Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0047",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:008",
+      "title": "Heavy Chef Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "down-forward+heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0044",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:009",
+      "title": "Low Table Kick 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 19,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "down-forward+heavy",
+        "forward+light"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0046",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:010",
+      "title": "Black Leg Rush 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0047",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0051",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:011",
+      "title": "Collier Spin Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0043",
+        "s0047",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:012",
+      "title": "Heavy Chef Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0044",
+        "s0047",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0052"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:basic:013",
+      "title": "Low Table Kick 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0045",
+        "s0046",
+        "s0047",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0052"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:014",
+      "title": "Advancing Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:015",
+      "title": "Advancing Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0056",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:016",
+      "title": "Black Leg Rushdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0058",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:017",
+      "title": "Black Leg Rushdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0057",
+        "s0051",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:018",
+      "title": "Ducking Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0060",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:019",
+      "title": "Ducking Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0059",
+        "s0061",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:020",
+      "title": "Aerial Heel Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:021",
+      "title": "Aerial Heel Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0064",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:022",
+      "title": "Black Leg Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0066",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:023",
+      "title": "Black Leg Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0065",
+        "s0067",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:024",
+      "title": "Diable Jambe Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:025",
+      "title": "Diable Jambe Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0070",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:026",
+      "title": "Diable Jambe Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0069",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:027",
+      "title": "Diable Jambe Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0070",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:028",
+      "title": "Diable Jambe Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:029",
+      "title": "Diable Jambe Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0073",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:030",
+      "title": "Diable Jambe Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0072",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:031",
+      "title": "Diable Jambe Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0071",
+        "s0073",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:032",
+      "title": "Diagonal Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0056",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:033",
+      "title": "Diagonal Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:034",
+      "title": "Overdrive Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:035",
+      "title": "Overdrive Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0078",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:036",
+      "title": "Overdrive Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:037",
+      "title": "Overdrive Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0078",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:038",
+      "title": "Sidestep Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:039",
+      "title": "Sidestep Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0081",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:040",
+      "title": "Sidestep Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0083",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:advanced:041",
+      "title": "Sidestep Low Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special+medium",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0082",
+        "s0060",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:042",
+      "title": "Aerial Heel Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0084",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:043",
+      "title": "Aerial Heel Drop 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0085",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:044",
+      "title": "Crouch Spin Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:045",
+      "title": "Crouch Spin Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0056",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:046",
+      "title": "Rising Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0080",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:047",
+      "title": "Rising Aerial Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0087",
+        "s0088",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:048",
+      "title": "Aerial Heel Drop 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 31,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0090",
+        "s0054",
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:049",
+      "title": "Aerial Heel Drop 7-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 34,
+      "damageScale": 0.5999999999999999,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0090",
+        "s0054",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:050",
+      "title": "Low Table Tornado 6-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 6,
+      "estimatedDamage": 29,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0090",
+        "s0054",
+        "s0048",
+        "s0049",
+        "s0050"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:crouch:051",
+      "title": "Low Table Tornado 7-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 32,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "down-forward+heavy",
+        "forward+light",
+        "forward+heavy",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0091",
+        "s0090",
+        "s0054",
+        "s0048",
+        "s0049",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:052",
+      "title": "Concasse Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:053",
+      "title": "Crouch Concasse Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0095",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:054",
+      "title": "Diagonal Concasse Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:055",
+      "title": "Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0097",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:056",
+      "title": "Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0098",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:057",
+      "title": "Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0097",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:058",
+      "title": "Concasse Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0099",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:059",
+      "title": "Crouch Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0100",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:060",
+      "title": "Crouch Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0101",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:061",
+      "title": "Crouch Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0100",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:062",
+      "title": "Crouch Concasse Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0102",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:063",
+      "title": "Diagonal Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0103",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:064",
+      "title": "Diagonal Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0104",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:065",
+      "title": "Diagonal Concasse Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "light"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0103",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:066",
+      "title": "Diagonal Concasse Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0105",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:067",
+      "title": "Low Joue Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0107",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:068",
+      "title": "Low Joue Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0108",
+        "s0055"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:069",
+      "title": "Low Joue Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0107",
+        "s0089"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:070",
+      "title": "Concasse Launcher Grounded Launcher 5-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 5,
+      "estimatedDamage": 24,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+medium",
+        "down-forward+heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0109",
+        "s0110",
+        "s0051",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:071",
+      "title": "Crouch Concasse Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.47323943661971823,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0102",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:072",
+      "title": "Crouch Concasse Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.5508196721311475,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0102",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:073",
+      "title": "Diagonal Concasse Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.47323943661971823,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:074",
+      "title": "Diagonal Concasse Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.5508196721311475,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:075",
+      "title": "Low Joue Launcher Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.46027397260273967,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:launcher:076",
+      "title": "Low Joue Launcher Air Chase Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 34,
+      "damageScale": 0.5333333333333332,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:077",
+      "title": "Concasse Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0097",
+        "s0056"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:078",
+      "title": "Crouch Concasse Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0100",
+        "s0056"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:079",
+      "title": "Crouch Concasse Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.47323943661971823,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0102",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:080",
+      "title": "Crouch Concasse Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.47323943661971823,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0102",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:081",
+      "title": "Diagonal Concasse Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0103",
+        "s0056"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:082",
+      "title": "Diagonal Concasse Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.47323943661971823,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:083",
+      "title": "Diagonal Concasse Launcher Grounded Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.47323943661971823,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0096",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:084",
+      "title": "Low Joue Launcher Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.46027397260273967,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:085",
+      "title": "Low Joue Launcher Air Chase Launcher 10-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "medium",
+      "estimatedHits": 10,
+      "estimatedDamage": 34,
+      "damageScale": 0.46027397260273967,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "down+light",
+        "forward+light",
+        "down-forward+heavy",
+        "light",
+        "forward+heavy",
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0105",
+        "s0090",
+        "s0048",
+        "s0110",
+        "s0051",
+        "s0111",
+        "s0050",
+        "s0052",
+        "s0042"
+      ]
+    },
+    {
+      "id": "sanji-vinsmoke:beginner:advanced:tornado:086",
+      "title": "Low Joue Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 21,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0106",
+        "s0107",
+        "s0056"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:014",
+        "edges": {
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "medium": "n9",
+          "special+medium": "n9",
+          "down+medium": "n9",
+          "down+special+medium": "n9",
+          "heavy": "n17",
+          "special+heavy": "n17",
+          "down-forward+heavy": "n17",
+          "down-forward+special+heavy": "n17",
+          "special": "n25",
+          "forward+medium": "n142",
+          "forward+heavy": "n160",
+          "down+heavy": "n137",
+          "forward+special": "n129",
+          "down+light": "n100",
+          "down+special": "n105",
+          "down-forward+light": "n150",
+          "down-forward+medium": "n165",
+          "down-forward+special": "n155",
+          "forward+special+medium": "n175",
+          "forward+special+heavy": "n170"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:016",
+        "edges": {
+          "light": "n2",
+          "special": "n186",
+          "down-forward+medium": "n34",
+          "down-forward+heavy": "n184",
+          "medium": "n28",
+          "heavy": "n134"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:017",
+        "edges": {
+          "light": "n3",
+          "special": "n136"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:light-core",
+        "edges": {
+          "medium": "n40",
+          "heavy": "n48",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:light-core",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n41"
+        }
+      },
+      "n41": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n42"
+        }
+      },
+      "n42": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 11,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 12,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 13,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 14,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47",
+          "heavy": "n88"
+        }
+      },
+      "n47": {
+        "depth": 15,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n88": {
+        "depth": 15,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n89"
+        }
+      },
+      "n89": {
+        "depth": 16,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n90"
+        }
+      },
+      "n90": {
+        "depth": 17,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 18,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 19,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 20,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 21,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 22,
+        "routeId": "sanji-vinsmoke:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n48": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n49"
+        }
+      },
+      "n49": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n50"
+        }
+      },
+      "n50": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 11,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 12,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 13,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 14,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 15,
+        "routeId": "sanji-vinsmoke:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n136": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:forward-light-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n134": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n135"
+        }
+      },
+      "n135": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n184": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:044",
+        "edges": {
+          "special": "n185"
+        }
+      },
+      "n185": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:044",
+        "edges": {}
+      },
+      "n186": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:045",
+        "edges": {
+          "special": "n187"
+        }
+      },
+      "n187": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:045",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:001",
+        "edges": {
+          "medium": "n10",
+          "light": "n213",
+          "heavy": "n215",
+          "special": "n211",
+          "down-forward+heavy": "n36",
+          "forward+light": "n98",
+          "forward+medium": "n30",
+          "forward+heavy": "n96"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:medium-core",
+        "edges": {
+          "light": "n56",
+          "medium": "n16",
+          "heavy": "n64"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:medium-core",
+        "edges": {}
+      },
+      "n56": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n57"
+        }
+      },
+      "n57": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n58"
+        }
+      },
+      "n58": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 11,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 12,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 13,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 14,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 15,
+        "routeId": "sanji-vinsmoke:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n64": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n65"
+        }
+      },
+      "n65": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n66"
+        }
+      },
+      "n66": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 11,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 12,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 13,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 14,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 15,
+        "routeId": "sanji-vinsmoke:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:006",
+        "edges": {
+          "forward+light": "n108",
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:006",
+        "edges": {
+          "forward+heavy": "n109"
+        }
+      },
+      "n109": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:006",
+        "edges": {
+          "heavy": "n117"
+        }
+      },
+      "n117": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n118"
+        }
+      },
+      "n118": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n119"
+        }
+      },
+      "n119": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:010",
+        "edges": {}
+      },
+      "n96": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n97"
+        }
+      },
+      "n97": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n99"
+        }
+      },
+      "n99": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n211": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:059",
+        "edges": {
+          "special": "n242",
+          "light": "n212"
+        }
+      },
+      "n212": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:059",
+        "edges": {}
+      },
+      "n242": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:tornado:078",
+        "edges": {}
+      },
+      "n213": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:060",
+        "edges": {
+          "special": "n214"
+        }
+      },
+      "n214": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:060",
+        "edges": {}
+      },
+      "n215": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:062",
+        "edges": {
+          "down+light": "n224",
+          "special": "n216"
+        }
+      },
+      "n216": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:062",
+        "edges": {}
+      },
+      "n224": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+light": "n225"
+        }
+      },
+      "n225": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {
+          "down-forward+heavy": "n226"
+        }
+      },
+      "n226": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {
+          "light": "n227"
+        }
+      },
+      "n227": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {
+          "forward+heavy": "n228"
+        }
+      },
+      "n228": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {
+          "heavy": "n229"
+        }
+      },
+      "n229": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {
+          "medium": "n230"
+        }
+      },
+      "n230": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {
+          "special": "n231"
+        }
+      },
+      "n231": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:071",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:022",
+        "edges": {
+          "heavy": "n18",
+          "medium": "n207",
+          "light": "n209",
+          "special": "n147",
+          "forward+light": "n205",
+          "forward+medium": "n32",
+          "down+light": "n197",
+          "forward+heavy": "n38",
+          "forward+special": "n203"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n19",
+          "special": "n149"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:heavy-core",
+        "edges": {
+          "light": "n72",
+          "medium": "n80",
+          "heavy": "n24"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:heavy-core",
+        "edges": {}
+      },
+      "n72": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n73"
+        }
+      },
+      "n73": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n74"
+        }
+      },
+      "n74": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 11,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 12,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 13,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 14,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 15,
+        "routeId": "sanji-vinsmoke:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n80": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n81"
+        }
+      },
+      "n81": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n82"
+        }
+      },
+      "n82": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 11,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 12,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 13,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 14,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 15,
+        "routeId": "sanji-vinsmoke:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:070",
+        "edges": {
+          "down-forward+heavy": "n221",
+          "special": "n33"
+        }
+      },
+      "n33": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n221": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:070",
+        "edges": {
+          "light": "n222"
+        }
+      },
+      "n222": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:070",
+        "edges": {
+          "special": "n223"
+        }
+      },
+      "n223": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:070",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n147": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n148"
+        }
+      },
+      "n148": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:050",
+        "edges": {
+          "down-forward+heavy": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:050",
+        "edges": {
+          "forward+light": "n199"
+        }
+      },
+      "n199": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:050",
+        "edges": {
+          "forward+heavy": "n200"
+        }
+      },
+      "n200": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:050",
+        "edges": {
+          "heavy": "n201"
+        }
+      },
+      "n201": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:050",
+        "edges": {
+          "light": "n202"
+        }
+      },
+      "n202": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:051",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:052",
+        "edges": {
+          "special": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n205": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n241",
+          "light": "n206"
+        }
+      },
+      "n206": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n241": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:tornado:077",
+        "edges": {}
+      },
+      "n207": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:056",
+        "edges": {
+          "special": "n208"
+        }
+      },
+      "n208": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:056",
+        "edges": {}
+      },
+      "n209": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:058",
+        "edges": {
+          "special": "n210"
+        }
+      },
+      "n210": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:058",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n26",
+          "medium": "n219",
+          "heavy": "n232",
+          "light": "n217",
+          "down-forward+medium": "n188",
+          "forward+light": "n103"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:047",
+        "edges": {
+          "special": "n27",
+          "light": "n190"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:special-core",
+        "edges": {}
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:047",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:004",
+        "edges": {
+          "down-forward+heavy": "n113",
+          "special": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:008",
+        "edges": {
+          "forward+light": "n114"
+        }
+      },
+      "n114": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:008",
+        "edges": {
+          "forward+heavy": "n123"
+        }
+      },
+      "n123": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:012",
+        "edges": {
+          "heavy": "n124"
+        }
+      },
+      "n124": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:012",
+        "edges": {
+          "medium": "n125"
+        }
+      },
+      "n125": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:012",
+        "edges": {}
+      },
+      "n188": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:046",
+        "edges": {
+          "special": "n189"
+        }
+      },
+      "n189": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:046",
+        "edges": {}
+      },
+      "n217": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n243",
+          "light": "n218"
+        }
+      },
+      "n218": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:067",
+        "edges": {}
+      },
+      "n243": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:tornado:086",
+        "edges": {}
+      },
+      "n219": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:068",
+        "edges": {
+          "special": "n220"
+        }
+      },
+      "n220": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:068",
+        "edges": {}
+      },
+      "n232": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "down+light": "n233"
+        }
+      },
+      "n233": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "forward+light": "n234"
+        }
+      },
+      "n234": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "down-forward+heavy": "n235"
+        }
+      },
+      "n235": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "light": "n236"
+        }
+      },
+      "n236": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "forward+heavy": "n237"
+        }
+      },
+      "n237": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "heavy": "n238"
+        }
+      },
+      "n238": {
+        "depth": 8,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "medium": "n239"
+        }
+      },
+      "n239": {
+        "depth": 9,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {
+          "special": "n240"
+        }
+      },
+      "n240": {
+        "depth": 10,
+        "routeId": "sanji-vinsmoke:beginner:advanced:launcher:075",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:003",
+        "edges": {
+          "down-forward+heavy": "n110",
+          "special": "n101"
+        }
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:007",
+        "edges": {
+          "forward+light": "n111"
+        }
+      },
+      "n111": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:007",
+        "edges": {
+          "forward+heavy": "n112"
+        }
+      },
+      "n112": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:007",
+        "edges": {
+          "heavy": "n120"
+        }
+      },
+      "n120": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:011",
+        "edges": {
+          "medium": "n121"
+        }
+      },
+      "n121": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n122"
+        }
+      },
+      "n122": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:011",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:005",
+        "edges": {
+          "light": "n106"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:005",
+        "edges": {
+          "down-forward+heavy": "n115",
+          "special": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:009",
+        "edges": {
+          "forward+light": "n116"
+        }
+      },
+      "n116": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:009",
+        "edges": {
+          "forward+heavy": "n126"
+        }
+      },
+      "n126": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:013",
+        "edges": {
+          "heavy": "n127"
+        }
+      },
+      "n127": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:013",
+        "edges": {
+          "medium": "n128"
+        }
+      },
+      "n128": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n129": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n132",
+          "down-forward+heavy": "n130"
+        }
+      },
+      "n130": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n131"
+        }
+      },
+      "n131": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n132": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n133"
+        }
+      },
+      "n133": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n137": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n140",
+          "down-forward+heavy": "n138"
+        }
+      },
+      "n138": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n140": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n141"
+        }
+      },
+      "n141": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n142": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:020",
+        "edges": {
+          "down-forward+medium": "n143",
+          "down+light": "n191",
+          "down+medium": "n180",
+          "heavy": "n145",
+          "special": "n182"
+        }
+      },
+      "n143": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n144"
+        }
+      },
+      "n144": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n145": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n146"
+        }
+      },
+      "n146": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n180": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:042",
+        "edges": {
+          "special": "n181"
+        }
+      },
+      "n181": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:042",
+        "edges": {}
+      },
+      "n182": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:043",
+        "edges": {
+          "special": "n183"
+        }
+      },
+      "n183": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:043",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:048",
+        "edges": {
+          "down-forward+heavy": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:048",
+        "edges": {
+          "forward+light": "n193"
+        }
+      },
+      "n193": {
+        "depth": 4,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:048",
+        "edges": {
+          "forward+heavy": "n194"
+        }
+      },
+      "n194": {
+        "depth": 5,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:048",
+        "edges": {
+          "heavy": "n195"
+        }
+      },
+      "n195": {
+        "depth": 6,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:048",
+        "edges": {
+          "light": "n196"
+        }
+      },
+      "n196": {
+        "depth": 7,
+        "routeId": "sanji-vinsmoke:beginner:advanced:crouch:049",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n151",
+          "light": "n153"
+        }
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:028",
+        "edges": {
+          "down-forward+medium": "n156",
+          "heavy": "n158"
+        }
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:028",
+        "edges": {
+          "special": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:028",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n161",
+          "light": "n163"
+        }
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n165": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:034",
+        "edges": {
+          "down-forward+medium": "n166",
+          "heavy": "n168"
+        }
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:038",
+        "edges": {
+          "down-forward+medium": "n171",
+          "heavy": "n173"
+        }
+      },
+      "n171": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n172"
+        }
+      },
+      "n172": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n173": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:039",
+        "edges": {
+          "special": "n174"
+        }
+      },
+      "n174": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:039",
+        "edges": {}
+      },
+      "n175": {
+        "depth": 1,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:040",
+        "edges": {
+          "special": "n176",
+          "down-forward+heavy": "n178"
+        }
+      },
+      "n176": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:040",
+        "edges": {
+          "special": "n177"
+        }
+      },
+      "n177": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:040",
+        "edges": {}
+      },
+      "n178": {
+        "depth": 2,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:041",
+        "edges": {
+          "special": "n179"
+        }
+      },
+      "n179": {
+        "depth": 3,
+        "routeId": "sanji-vinsmoke:beginner:advanced:advanced:041",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Collier Spin Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0005": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Concasse Launcher",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "launch"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0009": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Low Sweep",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Table Kick",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0022": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0028": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Concasse Launcher",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "launch"
+    },
+    "s0030": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0031": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Collier Spin Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "down+special+medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down-forward+special+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0041": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Collier Spin Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0042": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0043": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Collier Spin Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0044": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Collier Spin Kick",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down+special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Table Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0046": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Collier Spin Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Sweep",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Collier Spin Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Black Leg Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+special",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Aerial Heel Drop",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0058": {
+      "routeKey": "base:kickright:special",
+      "gesture": "heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0059": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Ducking Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Aerial Heel Drop",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "knockdown"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "forward+medium",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Aerial Heel Drop",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Concasse Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "juggle"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Joue Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "down-forward+light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diable Jambe Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Aerial Heel Drop",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Aerial Kick",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Diable Jambe Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Concasse Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "launch"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Aerial Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "down-forward+medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Overdrive Aerial Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+4",
+      "kiAnimationKey": "cmd:O+4",
+      "kiCost": 35
+    },
+    "s0077": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Concasse Launcher",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "launch"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "cmd:cmd:SS+4:SS+4",
+      "gesture": "forward+special+heavy",
+      "input": "special",
+      "command": "SS+4",
+      "animationKey": "cmd:SS+4",
+      "label": "Sidestep Aerial Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Concasse Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "forward+special+medium",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Joue Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Crouch Concasse Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:WS+4:WS+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "WS+4",
+      "animationKey": "cmd:WS+4",
+      "label": "Rising Aerial Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "neutral",
+      "movementMinFrames": 3,
+      "movementMaxFrames": 12,
+      "expect": "knockdown"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Crouch Spin Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0087": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Rising Aerial Kick Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "special",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Black Leg Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0089": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Crouch Spin Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Table Tornado Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Concasse Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0093": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0094": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Crouch Concasse Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0095": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+heavy",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Heavy Chef Kick",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0096": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Diagonal Concasse Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "forward+light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Diable Jambe Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Mouton Shot Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "light",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Table Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Diable Jambe Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Mouton Shot Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Table Tornado",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Diable Jambe Tornado",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "light",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Mouton Shot Tornado",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "juggle"
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Table Tornado",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "juggle"
+    },
+    "s0106": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Low Joue Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Diable Jambe Tornado",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0108": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Mouton Shot Tornado",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+medium",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Black Leg Rushdown",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Sweep",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Sweep",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    }
+  }
 }

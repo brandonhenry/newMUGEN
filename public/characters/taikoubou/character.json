@@ -3085,134 +3085,95 @@
   "beginnerComboRoutes": [
     {
       "id": "taikoubou:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Paopei Quick Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Staff Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
       ]
     },
     {
       "id": "taikoubou:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Staff Strike",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "animationKey": "jabright",
-          "label": "Dashinben Body Strike",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 30,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
       ]
     },
     {
       "id": "taikoubou:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Paopei Feint",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "animationKey": "kickleft",
-          "label": "Low Dashinben Sweep",
-          "windowBefore": 3,
-          "windowAfter": 7,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 33,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
       ]
     },
     {
@@ -3224,40 +3185,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Spirit Beast Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Spirit Beast Rush",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0016",
+        "s0017",
+        "s0018"
       ]
     },
     {
@@ -3269,41 +3206,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Paopei Quick Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Staff Strike",
-          "windowBefore": 16,
-          "windowAfter": 23,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 15,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0019",
+        "s0020"
       ]
     },
     {
@@ -3315,41 +3227,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "special",
-          "command": "1+4",
-          "animationKey": "cmd:1+4",
-          "label": "Spirit Beast Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Staff Strike",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 8,
-          "windowAfter": 12,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0021",
+        "s0009",
+        "s0020"
       ]
     },
     {
@@ -3361,41 +3248,16 @@
         "heavy",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Low Dashinben Knockdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Paopei Feint",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 6,
-          "windowAfter": 10,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0022",
+        "s0023",
+        "s0024"
       ]
     },
     {
@@ -3407,42 +3269,4970 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Paopei Power Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Paopei Quick Check",
-          "windowBefore": 16,
-          "windowAfter": 24,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "qcf+4",
-          "animationKey": "cmd:qcf+4",
-          "label": "Paopei Burst",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0004",
+        "s0026"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0027",
+        "s0028",
+        "s0029"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0030",
+        "s0031",
+        "s0029"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0033",
+        "s0029"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 17,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0034",
+        "s0009",
+        "s0020"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "heavy",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0035",
+        "s0023",
+        "s0024"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0004",
+        "s0026"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0005"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0010"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0004",
+        "s0004",
+        "s0006",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0009",
+        "s0011",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0014",
+        "s0015"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:001",
+      "title": "Dashinben Body Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0038",
+        "s0039"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:002",
+      "title": "Dashinben Body Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0041"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:003",
+      "title": "Low Dashinben Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:004",
+      "title": "Low Dashinben Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:005",
+      "title": "Quick Dashinben Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0048",
+        "s0049"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:006",
+      "title": "Quick Dashinben Check 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0050",
+        "s0051"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:007",
+      "title": "Spirit Beast Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0043",
+        "s0044"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:008",
+      "title": "Spirit Beast Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0045",
+        "s0046"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:009",
+      "title": "Dashinben Body Strike 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:010",
+      "title": "Low Dashinben Sweep 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0040",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:011",
+      "title": "Quick Dashinben Check 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0055",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:012",
+      "title": "Spirit Beast Rush 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "forward+medium"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0040",
+        "s0053",
+        "s0054"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:013",
+      "title": "Dashinben Body Strike 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0037",
+        "s0040",
+        "s0053",
+        "s0054",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:014",
+      "title": "Low Dashinben Sweep 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0042",
+        "s0040",
+        "s0053",
+        "s0054",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:015",
+      "title": "Quick Dashinben Check 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down+light",
+        "light",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0047",
+        "s0055",
+        "s0053",
+        "s0054",
+        "s0056",
+        "s0057",
+        "s0059"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:basic:016",
+      "title": "Spirit Beast Rush 7-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "medium",
+      "estimatedHits": 7,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down+light",
+        "light",
+        "forward+medium",
+        "special",
+        "forward+light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0040",
+        "s0053",
+        "s0054",
+        "s0056",
+        "s0057",
+        "s0058"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:017",
+      "title": "Ducking Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:018",
+      "title": "Ducking Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0063",
+        "s0046"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:019",
+      "title": "Forward Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0049"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:020",
+      "title": "Forward Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0054",
+        "s0044"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:021",
+      "title": "Forward Staff Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:022",
+      "title": "Forward Staff Strike 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0069",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:023",
+      "title": "Low Dashinben Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0071",
+        "s0044"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:024",
+      "title": "Low Dashinben Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0070",
+        "s0072",
+        "s0046"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:025",
+      "title": "Low Paopei Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0057",
+        "s0051"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:026",
+      "title": "Overdrive Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0075",
+        "s0046"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:027",
+      "title": "Paopei Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0046"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:028",
+      "title": "Paopei Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0077",
+        "s0046"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:029",
+      "title": "Paopei Ki Stance 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0079",
+        "s0039"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:030",
+      "title": "Paopei Ki Stance 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "forward+medium",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0078",
+        "s0080",
+        "s0041"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:031",
+      "title": "Spirit Beast Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0057",
+        "s0051"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:032",
+      "title": "Spirit Beast Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0044"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:033",
+      "title": "Low Paopei Feint 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0073",
+        "s0056",
+        "s0049"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:034",
+      "title": "Overdrive Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0074",
+        "s0083",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:035",
+      "title": "Paopei Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0084",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:036",
+      "title": "Paopei Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0084",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:037",
+      "title": "Paopei Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0086",
+        "s0041"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:038",
+      "title": "Paopei Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0087",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:039",
+      "title": "Paopei Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0086",
+        "s0041"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:040",
+      "title": "Paopei Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0085",
+        "s0087",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:041",
+      "title": "Paopei Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0089",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:042",
+      "title": "Paopei Power Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0088",
+        "s0083",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:043",
+      "title": "Paopei Quick Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:advanced:044",
+      "title": "Paopei Quick Check 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0061",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:crouch:045",
+      "title": "Ground-Skimming Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0093",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:crouch:046",
+      "title": "Ground-Skimming Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0092",
+        "s0069",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:crouch:047",
+      "title": "Rising Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:crouch:048",
+      "title": "Rising Staff Check 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0094",
+        "s0069",
+        "s0062"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:crouch:049",
+      "title": "Rising Wind Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0096",
+        "s0041"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:crouch:050",
+      "title": "Rising Wind Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0095",
+        "s0067",
+        "s0068"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:051",
+      "title": "Crouch Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0062",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:052",
+      "title": "Crouch Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0099",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:053",
+      "title": "Crouch Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0062",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:054",
+      "title": "Crouch Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0099",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:055",
+      "title": "Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:056",
+      "title": "Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0102",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:057",
+      "title": "Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0101",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:058",
+      "title": "Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0102",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:059",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0068",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:060",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0104",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:061",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0068",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:062",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0104",
+        "s0098"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:063",
+      "title": "Crouch Dashinben Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5902597402597403,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0105",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107",
+        "s0058",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:064",
+      "title": "Crouch Dashinben Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5902597402597403,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0105",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107",
+        "s0058",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:065",
+      "title": "Crouch Dashinben Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5902597402597403,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0105",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107",
+        "s0058",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:066",
+      "title": "Crouch Dashinben Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0097",
+        "s0105",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:067",
+      "title": "Dashinben Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5902597402597403,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0111",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0112",
+        "s0058",
+        "s0108",
+        "s0109",
+        "s0086",
+        "s0113"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:068",
+      "title": "Dashinben Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0100",
+        "s0111",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0112",
+        "s0058"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:069",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5902597402597403,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0055",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107",
+        "s0058",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:070",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5902597402597403,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0055",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107",
+        "s0058",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:071",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher 12-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "long",
+      "estimatedHits": 12,
+      "estimatedDamage": 45,
+      "damageScale": 0.5902597402597403,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light",
+        "light",
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0055",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107",
+        "s0058",
+        "s0108",
+        "s0109",
+        "s0110"
+      ]
+    },
+    {
+      "id": "taikoubou:beginner:advanced:launcher:072",
+      "title": "Diagonal Dashinben Launcher Grounded Launcher 8-Hit Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "medium",
+      "estimatedHits": 8,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "down+light",
+        "light",
+        "forward+medium",
+        "forward+light",
+        "special",
+        "heavy",
+        "light"
+      ],
+      "stepKeys": [
+        "s0103",
+        "s0055",
+        "s0053",
+        "s0054",
+        "s0057",
+        "s0065",
+        "s0106",
+        "s0107"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "taikoubou:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n25",
+          "special+light": "n25",
+          "forward+special+light": "n25",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special+medium": "n32",
+          "down+special+medium": "n32",
+          "special+heavy": "n35",
+          "down-forward+special+heavy": "n35",
+          "medium": "n9",
+          "down+medium": "n9",
+          "light": "n1",
+          "forward+light": "n1",
+          "forward+medium": "n169",
+          "down+light": "n143",
+          "forward+heavy": "n148",
+          "forward+special": "n100",
+          "down+heavy": "n110",
+          "down+special": "n105",
+          "down-forward+light": "n163",
+          "down-forward+medium": "n166",
+          "down-forward+special": "n115"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:043",
+        "edges": {
+          "light": "n2",
+          "heavy": "n193",
+          "down-forward+medium": "n191",
+          "medium": "n28",
+          "special": "n38"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:light-core",
+        "edges": {
+          "heavy": "n52",
+          "medium": "n44",
+          "light": "n8"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:light-core",
+        "edges": {}
+      },
+      "n44": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49"
+        }
+      },
+      "n49": {
+        "depth": 13,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n50"
+        }
+      },
+      "n50": {
+        "depth": 14,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92",
+          "medium": "n51"
+        }
+      },
+      "n51": {
+        "depth": 15,
+        "routeId": "taikoubou:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n92": {
+        "depth": 15,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 16,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 17,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 18,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 19,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 20,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n98"
+        }
+      },
+      "n98": {
+        "depth": 21,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n99"
+        }
+      },
+      "n99": {
+        "depth": 22,
+        "routeId": "taikoubou:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n52": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 13,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n58"
+        }
+      },
+      "n58": {
+        "depth": 14,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n59"
+        }
+      },
+      "n59": {
+        "depth": 15,
+        "routeId": "taikoubou:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:light-medium-heavy",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:light-medium-heavy",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:forward-light-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n191": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:043",
+        "edges": {
+          "special": "n192"
+        }
+      },
+      "n192": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:043",
+        "edges": {}
+      },
+      "n193": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:044",
+        "edges": {
+          "special": "n194"
+        }
+      },
+      "n194": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:044",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:021",
+        "edges": {
+          "medium": "n10",
+          "heavy": "n155",
+          "special": "n195",
+          "down-forward+medium": "n153",
+          "down+light": "n203",
+          "light": "n40",
+          "forward+light": "n197"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:medium-core",
+        "edges": {
+          "heavy": "n68",
+          "medium": "n16",
+          "light": "n60"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:medium-core",
+        "edges": {}
+      },
+      "n60": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 13,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n66"
+        }
+      },
+      "n66": {
+        "depth": 14,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n67"
+        }
+      },
+      "n67": {
+        "depth": 15,
+        "routeId": "taikoubou:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n68": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 13,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n74"
+        }
+      },
+      "n74": {
+        "depth": 14,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n75"
+        }
+      },
+      "n75": {
+        "depth": 15,
+        "routeId": "taikoubou:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:down-medium-route",
+        "edges": {
+          "special": "n41"
+        }
+      },
+      "n41": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n153": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n154"
+        }
+      },
+      "n154": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n155": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n156"
+        }
+      },
+      "n156": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n195": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:launcher:051",
+        "edges": {
+          "special": "n196"
+        }
+      },
+      "n196": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:launcher:051",
+        "edges": {}
+      },
+      "n197": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:launcher:052",
+        "edges": {
+          "special": "n198"
+        }
+      },
+      "n198": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:launcher:052",
+        "edges": {}
+      },
+      "n203": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n204"
+        }
+      },
+      "n204": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "forward+medium": "n205"
+        }
+      },
+      "n205": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "forward+light": "n206"
+        }
+      },
+      "n206": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n207"
+        }
+      },
+      "n207": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "heavy": "n208"
+        }
+      },
+      "n208": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n209"
+        }
+      },
+      "n209": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "light": "n210"
+        }
+      },
+      "n210": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "medium": "n211"
+        }
+      },
+      "n211": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n212"
+        }
+      },
+      "n212": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {
+          "special": "n213"
+        }
+      },
+      "n213": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:advanced:launcher:063",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:025",
+        "edges": {
+          "heavy": "n18",
+          "special": "n177",
+          "light": "n199",
+          "down+light": "n42",
+          "forward+light": "n161",
+          "medium": "n201"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:heavy-core",
+        "edges": {
+          "medium": "n84",
+          "heavy": "n24",
+          "light": "n76"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:heavy-core",
+        "edges": {}
+      },
+      "n76": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 13,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n82"
+        }
+      },
+      "n82": {
+        "depth": 14,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n83"
+        }
+      },
+      "n83": {
+        "depth": 15,
+        "routeId": "taikoubou:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n84": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 13,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n90"
+        }
+      },
+      "n90": {
+        "depth": 14,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n91"
+        }
+      },
+      "n91": {
+        "depth": 15,
+        "routeId": "taikoubou:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n214",
+          "special": "n43"
+        }
+      },
+      "n43": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n214": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "forward+medium": "n215"
+        }
+      },
+      "n215": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "forward+light": "n216"
+        }
+      },
+      "n216": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n217"
+        }
+      },
+      "n217": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n218"
+        }
+      },
+      "n218": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "light": "n219"
+        }
+      },
+      "n219": {
+        "depth": 8,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "medium": "n220"
+        }
+      },
+      "n220": {
+        "depth": 9,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n221"
+        }
+      },
+      "n221": {
+        "depth": 10,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "heavy": "n222"
+        }
+      },
+      "n222": {
+        "depth": 11,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {
+          "special": "n223"
+        }
+      },
+      "n223": {
+        "depth": 12,
+        "routeId": "taikoubou:beginner:advanced:launcher:067",
+        "edges": {}
+      },
+      "n161": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n162"
+        }
+      },
+      "n162": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n177": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:033",
+        "edges": {
+          "special": "n178"
+        }
+      },
+      "n178": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:033",
+        "edges": {}
+      },
+      "n199": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:launcher:055",
+        "edges": {
+          "special": "n200"
+        }
+      },
+      "n200": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:launcher:055",
+        "edges": {}
+      },
+      "n201": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:launcher:056",
+        "edges": {
+          "special": "n202"
+        }
+      },
+      "n202": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:launcher:056",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n26",
+          "heavy": "n183",
+          "down-forward+medium": "n185",
+          "forward+light": "n174",
+          "medium": "n30"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:special-core",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:032",
+        "edges": {
+          "special": "n176",
+          "heavy": "n31"
+        }
+      },
+      "n31": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n176": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:032",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n175"
+        }
+      },
+      "n175": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:031",
+        "edges": {}
+      },
+      "n183": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:037",
+        "edges": {
+          "special": "n184"
+        }
+      },
+      "n184": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:037",
+        "edges": {}
+      },
+      "n185": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:038",
+        "edges": {
+          "special": "n186"
+        }
+      },
+      "n186": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:038",
+        "edges": {}
+      },
+      "n32": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n33",
+          "forward+medium": "n157",
+          "medium": "n159"
+        }
+      },
+      "n33": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n34"
+        }
+      },
+      "n34": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n157": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n158"
+        }
+      },
+      "n158": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n159": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n160"
+        }
+      },
+      "n160": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n35": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:041",
+        "edges": {
+          "heavy": "n189",
+          "down-forward+medium": "n187",
+          "light": "n36"
+        }
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n187": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:041",
+        "edges": {
+          "special": "n188"
+        }
+      },
+      "n188": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:041",
+        "edges": {}
+      },
+      "n189": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:042",
+        "edges": {
+          "special": "n190"
+        }
+      },
+      "n190": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:042",
+        "edges": {}
+      },
+      "n100": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:basic:001",
+        "edges": {
+          "down+light": "n103",
+          "light": "n101"
+        }
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n104",
+          "light": "n120"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:009",
+        "edges": {
+          "forward+medium": "n121"
+        }
+      },
+      "n121": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:advanced:basic:009",
+        "edges": {
+          "special": "n131"
+        }
+      },
+      "n131": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:advanced:basic:013",
+        "edges": {
+          "forward+light": "n132"
+        }
+      },
+      "n132": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:advanced:basic:013",
+        "edges": {
+          "light": "n133"
+        }
+      },
+      "n133": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:advanced:basic:013",
+        "edges": {}
+      },
+      "n105": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:basic:003",
+        "edges": {
+          "down+light": "n122",
+          "forward+medium": "n106",
+          "medium": "n108"
+        }
+      },
+      "n106": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n107"
+        }
+      },
+      "n107": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n108": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:004",
+        "edges": {
+          "special": "n109"
+        }
+      },
+      "n109": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:004",
+        "edges": {}
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:010",
+        "edges": {
+          "light": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:010",
+        "edges": {
+          "forward+medium": "n124"
+        }
+      },
+      "n124": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:advanced:basic:010",
+        "edges": {
+          "special": "n134"
+        }
+      },
+      "n134": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:advanced:basic:014",
+        "edges": {
+          "forward+light": "n135"
+        }
+      },
+      "n135": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:advanced:basic:014",
+        "edges": {
+          "light": "n136"
+        }
+      },
+      "n136": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:advanced:basic:014",
+        "edges": {}
+      },
+      "n110": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n111",
+          "down+light": "n125",
+          "forward+light": "n113"
+        }
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:005",
+        "edges": {
+          "special": "n112"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:005",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:006",
+        "edges": {
+          "special": "n114"
+        }
+      },
+      "n114": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:006",
+        "edges": {}
+      },
+      "n125": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:011",
+        "edges": {
+          "light": "n126"
+        }
+      },
+      "n126": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:011",
+        "edges": {
+          "forward+medium": "n127"
+        }
+      },
+      "n127": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:advanced:basic:011",
+        "edges": {
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:advanced:basic:015",
+        "edges": {
+          "forward+light": "n138"
+        }
+      },
+      "n138": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:advanced:basic:015",
+        "edges": {
+          "medium": "n139"
+        }
+      },
+      "n139": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:advanced:basic:015",
+        "edges": {}
+      },
+      "n115": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:basic:007",
+        "edges": {
+          "down+light": "n128",
+          "forward+medium": "n116",
+          "medium": "n118"
+        }
+      },
+      "n116": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:007",
+        "edges": {
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:007",
+        "edges": {}
+      },
+      "n118": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:008",
+        "edges": {
+          "special": "n119"
+        }
+      },
+      "n119": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:008",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:basic:012",
+        "edges": {
+          "light": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:basic:012",
+        "edges": {
+          "forward+medium": "n130"
+        }
+      },
+      "n130": {
+        "depth": 4,
+        "routeId": "taikoubou:beginner:advanced:basic:012",
+        "edges": {
+          "special": "n140"
+        }
+      },
+      "n140": {
+        "depth": 5,
+        "routeId": "taikoubou:beginner:advanced:basic:016",
+        "edges": {
+          "forward+light": "n141"
+        }
+      },
+      "n141": {
+        "depth": 6,
+        "routeId": "taikoubou:beginner:advanced:basic:016",
+        "edges": {
+          "light": "n142"
+        }
+      },
+      "n142": {
+        "depth": 7,
+        "routeId": "taikoubou:beginner:advanced:basic:016",
+        "edges": {}
+      },
+      "n143": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:017",
+        "edges": {
+          "heavy": "n144",
+          "special": "n146"
+        }
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:017",
+        "edges": {
+          "special": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:017",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n149",
+          "forward+medium": "n151"
+        }
+      },
+      "n149": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:019",
+        "edges": {
+          "special": "n150"
+        }
+      },
+      "n150": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:019",
+        "edges": {}
+      },
+      "n151": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n152"
+        }
+      },
+      "n152": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n163": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:026",
+        "edges": {
+          "heavy": "n179",
+          "special": "n164"
+        }
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n179": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:034",
+        "edges": {
+          "special": "n180"
+        }
+      },
+      "n180": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:034",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:027",
+        "edges": {
+          "heavy": "n181",
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n168"
+        }
+      },
+      "n168": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n181": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:035",
+        "edges": {
+          "special": "n182"
+        }
+      },
+      "n182": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:035",
+        "edges": {}
+      },
+      "n169": {
+        "depth": 1,
+        "routeId": "taikoubou:beginner:advanced:advanced:029",
+        "edges": {
+          "down+light": "n172",
+          "light": "n170"
+        }
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 2,
+        "routeId": "taikoubou:beginner:advanced:advanced:030",
+        "edges": {
+          "special": "n173"
+        }
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "taikoubou:beginner:advanced:advanced:030",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Paopei Quick Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Dashinben Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Paopei Quick Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0006": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Dashinben Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0011": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Dashinben Sweep",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0016": {
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0019": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "hit"
+    },
+    "s0020": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0021": {
+      "gesture": "special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Dashinben Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0023": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0024": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0025": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0027": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Paopei Quick Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0028": {
+      "gesture": "special",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Dashinben Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0030": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "light",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Dashinben Sweep",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "hit"
+    },
+    "s0032": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "forward+special+light",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Dashinben Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "forward+special",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Dashinben Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Dashinben Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0039": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "knockdown"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0041": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown"
+    },
+    "s0042": {
+      "routeKey": "base:kickleft:kick",
+      "gesture": "down+special",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Dashinben Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0043": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "knockdown"
+    },
+    "s0045": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Dashinben Body Strike",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown"
+    },
+    "s0047": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+heavy",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Dashinben Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0049": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "knockdown"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Staff Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0051": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0052": {
+      "routeKey": "base:kickright:special",
+      "gesture": "down-forward+special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Paopei Quick Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0058": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Dashinben Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0059": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Dashinben Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0061": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Dashinben Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0063": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+heavy",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Forward Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0065": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0067": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Dashinben Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Dashinben Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Low Dashinben Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0072": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Dashinben Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0075": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Paopei Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0077": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "juggle"
+    },
+    "s0078": {
+      "routeKey": "cmd:cmd:FC+2:FC+2",
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "FC+2",
+      "animationKey": "cmd:FC+2",
+      "label": "Paopei Ki Stance",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit",
+      "kiCommand": "1+2",
+      "kiAnimationKey": "cmd:1+2",
+      "kiCost": 35
+    },
+    "s0079": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Quick Dashinben Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0081": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Staff Strike",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Dashinben Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Dashinben Launcher",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "launch"
+    },
+    "s0085": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Paopei Burst Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0086": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Dashinben Launcher",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "launch"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0089": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Dashinben Launcher",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "launch"
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Paopei Quick Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Dashinben Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0092": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Ground-Skimming Rush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0093": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Dashinben Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0094": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Rising Staff Check Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0095": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Rising Wind Rush Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0096": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0097": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Crouch Dashinben Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0098": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 8,
+      "windowAfter": 12,
+      "expect": "knockdown"
+    },
+    "s0099": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Staff Check",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0100": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Dashinben Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0101": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Paopei Power Crush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0102": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "medium",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Staff Check",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0103": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Diagonal Dashinben Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0104": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Staff Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0105": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0106": {
+      "routeKey": "cmd:cmd:2+3:2+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Paopei Feint",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0107": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0108": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Dashinben Body Strike",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0109": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Spirit Beast Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0110": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "knockdown"
+    },
+    "s0111": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Staff Check",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0112": {
+      "routeKey": "cmd:cmd:FC+1:FC+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "FC+1",
+      "animationKey": "cmd:FC+1",
+      "label": "Overdrive Staff Check",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "movementBefore": "crouch",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0113": {
+      "routeKey": "cmd:cmd:qcf+4:qcf+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "qcf+4",
+      "animationKey": "cmd:qcf+4",
+      "label": "Paopei Burst",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    }
+  }
 }

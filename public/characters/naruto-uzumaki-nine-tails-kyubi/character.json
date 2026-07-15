@@ -3642,136 +3642,95 @@
   "beginnerComboRoutes": [
     {
       "id": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
-      "title": "Light Knockdown",
+      "title": "Light Knockdown Chain",
       "family": "core",
       "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
         "light",
         "light",
         "light"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "d+1",
-          "animationKey": "cmd:d+1",
-          "label": "Ducking Chakra Jab",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 10,
-          "windowAfter": 14,
-          "expect": "knockdown"
-        }
+      "estimatedDamage": 29,
+      "estimatedHits": 8,
+      "requiresKi": false,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
       ]
     },
     {
       "id": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
-      "title": "Medium Ki Finish",
+      "title": "Medium Ki Chain",
       "family": "core",
       "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
         "medium",
         "medium",
         "medium"
       ],
-      "steps": [
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Chakra Tail Check",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "f+2",
-          "animationKey": "cmd:f+2",
-          "label": "Forward Chakra Claw",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 13,
-          "windowAfter": 17,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 35,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
       ]
     },
     {
       "id": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
-      "title": "Heavy Ki Finish",
+      "title": "Heavy Ki Chain",
       "family": "core",
       "gestures": [
         "heavy",
         "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Low Chakra Rush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "2+3",
-          "animationKey": "cmd:2+3",
-          "label": "Low Chakra Feint",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 34,
+      "estimatedHits": 8,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "medium",
+      "category": "basic",
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
       ]
     },
     {
@@ -3783,40 +3742,16 @@
         "special",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special",
-          "input": "special",
-          "animationKey": "kickright",
-          "label": "Nine-Tails Fan Kick",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "basic",
+      "stepKeys": [
+        "s0020",
+        "s0021",
+        "s0022"
       ]
     },
     {
@@ -3828,41 +3763,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Chakra Tail Check",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0000",
+        "s0010",
+        "s0023"
       ]
     },
     {
@@ -3874,41 +3784,16 @@
         "medium",
         "heavy"
       ],
-      "steps": [
-        {
-          "gesture": "special+light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Rush Jab",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "medium",
-          "input": "heavy",
-          "command": "1+2",
-          "animationKey": "cmd:1+2",
-          "label": "Chakra Tail Check",
-          "windowBefore": 3,
-          "windowAfter": 6,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 5,
-          "windowAfter": 9,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0024",
+        "s0010",
+        "s0023"
       ]
     },
     {
@@ -3917,44 +3802,19 @@
       "family": "mixed",
       "gestures": [
         "special+medium",
-        "heavy",
+        "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+medium",
-          "input": "special",
-          "command": "2+4",
-          "animationKey": "cmd:2+4",
-          "label": "Kyubi Drill Knockdown",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "heavy",
-          "input": "kick",
-          "command": "qcf+3",
-          "animationKey": "cmd:qcf+3",
-          "label": "Low Chakra Rush",
-          "windowBefore": 12,
-          "windowAfter": 16,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 11,
-          "windowAfter": 15,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0025",
+        "s0026",
+        "s0027"
       ]
     },
     {
@@ -3966,42 +3826,3739 @@
         "light",
         "special"
       ],
-      "steps": [
-        {
-          "gesture": "special+heavy",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 16,
-          "windowAfter": 20,
-          "expect": "hit"
-        },
-        {
-          "gesture": "light",
-          "input": "jab",
-          "command": "qcf+1",
-          "animationKey": "cmd:qcf+1",
-          "label": "Chakra Rush Jab",
-          "windowBefore": 7,
-          "windowAfter": 11,
-          "expect": "hit"
-        },
-        {
-          "gesture": "special",
-          "input": "special",
-          "command": "3+4",
-          "animationKey": "cmd:3+4",
-          "label": "Kyubi Tail Crush",
-          "windowBefore": 9,
-          "windowAfter": 13,
-          "expect": "knockdown",
-          "kiCommand": "O+2",
-          "kiAnimationKey": "cmd:O+2",
-          "kiCost": 35,
-          "poweredKiFallback": true
-        }
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0028",
+        "s0005",
+        "s0022"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:forward-light-route",
+      "title": "Forward Light Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+light",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0029",
+        "s0030",
+        "s0031"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:down-medium-route",
+      "title": "Down Medium Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0032",
+        "s0013",
+        "s0031"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:down-forward-heavy-route",
+      "title": "Down-Forward Heavy Route",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 28,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+heavy",
+        "down+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0033",
+        "s0034",
+        "s0031"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-light-route",
+      "title": "Directional Special Light Route",
+      "family": "mixed",
+      "gestures": [
+        "forward+special+light",
+        "medium",
+        "heavy"
+      ],
+      "estimatedDamage": 16,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0035",
+        "s0010",
+        "s0023"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-medium-route",
+      "title": "Directional Special Medium Route",
+      "family": "mixed",
+      "gestures": [
+        "down+special+medium",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0036",
+        "s0026",
+        "s0027"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-heavy-route",
+      "title": "Directional Special Heavy Route",
+      "family": "mixed",
+      "gestures": [
+        "down-forward+special+heavy",
+        "light",
+        "special"
+      ],
+      "estimatedDamage": 18,
+      "estimatedHits": 3,
+      "requiresKi": true,
+      "damageScale": 0.6,
+      "tier": "short",
+      "category": "advanced",
+      "stepKeys": [
+        "s0037",
+        "s0005",
+        "s0022"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-long-chain",
+      "title": "Light Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+      "title": "Light Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+      "title": "Medium Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+      "title": "Medium Into Heavy Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+      "title": "Heavy Into Light Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 35,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0006"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+      "title": "Heavy Into Medium Long Chain",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "long",
+      "estimatedHits": 15,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0011"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+      "title": "Light Medium Heavy Marathon",
+      "family": "mixed",
+      "category": "advanced",
+      "tier": "marathon",
+      "estimatedHits": 22,
+      "estimatedDamage": 45,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "light",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy",
+        "heavy"
+      ],
+      "stepKeys": [
+        "s0000",
+        "s0001",
+        "s0002",
+        "s0003",
+        "s0004",
+        "s0005",
+        "s0005",
+        "s0007",
+        "s0008",
+        "s0009",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0010",
+        "s0012",
+        "s0013",
+        "s0014",
+        "s0015",
+        "s0016",
+        "s0017",
+        "s0018",
+        "s0019"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:001",
+      "title": "Kyubi Chakra Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0039",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:002",
+      "title": "Nine-Tails Fan Kick 3-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "forward+light",
+        "medium"
+      ],
+      "stepKeys": [
+        "s0041",
+        "s0042",
+        "s0043"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:003",
+      "title": "Kyubi Chakra Jab 4-Hit Route",
+      "family": "advanced",
+      "category": "basic",
+      "tier": "short",
+      "estimatedHits": 4,
+      "estimatedDamage": 17,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+special",
+        "forward+light",
+        "medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0038",
+        "s0044",
+        "s0043",
+        "s0045"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:004",
+      "title": "Advancing Low Tail 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:005",
+      "title": "Advancing Low Tail 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0046",
+        "s0049",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:006",
+      "title": "Chakra Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0051",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:007",
+      "title": "Diagonal Low Tail 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0049",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:008",
+      "title": "Ducking Chakra Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0051",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:009",
+      "title": "Ducking Chakra Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0053",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:010",
+      "title": "Forward Chakra Claw 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0057",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:011",
+      "title": "Forward Chakra Claw 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0056",
+        "s0049",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:012",
+      "title": "Kyubi Tail Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0059",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:013",
+      "title": "Low Chakra Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0061",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:014",
+      "title": "Low Tail Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0063",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:015",
+      "title": "Low Tail Kick 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down+heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0062",
+        "s0049",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:016",
+      "title": "Nine-Tails Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:017",
+      "title": "Nine-Tails Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0065",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:018",
+      "title": "Overdrive Chakra Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:019",
+      "title": "Overdrive Chakra Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0067",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:020",
+      "title": "Sidestep Tail Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 11,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0049",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:021",
+      "title": "Chakra Rush Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0050",
+        "s0054",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:022",
+      "title": "Diagonal Low Tail 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "forward+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0052",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:023",
+      "title": "Kyubi Drill Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0070",
+        "s0071"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:024",
+      "title": "Kyubi Drill Knockdown 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0069",
+        "s0047",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:025",
+      "title": "Kyubi Tail Crush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 15,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special+heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0058",
+        "s0072",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:026",
+      "title": "Low Chakra Rush 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0060",
+        "s0073",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:027",
+      "title": "Nine-Tails Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0074",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:028",
+      "title": "Nine-Tails Aura Drive 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0064",
+        "s0074",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:029",
+      "title": "Overdrive Chakra Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0075",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:030",
+      "title": "Overdrive Chakra Jab 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "down-forward+light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0066",
+        "s0075",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:031",
+      "title": "Sidestep Tail Sweep 2-Hit Route",
+      "family": "advanced",
+      "category": "advanced",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 13,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "down-forward+special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0068",
+        "s0063",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:032",
+      "title": "Crouching Chakra Guard 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0067",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:033",
+      "title": "Crouching Chakra Guard 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 9,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "light",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0076",
+        "s0075",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:034",
+      "title": "While-Rising Chakra Claw 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 10,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0078",
+        "s0040"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:035",
+      "title": "Kyubi Rising Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "heavy",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0080",
+        "s0071"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:036",
+      "title": "Kyubi Rising Burst 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "special",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0079",
+        "s0057",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:037",
+      "title": "While-Rising Chakra Claw 2-Hit Route",
+      "family": "advanced",
+      "category": "crouch",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 12,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "down-forward+medium",
+        "special"
+      ],
+      "stepKeys": [
+        "s0077",
+        "s0073",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:038",
+      "title": "Crouch Tail Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0083"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:039",
+      "title": "Crouch Tail Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0083"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:040",
+      "title": "Crouch Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0084",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:041",
+      "title": "Crouch Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0084",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:042",
+      "title": "Crouch Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0085",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:043",
+      "title": "Diagonal Tail Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0087",
+        "s0083"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:044",
+      "title": "Diagonal Tail Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0087",
+        "s0083"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:045",
+      "title": "Diagonal Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0088",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:046",
+      "title": "Diagonal Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0088",
+        "s0055"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:047",
+      "title": "Diagonal Tail Launcher Grounded Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 16,
+      "damageScale": 0.6,
+      "requiresKi": true,
+      "gestures": [
+        "medium",
+        "forward+light",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0089",
+        "s0048"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:048",
+      "title": "Kyubi Tornado Launcher Air Chase Launcher Route",
+      "family": "advanced",
+      "category": "launcher",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 14,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0083"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:tornado:049",
+      "title": "Crouch Tail Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0081",
+        "s0082",
+        "s0083"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:tornado:050",
+      "title": "Diagonal Tail Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "medium",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0086",
+        "s0087",
+        "s0083"
+      ]
+    },
+    {
+      "id": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:tornado:051",
+      "title": "Kyubi Tornado Launcher Air Chase Launcher 3-Hit Route",
+      "family": "advanced",
+      "category": "tornado",
+      "tier": "short",
+      "estimatedHits": 3,
+      "estimatedDamage": 20,
+      "damageScale": 0.6,
+      "requiresKi": false,
+      "gestures": [
+        "heavy",
+        "special",
+        "special"
+      ],
+      "stepKeys": [
+        "s0090",
+        "s0091",
+        "s0083"
       ]
     }
-  ]
+  ],
+  "beginnerComboGraph": {
+    "version": 2,
+    "rootId": "n0",
+    "nodes": {
+      "n0": {
+        "depth": 0,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:004",
+        "edges": {
+          "medium": "n9",
+          "down+medium": "n9",
+          "special+medium": "n30",
+          "down+special+medium": "n30",
+          "special+heavy": "n33",
+          "down-forward+special+heavy": "n33",
+          "light": "n1",
+          "special+light": "n1",
+          "forward+light": "n1",
+          "forward+special+light": "n1",
+          "heavy": "n17",
+          "down-forward+heavy": "n17",
+          "special": "n25",
+          "forward+medium": "n113",
+          "down+light": "n116",
+          "down+heavy": "n130",
+          "forward+heavy": "n121",
+          "forward+special": "n106",
+          "down+special": "n98",
+          "down-forward+light": "n138",
+          "down-forward+medium": "n135",
+          "down-forward+special": "n141"
+        }
+      },
+      "n1": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:006",
+        "edges": {
+          "light": "n2",
+          "medium": "n28",
+          "forward+light": "n144",
+          "forward+medium": "n36",
+          "special": "n111"
+        }
+      },
+      "n2": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
+        "edges": {
+          "light": "n3"
+        }
+      },
+      "n3": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
+        "edges": {
+          "light": "n4"
+        }
+      },
+      "n4": {
+        "depth": 4,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
+        "edges": {
+          "light": "n5"
+        }
+      },
+      "n5": {
+        "depth": 5,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
+        "edges": {
+          "light": "n6"
+        }
+      },
+      "n6": {
+        "depth": 6,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
+        "edges": {
+          "light": "n7"
+        }
+      },
+      "n7": {
+        "depth": 7,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
+        "edges": {
+          "medium": "n42",
+          "light": "n8",
+          "heavy": "n50"
+        }
+      },
+      "n8": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-core",
+        "edges": {}
+      },
+      "n42": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n43"
+        }
+      },
+      "n43": {
+        "depth": 9,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n44"
+        }
+      },
+      "n44": {
+        "depth": 10,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n45"
+        }
+      },
+      "n45": {
+        "depth": 11,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n46"
+        }
+      },
+      "n46": {
+        "depth": 12,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n47"
+        }
+      },
+      "n47": {
+        "depth": 13,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n48"
+        }
+      },
+      "n48": {
+        "depth": 14,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "medium": "n49",
+          "heavy": "n90"
+        }
+      },
+      "n49": {
+        "depth": 15,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-long-chain",
+        "edges": {}
+      },
+      "n90": {
+        "depth": 15,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n91"
+        }
+      },
+      "n91": {
+        "depth": 16,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n92"
+        }
+      },
+      "n92": {
+        "depth": 17,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n93"
+        }
+      },
+      "n93": {
+        "depth": 18,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n94"
+        }
+      },
+      "n94": {
+        "depth": 19,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n95"
+        }
+      },
+      "n95": {
+        "depth": 20,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n96"
+        }
+      },
+      "n96": {
+        "depth": 21,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {
+          "heavy": "n97"
+        }
+      },
+      "n97": {
+        "depth": 22,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-medium-heavy-marathon",
+        "edges": {}
+      },
+      "n50": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n51"
+        }
+      },
+      "n51": {
+        "depth": 9,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n52"
+        }
+      },
+      "n52": {
+        "depth": 10,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n53"
+        }
+      },
+      "n53": {
+        "depth": 11,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n54"
+        }
+      },
+      "n54": {
+        "depth": 12,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n55"
+        }
+      },
+      "n55": {
+        "depth": 13,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n56"
+        }
+      },
+      "n56": {
+        "depth": 14,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {
+          "heavy": "n57"
+        }
+      },
+      "n57": {
+        "depth": 15,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:light-heavy-long-chain",
+        "edges": {}
+      },
+      "n28": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-light-route",
+        "edges": {
+          "heavy": "n29"
+        }
+      },
+      "n29": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-light-route",
+        "edges": {}
+      },
+      "n36": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:forward-light-route",
+        "edges": {
+          "special": "n37"
+        }
+      },
+      "n37": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:forward-light-route",
+        "edges": {}
+      },
+      "n111": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:006",
+        "edges": {
+          "special": "n112"
+        }
+      },
+      "n112": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:006",
+        "edges": {}
+      },
+      "n144": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:021",
+        "edges": {
+          "special": "n145"
+        }
+      },
+      "n145": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:021",
+        "edges": {}
+      },
+      "n9": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:034",
+        "edges": {
+          "medium": "n10",
+          "special": "n170",
+          "heavy": "n38",
+          "light": "n172",
+          "down-forward+medium": "n168",
+          "forward+light": "n174",
+          "forward+medium": "n162"
+        }
+      },
+      "n10": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
+        "edges": {
+          "medium": "n11"
+        }
+      },
+      "n11": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
+        "edges": {
+          "medium": "n12"
+        }
+      },
+      "n12": {
+        "depth": 4,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
+        "edges": {
+          "medium": "n13"
+        }
+      },
+      "n13": {
+        "depth": 5,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
+        "edges": {
+          "medium": "n14"
+        }
+      },
+      "n14": {
+        "depth": 6,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
+        "edges": {
+          "medium": "n15"
+        }
+      },
+      "n15": {
+        "depth": 7,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
+        "edges": {
+          "medium": "n16",
+          "light": "n58",
+          "heavy": "n66"
+        }
+      },
+      "n16": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-core",
+        "edges": {}
+      },
+      "n58": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n59"
+        }
+      },
+      "n59": {
+        "depth": 9,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n60"
+        }
+      },
+      "n60": {
+        "depth": 10,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n61"
+        }
+      },
+      "n61": {
+        "depth": 11,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n62"
+        }
+      },
+      "n62": {
+        "depth": 12,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n63"
+        }
+      },
+      "n63": {
+        "depth": 13,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n64"
+        }
+      },
+      "n64": {
+        "depth": 14,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {
+          "light": "n65"
+        }
+      },
+      "n65": {
+        "depth": 15,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-light-long-chain",
+        "edges": {}
+      },
+      "n66": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n67"
+        }
+      },
+      "n67": {
+        "depth": 9,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n68"
+        }
+      },
+      "n68": {
+        "depth": 10,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n69"
+        }
+      },
+      "n69": {
+        "depth": 11,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n70"
+        }
+      },
+      "n70": {
+        "depth": 12,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n71"
+        }
+      },
+      "n71": {
+        "depth": 13,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n72"
+        }
+      },
+      "n72": {
+        "depth": 14,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {
+          "heavy": "n73"
+        }
+      },
+      "n73": {
+        "depth": 15,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:medium-heavy-long-chain",
+        "edges": {}
+      },
+      "n38": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:down-medium-route",
+        "edges": {
+          "special": "n39"
+        }
+      },
+      "n39": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:down-medium-route",
+        "edges": {}
+      },
+      "n162": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:034",
+        "edges": {
+          "special": "n163"
+        }
+      },
+      "n163": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:034",
+        "edges": {}
+      },
+      "n168": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:037",
+        "edges": {
+          "special": "n169"
+        }
+      },
+      "n169": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:037",
+        "edges": {}
+      },
+      "n170": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:038",
+        "edges": {
+          "special": "n171"
+        }
+      },
+      "n171": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:038",
+        "edges": {}
+      },
+      "n172": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:040",
+        "edges": {
+          "special": "n173"
+        }
+      },
+      "n173": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:040",
+        "edges": {}
+      },
+      "n174": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:042",
+        "edges": {
+          "special": "n175"
+        }
+      },
+      "n175": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:042",
+        "edges": {}
+      },
+      "n17": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:013",
+        "edges": {
+          "heavy": "n18",
+          "special": "n176",
+          "down-forward+medium": "n154",
+          "down+light": "n40",
+          "light": "n128"
+        }
+      },
+      "n18": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n19"
+        }
+      },
+      "n19": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n20"
+        }
+      },
+      "n20": {
+        "depth": 4,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n21"
+        }
+      },
+      "n21": {
+        "depth": 5,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n22"
+        }
+      },
+      "n22": {
+        "depth": 6,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
+        "edges": {
+          "heavy": "n23"
+        }
+      },
+      "n23": {
+        "depth": 7,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
+        "edges": {
+          "medium": "n82",
+          "heavy": "n24",
+          "light": "n74"
+        }
+      },
+      "n24": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-core",
+        "edges": {}
+      },
+      "n74": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n75"
+        }
+      },
+      "n75": {
+        "depth": 9,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n76"
+        }
+      },
+      "n76": {
+        "depth": 10,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n77"
+        }
+      },
+      "n77": {
+        "depth": 11,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n78"
+        }
+      },
+      "n78": {
+        "depth": 12,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n79"
+        }
+      },
+      "n79": {
+        "depth": 13,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n80"
+        }
+      },
+      "n80": {
+        "depth": 14,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {
+          "light": "n81"
+        }
+      },
+      "n81": {
+        "depth": 15,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-light-long-chain",
+        "edges": {}
+      },
+      "n82": {
+        "depth": 8,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n83"
+        }
+      },
+      "n83": {
+        "depth": 9,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n84"
+        }
+      },
+      "n84": {
+        "depth": 10,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n85"
+        }
+      },
+      "n85": {
+        "depth": 11,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n86"
+        }
+      },
+      "n86": {
+        "depth": 12,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n87"
+        }
+      },
+      "n87": {
+        "depth": 13,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n88"
+        }
+      },
+      "n88": {
+        "depth": 14,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {
+          "medium": "n89"
+        }
+      },
+      "n89": {
+        "depth": 15,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:heavy-medium-long-chain",
+        "edges": {}
+      },
+      "n40": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:down-forward-heavy-route",
+        "edges": {
+          "special": "n41"
+        }
+      },
+      "n41": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:down-forward-heavy-route",
+        "edges": {}
+      },
+      "n128": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:013",
+        "edges": {
+          "special": "n129"
+        }
+      },
+      "n129": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:013",
+        "edges": {}
+      },
+      "n154": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:026",
+        "edges": {
+          "special": "n155"
+        }
+      },
+      "n155": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:026",
+        "edges": {}
+      },
+      "n176": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:048",
+        "edges": {
+          "special": "n177"
+        }
+      },
+      "n177": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:launcher:048",
+        "edges": {}
+      },
+      "n25": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:002",
+        "edges": {
+          "special": "n26",
+          "heavy": "n164",
+          "down-forward+medium": "n166",
+          "forward+light": "n101"
+        }
+      },
+      "n26": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:special-core",
+        "edges": {
+          "special": "n27"
+        }
+      },
+      "n27": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:special-core",
+        "edges": {}
+      },
+      "n101": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:002",
+        "edges": {
+          "medium": "n102"
+        }
+      },
+      "n102": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:002",
+        "edges": {}
+      },
+      "n164": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:035",
+        "edges": {
+          "special": "n165"
+        }
+      },
+      "n165": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:035",
+        "edges": {}
+      },
+      "n166": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:036",
+        "edges": {
+          "special": "n167"
+        }
+      },
+      "n167": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:crouch:036",
+        "edges": {}
+      },
+      "n30": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:023",
+        "edges": {
+          "heavy": "n148",
+          "down-forward+medium": "n150",
+          "light": "n31"
+        }
+      },
+      "n31": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-medium-route",
+        "edges": {
+          "special": "n32"
+        }
+      },
+      "n32": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-medium-route",
+        "edges": {}
+      },
+      "n148": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:023",
+        "edges": {
+          "special": "n149"
+        }
+      },
+      "n149": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:023",
+        "edges": {}
+      },
+      "n150": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:024",
+        "edges": {
+          "special": "n151"
+        }
+      },
+      "n151": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:024",
+        "edges": {}
+      },
+      "n33": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:012",
+        "edges": {
+          "down-forward+medium": "n152",
+          "light": "n34",
+          "special": "n126"
+        }
+      },
+      "n34": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-heavy-route",
+        "edges": {
+          "special": "n35"
+        }
+      },
+      "n35": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:directional-special-heavy-route",
+        "edges": {}
+      },
+      "n126": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:012",
+        "edges": {
+          "special": "n127"
+        }
+      },
+      "n127": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:012",
+        "edges": {}
+      },
+      "n152": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:025",
+        "edges": {
+          "special": "n153"
+        }
+      },
+      "n153": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:025",
+        "edges": {}
+      },
+      "n98": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:001",
+        "edges": {
+          "forward+light": "n103",
+          "medium": "n99"
+        }
+      },
+      "n99": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:001",
+        "edges": {
+          "special": "n100"
+        }
+      },
+      "n100": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:001",
+        "edges": {}
+      },
+      "n103": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:003",
+        "edges": {
+          "medium": "n104"
+        }
+      },
+      "n104": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:003",
+        "edges": {
+          "special": "n105"
+        }
+      },
+      "n105": {
+        "depth": 4,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:basic:003",
+        "edges": {}
+      },
+      "n106": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:004",
+        "edges": {
+          "down-forward+medium": "n107",
+          "special": "n109"
+        }
+      },
+      "n107": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:004",
+        "edges": {
+          "special": "n108"
+        }
+      },
+      "n108": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:004",
+        "edges": {}
+      },
+      "n109": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:005",
+        "edges": {
+          "special": "n110"
+        }
+      },
+      "n110": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:005",
+        "edges": {}
+      },
+      "n113": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:007",
+        "edges": {
+          "down-forward+medium": "n146",
+          "special": "n114"
+        }
+      },
+      "n114": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:007",
+        "edges": {
+          "special": "n115"
+        }
+      },
+      "n115": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:007",
+        "edges": {}
+      },
+      "n146": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:022",
+        "edges": {
+          "special": "n147"
+        }
+      },
+      "n147": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:022",
+        "edges": {}
+      },
+      "n116": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:008",
+        "edges": {
+          "forward+light": "n119",
+          "special": "n117"
+        }
+      },
+      "n117": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:008",
+        "edges": {
+          "special": "n118"
+        }
+      },
+      "n118": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:008",
+        "edges": {}
+      },
+      "n119": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:009",
+        "edges": {
+          "special": "n120"
+        }
+      },
+      "n120": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:009",
+        "edges": {}
+      },
+      "n121": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:010",
+        "edges": {
+          "down-forward+medium": "n122",
+          "special": "n124"
+        }
+      },
+      "n122": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:010",
+        "edges": {
+          "special": "n123"
+        }
+      },
+      "n123": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:010",
+        "edges": {}
+      },
+      "n124": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:011",
+        "edges": {
+          "special": "n125"
+        }
+      },
+      "n125": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:011",
+        "edges": {}
+      },
+      "n130": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:014",
+        "edges": {
+          "down-forward+medium": "n131",
+          "special": "n133"
+        }
+      },
+      "n131": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:014",
+        "edges": {
+          "special": "n132"
+        }
+      },
+      "n132": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:014",
+        "edges": {}
+      },
+      "n133": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:015",
+        "edges": {
+          "special": "n134"
+        }
+      },
+      "n134": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:015",
+        "edges": {}
+      },
+      "n135": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:016",
+        "edges": {
+          "forward+light": "n156",
+          "special": "n136"
+        }
+      },
+      "n136": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:016",
+        "edges": {
+          "special": "n137"
+        }
+      },
+      "n137": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:016",
+        "edges": {}
+      },
+      "n156": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:027",
+        "edges": {
+          "special": "n157"
+        }
+      },
+      "n157": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:027",
+        "edges": {}
+      },
+      "n138": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:018",
+        "edges": {
+          "forward+light": "n158",
+          "special": "n139"
+        }
+      },
+      "n139": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:018",
+        "edges": {
+          "special": "n140"
+        }
+      },
+      "n140": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:018",
+        "edges": {}
+      },
+      "n158": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:029",
+        "edges": {
+          "special": "n159"
+        }
+      },
+      "n159": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:029",
+        "edges": {}
+      },
+      "n141": {
+        "depth": 1,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:020",
+        "edges": {
+          "down-forward+medium": "n160",
+          "special": "n142"
+        }
+      },
+      "n142": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:020",
+        "edges": {
+          "special": "n143"
+        }
+      },
+      "n143": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:020",
+        "edges": {}
+      },
+      "n160": {
+        "depth": 2,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:031",
+        "edges": {
+          "special": "n161"
+        }
+      },
+      "n161": {
+        "depth": 3,
+        "routeId": "naruto-uzumaki-nine-tails-kyubi:beginner:advanced:advanced:031",
+        "edges": {}
+      }
+    }
+  },
+  "beginnerComboMoves": {
+    "s0000": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0001": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Chakra Jab",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0002": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Nine-Tails Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0003": {
+      "gesture": "light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Kyubi Chakra Jab",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0004": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Rush Jab",
+      "windowBefore": 4,
+      "windowAfter": 8,
+      "expect": "hit"
+    },
+    "s0005": {
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Rush Jab",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0006": {
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0007": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Chakra Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0008": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chakra Claw",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0009": {
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Kyubi Body Claw",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "hit"
+    },
+    "s0010": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Chakra Tail Check",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0011": {
+      "gesture": "medium",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0012": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Chakra Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0013": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "2+3",
+      "animationKey": "cmd:2+3",
+      "label": "Low Chakra Feint",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0014": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Tail",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0015": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Tail",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0016": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Tail Kick",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "hit"
+    },
+    "s0017": {
+      "gesture": "heavy",
+      "input": "kick",
+      "animationKey": "kickleft",
+      "label": "Low Chakra Tail Sweep",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "hit"
+    },
+    "s0018": {
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Chakra Rush",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "hit"
+    },
+    "s0019": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0020": {
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0021": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0022": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0023": {
+      "gesture": "heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0024": {
+      "gesture": "special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0025": {
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Kyubi Drill Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0026": {
+      "gesture": "light",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Chakra Rush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "hit"
+    },
+    "s0027": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35,
+      "poweredKiFallback": true
+    },
+    "s0028": {
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0029": {
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0030": {
+      "gesture": "forward+medium",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chakra Claw",
+      "windowBefore": 5,
+      "windowAfter": 9,
+      "expect": "hit"
+    },
+    "s0031": {
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0032": {
+      "gesture": "down+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Chakra Tail Check",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0033": {
+      "gesture": "down-forward+heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Chakra Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0034": {
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Chakra Jab",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "hit"
+    },
+    "s0035": {
+      "gesture": "forward+special+light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0036": {
+      "gesture": "down+special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Kyubi Drill Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0037": {
+      "gesture": "down-forward+special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0038": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down+special",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Kyubi Chakra Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0039": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Kyubi Body Claw",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0040": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "knockdown"
+    },
+    "s0041": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0042": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Nine-Tails Rush",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0043": {
+      "routeKey": "base:jabright:heavy",
+      "gesture": "medium",
+      "input": "heavy",
+      "animationKey": "jabright",
+      "label": "Kyubi Body Claw",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0044": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Nine-Tails Rush",
+      "windowBefore": 12,
+      "windowAfter": 16,
+      "expect": "juggle"
+    },
+    "s0045": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 13,
+      "windowAfter": 17,
+      "expect": "juggle"
+    },
+    "s0046": {
+      "routeKey": "cmd:cmd:f+3:f+3",
+      "gesture": "forward+special",
+      "input": "kick",
+      "command": "f+3",
+      "animationKey": "cmd:f+3",
+      "label": "Advancing Low Tail",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0047": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "launch"
+    },
+    "s0048": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0049": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "juggle"
+    },
+    "s0050": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Chakra Rush Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0051": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0052": {
+      "routeKey": "cmd:cmd:d/f+3:d/f+3",
+      "gesture": "forward+medium",
+      "input": "kick",
+      "command": "d/f+3",
+      "animationKey": "cmd:d/f+3",
+      "label": "Diagonal Low Tail",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0053": {
+      "routeKey": "cmd:cmd:d+1:d+1",
+      "gesture": "down+light",
+      "input": "jab",
+      "command": "d+1",
+      "animationKey": "cmd:d+1",
+      "label": "Ducking Chakra Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0054": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Nine-Tails Rush",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "juggle"
+    },
+    "s0055": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 10,
+      "windowAfter": 14,
+      "expect": "knockdown"
+    },
+    "s0056": {
+      "routeKey": "cmd:cmd:f+2:f+2",
+      "gesture": "forward+heavy",
+      "input": "heavy",
+      "command": "f+2",
+      "animationKey": "cmd:f+2",
+      "label": "Forward Chakra Claw",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0057": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 22,
+      "expect": "launch"
+    },
+    "s0058": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special+heavy",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0059": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "juggle"
+    },
+    "s0060": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Low Chakra Rush",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0061": {
+      "routeKey": "base:kickright:special",
+      "gesture": "light",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0062": {
+      "routeKey": "cmd:cmd:d+3:d+3",
+      "gesture": "down+heavy",
+      "input": "kick",
+      "command": "d+3",
+      "animationKey": "cmd:d+3",
+      "label": "Low Tail Kick",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0063": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "launch"
+    },
+    "s0064": {
+      "routeKey": "cmd:cmd:1+2:1+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Nine-Tails Aura Drive",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown",
+      "kiCommand": "O+2",
+      "kiAnimationKey": "cmd:O+2",
+      "kiCost": 35
+    },
+    "s0065": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0066": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "down-forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Overdrive Chakra Jab",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0067": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0068": {
+      "routeKey": "cmd:cmd:SS+3:SS+3",
+      "gesture": "down-forward+special",
+      "input": "kick",
+      "command": "SS+3",
+      "animationKey": "cmd:SS+3",
+      "label": "Sidestep Tail Sweep",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "movementBefore": "sidestepUp",
+      "movementMinFrames": 1,
+      "movementMaxFrames": 24,
+      "expect": "hit"
+    },
+    "s0069": {
+      "routeKey": "cmd:cmd:2+4:2+4",
+      "gesture": "special+medium",
+      "input": "special",
+      "command": "2+4",
+      "animationKey": "cmd:2+4",
+      "label": "Kyubi Drill Knockdown",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "knockdown"
+    },
+    "s0070": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Kyubi Tornado Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0071": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "knockdown"
+    },
+    "s0072": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Tail Launcher",
+      "windowBefore": 14,
+      "windowAfter": 18,
+      "expect": "launch"
+    },
+    "s0073": {
+      "routeKey": "cmd:cmd:d/f+2:d/f+2",
+      "gesture": "down-forward+medium",
+      "input": "heavy",
+      "command": "d/f+2",
+      "animationKey": "cmd:d/f+2",
+      "label": "Diagonal Tail Launcher",
+      "windowBefore": 16,
+      "windowAfter": 21,
+      "expect": "launch"
+    },
+    "s0074": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Nine-Tails Rush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "juggle"
+    },
+    "s0075": {
+      "routeKey": "cmd:cmd:f+1:f+1",
+      "gesture": "forward+light",
+      "input": "jab",
+      "command": "f+1",
+      "animationKey": "cmd:f+1",
+      "label": "Nine-Tails Rush",
+      "windowBefore": 15,
+      "windowAfter": 19,
+      "expect": "juggle"
+    },
+    "s0076": {
+      "routeKey": "cmd:cmd:qcf+1:qcf+1",
+      "gesture": "light",
+      "input": "jab",
+      "command": "qcf+1",
+      "animationKey": "cmd:qcf+1",
+      "label": "Crouching Chakra Guard Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0077": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "While-Rising Chakra Claw Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0078": {
+      "routeKey": "base:kickright:special",
+      "gesture": "forward+medium",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Nine-Tails Fan Kick",
+      "windowBefore": 16,
+      "windowAfter": 23,
+      "expect": "juggle"
+    },
+    "s0079": {
+      "routeKey": "base:kickright:special",
+      "gesture": "special",
+      "input": "special",
+      "animationKey": "kickright",
+      "label": "Kyubi Rising Burst Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0080": {
+      "routeKey": "cmd:cmd:1+3:1+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "1+3",
+      "animationKey": "cmd:1+3",
+      "label": "Kyubi Tornado Launcher",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "launch"
+    },
+    "s0081": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Crouch Tail Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0082": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Nine-Tails Spiral Kick",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle"
+    },
+    "s0083": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 16,
+      "windowAfter": 24,
+      "expect": "knockdown"
+    },
+    "s0084": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 3,
+      "windowAfter": 7,
+      "expect": "knockdown"
+    },
+    "s0085": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Overdrive Chakra Jab",
+      "windowBefore": 3,
+      "windowAfter": 6,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0086": {
+      "gesture": "medium",
+      "input": "heavy",
+      "command": "1+2",
+      "animationKey": "cmd:1+2",
+      "label": "Diagonal Tail Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0087": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Nine-Tails Spiral Kick",
+      "windowBefore": 6,
+      "windowAfter": 10,
+      "expect": "juggle"
+    },
+    "s0088": {
+      "routeKey": "cmd:cmd:3+4:3+4",
+      "gesture": "light",
+      "input": "special",
+      "command": "3+4",
+      "animationKey": "cmd:3+4",
+      "label": "Kyubi Tail Crush",
+      "windowBefore": 9,
+      "windowAfter": 13,
+      "expect": "knockdown"
+    },
+    "s0089": {
+      "routeKey": "base:jableft:jab",
+      "gesture": "forward+light",
+      "input": "jab",
+      "animationKey": "jableft",
+      "label": "Overdrive Chakra Jab",
+      "windowBefore": 7,
+      "windowAfter": 11,
+      "expect": "juggle",
+      "kiCommand": "O+1",
+      "kiAnimationKey": "cmd:O+1",
+      "kiCost": 35
+    },
+    "s0090": {
+      "routeKey": "cmd:cmd:qcf+3:qcf+3",
+      "gesture": "heavy",
+      "input": "kick",
+      "command": "qcf+3",
+      "animationKey": "cmd:qcf+3",
+      "label": "Kyubi Tornado Launcher Route Starter",
+      "windowBefore": 16,
+      "windowAfter": 20,
+      "expect": "hit"
+    },
+    "s0091": {
+      "routeKey": "cmd:cmd:1+4:1+4",
+      "gesture": "special",
+      "input": "special",
+      "command": "1+4",
+      "animationKey": "cmd:1+4",
+      "label": "Nine-Tails Spiral Kick",
+      "windowBefore": 11,
+      "windowAfter": 15,
+      "expect": "juggle"
+    }
+  }
 }
