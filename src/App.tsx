@@ -62,6 +62,7 @@ import { cloneMatchSnapshot, createMatch, stepMatch } from './engine/fightEngine
 import { useAnyInputActivation } from './hooks/useAnyInputActivation';
 import { getKeyboardBindingsForEvent, useControls } from './hooks/useControls';
 import { type CharacterLoadResult, loadCharacterRoster, normalizeAnimationFrameMap } from './lib/characterLoader';
+import { isCharacterPlayable, isCharacterSelectable, isCharacterUnlocked, type CharacterAccessContext } from './lib/characterAccess';
 import { debugHypotheses, debugLog } from './lib/debugLogger';
 import { defaultCharacterEffect, effectTransformAt, sanitizeEffects, sanitizeMoveEffects, sanitizeSoundCues } from './lib/effects';
 import { addFrameRangeToSelection } from './lib/frameSelection';
@@ -1757,18 +1758,22 @@ function isMemoryCardRecord(value: unknown): value is MemoryCardPayload {
   return record.format === MEMORY_CARD_FORMAT && record.version === MEMORY_CARD_VERSION && Boolean(record.slots) && typeof record.slots === 'object';
 }
 
-function isCharacterUnlocked(character: CharacterDefinition, unlockedIds: Set<string>) {
-  return !character.locked || unlockedIds.has(character.id);
-}
-
-function isCharacterPlayable(character: CharacterDefinition) {
-  return !character.unplayable;
-}
-
 function findFirstUnlockedCharacter(roster: CharacterDefinition[], unlockedIds: Set<string>, excludeId?: string) {
   return (
     roster.find((character) => character.id !== excludeId && isCharacterUnlocked(character, unlockedIds)) ??
     roster.find((character) => isCharacterUnlocked(character, unlockedIds))
+  );
+}
+
+function findFirstSelectableCharacter(
+  roster: CharacterDefinition[],
+  unlockedIds: Set<string>,
+  context: CharacterAccessContext,
+  excludeId?: string
+) {
+  return (
+    roster.find((character) => character.id !== excludeId && isCharacterSelectable(character, unlockedIds, context)) ??
+    roster.find((character) => isCharacterSelectable(character, unlockedIds, context))
   );
 }
 
@@ -1784,6 +1789,10 @@ function pickRandomUnlockedCharacter(roster: CharacterDefinition[], unlockedIds:
         ? fallbackPool
         : roster;
   return pool[Math.floor(Math.random() * pool.length)] ?? roster[0];
+}
+
+function pickRandomCharacter(roster: CharacterDefinition[]) {
+  return roster[Math.floor(Math.random() * roster.length)] ?? roster[0];
 }
 
 function pickRandomStage(stageRoster: StageDefinition[]) {
@@ -1860,20 +1869,21 @@ function resolveEffectiveMenuMotionMode(performanceSettings: GameSettings['perfo
   return performanceSettings.menuMotionMode === 'snappy' || shouldUseSnappyMenuPerformanceForDevice() ? 'snappy' : 'full';
 }
 
-function resolveUnlockedTrainingCharacters(
+function resolveTrainingCharacters(
   roster: CharacterDefinition[],
   unlockedIds: Set<string>,
   p1Id: string,
-  p2Id: string
+  p2Id: string,
+  context: CharacterAccessContext
 ) {
   const currentP1 = roster.find((character) => character.id === p1Id);
   const currentP2 = roster.find((character) => character.id === p2Id);
-  const p1 = currentP1 && isCharacterUnlocked(currentP1, unlockedIds)
+  const p1 = currentP1 && isCharacterSelectable(currentP1, unlockedIds, context)
     ? currentP1
-    : findFirstUnlockedCharacter(roster, unlockedIds);
-  const p2 = currentP2 && isCharacterUnlocked(currentP2, unlockedIds)
+    : findFirstSelectableCharacter(roster, unlockedIds, context);
+  const p2 = currentP2 && isCharacterSelectable(currentP2, unlockedIds, context)
     ? currentP2
-    : findFirstUnlockedCharacter(roster, unlockedIds, p1?.id);
+    : findFirstSelectableCharacter(roster, unlockedIds, context, p1?.id);
   return { p1, p2 };
 }
 
@@ -3219,6 +3229,9 @@ export default function App() {
     () => (isDevHost ? new Set(roster.map((character) => character.id)) : unlockedCharacterIds),
     [isDevHost, roster, unlockedCharacterIds]
   );
+  const selectionAccessContext: CharacterAccessContext = mode === 'training' && selectedTrainingMode !== 'online'
+    ? 'offlineTraining'
+    : 'standard';
   const unlockedMiniGameRoster = useMemo(
     () => roster.filter((character) => isCharacterPlayable(character) && isCharacterUnlocked(character, effectiveUnlockedCharacterIds)),
     [effectiveUnlockedCharacterIds, roster]
@@ -3477,12 +3490,17 @@ export default function App() {
   const resolveRandomCharacterSelection = useCallback((targetMode: MatchMode = mode) => {
     let nextP1Id = p1Id;
     let nextP2Id = p2Id;
+    const accessContext: CharacterAccessContext = targetMode === 'training' ? 'offlineTraining' : 'standard';
     if (randomCharacterSlots[1]) {
-      const nextP1 = pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds);
+      const nextP1 = accessContext === 'offlineTraining'
+        ? pickRandomCharacter(roster)
+        : pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds);
       if (nextP1) nextP1Id = nextP1.id;
     }
     if (!isArcadeMatchMode(targetMode) && randomCharacterSlots[2]) {
-      const nextP2 = pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds, nextP1Id);
+      const nextP2 = accessContext === 'offlineTraining'
+        ? pickRandomCharacter(roster.filter((character) => character.id !== nextP1Id)) ?? pickRandomCharacter(roster)
+        : pickRandomUnlockedCharacter(roster, effectiveUnlockedCharacterIds, nextP1Id);
       if (nextP2) nextP2Id = nextP2.id;
     }
     if (nextP1Id !== p1Id) setP1Id(nextP1Id);
@@ -3562,7 +3580,7 @@ export default function App() {
 
   const startCustomLocalTournament = useCallback(() => {
     const fighters = roster
-      .filter((character) => isCharacterPlayable(character))
+      .filter((character) => isCharacterSelectable(character, effectiveUnlockedCharacterIds))
       .map((character) => ({ id: character.id, displayName: character.displayName }));
     const bracket = createCustomLocalTournamentBracket(fighters);
     const match = getNextPlayableLocalTournamentMatch(bracket);
@@ -3577,7 +3595,7 @@ export default function App() {
       character_count: fighters.length,
       match_id: match.id
     });
-  }, [captureAppAnalytics, roster, setupLocalTournamentMatch]);
+  }, [captureAppAnalytics, effectiveUnlockedCharacterIds, roster, setupLocalTournamentMatch]);
 
   const startInfiniteTournamentMatch = useCallback((bracket: TournamentBracket) => {
     const match = getNextReadyTournamentMatch(bracket);
@@ -4657,18 +4675,18 @@ export default function App() {
   useEffect(() => {
     if (roster.length === 0) return;
     const selected = roster.find((character) => character.id === p1Id);
-    if (selected && isCharacterUnlocked(selected, effectiveUnlockedCharacterIds)) return;
-    const firstUnlocked = findFirstUnlockedCharacter(roster, effectiveUnlockedCharacterIds);
-    if (firstUnlocked) setP1Id(firstUnlocked.id);
-  }, [effectiveUnlockedCharacterIds, p1Id, roster]);
+    if (selected && isCharacterSelectable(selected, effectiveUnlockedCharacterIds, selectionAccessContext)) return;
+    const firstSelectable = findFirstSelectableCharacter(roster, effectiveUnlockedCharacterIds, selectionAccessContext);
+    if (firstSelectable) setP1Id(firstSelectable.id);
+  }, [effectiveUnlockedCharacterIds, p1Id, roster, selectionAccessContext]);
 
   useEffect(() => {
     if (roster.length === 0 || isArcadeMatchMode(mode)) return;
     const selected = roster.find((character) => character.id === p2Id);
-    if (selected && isCharacterUnlocked(selected, effectiveUnlockedCharacterIds)) return;
-    const firstUnlockedOpponent = findFirstUnlockedCharacter(roster, effectiveUnlockedCharacterIds, p1Id);
-    if (firstUnlockedOpponent) setP2Id(firstUnlockedOpponent.id);
-  }, [effectiveUnlockedCharacterIds, mode, p1Id, p2Id, roster]);
+    if (selected && isCharacterSelectable(selected, effectiveUnlockedCharacterIds, selectionAccessContext)) return;
+    const firstSelectableOpponent = findFirstSelectableCharacter(roster, effectiveUnlockedCharacterIds, selectionAccessContext, p1Id);
+    if (firstSelectableOpponent) setP2Id(firstSelectableOpponent.id);
+  }, [effectiveUnlockedCharacterIds, mode, p1Id, p2Id, roster, selectionAccessContext]);
 
   useEffect(() => {
     const hoverAudio = new Audio(KORE_MENU_HOVER_SOUND_URL);
@@ -5549,9 +5567,9 @@ export default function App() {
             onTraining={() => {
               captureAppAnalytics('game_start_clicked', { source: 'mode_select', selected_mode: 'training' });
               resetRandomSelections();
-              setMode(selectedTrainingMode === 'online' ? 'trainingOnline' : 'training');
+              setMode('training');
               setSelectedTrainingMode('free');
-              const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
+              const trainingCharacters = resolveTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id, 'offlineTraining');
               if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
               if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
               setScreen('training');
@@ -5805,6 +5823,7 @@ export default function App() {
           <CustomRoomsExperience
             profile={onlineProfile}
             roster={roster}
+            unlockedCharacterIds={effectiveUnlockedCharacterIds}
             stages={playableStageRoster}
             appVersion={KORE_APP_VERSION}
             session={customRoomSession}
@@ -5858,7 +5877,8 @@ export default function App() {
               const startTraining = () => {
                 const fightStage = trainingChamberStage;
                 if (!fightStage) return;
-                const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
+                const trainingAccessContext: CharacterAccessContext = selectedTrainingMode === 'online' ? 'standard' : 'offlineTraining';
+                const trainingCharacters = resolveTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id, trainingAccessContext);
                 if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
                 if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
                 const trainingMatchMode = selectedTrainingMode === 'online' ? 'trainingOnline' : 'training';
@@ -5946,10 +5966,10 @@ export default function App() {
                   const p1Selected = roster.find((character) => character.id === resolvedCharacters.p1Id);
                   const p2Selected = roster.find((character) => character.id === resolvedCharacters.p2Id);
                   if (
-                    (p1Selected && !isCharacterUnlocked(p1Selected, effectiveUnlockedCharacterIds)) ||
-                    (p2Selected && !isCharacterUnlocked(p2Selected, effectiveUnlockedCharacterIds))
+                    (p1Selected && !isCharacterSelectable(p1Selected, effectiveUnlockedCharacterIds, 'offlineTraining')) ||
+                    (p2Selected && !isCharacterSelectable(p2Selected, effectiveUnlockedCharacterIds, 'offlineTraining'))
                   ) {
-                    const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, resolvedCharacters.p1Id, resolvedCharacters.p2Id);
+                    const trainingCharacters = resolveTrainingCharacters(roster, effectiveUnlockedCharacterIds, resolvedCharacters.p1Id, resolvedCharacters.p2Id, 'offlineTraining');
                     if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
                     if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
                     return;
@@ -6007,8 +6027,8 @@ export default function App() {
                   setPrivateRoomIntent({ kind: 'host', roomName: `${p1.displayName} Room`, password: generatePrivateRoomPassword() });
                 }
                 if (mode === 'training') {
-                  if (!isCharacterUnlocked(p1, effectiveUnlockedCharacterIds) || !isCharacterUnlocked(p2, effectiveUnlockedCharacterIds)) {
-                    const trainingCharacters = resolveUnlockedTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id);
+                  if (!isCharacterSelectable(p1, effectiveUnlockedCharacterIds, 'offlineTraining') || !isCharacterSelectable(p2, effectiveUnlockedCharacterIds, 'offlineTraining')) {
+                    const trainingCharacters = resolveTrainingCharacters(roster, effectiveUnlockedCharacterIds, p1Id, p2Id, 'offlineTraining');
                     if (trainingCharacters.p1) setP1Id(trainingCharacters.p1.id);
                     if (trainingCharacters.p2) setP2Id(trainingCharacters.p2.id);
                     return;
@@ -10166,9 +10186,12 @@ function TrainingSelect({
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster.find((character) => character.id !== p1Character?.id) ?? roster[1] ?? p1Character;
   const basicCount = p1Character ? generateBasicTrainingTrials(p1Character, roster).length : 0;
   const comboCount = p1Character ? generateComboTrainingTrials(p1Character).length : 0;
+  const accessContext: CharacterAccessContext = trainingMode === 'online' ? 'standard' : 'offlineTraining';
   const baseRoster = useMemo(() => (
-    sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
-  ), [roster, unlockedCharacterIds]);
+    accessContext === 'offlineTraining'
+      ? roster.filter((character) => !isCharacterVariant(character))
+      : sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
+  ), [accessContext, roster, unlockedCharacterIds]);
   const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const pagedBaseRoster = baseRoster.slice(
@@ -10177,12 +10200,12 @@ function TrainingSelect({
   );
   const canStart = Boolean(
     p1Character &&
-    isCharacterUnlocked(p1Character, unlockedCharacterIds) &&
-    (trainingMode === 'online' || (p2Character && isCharacterUnlocked(p2Character, unlockedCharacterIds)))
+    isCharacterSelectable(p1Character, unlockedCharacterIds, accessContext) &&
+    (trainingMode === 'online' || (p2Character && isCharacterSelectable(p2Character, unlockedCharacterIds, accessContext)))
   );
   const assignCharacter = (id: string) => {
     const character = roster.find((item) => item.id === id);
-    if (!character || !isCharacterUnlocked(character, unlockedCharacterIds)) return;
+    if (!character || !isCharacterSelectable(character, unlockedCharacterIds, accessContext)) return;
     if (selectTarget === 1) {
       setP1Id(id);
       onAnalytics('character_target_changed', { source: 'training_select', slot: 1, character_id: id });
@@ -10201,13 +10224,13 @@ function TrainingSelect({
     onAnalytics('training_mode_changed', { source: 'training_select_gamepad_trigger', training_submode: nextMode });
   }, [onAnalytics, setTrainingMode, trainingMode]);
   const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
-    const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+    const family = getVariantFamily(roster, baseId, accessContext === 'offlineTraining' ? undefined : unlockedCharacterIds);
     if (family.length <= 1) return;
     const currentId = selectTarget === 1 ? p1Id : p2Id;
     const currentIndex = Math.max(0, family.findIndex((character) => character.id === currentId));
     const next = family[(currentIndex + direction + family.length) % family.length];
     if (next) assignCharacter(next.id);
-  }, [p1Id, p2Id, roster, selectTarget, unlockedCharacterIds]);
+  }, [accessContext, p1Id, p2Id, roster, selectTarget, unlockedCharacterIds]);
 
   useEffect(() => {
     setRosterPage((page) => Math.min(page, totalRosterPages - 1));
@@ -10370,13 +10393,15 @@ function TrainingSelect({
           <div className="versus-roster-grid">
             {pagedBaseRoster.map((character) => {
               const baseId = character.id;
-              const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
+              const family = getVariantFamily(roster, baseId, accessContext === 'offlineTraining' ? undefined : unlockedCharacterIds);
               const targetCharacter = selectTarget === 1 ? p1Character : p2Character;
-              const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
+              const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId && isCharacterSelectable(targetCharacter, unlockedCharacterIds, accessContext)
+                ? targetCharacter
+                : null;
               const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
               const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
               const isP1 = getCharacterBaseId(p1Character) === baseId;
-              const isLocked = family.length === 0;
+              const isLocked = accessContext === 'standard' && family.length === 0;
               const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
               return (
                 <button
@@ -10479,10 +10504,8 @@ function TournamentSelect({
   const p2Character = roster.find((character) => character.id === p2Id) ?? roster.find((character) => character.id !== p1Character?.id) ?? roster[1] ?? roster[0];
   const customTournamentMode = tournamentMode === 'custom';
   const baseRoster = useMemo(() => (
-    customTournamentMode
-      ? roster.filter((character) => !isCharacterVariant(character) && isCharacterPlayable(character))
-      : sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
-  ), [customTournamentMode, roster, unlockedCharacterIds]);
+    sortRosterByUnlockState(roster.filter((character) => !isCharacterVariant(character)), unlockedCharacterIds, roster)
+  ), [roster, unlockedCharacterIds]);
   const totalRosterPages = Math.max(1, Math.ceil(baseRoster.length / CHARACTER_SELECT_PAGE_SIZE));
   const visibleRosterPage = Math.min(rosterPage, totalRosterPages - 1);
   const pagedBaseRoster = baseRoster.slice(
@@ -10509,7 +10532,7 @@ function TournamentSelect({
     : paidSummary?.prizeLabel ?? '$15 / $10 / $5 Lightning';
   const canStart = Boolean(
     customTournamentMode
-      ? roster.filter((character) => isCharacterPlayable(character)).length >= 2
+      ? roster.filter((character) => isCharacterSelectable(character, unlockedCharacterIds)).length >= 2
       : p1Character &&
     isCharacterUnlocked(p1Character, unlockedCharacterIds) &&
     (tournamentMode !== 'free' || localPlayerCount === 1 || (p2Character && isCharacterUnlocked(p2Character, unlockedCharacterIds)))
@@ -10525,7 +10548,7 @@ function TournamentSelect({
     : tournamentMode === 'custom'
       ? {
           label: 'Custom tournament',
-          description: 'P1 and P2 fight every match in a full-roster trial.',
+          description: 'P1 and P2 fight every match using your unlocked roster.',
           stats: '2 local players • No CPU matches'
         }
       : tournamentMode === 'online'
@@ -10571,7 +10594,7 @@ function TournamentSelect({
 
   const assignCharacter = (id: string) => {
     const character = roster.find((item) => item.id === id);
-    if (!character || (!customTournamentMode && !isCharacterUnlocked(character, unlockedCharacterIds))) return;
+    if (!character || !isCharacterSelectable(character, unlockedCharacterIds)) return;
     if (selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1) {
       setP1Id(id);
     } else {
@@ -10602,13 +10625,13 @@ function TournamentSelect({
   }, [totalRosterPages]);
 
   const cycleVariantForBase = useCallback((baseId: string, direction: -1 | 1) => {
-    const family = getVariantFamily(roster, baseId, customTournamentMode ? undefined : unlockedCharacterIds);
+    const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
     if (family.length <= 1) return;
     const currentId = selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1 ? p1Id : p2Id;
     const currentIndex = Math.max(0, family.findIndex((character) => character.id === currentId));
     const next = family[(currentIndex + direction + family.length) % family.length];
     if (next) assignCharacter(next.id);
-  }, [customTournamentMode, localPlayerCount, p1Id, p2Id, roster, selectTarget, tournamentMode, unlockedCharacterIds]);
+  }, [localPlayerCount, p1Id, p2Id, roster, selectTarget, tournamentMode, unlockedCharacterIds]);
 
   useEffect(() => {
     setRosterPage((page) => Math.min(page, totalRosterPages - 1));
@@ -10784,14 +10807,14 @@ function TournamentSelect({
           <div className="versus-roster-grid">
             {pagedBaseRoster.map((character) => {
               const baseId = character.id;
-              const family = getVariantFamily(roster, baseId, customTournamentMode ? undefined : unlockedCharacterIds);
+              const family = getVariantFamily(roster, baseId, unlockedCharacterIds);
               const targetCharacter = selectTarget === 1 || tournamentMode !== 'free' || localPlayerCount === 1 ? p1Character : p2Character;
               const selectedTargetMember = getCharacterBaseId(targetCharacter) === baseId ? targetCharacter : null;
               const displayedCharacter = selectedTargetMember ?? family[0] ?? character;
               const assignId = selectedTargetMember?.id ?? displayedCharacter.id;
               const isP1 = getCharacterBaseId(p1Character) === baseId;
               const isP2 = tournamentMode === 'free' && localPlayerCount === 2 && getCharacterBaseId(p2Character) === baseId;
-              const isLocked = !customTournamentMode && family.length === 0;
+              const isLocked = family.length === 0;
               const variantCount = Math.max(0, getVariantFamily(roster, baseId).length - 1);
               return (
                 <button

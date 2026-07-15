@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import type { CharacterDefinition, StageDefinition } from './types';
 import { GameScene } from './components/GameScene';
 import { readGameSettings } from './lib/gameSettings';
+import { isCharacterSelectable } from './lib/characterAccess';
 import { readFriends } from './lib/socialHistory';
 import type { OnlinePlayerProfile } from './lib/online/leaderboard';
 import { sendFriendInvite } from './lib/online/friends';
@@ -32,9 +33,10 @@ export type CustomMatchLaunch = {
   localPlayerId: string;
 };
 
-export function CustomRoomsExperience({ profile, roster, stages, appVersion, session, setSession, onBack, onLaunchMatch, onWatchMatch, fixtureMode = false }: {
+export function CustomRoomsExperience({ profile, roster, unlockedCharacterIds, stages, appVersion, session, setSession, onBack, onLaunchMatch, onWatchMatch, fixtureMode = false }: {
   profile: OnlinePlayerProfile;
   roster: CharacterDefinition[];
+  unlockedCharacterIds: ReadonlySet<string>;
   stages: StageDefinition[];
   appVersion: string;
   session: CustomRoomSession | null;
@@ -74,7 +76,7 @@ export function CustomRoomsExperience({ profile, roster, stages, appVersion, ses
     finally { setBusy(''); }
   };
 
-  if (session) return <CustomRoomLobby profile={profile} roster={roster} stages={stages} session={session} setSession={commitSession} onBack={onBack} onLaunchMatch={onLaunchMatch} onWatchMatch={onWatchMatch} fixtureMode={fixtureMode} />;
+  if (session) return <CustomRoomLobby profile={profile} roster={roster} unlockedCharacterIds={unlockedCharacterIds} stages={stages} session={session} setSession={commitSession} onBack={onBack} onLaunchMatch={onLaunchMatch} onWatchMatch={onWatchMatch} fixtureMode={fixtureMode} />;
 
   return (
     <div className="custom-entry-screen">
@@ -112,9 +114,10 @@ export function CustomRoomsExperience({ profile, roster, stages, appVersion, ses
   );
 }
 
-function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack, onLaunchMatch, onWatchMatch, fixtureMode }: {
+function CustomRoomLobby({ profile, roster, unlockedCharacterIds, stages, session, setSession, onBack, onLaunchMatch, onWatchMatch, fixtureMode }: {
   profile: OnlinePlayerProfile;
   roster: CharacterDefinition[];
+  unlockedCharacterIds: ReadonlySet<string>;
   stages: StageDefinition[];
   session: CustomRoomSession;
   setSession: (session: CustomRoomSession | null) => void;
@@ -159,6 +162,13 @@ function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack,
 
   const command = async (value: CustomRoomCommand) => {
     setError('');
+    if (value.type === 'lockCharacter') {
+      const character = roster.find((candidate) => candidate.id === value.characterId);
+      if (!character || !isCharacterSelectable(character, unlockedCharacterIds)) {
+        setError('Unlock this fighter before using them online.');
+        return;
+      }
+    }
     try {
       const next = fixtureMode
         ? applyCustomRoomCommand(room, playerId, value)
@@ -174,7 +184,7 @@ function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack,
   };
 
   if (localIsFighter && localStation?.phase === 'characterSelect' && localMatch) {
-    return <CustomCharacterSelect roster={roster} room={room} stationId={localStation.id} match={localMatch} playerId={playerId} onLock={(characterId) => command({ type: 'lockCharacter', stationId: localStation.id, characterId })} />;
+    return <CustomCharacterSelect roster={roster} unlockedCharacterIds={unlockedCharacterIds} room={room} stationId={localStation.id} match={localMatch} playerId={playerId} onLock={(characterId) => command({ type: 'lockCharacter', stationId: localStation.id, characterId })} />;
   }
   if (localIsFighter && localStation?.phase === 'stageSelect' && localMatch) {
     return <CustomStageSelect stages={stages} match={localMatch} playerId={playerId} onLock={(choice) => command({ type: 'lockStage', stationId: localStation.id, choice, stagePool: stages.map((stage) => stage.id) })} />;
@@ -238,10 +248,15 @@ function CustomRoomLobby({ profile, roster, stages, session, setSession, onBack,
   );
 }
 
-function CustomCharacterSelect({ roster, room, stationId, match, playerId, onLock }: { roster: CharacterDefinition[]; room: CustomRoomState; stationId: string; match: CustomMatch; playerId: string; onLock: (id: string) => Promise<void> }) {
-  const [selected, setSelected] = useState(roster[0]?.id ?? ''); const [locked, setLocked] = useState(false);
+function CustomCharacterSelect({ roster, unlockedCharacterIds, room, stationId, match, playerId, onLock }: { roster: CharacterDefinition[]; unlockedCharacterIds: ReadonlySet<string>; room: CustomRoomState; stationId: string; match: CustomMatch; playerId: string; onLock: (id: string) => Promise<void> }) {
+  const firstSelectableId = roster.find((character) => isCharacterSelectable(character, unlockedCharacterIds))?.id ?? '';
+  const [selected, setSelected] = useState(firstSelectableId);
+  const [locked, setLocked] = useState(false);
   const opponentLocked = match.characterLocked[match.fighterPlayerIds[0] === playerId ? 1 : 0];
-  return <div className="custom-pick-screen"><header><span>{room.roomName} · {customStationName(room.stations.find((station) => station.id === stationId))}</span><h1>Choose Your Fighter</h1><p>Your pick stays hidden until both players lock in.</p></header><div className="custom-pick-grid">{roster.map((character) => <button key={character.id} className={selected === character.id ? 'active' : ''} disabled={locked} onClick={() => setSelected(character.id)} style={{ '--fighter-color': character.colors.primary } as CSSProperties}><img src={character.animationFrames?.idle?.[0] || character.spriteSheetPath} alt="" /><strong>{character.displayName}</strong></button>)}</div><footer><div><Lock size={17} /><span>{opponentLocked ? 'Opponent locked' : 'Opponent choosing'}</span></div><button className="primary-button" disabled={!selected || locked} onClick={() => void onLock(selected).then(() => setLocked(true))}>{locked ? 'Locked In' : 'Lock Fighter'}</button></footer></div>;
+  return <div className="custom-pick-screen"><header><span>{room.roomName} · {customStationName(room.stations.find((station) => station.id === stationId))}</span><h1>Choose Your Fighter</h1><p>Your pick stays hidden until both players lock in.</p></header><div className="custom-pick-grid">{roster.map((character) => {
+    const selectable = isCharacterSelectable(character, unlockedCharacterIds);
+    return <button key={character.id} className={`${selected === character.id ? 'active' : ''} ${selectable ? '' : 'is-locked'}`} disabled={locked || !selectable} onClick={() => setSelected(character.id)} style={{ '--fighter-color': character.colors.primary } as CSSProperties} aria-label={selectable ? `Select ${character.displayName}` : `${character.displayName} locked`}><img src={character.animationFrames?.idle?.[0] || character.spriteSheetPath} alt="" /><strong>{character.displayName}</strong>{!selectable && <small className="custom-pick-lock"><Lock size={13} /> Locked</small>}</button>;
+  })}</div><footer><div><Lock size={17} /><span>{opponentLocked ? 'Opponent locked' : 'Opponent choosing'}</span></div><button className="primary-button" disabled={!selected || locked} onClick={() => void onLock(selected).then(() => setLocked(true))}>{locked ? 'Locked In' : 'Lock Fighter'}</button></footer></div>;
 }
 
 function customStationName(station?: Pick<CustomStation, 'id' | 'label'>) {

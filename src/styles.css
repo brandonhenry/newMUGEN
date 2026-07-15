@@ -16733,10 +16733,15 @@ button {
 .custom-stage-grid button:active { scale: .96; }
 .custom-pick-grid button.active,
 .custom-stage-grid button.active { background: color-mix(in srgb, var(--fighter-color, #56e9ff) 20%, #12182a); box-shadow: 0 0 0 2px #56e9ff, 0 18px 38px rgba(0,0,0,.3); }
+.custom-pick-grid button:disabled { cursor: not-allowed; }
+.custom-pick-grid button.is-locked { opacity: .42; filter: grayscale(.7); }
+.custom-pick-grid button.is-locked:active { scale: 1; }
 .custom-pick-grid img { position: absolute; inset: 8px 8px 34px; width: calc(100% - 16px); height: calc(100% - 42px); object-fit: contain; image-rendering: pixelated; outline: 1px solid rgba(255,255,255,.1); outline-offset: -1px; }
 .custom-pick-grid strong,
+.custom-pick-grid small,
 .custom-stage-grid strong,
 .custom-stage-grid small { position: relative; z-index: 1; }
+.custom-pick-lock { display: flex; align-items: center; gap: 5px; margin-top: 4px; color: rgba(255,255,255,.7); font-size: 10px; font-weight: 900; text-transform: uppercase; }
 .custom-stage-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
 .custom-stage-grid button { align-content: center; justify-items: center; gap: 8px; min-height: 130px; text-align: center; }
 .custom-stage-grid button > span { width: 100%; height: 8px; border-radius: 999px; }

@@ -1736,7 +1736,7 @@ test('starts a custom local tournament with P1 versus P2 every match', async ({ 
   await startFromSplash(page);
   await page.getByRole('button', { name: 'Tournament' }).click();
   await selectTournamentMode(page, 'Custom');
-  await expect(page.getByText('P1 and P2 fight every match in a full-roster trial.')).toBeVisible();
+  await expect(page.getByText('P1 and P2 fight every match using your unlocked roster.')).toBeVisible();
   await page.getByRole('button', { name: 'Start Custom' }).click();
   await expect(page.locator('.tournament-bracket-intro')).toBeVisible({ timeout: 5000 });
   await expect(page.locator('.tournament-bracket-board')).not.toContainText('CPU');
